@@ -86,8 +86,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 			}
 		}
 		
-		if(remoteInvocationsIdToProcess.isEmpty())
-			return; // move along, nothing to see here ...
+		if(remoteInvocationsIdToProcess.isEmpty()) return; // move along, nothing to see here ...
 
 		for(String classType: typesToProcess){
 			

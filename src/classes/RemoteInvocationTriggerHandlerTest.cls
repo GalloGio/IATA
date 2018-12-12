@@ -86,7 +86,9 @@ public class RemoteInvocationTriggerHandlerTest {
 			//Making the process starting to create the Bank Account Case OSCAR 
 			re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 			update re;
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.assert(e.getMessage().contains('Parent account with the IATA code 1234567 is not an IATA Agency.'), 'Error Message doesn\'t match: ' +e.getMessage());
+		}
 
 		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
 		System.assertEquals(oscars.size(), 0); 
@@ -94,7 +96,7 @@ public class RemoteInvocationTriggerHandlerTest {
 	}
 
 	@isTest
-	public static void testFailingGeneralValidations() {
+	public static void testNoAccountFound() {
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
 		insert ctry;
@@ -128,7 +130,96 @@ public class RemoteInvocationTriggerHandlerTest {
 			//Making the process starting to create the Bank Account Case OSCAR 
 			re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 			update re;
-		}catch(Exception e){}
+		}catch(Exception e){
+			System.assert(e.getMessage().contains('Parent account with the IATA code 111111 not found.'), 'Error Message doesn\'t match: ' +e.getMessage());
+		}
+
+		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
+		System.assertEquals(oscars.size(), 0); 
+	}	
+
+	@isTest
+	public static void testDiferentIATACode() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
+		insert ctry;
+
+		//not assigning the correct recordtype to the account
+		Account acc = new Account(name = 'account name', Sector__c = 'Travel Agent', Category__c = 'Cargo only', IATACode__c = '1234567',
+			Location_Type__c =AMS_Utils.HE, Location_Class__c = AMS_Utils.LC_PASSENGER, recordtypeid = AMS_Utils.RECTYPE_IATAAGENCY, IATA_ISO_Country__c = ctry.id );
+		insert acc;
+
+		Contact c = new Contact(FirstName = 'test', LastName = 'contact', email = 'email@contactmeila.com', AccountId = acc.id);
+		insert c;
+
+		Portal_Applications__c pa = new Portal_Applications__c(name = 'IATA EasyPay (EDENRED)');
+		insert pa;
+
+		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted', 
+			ANG_Portal_Service_Role__c = 'IEP Admin',Contact__c = c.id, Portal_Application__c = pa.id);
+		insert par;
+		
+		try{
+				
+			//not assigning the correct iata code, trigger will fail
+			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+				Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
+				status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
+			insert re;
+            
+			Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = re.id, Internal_ID__c = '111111');
+			insert artifact;
+
+			//Making the process starting to create the Bank Account Case OSCAR 
+			re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+			update re;
+		}catch(Exception e){
+			System.assert(e.getMessage().contains('Remote Invocation IATA code (1234567) doesn\'t match the Artifact IATA Code (111111).'), 'Error Message doesn\'t match: ' +e.getMessage());
+		}
+
+		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
+		System.assertEquals(oscars.size(), 0); 
+	}	
+
+	@isTest
+	public static void testNoArtifact() {
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
+		insert ctry;
+
+		//not assigning the correct recordtype to the account
+		Account acc = new Account(name = 'account name', Sector__c = 'Travel Agent', Category__c = 'Cargo only', IATACode__c = '1234567',
+			Location_Type__c =AMS_Utils.HE, Location_Class__c = AMS_Utils.LC_PASSENGER, recordtypeid = AMS_Utils.RECTYPE_IATAAGENCY, IATA_ISO_Country__c = ctry.id );
+		insert acc;
+
+		Contact c = new Contact(FirstName = 'test', LastName = 'contact', email = 'email@contactmeila.com', AccountId = acc.id);
+		insert c;
+
+		Portal_Applications__c pa = new Portal_Applications__c(name = 'IATA EasyPay (EDENRED)');
+		insert pa;
+
+		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted', 
+			ANG_Portal_Service_Role__c = 'IEP Admin',Contact__c = c.id, Portal_Application__c = pa.id);
+		insert par;
+		
+		try{
+				
+			//not assigning the correct iata code, trigger will fail
+			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+				Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
+				status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
+			insert re;
+            
+            //Not Inserting the artifact
+			//Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = re.id, Internal_ID__c = '111111');
+			//insert artifact;
+
+			//Making the process starting to create the Bank Account Case OSCAR 
+			re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+			update re;
+		}catch(Exception e){
+			System.assert(e.getMessage().contains('Remote Invocation (1234567) doesn\'t have a artifact.'), 'Error Message doesn\'t match: ' +e.getMessage());
+		}
 
 		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
 		System.assertEquals(oscars.size(), 0); 

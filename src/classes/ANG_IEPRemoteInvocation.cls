@@ -9,9 +9,6 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 	Map<Id, Account> mapIdAccs = new Map<Id, Account>();
 	Set<String> iataCodesToFetch = new Set<String>();
 	Set<String> remoteInvocationsWithoutArtifcts = new Set<String>();
-	//if it's required to identify the remote invocations that dont have artifacts (probably yes), set of all remoteInvocations IDs
-		//remove the id when iterating, the arficats. in the end, if theres remote invocations, iterate, remove from list (remoteInvocationsIdToProcess) and add error
-
 
 	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 		
@@ -20,49 +17,61 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 		
 
 		for (Remote_Invocation__c ri : remoteInvocationsIdToProcess){
-			if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY ){ //otherwise, not remote invocations to process here	
-				mapRemoteInvocations.put(ri.Internal_ID__c,ri);
+			if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY ){ //otherwise, it's not a remote invocation to be process in this interface	
+				mapRemoteInvocations.put(ri.id,ri);
 				iataCodesToFetch.add(ri.Internal_ID__c);
-				remoteInvocationsWithoutArtifcts.add(ri.Internal_ID__c);
+				
+				remoteInvocationsWithoutArtifcts.add(ri.ID); //to later thow error
 			}
 		}
 
-		for(Account acc : [SELECT ID, name, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c, IATACode__c, RecordTypeId FROM Account WHERE iataCode__c IN :iataCodesToFetch]){
-			
+		for(Account acc : [SELECT ID, name, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c, IATACode__c, RecordTypeId FROM Account WHERE iataCode__c IN :iataCodesToFetch])	
 			mapIATACodeAccs.put(acc.IATACode__c,acc);
-			mapIdAccs.put(acc.id, acc);
-		} 
 
-			system.debug('## map at start: ' + remoteInvocationsWithoutArtifcts);
-		for(Remote_Invocation_Artefact__c artifact : [SELECT ID, Remote_Invocation__c, Remote_Invocation__r.Request_Type__c, Remote_Invocation__r.Internal_ID__c, Internal_ID__c FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :remoteInvocationsIdToProcess]){
+		system.debug('## map at start: ' + remoteInvocationsWithoutArtifcts);
+		for(Remote_Invocation_Artefact__c artifact : [SELECT ID, Remote_Invocation__c, Internal_ID__c FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :remoteInvocationsIdToProcess]){
 			system.debug('## artifact: ' + artifact);
 			//remove from the list the parent of the artifact
-			remoteInvocationsWithoutArtifcts.remove(artifact.Remote_Invocation__r.Internal_ID__c);
-			system.debug('## removing from map: ' + artifact.Remote_Invocation__r.Internal_ID__c);
+			remoteInvocationsWithoutArtifcts.remove(artifact.Remote_Invocation__c);
+			system.debug('## removing from map: ' + artifact.Remote_Invocation__c);
 			
 
-			Account parentAccount = mapIATACodeAccs.get(artifact.Remote_Invocation__r.Internal_ID__c);
-			if(artifact.Remote_Invocation__c != null && parentAccount != null){
+			Remote_Invocation__c ri = mapRemoteInvocations.get(artifact.Remote_Invocation__c);
+			Account parentAccount = mapIATACodeAccs.get(ri.Internal_ID__c);
 
-				if( parentAccount.recordtypeid == RECTYPE_IATAAGENCY){				
-					//artifact.addError('');
-					//remoteInvocationsIdToProcess.remove(mapRemoteInvocations.get(artifact.Remote_Invocation__c));
-					mapRemoteInvocationArtifacts.put(artifact.Internal_ID__c, artifact);
+			if( parentAccount != null){
+
+				if( parentAccount.recordtypeid == RECTYPE_IATAAGENCY){	
+					if(ri.Internal_ID__c == artifact.Internal_ID__c){
+				
+						//Going to be processed
+						mapRemoteInvocationArtifacts.put(artifact.Internal_ID__c, artifact);
+						mapIdAccs.put(parentAccount.id, parentAccount);
+
+					}else{
+
+						ri.addError('Remote Invocation IATA code ('+ ri.Internal_ID__c+') doesn\'t match the Artifact IATA Code ('+ artifact.Internal_ID__c+').');
+
+						//not required anymore, remove from all places
+						mapRemoteInvocations.remove(artifact.Remote_Invocation__c);
+						remoteInvocationsWithoutArtifcts.remove(artifact.Remote_Invocation__c);
+						remoteInvocationsIdToProcess.remove(ri);	
+					}		
+
 				}else{
 
-					Remote_Invocation__c ri = mapRemoteInvocations.get(artifact.Remote_Invocation__c);
 					ri.addError('Parent account with the IATA code ' + ri.Internal_ID__c + ' is not an IATA Agency.');
 
 					//not required anymore, remove from all places
 					mapRemoteInvocations.remove(artifact.Remote_Invocation__c);
 					remoteInvocationsWithoutArtifcts.remove(artifact.Remote_Invocation__c);
-					remoteInvocationsIdToProcess.remove(ri);
+					remoteInvocationsIdToProcess.remove(ri);	
 				}				
 
 			}else{
 				
-				Remote_Invocation__c ri = mapRemoteInvocations.get(artifact.Remote_Invocation__c);
-				ri.addError('Parent account with the IATA code ' + ri.Internal_ID__c + ' not found .');
+				
+				ri.addError('Parent account with the IATA code ' + ri.Internal_ID__c + ' not found.');
 
 				//not required anymore, remove from all places
 				mapRemoteInvocations.remove(artifact.Remote_Invocation__c);
@@ -71,14 +80,14 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 			}
 		}
 
-			system.debug('## map at end: ' + remoteInvocationsWithoutArtifcts);
-		for(String remoteInvocationIATACode : remoteInvocationsWithoutArtifcts){
-			Remote_Invocation__c ri = mapRemoteInvocations.get(remoteInvocationIATACode);
-			ri.addError('Remote Invocation doesn\'t have a artifact.');
+		system.debug('## map at end: ' + remoteInvocationsWithoutArtifcts);
+		for(String remoteInvocationID : remoteInvocationsWithoutArtifcts){
+			Remote_Invocation__c ri = mapRemoteInvocations.get(remoteInvocationID);
+			ri.addError('Remote Invocation (' + ri.Internal_ID__c + ') doesn\'t have a artifact.');
 
 			//not required anymore, remove from all places
-			mapRemoteInvocations.remove(remoteInvocationIATACode);
-			remoteInvocationsWithoutArtifcts.remove(remoteInvocationIATACode);
+			mapRemoteInvocations.remove(remoteInvocationID);
+			remoteInvocationsWithoutArtifcts.remove(remoteInvocationID);
 			remoteInvocationsIdToProcess.remove(ri);
 		}
 	}
@@ -123,14 +132,14 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 				artifact.Request_Result__c = 'Failed';
 				
 				//mark parent with error
-				mapRemoteInvocations.get(artifact.Internal_ID__c).Status__c = 'Failed';
-				mapRemoteInvocations.get(artifact.Internal_ID__c).Status_detail__c = e.getMessage();
-				requestsToUpdate.add(mapRemoteInvocations.get(artifact.Internal_ID__c));
+				mapRemoteInvocations.get(artifact.Remote_Invocation__c).Status__c = 'Failed';
+				mapRemoteInvocations.get(artifact.Remote_Invocation__c).Status_detail__c = e.getMessage();
+				requestsToUpdate.add(mapRemoteInvocations.get(artifact.Remote_Invocation__c));
 				//status details should be filled with error description but...
 				
 				artifactRequestsToUpdate.add(artifact);
 				mapRemoteInvocationArtifacts.remove(artifact.Internal_Id__c);
-			}
+			}	
 		}
 
 		/*After processing all OSCAR's, the mapRemoteInvocationArtifacts should be empty 
@@ -145,10 +154,10 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 				mapRemoteInvocationArtifacts.remove(artifact.Internal_Id__c);
 				
 				//mark parent with error
-				mapRemoteInvocations.get(artifact.Internal_ID__c).Status__c = 'Failed';
-				mapRemoteInvocations.get(artifact.Internal_ID__c).Status_detail__c = 'Unknown Error occurred';
+				mapRemoteInvocations.get(artifact.Remote_Invocation__c).Status__c = 'Failed';
+				mapRemoteInvocations.get(artifact.Remote_Invocation__c).Status_detail__c = 'Unknown Error occurred';
 				//status details should be filled with error description but...
-				requestsToUpdate.add(mapRemoteInvocations.get(artifact.Internal_ID__c));
+				requestsToUpdate.add(mapRemoteInvocations.get(artifact.Remote_Invocation__c));
 
 			}
 		}
