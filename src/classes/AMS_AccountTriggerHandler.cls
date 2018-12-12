@@ -1,5 +1,5 @@
 public class AMS_AccountTriggerHandler {
-    
+
     public static Set<String> minorChangesAccountFields = new Set<String> {
                 'phone',
                 'fax',
@@ -22,14 +22,27 @@ public class AMS_AccountTriggerHandler {
     public static Integer runningVCU = 0;
 
     public static void handleBeforeInsert(List<Account> accs){
+    	System.debug('[AMS_AccountTriggerHandler] Before Insert');
         Set<String> disallowedSources = new Set<String>();
         disallowedSources.add('AIMS1');
         disallowedSources.add('AIMS2');
         disallowedSources.add('AIMS3');
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
-
+        
+        List<Id> parentIds = new List<Id>();
+        for(Account ac: accs){
+        	if((ac.Location_Type__c == 'AE' || ac.Location_Type__c == 'HE') && (ac.Location_Class__c == 'P' || ac.Location_Class__c == 'D'))
+        		parentIds.add(ac.ParentId);
+        }
+        System.debug('[AMS_AccountTriggerHandler]parentIds: ' + parentIds);
+        List<Account> accList = [select id, name, Top_Parent__c, ParentId, Location_Type__c, Location_Class__c, IATA_ISO_Country__c, ANG_IsNewGenAgency__c from account where (ParentId in :parentIds OR Id in :parentIds) AND ANG_IsNewGenAgency__c = true AND (Top_Parent__r.Location_Type__c = 'GE' OR Location_Type__c = 'GE')];
+        System.debug('[AMS_AccountTriggerHandler]accList: ' + accList);
+		Map<Id,List<Account>> accMap = new Map<Id,List<Account>>();
+        accMap = accountMapBuild(accList);
+        System.debug('[AMS_AccountTriggerHandler]Map: ' + accMap);
         for(Account ag : accs){
+        	System.debug('[AMS_AccountTriggerHandler]ag: ' + ag);
             if(!disallowedSources.contains(ag.Source_System__c)){
                 if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
                     setCassNumberOnHO(ag);
@@ -38,6 +51,32 @@ public class AMS_AccountTriggerHandler {
                         ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
                     }
                 }
+            }
+            
+            //NEWGEN-4815
+            System.debug('[AMS_AccountTriggerHandler] if(accMap.containsKey(ag.ParentId)): '+ accMap.containsKey(ag.ParentId));
+            if(accMap.containsKey(ag.ParentId)){    
+            	System.debug('[AMS_AccountTriggerHandler] ag.Location_Type__c =  ' + ag.Location_Type__c);
+            	//SENAIO 1
+            	if(ag.Location_Type__c == 'HE'){
+            		for(Account a1: accMap.get(ag.ParentId))
+            			if(a1.Location_Type__c == 'HE' && a1.id != ag.Id && a1.IATA_ISO_Country__c == ag.IATA_ISO_Country__c)
+            				ag.addError('The BSP is already in the multicountry hierarchy, the new agency can only be an AE in that BSP');
+            	}
+            	//SENARIO 2
+            	else if(ag.Location_Type__c == 'AE'){
+            		System.debug('[AMS_AccountTriggerHandler] Is inside else');
+            		boolean hasHE = false;
+            		
+            		for(Account a2: accMap.get(ag.ParentId)){
+            			System.debug('[AMS_AccountTriggerHandler]a2.IATA_ISO_Country__c = ' +a2.IATA_ISO_Country__c);
+            			System.debug('[AMS_AccountTriggerHandler]ag.IATA_ISO_Country__c = ' +ag.IATA_ISO_Country__c);
+            			if((a2.Location_Type__c == 'HE' || a2.Location_Type__c == 'GE') && a2.IATA_ISO_Country__c == ag.IATA_ISO_Country__c)
+            				hasHE = true;
+            		}
+            		if(!hasHE)
+            			ag.addError('The BSP is not in the multicountry hierarchy yet, the new agency can only be an HE in that BSP');
+            	}
             }
         }
     }
@@ -535,5 +574,22 @@ public class AMS_AccountTriggerHandler {
             update certs;
         }
     }
-
+    
+    private static Map<Id,List<Account>> accountMapBuild(List<Account> accList){
+    	Map<Id,List<Account>> toReturn = new Map<Id,List<Account>>();
+    	List<Account> children;
+    	
+    	for(Account dad :accList){
+    		children = new List<Account>();
+    		for(Account child: accList){
+    			
+    			if(child.ParentId == dad.id)
+    				children.add(child);
+    		}
+    		if(!children.isEmpty())
+    			toReturn.put(dad.Id,children);
+    	}
+    	 	
+    	return toReturn;
+    }
 }
