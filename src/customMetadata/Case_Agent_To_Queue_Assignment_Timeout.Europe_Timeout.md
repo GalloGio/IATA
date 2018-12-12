@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Timeout_In_Minutes__c</field>
-        <value xsi:type="xsd:double">2.0</value>
+        <value xsi:type="xsd:double">120.0</value>
     </values>
 </CustomMetadata>

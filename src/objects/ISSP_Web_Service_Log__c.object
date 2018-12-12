@@ -454,43 +454,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Today_s_logs</fullName>
-        <booleanFilter>1 AND 2 AND 3</booleanFilter>
-        <columns>NAME</columns>
-        <columns>OBJECT_ID</columns>
-        <columns>Contact__c</columns>
-        <columns>Error_Code__c</columns>
-        <columns>Error_Message__c</columns>
-        <columns>Finished__c</columns>
-        <columns>Input_Description__c</columns>
-        <columns>Login_Ip__c</columns>
-        <columns>Method__c</columns>
-        <columns>Started__c</columns>
-        <columns>Success__c</columns>
-        <columns>System__c</columns>
-        <columns>Web_Service__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Error_Code__c</field>
-            <operation>equals</operation>
-            <value>Exception sending request</value>
-        </filters>
-        <filters>
-            <field>Success__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>greaterThan</operation>
-            <value>11/9/2018 12:00 AM</value>
-        </filters>
-        <label>Today&apos;s logs</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>X05_07_2018_logs</fullName>
         <booleanFilter>1 AND 2 and 3</booleanFilter>
         <columns>NAME</columns>

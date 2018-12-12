@@ -1241,6 +1241,10 @@
         <name>Acceptance_date</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account --></label>
+        <name>Account</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Account Invoicing Collection Cases Report ID --></label>
         <name>Account_Invoicing_Collection_Cases_Report_ID</name>
     </customLabels>
@@ -1263,6 +1267,14 @@
     <customLabels>
         <label><!-- AddToCart --></label>
         <name>AddToCart</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add an attachment --></label>
+        <name>Add_an_attachment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add_attachment_Action --></label>
+        <name>Add_attachment_Action</name>
     </customLabels>
     <customLabels>
         <label><!-- Add campaign member error --></label>
@@ -2155,6 +2167,14 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Documents POP --></label>
+        <name>Documents_POP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Done --></label>
+        <name>Done</name>
     </customLabels>
     <customLabels>
         <label><!-- Download Invoice --></label>
@@ -3419,6 +3439,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- ICCS will replace Label --></label>
         <name>ICCS_will_replace_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICE_POP_Sidra_Msg --></label>
+        <name>ICE_POP_Sidra_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- ICE Portal Service --></label>
@@ -11286,6 +11310,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Fill_Profile_Fields</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Filter By Product Type --></label>
+        <name>ISSP_Filter_By_Product_Type</name>
+    </customLabels>
+    <customLabels>
         <label>Filtro per Paese/Territorio</label>
         <name>ISSP_Filter_by_Country</name>
     </customLabels>
@@ -11304,6 +11332,26 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>Filtrare a seconda del tipo di partecipazione</label>
         <name>ISSP_Filter_by_Type_Of_Participation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <name>ISSP_Financial_Securities_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <name>ISSP_Financial_Securities_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <name>ISSP_Financial_Securities_Summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
         <label>Grazie per inviarci i complimenti</label>
@@ -12258,6 +12306,10 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
         <name>ISSP_Ongoing_TIP_Requests</name>
     </customLabels>
     <customLabels>
+        <label>Portami al caso</label>
+        <name>ISSP_OpenCase</name>
+    </customLabels>
+    <customLabels>
         <label>Calendario Operazioni</label>
         <name>ISSP_OperationalCalendar</name>
     </customLabels>
@@ -12278,7 +12330,7 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
         <name>ISSP_OperationalCalendar_CountryFilter</name>
     </customLabels>
     <customLabels>
-        <label>Per favore, selezioni un valore nel filtro &quot;Paese&quot;</label>
+        <label>Per favore, selezioni un valore nel filtro Paese</label>
         <name>ISSP_OperationalCalendar_Country_Filter_Required</name>
     </customLabels>
     <customLabels>
@@ -13263,6 +13315,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Showing_total_records</name>
     </customLabels>
     <customLabels>
+        <label>La informiamo che c’e un pagamento che risulta in attesa. La invitiamo ad inviarci la prova del pagamento effettuato cosi da evitare eventuali conseguenze verso la sua Agenzia.</label>
+        <name>ISSP_SidraPopMessage</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
         <name>ISSP_Simplified_Interline_Settlement</name>
     </customLabels>
@@ -13642,6 +13698,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label>Come possiamo essere d&apos;aiuto?</label>
         <name>ISSP_TopicsAndArticlesTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Topics To Exclude Country PL --></label>
+        <name>ISSP_Topics_To_Exclude_Country_PL</name>
     </customLabels>
     <customLabels>
         <label><!-- Tracking ID Google Analitycs --></label>
@@ -14874,6 +14934,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- OneId_FRED_ContactUs_Link --></label>
         <name>OneId_FRED_ContactUs_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
+        <name>OneId_FRED_Missing_Mandatory_Fields</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
@@ -16125,6 +16189,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- Payment number --></label>
         <name>Payment_number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Period --></label>
+        <name>Period</name>
     </customLabels>
     <customLabels>
         <label><!-- Personal information --></label>
