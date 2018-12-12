@@ -6,14 +6,6 @@ public class ANG_RiskEventTriggerHandler {
 	public Map<Id, ANG_Agency_Risk_Event__c> newMap = (Map<Id,ANG_Agency_Risk_Event__c>) Trigger.newMap;
 	public Map<Id, ANG_Agency_Risk_Event__c> oldMap = (Map<Id,ANG_Agency_Risk_Event__c>) Trigger.oldMap;
 
-    public static Boolean skipassessRisk{
-        get{
-            if(skipassessRisk == null) skipassessRisk = false;
-            return skipassessRisk;
-        }
-        set;
-    }
-
 	// ************************************************************
 	// ****************** distribution methods ********************
 	// ************************************************************
@@ -80,9 +72,9 @@ public class ANG_RiskEventTriggerHandler {
     }
 
     private void assessRisk() {
-
-        if(skipassessRisk) return;
-        skipassessRisk = true;
+        // we don't need to run this method for multiple risk events (created from the original risk event)
+        // because it will run at the end, for the original/first risk event created 
+        if(ANG_RiskEventGenerator.skipMultipleGeneration) return;
         
         Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
         for(ANG_Agency_Risk_Event__c re : triggerNew){  
