@@ -26,6 +26,17 @@ Timeout denotes how long the batch job waits until it ignores the agent as logge
         <unique>false</unique>
     </fields>
     <label>Agent2Queue Region Assignment Timeout</label>
+    <listViews>
+        <fullName>All_Custom</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>NamespacePrefix</columns>
+        <columns>Region__c</columns>
+        <columns>Timeout_In_Minutes__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All - Custom</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>Agent2Queue Region Assignment Timeouts</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>

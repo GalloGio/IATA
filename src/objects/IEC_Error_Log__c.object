@@ -393,17 +393,17 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>greaterThan</operation>
-            <value>7/13/2018 3:31 PM</value>
+            <value>12/6/2018 12:01 AM</value>
         </filters>
         <filters>
             <field>CREATED_DATE</field>
             <operation>lessOrEqual</operation>
-            <value>7/13/2018 11:31 PM</value>
+            <value>12/6/2018 11:59 PM</value>
         </filters>
         <filters>
             <field>Source__c</field>
             <operation>contains</operation>
-            <value>SAP</value>
+            <value>sap</value>
         </filters>
         <label>e-commerce</label>
         <language>en_US</language>
