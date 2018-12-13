@@ -10013,38 +10013,6 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
             </valueSetDefinition>
         </valueSet>
     </fields>
-     <fields>
-        <fullName>Give_SIS_Membership__c</fullName>
-        <description>Allow ISS portal users under this account to access to Join SIS e-Invoicing application</description>
-        <externalId>false</externalId>
-        <label>Give SIS Membership</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>MultiselectPicklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>ISPA</fullName>
-                    <default>false</default>
-                    <label>ISPA</label>
-                </value>
-                <value>
-                    <fullName>ISUA</fullName>
-                    <default>false</default>
-                    <label>ISUA</label>
-                </value>
-                <value>
-                    <fullName>TOU</fullName>
-                    <default>false</default>
-                    <label>TOU</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-        <visibleLines>3</visibleLines>
-    </fields>
     <fields>
         <fullName>GDP_Location_Type__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -10235,6 +10203,38 @@ WSPN-Worldspan</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Give_SIS_Membership__c</fullName>
+        <description>Allow ISS portal users under this account to access to Join SIS e-Invoicing application</description>
+        <externalId>false</externalId>
+        <label>Give SIS Membership</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ISPA</fullName>
+                    <default>false</default>
+                    <label>ISPA</label>
+                </value>
+                <value>
+                    <fullName>ISUA</fullName>
+                    <default>false</default>
+                    <label>ISUA</label>
+                </value>
+                <value>
+                    <fullName>TOU</fullName>
+                    <default>false</default>
+                    <label>TOU</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Guaranteed_amount__c</fullName>
@@ -30351,21 +30351,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
         </picklistValues>
-         <picklistValues>
-            <picklist>Give_SIS_Membership__c</picklist>
-            <values>
-                <fullName>ISPA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ISUA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOU</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
@@ -30441,6 +30426,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36639,21 +36639,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
         </picklistValues>
-         <picklistValues>
-            <picklist>Give_SIS_Membership__c</picklist>
-            <values>
-                <fullName>ISPA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ISUA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOU</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
@@ -36729,6 +36714,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42708,6 +42708,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Customer_Type__c</picklist>
             <values>
                 <fullName>Accredited Training Center %28ATC%29</fullName>
@@ -42988,21 +43007,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
         </picklistValues>
-         <picklistValues>
-            <picklist>Give_SIS_Membership__c</picklist>
-            <values>
-                <fullName>ISPA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ISUA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOU</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
@@ -43078,6 +43082,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48752,6 +48771,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Customer_Type__c</picklist>
             <values>
                 <fullName>CNS</fullName>
@@ -48996,21 +49034,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
         </picklistValues>
-         <picklistValues>
-            <picklist>Give_SIS_Membership__c</picklist>
-            <values>
-                <fullName>ISPA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ISUA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOU</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
@@ -49090,6 +49113,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57063,21 +57101,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
         </picklistValues>
-         <picklistValues>
-            <picklist>Give_SIS_Membership__c</picklist>
-            <values>
-                <fullName>ISPA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ISUA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOU</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
@@ -57157,6 +57180,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -66476,21 +66514,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
         </picklistValues>
-         <picklistValues>
-            <picklist>Give_SIS_Membership__c</picklist>
-            <values>
-                <fullName>ISPA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ISUA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOU</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
@@ -66570,6 +66593,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73691,6 +73729,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Customer_Type__c</picklist>
             <values>
                 <fullName>Accredited Training Center %28ATC%29</fullName>
@@ -73964,6 +74021,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -79934,21 +80006,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
         </picklistValues>
-         <picklistValues>
-            <picklist>Give_SIS_Membership__c</picklist>
-            <values>
-                <fullName>ISPA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ISUA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOU</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
@@ -80024,6 +80081,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -88101,21 +88173,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
         </picklistValues>
-         <picklistValues>
-            <picklist>Give_SIS_Membership__c</picklist>
-            <values>
-                <fullName>ISPA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ISUA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TOU</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>GDS__c</picklist>
             <values>
@@ -88195,6 +88252,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
