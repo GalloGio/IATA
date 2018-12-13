@@ -336,7 +336,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = 'none';
 
+		ctrl.createAgencyContact();
 
+		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = '';
 		ctrl.createAgencyContact();
 
 		ctrl.currentAccount.newContact.First_name__c = '╗';
@@ -356,6 +358,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.validateCharactersInPersonWindow();
 
 		ctrl.createAgencyContact();
+		ctrl.validateCharactersInCompanyWindow();
+
+		ctrl.currentAccount.newContact.Registration_number__c = '╗';
 		ctrl.validateCharactersInCompanyWindow();
 
 		ctrl.contactType = 'Company';
@@ -403,6 +408,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.deleteAgencyContact();
 		ctrl.fetchAgentDetails();
 		ctrl.iatacode = '87654321';
+		ctrl.fetchAgentDetails();
+		ctrl.isAddCompanyModal = true;
+		ctrl.iatacode = '22335408';
 		ctrl.fetchAgentDetails();
 		ctrl.iatacode = '12345678';
 		ctrl.fetchAgentDetails();
@@ -694,7 +702,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', 
-                                    Region__c = 'Europe', ANG_Enable_NewGen__c = true );
+                                    Region__c = 'Europe', ANG_Enable_NewGen__c = true, Informatica_Value__c = 'test');
 		insert country;
 
         Account account = ISSP_ObjectFactory.createNewAccount();

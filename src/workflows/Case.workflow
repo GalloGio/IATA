@@ -15147,6 +15147,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Update_AIMS_DEF__c</field>
             <operation>equals</operation>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.Outs_Amount_equals_IATA_charges__c</field>
+            <operation>equals</operation>
+            <value>NO</value>
+        </criteriaItems>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
