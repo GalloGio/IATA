@@ -2996,7 +2996,7 @@ public without sharing class ISSP_AMS_Accreditation {
             return goToStep4();
         }
         
-        if (!newform.Accept_terms_and_conditions__c && !isocountry.Multicountry_Enabled__c) {
+        if (!newform.Accept_terms_and_conditions__c && !isMultiCountry) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
             return null;
         }
@@ -3152,7 +3152,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             SYSTEM.DEBUG('accountId for OSCAR: ' + accountId);
 
-            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID)
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && !isMultiCountry)
                 OSCARIntegration(accountId, newForm.Id, typeOfProcess, newCase.Id);
             //startRecordCreatorWS(hqAccount.Id, newCase.Id, newForm.Id,sector,con.Account.IATA_ISO_Country__r.ISO_Code__c,applyLanguage,iatacode,UserInfo.getSessionId());
 
@@ -3172,6 +3172,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (isNoticeOfChange)
                 return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=Final' + commParam);
+
+            if (isMultiCountry)
+                return new PageReference('/ISSP_AMSCases');
 
             return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
         } catch (DmlException ex) {
