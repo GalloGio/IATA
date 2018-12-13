@@ -92,11 +92,9 @@ private class AMS_AccountTriggerHandlerTest {
 
 		insert hierarchiesToInsert;
 
-
 		AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc2.id,Parent_Account__c=acc1.id);
 		AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc3.id,Parent_Account__c=acc1.id);
 		AMS_Agencies_relationhip__c ar3 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc4.id,Parent_Account__c=acc1.id);
-
 
 		AMS_Agencies_relationhip__c ar1d = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=acc2d.id,Parent_Account__c=acc1d.id);
 		AMS_Agencies_relationhip__c ar2d = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=acc3d.id,Parent_Account__c=acc1d.id);
@@ -114,7 +112,6 @@ private class AMS_AccountTriggerHandlerTest {
 
 		insert rels;
 	}
-
 
 	@isTest static void verifychangeCassNumberError() {
 		
@@ -148,8 +145,6 @@ private class AMS_AccountTriggerHandlerTest {
 				System.debug('The Account name '+ acc.Name + ' does not have parent id ');
 			}
 		}
-
-	   
 
 		if(!accountListToUpdate.isEmpty()){
 			try{
@@ -198,8 +193,6 @@ private class AMS_AccountTriggerHandlerTest {
 			}
 		}
 
-		
-
 		if(!accountListToUpdate.isEmpty()){
 			update accountListToUpdate;
 		}
@@ -209,7 +202,6 @@ private class AMS_AccountTriggerHandlerTest {
 		
 		Test.StopTest();
 	}
-
 
 	//Test the trigger trgAccount
 	static testMethod void test_trgAccount() {
@@ -353,4 +345,76 @@ private class AMS_AccountTriggerHandlerTest {
 		Boolean bool = AMS_AccountTriggerHandler.verifyFieldChanges(account, account2);
 	}
 	
+	static testMethod void test_MulticountryValidations() {
+        
+        IATA_ISO_Country__c country1 = new IATA_ISO_Country__c(
+			Name = 'Test Country',
+			ISO_Code__c = 'TC',
+			AIMS_Area_Name__c = 'Test City',
+			OSCAR_enabled__c = true,
+			Multicountry_Enabled__c = true,
+            ANG_Enable_NewGen__c = true
+		);
+        
+        insert country1;
+        
+        Account topGEParent = new Account(name = 'trigger GE',
+                                          IATA_ISO_Country__c = country1.Id,
+                                          Location_Type__c = 'GE',
+                                          Location_Class__c = 'P',
+                                          ANG_Accreditation_Model__c = 'Multicountry');
+        insert topGEParent;
+        
+        Account HECountry = new Account(name = 'trigger HE1',
+                                          IATA_ISO_Country__c = country1.Id,
+                                          Location_Type__c = 'HE',
+                                          Location_Class__c = 'P',
+                                          ANG_Accreditation_Model__c = 'Multicountry',
+                                          ParentId = topGEParent.Id);
+        insert HECountry;
+        
+        Account HESameCountry = new Account(name = 'Validation trigger same HE',
+                                          IATA_ISO_Country__c = country1.Id,
+                                          Location_Type__c = 'HE',
+                                          Location_Class__c = 'P',
+                                          ANG_Accreditation_Model__c = 'Multicountry',
+                                          ParentId = topGEParent.Id);
+        
+        try{        
+        	insert HESameCountry;
+        }
+        catch(Exception e){
+        
+        	Boolean expectedExceptionThrown =  e.getMessage().contains('The BSP is already in the multicountry hierarchy, the new agency can only be an AE in that BSP') ? true : false;
+        
+        	System.AssertEquals(expectedExceptionThrown, true);
+		} 
+        
+        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(
+			Name = 'Test Country 2',
+			ISO_Code__c = 'ZZ',
+			AIMS_Area_Name__c = 'Test City2',
+			OSCAR_enabled__c = true,
+			Multicountry_Enabled__c = true,
+            ANG_Enable_NewGen__c = true
+		);
+        
+        insert country2;
+        
+        Account AECountry = new Account(name = 'Validation trigger AE with no HE',
+                                          IATA_ISO_Country__c = country2.Id,
+                                          Location_Type__c = 'AE',
+                                          Location_Class__c = 'P',
+                                          ANG_Accreditation_Model__c = 'Multicountry',
+                                          ParentId = topGEParent.Id);
+        try{       
+        	insert AECountry;
+        }
+        catch(Exception e){
+        
+        	Boolean expectedExceptionThrown =  e.getMessage().contains('The BSP is not in the multicountry hierarchy yet, the new agency can only be an HE in that BSP') ? true : false;
+        
+        	System.AssertEquals(expectedExceptionThrown, true);
+		} 
+    }
 }
