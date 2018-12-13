@@ -93920,7 +93920,7 @@ ISCHANGED(IATA_ISO_Country__c),
 ISCHANGED(RecordTypeId))
 ,
 NOT
-(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;Restricted Profile - automated process&quot;))
+(CONTAINS($Profile.Name, &quot;System Administrator&quot;) || CONTAINS($Profile.Name, &quot;Restricted Profile - automated process&quot;))
 )</errorConditionFormula>
         <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>

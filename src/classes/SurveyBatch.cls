@@ -175,7 +175,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     system.debug(LoggingLevel.error, '##### lstCaseIds.size() = ' + lstCaseIds.size());
 
-    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name
+    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name, Reason1__c
                                FROM Case
                                WHERE Id IN :lstCaseIds
                                AND RecordType.DeveloperName IN :lstRecordTypesInScope]);

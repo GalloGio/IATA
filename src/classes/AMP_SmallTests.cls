@@ -36,8 +36,8 @@ private class AMP_SmallTests {
 		testContact.Email = 'testLastname@test.ts';
 		testContact.Title = 'test Title';
 		testContact.AccountId = a.Id;
-		testContact.Function__c = 'testFunction';
-		testContact.Membership_Function__c = 'testFunction';
+		testContact.Function__c = 'Aeropolitical';
+		testContact.Membership_Function__c = 'Aeropolitical';
 		insert testContact;
 
 		testContact.Membership_Function__c = '';

@@ -12,7 +12,7 @@ public class OneIdForgotPasswordControllerTest {
         Account a = new Account (name= 'New TAP Account');
         upsert a;
 
-        Contact con = new Contact ( accountid = a.id, FirstName = 'Test'  , LastName = 'TES' , Phone = 'phone' , Fax = 'fax', Title='jobtitle', Membership_Function__c = 'functionpick', Preferred_Language__c='preferredlanguage', email='qqqqtest@test.com');
+        Contact con = new Contact ( accountid = a.id, FirstName = 'Test'  , LastName = 'TES' , Phone = 'phone' , Fax = 'fax', Title='jobtitle', Membership_Function__c = 'Aeropolitical', Preferred_Language__c='preferredlanguage', email='qqqqtest@test.com');
         upsert con;
 
 

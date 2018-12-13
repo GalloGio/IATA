@@ -3617,6 +3617,7 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
         <valueSet>
+            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
@@ -7105,6 +7106,7 @@ IFAP Application.</description>
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <valueSet>
+            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
@@ -8609,6 +8611,7 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <trackHistory>false</trackHistory>
         <type>MultiselectPicklist</type>
         <valueSet>
+            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>

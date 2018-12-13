@@ -818,7 +818,7 @@ Object used to store objectives that can be independent, related to other object
     <fields>
         <fullName>Benefits_to_Account__c</fullName>
         <externalId>false</externalId>
-        <label>Benefits to Account</label>
+        <label>Comment</label>
         <length>1024</length>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
