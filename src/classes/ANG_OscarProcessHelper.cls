@@ -623,7 +623,7 @@ global class ANG_OscarProcessHelper {
 
 			changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeId, theOSCAR.ANG_Type_Of_Change__c, accnt.Status__c, activeChangeCode, null);
 			changeCodesList.add(changeCode);
-			oscars.add(null);
+			oscars.add(theOSCAR);
 		}
 
 		AMS_ChangeCodesHelper.createAAChangeCodes(changeCodesList, oscars, new List<Account>(targetAccounts), true);
