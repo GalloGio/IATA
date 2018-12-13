@@ -28294,63 +28294,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
-            <picklist>Clearance_level__c</picklist>
-            <values>
-                <fullName>Level 1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Level 2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Level 3</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Level 4</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Clearance_level__c</picklist>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>4</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Clearance_level__c</picklist>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>4</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
         <fullName>IATA_Agency</fullName>
         <active>true</active>
         <description>The new record type for ALL Agencies with NEW data model - Use this for all Agencies</description>
