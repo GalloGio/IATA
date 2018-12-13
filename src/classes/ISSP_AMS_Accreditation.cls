@@ -260,6 +260,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         private set;
     }
+    public Boolean isMultiCountry {get; private set;}
 
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -287,6 +288,7 @@ public without sharing class ISSP_AMS_Accreditation {
         namEnabled = false;
         cntIFAPContacts = 0;
         isAuthorizedSignature = false;
+        isMultiCountry = false;
 
         newCase = new Case();
         newForm = new AMS_Pax_Accreditation_Form__c();
@@ -516,6 +518,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
                     lblStepE = Label.ISSP_AMS_Step5_ProgressBar_Validate_Data;
+                    isMultiCountry = true;
                 }
 
                 if(amsOfficeType == AMS_Utils.HO && isHOAccredited && newCase.Reason1__c != AMS_Utils.CASE_REASON_BR_ABROAD)
@@ -1369,7 +1372,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if(ISSP_Utilities.isCNS()){ newCase.CNSCase__c=true;}
 
-            if (amsLocationType.contains('GoGlobal')) lblStepE = Label.ISSP_AMS_Step5_ProgressBar_Validate_Data;
+            if (amsLocationType.contains('GoGlobal')) {
+                lblStepE = Label.ISSP_AMS_Step5_ProgressBar_Validate_Data;
+                isMultiCountry = true;
+            } 
 
             agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
 
@@ -2990,7 +2996,7 @@ public without sharing class ISSP_AMS_Accreditation {
             return goToStep4();
         }
         
-        if (!newform.Accept_terms_and_conditions__c && !isocountry.Multicountry_Enabled__c) {
+        if (!newform.Accept_terms_and_conditions__c && !isMultiCountry) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Accept_TOS));
             return null;
         }
@@ -3146,7 +3152,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             SYSTEM.DEBUG('accountId for OSCAR: ' + accountId);
 
-            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID)
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID && !isMultiCountry)
                 OSCARIntegration(accountId, newForm.Id, typeOfProcess, newCase.Id);
             //startRecordCreatorWS(hqAccount.Id, newCase.Id, newForm.Id,sector,con.Account.IATA_ISO_Country__r.ISO_Code__c,applyLanguage,iatacode,UserInfo.getSessionId());
 
@@ -3166,6 +3172,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (isNoticeOfChange)
                 return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=Final' + commParam);
+
+            if (isMultiCountry)
+                return new PageReference('/ISSP_AMSCases');
 
             return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
         } catch (DmlException ex) {

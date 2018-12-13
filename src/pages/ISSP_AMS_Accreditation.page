@@ -961,12 +961,12 @@
                     <apex:actionStatus id="buttonLoadingStep5PAX">
                     <apex:facet name="stop"><apex:outputPanel >
                     <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
+                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
                     <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5PAX"/>
                         </apex:outputPanel></apex:facet>
                     <apex:facet name="start"><apex:outputPanel >
                     <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
+                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true"/>
                     <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
                          </apex:outputPanel></apex:facet>
                     </apex:actionStatus>
@@ -1003,12 +1003,12 @@
         <apex:actionStatus id="buttonLoadingStep5CGO">
              <apex:facet name="stop"><apex:outputPanel >
             <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5CGO"/>
-            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5CGO" reRender="CGOForm"/>
+            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}" status="buttonLoadingStep5CGO" reRender="CGOForm"/>
             <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5CGO"/>
             </apex:outputPanel></apex:facet>
             <apex:facet name="start"><apex:outputPanel >
            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
-            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
+            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true"/>
             <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
            </apex:outputPanel></apex:facet>
           </apex:actionStatus>
