@@ -1,12 +1,15 @@
 public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocationINT{
 
 	private static Map<ID,Remote_Invocation_Artefact__c> artifactsWithParents;
-
 	private static Map<string,Account> mapIATACodeAccs;
+
+	private static Financial_Institution__c dfltFI;
+	private static pricebook2 pb;
+	private static PricebookEntry pbe;
 
 	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 
-		list<Remote_Invocation__c> remoteInvocationsGDI = new List<Remote_Invocation__c>();
+		Set<Remote_Invocation__c> remoteInvocationsGDI = new Set<Remote_Invocation__c>();
 
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess)
 			if(ri.Request_Type__c == 'GDI')	remoteInvocationsGDI.add(ri);
@@ -84,31 +87,80 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 	public void doProcess(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 		
 		list<Remote_Invocation__c> remoteInvocationsGDI = new List<Remote_Invocation__c>();
-
+		
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess)
 			if(ri.Request_Type__c == 'GDI') remoteInvocationsGDI.add(ri);	
 
 		if(remoteInvocationsGDI.isEmpty()) return;
+
+		//We have data, lets start processing...
+
+		Map<String,AMS_Oscar__c> mapIATACodeOSCARs = new Map<String,AMS_OSCAR__c>();
+		Map<String,Opportunity> opportunitiesMap = new Map<String,Opportunity>(); //key -> iata code
+		Map<String,Financial_Security__c> financialSecuritiesMap = new Map<String,Financial_Security__c>(); //key -> iata code
+		Set<ID> oscarIDs = new Set<ID>(); //used to fetch the opportunities
+
+		//Opportunities to update
+		List<Opportunity> updatedOpportunities = new List<Opportunity>();
+		//the new Staging Financial Securities to be inserted
+		List<Opportunitylineitem> stagingFSs = new List<Opportunitylineitem>();
 		
 
 
+		dfltFI = [Select id from Financial_Institution__c where name = 'GDI - Euler Hermes'];
+		pb = [select id from pricebook2 where name = 'NewGen Generic'];
+		pbe = [select id,unitprice,product2id,product2.name from pricebookentry where pricebook2id = :pb.id limit 1];
+
+
+
+		//fetch and store OSCARS by iata code (FALTA VALIDAR PELA POIA DO TIPO GDI)
+		
+		for (AMS_OSCAR__c oscar : [SELECT ID, name, Account__r.IATACode__c FROM AMS_OSCAR__c WHERE Account__c IN :mapIATACodeAccs.values() ]){
+			mapIATACodeOSCARs.put(oscar.Account__r.IATACode__c, oscar);
+			oscarIDs.add(oscar.id);
+		}
+
+        //fetch and store opportunities by iata code
+        for (Opportunity opp : [SELECT Id, currencyIsoCode, Account.Region_formula__c, Account.IATACode__c FROM Opportunity WHERE Related_Oscar__c IN :oscarIDs]){
+			opportunitiesMap.put(opp.Account.IATACode__c, opp);
+		}
+		
+		//List<Financial_Security__c> fsList = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
+		for (Financial_Security__c fs : [SELECT Id, Amount__c, Security_Type__c,Reception_Case__c FROM Financial_Security__c WHERE Account__r.IATACode__c IN :mapIATACodeOSCARs.keyset() AND Security_Type__c = 'GDI' AND Security_Status__c IN ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1]){
+			financialSecuritiesMap.put(fs.Account__.IATACode__c, fs);
+		}
+		
+
+
+		//and finally lets start creating staging areas
+		for(Remote_Invocation__c ri : remoteInvocationsGDI){
+
+			AMS_OSCAR__c oscar = mapIATACodeOSCARs.get(ri.Internal_ID__c);
+			Opportunity opp = opportunitiesMap.get(ri.Internal_ID__c);
+			Financial_Security__c fs = financialSecuritiesMap.get(ri.Internal_ID__c);
+
+			//if tenho que mudar a cena na opportunidade
+
+
+			stagingFSs.add(createStagingArea(oscar,ri,opp,fs));
+		}
+
+		update updatedOpportunities;
+		insert stagingFSs;
 	}
 
-	public Opportunitylineitem createStagingArea(AMS_Oscar__c oscar, Remote_Invocation__c ri){
+	//aqui vai ter que receber a oportunidade e o financial security
+	public Opportunitylineitem createStagingArea(AMS_Oscar__c oscar, Remote_Invocation__c ri, Opportunity opp, Financial_Security__c fsList){
 	    
 		Opportunitylineitem stagingFs;
 
 		try{
         
-            Opportunity opp = [Select Id, currencyIsoCode, Account.Region_formula__c from Opportunity where Related_Oscar__c = :oscar.Id];
+            //Opportunity opp = [Select Id, currencyIsoCode, Account.Region_formula__c from Opportunity where Related_Oscar__c = :oscar.Id];
             
-            pricebook2 pb = [select id from pricebook2 where name = 'NewGen Generic'];
-            PricebookEntry pbe = [select id,unitprice,product2id,product2.name from pricebookentry where pricebook2id = :pb.id limit 1];
-
 			stagingFs = new Opportunitylineitem();
 
-			List<Financial_Security__c> fsList = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
-			Financial_Institution__c dfltFI = [Select id from Financial_Institution__c where name = 'GDI - Euler Hermes'];
+			//List<Financial_Security__c> fsList = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
 			
             stagingFs.OpportunityId = opp.Id;
             stagingFs.OSCAR_GDI__c = oscar.Id;
@@ -116,7 +168,7 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
             stagingFs.Security_Status__c = 'Draft';
             stagingFs.Reception_Case__c = oscar.Oscar_Communication_Case_Id__c;
 
-            if(!fsList.isEmpty()) stagingFs.Financial_Security__c = fsList.get(0).Id;
+            if(fsList != null) stagingFs.Financial_Security__c = fsList.Id;
             
             stagingFs.Quantity = 1;
             stagingFs.Region__c = opp.Account.Region_formula__c;
