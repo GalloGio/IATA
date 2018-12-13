@@ -370,7 +370,14 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION && nbrOfPendingCases > 1){
 					showOnGoingOscarWarning = true;
 				}
+				
 				selectMain();
+				
+				if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
+					selectAll = true;
+					doSelectAll();
+				}
+				
 			}
 			return hierarchy;
 		}
