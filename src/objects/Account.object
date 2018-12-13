@@ -6642,6 +6642,42 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Clearance_level__c</fullName>
+        <description>Clearance level performed on account by due diligence</description>
+        <externalId>false</externalId>
+        <label>Clearance level</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>Level 1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>Level 2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>Level 3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>Level 4</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Collection_Case_Indicator__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Indicates whether there is an open collection case, or if the last collection case was closed with the invoice not paid.</inlineHelpText>
@@ -9282,6 +9318,16 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Date_of_last_clearance__c</fullName>
+        <description>Date due diligence performed last clearance on an account</description>
+        <externalId>false</externalId>
+        <label>Date of last clearance</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Date_of_most_recent_name_change__c</fullName>
         <externalId>false</externalId>
         <label>Date of most recent name change</label>
@@ -9966,6 +10012,38 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+     <fields>
+        <fullName>Give_SIS_Membership__c</fullName>
+        <description>Allow ISS portal users under this account to access to Join SIS e-Invoicing application</description>
+        <externalId>false</externalId>
+        <label>Give SIS Membership</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ISPA</fullName>
+                    <default>false</default>
+                    <label>ISPA</label>
+                </value>
+                <value>
+                    <fullName>ISUA</fullName>
+                    <default>false</default>
+                    <label>ISUA</label>
+                </value>
+                <value>
+                    <fullName>TOU</fullName>
+                    <default>false</default>
+                    <label>TOU</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>GDP_Location_Type__c</fullName>
@@ -28216,6 +28294,63 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>Level 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Level 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Level 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Level 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
         <fullName>IATA_Agency</fullName>
         <active>true</active>
         <description>The new record type for ALL Agencies with NEW data model - Use this for all Agencies</description>
@@ -29908,6 +30043,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -30251,6 +30405,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33878,6 +34047,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </picklistValues>
     </recordTypes>
     <recordTypes>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
         <fullName>IATA_Airline</fullName>
         <active>true</active>
         <compactLayoutAssignment>Simple_Account_name</compactLayoutAssignment>
@@ -35542,6 +35730,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -36505,6 +36712,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -40934,6 +41156,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </picklistValues>
     </recordTypes>
     <recordTypes>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
         <fullName>IATA_Airline_BR</fullName>
         <active>true</active>
         <description>The new record type for ALL Airline Branches with NEW data model - Use this for all Airlines Branches</description>
@@ -42839,6 +43080,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48832,6 +49088,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54854,6 +55125,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -56865,6 +57155,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64241,6 +64546,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -66244,6 +66568,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -79325,6 +79664,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -79668,6 +80026,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -83444,6 +83817,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Termination_Reason__c</picklist>
             <values>
                 <fullName>Cease operations%2Fbankruptcy</fullName>
@@ -85790,6 +86182,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -87801,6 +88212,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+         <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

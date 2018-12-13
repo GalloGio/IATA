@@ -111,6 +111,35 @@ public  class AmazonRest {
             return status.equals('OK');
           }
 
+        public static Boolean uploadFile(AmazonCredentials credential, String fullFileName, String contentType, Blob fileBody){
+            HttpRequest req = new HttpRequest();
+            req.setMethod('PUT');
+            String fullFileNameEncoded = EncodePath(fullFileName);
+            req.setEndpoint(credential.EndpointBaseURL+credential.Bucket+'/'+fullFileNameEncoded);
+            req.setHeader('Cache-Control', 'no-cache');
+            String timestamp = DateTime.now().format('E, d MMM yyyy HH:mm:ss Z');
+            req.setHeader('Authorization',calculePolicy(credential, timestamp, contentType, fullFileNameEncoded));
+            req.setHeader('X-Amz-Date',timestamp);
+            req.setHeader('Content-Type', contentType+';charset=UTF-8');
+            req.setBodyasBlob(fileBody);
+
+            Http http = new Http();
+            String status = !Test.isRunningTest() ? http.send(req).getStatus() : TESTRESULT ;
+
+            return status.equals('OK');
+        }
+
+        private static String calculePolicy(AmazonCredentials credential, String timestamp, String contentType, String fullFileNameEncoded ) {
+            //timestamp = DateTime.now().format('E, d MMM yyyy HH:mm:ss Z');
+            system.debug('@@@timestamp: ' + timestamp);
+            String policyString = 'PUT\n\n'
+                + contentType + ';charset=UTF-8\n\n'
+                + 'x-amz-date:' + timestamp + '\n'
+                + '/'+credential.Bucket+'/'+fullFileNameEncoded;
+            String signedPolicy = AmazonRest.make_sig(policyString, credential);
+            return 'AWS ' + credential.AWSAccessKeyId + ':' + signedPolicy;
+        }
+
         public static string EncodePath(string pathToEncode){
             
             string  stringToSplit = '/'+pathToEncode;   
