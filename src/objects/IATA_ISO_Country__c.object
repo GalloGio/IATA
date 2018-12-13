@@ -2399,6 +2399,18 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Informatica_Value__c</fullName>
+        <description>Country Name returned by the Address Doctor</description>
+        <externalId>false</externalId>
+        <label>Informatica Value</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>International_dialing_code_ISD__c</fullName>
         <externalId>false</externalId>
         <label>International dialing code ISD</label>
