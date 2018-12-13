@@ -33990,25 +33990,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </picklistValues>
     </recordTypes>
     <recordTypes>
-            <picklist>Clearance_level__c</picklist>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>4</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
         <fullName>IATA_Airline</fullName>
         <active>true</active>
         <compactLayoutAssignment>Simple_Account_name</compactLayoutAssignment>
@@ -41099,25 +41080,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </picklistValues>
     </recordTypes>
     <recordTypes>
-            <picklist>Clearance_level__c</picklist>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>4</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
         <fullName>IATA_Airline_BR</fullName>
         <active>true</active>
         <description>The new record type for ALL Airline Branches with NEW data model - Use this for all Airlines Branches</description>
