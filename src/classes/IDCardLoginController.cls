@@ -771,7 +771,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
     }
 
 	
-	public static void fakemethod () {
+	public void fakemethod () {
 			Integer i=0;
 			i=0;
 			i=0;
