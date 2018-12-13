@@ -5,29 +5,36 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 	private static Map<string,Account> mapIATACodeAccs;
 
 	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
-		
-		if(remoteInvocationsIdToProcess.isEmpty())
-			return;
+
+		list<Remote_Invocation__c> remoteInvocationsGDI = new List<Remote_Invocation__c>();
+
+		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess)
+			if(ri.Request_Type__c == 'GDI')	remoteInvocationsGDI.add(ri);
+
+		if(remoteInvocationsGDI.isEmpty()) return;
 
 		artifactsWithParents = new Map<Id,Remote_Invocation_Artefact__c>();
 
 		Map<Id,Remote_Invocation_Artefact__c> artefacts = new Map<ID,Remote_Invocation_Artefact__c>([SELECT ID, External_ID__c, Format__c, Internal_ID__c, Name__c, Previous_Version__c, Remote_Invocation__c, 
 															Request_Result__c, Source__c, Status__C, Status_Detail__c, Valid_From__c, Valid_To__c, Version__c, Version_Notes__c
-															FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :remoteInvocationsIdToProcess]);								
+															FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :remoteInvocationsGDI]);								
 		
 		Set<String> keysForsBojects;
 
 		for(Remote_Invocation_Artefact__c artifact: artefacts.values()){
+
 			keysForsBojects.add(artifact.Internal_ID__c);
 			artifactsWithParents.put(artifact.Remote_Invocation__c,artifact);
 		}
 
 		// let's take the orpahs and put them in error.
 
-		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
+		for(Remote_Invocation__c ri : remoteInvocationsGDI){
+
 			if(artifactsWithParents.get(ri.Id) == null){
 				ri.addError('The Remote invocation does not have a match for a remote invocation artifact. [Id:'+ri.Id+'].');
 				remoteInvocationsIdToProcess.remove(ri); // one less to process
+				remoteInvocationsGDI.remove(ri);
 				artifactsWithParents.remove(ri.Id);
 			}
 		}
@@ -61,10 +68,12 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 			mapIATACodeAccs.put(acc.IATACode__c,acc);
 		
 		// let's understand if the keys are all valid.
-		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
+		for(Remote_Invocation__c ri : remoteInvocationsGDI){
+
 			if(mapIATACodeAccs.get(ri.Internal_ID__c) == null){
 				ri.addError('The Remote invocation does not have a match for the IATA Code provided ('+ri.Internal_ID__c+') invocation artifact. [Id:'+ri.Id+'].');
 				remoteInvocationsIdToProcess.remove(ri); // one less to process
+				remoteInvocationsGDI.remove(ri); 
 			}
 		}
 
@@ -74,8 +83,12 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 
 	public void doProcess(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 		
-		if(remoteInvocationsIdToProcess.isEmpty())
-			return;
+		list<Remote_Invocation__c> remoteInvocationsGDI = new List<Remote_Invocation__c>();
+
+		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess)
+			if(ri.Request_Type__c == 'GDI') remoteInvocationsGDI.add(ri);	
+
+		if(remoteInvocationsGDI.isEmpty()) return;
 		
 
 
@@ -102,8 +115,9 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
             stagingFs.Security_Type__c = 'GDI';
             stagingFs.Security_Status__c = 'Draft';
             stagingFs.Reception_Case__c = oscar.Oscar_Communication_Case_Id__c;
-            if(!fsList.isEmpty())
-                stagingFs.Financial_Security__c = fsList.get(0).Id;
+
+            if(!fsList.isEmpty()) stagingFs.Financial_Security__c = fsList.get(0).Id;
+            
             stagingFs.Quantity = 1;
             stagingFs.Region__c = opp.Account.Region_formula__c;
             stagingFs.Financial_Institution__c = dfltFI.Id; 
