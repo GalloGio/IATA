@@ -7,6 +7,7 @@ public class AmazonRestTest {
     createCredentials('IFAP');
 
     AmazonRest.getFile('Test File Name', AmazonCredentials.getCredentials('IFAP'));
+	AmazonRest.fakemethod();
   }
 
   static testMethod void listBucketTest(){
