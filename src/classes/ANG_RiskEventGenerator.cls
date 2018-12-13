@@ -292,7 +292,6 @@ public class ANG_RiskEventGenerator {
 	public void generateMultiples() {
 
 		if(skipMultipleGeneration) return;
-		//we don't run the generateMultiples() neither the assessRisk(), for multiple risk events
 		skipMultipleGeneration = true;
 
 		//find all Accounts Involved (process details) for the oscars and create a map to fetch risk event information
@@ -310,8 +309,6 @@ public class ANG_RiskEventGenerator {
 		}
 
 		if(!multiples.isEmpty()) insert multiples;
-		//we run the assessRisk() just for the original risk event (not for multiples)
-		skipMultipleGeneration = false;
 	}
 
 

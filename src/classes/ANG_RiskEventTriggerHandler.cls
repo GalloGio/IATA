@@ -72,9 +72,6 @@ public class ANG_RiskEventTriggerHandler {
     }
 
     private void assessRisk() {
-        // we don't need to run this method for multiple risk events (created from the original risk event)
-        // because it will run at the end, for the original/first risk event created 
-        if(ANG_RiskEventGenerator.skipMultipleGeneration) return;
         
         Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
         for(ANG_Agency_Risk_Event__c re : triggerNew){  
