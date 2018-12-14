@@ -1,0 +1,14 @@
+<apex:page controller="ANG_ChangeRHCCurrency" showHeader="false" sidebar="false">
+
+	<apex:form>
+		 <apex:pageBlock mode="maindetail" tabStyle="ANG_RHC_Information__c" title="Account Detail" rendered="{!rhc != null}">
+			 <apex:pageBlockSection title="RHC Information" columns="2">
+				<apex:repeat value="{!displayFields}" var="field">
+					<!--<apex:outputLabel value="{!field.label}"/>-->
+					<apex:outputField value="{!rhc[field.name]}"/>
+				</apex:repeat>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+	
+</apex:page>
