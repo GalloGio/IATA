@@ -123,8 +123,8 @@ trigger trgICCSManageProductAssignment on Case (after insert, after update) {
           caseToBAccs.put(c.id, new List<ICCS_BankAccount_To_Case__c>());
 
 
-        //INC441640: Removed validation for ICCS – Assign Product
-        /*if (c.CaseArea__c == 'ICCS – Assign Product') {
+
+        if (c.CaseArea__c == 'ICCS – Assign Product') {
           if (caseToBAccs.get(c.id).size() == 0)
             c.addError('If the case area is "ICCS – Assign Product" is required at least one ICCS Bank Accounts.');
           // Create one Product Assignment record for each Bank Account related to the case.
@@ -160,7 +160,7 @@ trigger trgICCSManageProductAssignment on Case (after insert, after update) {
             
             lstProdAssignments.add(pa);
           }
-        } else*/ if (c.CaseArea__c == 'ICCS – Remove Product') {
+        } else if (c.CaseArea__c == 'ICCS – Remove Product') {
 
 
 
