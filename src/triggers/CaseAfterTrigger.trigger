@@ -335,6 +335,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
 	Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
 	Id OscarComRTId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('OSCAR Communication');
+    Id globalRT = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - Global');
     /*Record type*/	
     
     /*Variables*/
@@ -476,6 +477,25 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			CaseChildHelper.CreateChildCase(Trigger.old, Trigger.new);
 		}  
 	}
+
+	/**
+	 * KPI Reporting part created here as separated part of the trigger, because of terrible quality of code in this file.
+	 * Trigger is created without good practices, is unreadable, so here is separated part responsible for Case Status monitoring, and
+	 * FDS_KPI_Reporting__c, KPI_Value__c records creation.
+	 *
+	 * JIRA - ICSC-35
+	 */
+
+	if(Trigger.isUpdate && CaseTriggerHelper.isDone == false) {
+        CaseTriggerHelper.createKPIValues((Map<String,Case>)Trigger.oldMap, (Map<String,Case>)Trigger.newMap, (List<Case>)Trigger.new);
+	}
+
+	/**
+	 * END of separated part
+	 */
+
+
+
 	/*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	
 	if(trigger.isInsert || trigger.isUpdate){	
