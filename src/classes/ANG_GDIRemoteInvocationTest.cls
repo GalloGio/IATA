@@ -158,22 +158,21 @@ public class ANG_GDIRemoteInvocationTest {
 
 		testSetup('EUR',true);
 
-		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1111111', 
+		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567', 
 			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
 			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING, currencyisoCode = 'USD');
 		
 		insert ri;
 		
-		/*not inserting the artifact
-		Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1111111');
-		insert artifact;*/
+		Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1234567');
+		insert artifact;
 
 		//Making the process starting to create the Bank Account Case OSCAR 
 		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 		try{
 			update ri;
 		}catch(Exception e){
-			ri.addError('The Remote invocation does not have a match for a remote invocation artifact. [Id:'+ri.Id+'].');
+			ri.addError('Unable to create staging are for the certificate of endorsment [Id:'+ri.Id+'].');
 		}
 
 		List<Opportunitylineitem> stagingFSs = [SELECT id FROM Opportunitylineitem];		
