@@ -1,4 +1,4 @@
-public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocationINT{
+public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocationINT{
 
 	private static Map<ID,Remote_Invocation_Artefact__c> artifactsWithParents;
 	private static Map<string,Account> mapIATACodeAccs;

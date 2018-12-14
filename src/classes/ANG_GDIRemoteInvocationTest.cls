@@ -1,5 +1,5 @@
 @isTest
-public class ANG_DGIRemoteInvocationTest {
+public class ANG_GDIRemoteInvocationTest {
 
 	public static void testSetup(String OpportunityCurrency, boolean forceException){
 

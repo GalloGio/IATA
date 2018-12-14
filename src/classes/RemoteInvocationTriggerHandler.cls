@@ -31,7 +31,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 
 
 
-	private final List<String> typesToProcess = new List<String>{'ANG_IEPRemoteInvocation','ANG_DGIRemoteInvocation'};
+	private final List<String> typesToProcess = new List<String>{'ANG_IEPRemoteInvocation','ANG_GDIRemoteInvocation'};
 
 	public RemoteInvocationTriggerHandler(){
 	}
