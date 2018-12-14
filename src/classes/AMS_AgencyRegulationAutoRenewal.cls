@@ -236,7 +236,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         if(accountData.Is_your_firm_handling_Dangerous_Goods__c != 'No'){
         	//AMSU-208
         	if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && typeOfCertificate == AMS_Utils.CERT_DGR) {
-        		if(accountData.Location_Class__c == AMS_Utils.HO) {
+        		if(accountData.Location_Type__c == AMS_Utils.HO) {
         			return numberOfActiveCertificates < 2;
     			} else {
     				return numberOfActiveCertificates < 1;

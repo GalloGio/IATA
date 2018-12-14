@@ -174,7 +174,7 @@ public class AMS_AgencyRegulationTriggerHandler {
             }
             //AMSU-208
             if(china != null && a.IATA_ISO_Country__c == china.Id) {
-                if(a.Location_Class__c == 'HO') {
+                if(a.Location_type__c == 'HO') {
                     isCompliant = count >= 2;
                 } else {
                      isCompliant = count >= 1;
