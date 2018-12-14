@@ -25460,6 +25460,14 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <value>Section 8 - Corporate Documents</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_ISPA_Section9_Question</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Question</shortDescription>
+        <value>Is your company subject to EU data protection laws?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section9_Subtitle1</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
@@ -25490,14 +25498,6 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Title</shortDescription>
         <value>Section 9 - Additional Questions</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_SIS_Membership_ISPA_Section9_Question</fullName>
-        <categories>ISSP SIS Membership</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_SIS_Membership_ISPA_Section9_Question</shortDescription>
-        <value>Is your company subject to EU data protection laws?</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section1_Subtitle1</fullName>
