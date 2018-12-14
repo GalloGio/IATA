@@ -487,7 +487,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	 */
 
 	if(Trigger.isUpdate && CaseTriggerHelper.isDone == false) {
-        CaseTriggerHelper.createKPIValues((Map<String,Case>)Trigger.oldMap, (Map<String,Case>)Trigger.newMap, (List<Case>)Trigger.new);
+        CaseTriggerHelper.createKPIValues(Trigger.oldMap, Trigger.newMap, Trigger.new);
 	}
 
 	/**
