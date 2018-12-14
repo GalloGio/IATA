@@ -337,7 +337,16 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 				update oscar;
 				//if(updateRelatedRecords()) closeTab = true;
-
+				
+				//setting Set for batch to create case, oscar and staging area for the child accounts
+				Set<Id> acctId = new Set<Id>();
+				
+				for(Account a: accountsToUpdate)
+					AcctId.Add(a.id);
+				
+				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
+				Id batchId = Database.executeBatch(myBatchObject,1);
+			
 			} catch(Exception e) {
 				Database.rollback(sp);
 				//DML Exceptions are sometimes displayed on the page
