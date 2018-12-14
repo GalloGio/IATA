@@ -7,6 +7,7 @@ public with sharing class ISSP_SIS_AccountHandler {
     
     public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
     public static set<ID> ALLOWED_COUNTRIES = null;
+    public static set<String> ALLOWED_LOCATIONS = null;
     public static Boolean BLOCK_EXECUTION = false;
     
     public static map<String,ISSP_SIS_Account_Status__c> MAP_SIS_ACCOUNT_STATUS = null;
@@ -29,6 +30,25 @@ public with sharing class ISSP_SIS_AccountHandler {
             }
         }
         return MAP_SIS_ACCOUNT_STATUS;
+    }
+
+    /**
+        Get the set of all valid combinations of location class an location Type
+        defined in the CS 'ISSP_SIS_Account_Allowed_Location__c'
+    **/
+    public static set<String> getAllowedLocations() {
+        // initialize  the location set if it is the first time
+        if (ALLOWED_LOCATIONS==null) {
+            ALLOWED_LOCATIONS = new set<String>();
+            for (ISSP_SIS_Account_Allowed_Location__c setting: ISSP_SIS_Account_Allowed_Location__c.getAll().values()) {
+                for (String locationClass: setting.Location_Classes__c.split(',')) {
+                    for (String locationType: setting.Location_Types__c.split(',')) {
+                        ALLOWED_LOCATIONS.add(locationClass.trim() + ',' + locationType.trim());
+                    }
+                }
+            }
+        }
+        return ALLOWED_LOCATIONS;
     }
 
     /**
@@ -123,8 +143,9 @@ public with sharing class ISSP_SIS_AccountHandler {
             }
             return account.RecordtypeId==RT_AGENCY &&
                 (account.Quality__c.contains('YES') || account.Quality__c.contains('015w0000001yCfW')) &&
-                ALLOWED_COUNTRIES.contains(account.IATA_ISO_Country__c);
-            
+                ALLOWED_COUNTRIES.contains(account.IATA_ISO_Country__c) &&
+                checkAccountLocation(account);
+
         } catch (Exception e) {
             System.debug('ERROR in validSISAccount for account ' + account + ' ' + e.getMessage());
             return false;
@@ -226,5 +247,15 @@ public with sharing class ISSP_SIS_AccountHandler {
         key = account.RecordtypeId + ' ' + account.Status__c + ' All All';
         setting = mapSettings.get(key);
         return setting;
+    }
+
+    /**
+        check if account location fields are valid according to the CS ISSP_SIS_Account_Allowed_Location__c
+    **/
+    public static Boolean checkAccountLocation(Account account) {
+        String locationClass = account.Location_Class__c==null? '': account.Location_Class__c.trim();
+        String locationType = account.Location_Type__c==null? '': account.Location_Type__c.trim();
+        String key = locationClass + ',' + locationType;
+        return getAllowedLocations().contains(key);
     }
 }

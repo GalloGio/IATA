@@ -14,6 +14,11 @@ private class ISSP_SIS_AccountHandlerTest {
         	new ISSP_SIS_Account_Allowed_Countries__c(Name='SP')
         };
         insert listAllowedCountries;
+        insert new ISSP_SIS_Account_Allowed_Location__c(
+            Name='1',
+            Location_Classes__c = 'A,B',
+            Location_Types__c = 'AA,BB'
+        );
     }
 
     static testMethod void test_afterInsert_NonSISAccount() {
@@ -33,7 +38,9 @@ private class ISSP_SIS_AccountHandlerTest {
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
             Status__c = 'Changes processed',
             IATA_ISO_Country__c = country.Id,
-            Name = 'test'
+            Name = 'test',
+            Location_Class__c = 'B',
+            Location_Type__c = 'BB'
         );
         ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>' + testSISID + '</SISMemberID></Response>';
         
@@ -60,7 +67,9 @@ private class ISSP_SIS_AccountHandlerTest {
             Status__c = 'Changes processed',
             IATA_ISO_Country__c = country.Id,
             Name = 'test',
-            SIS_ID__c = testSISID
+            SIS_ID__c = testSISID,
+            Location_Class__c = 'A',
+            Location_Type__c = 'AA'
         );
         
         ISSP_WS_SIS_Callout_UpdateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>' + testSISID + '</SISMemberID></Response>';
@@ -83,7 +92,9 @@ private class ISSP_SIS_AccountHandlerTest {
         String testSISID = '123456';
         IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='SP'];
         Account account = new Account(
-            Name = 'test'
+            Name = 'test',
+            Location_Class__c = 'A',
+            Location_Type__c = 'AA'
         );
         insert account;
         
@@ -115,7 +126,9 @@ private class ISSP_SIS_AccountHandlerTest {
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
             Status__c = '',
             Name = 'test',
-            SIS_ID__c = testSISID
+            SIS_ID__c = testSISID,
+            Location_Class__c = 'A',
+            Location_Type__c = 'AA'
         );
         insert account;
         
@@ -181,6 +194,7 @@ private class ISSP_SIS_AccountHandlerTest {
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
             Status__c = 'Approved',
             Location_Class__c = 'B',
+            Location_Type__c = 'BB',
             IATA_ISO_Country__c = country.Id
         );
         ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>123465</SISMemberID></Response>';
@@ -202,6 +216,7 @@ private class ISSP_SIS_AccountHandlerTest {
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
             Status__c = 'Approved',
             Location_Class__c = 'B',
+            Location_Type__c = 'BB',
             IATA_ISO_Country__c = country.Id
         );
         ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>123465</SISMemberID></Response>';
@@ -222,7 +237,9 @@ private class ISSP_SIS_AccountHandlerTest {
         
         Account account = new Account(
             Name = 'test',
-            RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY
+            RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
+            Location_Class__c = 'A',
+            Location_Type__c = 'AA'
         );
         insert account;
         ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess><SISMemberID>123465</SISMemberID></Response>';
