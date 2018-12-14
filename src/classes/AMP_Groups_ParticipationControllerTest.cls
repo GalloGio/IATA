@@ -41,8 +41,8 @@ private class AMP_Groups_ParticipationControllerTest {
 			testContact.Email = 'testLastname@test.ts';
 			testContact.Title = 'test Title';
 			testContact.AccountId = acct_hq.Id;
-            testContact.Function__c = 'testFunction';
-            testContact.Membership_Function__c = 'testFunction';
+            testContact.Function__c = 'Aeropolitical';
+            testContact.Membership_Function__c = 'Aeropolitical';
 			insert testContact;
 			
 			// List<AMPCoreGroups__c> lsCoreGroups = AMPCoreGroups__c.getAll().Values();

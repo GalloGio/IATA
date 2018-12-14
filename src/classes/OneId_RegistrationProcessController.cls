@@ -79,6 +79,10 @@ public without sharing class OneId_RegistrationProcessController {
         Boolean isServiceUser {get; set;}
         @AuraEnabled
         Boolean isServiceEligible {get; set;}
+        @AuraEnabled
+        Contact con {get;set;}
+        @AuraEnabled
+        Account acc {get;set;}
     }
 
     @AuraEnabled
@@ -95,19 +99,37 @@ public without sharing class OneId_RegistrationProcessController {
             //Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false);
             //Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
 
-            isAlreadyContact = true;
-            Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);
+            if(serviceName != 'FRED'){
+	            isAlreadyContact = true;
+    	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);
             
-            if(userCreated == true){
+	            if(userCreated == true){
+		            userInformation.isContactInserted = true;
+   	    	        userInformation.isServiceEligible = true;
+	                userInformation.con = conList.get(0);
+            	    System.Debug('User CREATED with success!');
+            	}
+            	else {
+                	userInformation.isContactInserted = false;
+                	System.Debug('User NOT created!');
+            	}
+            }
+            else{
                 userInformation.isContactInserted = true;
-                userInformation.isServiceEligible = true;
-                System.Debug('User CREATED with success!');
-            }
-            else {
-                userInformation.isContactInserted = false;
-                System.Debug('User NOT created!');
-            }
+                userInformation.con = conList.get(0);
+                Account acc = [SELECT Name, RecordTypeId, RecordType.Name, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
 
+                if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+                    userInformation.isServiceEligible = true;
+                }
+                else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
+                    userInformation.isServiceEligible = true;
+                }
+                else{
+                    userInformation.isServiceEligible = false;
+                }                
+                userInformation.acc = acc;                
+            }
         }
 
         if(!userInformation.isEmailAddressAvailable){
@@ -183,7 +205,7 @@ public without sharing class OneId_RegistrationProcessController {
     public static List<Contact> returnExistingContact(String email) {
         
         // Method to search contact that already exists in SALESFORCE
-        List<Contact> conList = [SELECT id, Preferred_Language__c, Salutation, FirstName, LastName, Email, Account.Id, Account.Sector__c, RecordTypeId, ISO_Country__c, IATA_ISO_Shipping_Country__c, Primary_Contact__c, User_Portal_Status__c, Status__c, BSP_CASS_Payment_contact__c, Invoicing_Contact__c FROM Contact WHERE Email =: email];
+        List<Contact> conList = [SELECT id, Preferred_Language__c, Salutation, FirstName, LastName, Email, Account.Id, Account.Sector__c, RecordTypeId, ISO_Country__c, IATA_ISO_Shipping_Country__c, Primary_Contact__c, User_Portal_Status__c, Status__c, BSP_CASS_Payment_contact__c, Invoicing_Contact__c, Title, Phone, MobilePhone, Fax, Membership_Function__c FROM Contact WHERE Email =: email];
 
         return conList;
 

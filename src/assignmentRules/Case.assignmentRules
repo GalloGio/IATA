@@ -177,7 +177,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
                 <operation>equals</operation>
-                <value>iiNet Information request,iiNet WEB File retrieval,iiNet WEB How-to question,iiNet WEB interface,Integrated connectivity,Integrated file processing,iiNet WEB How to question</value>
+                <value>iiNet General Information,iiNet New Account/Connectivity,iiNet WEB Interface,iiNet Integrated Connectivity,iiNet Files Processing,iiNet Files Retrieval,iiNet Invoicing/Billing,iiNet Configuration Service/Account</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Reason1__c</field>
@@ -321,7 +321,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>E F</value>
+                <value>E&amp;F - Enhancement &amp; Financing</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
@@ -371,7 +371,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>E F</value>
+                <value>E&amp;F - Enhancement &amp; Financing</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>

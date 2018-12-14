@@ -278,7 +278,7 @@ public with sharing class ISSP_ObjectFactory {
         system.debug('basto1p TEST UserName='+UserNameStr);
         system.debug('basto1p TEST ComNickNameStr='+ComNickNameStr);
        User newUser = new User(alias = 'dsfsdfds', 
-                                email = con.email, 
+                                email = string.valueof(system.currenttimemillis())+con.email, 
                                 emailencodingkey = 'UTF-8', 
                                 firstname = con.firstName, 
                                 lastname = con.lastname, 
@@ -287,7 +287,7 @@ public with sharing class ISSP_ObjectFactory {
                                 contactId = con.Id,
                                 FederationIdentifier = conId15,
                                 timezonesidkey = 'Asia/Dubai',
-                                Username = UserNameStr,
+                                Username = UserNameStr+string.valueof(system.currenttimemillis()),
                                 PortalRole = 'Manager',
                                 CommunityNickname = ComNickNameStr,
                                 ProfileId = ISSP_Constant.TEST_User_ProfileID,

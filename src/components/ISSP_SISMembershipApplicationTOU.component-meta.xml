@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>43.0</apiVersion>
+    <description>Used in ISSP SIS Management, used to show fields for an TOU membership form</description>
+    <label>ISSP_SISMembershipApplicationTOU</label>
+</ApexComponent>
