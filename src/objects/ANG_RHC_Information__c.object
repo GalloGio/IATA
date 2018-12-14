@@ -373,6 +373,39 @@
     </validationRules>
     <visibility>Public</visibility>
     <webLinks>
+        <fullName>Change_the_RHC_currency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Change the RHC currency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/apex.js&quot;)} 
+
+try{
+    var result = sforce.connection.query(&quot;Select ANG_AccountId__r.ANG_Accreditation_Model__c, ANG_AccountId__r.Location_Type__c From ANG_RHC_Information__c Where Id = &apos;{!ANG_RHC_Information__c.Id}&apos;&quot;);
+
+    var records = result.getArray(&quot;records&quot;);
+    var rhc;
+
+    if (records.length &gt; 0)
+        rhc = records[0];
+				else
+				    throw &apos;RHC record not found&apos;;
+    
+				if (rhc.ANG_AccountId__r.ANG_Accreditation_Model__c != &apos;Multicountry&apos; || rhc.ANG_AccountId__r.Location_Type__c != &apos;GE&apos;)
+				    throw &apos;This functionality is only available for GoGlobal agents&apos;;		
+								
+				window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!Case.OSCARId__c}&quot;);
+								
+				alert(&quot;OK!&quot;);
+				
+} catch (err) {
+    alert(err);
+}</url>
+    </webLinks>
+    <webLinks>
         <fullName>Confirm_RHC</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
