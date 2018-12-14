@@ -289,21 +289,21 @@
         });
 
         function remittanceFrequencyChange() {
-            if(!{!isNewAE}){
+            if(!({!isNewAE}||{!isNewMulticountryAE})){
                 $('[id$=saveButton]')[0].style.display = '';
                 $('[id$=cancelButton]')[0].style.display = '';
             }
         }
 
         function showMultiPick() {
-            if(!{!isNewAE}){
+            if(!({!isNewAE}||{!isNewMulticountryAE})){
                 $('[id$=multipick]')[0].style.display = '';
                 $('[id$=mRFLabel]')[0].style.display = 'none';
             }
         }
 
         function showCPickList() {
-            if(!{!isNewAE}){
+            if(!({!isNewAE}||{!isNewMulticountryAE})){
                 $('[id$=cPicklist]')[0].style.display = '';
                 $('[id$=outputRF]')[0].style.display = 'none';
             }

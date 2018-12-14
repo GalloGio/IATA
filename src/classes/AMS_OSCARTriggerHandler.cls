@@ -655,7 +655,7 @@ public class AMS_OSCARTriggerHandler {
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
-            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHANGES){
                 oscar.Sanity_check_deadline__c = Date.today() + 15;
                 oscar.OSCAR_Deadline__c = Date.today() + 30;
 
@@ -2728,6 +2728,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NEWAE && step == AMS_Utils.SANITYCHECK) templateId                      = 'ANG_New_AE_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NEWAE && step == AMS_Utils.APPROVAL && wasApproved) templateId          = 'ANG_New_AE_Accreditation_Decision_APP';
         else if(agencyType == AMS_Utils.NEWAE && step == AMS_Utils.APPROVAL && !wasApproved) templateId         = 'ANG_New_AE_Accreditation_Decision_DIS';
+        else if(agencyType == AMS_Utils.MCAE && step == AMS_Utils.SANITYCHECK) templateId                      = 'ANG_New_AE_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.MCAE && step == AMS_Utils.APPROVAL && wasApproved) templateId          = 'ANG_New_AE_Accreditation_Decision_APP';
+        else if(agencyType == AMS_Utils.MCAE && step == AMS_Utils.APPROVAL && !wasApproved) templateId         = 'ANG_New_AE_Accreditation_Decision_DIS';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId                  = 'ANG_Changes_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId      = 'ANG_Changes_APP';
         else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId     = 'ANG_Changes_DIS';
@@ -3306,7 +3309,7 @@ public class AMS_OSCARTriggerHandler {
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE || updatedOscar.Process__c == AMS_Utils.MCAE){
 
                 if (updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD && updatedOscar.STEP34__c != AMS_Utils.PASSED)
                      updatedOscar.addError('Approval can\'t be set if Request financial security step is not Passed.');
@@ -3318,7 +3321,7 @@ public class AMS_OSCARTriggerHandler {
 
                 if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD)
                     createAgencyAuthorizations(updatedOscar);
-                else if(updatedOscar.Process__c == AMS_Utils.NEWAE)
+                else if(updatedOscar.Process__c == AMS_Utils.NEWAE || updatedOscar.Process__c == AMS_Utils.MCAE)
                     copyAgencyAuthorizationsFromParent(updatedOscar);
 
             }
@@ -3999,7 +4002,7 @@ public class AMS_OSCARTriggerHandler {
 
         String statusForCC = 'Active';
 
-        if(oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NEWHESTANDARD  || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
+        if(oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NEWHESTANDARD  || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
             statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
         else if(oscar.Process__c == AMS_Utils.NEWHELITE){
 
@@ -4031,15 +4034,15 @@ public class AMS_OSCARTriggerHandler {
             if(fop.ANG_FormOfPayment_ID__c == 'CC')
                 isCCCreated = true;
 
-            if(fop.ANG_FormOfPayment_ID__c == 'CC' && oscar.Process__c == AMS_Utils.NEWAE && oscar.Is_PCI_compliant__c == 'No')
+            if(fop.ANG_FormOfPayment_ID__c == 'CC' && (oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE) && oscar.Is_PCI_compliant__c == 'No')
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = 'Non-Active', RecordTypeId = fop.RecordTypeId));
             else
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = fop.Status__c, RecordTypeId = fop.RecordTypeId));
         }
 
-        if(!isCCCreated && oscar.Process__c == AMS_Utils.NEWAE){
+        if(!isCCCreated && (oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE)){
 
-            if(oscar.Process__c == AMS_Utils.NEWAE && oscar.Is_PCI_compliant__c == 'No')
+            if((oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE) && oscar.Is_PCI_compliant__c == 'No')
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
             else
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));

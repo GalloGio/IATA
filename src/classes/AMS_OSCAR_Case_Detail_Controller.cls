@@ -15,6 +15,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isCertificationOSCAR{get;set;}
     public Boolean isNewGenProcess{get;set;}
     public Boolean isNewAE{get{return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
+    public Boolean isNewMulticountryAE{get{return (oscarObj.Process__c == AMS_Utils.MCAE);}set;}
     public Boolean displayErrorMsg{get{return false;} set;}
 
     //FM AMSU-1
@@ -196,7 +197,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         //if(fieldName == 'Location_Class__c' && isNewGenProcess) return false;
         //if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
         if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;
-        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && oscarObj.Process__c == AMS_Utils.NEWAE) return false;     
+        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && (oscarObj.Process__c == AMS_Utils.NEWAE || oscarObj.Process__c == AMS_Utils.MCAE)) return false;     
 
         if(!isAgencyChanges && !isAgencyCorrection) return true;     
 
@@ -319,7 +320,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                     }
 
                 // for New AE, remittance frequency is populated from the Parent Account and picklist values are restricted to the value of the parent
-                }else if(oscarObj.Process__c == AMS_Utils.NEWAE) {
+                }else if(oscarObj.Process__c == AMS_Utils.NEWAE || oscarObj.Process__c == AMS_Utils.MCAE) {
 
                     if(oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c != null )
                         rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get( oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c)));                 
