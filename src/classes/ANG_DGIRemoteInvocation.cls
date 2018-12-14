@@ -4,7 +4,7 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 	private static Map<string,Account> mapIATACodeAccs;
 
 	private static Financial_Institution__c dfltFI;
-	private static pricebook2 pb;
+	private static Id pb;
 	private static PricebookEntry pbe;
 
 	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
@@ -22,7 +22,7 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 															Request_Result__c, Source__c, Status__C, Status_Detail__c, Valid_From__c, Valid_To__c, Version__c, Version_Notes__c
 															FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :remoteInvocationsGDI]);								
 		
-		Set<String> keysForsBojects;
+		Set<String> keysForsBojects = new Set<String>();
 
 		for(Remote_Invocation_Artefact__c artifact: artefacts.values()){
 
@@ -41,29 +41,6 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 				artifactsWithParents.remove(ri.Id);
 			}
 		}
-
-/*		
-		// let's understand if the keys are all valid.
-		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
-
-			String sobjectType = Id.valueOf(ri.Internal_ID__c).getSObjectType().getDescribe().getName();
-
-			switch on sobjectType {
-				when 'Account' {
-					iatacodesToFetch.add(ri.Internal_ID__c);
-				}	
-				when 'Quote' {
-					
-				}
-				when else {		  
-				// not prepared for this.At.All.
-				ri.addError('The Remote invocation Id does not have a match for valid sObject in Salesforce ('+sobjectType+'). [Id:'+ri.Id+'].');
-				remoteInvocationsIdToProcess.remove(ri); // one less to process
-				}
-			}
-
-		}
-*/
 
 		mapIATACodeAccs = new Map<String, Account>();
 
@@ -108,14 +85,17 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 
 
 		dfltFI = [Select id from Financial_Institution__c where name = 'GDI - Euler Hermes'];
-		pb = [select id from pricebook2 where name = 'NewGen Generic'];
-		pbe = [select id,unitprice,product2id,product2.name from pricebookentry where pricebook2id = :pb.id limit 1];
+		
+		if(!Test.isRunningTest()) pb = [select id from pricebook2 where name = 'NewGen Generic'].id;
+		else pb = Test.getStandardPricebookId();
+		
+		pbe = [select id,unitprice,product2id,product2.name from pricebookentry where pricebook2id = :pb limit 1];
 
 
 
 		//fetch and store OSCARS by iata code (FALTA VALIDAR PELA POIA DO TIPO GDI)
 		
-		for (AMS_OSCAR__c oscar : [SELECT ID, name, Account__r.IATACode__c FROM AMS_OSCAR__c WHERE Account__c IN :mapIATACodeAccs.values() ]){
+		for (AMS_OSCAR__c oscar : [SELECT ID, name, Account__r.IATACode__c,Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Account__c IN :mapIATACodeAccs.values() ]){
 			mapIATACodeOSCARs.put(oscar.Account__r.IATACode__c, oscar);
 			oscarIDs.add(oscar.id);
 		}
@@ -126,8 +106,8 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 		}
 		
 		//List<Financial_Security__c> fsList = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
-		for (Financial_Security__c fs : [SELECT Id, Amount__c, Security_Type__c,Reception_Case__c FROM Financial_Security__c WHERE Account__r.IATACode__c IN :mapIATACodeOSCARs.keyset() AND Security_Type__c = 'GDI' AND Security_Status__c IN ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1]){
-			financialSecuritiesMap.put(fs.Account__.IATACode__c, fs);
+		for (Financial_Security__c fs : [SELECT Id, Amount__c, Security_Type__c,Reception_Case__c,Account__r.IATACode__c FROM Financial_Security__c WHERE Account__r.IATACode__c IN :mapIATACodeOSCARs.keyset() AND Security_Type__c = 'GDI' AND Security_Status__c IN ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1]){
+			financialSecuritiesMap.put(fs.Account__r.IATACode__c, fs);
 		}
 		
 
@@ -140,7 +120,10 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
 			Financial_Security__c fs = financialSecuritiesMap.get(ri.Internal_ID__c);
 
 			//if tenho que mudar a cena na opportunidade
-
+			if(ri.currencyISOCode != opp.currencyISOCode){
+				opp.currencyISOCode = ri.currencyISOCode; 
+				updatedOpportunities.add(opp);
+			}
 
 			stagingFSs.add(createStagingArea(oscar,ri,opp,fs));
 		}
@@ -166,7 +149,6 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
             stagingFs.OSCAR_GDI__c = oscar.Id;
             stagingFs.Security_Type__c = 'GDI';
             stagingFs.Security_Status__c = 'Draft';
-            stagingFs.Reception_Case__c = oscar.Oscar_Communication_Case_Id__c;
 
             if(fsList != null) stagingFs.Financial_Security__c = fsList.Id;
             
@@ -176,12 +158,13 @@ public with sharing class ANG_DGIRemoteInvocation implements ANG_RemoteInvocatio
             stagingFs.TotalPrice = 1;
             stagingFs.pricebookentryid = pbe.id;
 
+            stagingFs.Reception_Case__c = oscar.Oscar_Communication_Case_Id__c;
         
         }catch(Exception e){
             System.debug(e.getStackTraceString());
 			ri.addError('Unable to create staging are for the certificate of endorsment [Id:'+ri.Id+'] - Reason:'+e.getStackTraceString());
         }
-
+        system.debug('##final stagingFs' + stagingFs);
 		return stagingFs;
 	}
 }

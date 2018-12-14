@@ -13,7 +13,6 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 		
 		
-		if(remoteInvocationsIdToProcess.isEmpty()) return; //nothing to do here
 		
 
 		for (Remote_Invocation__c ri : remoteInvocationsIdToProcess){
@@ -24,6 +23,7 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 				remoteInvocationsWithoutArtifcts.add(ri.ID); //to later thow error
 			}
 		}
+		if(mapRemoteInvocations.isEmpty()) return; //nothing to do here
 
 		for(Account acc : [SELECT ID, name, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c, IATACode__c, RecordTypeId FROM Account WHERE iataCode__c IN :iataCodesToFetch])	
 			mapIATACodeAccs.put(acc.IATACode__c,acc);

@@ -1,25 +1,8 @@
 @isTest
 public class ANG_DGIRemoteInvocationTest {
 
-	public static void testSetup(){
-		/*
-		Financial_Institution__c
-		pricebook2
-		pricebookentry
+	public static void testSetup(String OpportunityCurrency, boolean forceException){
 
-
-
-		criar account
-		oscar
-		criar fs
-		opp
-
-
-		para depois criar remote invocation e remote invocation artifact
-		run
-
-		testar que no final foi criado o Staging fs
-		*/
 		Financial_Institution__c fi = new Financial_Institution__c(name= 'GDI - Euler Hermes', Region__c = 'Europe', Country__c = 'Portugal', Institution_Type__c = 'Insurance Company');
 		insert fi;
 
@@ -34,7 +17,7 @@ public class ANG_DGIRemoteInvocationTest {
 		insert pb;*/
 
         ID standardPBID = Test.getStandardPricebookId();
-		insert new pricebookentry(UnitPrice = 20, CurrencyIsoCode = 'EUR', Product2id = prod.id, IsActive = true, Pricebook2Id = standardPBID);
+		insert new pricebookentry(UnitPrice = 20, CurrencyIsoCode = 'USD', Product2id = prod.id, IsActive = true, Pricebook2Id = standardPBID);
 
 
 		Account acc = new Account(name = 'account name', Sector__c = 'Travel Agent', Category__c = 'Cargo only', IATACode__c = '1234567',
@@ -53,63 +36,149 @@ public class ANG_DGIRemoteInvocationTest {
         oscarCase.ContactId = contact.Id;
         insert oscarCase;
 
+        if(forceException) oscar.Oscar_Communication_Case_Id__c = oscarCase.id;
+	    else 			   oscar.Oscar_Communication_Case_Id__c = 'fakeID';
+	    update oscar;
 
         case cc = new case(AccountId = acc.Id);
         insert cc;
-        Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=acc.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=fi.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
+        Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=acc.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=fi.Id, SECURITY_STATUS__C='Active', Security_Type__c='GDI', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
         insert FS;
 
         ID oppRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDI_FinancialSecurity'); 
-        Opportunity opp = new Opportunity(AccountId = acc.id, CloseDate = Date.today(), CurrencyIsoCode = 'USD', Name ='OPP - ' , RecordTypeId = oppRecordtype, StageName = 'Pending', Related_Oscar__c = oscar.id);
+        Opportunity opp = new Opportunity(AccountId = acc.id, CloseDate = Date.today(), CurrencyIsoCode = OpportunityCurrency, Name ='OPP - ' , RecordTypeId = oppRecordtype, StageName = 'Pending', Related_Oscar__c = oscar.id);
         insert opp;
 	}
 
-
 	@isTest
-	public static void testNoAccountFound() {
+	public static void testCreatingStagingFS() {
 
-		testSetup();
+		testSetup('USD',false);
 
-/*
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
-		insert ctry;
-
-		//not assigning the correct recordtype to the account
-		Account acc = new Account(name = 'account name', Sector__c = 'Travel Agent', Category__c = 'Cargo only', IATACode__c = '1234567',
-			Location_Type__c =AMS_Utils.HE, Location_Class__c = AMS_Utils.LC_PASSENGER, recordtypeid = AMS_Utils.RECTYPE_IATAAGENCY, IATA_ISO_Country__c = ctry.id );
-		insert acc;
-
-		Contact c = new Contact(FirstName = 'test', LastName = 'contact', email = 'email@contactmeila.com', AccountId = acc.id);
-		insert c;
-
-		Portal_Applications__c pa = new Portal_Applications__c(name = 'IATA EasyPay (EDENRED)');
-		insert pa;
-
-		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted', 
-			ANG_Portal_Service_Role__c = 'IEP Admin',Contact__c = c.id, Portal_Application__c = pa.id);
-		insert par;
+		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
 		
-		try{
-				
-			//not assigning the correct iata code, trigger will fail
-			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '111111', 
-				Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
-				status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
-			insert re;
-            
-			Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = re.id, Internal_ID__c = '111111');
-			insert artifact;
+		insert ri;
 
-			//Making the process starting to create the Bank Account Case OSCAR 
-			re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
-			update re;
-		}catch(Exception e){
-			System.assert(e.getMessage().contains('Parent account with the IATA code 111111 not found.'), 'Error Message doesn\'t match: ' +e.getMessage());
-		}
+		Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1234567');
+		insert artifact;
 
-		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
-		System.assertEquals(oscars.size(), 0); */
+		//Making the process starting to create the Bank Account Case OSCAR 
+		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+		update ri;
+
+		List<Opportunitylineitem> stagingFSs = [SELECT id FROM Opportunitylineitem];		
+		System.assertEquals(stagingFSs.size(), 1); 
 	}	
 
+	@isTest
+	public static void testConfirmOpportunityCurrencyChanged() {
+
+		testSetup('EUR',false);
+
+		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING, currencyisoCode = 'USD');
+		
+		insert ri;
+
+		Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1234567');
+		insert artifact;
+
+		//Making the process starting to create the Bank Account Case OSCAR 
+		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+		update ri;
+
+		List<Opportunitylineitem> stagingFSs = [SELECT id FROM Opportunitylineitem];		
+		System.assertEquals(stagingFSs.size(), 1); 
+
+		List<Opportunity> Opportunities = [SELECT id,CurrencyIsoCode FROM Opportunity];		
+		System.assertEquals(Opportunities.size(), 1); 
+		System.assertEquals(Opportunities[0].CurrencyIsoCode, 'USD'); 
+	}	
+
+	@isTest
+	public static void testNoMatchForIATACodeProvider() {
+
+		testSetup('EUR',false);
+
+		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1111111', 
+			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING, currencyisoCode = 'USD');
+		
+		insert ri;
+
+		Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1111111');
+		insert artifact;
+
+		//Making the process starting to create the Bank Account Case OSCAR 
+		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+		try{
+			update ri;
+		}catch(Exception e){
+			ri.addError('The Remote invocation does not have a match for the IATA Code provided (\'1111111\') invocation artifact. [Id:'+ri.Id+'].');
+		}
+
+		List<Opportunitylineitem> stagingFSs = [SELECT id FROM Opportunitylineitem];		
+		System.assertEquals(stagingFSs.size(), 0); 
+
+	}	
+
+	@isTest
+	public static void testNoArtifactProvider() {
+
+		testSetup('EUR',false);
+
+		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1111111', 
+			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING, currencyisoCode = 'USD');
+		
+		insert ri;
+		
+		/*not inserting the artifact
+		Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1111111');
+		insert artifact;*/
+
+		//Making the process starting to create the Bank Account Case OSCAR 
+		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+		try{
+			update ri;
+		}catch(Exception e){
+			ri.addError('The Remote invocation does not have a match for a remote invocation artifact. [Id:'+ri.Id+'].');
+		}
+
+		List<Opportunitylineitem> stagingFSs = [SELECT id FROM Opportunitylineitem];		
+		System.assertEquals(stagingFSs.size(), 0); 
+
+	}	
+
+	@isTest
+	public static void testvalidateException() {
+
+		testSetup('EUR',true);
+
+		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1111111', 
+			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING, currencyisoCode = 'USD');
+		
+		insert ri;
+		
+		/*not inserting the artifact
+		Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1111111');
+		insert artifact;*/
+
+		//Making the process starting to create the Bank Account Case OSCAR 
+		ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+		try{
+			update ri;
+		}catch(Exception e){
+			ri.addError('The Remote invocation does not have a match for a remote invocation artifact. [Id:'+ri.Id+'].');
+		}
+
+		List<Opportunitylineitem> stagingFSs = [SELECT id FROM Opportunitylineitem];		
+		System.assertEquals(stagingFSs.size(), 0); 
+
+	}	
 
 }
