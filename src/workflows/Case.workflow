@@ -7422,7 +7422,8 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
 (IF(CONTAINS( $UserRole.Name, &quot;Operations Manager&quot;),&quot;Operations&quot;,
 (IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;, 
 (IF(CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))))))))))</formula>
+(IF(CONTAINS($Profile.Name, &quot;GCS -&quot;), &quot;Customer Service&quot;,
+(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -15146,6 +15147,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Update_AIMS_DEF__c</field>
             <operation>equals</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Outs_Amount_equals_IATA_charges__c</field>
+            <operation>equals</operation>
+            <value>NO</value>
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
     </rules>

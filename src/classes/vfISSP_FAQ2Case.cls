@@ -242,7 +242,7 @@ global class vfISSP_FAQ2Case
                 introVideoCookie = new Cookie(cookieNameStr,'1',null,-1,false);
             }
 			else{ // If this isn't the first time the user is accessing the page
-				CookieValCount = Integer.valueOf(introVideoCookie.getValue());
+				CookieValCount = convertIndex(introVideoCookie.getValue());
 //introVideoCookie = new Cookie(cookieNameStr, '0', null, -1, false);//basto1p - for tests
 				if (CookieValCount != LVA_INTRO_VID_COOKIE_DEACTIVATED) {
 					// create a new cookie, incrementing the value of the original count by 1
@@ -411,7 +411,7 @@ global class vfISSP_FAQ2Case
                 // calculate sub topic for each topic 
 
                 faq2Case.lst_selectsubTopics = new list<SelectOption>();
-                Integer index = Integer.valueOf(faq2Case.topic.trim());
+                Integer index = convertIndex(faq2Case.topic.trim());
 
                 clsDataCategory selectDataCategory = faq2Case.DataCategoryContainer.lst_DataCategories[index];
 
@@ -1684,7 +1684,7 @@ for (string topicver:listofAllowedTopics){
         String addDecsription ;
         if (isCompliment1 == false)
         {
-             Integer index = Integer.valueOf(topic.trim());
+             Integer index = convertIndex(topic.trim());
              clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
              
              String areaOfConcernStr='';
@@ -1876,7 +1876,7 @@ for (string topicver:listofAllowedTopics){
         if (!isArticleStatisticExist(theArticle, statisticType)) {
             try
             {
-                Integer index = Integer.valueOf(this.topic.trim());
+                Integer index = convertIndex(this.topic.trim());
                 clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
                 // Set the record's field values
@@ -1907,7 +1907,7 @@ for (string topicver:listofAllowedTopics){
         GenerateCreateCaseButtonURL();
         if (CreateButtonURL != null && CreateButtonURL != '')
         {
-            Integer index = Integer.valueOf(topic.trim());
+            Integer index = convertIndex(topic.trim());
             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
             String extraURL = '&topic='+selectDataCategory.CategoryLabel+'&subtopic='+selectDataCategory.getLabelByNameCategory(subtopic);
             return new Pagereference(CreateButtonURL+extraURL);
@@ -2350,7 +2350,7 @@ for (string topicver:listofAllowedTopics){
         {system.debug('Kerensen refreshTopicPickList: After  resetCase(); ELSE'  );
             this.lst_selectsubTopics = new list<SelectOption>();
             system.debug('TOPIC: ' + topic);
-            Integer index = Integer.valueOf(topic.trim());
+            Integer index = convertIndex(topic.trim());
             system.debug('INTEGER: ' + index);
             isToShowFAQs = true;
 
@@ -2404,7 +2404,7 @@ for (string topicver:listofAllowedTopics){
         resetCase();
        System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
         system.debug('TOPIC: ' + topic);
-        Integer index = Integer.valueOf(topic.trim());
+        Integer index = convertIndex(topic.trim());
         system.debug('INTEGER: ' + index);
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
         system.debug('JK subtopic: ' + subtopic);
@@ -3021,7 +3021,7 @@ for (string topicver:listofAllowedTopics){
         //set the Topic__c "English Value"
         if (isCompliment1 == false)
         {
-            clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(topic)];
+            clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[convertIndex(topic)];
             //newCase.Topic__c = ((cdc.CategoryName).replace('__c',' ')).replace('_',' ') ;
             newCase.Topic__c = cdc.CategoryLabel;
             //set the Topic__c "English Value"
@@ -3049,7 +3049,7 @@ for (string topicver:listofAllowedTopics){
         }
 
 
-        Integer index = Integer.valueOf(topic.trim());
+        Integer index = convertIndex(topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
         String topicName = selectDataCategory.CategoryName;
 
@@ -3465,7 +3465,7 @@ for (string topicver:listofAllowedTopics){
 
     public PageReference GenerateTopicHelpText(){
         if(topic != Env.SelectOptionDefaultValue){ // INC263231 - IF topic was the default don't do the logic
-            Integer index = Integer.valueOf(this.topic.trim());
+            Integer index = convertIndex(this.topic.trim());
             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
             List<ISSP_HelpText__c> ISSP_TopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
@@ -3489,7 +3489,7 @@ for (string topicver:listofAllowedTopics){
 
         System.debug('Kerensen1 START GenerateTopicHelpText ==>'+subtopic);
         if(subtopic != Env.SelectOptionDefaultValue){  // INC263231 - IF topic was the default don't do the logic
-            Integer index = Integer.valueOf(this.topic.trim());
+            Integer index = convertIndex(this.topic.trim());
             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
             List<ISSP_HelpText__c> ISSP_SubTopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
@@ -3533,7 +3533,7 @@ for (string topicver:listofAllowedTopics){
                 String CategoryNameItem='';
                 if (top.getValue() != '-- Select --')
                 {
-                    clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(top.getValue())];
+                    clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[convertIndex(top.getValue())];
                     TopicinEnglish = ((cdc.CategoryName).replace('__c','')) ;//.replace('_',' ')
                     CategoryNameItem=cdc.CategoryName;
                 }else{
@@ -3586,7 +3586,7 @@ for (string topicver:listofAllowedTopics){
     // Method display topic and subtopic according to Custom Setting "ISSP_FAQ2Case_Permissions__c" Permissions
     private void setSubTopicByPermissions(){
         List<String> sectors2 = new List<String>();
-        Integer index = Integer.valueOf(topic.trim());
+        Integer index = convertIndex(topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
         //Help Selectoptuion List
@@ -3651,7 +3651,7 @@ for (string topicver:listofAllowedTopics){
 
     public void GenerateCreateCaseButtonURL(){
         System.debug('Kerensen2 START GenerateCreateButtonURL ==>');
-        Integer index = Integer.valueOf(this.topic.trim());
+        Integer index = convertIndex(this.topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
         List<ISSP_FAQ2Case_CreateCaseURL__c> ISSP_CreateButtonURL_Lst = new List<ISSP_FAQ2Case_CreateCaseURL__c> ([ select Id ,Topic__c , SubTopic__c , URL__c
@@ -3666,6 +3666,14 @@ for (string topicver:listofAllowedTopics){
         if(ISSP_CreateButtonURL_Lst != null && ISSP_CreateButtonURL_Lst.size() > 0){
             CreateButtonURL = ISSP_CreateButtonURL_Lst[0].URL__c;
 
+        }
+    }
+    
+    private static Integer convertIndex(String index) {
+        try {
+            return Integer.valueOf(index.trim());
+        } catch(Exception e) {
+            return 0;
         }
     }
 }

@@ -72,7 +72,7 @@ public with sharing class DAL_ISSP {
         List<Case> cases = [select  
                 (Select Id, IsPublished, CreatedDate From CaseComments),Product_Manager_ACR__c,ArchivedDate__c,Account.Type,Account.IATA_ISO_Country__c,account.IATA_ISO_Country__r.iso_code__c,
                 Id,Subject,Description,CaseArea__c, Country_concerned_by_the_query__c,CaseNumber,Portal_Case_Status__c,
-                ContactId, RecordType.Name, Type, Priority, Classification_SIS__c, Defect_Issue__c, Airline_Designator__c,
+                ContactId, RecordType.Name, RecordType.DeveloperName, Type, Priority, Classification_SIS__c, Defect_Issue__c, Airline_Designator__c,
                 Member_Code_Numeric__c, Contact.Name, Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Fax, Contact.FirstName, Contact.LastName ,
                 CreatedDate, ClosedDate, Region__c, IATA_Code__c, BSPCountry__c, Account.Name, Account.Status__c, SAAM_Deadline_Date__c,
                 Process_Approved__c, Process_Start_Date__c, Missing_Documents_A_B_received__c,Financial_Review_Type__c,Deadline_Date__c,FA_Second_Deadline_Date__c,
@@ -93,7 +93,7 @@ public with sharing class DAL_ISSP {
                 Outstanding_Amount__c,End_of_Grace_Period_Date__c,Total_Irregularities__c,Update_AIMS_IRR__c,Update_AIMS_IRRWITH__c,Update_AIMS_DEF__c,Reason_for_Default__c,
              	DEF_Withdrawal_Approval_Rejection__c,DEF_Withdrawal_Approval_Rejection_Date__c,Update_AIMS_REI_DEFWITH__c,Remittance_Date__c,Short_Payment_Amount__c,Billing_Amount__c,
                 Collected_amount__c, E2CP__AdditionalCC__c, Has_the_agent_paid_invoice__c, Account.Location_Type__c, Reason_for_Deadline__c, Cost_Centre__c, Action__c, Due_Date__c, 
-                Action_Person__c, Detailed_Description__c, Source_of_Case__c,
+                Action_Person__c, Detailed_Description__c, Source_of_Case__c, IsClosed,
                 OSCAR__c, Oscar__r.Process__c
                 FROM Case where Id=:caseId];
         if (cases.size() > 0)

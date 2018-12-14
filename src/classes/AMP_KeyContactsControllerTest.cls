@@ -46,7 +46,7 @@ private class AMP_KeyContactsControllerTest
 			primaryContact.Title = 'primary';
 			primaryContact.Email = 'primary@testAccount.com';
 			primaryContact.AccountId = a.Id;
-			primaryContact.Membership_Function__c = 'Cargo';
+			primaryContact.Membership_Function__c = 'Aeropolitical';
 			primaryContact.Function__c = 'Aeropolitical';
 			insert primaryContact;
 
