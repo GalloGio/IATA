@@ -36,8 +36,8 @@ public class ANG_GDIRemoteInvocationTest {
         oscarCase.ContactId = contact.Id;
         insert oscarCase;
 
-        if(forceException) oscar.Oscar_Communication_Case_Id__c = oscarCase.id;
-	    else 			   oscar.Oscar_Communication_Case_Id__c = 'fakeID';
+        if(forceException) oscar.Oscar_Communication_Case_Id__c = 'fakeID';
+	    else 			   oscar.Oscar_Communication_Case_Id__c = oscarCase.id;
 	    update oscar;
 
         case cc = new case(AccountId = acc.Id);
