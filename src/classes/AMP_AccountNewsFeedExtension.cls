@@ -46,7 +46,8 @@ public with sharing class AMP_AccountNewsFeedExtension {
     HttpRequest req = new HttpRequest();
     // url that returns the XML in the response body
 
-    String url = 'https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&output=rss&q=' + searchTerm;
+    //String url = 'https://news.google.com/news?cf=all&hl=en&pz=1&ned=us&output=rss&q=' + searchTerm;
+    String url = 'https://news.google.com/_/rss/search?cf=all&pz=1&q='+ searchTerm + '&hl=en-US&gl=US&ceid=US:en';
     req.setEndpoint(url);
     req.setMethod('GET');
     Http h = new Http();
@@ -57,9 +58,12 @@ public with sharing class AMP_AccountNewsFeedExtension {
   @AuraEnabled
   public static  List<rssPost> getNewsFeed(String searchTerm) {
     List<rssPost> tmpList = new List<rssPost>();
+    System.debug('res: ' + searchTerm);
+    
     HttpResponse res = getInfoFromExternalService(searchTerm);
     Dom.Document doc = res.getBodyDocument();
     String xml = res.getBody();
+    System.debug('Enter getNewsFeed');
     //  System.debug(xml);
     XmlStreamReader xsr = new XmlStreamReader(xml);
 

@@ -1711,7 +1711,7 @@ public with sharing class AMS_XML_Generator {
                 }
             }
 
-            getElementNode(agencyNode, 'license', agency.License_Number__c);
+            getElementNode(agencyNode, 'license', AMS_Utils.cleanSpecialChars(agency.License_Number__c));
             getElementNode(agencyNode, 'lang', getPersonLanguageOfCorrespondence(sLang) );
 
             getElementTranslatedNode(agencyNode, iQta, 'AMS_Person__c.Lastname__c', 'qtal_name', sQtal_name);

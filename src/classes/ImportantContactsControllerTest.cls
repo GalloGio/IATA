@@ -11,7 +11,7 @@ private class ImportantContactsControllerTest {
         // Create an Airline HQ account
         Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
-                                RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_fr.Id, Membership_status__c = 'Non-IATA member');
+                                RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_fr.Id, Membership_status__c = 'Aeropolitical');
         insert acct_hq;
 
         Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
@@ -19,7 +19,7 @@ private class ImportantContactsControllerTest {
         insert c1;
 
         Contact c2 = new Contact(FirstName = 'Another', LastName = 'Contact', Email = 'test2@test.com', Title = 'CEO', AccountId = acct_hq.Id, RecordTypeId = ContactStd_RT_Id, CEO_CFO__c = 'CEO',
-                                Membership_Function__c = 'testFunction');
+                                Membership_Function__c = 'Aeropolitical');
         insert c2;
 
         test.startTest();
