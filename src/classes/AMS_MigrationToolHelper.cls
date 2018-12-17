@@ -13,6 +13,7 @@ public without sharing class AMS_MigrationToolHelper {
 			AMS_Utils.NEWHELITE => 'New HE lite',
 			AMS_Utils.NEWHESTANDARD => 'New HE standard',
 			AMS_Utils.NEWAE => 'New AE',
+			AMS_Utils.MCAE => 'New AE Multicountry',
 			AMS_Utils.NGCHANGES => 'Agency changes',
 			AMS_Utils.NGCORRECTION => 'Corrections',
 			AMS_Utils.CERTIFICATION => 'PAX/CARGO Certificate',
@@ -72,6 +73,7 @@ public without sharing class AMS_MigrationToolHelper {
 			'Financial review opt-in / opt-out' => 'ANG.FS.OPTINOUT',
 			'New HE lite' => 'ANG.NEW.HE.LITE.1.0',
 			'New AE' => 'ANG.NEW.AE.1.0',
+			'New AE Multicountry' => 'ANG.MULTICOUNTRY.AE.1.0',
 			'New HE standard' => 'ANG.NEW.HE.STANDARD.1.0'
             };
         }
@@ -255,7 +257,7 @@ public without sharing class AMS_MigrationToolHelper {
 		Id caseId = caseIn.Id;
 
 
-		if(processType == AMS_Utils.NEWAE){
+		if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE){
 			accreditationObj.Remittance_frequency__c = caseIn.Account.Parent.Remittance_frequency__c;
 			accreditationObj.TradeName__c = caseIn.Account.TradeName__c;
 			accreditationObj.Trade_Name__c = caseIn.Account.TradeName__c;
@@ -388,7 +390,7 @@ public without sharing class AMS_MigrationToolHelper {
 			accreditationObj.IATACode__c = caseToProcess.Account.IATACode__c;
 
 			update accreditationObj;
-		}else if(processType == AMS_Utils.NEWAE){
+		}else if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE){
 			update accreditationObj;		   
 		}
 
@@ -503,7 +505,7 @@ public without sharing class AMS_MigrationToolHelper {
 		accreditationObj.VAT_Number_2__c = accreditationObj.VAT_Number_2__c == null ? acct.VAT_Number_2__c : accreditationObj.VAT_Number_2__c;
 		accreditationObj.Website__c = accreditationObj.Website__c == null ? acct.Website : accreditationObj.Website__c;
 
-		if(processType == AMS_Utils.NEWAE){
+		if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE){
 			accreditationObj.ANG_Accreditation_type__c = acct.ANG_Accreditation_Model__c;
 		}
 		
@@ -573,7 +575,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 		accreditationObj = fillAccreditation(accreditationObj, acct, directAccount, processType, caseId);
 
-		if(processType == AMS_Utils.NEWAE){
+		if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE){
 			accreditationObj.Remittance_frequency__c = acct.Remittance_frequency__c;
 			accreditationObj.TradeName__c = acct.TradeName__c;
 			accreditationObj.Trade_Name__c = acct.TradeName__c;
@@ -783,7 +785,7 @@ public without sharing class AMS_MigrationToolHelper {
 
 			List<AMS_Accreditation_Contact__c> contacts;
 
-			if(processType == AMS_Utils.NEWAE)
+			if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE)
 				contacts = createAccreditationContacts(accreditationObj,caseToProcess.Account.ParentId,processType);
 			else
 				contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);

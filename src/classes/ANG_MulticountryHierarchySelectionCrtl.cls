@@ -13,9 +13,9 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		get{
 			if(oscarFields == null){
 				oscarFields = new Set<String>{
-					  'Account__c'
+					'Account__c'
 					, 'Process__c'
-                    , 'ANG_Type_Of_Change__c'
+					, 'ANG_Type_Of_Change__c'
 					, 'Step6__c'
 					, 'Step45__c'
 					, 'AMS_Online_Accreditation__c'
@@ -263,7 +263,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		oscarId = stdController.getId();
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
 
-        if(Test.isRunningTest()) oscar =  [Select Id, Account__c, Process__c, ANG_Type_Of_Change__c, Step6__c, STEP45__c, ANG_Hierarchy_Created__c from AMS_OSCAR__c where Id =:oscarId];
+        if(Test.isRunningTest()) oscar =  [Select Id, Account__c, Process__c, Step6__c, ANG_Type_Of_Change__c, STEP45__c, ANG_Hierarchy_Created__c from AMS_OSCAR__c where Id =:oscarId];
 	}
 
 
@@ -320,47 +320,33 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 			Savepoint sp = Database.setSavepoint();
 			try {
+				
+
 
 				adjustAccountsParentship();
 
 				List<Account> accountsToUpdate = fetchAccounts();
 
 				if(!accountsToUpdate.isEmpty()){
-
-					System.debug('Updating accounts:'+accountsToUpdate);
-
-					AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 					update accountsToUpdate;
-					AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 					createHierarchy(accountsToUpdate);
 					closeTab = true;
-				}
-
-				Account newgeAccount = isChangedGE();
-
-				if(newgeAccount != null){
-					
-					Id newGEId = newgeAccount.Id;
-
-					oscar.Account__c = newGEId;
-					AMS_Pax_Accreditation_Form__c onlineAcc = new AMS_Pax_Accreditation_Form__c(Id=oscar.AMS_Online_Accreditation__c);
-					onlineAcc.HO_Account__c = newGEId;
-					onlineAcc.Account_Name__c = newgeAccount.Name;
-					onlineAcc.Abbreviated_name__c = newgeAccount.Name;
-					
-					update onlineAcc;
-
-					Case oscarCase = new Case(Id=oscar.Oscar_Communication_Case_Id__c);
-					oscarCase.AccountId = newGEId;
-					update oscarCase;
-
 				}
 
 				oscar.Step45__c = AMS_Utils.PASSED;
 
 				update oscar;
 				//if(updateRelatedRecords()) closeTab = true;
-
+				
+				//setting Set for batch to create case, oscar and staging area for the child accounts
+				Set<Id> acctId = new Set<Id>();
+				
+				for(Account a: accountsToUpdate)
+					AcctId.Add(a.id);
+				
+				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
+				Id batchId = Database.executeBatch(myBatchObject,1);
+			
 			} catch(Exception e) {
 				Database.rollback(sp);
 				//DML Exceptions are sometimes displayed on the page
@@ -370,38 +356,15 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 	}
 
-	private Account isChangedGE(){
-
-		Id accountId = oscar.Account__c;
-
-		for(HierarchyItem item:hierarchyValues){
-
-			if(!item.isAE && !item.isHE){
-				if(item.acc.Id != accountId)
-					return item.acc;
-			}
-
-		}	
-
-		return null;
-
-	}
-
 	private void createHierarchy(List<Account> acctLst){
 
-		List<AMS_Agencies_relationhip__c> alreadyCreatedRelations = new List<AMS_Agencies_relationhip__c>();
-		Id hierarchyId = null;
+		Set<String> alreadyCreatedRelations = new Set<String>();
 
-		For(AMS_Agencies_relationhip__c ar : [Select Id, Hierarchy__c, Parent_Account__c, Child_Account__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__c = :oscar.account__c]){
-			alreadyCreatedRelations.add(ar);
-			hierarchyId = ar.Hierarchy__c;
-		}
+		For(AMS_Agencies_relationhip__c ar : [Select Id, Parent_Account__c, Child_Account__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__c = :oscar.account__c])
+			alreadyCreatedRelations.add(String.valueof(ar.Child_Account__c)+String.valueOf(ar.Parent_Account__c));
 
-		if(!alreadyCreatedRelations.isEmpty()){
-			delete alreadyCreatedRelations;
-			AMS_Agencies_Hierarchy__c ahie = new AMS_Agencies_Hierarchy__c(id=hierarchyId);
-			delete ahie;
-		}
+		if(acctLst.size() < 2)
+			return;
 
 		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
 		insert hierarchy;
@@ -489,16 +452,6 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			}
 			if(item.acc.Location_Type__c == AMS_Utils.HE && item.isAE){
 				item.acc.Location_type__c = AMS_Utils.AE;
-				item.wasChanged = true;			
-			}
-			if(item.acc.Location_Type__c == AMS_Utils.GE && (item.isAE || item.isHE)){
-				item.acc.Location_type__c = item.isAE ? AMS_Utils.AE : AMS_Utils.HE;
-				item.wasChanged = true;			
-			}
-
-
-			if(!item.isHE && !item.isAE){
-				item.acc.Location_type__c = AMS_Utils.GE;
 				item.wasChanged = true;			
 			}
 		}
