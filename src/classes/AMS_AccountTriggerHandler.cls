@@ -37,21 +37,18 @@ public class AMS_AccountTriggerHandler {
         }
         System.debug('[AMS_AccountTriggerHandler]parentIds: ' + parentIds);
         
-        List<Account> parentList = [select id, name, Top_Parent__c, ParentId, Location_Type__c, Location_Class__c, IATA_ISO_Country__c, ANG_IsNewGenAgency__c from account where Id in :parentIds AND ANG_IsNewGenAgency__c = true AND (Top_Parent__r.Location_Type__c = 'GE' OR Location_Type__c = 'GE')];
+        List<Account> aList = [select id, name, Top_Parent__c, ParentId, Location_Type__c, Location_Class__c, IATA_ISO_Country__c, IATA_ISO_Country__r.name, ANG_IsNewGenAgency__c from account where (Id in :parentIds OR ParentId in :parentIds) AND ANG_IsNewGenAgency__c = true AND (Top_Parent__r.Location_Type__c = 'GE' OR Location_Type__c = 'GE')];
+        System.debug('[AMS_AccountTriggerHandler]aList: ' + aList);
         
-        Map<Id,Account> parentAccounts = new Map<Id,Account>();
-        for(Account pa : parentList)
-        	parentAccounts.put(pa.Id, pa);
-        System.debug('[AMS_AccountTriggerHandler]parentAccounts: ' + parentAccounts);
         
-        List<Account> acclist = new List<Account>();
-        accList = parentList.clone();
-        accList.addAll(accs);
-        
-        System.debug('[AMS_AccountTriggerHandler]accList: ' + accList);
+        Map<Id,Account> aAccounts = new Map<Id,Account>();
+        for(Account pa : aList)
+        	aAccounts.put(pa.Id, pa);
+        System.debug('[AMS_AccountTriggerHandler]parentAccounts: ' + aAccounts);
+
 		Map<Id,List<Account>> accMap = new Map<Id,List<Account>>();
         
-        accMap = accountMapBuild(accList);
+        accMap = accountMapBuild(aList);
         System.debug('[AMS_AccountTriggerHandler]Map: ' + accMap);
         
         for(Account ag : accs){
@@ -73,11 +70,16 @@ public class AMS_AccountTriggerHandler {
             	
             	//SENAIO 1
             	if(ag.Location_Type__c == 'HE'){
+            		
+            		if(aAccounts.get(ag.parentId).Location_Type__c != 'GE')
+            			ag.addError('HE Accounts must have a GE Parent Account');
+            		
             		for(Account brotherAccount1: accMap.get(ag.ParentId)){
             			
-            			System.debug('[AMS_AccountTriggerHandler] parentAccounts.get(ag.parentId).Location_Type__c =  ' + parentAccounts.get(ag.parentId).Location_Type__c);
+            			System.debug('[AMS_AccountTriggerHandler] parentAccounts.get(ag.parentId).Location_Type__c =  ' + aAccounts.get(ag.parentId).Location_Type__c);
             			System.debug('[AMS_AccountTriggerHandler] '+ brotherAccount1.IATA_ISO_Country__r.name+' == '+ag.IATA_ISO_Country__r.name);
-            			if(brotherAccount1.IATA_ISO_Country__c == ag.IATA_ISO_Country__c || parentAccounts.get(ag.parentId).Location_Type__c != 'GE')
+            			System.debug('[AMS_AccountTriggerHandler] brotherAccount1 =  ' + brotherAccount1);
+            			if(brotherAccount1.Id != null && (brotherAccount1.IATA_ISO_Country__c == ag.IATA_ISO_Country__c))
             				ag.addError('The BSP is already in the multicountry hierarchy, the new agency can only be an AE in that BSP');
             		}
             	}
@@ -85,12 +87,22 @@ public class AMS_AccountTriggerHandler {
             	else if(ag.Location_Type__c == 'AE'){
             		System.debug('[AMS_AccountTriggerHandler] Is inside else');
             		
+            		
+            		
+            		//restrictions caused by the parent account
+            		if(aAccounts.get(ag.parentId).Location_Type__c == 'AE')
+            			ag.addError('AE Accounts must have a GE or HE Parent Account');
+            		
+            		else if(aAccounts.get(ag.parentId).IATA_ISO_Country__c != ag.IATA_ISO_Country__c)
+            				ag.addError('The BSP is not in the multicountry hierarchy yet, the new agency can only be an HE in that BSP');
+            		
+            		//restriction caused by simbing accounts
             		for(Account brotherAccount2: accMap.get(ag.ParentId)){
             			
             			System.debug('[AMS_AccountTriggerHandler]a2.IATA_ISO_Country__c = ' +brotherAccount2.IATA_ISO_Country__c);
             			System.debug('[AMS_AccountTriggerHandler]ag.IATA_ISO_Country__c = ' +ag.IATA_ISO_Country__c);
             			
-            			if(parentAccounts.get(ag.parentId).Location_Type__c == 'AE' || (brotherAccount2.IATA_ISO_Country__c == ag.IATA_ISO_Country__c && brotherAccount2.Location_Type__c == 'HE') || ag.IATA_ISO_Country__c != parentAccounts.get(ag.parentId).IATA_ISO_Country__c)
+            			if(((brotherAccount2.IATA_ISO_Country__c == ag.IATA_ISO_Country__c && brotherAccount2.Location_Type__c == 'HE') || ag.IATA_ISO_Country__c != aAccounts.get(ag.parentId).IATA_ISO_Country__c) && brotherAccount2.Id != null)
             				ag.addError('The BSP is not in the multicountry hierarchy yet, the new agency can only be an HE in that BSP');
             		}
             	}
@@ -603,8 +615,7 @@ public class AMS_AccountTriggerHandler {
     			if(child.ParentId == dad.id)
     				children.add(child);
     		}
-    		if(!children.isEmpty())
-    			toReturn.put(dad.Id,children);
+    		toReturn.put(dad.Id,children);
     	}
     	 	
     	return toReturn;
