@@ -380,27 +380,40 @@
         <masterLabel>Change the RHC currency</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/apex.js&quot;)} 
+        <url>{!REQUIRESCRIPT("/soap/ajax/43.0/connection.js")} 
+{!REQUIRESCRIPT("/soap/ajax/43.0/apex.js")} 
+{!REQUIRESCRIPT("/support/console/43.0/integration.js")} 
+
 
 try{
-    var result = sforce.connection.query(&quot;Select ANG_AccountId__r.ANG_Accreditation_Model__c, ANG_AccountId__r.Location_Type__c From ANG_RHC_Information__c Where Id = &apos;{!ANG_RHC_Information__c.Id}&apos;&quot;);
+    var result = sforce.connection.query("Select ANG_AccountId__r.ANG_Accreditation_Model__c, ANG_AccountId__r.Location_Type__c From ANG_RHC_Information__c Where Id = '{!ANG_RHC_Information__c.Id}'");
 
-    var records = result.getArray(&quot;records&quot;);
+    var records = result.getArray("records");
     var rhc;
 
-    if (records.length &gt; 0)
+    if (records.length > 0)
         rhc = records[0];
-				else
-				    throw &apos;RHC record not found&apos;;
+                else
+                    throw 'RHC record not found';
     
-				if (rhc.ANG_AccountId__r.ANG_Accreditation_Model__c != &apos;Multicountry&apos; || rhc.ANG_AccountId__r.Location_Type__c != &apos;GE&apos;)
-				    throw &apos;This functionality is only available for GoGlobal agents&apos;;		
-								
-				window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!Case.OSCARId__c}&quot;);
-								
-				alert(&quot;OK!&quot;);
-				
+                if (rhc.ANG_AccountId__r.ANG_Accreditation_Model__c != 'Multicountry' || rhc.ANG_AccountId__r.Location_Type__c != 'GE')
+                    throw 'This functionality is only available for GoGlobal agents';       
+                                
+                if (sforce.console.isInConsole()) {
+    
+         sforce.console.getEnclosingPrimaryTabId(openPrimarytab);   
+
+        function openPrimarytab(result) {
+            var primaryTabId = result.id;
+            sforce.console.openPrimaryTab(primaryTabId , '/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}', true, 
+                'RHC Currency', null);
+        };
+                                
+    } else {
+       window.open('/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}');
+                }
+                                                                
+                
 } catch (err) {
     alert(err);
 }</url>
