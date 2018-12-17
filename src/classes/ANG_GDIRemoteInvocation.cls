@@ -20,7 +20,7 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 
 		Map<Id,Remote_Invocation_Artefact__c> artefacts = new Map<ID,Remote_Invocation_Artefact__c>([SELECT ID, External_ID__c, Format__c, Internal_ID__c, Name__c, Previous_Version__c, Remote_Invocation__c, 
 															Request_Result__c, Source__c, Status__C, Status_Detail__c, Valid_From__c, Valid_To__c, Version__c, Version_Notes__c
-															FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :remoteInvocationsGDI]);								
+															FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :remoteInvocationsGDI ORDER BY LastModifiedDate ASC]);								
 		
 		Set<String> keysForsBojects = new Set<String>();
 
@@ -79,6 +79,7 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 
 		//Opportunities to update
 		List<Opportunity> updatedOpportunities = new List<Opportunity>();
+		List<Case> updatedCases = new List<Case>();
 		//the new Staging Financial Securities to be inserted
 		List<Opportunitylineitem> stagingFSs = new List<Opportunitylineitem>();
 		
@@ -95,7 +96,7 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 
 		//fetch and store OSCARS by iata code (FALTA VALIDAR PELA POIA DO TIPO GDI)
 		
-		for (AMS_OSCAR__c oscar : [SELECT ID, name, Account__r.IATACode__c,Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Account__c IN :mapIATACodeAccs.values() ]){
+		for (AMS_OSCAR__c oscar : [SELECT ID, name, Account__r.IATACode__c,Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Process__c = :AMS_Utils.NGGDI AND Account__c IN :mapIATACodeAccs.values() ]){
 			mapIATACodeOSCARs.put(oscar.Account__r.IATACode__c, oscar);
 			oscarIDs.add(oscar.id);
 		}
@@ -119,7 +120,9 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 			Opportunity opp = opportunitiesMap.get(ri.Internal_ID__c);
 			Financial_Security__c fs = financialSecuritiesMap.get(ri.Internal_ID__c);
 
-			//if tenho que mudar a cena na opportunidade
+			updatedCases.add(new Case(New_interaction__c = 'New Attachment', ID = oscar.Oscar_Communication_Case_Id__c));
+			oscar.Financial_Security_Received__c = system.today();
+
 			if(ri.currencyISOCode != opp.currencyISOCode){
 				opp.currencyISOCode = ri.currencyISOCode; 
 				updatedOpportunities.add(opp);
@@ -129,6 +132,8 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 		}
 
 		update updatedOpportunities;
+		update updatedCases;
+		update mapIATACodeOSCARs.values();
 		insert stagingFSs;
 	}
 
