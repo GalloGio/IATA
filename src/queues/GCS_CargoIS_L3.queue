@@ -2,6 +2,13 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <name>GCS-CargoIS-L3</name>
+    <queueMembers>
+        <users>
+            <user>shid@iata.org.prod</user>
+            <user>rossandj@iata.org</user>
+            <user>siponenp@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
