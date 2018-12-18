@@ -388,7 +388,7 @@
                     <apex:selectOption itemValue="No" itemLabel="Off"/>
                     <apex:actionSupport event="onchange" rerender="section4"/>
                 </apex:selectRadio>
-                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_AutoBilling_Helptext}"
+                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_SIS_Membership_AutoBilling_Helptext} {!$Label.ISSP_SIS_Membership_AutoBilling_Helptext2}"
                     styleclass="help" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
@@ -562,7 +562,7 @@
 
         <apex:pageBlockSectionItem rendered="{!showSection9}">
             <apex:outputLabel value="{!$Label.ISSP_Fax}"/>
-            <apex:inputField styleclass="required" value="{!newForm.Data_Exporting_Organization_Fax__c}" style="width: 20em;"/>
+            <apex:inputField value="{!newForm.Data_Exporting_Organization_Fax__c}" style="width: 20em;"/>
         </apex:pageBlockSectionItem>
 
         <apex:pageBlockSectionItem rendered="{!showSection9}">

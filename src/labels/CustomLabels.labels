@@ -25074,8 +25074,15 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership AutoBilling Helptext</shortDescription>
-        <value>As part of this service, IS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis IS will generate a Revenue Recognition File (File Format defined in the IS Participation Guide) containing the billing records of coupons included in the Auto-Billing Invoices.
-The Auto-Billed invoices are automatically closed and finalized by IS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, IS generates an Invoice Posting File which includes details of all Auto-Billed invoices.</value>
+        <value>As part of this service, SIS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis SIS will generate a Revenue Recognition File containing the billing records of coupons included in the Auto-Billing Invoices.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_AutoBilling_Helptext2</fullName>
+        <categories>ISSP SIS Membership2</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership AutoBilling Helptext2</shortDescription>
+        <value>This Revenue Recognition File along with the optional ISR data is forwarded to the billing entity. SIS allows the billing entity to correct/update the values of the Auto-Billing invoices though the IS-WEB. Any update made on IS-WEB is reported back to the billing entity in the next Revenue Recognition File. The Auto-Billed invoices are automatically closed and finalized by SIS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, SIS generates an IS-IDEC file for the billing entity called Invoice Posting File which includes details of all Auto-Billed invoices. The billing entity can use it to carry out any account postings for such invoices within its Revenue Accounting/General Ledger System.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_BankMandateDescription</fullName>
@@ -25369,7 +25376,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section4_Subtitle2</shortDescription>
-        <value>The Value Determination and Auto Billing are optional services provided by SIS in conjunction with A&amp;A, and can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®.</value>
+        <value>The Value Determination and Auto Billing are optional services provided by SIS in conjunction with A&amp;A, and can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®. Subscribers to these services are restricted to A&amp;A members only.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section4_Title</fullName>
@@ -25521,7 +25528,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section2_Subtitle1</shortDescription>
-        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
+        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section2_Title</fullName>
@@ -25714,14 +25721,6 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Only_One_File</shortDescription>
         <value>Only one file allowed</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_SIS_Membership_Originals_To_IATA</fullName>
-        <categories>ISSP SIS Membership</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_SIS_Membership_Originals_To_IATA</shortDescription>
-        <value>Originals should be sent to IATA Madrid office to the following address, but only after the approval of IATA:</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Participation_Agreement</fullName>
