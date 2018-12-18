@@ -364,7 +364,7 @@ global class ANG_RME_Alert_Service {
 	@future (callout=true)
 	webservice static void requestGDIEndorsementCertificate(String iataCode, String offerId){
 
-		WebserviceResult result = doRequest(iataCode, 'ENDORS_CERT'); //results are saved on the private varible "result"
+		WebserviceResult result = doRequest(iataCode, 'ENDORS_CERT', true, offerId); //results are saved on the private varible "result"
 
 		if(result.isSuccess){
 
