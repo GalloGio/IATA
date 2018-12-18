@@ -46,16 +46,38 @@
             c.set("v.isServiceEligible", params.isServiceEligible);
             
             if(params.isContactInserted){
-                var e = c.getEvent("StepCompletionNotification");
-                e.setParams({
-                    "stepNumber" : 3,
-                    "isComplete" : true,
-                     });
-                e.fire();
-                
-                emailCmp.set("v.errors", null);
-                emailCmp.set("v.disabled", true);
-                c.find("termsaccepted").set("v.disabled", true);
+            	if(serviceName != 'FRED'){
+                	var e = c.getEvent("StepCompletionNotification");
+                	e.setParams({
+                	    "stepNumber" : 3,
+                	    "isComplete" : true,
+                	     });
+                	e.fire();
+                	
+                	emailCmp.set("v.errors", null);
+                	emailCmp.set("v.disabled", true);
+                	c.find("termsaccepted").set("v.disabled", true);
+            	}
+            	else{
+            		if(! params.isServiceEligible){
+                        emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+                        c.set("v.Terms", false);
+            		}
+            		else{
+	                    c.set("v.contact",params.con);
+	                    c.set("v.account",params.acc);
+	                    //notify parent component that step is completed
+	                    var e = c.getEvent("StepCompletionNotification");
+	                    e.setParams({
+	                        "stepNumber" : 1,
+	                        "isComplete" : true,
+	                         });
+	                    e.fire();
+	                    emailCmp.set("v.errors", null);
+	                    emailCmp.set("v.disabled", true);
+	                    c.find("termsaccepted").set("v.disabled", true);
+            		}
+            	}
             }
             else if(params.isEmailAddressAvailable && !params.isContactInserted){
                 //notify parent component that step is completed

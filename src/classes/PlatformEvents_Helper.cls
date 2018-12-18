@@ -46,7 +46,8 @@ public class PlatformEvents_Helper {
                 for(string FieldSource:MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
                         if(!rtList.isEmpty()) 
-                            sObj.put(MapMapping.get(FieldSource) , RecordTypeSingleton.getInstance().getRecordTypeById(ObjSource, (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))).Name);
+                            //sObj.put(MapMapping.get(FieldSource) , RecordTypeSingleton.getInstance().getRecordTypeById(ObjSource, (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))).Name);
+                            sObj.put(MapMapping.get(FieldSource) , RTName(string.valueOf(ObjId.getsobjecttype()), (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))));
                         else
                             sObj.put(MapMapping.get(FieldSource), null);
                         
@@ -83,6 +84,11 @@ public class PlatformEvents_Helper {
         }
         
         if(!lsLogs.isEmpty()) insert lsLogs;
+    }
+    
+    private static string RTName(string theObject, id RTId){
+        if(RTId==null)  return null;
+        return Schema.getGlobalDescribe().get(theObject).getDescribe().getRecordTypeInfosById().get(RTId).getName();
     }
     
     private static map<string, string> getMappingMap(string sObj){
