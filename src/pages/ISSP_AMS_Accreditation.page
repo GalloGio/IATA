@@ -694,7 +694,7 @@
                             <div class="form-group">
                                 <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
 
-                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;display:none">
+                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px; display:{!IF(isMultiCountryNewAE, '', 'none')};">
                                     <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
                                     </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
@@ -746,7 +746,7 @@
 
                     });
 
-                    toggleCountries($('[id$=officetypelist]').val());
+                    if ({!isMultiCountryNewAE} == false) toggleCountries($('[id$=officetypelist]').val());
 
                     //Disable country selection for the Pilot
                     //document.getElementById('{!$Component.step1Form.step1Block.countryconcerned}').disabled=true;
