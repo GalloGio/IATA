@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Product Effective to Expired</name>
+    <style>none</style>
+    <subject>Product Effective to – Expired</subject>
+    <textOnly>Dear Product Owner,
+
+This is a final notice to let you know that the validity date for your product #{!Product2.SAP_Material_Number__c} has expired. This is your last chance to change or extend your product’s Effective To date. Please perform one of the following actions:
+
+Extend the Effective To date to a future period if you still wish to sell the remaining inventory
+Should you not complete this action, the product will automatically be removed from the Online catalog tomorrow.
+
+
+Best regards,
+eCommerce Support Team</textOnly>
+    <type>custom</type>
+</EmailTemplate>
