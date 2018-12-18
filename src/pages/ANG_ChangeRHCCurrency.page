@@ -1,9 +1,8 @@
 <apex:page  controller="ANG_ChangeRHCCurrency" showHeader="false" sidebar="false">
 
-	<apex:form>
-		
+	<apex:form>		
 
-		<apex:pageBlock id="infoBlock" mode="edit" tabStyle="ANG_RHC_Information__c" title="Current RHC" rendered="{!rhc != null}">
+		<apex:pageBlock id="infoBlock" mode="detail" tabStyle="ANG_RHC_Information__c" title="Current RHC" rendered="{!rhc != null}">
 			<apex:pageBlockButtons>
 				<apex:commandButton action="{!toggleEditMode}" value="Edit" id="editButton"/>
 			</apex:pageBlockButtons>
@@ -14,18 +13,15 @@
 			</apex:pageBlockSection>
 		</apex:pageBlock>
 
-
 		<apex:pageBlock mode="edit" tabStyle="ANG_RHC_Information__c" title="Change RHC Currency" rendered="{!AND(isEdit, rhc != null)}">
 			 <apex:pageBlockSection title="RHC Information" columns="2">
-
 				 <apex:pageBlockSectionItem labelStyleClass="field.styleClass" dataStyleClass="field.styleClass" >      
                     <apex:outputLabel id="plLabel" value="Currency"/> 
                         <apex:selectList id="currencyPL" value="{!rhc.CurrencyIsoCode}" multiselect="false" size="1" onchange="forecast(),rerenderInfo()"> 
                             <apex:selectOptions value="{!plOptions}"/>
                         </apex:selectList>
                 </apex:pageBlockSectionItem>
-                <apex:commandButton action="{!save}" value="Save" id="saveButton"/>
-
+                <apex:commandButton action="{!save}" value="Save" id="saveButton"/>           
 			</apex:pageBlockSection>
 		</apex:pageBlock>
 

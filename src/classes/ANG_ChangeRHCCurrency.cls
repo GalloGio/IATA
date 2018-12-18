@@ -58,6 +58,8 @@ public with sharing class ANG_ChangeRHCCurrency {
         private set;
     }
 
+    private String oldCurrency{get; set;}
+
     public ANG_RHC_Information__c rhc{get;set;}
 
     public List<SelectOption> plOptions{
@@ -74,9 +76,19 @@ public with sharing class ANG_ChangeRHCCurrency {
     }
 
     public void forecast(){
-        rhc.recalculateFormulas();
+
+        Map<String,Schema.SObjectField> fieldsMap = sObjDesc.fields.getMap();
+
+        for (String field : fieldsToQuery){
+            if(rhc.get(field) != null && fieldsMap.get(field).getDescribe().getType().name() == 'CURRENCY' && !fieldsMap.get(field).getDescribe().isCalculated()){
+                Decimal value = (Decimal)rhc.put(field, CurrencySingleton.getInstance().convertCurrency((Decimal)rhc.get(field), oldCurrency, rhc.CurrencyIsoCode));
+            }
+        }
+
         ANG_RHCHelper.calculateRHCAmount(new List<ANG_RHC_Information__c>{rhc});
         rhc.recalculateFormulas();
+        oldCurrency = rhc.CurrencyIsoCode;
+        
     }
 
     public void toggleEditMode(){
@@ -86,6 +98,7 @@ public with sharing class ANG_ChangeRHCCurrency {
     public void save(){
         update rhc;
         queryRHC();
+        ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.INFO,'Currency Saved'));
     }
 
     private void queryRHC(){
@@ -94,7 +107,8 @@ public with sharing class ANG_ChangeRHCCurrency {
 
     public ANG_ChangeRHCCurrency() {
         this.objId = ApexPages.currentPage().getParameters().get('Id'); 
-        queryRHC();      
+        queryRHC();
+        oldCurrency = rhc.CurrencyIsoCode;      
     }
 
     public class FieldWrapper{
