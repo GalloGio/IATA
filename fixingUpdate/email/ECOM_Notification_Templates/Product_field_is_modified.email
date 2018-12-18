@@ -1,0 +1,18 @@
+<html> 
+<head> 
+</head> 
+<body> 
+<p>Dear {!Product2.Product_Manager_lookup__c},</p>
+<p>
+Your product has been modified {!Product2.SAP_Material_Number__c}. Please verify that your requirements were met by this/these modification(s).
+</p>
+<p>{!ListOfFields}</p>
+
+<p></p>
+<p></p>
+<p>Best regards,<br />
+eCommerce Support Team
+</p>
+
+</body> 
+</html>
