@@ -4362,29 +4362,25 @@ public class AMS_OSCARTriggerHandler {
         //END Validation 1
 
         //START Validation 2: check if oscar has an opportunity created
-        Set<Id> oppOscarIDSet = new Set<Id>();
-        for(Opportunity opp : [SELECT Id, Related_Oscar__c FROM Opportunity WHERE Related_Oscar__c IN :oscarsToProcessMap.keySet()])
-            oppOscarIDSet.add(opp.Related_Oscar__c);
+        Map<Id,Opportunity> oppOscarIdMap = new Map<Id,Opportunity>();
+        for(Opportunity opp : [SELECT Id, Related_Oscar__c, GDI_Offer_Id__c FROM Opportunity WHERE Related_Oscar__c IN :oscarsToProcessMap.keySet()])
+            oppOscarIdMap.put(opp.Related_Oscar__c, opp);
 
-        Set<String> iataCodes = new Set<String>();
+        Map<String,String> iataCodes = new Map<String,String>();
 
         for(AMS_OSCAR__c oscar :oscarsToProcessMap.values()) {
-            if(!oppOscarIDSet.contains(oscar.Id)) {
+            if(!oppOscarIdMap.containsKey(oscar.Id) || String.isBlank(oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c) ) {
                oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
             } else {
-                iataCodes.add(oscar.IATACode__c);
+                iataCodes.put(oscar.IATACode__c,oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c);
             }
         }
 
         if(iataCodes.isEmpty())
             return;
-        //END Validation 2
 
-        //TODO: do callout (confirm endpoint)
-
-        //create overload for following method? 
-        //ANG_RME_Alert_Service.requestProvisionalRHC(String accountId, Boolean flagUpdateProvisioning){
-
+        for(String key : iataCodes.keySet())
+            ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
         
     }          
 

@@ -360,11 +360,39 @@ global class ANG_RME_Alert_Service {
 		return result;
 	}
 
+	//called from the oscar trigger when Endorsement_Requested__c is set to true
+	@future (callout=true)
+	webservice static void requestGDIEndorsementCertificate(String iataCode, String offerId){
+
+		WebserviceResult result = doRequest(iataCode, 'ENDORS_CERT'); //results are saved on the private varible "result"
+
+		if(result.isSuccess){
+
+			if(result.res.iataCode != iataCode){ 
+				log.Error_Code__c = 'Iata Code Mismatch';
+				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				ServiceNow_Helper.sendRequestToSNOWRME('SNOW6',iataCode, log, result);
+			}
+
+			if(String.isNotEmpty(log.Error_Code__c)) update log;
+		}
+
+		//
+		// To reset the singleton for future calls
+		//
+		log = null;	
+
+	}
+
 	private static WebserviceResult doRequest(String iataCode, String mappingName){
-		return doRequest(iataCode, mappingName, true);
+		return doRequest(iataCode, mappingName, true, '');
 	}
 
 	private static WebserviceResult doRequest(String iataCode, String mappingName, boolean commitLog){
+		return doRequest(iataCode, mappingName, commitLog, '');
+	}
+
+	private static WebserviceResult doRequest(String iataCode, String mappingName, boolean commitLog, String offerId){
 
 		ANG_CalloutMapping__c params = ANG_CalloutMapping__c.getInstance(mappingName);
 
@@ -376,7 +404,7 @@ global class ANG_RME_Alert_Service {
 		req.setHeader('Content-Type', 'application/json');
 		req.setMethod(params.Action__c);
 		req.setTimeout(120000);
-		req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c);
+		req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode).replace('{offerId}',offerId) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c);
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] req - ' + req);
 
