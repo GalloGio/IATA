@@ -657,6 +657,27 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Allrd</fullName>
+        <columns>NAME</columns>
+        <columns>ISS_operation__c</columns>
+        <columns>Operation_Code__c</columns>
+        <columns>Period_Code__c</columns>
+        <columns>Operation_Period_code__c</columns>
+        <columns>First_Day__c</columns>
+        <columns>Last_Day__c</columns>
+        <columns>Remittance_Day__c</columns>
+        <columns>Settlement_Day__c</columns>
+        <columns>Operation_Currency__c</columns>
+        <columns>frequency_code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Remittance_Day__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>All with remittance day</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>mgo</fullName>
         <columns>NAME</columns>
         <columns>ISS_operation__c</columns>

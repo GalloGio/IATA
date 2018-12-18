@@ -547,15 +547,6 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <customButtons>Mass_Update_Contracts</customButtons>
-        <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CONTRACT.NAME</fields>
-        <fields>CONTRACT.START_DATE</fields>
-        <fields>CONTRACT.END_DATE</fields>
-        <fields>EF_Status__c</fields>
-        <relatedList>RelatedContractList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <customButtons>Edit_All_Airline_BA</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
@@ -627,6 +618,21 @@
         <fields>Active__c</fields>
         <relatedList>Location__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>Mass_Update_Contracts</customButtons>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>Product_Family__c</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <fields>CONTRACT_TERM</fields>
+        <fields>Current_Cycle_Start_Date__c</fields>
+        <fields>Current_Cycle_End_Date__c</fields>
+        <fields>Contract_Renewal_Cycle_in_months__c</fields>
+        <fields>Status_formula__c</fields>
+        <relatedList>RelatedContractList</relatedList>
+        <sortField>CONTRACT.END_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
