@@ -51,6 +51,7 @@ public with sharing class ANG_ChangeRHCCurrency {
                         }
                     }
                 }
+                fieldsToQuery.addAll(FORECAST_REQUIRED_FIELDS);
             }
             return fieldsToQuery;
         }
@@ -84,12 +85,16 @@ public with sharing class ANG_ChangeRHCCurrency {
 
     public void save(){
         update rhc;
+        queryRHC();
+    }
+
+    private void queryRHC(){
+        this.rhc = Database.query('SELECT Id,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
     }
 
     public ANG_ChangeRHCCurrency() {
-        this.objId = ApexPages.currentPage().getParameters().get('Id');
-        fieldsToQuery.addAll(FORECAST_REQUIRED_FIELDS);       
-        this.rhc = Database.query('SELECT Id,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
+        this.objId = ApexPages.currentPage().getParameters().get('Id'); 
+        queryRHC();      
     }
 
     public class FieldWrapper{

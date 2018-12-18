@@ -1,17 +1,19 @@
 <apex:page  controller="ANG_ChangeRHCCurrency" showHeader="false" sidebar="false">
 
 	<apex:form>
+		
 
 		<apex:pageBlock id="infoBlock" mode="edit" tabStyle="ANG_RHC_Information__c" title="Current RHC" rendered="{!rhc != null}">
+			<apex:pageBlockButtons>
+				<apex:commandButton action="{!toggleEditMode}" value="Edit" id="editButton"/>
+			</apex:pageBlockButtons>
 			<apex:pageBlockSection title="RHC Information" columns="2">
 				<apex:repeat value="{!displayFields}" var="field">
-					<!--<apex:outputLabel value="{!field.label}"/>-->
 					<apex:outputField value="{!rhc[field.name]}"/>
 				</apex:repeat>
 			</apex:pageBlockSection>
 		</apex:pageBlock>
 
-		<apex:commandButton action="{!toggleEditMode}" value="Edit" id="editButton"/>
 
 		<apex:pageBlock mode="edit" tabStyle="ANG_RHC_Information__c" title="Change RHC Currency" rendered="{!AND(isEdit, rhc != null)}">
 			 <apex:pageBlockSection title="RHC Information" columns="2">
@@ -27,8 +29,8 @@
 			</apex:pageBlockSection>
 		</apex:pageBlock>
 
-	<apex:actionFunction name="rerenderInfo" rerender="infoBlock" />
-	<apex:actionFunction name="forecast" action="{!forecast}"/>
+		<apex:actionFunction name="rerenderInfo" rerender="infoBlock" />
+		<apex:actionFunction name="forecast" action="{!forecast}"/>
 
 	</apex:form>
 	
