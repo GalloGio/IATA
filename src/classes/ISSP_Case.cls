@@ -177,6 +177,11 @@ public without sharing class ISSP_Case {
                 return new PageReference('/ISSP_ModelA_Onboarding?caseId=' + caseId);
             }
 
+            //if case is a SIS Joining Form
+            if(newCase.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process' && newCase.Classification_SIS__c == 'SIS Membership'
+                    && newCase.Status == 'Draft' && !newCase.isClosed && !newCase.Owner.Name.StartsWith('Recycle Bin')){
+                return new PageReference('/ISSP_SISMembershipApplicationForm?id=' + caseId + '&step=2');
+            }
             // If Case is an ICCS Case, redirect to ICCS Service
 			Set<String> recordTypesSet = new Set<String>{
 				'FDS ASP Management',
@@ -654,8 +659,6 @@ public without sharing class ISSP_Case {
                     }
                 }
                 
-                
-                
                 List<Contact> lsContacts = new list<Contact>();
                 for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
                         FROM User
@@ -669,6 +672,7 @@ public without sharing class ISSP_Case {
                 JSONcontacts = JSON.serialize(lsContacts);
                 System.debug(lsAccounts);
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
+                newCase.Status = 'Action Needed';
 
                 System.debug(profileRole);
 
@@ -1793,5 +1797,18 @@ public without sharing class ISSP_Case {
             }
         }
         return listHistory;
+    }
+    
+    /**
+        Allowed values for Status field when a DPC user is using this page
+    **/
+    public list<SelectOption> getListDPCValidCaseStatus() {
+        set<String> setStatus = new set<String>{'Pending Feedback From Requestor','Action Needed'};
+        setStatus.add(this.newCase.Status);
+        list<SelectOption> listOptions = new list<SelectOption>();
+        for (String status: setStatus) {
+            listOptions.add(new SelectOption(status,status));
+        }
+        return listOptions;
     }
 }
