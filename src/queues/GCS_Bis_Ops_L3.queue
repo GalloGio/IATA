@@ -3,11 +3,9 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <name>GCS-BIS-Ops-L3</name>
     <queueMembers>
-        <users>
-            <user>meuniera@iata.org</user>
-            <user>zhuj@iata.org</user>
-            <user>bacelarp@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>GCS_BIS_OPS</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
