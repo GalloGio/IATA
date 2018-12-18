@@ -75,13 +75,7 @@ public class ANG_RiskEventTriggerHandler {
         
         Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
         for(ANG_Agency_Risk_Event__c re : triggerNew){  
-            //this check is necessary in case a risk event is inserted without a related object
-            //in this case, the unique key is set by a workflow rule, that triggers an update
-            //so we need to skip the call of assessment() (ANG_RiskAssessmentEngine)
-            if(Trigger.isUpdate && re.ANG_UniqueKey__c != oldMap.get(re.Id).ANG_UniqueKey__c && String.isBlank(oldMap.get(re.Id).ANG_UniqueKey__c)) {continue;}
-
             if(re.ANG_HE_AccountId__c != null) involvedAccounts.put(re.ANG_HE_AccountId__c,null);
-
 
             if(Trigger.isUpdate){
                 ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);

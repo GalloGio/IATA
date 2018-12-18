@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Internal Major default notification</name>
+    <style>formalLetter</style>
+    <subject>Major default notification</subject>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

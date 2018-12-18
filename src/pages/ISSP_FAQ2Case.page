@@ -644,19 +644,20 @@
 
 
                                     <apex:outputpanel id="countryPnl">
-                                        <!-- <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}"> --><!-- will show always as it is requested for chat -->
+                                                <!--     <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','none','block')}">--> <!-- will show always as it is requested for chat -->
+                                                <li style=" display:{!IF(excludeCountryPicklist == false,'block','none')}">
                                             <!-- Country -->
                                             <div class="row form-group">
                                                 <label class="col-lg-5 control-label" for="exampleInputEmail1"> {!$ObjectType.Case.Fields.Country_concerned_by_the_query__c.Label}</label>
                                                 <div class="col-lg-7">
 
-                                                    <div style="display:{!IF(isGSAUser == false || isCompliment == true,'block','none')}">
+                                                            <div style="display:{!IF((isGSAUser == false || isCompliment == true) && excludeCountryPicklist == false,'block','none')}">
                                                         <apex:selectlist styleclass="form-control rec mandatory" value="{!newCase1.IFAP_Country_ISO__c}" size="1" onchange="refreshAirlineList1();" id="SLNoN">
                                                             <apex:selectoptions value="{!countryList}" />
                                                         </apex:selectlist>
                                                     </div>
 
-                                                    <div style="display:{!if(isGSAUser == true && isCompliment == false,'block','none')}">
+                                                            <div style="display:{!if((isGSAUser == true && isCompliment == false) && excludeCountryPicklist == false,'block','none')}">
                                                         <apex:selectlist styleclass="form-control rec mandatory" value="{!newCase.IFAP_Country_ISO__c}" size="1" onchange="refreshAirlineList();" id="SLonchange">
                                                             <apex:selectoptions value="{!countryList}" />
                                                         </apex:selectlist>
@@ -668,7 +669,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <!-- </li> -->
+                                                </li>
                                     </apex:outputpanel>
 
                                     <apex:outputpanel id="AirlinesPnl" rendered="{!AND(isAgencyUser, currentButtonsToShow == 'CancelAndSubmit')}">
@@ -849,7 +850,7 @@
                              <!-- basto1p Live Agent V2 -->
                              <apex:actionFunction name="controllerCancel" action="{! cancel }" />
                              <apex:actionFunction name="controllerBack" action="{! back }" />
-                             <apex:actionFunction name="controllerCreate" action="{! create }" rerender="FieldsRep,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,op_subtopic_helptext,op_topic_helptext"/>
+                                        <apex:actionFunction name="controllerCreate" action="{! create }" rerender="FieldsRep,RightPanel,TopicsAndArticlesForm,AirlinesPnl,OPpbButton,op_subtopic_helptext,op_topic_helptext"/>
                              <apex:actionFunction name="controllerSave" action="{! save }" rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner"/>
                              <apex:actionFunction name="controllerSaveAttach" action="{! saveAttach }" rerender="RightPanel,TopicsAndArticlesForm,OPpbButton,err,loadStatusSpinner" status="loadStatusSpinner"/>
                              <apex:actionFunction name="ctrlLivAgIntroVidCloseDontRemenber" action="{! livAgentIntroVidCloseAndDontRemenber }" />
@@ -915,7 +916,7 @@
                                     </apex:outputPanel>
 
                                     <row>
-                                        <div class="col-md-1"></div>
+                                                    <div class="col-md-1" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}"></div>
                                         
                                         <!-- If not show call Us  fill the columns space with empty sapce -->
                                         <apex:outputPanel layout="none" rendered="{!IF(showCallUsButton==true, false, true)}">
@@ -1058,7 +1059,7 @@
                                             <div class="col-md-2"></div>
                                         </apex:outputPanel>
 
-                                        <div class="col-md-1"></div>
+                                                    <div class="col-md-1" style=" display:{!IF(currentButtonsToShow != 'CancelAndSubmit','block','none')}"></div>
 
                                     </row>
                                 </apex:outputPanel>
@@ -1084,7 +1085,7 @@
                                         <apex:param name="myRecordType" value=""/>
                                     </apex:actionFunction>
                              <apex:actionfunction name="ComplaintMethod" action="{!IwishtoComplain}"
-                                                  rerender="MainPnl,MainTitle,err,FAQsPanel" />
+                                                             rerender="MainPnl,MainTitle,err,FAQsPanel, countryPnl" />
                              <apex:actionfunction name="GeneralQueueMethod" action="{!GeneralQueueMethod}"
                                                   rerender="MainPnl,MainTitle,FieldsRep,FAQsPanel,RightPanel,TopicsAndArticlesForm,countryPnl,AirlinesPnl,OPpbButton,err" />
                             <apex:actionfunction name="EmergencyMethod" action="{!createAnEmergency}"
@@ -1101,7 +1102,7 @@
 
                                     <apex:actionFunction name="refreshTopicPickList" action="{!refreshTopicPickList}"
                                                          oncomplete="GenerateTopicHelpText();"
-                                                         reRender="countryPnl,AirlinesPnl,subtopPnl_Val,
+                                                             reRender="AirlinesPnl,subtopPnl_Val,
                                                          areaOfConcernPnl_Val,areaOfConcernPnl,
                                                          FAQsPanel, RightPanel, OPpbButton, modalWindowId"
                                                          status="actStatusId"/>
