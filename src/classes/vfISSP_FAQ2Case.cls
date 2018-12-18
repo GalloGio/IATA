@@ -2264,6 +2264,7 @@ for (string topicver:listofAllowedTopics){
     public PageReference createAnEmergency(){
         System.debug('createAnEmergency START: ' + this.Clicked_EmergencyRequest);
         resetCase();
+		excludeCountryPicklist = false;
         Clicked_SISHelpDesk = false;
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;

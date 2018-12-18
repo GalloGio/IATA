@@ -1103,7 +1103,7 @@
                                         <apex:actionFunction name="refreshSubTopicPickList"
                                                              action="{!refreshSubTopicPickList}"
                                                              oncomplete="GenerateSubTopicHelpText();"
-                                                             reRender="countryPnl,chatButtonsPnl,actStatusId,subtopPnl_Val, areaOfConcernPnl_Val,areaOfConcernPnl, RightPanel,OPpbButton, modalWindowId, MainPnl,MainTitle,err,FAQsPanel, countryPnl"
+                                                             reRender="countryPnl,chatButtonsPnl,callButtonPnl,actStatusId,subtopPnl_Val,areaOfConcernPnl_Val,areaOfConcernPnl,RightPanel,OPpbButton, modalWindowId, MainPnl,MainTitle,err,FAQsPanel"
                                                              immediate="{!CASE(currentButtonsToShow, 'OnlyCancel', 'false',
                                                                               'CancelAndCreateACase', 'false',
                                                                               'CancelAndSubmit','true', 'false')}"
