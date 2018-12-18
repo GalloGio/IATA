@@ -194,6 +194,7 @@
 
     <div class="container">
    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+        <c:ISSP_Notification attShowPopUp="{!showSidraPopup}" attRecordId="{!sidraCaseIdToShow}"/>
           <div class="row">
 <apex:variable var="Compatilitymode" value="{!if(isIE == 'IE'  || isIE == 'notIE','none','block')}" />
     <div style="display:{!Compatilitymode}"  class="col-md-12 col-xs-12 alert alert-warning" >

@@ -24,6 +24,8 @@ public  class ISSP_TC_Accept {
 
     //AMSU-142 (AMSU-26)
     public Boolean isCargoDGR {get; set;}
+    //AMSU-201
+    public Boolean showFinancialSec {get;set;}
 
      //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -61,8 +63,9 @@ public  class ISSP_TC_Accept {
         toAcceptTC = false;
         integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
         //AMSU-142 (AMSU-26) - added accountId      
-        userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId, AccountId, Contact.Designated_IFAP_Contact__c, Contact.User_Portal_Status__c
-                                //X2FA_Session__c, TD_User__c
+        //AMSU-201 - added Portal Status and Financial Assessment
+        userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId, AccountId, Contact.Designated_IFAP_Contact__c, Contact.User_Portal_Status__c,
+                        Contact.Financial_Assessment_Contact__c, Contact.User_Portal_Status__c
                                 FROM User WHERE Id =:UserInfo.getUserId()];
         if (!userList.isEmpty()){
             if (userList[0].LastPasswordChangeDate != null){
@@ -112,6 +115,10 @@ public  class ISSP_TC_Accept {
                     showFinancialInstitution = true;
                 }
             }
+
+            //AMSU-201
+            User u = userList[0];
+            showFinancialSec = u.Contact.Financial_Assessment_Contact__c || u.Contact.User_Portal_Status__c == 'Approved Admin';
         }
         
         selectedLanguage = UserInfo.getLanguage();

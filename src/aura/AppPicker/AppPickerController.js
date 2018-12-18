@@ -113,10 +113,42 @@
 		component.set("v.submitDisabled", false);
 	},
 
+    checkMandatoryFields : function(component, event, helper){
+        // For Fred, we need to check that contact's mandatory fields are filled 
+        // - if not, prompt the user to complete his profile
+        if(component.get("v.activeApp") == 'FRED'){
+			var action = component.get("c.areMandatoryFieldsFilled");
+			action.setParams({connectedapp : component.get("v.activeApp")});
+			action.setCallback(this, function(a) {
+				var state = a.getState();
+				// console.log(state);
+                if (state === "SUCCESS"){
+					var results = a.getReturnValue();
+                    
+                    if(results == true){
+						var action2 = component.get('c.checkSelectedRoleAvailability');
+                        $A.enqueueAction(action2);
+                    }
+                    else{
+						alert($A.get("$Label.c.OneId_FRED_Missing_Mandatory_Fields"));
+                    }
+				} else {
+					console.log(state);
+				}
+			});
+	    	$A.enqueueAction(action);            
+        }
+        else{
+            var action2 = component.get('c.checkSelectedRoleAvailability');
+            $A.enqueueAction(action2);
+        }
+    },
+
     checkSelectedRoleAvailability : function(component, event, helper){
         // For Fred, we need to check the roles availability accordingly to the following logic
         // - if there is no Fred user in the company, the Primary User role is given
         // - otherwise, the Secondary User role is given if the limit is not reached
+        var fredServiceRequestWarining = 'Please note, you are about to request access to FRED+. This service facilitates CORSIA CO2 emissions reporting for Aircraft Operators and State Authorities and your access request will be assessed by the FRED+ team. Please confirm that you would like to proceed.';
         if(component.get("v.activeApp") == 'FRED'){
 			var action = component.get("c.getAutomaticRole");
 			action.setParams({connectedapp : component.get("v.activeApp")});
@@ -132,7 +164,9 @@
                     else{
                         component.set("v.selectedRole", results);
 						var action2 = component.get('c.submitRequest');
-                        $A.enqueueAction(action2);
+                        if(confirm(fredServiceRequestWarining)){
+                        	$A.enqueueAction(action2);
+                        }
                     }
 				} else {
 					console.log(state);
