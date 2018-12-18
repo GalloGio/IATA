@@ -61,9 +61,8 @@ public  class ISSP_TC_Accept {
         toAcceptTC = false;
         integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
         //AMSU-142 (AMSU-26) - added accountId      
-        userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId, AccountId, Contact.Designated_IFAP_Contact__c, Contact.User_Portal_Status__c
-                                //X2FA_Session__c, TD_User__c
-                                FROM User WHERE Id =:UserInfo.getUserId()];
+        userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId, AccountId, Contact.Designated_IFAP_Contact__c, Contact.User_Portal_Status__c, Contact.Financial_Assessment_Contact__c
+                    FROM User WHERE Id =:UserInfo.getUserId()];
         if (!userList.isEmpty()){
             if (userList[0].LastPasswordChangeDate != null){
                 system.debug('LastPasswordChangeDate: ' + userList[0].LastPasswordChangeDate);
@@ -108,7 +107,7 @@ public  class ISSP_TC_Accept {
                 if (((acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent') && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) && 
                     (allowedLocTypes.contains(acc.Location_Type__c) || acc.Is_Branch_Abroad__c == 'Yes') &&
                     (AMS_Utils.ACTIVEAGENCYSTATUS.contains(acc.Status__c) || acc.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING) &&
-                    (userList[0].Contact.Designated_IFAP_Contact__c || userList[0].Contact.User_Portal_Status__c == 'Approved Admin')) {
+                    (userList[0].Contact.Financial_Assessment_Contact__c || userList[0].Contact.User_Portal_Status__c == 'Approved Admin')) {
                     showFinancialInstitution = true;
                 }
             }
