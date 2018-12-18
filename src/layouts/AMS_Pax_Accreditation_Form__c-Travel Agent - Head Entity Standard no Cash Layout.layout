@@ -214,6 +214,14 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ISSP_AMS_Gross_Amnt_First_year__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ISSP_AMS_Gross_Amnt_Second_year__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ISSP_AMS_IATA_Registered_Cargo_Agent__c</field>
             </layoutItems>
             <layoutItems>
@@ -316,7 +324,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7E000000OKZV</masterLabel>
+        <masterLabel>00hw000000iVCB2</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
