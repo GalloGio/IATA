@@ -3,7 +3,7 @@
     <apex:includeScript value="{!$Resource.jquery2_1_4}" />
     <apex:includeScript value="/support/console/34.0/integration.js" />
 
-    <script type="text/javascript">
+    <script>
         var pageLoad = window.onload;
 
         function openPrimaryTab(tabId, tabName) {
@@ -36,8 +36,65 @@
                 sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);
             };
             sforce.console.getEnclosingPrimaryTabId(openSubtab);
+        };
+
+        function blockPanel(){
+
+            document.getElementById('loaderPageBlock').style.display = 'block';
+
+            setTimeout(function(){
+                acceptMethod();
+            },10);
         }
+
+
     </script>
+
+<style>
+.overlay{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.85);
+    overflow-x: hidden;
+}
+
+.overlay-content {
+    position: relative;
+    top: 15%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay a:visited {
+    color: #666666;
+}
+
+.overlay p, ul, li {
+    padding: 0 0 8px 0;
+    text-decoration: none;
+    font-size: 22px;
+    color: #818181;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+.overlay ul, li {
+    font-size: 14px;
+    color: #818181;
+    text-align: left;
+    display: block; /* Display block instead of inline */
+}
+</style>
 
     <apex:sectionHeader title="Newgen ISS Financial Staging Area" />
 
@@ -92,19 +149,36 @@
             <apex:pageBlockSection columns="2" rendered="{!NOT(OR(ISNULL(newFSId),ISBLANK(newFSId)))}" collapsible="false">
                 <script type="text/javascript">
                     openSubtab('/{!newFSId}', 'New Financial Security');
-                    closeTab();
+                	closeTab();
                 </script>
             </apex:pageBlockSection>
 
         </apex:pageBlock>
  
         <apex:pageBlock mode="read">
+
             <apex:pageBlockButtons location="both">
-                <apex:commandButton value="Accept" action="{!accept}" onComplete="if({!!hasErrorMessages}){closeTab()}" id="acceptButton" rerender="stagingAreaForm" disabled="{!oscarProcessed}" />
-                <apex:commandButton value="Reject" action="{!reject}" onComplete="closeTab()" id="rejectButton" rerender="stagingAreaForm" disabled="{!oscarProcessed}" />
+
+                <apex:actionFunction name="acceptMethod" action="{!accept}"  />
+
+                <apex:commandButton value="Accept" onclick="blockPanel();"  id="acceptButton" disabled="{!oscarProcessed}" onComplete="refreshTab();">
+                </apex:commandButton>
+
+                <apex:commandButton value="Reject" action="{!reject}" onComplete="closeTab()" id="rejectButton" rerender="stagingAreaForm" disabled="{!oscarProcessed}">
+                </apex:commandButton>
+
             </apex:pageBlockButtons>
 
             <apex:pageBlockSection id="stagingAreaContents" columns="2" title="Staging Area Details" collapsible="true">
+
+                <div Id="loaderPageBlock" style="display:none;">
+                    <div class="overlay">
+                         <div class="overlay-content">
+                            <p style="font-size: 18px;color:#FFFFFF">Processing...</p>
+                        </div>
+                      <div class="loaderCircle"></div>
+                    </div>
+                </div>
 
                 <apex:repeat value="{!stagingAreaFields}" var="field">
                     <apex:pageBlockSectionItem>
