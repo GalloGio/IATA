@@ -1121,8 +1121,8 @@ $Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
 	AND(
 		NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
 		AND(
-			BEGINS($Profile.Name, &apos;ISS&apos;), 
-			NOT(BEGINS(Portal_Application__r.Name, &apos;Global Default Insurance&apos;))
+			NOT(BEGINS($Profile.Name, &apos;ISS&apos;)),
+			BEGINS(Portal_Application__r.Name, &apos;Global Default Insurance (GDI)&apos;)
 		)
 	)
 )</errorConditionFormula>
