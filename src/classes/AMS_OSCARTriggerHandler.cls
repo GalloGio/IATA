@@ -4433,7 +4433,7 @@ public class AMS_OSCARTriggerHandler {
     }
 
     // NEWGEN-4426
-    public static void handleGDIRequestEndorsementCertificate(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap) {
+    public static void handleGDIRequestEndorsementCertificate(Map<Id, AMS_OSCAR__c> newMap, Map<Id, AMS_OSCAR__c> oldMap) {
 
         //START validation 1: Check if Endorsement_Requested__c was set to true
         Map<Id,AMS_OSCAR__c> oscarsToProcessMap = new Map<Id,AMS_OSCAR__c>();

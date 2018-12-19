@@ -371,7 +371,7 @@ global class ANG_RME_Alert_Service {
 			if(result.res.iataCode != iataCode){ 
 				log.Error_Code__c = 'Iata Code Mismatch';
 				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW6',iataCode, log, result);
+				ServiceNow_Helper.sendRequestToSNOWRME('SNOW19',iataCode, log, result);
 			}
 
 			if(String.isNotEmpty(log.Error_Code__c)) update log;
