@@ -1,18 +1,29 @@
 <messaging:emailTemplate subject="
-{!IF(relatedTo.CaseArea__c=='Accreditation Process',
-CASE(relatedTo.Reason1__c,
-'New HO', $Label.ISSP_AMS_Email_HO_Subject,
-'New HE standard', $Label.ISSP_ANG_Email_HE_Cash_Subject,
-'New HE lite', $Label.ISSP_ANG_Email_HE_Cashless_Subject,
-'New AE', $Label.ISSP_ANG_Email_AE_Subject,
-'New BR / IP', $Label.ISSP_AMS_Email_Branch_Subject,
-'New BR Abroad', $Label.ISSP_AMS_Email_Branch_Abroad_Subject,
-'PCI DSS Compliant',$Label.ISSP_Draft + ' - ' + $Label.ISSP_ANG_PCI_DSS_Compliant,
-'FoP Management', $Label.ISSP_Draft + ' - ' + $Label.ISSP_ANG_FoP_Management,
-$Label.ISSP_AMS_Email_Change_Subject),
-IF(relatedTo.CaseArea__c=='Transparency in Payments (TIP)', relatedTo.CaseArea__c + ' Draft Application',
-'BSP / CASS ' + relatedTo.CaseArea__c + ' Draft Application'))
-} - case n° {!relatedTo.CaseNumber}" recipientType="Contact" relatedToType="Case">
+    {!
+        CASE(relatedTo.CaseArea__c,
+            'Accreditation Process',
+                CASE(relatedTo.Reason1__c,
+                    'New HO', $Label.ISSP_AMS_Email_HO_Subject,
+                    'New HE standard', $Label.ISSP_ANG_Email_HE_Cash_Subject,
+                    'New HE lite', $Label.ISSP_ANG_Email_HE_Cashless_Subject,
+                    'New AE', $Label.ISSP_ANG_Email_AE_Subject,
+                    'New BR / IP', $Label.ISSP_AMS_Email_Branch_Subject,
+                    'New BR Abroad', $Label.ISSP_AMS_Email_Branch_Abroad_Subject,
+                    'PCI DSS Compliant',$Label.ISSP_Draft + ' - ' + $Label.ISSP_ANG_PCI_DSS_Compliant,
+                    'FoP Management', $Label.ISSP_Draft + ' - ' + $Label.ISSP_ANG_FoP_Management,
+                    $Label.ISSP_AMS_Email_Change_Subject
+                ),
+            'Transparency in Payments (TIP)',
+                relatedTo.CaseArea__c + ' Draft Application',
+            'Airline Joining',
+                CASE(relatedTo.Reason1__c,
+                    'SIS Client','SIS Participation Draft Application',
+                    'BSP / CASS ' + relatedTo.CaseArea__c + ' Draft Application'
+                ),
+            'BSP / CASS ' + relatedTo.CaseArea__c + ' Draft Application'
+        )
+    } - case n° {!relatedTo.CaseNumber}"
+    recipientType="Contact" relatedToType="Case">
 <messaging:htmlEmailBody >
 <div style="margin:auto; width:600px">
  <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
@@ -22,29 +33,80 @@ IF(relatedTo.CaseArea__c=='Transparency in Payments (TIP)', relatedTo.CaseArea__
 
 {!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact.Salutation} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
-{!CASE(relatedTo.CaseArea__c,
-'Accreditation Process', IF(OR(relatedTo.Reason1__c=='New HO', relatedTo.Reason1__c=='New HE standard', relatedTo.Reason1__c=='New HE lite', relatedTo.Reason1__c=='New AE', relatedTo.Reason1__c=='New BR / IP', relatedTo.Reason1__c=='New BR Abroad'), relatedTo.Description, $Label.ISSP_Email_Draft_Change_Process),
-'Airline Joining', 'Thank you for creating your Airline Joining BSP / CASS draft application.',
-'Thank you for creating your draft application request to change your Airline BSP / CASS details.')
+{!
+    CASE(relatedTo.CaseArea__c,
+        'Accreditation Process',
+            IF(
+                OR(
+                    relatedTo.Reason1__c=='New HO',
+                    relatedTo.Reason1__c=='New HE standard',
+                    relatedTo.Reason1__c=='New HE lite',
+                    relatedTo.Reason1__c=='New AE',
+                    relatedTo.Reason1__c=='New BR / IP',
+                    relatedTo.Reason1__c=='New BR Abroad'
+                ),
+                relatedTo.Description,
+                $Label.ISSP_Email_Draft_Change_Process
+            ),
+        'Airline Joining',
+            CASE(relatedTo.Reason1__c,
+                'SIS Client','Thank you for creating your SIS Participation draft application.',
+                'Thank you for creating your Airline Joining BSP / CASS draft application.'
+            ),
+        'Thank you for creating your draft application request to change your Airline BSP / CASS details.'
+    )
 }
 <br/><br/>
-<strong>{!CASE(relatedTo.CaseArea__c,
-'Accreditation Process',
-$Label.ISSP_AMS_Step1_Two_Weeks_Expiry,
-'Transparency in Payments (TIP)',
-'Draft Applications must be submitted within 2 weeks, otherwise you will need to restart the Transparency in Payments process.',
-'Draft Applications must be submitted within 2 weeks, otherwise you will need to restart the Airline participation process.')}</strong>
+<strong>
+    {!CASE(relatedTo.CaseArea__c,
+        'Accreditation Process',
+            $Label.ISSP_AMS_Step1_Two_Weeks_Expiry,
+        'Transparency in Payments (TIP)',
+            'Draft Applications must be submitted within 2 weeks, otherwise you will need to restart the Transparency in Payments process.',
+        'Airline Joining',
+            CASE(relatedTo.Reason1__c,
+                'SIS Client','Draft Applications must be submitted within 2 weeks, otherwise you will need to restart the participation process.',
+                'Draft Applications must be submitted within 2 weeks, otherwise you will need to restart the Airline participation process.'
+            ),
+        'Draft Applications must be submitted within 2 weeks, otherwise you will need to restart the Airline participation process.'
+    )}
+</strong>
 <br/><br/>
-{!CASE(relatedTo.CaseArea__c,
-'Accreditation Process',
-$Label.ISSP_Email_Draft_Process2,
-'Transparency in Payments (TIP)',
-'You can access any ongoing Transparency in Payments (TIP) applications by clicking the link below and logging into the portal with your email address:',
-'You can access any ongoing BSP / CASS ' + relatedTo.CaseArea__c + ' applications by clicking the link below and logging into the portal with your email address:')
-}
+    {!CASE(relatedTo.CaseArea__c,
+        'Accreditation Process',
+            $Label.ISSP_Email_Draft_Process2,
+        'Transparency in Payments (TIP)',
+            'You can access any ongoing Transparency in Payments (TIP) applications by clicking the link below and logging into the portal with your email address:',
+        'Airline Joining',
+            CASE(relatedTo.Reason1__c,
+                'SIS Client','You can access any ongoing SIS Participation applications by clicking the link below and logging into the portal with your email address:',
+                'You can access any ongoing BSP / CASS ' + relatedTo.CaseArea__c + ' applications by clicking the link below and logging into the portal with your email address:'
+            ),
+        'You can access any ongoing BSP / CASS ' + relatedTo.CaseArea__c + ' applications by clicking the link below and logging into the portal with your email address:'
+    )}
 <br/>
-<a href="{!if(relatedto.CNSCase__c, $Label.ISSP_Email_PortalUrl_CNS,$Label.ISSP_Email_PortalUrl)}ISSP_Login?{!IF(relatedTo.CNSCase__c, 'CommunityName=CNS&','')}retURL={!CASE(relatedTo.CaseArea__c, 'Accreditation Process','/ISSP_AMSCases', 'Transparency in Payments (TIP)', '/ISSP_TIP_Home', '/ISSP_APCases')}">
-{!IF(relatedTo.CaseArea__c=='Accreditation Process',IF(relatedTo.CNSCase__c, 'Agency Endorsement & Changes','Agency Accreditation & Changes'), relatedTo.CaseArea__c)}
+<apex:variable var="retURL"
+    value="{!CASE(relatedTo.CaseArea__c,
+        'Accreditation Process','/ISSP_AMSCases',
+        'Transparency in Payments (TIP)', '/ISSP_TIP_Home',
+        'Airline Joining',
+            CASE(relatedTo.Reason1__c,
+                'SIS Client','/ISSP_SISMembershipApplication',
+                '/ISSP_APCases'
+            ),
+        '/ISSP_APCases'
+    )}"/>
+<a href="{!IF(relatedto.CNSCase__c,$Label.ISSP_Email_PortalUrl_CNS,$Label.ISSP_Email_PortalUrl)}ISSP_Login?{!IF(relatedTo.CNSCase__c, 'CommunityName=CNS&','')}retURL={!retURL}">
+{!IF(relatedTo.CaseArea__c=='Accreditation Process',
+    IF(relatedTo.CNSCase__c,
+        'Agency Endorsement & Changes',
+        'Agency Accreditation & Changes'
+    ),
+    IF(relatedTo.Reason1__c=='SIS Client',
+        'Join SIS',
+        relatedTo.CaseArea__c
+    )
+)}
 </a>
 <p/>
 {!$Label.ISSP_Email_ThankYouInAdvance}<br/>

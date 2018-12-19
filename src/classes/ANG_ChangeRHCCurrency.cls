@@ -51,11 +51,14 @@ public with sharing class ANG_ChangeRHCCurrency {
                         }
                     }
                 }
+                fieldsToQuery.addAll(FORECAST_REQUIRED_FIELDS);
             }
             return fieldsToQuery;
         }
         private set;
     }
+
+    private String oldCurrency{get; set;}
 
     public ANG_RHC_Information__c rhc{get;set;}
 
@@ -73,9 +76,19 @@ public with sharing class ANG_ChangeRHCCurrency {
     }
 
     public void forecast(){
-        rhc.recalculateFormulas();
+
+        Map<String,Schema.SObjectField> fieldsMap = sObjDesc.fields.getMap();
+
+        for (String field : fieldsToQuery){
+            if(rhc.get(field) != null && fieldsMap.get(field).getDescribe().getType().name() == 'CURRENCY' && !fieldsMap.get(field).getDescribe().isCalculated()){
+                Decimal value = (Decimal)rhc.put(field, CurrencySingleton.getInstance().convertCurrency((Decimal)rhc.get(field), oldCurrency, rhc.CurrencyIsoCode));
+            }
+        }
+
         ANG_RHCHelper.calculateRHCAmount(new List<ANG_RHC_Information__c>{rhc});
         rhc.recalculateFormulas();
+        oldCurrency = rhc.CurrencyIsoCode;
+        
     }
 
     public void toggleEditMode(){
@@ -84,12 +97,18 @@ public with sharing class ANG_ChangeRHCCurrency {
 
     public void save(){
         update rhc;
+        queryRHC();
+        ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.INFO,'Currency Saved'));
+    }
+
+    private void queryRHC(){
+        this.rhc = Database.query('SELECT Id,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
     }
 
     public ANG_ChangeRHCCurrency() {
-        this.objId = ApexPages.currentPage().getParameters().get('Id');
-        fieldsToQuery.addAll(FORECAST_REQUIRED_FIELDS);       
-        this.rhc = Database.query('SELECT Id,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
+        this.objId = ApexPages.currentPage().getParameters().get('Id'); 
+        queryRHC();
+        oldCurrency = rhc.CurrencyIsoCode;      
     }
 
     public class FieldWrapper{

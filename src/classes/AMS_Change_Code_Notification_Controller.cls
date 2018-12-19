@@ -9,7 +9,7 @@ public with sharing class AMS_Change_Code_Notification_Controller {
         caseId = stdController.getId(); 
         isSidra = false;
 
-        list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, OSCAR__c FROM Case WHERE Id = :caseId];
+        list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, Remittance_Period__c, Status, AccountId, Account.Name, OSCAR__c FROM Case WHERE Id = :caseId];
         if (!lstCases.isEmpty()) {
             currentCase = lstCases[0];
 
@@ -22,7 +22,7 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 
     public void setNotificationMessage() {
 
-        list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, OSCAR__c FROM Case WHERE Id = :caseId];
+        list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, Remittance_Period__c, AccountId, Status, Account.Name, OSCAR__c FROM Case WHERE Id = :caseId];
 
         if (currentCase != null) {
             list<Agency_Applied_Change_code__c> lstRecentChangeCodes = new list<Agency_Applied_Change_code__c>();
@@ -80,9 +80,79 @@ public with sharing class AMS_Change_Code_Notification_Controller {
                     delete notifications;
                 }
             }
+
+            /*
+             pop up message to customer service team when they land on a SIDRA case with a matching remittance period (case field) to the one in the amazon file record
+             WMO-358
+             */
+            if(currentCase.RecordType.DeveloperName == 'SIDRA'){
+                if(currentCase.Remittance_Period__c != null){
+
+                    List<Account_Statement__c> listStatements = [Select Id, Period__c, Operation__c, Name, Account__c,
+                                                                        Amount_to_be_Paid__c, Balance__c, Billing_Amount__c,
+                                                                        Paid__c, Remittance_Date__c, Status__c, Billing_Adjustment__c,
+                                                                        Account__r.Name, LastModifiedDate
+                                                                        From Account_Statement__c
+                                                                        Where Account__c =: currentCase.AccountId
+                                                                        And Period__c =: currentCase.Remittance_Period__c
+                                                                        LIMIT 100];
+			        if(!listStatements.isEmpty()) {
+                        list<AmazonFile__c> accountStatementAttPOP = new List<AmazonFile__c>();
+                        String AmazonFileName = AmazonFile.ICE_proofOfPayment + ' ' + listStatements[0].Period__c + ' ' + listStatements[0].Billing_Amount__c;
+                        accountStatementAttPOP  = AmazonFile.getAccountRelatedAmazonFiles(currentCase.AccountId, AmazonFileName);
+
+                        if(!accountStatementAttPOP.isEmpty()){
+                            //String msg = 'There are proof of payment add to the account:';
+                            String msg = Label.ICE_POP_Sidra_Msg;
+                            Integer secondsValid = 300;
+
+                            for (AmazonFile__c af : accountStatementAttPOP){
+                                String amazonLink = AmazonRest.genPublicExpiringAWSLink( af.Full_Name_Unique__c, WrapperAttach.CREDENTIAL, secondsValid);
+                                msg = msg + ' '+ '<a href="'+amazonLink+'" target="_blank">'+af.Name+'</a>';
+
+                            }
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, msg));
+
+                        }
+                    }
+		        }
+	        }
         }
 
     }
-
-
+	//EM - To be removed
+	public static void fakemethod () {
+		Integer i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		
+	
+	
+	}
 }

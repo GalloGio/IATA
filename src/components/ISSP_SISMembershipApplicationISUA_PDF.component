@@ -1,0 +1,1720 @@
+<apex:component controller="ISSP_SISMembershipApplicationForm_Ctrl">
+    <apex:attribute name="newForm" description="AP_Process_Form__c" type="AP_Process_Form__c" required="true"/>
+    <apex:attribute name="account" description="Account" type="account"/>
+
+<div id="form-container">
+
+    <center>
+        <h2 class="panel-title">
+            STANDARD PARTICIPATION AGREEMENT FOR SIS E-INVOICING SERVICES - NON TRANSPORTATION
+        </h2>
+    </center>
+
+    <p>
+        This Standard Participation Agreement for SIS e-Invoicing Services – Non Transportation (“<span class="bold">Agreement</span>”) is entered on <apex:outputText styleclass="bold" value="{0, date, MMMM d yyyy}"><apex:param value="{!NOW()}"/></apex:outputText> (“<span class="bold">Effective Date</span>”) into by and between <span class="bold">{!newForm.Legal_Name_of_company__c}</span> a company incorporated under the laws of <span class="bold">{!newForm.Company_State__c}/{!newForm.Company_Country__r.Name}</span> with its head office located at <span class="bold">{!newForm.Company_address__c}, {!newForm.Company_city__c}, {!newForm.Company_State__c}, {!newForm.Company_Country__r.Name}, {!newForm.Postal_code__c}</span> (“<span class="bold">User</span>”) and the <span class="bold">INTERNATIONAL AIR TRANSPORT ASSOCIATION</span>, an association incorporated by Special Act of the Parliament of Canada, with its head office at 800 Place Victoria. P.O. Box 113, Montreal, Quebec, Canada, H4Z 1M1 (“<span class="bold">IATA</span>”) (each a “<span class="bold">Party</span>” and collectively, the “<span class="bold">Parties</span>”).
+    </p>
+    <p>
+        BY CLICKING AN “ENTER”, “I AGREE” OR “I ACCEPT” OR ANY OTHER SIMILAR ICON OR BUTTON WHEN PROMPTED TO DO SO AT THE TIME OF SIGNING UP FOR THE SERVICE OR AT ANY TIME THEREAFTER, OR BY ACTUALLY SIMPLY ACCESSING OR OTHERWISE USING THE SERVICE OR ANY ADDITIONAL SERVICE, USER SHALL BE DEEMED TO HAVE IRREVOCABLY AGREED TO BE BOUND BY ALL TERMS AND CONDITIONS OF THIS AGREEMENT. 
+    </p>
+    
+    <center class="bold underline">PREAMBLE</center>
+
+    <p>
+        <span class="bold">WHEREAS</span> IATA is an international association of airlines that promotes safe, regular and economical air transport and facilitates collaboration among air transport enterprises engaged directly or indirectly in international air transport services;
+    </p>
+
+    <p>
+        <span class="bold">WHEREAS</span> IATA operates and manages one or more industry clearing houses and other, billing, settlement and other electronic or computerized platforms, systems and solutions as a service to or in relation to the air transport industry;
+    </p>
+
+    <p>
+        <span class="bold">WHEREAS</span> IATA provides the Services and the Additional Services (both terms Service and the Additional Services are defined below) from various locations worldwide, including through the use of subcontractors; and
+    </p>
+
+    <p>
+        <span class="bold">WHEREAS</span> The Parties now wish to set out the terms and conditions pursuant to which IATA has agreed to provide the Service and Additional Services to User, and User has agreed to accept the Service, and may elect to choose Additional Services, in exchange for certain fees, and where User recognizes that IATA provides the Service and any Additional Services through sub-contractors worldwide, the whole as further set forth below. 
+    </p>
+
+    <p>
+        This Preamble shall form an integral part of this Agreement.
+    </p>
+
+    <p class="bold">
+        NOW THEREFORE THE PARTIES AGREE AS FOLLOWS:
+    </p>
+
+    <p class="bold">
+        1. SUBMISSION OF ELECTRONIC INVOICE DATA VIA ELECTRONIC DATA INTERCHANGE (EDI) FOR THE PURPOSE OF ELECTRONIC INVOICING
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        1.1 The Parties agree to submit and receive (as applicable) electronic invoices from other users of the Service and/or Additional Services and/or any participants to other IATA electronic invoicing services using the Solution in accordance with the procedures and standards set out in this Agreement.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        1.2 This Agreement includes Attachments A (“Services”), B (“Additional Services”), C (“Service Levels”) and D (“Pricing”), which may be amended in accordance with this Agreement, and published by IATA from time to time. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        1.3 Whenever used in this Agreement: (i) “<span class="bold">includes</span>” and “<span class="bold">including</span>” mean “including (or includes) without limitation”, and (ii) “<span class="bold">Solution</span>” means any and all platforms, systems, solutions, applications, APIs, software, websites, servers, hardware, devices, databases, equipment and other technology or intellectual property owned, used or licensed by IATA to provide or in support of its electronic services and related activities.
+    </p>
+
+    <p class="bold">
+        2. PROVISION OF SERVICE; DEFINITION
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.1 As of the Effective Date of this Agreement and during its Term, IATA shall provide to User, and User agrees to use such services as it has paid for and as are described in <span class="underline">Attachment A</span>, including support in relation thereto as and to the extent expressly set forth herein (the “<span class="bold">Service</span>”), as well as such  additional services as it has also paid for and separately selected and are described in accordance with <span class="underline">Attachment B</span>, including support in relation thereto as and to the extent expressly set forth herein (“<span class="bold">Additional Services</span>”). For clarity, <span class="underline">Attachments A</span> and <span class="underline">B</span> may be amended by IATA in its discretion from time to time as contemplated by Section 2.3.
+    </p>
+
+    <p class="margin-3">
+        USER (AT ITS SOLE COST AND EXPENSE), IS SOLELY RESPONSIBLE FOR PROVIDING, PROCURING AND MAINTAINING, AND FOR ENSURING THAT ALL HARDWARE, SOFTWARE, ELECTRICAL AND OTHER PHYSICAL REQUIREMENTS FOR USER'S USE OF THE SERVICE OR ANY ADDITIONAL SERVICES, INCLUDING TELECOMMUNICATIONS AND INTERNET ACCESS CONNECTIONS AND LINKS, WEB BROWSERS, BANDWIDTH OR OTHER EQUIPMENT, PROGRAMS AND SERVICES REQUIRED TO ACCESS AND USE THE SERVICE OR ANY ADDITIONAL SERVICES, ARE COMPATIBLE WITH THE SOLUTION, THE SERVICE AND THE ADDITIONAL SERVICES.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.2 Services and Additional Services are only to be used (i) by <span class="bold">Core Air Transport Industry Suppliers</span> (as defined below), or (ii) by other suppliers in relation to or for the air transport industry or Core Air Transport Industry Suppliers. For the purposes of this Agreement, “Core Air Transport Industry Suppliers” includes airlines, airports, airport management, ground handling, in-flight catering, aviation manufacturing, in-flight entertainment, aviation maintenance, repair and overhaul providers and air traffic control companies, as well as other companies or agencies for which core activities include the direct supply of materials or services to the air transport industry. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.3 Notwithstanding anything contrary in this Agreement, IATA may at any time in its sole discretion, by notice to User (which notice may be sent, without limitation, through the posting of an electronic bulletin on the portal of the Service/Additional Services, as applicable, or by email at the email address provided by User as part of its registration) (each a “<span class="bold">Change Notice</span>”), reasonably modify, amend, change, alter, enhance, suspend, disable, terminate or discontinue portion or feature of any Service or any Additional Services, or the terms and conditions governing these including, pricing, service levels, this Agreement, the Attachments, or any part thereof (each a “<span class="bold">Change</span>”). Any and all such Changes shall become effective thirty (30) days after the date of their respective Change Notice, except where User exercises its right, within such thirty (30) day period and in accordance with Section 14.2, to terminate this Agreement as a result of the proposed Change. Where User so terminates the Agreement in accordance with Section 14.2, the Change will not be implemented in respect of User between the time of its termination notice and the effective termination date, except that, as per Section 14.4, IATA shall, thirty (30) days following the receipt of User’s termination notice, suspend User’s active access to the Service and IATA shall complete the settlement of the on-going transactions involving User, if any, until the effective date of termination. Notwithstanding the above, where a Change is, in IATA’s sole judgment, required by law or desirable by reason of any circumstances beyond IATA’s reasonable control, the Change will become effective (including in respect of any User terminating the Agreement by reason of such Change) at the date of the Change Notice or at such other date as may be determined by IATA in its sole discretion.  
+    </p>
+
+    <p class="bold">
+        3. USE OF SERVICE
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        3.1 Obligations and Responsibilities of User
+    </p>
+
+    <p class="margin-6 indent-3">
+        3.1.1 User shall pay IATA the fees and charges set out in Section 5 for the provision of the Service. 
+    </p>
+
+    <p class="margin-6 indent-3">
+        3.1.2 If User elects to use any Additional Services it shall pay IATA the fees and charges set out in Section 5 for the provision of such Additional Services as selected in <span class="underline">Attachment B</span>.
+    </p>
+
+    <p class="margin-6 indent-3">
+        3.1.3 Participation in this Agreement is conditional upon User agreeing that IATA will be generating electronic invoices on User’s behalf, and on agreeing to accept electronic invoices via the Solution. Invoices are deemed to be received as soon as notification has been sent to the recipient of the invoice. It is User’s responsibility to secure any permissions or authorizations that may be required in its country or countries of base regarding the use of electronic invoices, and to comply with laws that those countries may apply to the creation of invoices, determination of applicable taxes, management of access controls, record keeping and legal archiving. The correctness of any User Data (as defined in Section 3.3) submitted to the Service and/or Additional Services remains the responsibility of User at all times. Where electronic signatures have been requested, User authorizes IATA to apply or validate the electronic signature through the electronic signature service providers listed in <span class="underline">Attachment A</span> and as amended from time to time. 
+    </p>
+
+    <p class="margin-6 indent-3">
+        3.1.4 Participation is conditional upon preliminary testing and successful completion of the certification process for the file type defined in <span class="underline">Attachment A</span> that User will submit and subsequently for any other additional file types that IATA may make available from time to time in a revised <span class="underline">Attachment A</span>.  In the event User elects to change for another file type available as listed in <span class="underline">Attachment A</span>, it shall notify IATA in writing and its participation in this Agreement will be conditional upon preliminary testing and successful completion of the certification process of such new file type.
+    </p>
+
+    <p class="margin-6 indent-3">
+        3.1.5 Settlement of invoices entered into the Service will be made directly by the debtor to the creditor using such channels as may have been agreed between them. Where settlement is to be effected through an industry clearing house, each User must have access to and act in compliance with the rules of that specific clearing house. 
+    </p>
+
+    <p class="margin-6 indent-3">
+        3.1.6 User acknowledges that settlement through IATA settlement systems of electronically submitted invoices via the Service could generate an automatic default notice if payment is made by any user of the Service and/or Additional Service when not based on the gross amount of the invoice, but on the gross amount net of deduction or withholdings based on taxes or other governmental charges.
+    </p>
+
+    <p class="margin-6 indent-3">
+        3.1.7 In supplying User Data, User shall comply with the procedures and standards provided for in this Agreement. All User Data supplied must be transmitted in compliance with the published IS-XML standards as valid at the time as well as in compliance with any other format as may be required or developed by IATA from time to time, or be entered by User via the user interface provided. User shall maintain in the Solution a full and up to date list of the names of persons authorized by it to supply, modify, or withdraw User Data on its behalf or to issue instructions concerning the applicability or distribution thereof. 
+    </p>
+
+    <p class="margin-6 indent-3">
+        3.1.8 User holds the entire responsibility for the accuracy and the completeness of the tax and VAT-related information it provides to IATA and third parties in connection with the Service. When national legislations provide for specific validation procedure for the tax or VAT identification number of the customer, the obligation to perform such validation remains with User. 
+    </p>
+
+    <p class="margin-6 indent-3">
+        3.1.9 It is the sole responsibility of User to ensure User Data or any other information transmitted via the Service and/or Additional Services is in compliance with applicable laws, including applicable privacy laws. To the extent applicable, any payment card data supplied under the Service by User or any third party acting on its behalf shall be masked in accordance with Payment Card Industry Digital Security Standard (PCI-DSS) specifications using the format 1234567890.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        3.2 Personal Data
+    </p>
+
+    <p class="margin-3">
+        User shall not provide IATA with any Personal Data (as defined below) unless such Personal Data is required for the purpose of the Service or any Additional Service; and even in such instances, User shall use best efforts to only provide any such Personal Data in the form of de-identified User Data containing no names or information that would, in any way, allow identification of a User or any individual. Where IATA receives Personal Data under this Agreement from User or its employees, agents and representatives, IATA may collect, process, provision, use, disclose, validate, dispose, store, anonymize, delete and/or manage (collectively “<span class="bold">Process</span>”) use of such Personal Data solely as needed for the performance of the Service and/or Additional Services, or as otherwise expressly permitted under this Agreement. IATA uses subcontractors to Process User Data for IATA in various locations around the world, including India. To the extent User intends to provide any Personal Data governed by EU laws, as determined by User, and in particular Directive 95/46/EC, the Parties may be required to sign the EU Standard Contractual Clauses, pursuant to which IATA may transfer the Personal Data to its subcontractors on condition that such subcontractors have entered into the same obligations. To the extent that User intends to provide any Personal Data governed by laws other than EU laws, as determined by User, (i) User will inform IATA thereof, (ii) IATA may impose any additional requirements on User and (iii) User will be responsible for any costs incurred by IATA to comply with such laws. In all cases, it is User’s exclusive responsibility to ensure and take all required steps and measures such that it has obtained, at all relevant times, all required rights, consents and waivers from any and all relevant individuals in respect of any and all Personal Data provided to or accessed by IATA hereunder so that it can be Processed by IATA as contemplated or permitted hereunder.  For the purposes of this Agreement, “<span class="bold">Personal Data</span>” means any data, which permits the identification of an individual. IATA hereby notifies User of such Processing and User hereby grants consent required for the Processing of Personal Data. User agrees that IATA shall not be in breach of this Agreement if IATA refuses to perform any transaction offered as part of the Service and/or Additional Services described in this Agreement to User when User’s employee, agent and/or representative refuses to consent to the Processing of its necessary Personal Data for the performance of such transaction(s). 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        3.3 For the purpose of this Agreement “<span class="bold">User Data</span>” means all data and information (including Personal Data) owned by User and that is provided to or otherwise made available to or uploaded in the Solution, the Service, the Additional Services or IATA, by User or any third party acting on its behalf for purposes of or in relation to this Agreement, the Solution, the Service or the Additional Services.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        3.4 For the purpose of this Agreement “<span class="bold">IATA Data</span>” means all data and information other than and excluding only User Data, including all (i) data and information provided to or otherwise made available to or uploaded in the Solution, the Service or the Additional Services, by IATA or any third party acting on its behalf for purposes of or in relation to this Agreement, the Solution, the Service or the Additional Services, (ii) Collated Data (but subject to the restrictions set out in Section 10.5), (iii) data and information obtained in relation to or pursuant to Article 12, and (iv) any and all performance, usage, statistical, data mining related, secondary, operational, processing or other similar or related data or information within, resulting, generated, gathered, obtained, collected and/or used by or in relation to the Solution, the Service or the Additional Services. For clarity, except only as for “Collated Data”, IATA Data does not include any User Data.
+    </p>
+
+    <p class="bold">
+        4. SERVICE LEVEL
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        4.1  General
+    </p>
+
+    <p class="margin-3">
+        The level of performance of the Service shall be at least consistent with the service levels described in <span class="underline">Attachment C</span> (“<span class="bold">Service Levels</span>”). For clarity, <span class="underline">Attachment C</span> may be amended by IATA in its discretion from time to time as contemplated by Section 2.3.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        4.2  Failure to Perform
+    </p>
+
+    <p class="margin-3">
+        Any failure identified in the provision of the Service will be directed in the first instance to the designated help desk as provided in <span class="underline">Attachment C</span>, which shall log the failure and identify the action required. In the event IATA fails to meet any Service Level requirement, IATA shall, or shall cause its sub-contractor to, (i) investigate the causes of such failure; (ii) use commercially reasonable efforts to correct such failure within the time frames set forth in <span class="underline">Attachment C</span> and start implementing the corrective measures as applicable, and (iii) take reasonable preventive measures to reduce the likelihood that such failure reoccurs.  
+    </p>
+    
+    <p class="margin-3 indent-1_5">
+        4.3  Service Level Credits 
+    </p>
+
+    <p class="margin-3">
+        If IATA fails at any time to meet any Service Level requirement, User is entitled to receive a Service Level Credit from IATA.  Should User recover monetary damages from IATA as a result of an event also giving rise to a Service Level Credit, IATA will be entitled to set off such damages against any such Service Level Credit.  For the purpose of this Agreement, “<span class="bold">Service Level Credits</span>” means the financial credits, if any, as calculated in the manner specified in <span class="underline">Attachment C</span>, to be awarded to User by IATA as a result of a failure to achieve certain Service Levels.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        4.4  Measurement and Monitoring Tools  
+    </p>
+
+    <p class="margin-6 indent-3">
+        4.4.1 IATA will monitor the Service and Additional Services to determine whether they are provided in accordance with the Service Levels described in <span class="underline">Attachment C</span>.  IATA shall use the reasonable measurement and monitoring tools and procedures required to measure the performance of the Service and Additional Services against the applicable Service Levels. 
+    </p>
+
+    <p class="margin-6 indent-3">
+        4.4.2 Each Service Level shall be measured on a monthly basis unless stated otherwise in <span class="underline">Attachment C</span>.  Upon written request by User, IATA shall provide reports or information in relation to the Service performance and compliance with the Service Levels.  This data, if provided, shall be considered Confidential Information of IATA. For the avoidance of doubt, any such report shall not contain any User Data (as defined above).
+    </p>
+
+    <p class="bold">
+        5. FEES AND CHARGES
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        5.1 Fees and charges for the Service and the Additional Services as described in <span class="underline">Attachment D</span> will be paid by User for the Service and/or the Additional Services. For clarity, <span class="underline">Attachment D</span> may be amended by IATA in its discretion from time to time as contemplated by Section 2.3.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        5.2 The fees and charges do not include: communication charges relating to User’s transmission of input or receipt of output files; customization of software; systems integration; any implementation in User’s premises; audit certification or other legal process requested by User; set-up fees, or enhancements.  Fees for any such services that might be required for User and have been received shall be agreed separately and in advance between User and IATA or its service providers.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        5.3 Fees and charges are payable to IATA within thirty (30) days of billing.  Fees and charges against members of the IATA Clearing House (“<span class="bold">ICH</span>”) or the Airlines Clearing House (“<span class="bold">ACH</span>”) shall be collected through the appropriate clearing house unless otherwise agreed. IATA may suspend provision of the Service upon thirty (30) days’ prior written notice in the event of failure by User to settle any invoice or charge for the Service in a timely manner. 
+    </p>
+
+    <p class="bold">
+        6.  TAXES
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        6.1  Payment for fees and charges related to the use of the Service and/or Additional Services must be made by User without any set-off or counter claim and free of deduction or withholding of any taxes or governmental charges (except as required by law).  If any deduction or withholding is required by law, User must pay the required amount to the relevant governmental authority, and pay to IATA as the case may be, in addition to the payment to which it is otherwise entitled under this Agreement, such additional amount as is necessary to ensure that the net amount actually received by IATA, free and clear of all taxes, equals the full amount IATA would have received had no such deduction or withholding been required.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        6.2  Should any taxes, levies, charges or duties (including any goods and services or other VAT) be imposed, levied or become payable on the supply of the Service and/or Additional Services made to User pursuant to this Agreement, User shall pay any and all such taxes, levies, charges and duties, in addition to any other payments due under this Agreement. In the event IATA pays any such tax or assessment, User shall immediately reimburse IATA upon request. Notwithstanding the foregoing, neither Party shall be responsible for the other Party’s taxes which are based on net or gross income or capital.
+    </p>
+
+    <p class="bold">
+        7. WARRANTIES AND LIABILITIES
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        7.1 User hereby represents and warrants that:
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.1.1 it has obtained all operating licenses or government authorizations required for engaging in business;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.1.2 it is either (a) a Core Air Industry Supplier, or (b) a supplier using the Services and any Additional Services primarily for or in relation to the air transport industry;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.1.3 it is not a party to the Chapter B16 Standard Agreement for SIS Participation or any variation of this agreement from time to time;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.1.4 it is a merchant or business entering into this Agreement and using the Service or any Additional Services solely for business purposes;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.1.5 it owns or has obtained all required rights, consents and waivers in respect of any and all User Data, including in relation to its collection, processing, provision, use, disclosure, validation, disposal, storage, anonymization, deletion and/or management as part of or in relation to this Agreement, the Solution, the Service or the Additional Services and all required rights, consents and waivers otherwise necessary for the purposes of this Agreement, the whole in compliance with all applicable laws, including data privacy and data security laws;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.1.6 it shall use, handle, protect, dispose of and otherwise deal with any and all data of any and all other users made available to it via the Solution and/or otherwise by or through IATA solely for the purposes contemplated by this Agreement and in compliance with the terms and conditions of this Agreement and all applicable laws, and with a degree of care at least as high as the one that is applied to its own User Data hereunder; 
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.1.7 it shall be responsible for ensuring that User Data or any attachment supplied by itself, its respective employees, agents, and contractors does not contain or introduce any Destructive Elements.  If User becomes aware that a Destructive Element has been so introduced, User shall eliminate the effects of the Destructive Element and, if the Destructive Element causes a loss (e.g., of operational efficiency or data), assist IATA to mitigate and restore such losses provided that it shall not prevent IATA from exercising any recourse it may have against User under this Agreement or at law.  “<span class="bold">Destructive Elements</span>” means any software, data or tool (e.g., “viruses”, “worms” or “trojan” programs) that (i) are intentionally designed to disrupt, disable, harm or otherwise impede in any manner, including aesthetical disruptions or distortions, the operation of the  Service or related systems of IATA, including, for example, based on the elapsing of a period of time, exceeding an authorized number of copies, advancement to a particular date or other numeral (e.g., “time bombs”, “time locks” or “drop dead” devices), (ii) would permit User or third parties to access the Service or related systems, to cause such disablement or impairment, or otherwise to circumvent the security features of the Service, the Solution or related systems, or (iii) contain any other harmful, malicious or hidden procedures, routines or mechanisms which would cause the Service or related systems to cease functioning, or to damage or corrupt software, data or communications, or otherwise interfere with operations; and 
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.1.8 it shall not, directly or indirectly: (i) decompile, transform, modify, translate, disassemble, reverse engineer or otherwise attempt to decrypt or derive the source code, any trade secrets, or any sensitive or proprietary information of, or included in or related to the Solution, the Service, the Additional Services, or any Confidential Information of IATA, (ii) modify, merge, alter, copy, distribute or otherwise reproduce or tamper with the Solution, the Service, the Additional Services or any Confidential Information of IATA or produce or create any other applications whatsoever or any derivative works thereof (except to the extent expressly permitted by applicable law despite this limitation), (iii) destroy or remove any copyright, trade secret, patent, trademark or other proprietary or legal markings or notices placed upon or contained within the Solution, the Service, the Additional Services or any Confidential Information of IATA, (iv) copy, rent, resale, lease, access, share, operate on a time share or service bureau or managed service basis, distribute as part of an ASP, VAR, OEM, SaaS or other arrangement, the Solution, the Service, the Additional Services or any Confidential Information of IATA, (v) use or access the Solution, the Service, the Additional Services or any Confidential Information of IATA to publish, transfer, display, store, distribute or disseminate or otherwise transmit, load upon or make available anything (including any information, files, software, photographs, images, data or other content) that is inappropriate, inaccurate, illegal, unlawful, profane, defamatory, obscene, or indecent, or that is protected by or contravenes or violates any applicable laws or regulations, or (vi) otherwise use or access the Solution, the Service, the Additional Services or any Confidential Information of IATA to for any unlawful, prohibited, illegal, inappropriate, offensive, damaging or otherwise unsuitable purposes, including in connection with activities involving tax evasion, money laundering, pyramid schemes, chain letters, junk email, spamming, hacking, defamation, abuse, harassment, stalking, threatening or otherwise violating the rights of any person or government.
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.1.9 this Agreement has been duly and validly authorized, executed and delivered by or on behalf of User and constitutes a valid and binding agreement of User, enforceable in accordance with its terms.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        7.2 IATA hereby represents and warrants that:
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.2.1 it has obtained all operating licenses or government authorizations required to engage in its business;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.2.2  it shall use all commercially reasonable efforts to implement the Service.  However, if IATA is unable, for any reason (including due to a Force Majeure Event), to provide the Service or similar Service or discontinues the Service or similar Service in accordance with this Agreement, IATA will have no further liability nor obligation to User other than to: 
+    </p>
+
+    <p class="margin-9 indent-1_5">
+        (a)  use commercially reasonable efforts to mitigate the disruption to the Service; and
+    </p>
+
+    <p class="margin-9 indent-1_5">
+        (b)  use commercially reasonable efforts to provide User, when applicable, with continued access to the ICH and ACH (the latter being to the extent ACH authorizes IATA to provide such access) in accordance with the generally applicable terms of access to and use of the ICH and/or ACH, as the case may be;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.2.3 it shall use all commercially reasonable efforts to perform or ensure that any of its subcontractors perform the Service and Additional Services and operate the Solution in conformity to the Service Levels and Service Description as defined in <span class="underline">Attachments A</span>, <span class="underline">B</span> and <span class="underline">C</span>; in the event of any failure to meet such warranty, IATA shall promptly take commercially reasonable corrective actions for future performance of such obligations;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.2.4 it shall use all commercially reasonable efforts to ensure that proper, complete, sufficient and adequately formatted User Data supplied by User and its respective employees, agents, and contractors, are promptly and accurately incorporated into the Solution, and made available for the purpose of the Service in accordance with the published calendars;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.2.5 it shall use all commercially reasonable efforts to ensure that any data and/or attachment supplied by itself, its respective employees, agents, and contractors for the purposes of performing the Service and/or Additional Services hereunder do not contain or introduce any Destructive Elements.   If IATA becomes aware that a Destructive Element has been so introduced, IATA will use all reasonable efforts to eliminate the effects of the Destructive Element, and, if the Destructive Element causes a loss (e.g., of operational efficiency or data), assist User to mitigate and restore such losses;
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.2.6 the performance of the Service and/or Additional Services under this Agreement and any related software which is used to provide, or which forms part of or is used in connection with the Service and/or applicable Additional Services, if any, do not and shall not infringe or misappropriate any intellectual property rights of a third party; and
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.2.7 subject to Sections 3.4, 10.1, 10.4 and 10.5 and Article 12, it shall use, handle, protect, dispose of and otherwise deal with any and all User Data solely for the performance of the Service and Additional Services and other purposes as permitted by this Agreement, and in compliance with all applicable laws, including data privacy and data security laws, all of the foregoing being subject to User’s representations and warranties in Sections 7.1 above.
+    </p>
+
+    <p class="margin-6 indent-3">
+        7.2.8 it has, and shall, at all relevant times, have the necessary rights to provide the Service and/or applicable Additional Services.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        7.3  EXCEPT FOR THE LIMITED EXPRESS WARRANTIES PROVIDED IN SECTION 7.2 ABOVE, TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IATA DISCLAIMS AND EXCLUDES ALL EXPRESS, IMPLIED, STATUTORY OR OTHER REPRESENTATIONS, WARRANTIES, AND CONDITIONS WHATSOEVER, INCLUDING THOSE PERTAINING TO TITLE, NON-INFRINGEMENT, SATISFACTORY CONDITION, QUALITY, MERCHANTABILITY AND FITNESS FOR PARTICULAR OR GENERAL PURPOSE.  FOR CLARITY, IATA DOES NOT WARRANT THAT THE OPERATION OF THE SOLUTION AND THE SERVICE AND ADDITIONAL SERVICES WILL BE UNINTERRUPTED, AND/OR ERROR-FREE.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        7.4 EXCEPT FOR IATA’S FRAUD AND WILLFUL MISCONDUCT, THE SOLE AND ENTIRE AGGREGATE LIABILITY OF IATA FOR ANY AND ALL CLAIMS, DAMAGES, LOSSES, LIABILITIES AND PREJUDICES IN ANY MANNER RELATED TO THIS AGREEMENT, INCLUDING AS THEY MAY RELATE TO THE SOLUTION, THE SERVICE, THE ADDITIONAL SERVICES OR USER DATA, WILL BE THE PAYMENT OF DIRECT DAMAGES, NOT TO EXCEED (IN THE AGGREGATE) THE TOTAL OF ALL FEES RECEIVED BY IATA HEREUNDER FROM USER UP TO AN ABSOLUTE AGGREGATE MAXIMUM LIMIT OF $50,000.  EXCEPT FOR THE SPECIFIC REMEDIES EXPRESSLY IDENTIFIED AS SUCH IN THIS AGREEMENT, USER’S EXCLUSIVE REMEDY FOR ANY SUCH CLAIM, DAMAGE, LOSS, LIABILITY AND PREJUDICE ARISING OUT OF THIS AGREEMENT WILL BE FOR IATA, UPON RECEIPT OF WRITTEN NOTICE, TO USE COMMERCIALLY REASONABLE EFFORTS TO CURE THE BREACH AT ITS EXPENSE, OR FAILING THAT, TO RETURN THE FEES OR PORTION THEREOF PAID TO IATA FOR THE SERVICE OR ADDITIONAL SERVICES, OR PORTION THEREOF, THAT CAUSED THE BREACH.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        7.5 NOTWITHSTANDING ANY OTHER PROVISION OF THIS AGREEMENT TO THE CONTRARY AND TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IATA SHALL NOT BE LIABLE UNDER OR IN RELATION TO THIS AGREEMENT FOR ANY LOST PROFITS, LOST SAVINGS, LOST GAINS AND OPPORTUNITIES OR OTHER ECONOMIC LOSS (INCLUDING BUSINESS INTERRUPTION, LOST BUSINESS AND LOST DATA), OR FOR ANY CONSEQUENTIAL, SPECIAL, PUNITIVE, INDIRECT, OR INCIDENTAL DAMAGES, OR FINES, EVEN IF IATA KNEW OR SHOULD HAVE KNOWN OF THE EXISTENCE OR POSSIBILITY OF SUCH DAMAGES, LOSSES, LIABILITIES OR PREJUDICES.
+    </p>
+
+    <p class="bold">
+        8. INDEMNIFICATION
+    </p>
+
+    <p class="margin-3">
+        User shall fully indemnify and hold IATA, its directors, officers, employees, agents and representatives, harmless from any and all claims, actions, proceedings, damages, losses, liabilities, costs (including reasonable legal and attorney’s fees), fines, penalties, sanctions, orders and prejudices suffered or incurred by IATA or its directors, officers, employees, agents and representatives arising out of, or relating to, directly or indirectly, any act, omission, fault or breach of this Agreement by User (including any breach or inaccuracy of any representation or warranty in Section 7.1) or resulting from or related in any way to any User Data, including in relation to its use or re-use, distribution, protection or loss by any party or person. 
+    </p>
+
+    <p class="bold">
+        9.  VALIDATION OF DATA
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        9.1   IATA will not be responsible for nor have any liability to User for the content, correctness and validation of User Data provided hereunder by User or any third party acting on behalf of User, and User shall indemnify and hold IATA, and its directors, officers, employees and agents harmless from and against any and all claims, actions, proceedings, damages, losses, liabilities, costs (including reasonable legal and attorney’s fees), fines, penalties, sanctions, orders and prejudices suffered or incurred by IATA or its directors, officers employees and agents arising out of, or relating to, directly or indirectly, the content, correctness and validation of data transmitted by User or any third party acting on behalf of User hereunder or otherwise in connection with the Service and/or Additional Services.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        9.2  User shall, on a timely basis, inspect and review all reports submitted to it through the Service and/or Additional Services hereunder and will notify IATA of any errors therein no later than ninety (90) days following the receipt of such reports. Failure to notify IATA of any such errors within this period shall be deemed to constitute acceptance of such reports, but any errors may be reported at any time for the purpose of preventing similar errors in the future and enabling IATA to take appropriate action, if applicable.
+    </p>
+
+    <p class="bold">
+        10. INTELLECTUAL PROPERTY RIGHTS
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        10.1 IATA or its licensors, suppliers or subcontractors shall have sole and exclusive ownership of all rights, titles and interests in and to the Solution, the IATA Data, the IATA Confidential Information, the Service and/or Additional Services, including all intellectual property rights and any accompanying written or printed materials and copies thereof, and including all changes, derivations, modifications and enhancements thereto (together, the “<span class="bold">Materials</span>”). This Agreement does not provide User with title or ownership of the Materials, but only a right of limited access and use as described in Section 10.3. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        10.2 Without limiting the foregoing, as between the Parties, IATA is the sole and exclusive owner of the Solution and the IATA Data, and User is the sole and exclusive owner of the User Data. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        10.3 During the Term, IATA grants to User a limited right to remotely use the relevant portions of the Solution solely for the purposes of enabling User to obtain the benefit of the Service and applicable Additional Services during the Term of this Agreement and without further consideration to IATA than the fees hereunder. The foregoing right to access and use includes the right to permit User’s agents to access and use the Solution on User’s behalf and the right to make and provide copies of user guides and other instructions to such agents, provided that such agents have agreed that their access and use of the Solution and any user guides and instructions are subject to the same conditions and restrictions that apply to such access and use by User.  It is agreed that any breach by such agents of any such conditions and restrictions shall be deemed to be a breach by User of this Agreement and shall entitle IATA to pursue any and all remedies available to IATA.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        10.4 During the Term, User grants IATA an irrevocable license to use, reuse, modify, create derivative works from and sublicense User Data solely for the purpose or performing the Service and/or Additional Services hereunder or as otherwise permitted under this Agreement including Section 10.5.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        10.5 IATA reserves the right to perpetually and irrevocably use, exploit and sublicense User Data in a Collated Data form (hereinafter further defined, and which Collated Data is and shall be deemed not to be User Data for all purposes hereunder) solely for non-commercial purposes in promoting and reporting performance of the Service and/or Additional Services to present and prospective users of the Service and/or Additional Services, including operational efficiency, training and international trending and benchmarking initiatives with respect to the Service and/or Additional Services. Any other use of Collated Data by IATA shall be agreed to in writing by User in a separate agreement duly signed by User’s and IATA’s respective authorized representatives. For the purpose of this Agreement “Collated Data” means any set of de-identified and aggregated User Data collated by IATA from User and other users in the Service and/or Additional Services, which contains no names or information that would, in any way, allow identification of User or any other user. In addition and for clarity, IATA is the sole and exclusive owner of all IATA Data (as defined in Section 3.4) and may use any and all IATA Data in any manner whatsoever, including for commercial reasons and with third parties, with the exception of the Collated Data where its use shall be in accordance with the limited purpose set out in this Section 10.5. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        10.6  The terms and conditions set forth in this Section 10 shall survive termination or expiry of this Agreement.
+    </p>
+
+    <p class="bold">
+        11.  CONFIDENTIALITY
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        11.1 Each Party may be given access to information (verbally or in hardcopy and/or electronic form) relating to the other Party’s past, present, and future research, development, business activities, products, services, and technical knowledge, which is identified by the discloser as confidential or that would be treated as confidential by a reasonable person given the nature of the information or the circumstances surrounding its disclosure or access (“<span class="bold">Confidential Information</span>”).
+    </p>
+
+    <p class="margin-3">
+        Notwithstanding the foregoing, Confidential Information shall not include any information that (i) at the time of its disclosure, is publicly known or within the public domain without receiving Party’s breach of this Agreement (ii) prior to its initial disclosure hereunder, is in the possession of the disclosing Party as evidenced in a documentary form and has not been the subject of an earlier confidential relationship with the other Party; (iii) is independently developed by the disclosing Party without use of or reference to any of the other Party’s Confidential Information; or (iv) is acquired by the disclosing Party from any third party having a right to disclose it to the receiving party.  Each Party may disclose Confidential Information to the extent required by a court of competent jurisdiction or other governmental authority or otherwise as required by law, provided that the disclosing Party will, to the extent permitted pursuant to such disclosure order or law, use commercially reasonable efforts to notify the other Party in advance of such disclosure so as to permit such Party to request confidential treatment or a protective order prior to such disclosure.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        11.2 Each Party shall keep confidential, and shall not disclose to any third party for any reason, any Confidential Information of the disclosing Party without the prior written consent of the disclosing Party at its sole discretion, except to (i) its respective employees, agents and contractors on a need to know basis and (ii) in case of IATA, to its service providers that are directly responsible for operating and managing the Service and/or Additional Services, but only to the extent necessary for purposes of this Agreement provided that such service providers are bound by same or substantially similar terms and conditions than those contained in this Section 11.  Furthermore, IATA may use or make copies of User’s Confidential Information only to the extent necessary for purposes of or permitted by this Agreement. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        11.3  Subject to this Section 11, IATA reserves the right to use User Data for purposes of allowing IATA to perform the Service and/or Additional Services.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        11.4  The terms and conditions set forth in this Section 11 shall survive termination or expiry of this Agreement.
+    </p>
+
+    <p class="bold">
+        12. MONITORING
+    </p>
+
+    <p class="margin-3">
+        IATA may monitor individual use of and access to the Service or Additional Services to ensure compliance with the rules, policies, deadlines and instructions applicable thereto.  User using the Service or any Additional Services expressly consents to such monitoring.  If such monitoring reveals possible criminal activity or unauthorized use, IATA may immediately suspend the individual User’s access to the Service or Additional Services and/or provide the evidence of such monitoring to law enforcement officials.  IATA reserves the right to maintain and, for any legitimate reason, review logs containing any inquiry details and other activities performed by User in connection with User’s use of the Service. Users will be notified if any potential fraud or breach of security is identified.  
+    </p>
+
+    <p class="bold">
+        13. PUBLICATION AND NOTIFICATION
+    </p>
+
+    <p class="margin-3">
+        All notices and documents to be issued by IATA under this Agreement (including for the purposes stated in Section 2.3) may be issued by IATA through the posting of an electronic bulletin on the portal of the Service/Additional Services, as applicable, or by email at the email address provided by User as part of its registration.
+    </p>
+
+    <p class="bold">
+        14. TERM AND TERMINATION
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        14.1  This Agreement shall commence on the date of its acceptance by User as per the second paragraph of this Agreement and, subject to Sections 14.2 and 14.3, shall continue for an initial term of one (1) year, and thereafter shall automatically renew for successive periods of one (1) year each (the “Term”). 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        14.2  IATA may terminate this Agreement at the end of any calendar quarter by giving User not less than one hundred eighty (180) days advance written notice, which notice shall be given in accordance with Section 18.  User may terminate this Agreement at the end of any calendar quarter by giving IATA not less than ninety (90) days advance written notice, which notice shall be given in accordance with Section 18. However, User may, within thirty (30) days from the receipt of any Change Notice issued pursuant to or as contemplated in Section 2.3, notify IATA that it refuses the subject matter of such Change Notice and that it elects to terminate this Agreement, effective ninety (90) days following the receipt by IATA of such termination notice or as stated in the following sentence. For clarity and notwithstanding anything contrary, no termination (and no notice in relation thereto) may become effective before the later of (i) expiration of the calendar quarter that ends at least ninety (90) days after receipt of any of the above stated termination notice, and (ii) the expiration of any other and longer termination or winding down period applicable to any particular Additional Service as may be set forth in <span class="underline">Attachment B</span>.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        14.3  During the Term, in the event of any breach by User, IATA may terminate the Agreement, in whole or in part, at IATA’s option: (i) upon notice to User, and/or (ii) by giving thirty (30) days’ written notice to User specifically identifying the breach, unless the breach is cured by User within the thirty (30) day period.  Either Party may also terminate this Agreement upon written notice to the other Party (i) if an Event of Insolvency occurs with respect to the other Party, or (ii) as otherwise expressly allowed hereunder.  A Party affected by an Event of Insolvency in respect of itself must immediately notify the other Party in writing of the occurrence of such Event of Insolvency. “<span class="bold">Event of Insolvency</span>” means any instance where a Party makes a general assignment for the benefit of creditors, or files a voluntary petition in bankruptcy or petitions for reorganization or arrangement, or where a petition in bankruptcy is filed against a Party, or where a receiver or trustee is appointed for all or any part of the property and asset of a Party, or otherwise commit any act of insolvency, under any Laws of New York and of any other jurisdiction in the world relating to bankruptcy, insolvency, stay of creditor remedies, moratorium, compromise, arrangement, extension, adjustment or reorganization of debts or other liabilities, liquidation, winding-up or dissolution, excluding any solvent reorganization or scheme arrangement.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        14.4  Thirty (30) days following the receipt of a termination notice, IATA shall suspend User’s active access to the Service and IATA shall complete the settlement of the on-going transactions involving User, if any, until the effective date of termination.
+    </p>
+
+    <p class="bold">
+        15. INSURANCE
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        15.1 IATA hereunder shall, during the Term of this Agreement (as regards insurance on an event-occurring basis) and for at least 6 years after expiry or termination of the Agreement for insurance on a claims made basis), maintain at its own cost the following insurance coverage:
+    </p>
+
+    <p class="margin-6 indent-3">
+        15.1.1 Commercial general liability insurance for bodily injury and property damage in an amount not less than US$2 million each occurrence; and
+    </p>
+
+    <p class="margin-6 indent-3">
+        15.1.2 Professional and Technology Liability/Errors and Omissions, including professional liability, technology products, employee fraud/dishonesty and computer fraud insurance in an amount not less than US$5 million.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        15.2 In the event that the insurance coverage is to be cancelled or materially changed, IATA shall give User at least thirty (30) calendar days prior written notice. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        15.3 IATA shall provide User with a certificate of insurance in customary form evidencing such coverage upon request.
+    </p>
+
+    <p class="bold">
+        16. FORCE MAJEURE
+    </p>
+
+    <p class="margin-3">
+        IATA shall not be liable for any default, delay or failure to provide the Service and/or Additional Services under this Agreement caused directly or indirectly from any cause beyond IATA’s reasonable control including, acts of God, acts of governmental agencies, international sanctions, acts of war, riots, fires, freight embargoes, severe weather conditions, floods, earthquakes, natural disasters, explosions or other catastrophes (“<span class="bold">Force Majeure Event</span>”).  Notwithstanding the above, in the event of a Force Majeure Event, IATA shall make all commercially reasonable efforts to restore the Service and/or Additional Services as promptly as possible.
+    </p>
+
+    <p class="bold">
+        17. ASSIGNMENT
+    </p>
+
+    <p class="margin-3">
+        Neither Party may assign its respective rights and/or obligations under this Agreement without the prior written consent of the other subject to the following exceptions: (a) if the User wishes to assign its rights or obligations IATA’s consent shall not be unreasonably withheld or delayed; and (b) IATA may (effective ninety (90) days after an informational notice is sent by IATA to User) assign its relevant respective rights and/or obligations under this Agreement in its discretion without the consent of User to (i) an affiliate of IATA, (ii) to any service provider servicing IATA or its affiliates, and/or (iii) to any third party, person or entity as part of or in relation to a merger, amalgamation or sale of all or a substantial part of its business, activities or assets related to the Solution, the Service and/or any Additional Services, or any part thereof. 
+    </p>
+
+    <p class="bold">
+        18.  NOTICE
+    </p>
+
+    <p class="margin-3">
+        Except as expressly stated otherwise herein (including as contemplated in Section 13), any and all notices under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.
+    </p>
+
+    <div class="align-left margin-6 no-page-break">
+        <div class="grey-box bold">
+            To User: {!newForm.Legal_Name_of_company__c}
+        </div>
+        <p class="margin-3 indent-3">
+            <span class="bold">Address:</span><br/>
+            {!newForm.Company_address__c}<br/>
+            {!newForm.Company_city__c}, {!newForm.Company_State__c}<br/>
+            {!newForm.Company_Country__r.Name}<br/>
+            {!newForm.Postal_code__c}
+        </p>
+        <p>
+            <span class="bold">Attn:</span> {!newForm.Contact_First_name__c} {!newForm.Contact_Last_name__c}<br/>
+            <span class="bold">E-mail:</span> {!newForm.Contact_email__c}
+        </p>
+    </div>
+    <div class="align-left margin-6 no-page-break">
+        <div class="grey-box bold">
+            To IATA:
+        </div>
+        <br/>
+        <p class="bold">International Air Transport Association</p>
+        <p>
+            800 Place Victoria, P.O. Box 113<br/>
+            Montréal, Québec<br/>
+            Canada<br/>
+            H4Z 1M1<br/>
+            <span class="bold">Attn:</span> GDC Participation <br/>
+            www.iata.org/cs
+        </p>
+    </div>
+
+    <p class="bold">
+        19. GOVERNING LAW AND DISPUTE RESOLUTION
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        19.1 Laws
+    </p>
+
+    <p class="margin-3">
+        This Agreement shall be governed by and construed in accordance with the laws of the State of New York, United States of America, without regards to any conflict of law provisions.  To the extent applicable, the Parties expressly agree to exclude the application of the U.N. Convention on Contracts for the International Sale of Goods (1980) to this Agreement.  
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        19.2 Dispute Resolution
+    </p>
+
+    <p class="margin-6 indent-2">
+        19.2.1 Amicable Resolution
+    </p>
+
+    <p class="margin-6">
+        The Parties shall attempt to amicably resolve any dispute, controversy or claim relating directly or indirectly to, or arising out of, or in connection with, this Agreement (the "<span class="bold">Dispute</span>").  In the event the Parties have failed to resolve such Dispute within twenty (20) calendar days after receipt of a notice, then the Parties shall refer such Dispute for settlement to their respective officers who shall make every effort to reach an agreement on such Dispute.  In the event the Parties’ respective officers fail to resolve such Dispute within fifteen (15) calendar days, either Party may, without further notice, submit such Dispute to arbitration in accordance with Section 19.2.2.
+    </p>
+
+    <p class="margin-6 indent-2">
+        19.2.2 Arbitration
+    </p>
+
+    <p class="margin-6">
+        If the Parties fail to amicably settle a Dispute in accordance with Section 19.2.1 above, either Party may, without further notice, submit the Dispute to arbitration. The Parties agree that such Dispute shall be exclusively and finally settled by arbitration conducted in accordance with the Rules of Arbitration of the International Chamber of Commerce (the “<span class="bold">Rules</span>”) in effect on the date of notification of arbitration hereunder submitted in accordance with the Rules, or such other procedures as the parties may agree in writing.  The Parties agree to permit an ICC arbitration panel to grant preliminary or permanent relief available pursuant to the Rules and New York law.  The arbitration shall take place in Montreal (Quebec, Canada) and the language for the proceedings shall be English. The arbitral tribunal shall be composed of three (3) arbitrators appointed in accordance with the Rules.  The arbitration award shall be final and binding upon the Parties, the Parties renouncing to appeal against the arbitration award by any ordinary or extraordinary means. The arbitration award may be enforced by action before any court of competent jurisdiction.  The Parties shall treat as confidential the arbitration, the content of the proceedings, the terms of any order or award and any documentary or other evidence disclosed during the arbitration.  Unless the Rules otherwise require, service of any request for arbitration made pursuant to this Section 19.2.2 must be made in accordance with the Notice provisions in Section 18.
+    </p>
+
+    <p class="margin-6 indent-2">
+        19.2.3 Arbitration – Joining Disputes
+    </p>
+
+    <p class="margin-6">
+        If any dispute arising out of or relating to this Agreement (hereinafter referred to as a "<span class="bold">Related Dispute</span>") raises issues which are substantially the same as or connected with issues raised in another dispute which has already been referred to arbitration by another User, the tribunal appointed or to be appointed in respect of any such Existing Dispute shall also be appointed as the tribunal in respect of any such Related Dispute, if:
+    </p>
+
+    <p class="margin-9 indent-1_5">
+        (a) the request for arbitration in the Related Dispute is submitted, in accordance with Section 19.2.1, prior to the terms of reference of the Existing Dispute being signed or approved in the Existing Dispute in accordance with Article 18(2) or 18(3) of the Rules effective on May 1, 2013; or
+    </p>
+    <p class="margin-9 indent-1_5">
+        (b) IATA requests that the disputes be heard together. 
+    </p>
+
+    <p class="margin-6">
+        Where, pursuant to the foregoing provisions, the same tribunal has been appointed in relation to two or more disputes (i.e. an Existing Dispute and a Related Dispute), the tribunal shall order that the whole or part of the matters at issue shall be heard together upon such terms or conditions as the tribunal thinks fit.  The appointment of arbitrators where there are multiple parties to the arbitration shall be in accordance with Article 10 of the Rules effective on May 1, 2013.
+    </p>
+
+    <p class="bold">
+        20. NATURE OF THIS AGREEMENT
+    </p>
+
+    <p class="margin-3">
+        This Agreement constitutes the entire agreement between the Parties regarding the subject matter contained herein, and supersedes any and all prior and contemporaneous understandings, agreements, representations and warranties, both written and oral, with respect to such subject matter.  Except as otherwise expressly set forth herein, this Agreement shall be solely for the benefit of, and shall be enforceable only by the Parties and their respective successors and permitted assigns, and no other person or entity is or shall be entitled to bring any action to enforce any provision of this Agreement against either Party. Neither the failure nor the delay of a Party to enforce any provision of this Agreement shall constitute a waiver of such provision or of either Party to enforce each and every provision.  The electronically executed copy of this Agreement shall be deemed to have the same legal effect as delivery of an original executed copy.  
+    </p>
+
+    <p class="bold">
+        21.  SEVERABILITY
+    </p>
+
+    <p class="margin-3">
+        The invalidity, illegality or unenforceability of the whole or part of any clause or term or condition does not affect or impair the continuation in full force and effect of the remainder of this Agreement.
+    </p>
+
+    <p class="bold">
+        22.  USE OF SYMBOL &amp; LOGOS
+    </p>
+
+    <p class="margin-3">
+        Except as otherwise provided in this Agreement, the Parties shall not use, display or reproduce the symbols or logos of each other in any way without the prior written permission of the other Party.  Without limiting the foregoing, any proposed use of the name or logo of each Party must be submitted to the appropriate Party’s corporate secretary division for prior written approval.  Notwithstanding the above, User shall be deemed having given its consent to IATA, for the purposes of providing the Service or Additional Services, to use, display or reproduce its logo and/or symbol by loading them into the Solution.
+    </p>
+
+    <p class="bold">
+        23. SURVIVAL
+    </p>
+
+    <p class="margin-3">
+        Notwithstanding any termination of this Agreement, either Party’s rights and obligations under Sections 5 (“Fees and Charges”), 6 (“Taxes”), 7.1, 7.3, 7.4, 7.5, 8 ("Indemnification"), 9.1, 10 ("Intellectual Property Rights"), 11 ("Confidentiality"), 14.2, 17 (“Assignment”), 18 (“Notice”), 19 ("Governing Law and Dispute Resolution"), 23 (“Survival”) and any other Sections or clauses which by their nature should survive termination of this Agreement, shall survive any such termination.
+    </p>
+
+    <h2 class="panel-title new-line">
+        ATTACHMENT A – SERVICE DESCRIPTION
+    </h2>
+
+    <p class="bold">
+        Table of Contents
+    </p>
+
+    <div class="table-contents">
+        <table>
+            <tr class="bold"><td>1.</td><td><span>BACKGROUND</span></td><td>14</td></tr>
+            <tr><td>1.1</td><td><span>OVERVIEW OF SIS</span></td><td>14</td></tr>
+            <tr><td>1.2</td><td><span>SUPPORTING DOCUMENTATION</span></td><td>14</td></tr>
+            <tr><td>1.3</td><td><span>STANDARD SERVICES AND OPTIONAL SERVICES</span></td><td>15</td></tr>
+            <tr><td></td></tr>
+            <tr class="bold"><td>2.</td><td><span>USER MANAGEMENT</span></td><td>15</td></tr>
+            <tr><td>2.1</td><td><span>USER CREATION</span></td><td>15</td></tr>
+            <tr><td>2.2</td><td><span>USER PROFILE SET-UP</span></td><td>15</td></tr>
+            <tr><td>2.3</td><td><span>USER SET-UP</span></td><td>16</td></tr>
+            <tr><td>2.4</td><td><span>ASSIGN PERMISSIONS</span></td><td>16</td></tr>
+            <tr><td></td></tr>
+            <tr class="bold"><td>3.</td><td><span>DATA TRANSMISSION</span></td><td>16</td></tr>
+            <tr><td></td></tr>
+            <tr class="bold"><td>4.</td><td><span>RECEIVABLES PROCESSING</span></td><td>17</td></tr>
+            <tr><td>4.1</td><td><span>INVOICE DATA PROCESSING</span></td><td>17</td></tr>
+            <tr><td>4.2</td><td><span>SUPPORTING DOCUMENT MANAGEMENT</span></td><td>18</td></tr>
+            <tr><td>4.3</td><td><span>DIGITAL SIGNATURE SERVICES</span></td><td>19</td></tr>
+            <tr><td>4.4</td><td><span>SETTLEMENT SERVICES</span></td><td>19</td></tr>
+            <tr><td>4.5</td><td><span>REPORTS, ALERTS AND OUTPUTS</span></td><td>20</td></tr>
+            <tr><td></td></tr>
+            <tr class="bold"><td>5.</td><td><span>PAYABLES PROCESSING</span></td><td>21</td></tr>
+            <tr><td>5.1</td><td><span>INVOICE AND SUPPORTING DATA MANAGEMENT</span></td><td>21</td></tr>
+            <tr><td>5.2</td><td><span>REJECTIONS OF INCOMING BILLINGS</span></td><td>21</td></tr>
+            <tr><td>5.3</td><td><span>PROCESS INVOICES ON IS-WEB</span></td><td>21</td></tr>
+            <tr><td>5.4</td><td><span>DIGITAL SIGNATURE SERVICES</span></td><td>22</td></tr>
+            <tr><td>5.5</td><td><span>REPORTS</span></td><td>22</td></tr>
+            <tr><td></td></tr>
+            <tr class="bold"><td>6.</td><td><span>CORRESPONDENCE MANAGEMENT</span></td><td>22</td></tr>
+            <tr><td>6.1</td><td><span>GENERATE CORRESPONDENCE</span></td><td>22</td></tr>
+            <tr><td>6.2</td><td><span>RECEIVE CORRESPONDENCE</span></td><td>22</td></tr>
+            <tr><td>6.3</td><td><span>GRANT AUTHORITY TO BILL FOR CORRESPONDENCE</span></td><td>22</td></tr>
+            <tr><td>6.4</td><td><span>EXPIRY OF CORRESPONDENCE CASES</span></td><td>23</td></tr>
+            <tr><td>6.5</td><td><span>ALERTS AND REPORTS</span></td><td>23</td></tr>
+            <tr><td>6.6</td><td><span>DOWNLOAD</span></td><td>23</td></tr>
+            <tr><td></td></tr>
+            <tr class="bold"><td>7.</td><td><span>SYSTEM REPORTS</span></td><td>23</td></tr>
+            <tr><td></td></tr>
+            <tr class="bold"><td>8.</td><td><span>GLOSSARY</span></td><td>24</td></tr>
+        </table>
+    </div>
+
+    <p class="bold new-line">
+        1. BACKGROUND
+    </p>
+
+    <p class="margin-3">
+        The SIS platform exists to simplify air transport industry billing and to remove paper from the entire process, delivering tangible financial benefits to all participants in the industry. The SIS platform enables a service provider to generate a single electronic billing file that can be converted to a series of standard-format electronic invoices that can be read and processed automatically by the recipient. Settlement through industry clearing house is automatically enabled, so that members can incorporate immediate settlement if agreed between them. Dispute mechanisms and agreed procedures for both invoicing and settlement are included as part of the service.
+    </p>
+    <p class="margin-3">
+        In providing this service, IATA aims to simplify and accelerate industry processes, increasing efficiency and reducing costs for all participants.
+    </p>
+
+    <p class="margin-3 bold">
+        1.1 OVERVIEW OF SIS
+    </p>
+
+    <p class="margin-3">
+        SIS is an Invoicing Platform which is connected to various external systems such as ICH, ACH, a trusted Digital Signature service provider, etc., thus providing a single point of communication for industry billing, invoicing and settlement.
+        A high level overview of Integrated Settlement is shown in Figure 1 below:
+    </p>
+
+    <figure>
+        <apex:image width="680" value="{!URLFOR($Resource.ISSP_MembershipApplicationFormPDF,'img/ISUA_figure1.png')}"/>
+        <figcaption>Figure : Overview of Integrated Settlement</figcaption>
+    </figure> 
+
+    <p class="margin-3">
+        The SIS application can be grouped into the following logical modules:
+        <ul>
+            <li>User and User Management</li>
+            <li>Receivables Data Processing</li>
+            <li>Payables Data Processing</li>
+            <li>Dispute Management (known in IS as ‘Correspondence’)</li>
+        </ul>
+    </p>
+    <p class="margin-3">
+        The services provided by each module are described in the subsequent chapters.
+    </p>
+
+    <p class="margin-3 bold">
+        1.2 SUPPORTING DOCUMENTATION
+    </p>
+
+    <p class="margin-3">
+        The following documents provide additional information to the services described in this document:
+        <ul class="margin-6">
+            <li>SIS Implementation Handbook: This document provides the details of the impact of IS on the IT systems and processes of the Users</li>
+            <li>IS-XML Structure and Interface Specification: This document describes the format of the IS-XML electronic invoice.</li>
+            <li>Sign up and Certification Guide: This document provides detail explanation on the Sign up process and steps to be followed to get certified for SIS.</li>
+            <li>ACH Manual of Procedure: For members of the ACH, the Manual of Procedure contains all the rules and procedures associated with billings using the ACH for settlement</li>
+            <li>SIS User Guide: This manual documents all the functional processes of SIS that are available to the individual user.</li>
+        </ul>
+    </p>
+
+    <p class="margin-3 bold">
+        1.3 STANDARD SERVICES AND OPTIONAL SERVICES
+    </p>
+
+    <p class="margin-3">
+        Standard Services such as submission of invoices, rejections etc. are available to any User as soon as participation formalities have been completed. Optional Services require specific notification or request to IATA, whether before or after use of the service has commenced. Use of optional services will incur additional charges (such as Digital Signatures). Because a service is shown as ‘Optional’ in SIS does not mean that it is optional in the User’s operating jurisdictions.
+    </p>
+
+    <p class="bold">
+        2. USER MANAGEMENT
+    </p>
+
+    <p class="margin-3">
+        The SIS application allows Users to configure their company and staff responsibility details using the User Profile module over IS-WEB.
+    </p>
+
+    <p class="margin-3 bold">
+        2.1 USER CREATION
+    </p>
+
+    <p class="margin-3">
+        The initial set-up of the User is done by IATA using existing information within IATA as well as using information sourced from individual participants during the sign-up process. Once the participation formalities are completed, the participation status is activated by SIS-Ops and a Super User account is created and provided to the User. Login credentials to access IS-WEB are also provided by IATA so that the User can communicate with the SIS Platform. 
+        <span style="font-style: italic;">Note: The User will have to go through the Sandbox Testing and Certification process to be able to send invoice files to SIS. This process is described in detail in the SIS Sign Up and Certification Guide.</span>
+    </p>
+
+    <p class="margin-3 bold">
+        2.2 USER PROFILE SET-UP
+    </p>
+
+    <p class="margin-3">
+        Using the login credentials provided by SIS-Ops, the User can login to IS-WEB and review the set-up details on the Member Profile Screen. SIS allows the User to update the details on the Member Profile. Certain fields on the Member Profile will only allow changes to be made which will be applicable for a future billing period or date. 
+    </p>
+
+    <div class="bold margin-3">Member Details</div>
+    <p class="margin-3">
+    SIS application will allow the User to upload and store its official logo on to its platform. This logo will be used by SIS to display the image on the PDF invoices generated on behalf of the User. The User’s Accounting Code, Prefix, Legal Name, Status in IS,  the ICH, or the ACH, and the details of the User’s bank accounts for bilateral settlements cannot be changed by the User and must be referred to SIS-Ops.
+    </p>
+
+    <div class="bold margin-3">Location Details</div>
+     <p class="margin-3">
+        Every User needs to have at least one location detail setup in the User Profile. This will be the default location of the User and is referred to as the “MAIN” location. The User will be allowed to update the details of the MAIN location as well as create any additional location details that may be required for legal or business reasons. This information is used at the time of PDF Invoice generation as well as when generating the Payable output invoices, in case the invoice reference data is not provided in the incoming receivables invoice.
+    </p>
+
+    <div class="bold margin-3">Bank Details for Bilateral Settlement</div>
+     <p class="margin-3">
+        Bank details can be set-up against each location created in the Member Profile to be used in case of bilateral settlement invoices. This set-up can only be done by SIS-Ops based on signed physical requests from the Users. This information is included by SIS in the Payable Invoice in case of Bilateral Settlement.
+    </p>
+
+    <div class="bold margin-3">Contacts</div>
+     <p class="margin-3">
+        SIS allows set-up of two types of contacts in the Member Profile:
+        <ul>
+            <li>Informational Contacts: These contacts are set up for purely informational purposes. The contact details include information such as the name, designation, address, contact numbers, email id etc. of that person. The SIS application allows Users to retrieve the informational contacts of other service participants. As part of the initial data set-up, SIS-Ops will configure some of the informational contacts of the User based on the data available within IATA. </li>
+            <li>Processing Contacts: These contacts, if set up by the User, will receive email alerts on specific events related to invoice processing. </li>
+        </ul>
+    </p>
+    
+    <div class="bold margin-3">E-invoicing Specific Details</div>
+    <p class="margin-3">
+        SIS allows the User to set-up e-invoicing specific parameters on the User Profile which control the behavior of the SIS application at the time of processing. 
+    </p>
+
+    <div class="bold margin-3">Clearing House Specific Details</div>
+    <p class="margin-3">
+        SIS allows view access to the Clearing House set-up details to the Users. This information can only be updated by the respective clearing house operations team members. 
+    </p>
+
+    <p class="margin-3 bold">
+        2.3 USER SET-UP
+    </p>
+
+    <p class="margin-3">
+        The SIS platform allows different type of users to be configured in the system. Depending on the type of the user, the IS-WEB Menu structure and the Screens changes accordingly. The User profile details stored in SIS includes the name, location details, email id, contact number etc. of the person. The email id of the user acts as the login id for IS-WEB. IS provides a facility by which the email id of a User can be changed by the User if required.
+    </p>
+    <p class="margin-3">
+        SIS-Ops creates a Super User account once the participation formalities are completed. This Super User can create other users for their company. 
+    </p>
+
+    <p class="margin-3 bold">
+        2.4 ASSIGN PERMISSIONS
+    </p>
+    <p class="margin-3">
+        The SIS Platform will assign the maximum permission allowed for a User to their Super User Account. The Super User, at the time of creating other users, can assign permissions to the users. These include permissions for viewing/editing information on a particular screen, permission to perform some special operations on specific screens, permission to create other users etc.
+    </p>
+
+    <p class="margin-3">
+        The SIS application will have default templates to assign permissions, which can be used by users to assign permissions. Users will also have the ability to create their own permission templates and apply them to their users.
+    </p>
+
+    <p class="margin-3">
+        The SIS application also provides a facility to copy the user permission profile from one user and replicate them on other users.
+    </p>
+
+    <p class="bold">
+        3. DATA TRANSMISSION
+    </p>
+
+    <p class="margin-3">
+        All files to and from SIS will be processed initially by iiNet on behalf of SIS. Files will be received by iiNet from all Users, and will be transmitted by iiNet to the SIS application. Once the file is received correctly by iiNet, iiNet will complete delivery to the SIS application. Any files to be transmitted to a User will be sent by the SIS application to iiNet, and will be transmitted from iiNet to the User.
+    </p>
+
+    <p class="margin-3">
+        Files from the User must be pushed to iiNet, and files from iiNet to the User may be pushed by iiNet or pulled by the User at the User’s choice.
+    </p>
+
+    <p class="margin-3">
+        There are no fees for this service provided by iiNet for files transmitted from and to SIS, but usage will require separate acceptance of the iiNet Terms Of Use. Any added-value services provided by iiNet beyond transmission between the User and SIS are subject to iiNet’s normal terms and conditions, and fees may be applicable.
+    </p>
+
+    <p class="bold">
+        4. RECEIVABLES PROCESSING
+    </p>
+
+    <p class="margin-3">
+        The SIS application will process the incoming invoices and supporting documents provided by the billing entities.
+    </p>
+
+    <p class="margin-3 bold">
+        4.1 INVOICE DATA PROCESSING
+    </p>
+
+    <p class="margin-3 bold">
+        Input Possibilities
+    </p>
+    <p class="margin-3">
+        The SIS application allows the billing entities to provide invoice information in an electronic formats (IS-XML).
+    </p>
+
+    <p class="margin-3">
+        Along with the electronic mode of invoice submission, SIS also provides a facility to manually capture and review invoice information online over the internet, named IS-WEB. The table below details the support provided by SIS for different type of transactions. 
+    </p>
+
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 50%; margin-left: 20%;">
+            <tr>
+                <th>Transaction Types</th>
+                <th>IS-XML</th>
+                <th>IS-WEB</th>
+            </tr>
+            <tr>
+                <td>Original Invoice</td>
+                <td>X</td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>Rejection Invoice</td>
+                <td>X</td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>Correspondence  Invoice</td>
+                <td>X</td>
+                <td>X</td>
+            </tr>
+            <tr>
+                <td>Correspondence </td>
+                <td>-</td>
+                <td>X</td>
+            </tr>
+        </table>
+    </div>
+
+    <p class="margin-3">
+        On successful receipt of an incoming file, SIS generates a confirmation email and sends it to the billing entity. This email alert can be configured by billing entity using the User Profile screen on IS-WEB.
+    </p>
+
+    <p class="margin-3">
+        In case of invoices captured over IS-WEB, SIS generates an email alert to the billing entity 24 hours before the billing period closure providing a list of open invoices yet to be submitted for further processing.
+    </p>
+
+    <p class="margin-3 bold">
+        Data Validation
+    </p>
+    <p class="margin-3">
+        Invoice data provided by the billing entities will be validated by SIS. This process will ensure that the invoice data is of good quality and the billed entities can process the same without any issue within their internal systems. This process will take place upon receipt of each SIS billing file.  
+    </p>
+
+    <p class="margin-3">
+        The different types of validation checks performed by the SIS application are as follows:
+        <ul>
+            <li>File Construction checks: SIS will validate if the invoice files are created as per the defined file specifications, naming convention, duplicate files, compression logic, etc.</li>
+            <li>Field Format checks: SIS will check if data values have been provided for mandatory data elements, conditionally mandatory data elements if the condition is met, etc. It will also ensure that the data is provided as per the field format (e.g. numeric, alphabetic, date, etc.) and as per the field length specifications (e.g. numeric field with a maximum of 5 digits)</li>
+            <li>Reference Master checks: Invoice data fields having standard reference data values are valid (e.g. From City field if populated should have a valid IATA city/airport code, etc.)</li>
+            <li>Interline Billing Rules checks: Some of the Interline billing rules defined in the RAM or ACH Manual of Procedure, such as possible duplicate billing check, outside time limit billings, minimum billing amount check for different type of transaction, etc.</li>
+            <li>Settlement Information checks: SIS will validate the correctness of the Settlement details provided on the invoice if it needs to be cleared through a clearing house (e.g. Currency of Clearance information, Clearing House information, etc.).</li>
+            <li>Billing Audit Trail checks: SIS will check if the various stages of billing are linked together and there are no out of turn billings (e.g. validation of ‘Previous Invoice number’, ‘Previous Billing Month’, ‘Previous Rejection number’, ‘Rejection Stage number’ in case of Rejections etc.)</li>
+            <li>Computation checks: SIS will validate if billing amounts specified at various levels within the invoice add up together (e.g. the invoice total adds up to the sum of all Line Item totals, similarly Line Item total adds up to the sum of all Line Item details totals etc.). The total of the line items must not vary from the invoice value by more than a small tolerance.</li>
+            <li>Legal Requirement checks: SIS will validate if certain legal requirements are satisfied by the Billing Entity in the invoice data (e.g. invoice Number is unique for a Billing User within a calendar year, VAT breakdown information is provided in the case that VAT amounts are billed in the invoice, etc.)</li>
+        </ul>
+    </p>
+
+    <p class="margin-3">
+        Wherever possible, SIS will validate the entire file and identify all possible errors in the file. A validation report is generated at the end of this process and is provided to Billing Entity irrespective of the status of the validation. In case of errors, the Billing Entity can configure its User Profile to receive an email alerting its contact about the details of the Validation error.
+    </p>
+
+    <p class="margin-3">
+        Invoice data captured using IS-WEB is validated at the time of data entry. SIS will alert the user in case invalid data in entered at the time of saving the information.
+    </p>
+    <p class="margin-3">
+        The SIS Platform does not validate the following:
+        <ul>
+            <li>Whether the entity can legally bill the invoice through IS</li>
+            <li>Whether the billed amounts are correct</li>
+            <li>Whether all required taxes are applied correctly</li>
+            <li>Whether all required legal information of all countries in the world is provided</li>
+        </ul>
+    </p>
+
+    <p class="margin-3 bold">
+        Error Handling
+    </p>
+    <p class="margin-3">
+        In case of validation error, SIS provides a facility to delete the erroneous invoices or the entire file through IS-WEB. For certain errors, SIS also provides an option of carrying out online correction on the IS-WEB. These correctable errors are errors related to reference data values such as invalid city/airport code, invalid tax code etc.
+    </p>
+
+    <p class="margin-3">
+        Invoices in an error status are not considered for further processing by SIS.
+    </p>
+
+    <p class="margin-3 bold">
+        4.2 SUPPORTING DOCUMENT MANAGEMENT
+    </p>
+
+    <p class="margin-3 bold">
+        Input Possibilities
+    </p>
+
+    <p class="margin-3">
+        SIS provides the facility for billing entities to supply supporting documents in electronic format in both batch and as online modes. At the time of invoice capture, billing entities can manually upload the supporting documents. IS will store the uploaded supporting documents and link them to the invoice, or to the transaction within the invoice. 
+    </p>
+
+    <p class="margin-3">
+        IS supports 3 indexing options for submitting supporting documents in a batch mode. These are:
+        <ul>
+            <li>Using folder name based indexing</li>
+            <li>Using a CSV file based indexing</li>
+            <li>Using an XML file based indexing</li>
+        </ul>
+    </p>
+
+    <p class="margin-3">
+        The formats are explained in the IS-XML Structure and Interface Specification document.
+    </p>
+
+    <p class="margin-3">
+        Billing entities can use any of the options to submit the batch supporting documents to IS.
+    </p>
+
+    <p class="margin-3">
+        On successful receipt of a batch supporting file, IS generates a confirmation email and sends it to the billing entity. 
+    </p>
+
+    <p class="margin-3 bold">
+        Data Validation
+    </p>
+    <p class="margin-3">
+        IS carries out certain sanity checks on the batch supporting document file before it is considered for processing. The different type of checks includes the following:
+        <ul>
+            <li>File Construction checks: SIS will validate if the batch supporting documents files are created as per the defined file specifications, naming convention, duplicate files, compression logic, etc.</li>
+            <li>Index Information checks: SIS will validate the index information supplied with the batch supporting documents files and confirm if it is as per the defined specification.</li>
+            <li>File Extension checks: SIS will validate the file extensions of the individual supporting documents and check if it matches with one of the supported neutral file formats. In case it is not a neutral file format, SIS will validate if any exceptions for supporting document file types have been defined in the Member Profile of the billed entity for acceptance. If it is not an exception, SIS will delete the supporting document file from the system.</li>
+        </ul>
+    </p>
+
+    <p class="margin-3">
+        Wherever possible, SIS will validate the entire file and identify all possible issues in the batch supporting document file. A validation report is generated at the end of this process and is provided to the billing entity.
+    </p>
+
+    <p class="margin-3 bold">
+        Automated Linking of Supporting Documents
+    </p>
+
+    <p class="margin-3">
+        The SIS application will carry out auto-linking of supporting documents provided in a batch mode to the corresponding billing record. This linking will be based on the Index information supplied in the batch supporting document file. Invoices which are successfully validated will be considered for automated linking. SIS will take care of any timing issues in case of automated linking if the supporting document file is provided prior to the invoice being successfully validated.
+    </p>
+    <p class="margin-3">
+        For cases where the SIS application is not able to automatically link the supporting documents, SIS provides a facility by which the billing entity can update the linking information on IS-WEB and manually trigger the linking process.
+    </p>
+
+    <p class="margin-3 bold">
+        4.3 DIGITAL SIGNATURE SERVICES
+    </p>
+
+    <p class="margin-3">
+        This is an optional service provided by the IS application. 
+    </p>
+
+    <p class="margin-3 bold">
+        Digital Signature Application
+    </p>
+    <p class="margin-3">
+        SIS offers digital signature (DS) application service through a trusted digital signature service provider (currently <a href="https://www.trustweaver.com/">TrustWeaver</a>). Based on the instructions provided by the billing entity, SIS creates from the SIS-format invoice data an invoice subset file in PDF or XML format with the necessary legal and invoice information fields. This invoice subset file is forwarded to a trusted DS service provider in order to apply the appropriate digital signature. The file is sent immediately unless the file is incomplete (awaiting attachment). If there are attachments awaited, the file is not sent until all attachments have been uploaded and matched, or the billing deadline is reached, at which point the number of attachments reported is updated to reflect the number that are actually available at that time. The invoice is then sent for digital signature. After applying the digital signature, SIS receives the invoice subset file and stores it in its Central Repository. This digitally signed file is made available by SIS as one of the outputs to the billing entity at the end of the billing period, based on the configuration of the User Profile. The file can also be downloaded online over the IS-WEB.
+    </p>
+
+    <p class="margin-3 bold">
+        4.4 SETTLEMENT SERVICES
+    </p>
+
+    <p class="margin-3">
+        The SIS application provides interfaces with industry clearing houses thus enabling automatic settlement of billed invoices as well as other clearing house related services.
+    </p>
+
+    <p class="margin-3 bold">
+        Settlement Information
+    </p>
+
+    <p class="margin-3">
+        The SIS application interfaces with two clearing houses: The IATA Clearing House (ICH) and the Airlines Clearing House (ACH). Based on the instructions provided by the billing entity, SIS generates a summary statement of the billed invoices and forwards it to the respective clearing house for settlement. In case of ICH, SIS generates claim files every 10 minutes whereas in case of ACH the settlement information is generated and passed only once at the billing period closure.
+    </p>
+
+    <p class="margin-3 bold">
+        Suspended User Billing Management
+    </p>
+
+    <p class="margin-3">
+        SIS supports billings from or against entities that continue in business but have been suspended from the clearing house. The billing entities can continue to send invoices to be routed through the clearing house or for bilateral settlement. In case of billing from/to suspended members involving ICH, SIS will flag the invoices as “Suspended” in the summary settlement statement and forward them to ICH. The ICH will record this information in accordance with its procedures. In the case of billing from/to suspended members involving ACH, SIS will not include such invoice details at the time of creating the summary settlement statement, and no record will be retained by the ACH. When creating the SIS-Format output (IS-XML or IS-WEB), SIS flags such invoices as “Suspended” and forwards them to the billed entity along with the other invoices.
+    </p>
+
+    <p class="margin-3">
+        In case of re-instatement of the suspended member, SIS provides the functionality for the billing entities to re-submit their claims and settle through the clearing house any outstanding amounts that arose after suspension. SIS also provides a report which helps the billing entities to manage the invoice claims made during the suspension period.
+    </p>
+
+    <p class="margin-3 bold">
+        Handling Late Submission Billings
+    </p>
+
+    <p class="margin-3">
+        SIS supports processing of invoices of closed billing periods for a short duration of time, immediately after the closure of the billing period. The designated person identified in the User Profile can request invoices to be considered for Late Submission. On acceptance of such request by the clearing house, the invoices will automatically be considered for settlement. Clearing houses may charge a fee for such submissions.
+    </p>
+
+    <p class="margin-3 bold">
+        4.5 REPORTS, ALERTS AND OUTPUTS
+    </p>
+    <p class="margin-3 bold">
+        Processing Dashboard
+    </p>
+    <p class="margin-3">
+        SIS has an online dashboard on IS-WEB which provides visibility of the status of processing of receivable invoices. There are 2 views provided by the dashboard:
+        <ul>
+            <li>File Level View: This view provides the status of processing of files submitted to SIS.</li>
+            <li>Invoice Level View: This view provides the status of the receivable invoices processed in SIS. The status of the intermediate stages of invoice processing can also be viewed and downloaded by the User.</li>
+        </ul>
+    </p>
+
+    <p class="margin-3 bold">
+        Reports
+    </p>
+    <p class="margin-3">
+        SIS provides reports to its members based on the receivables data which can be used to analyze billing trends and volumes. These reports can be queried using a number of different criteria and saved in PDF or Microsoft Excel format.
+    </p>
+
+    <p class="margin-3 bold">
+        Alerts
+    </p>
+    <p class="margin-3">
+        SIS generates a number of alert messages to the User. These alert messages are sent by email to the contacts setup in the User Profile. Some of these alerts are listed below:
+        <ul>
+            <li>Profile data update alert: An alert email message is generated every time a change is made to the User profile details. It is also generated when a post-dated change made on the User profile becomes effective</li>
+            <li>Other Users Invoice Reference Data Update alert: An alert message is sent with an attached CSV file providing details of changes made by other Users on their location information. This update can be used by the Users to synchronize the new location details within their receivables system</li>
+            <li>DS failure alert: An alert email message is generated in case SIS Platform was unable to apply Digital Signature on a particular invoice. </li>
+            <li>File Receipt alert: An alert email message is generated by SIS whenever a file is received by the platform for processing. This alert can be set up on the User Profile for incoming files related to individual billing categories.</li>
+            <li>Validation Error alert: An alert email message is generated whenever an invoice file fails in the validation process. This alert can be set up on the User Profile for an individual Billing Category. The Validation report is attached along with the alert email.</li>
+            <li>Open invoices alert: An alert email message is generated 24 hours before the billing period closure informing the user about open invoices on IS-WEB, yet to be submitted for processing. A list of Open invoices is also attached with this email.</li>
+        </ul>
+    </p>
+
+    <p class="margin-3 bold">
+        Output Information
+    </p>
+    <p class="margin-3">
+        SIS application generates the following outputs from the receivables data provided by the User:
+    </p>
+    <p class="margin-3">
+        E-invoicing related files, which include
+        <ul>
+            <li>Invoices in PDF format</li>
+            <li>Detail Listings in csv or pdf format</li>
+            <li>Digital Signature files</li>
+            <li>Rejection/Credit Memo details in html format</li>
+        </ul>
+    </p>
+    <p class="margin-3">
+        Based on the preference defined in the member profile, SIS automatically creates a zip file and includes in it the above mentioned files for all invoices fully processed in that period. The above mentioned outputs can also be downloaded manually from the IS-WEB for individual invoices. 
+    </p>
+
+    <p class="margin-3">
+        In case of invoices submitted by 3rd parties on behalf of Users (e.g. invoices raised by IATA for Call Day Adjustments), SIS provides the billing entity with the option to generate an IS-XML output file at the end of each billing period. This file can be used to carry out account adjustments within the Receivable system of the billing entity.
+    </p>
+
+    <p class="margin-3">
+        SIS provides an option via the member profile to automatically generate a summary report with the listing of all invoices fully processed in a particular billing period. This report can be used by the billing entity to synchronize the processing status of invoices within its Receivable system.
+    </p>
+
+    <p class="bold">
+        5. PAYABLES PROCESSING
+    </p>
+    <p class="margin-3">
+        The processed invoices are made available by the SIS Platform to the User at Output File Generation Time as shown in the SIS Calendar.
+    </p>
+    <p class="margin-3 bold">
+        5.1 INVOICE AND SUPPORTING DATA MANAGEMENT
+    </p>
+    <p class="margin-3">
+        Based on the setup in the User Profile, the User can receive the following from SIS for Payables processing:
+        <ul>
+            <li>
+                SIS-Format Invoice Files: IS groups the payable invoice information as per the Billed Entity and Billing Category level and generates invoice files as per the format requested by the billed entity.
+            </li>
+        </ul>
+    </p>
+
+    <p class="margin-3">
+        The Payable invoices can also be reviewed over IS-WEB. 
+        <ul>
+            <li>
+                Offline Archive Files: At Output File Generation Time as defined in the SIS Calendar, SIS generates the following additional output files and groups them as per the Billed Entity and Billing Category into separate offline archive files:
+                <ul style="list-style-type: circle;">
+                    <li>E-invoicing related files
+                        <ul style="list-style-type: square;">
+                            <li>Invoice in PDF format</li>
+                            <li>Detail Listings in csv or pdf format</li>
+                            <li>Digital Signature files</li>
+                            <li>Digital Signature Verification log files</li>
+                            <li>Rejection/Credit Memo details in html format</li>
+                        </ul>
+                    </li>
+                    <li>Supporting Documents</li>
+                </ul>
+            </li>
+        </ul>
+    </p>
+
+
+    <p class="margin-3">
+        An XML index file is also provided having references for each file provided in the Offline Archive. This XML file is used by the User to automatically read and link the contents of the Offline Archive within its internal payables system.
+    </p>
+
+    <p class="margin-3">
+        The above outputs can also be downloaded for individual invoices manually over the IS-WEB. They are kept for 60 days, and then deleted.
+    </p>
+
+    <p class="margin-3">
+        An alert email can be configured on the User Profile at a Billing Category level to be triggered whenever the output files are generated and available to download. In case of an SIS-User opting for IS-WEB, this alert will denote that the invoices are available for review on IS-WEB.
+    </p>
+
+    <p class="margin-3 bold">
+        5.2 REJECTIONS OF INCOMING BILLINGS
+    </p>
+    <p class="margin-3">
+        SIS enables rejection of incoming billings either via file upload using the IS-XML format, or by manual entry into the IS-WEB. Rejection processing can only take place once the Billing Output file has been received from SIS at the end of the clearance period. It is not possible to reject an incoming invoice in the same period as it was issued.
+    </p>
+
+    <p class="margin-3">
+        The SIS application will check that rejections contain the required information, and will not permit rejections beyond the limits defined in the RAM or the ACH Manual of Procedure.
+    </p>
+
+    <p class="margin-3">
+        Rejections are only possible while the billing or rejection to which it refers remains live in SIS for 6+2 months. 
+    </p>
+
+    <p class="margin-3 bold">
+        5.3 PROCESS INVOICES ON IS-WEB 
+    </p>
+    <p class="margin-3">
+        The SIS Platform allows Users to review the Payable invoice and transaction details on the IS-WEB. It also allows the user to view supporting documents linked to the invoice/transactions within the invoice. SIS maintains an audit trail of all invoices/ transactions within the platform so that the complete billing history of any invoice/ transaction can be viewed at any time. 
+    </p>
+
+    <p class="margin-3">
+        SIS allows Rejection Invoices (known as Memos) to be raised weekly against Payable invoice transactions via the IS-WEB once received in the SIS outward file. The transaction details selected by the User when raising the Rejection Invoices/Memos are automatically carried forward thus reducing the data entry effort to some extent. 
+    </p>
+
+    <p class="margin-3 bold">
+        5.4 DIGITAL SIGNATURE SERVICES
+    </p>
+    <p class="margin-3">
+        This is an optional service provided by SIS.
+    </p>
+
+    <p class="margin-3 bold">
+        Digital Signature Application
+    </p>
+    <p class="margin-3">
+        SIS allows billed entities to configure the application of Digital Signature on Payable Invoices on the User Profile. Based on the location details specified on the payable invoice, if it matches the profile set-up of the billed entity, SIS triggers the process to apply digital signature as explained in section 4.3.
+    </p>
+
+    <p class="margin-3 bold">
+        Digital Signature Verification
+    </p>
+    <p class="margin-3">
+        SIS provides an option whereby the billed entity can request verification of the digital signature applied on Payable Invoices, via the User Profile. A verification log file is created by this process which contains the status of the applied digital signature. 
+    </p>
+ 
+    <p class="margin-3 bold">
+        5.5 REPORTS
+    </p>
+    <p class="margin-3">
+        SIS provides a number of reports to its members based on the payables data which can be used to analyze billing trends and volumes. These reports can be queried using a number of different criteria and saved in PDF or MS Excel format.
+    </p>
+
+    <p class="bold">
+        6. CORRESPONDENCE MANAGEMENT
+    </p>
+    <p class="margin-3">
+        Once a rejection for a billing has been entered, the entity which received the rejection can only continue the dispute by initiating correspondence. IS will not permit further re-billings unless the recipient has indicated their acceptance through the Correspondence process.
+    </p>
+
+    <p class="margin-3 bold">
+        6.1 GENERATE CORRESPONDENCE
+    </p>
+    <p class="margin-3">
+        Once a rejection has been entered, the SIS application provides a facility by which the User who received the rejection, selects the rejection transaction/invoice on IS-WEB and initiates an electronic correspondence with the originator. The SIS application automatically populates the data in the correspondence screen based on the User Profile information. SIS automatically generates a correspondence reference number which remains the same until the end of the correspondence cycle. SIS provides an option to the User to attach supporting documents to the correspondence.
+    </p> 
+
+    <p class="margin-3">
+        SIS provides a facility by which the user can save the correspondence in the draft stage and work on it later. SIS also provides a facility by which, if a user does not have the permission to send correspondence, can mark the correspondence as “Ready to Submit” and the supervisor can review, edit (if required) and send the correspondence. 
+    </p>
+
+    <p class="margin-3 bold">
+        6.2 RECEIVE CORRESPONDENCE
+    </p>
+    <p class="margin-3">
+        When a correspondence is sent via SIS, an email notification is generated and is sent to the Correspondence Alert contact defined in the User Profile for the specific Billing Category. The email only contains a URL reference, which on clicking, will open up the IS-WEB Correspondence screen (note: it may be necessary for the user to modify their junk/spam filters to enable these communications to be viewed/actioned). On reading the correspondence if the User wants to continue with the correspondence process, IS provides a facility by which a reply correspondence is generated and the user is allowed to enter the details and send it to the interline partner.
+    </p>
+
+    <p class="margin-3">
+        IS ensures that there is no out of turn correspondence done by the User.
+    </p>
+
+    <p class="margin-3 bold">
+        6.3 GRANT AUTHORITY TO BILL FOR CORRESPONDENCE
+    </p>
+    <p class="margin-3">
+        SIS provides a facility where the User who received the correspondence can grant an Authority to Bill when responding to the received correspondence. If the issuer receiving the Authority to Bill is not satisfied with the amount for which the authority is granted, it can continue with the correspondence process and the Authority will be considered null and void. 
+    </p>
+
+    <p class="margin-3">
+        If the issuer receiving the authority to bill accepts the amount for which authority is granted, the User is expected to raise a Correspondence Invoice and claim the amount for which the authority is granted. SIS validates the amount of such Correspondence Invoices and matches it with the Authority amount. In case the two are not matching and the difference is more than the allowed tolerance, the invoice will fail in the Validation process.
+    </p>
+
+    <p class="margin-3 bold">
+        6.4 EXPIRY OF CORRESPONDENCE CASES
+    </p>
+    <p class="margin-3">
+        SIS tracks the expiry dates of open correspondence cases in the system as per the rules defined in RAM/ACH Manual of Procedure. In case the party that initiated the correspondence does not respond to a received correspondence by the expiry of the time limit, the Correspondence case is closed by IS automatically with no further recourse through SIS for that particular case.
+    </p>
+
+    <p class="margin-3">
+        Similarly if an Authority to Bill was granted and the User fails to raise the Correspondence Invoice by the expiry time limit, IS will close the correspondence case with no further recourse. 
+    </p>
+
+    <p class="margin-3">
+        In case the party who received the correspondence fails to respond to a received correspondence by the expiry time limit, SIS will mark the correspondence case as Expired. The User who caused the expiry will not be allowed to respond to the correspondence any further by SIS. The other party has the right to raise a Correspondence Invoice equal to the amount stated in the last correspondence sent which had expired. SIS validates the amount of such Correspondence Invoices and matches it with the amount of the last correspondence. In case the two are not matching and the difference is more than the allowed tolerance, the invoice will fail in the validation process.
+    </p>
+
+    <p class="margin-3">
+        In the above case if the User fails to raise the Correspondence Invoice by the expiry time limit, SIS will close the correspondence case with no further recourse.
+    </p>
+ 
+    <p class="margin-3 bold">
+        6.5 ALERTS AND REPORTS
+    </p>
+    <p class="margin-3">
+        Alerts
+    </p>
+    <p class="margin-3">
+        SIS generates a number of alerts for the following correspondence cases;
+        <ul>
+            <li>An email alert is generated and sent to all Correspondence Alert contacts when a new correspondence is received</li>
+            <li>72 hours before expiry of a received correspondence, an alert is generated by SIS informing the Correspondence Alert contacts</li>
+            <li>72 hours before expiry of a draft correspondence, an alert is generated by SIS informing the Correspondence Alert contacts</li>
+            <li>For any received correspondence which has the Authority to Bill flag and a Correspondence Invoice has not yet been raised two days prior to the expiry of this Correspondence.</li>
+        </ul>
+    </p>
+
+    <p class="margin-3 bold">
+        Reports
+    </p>
+    <p class="margin-3">
+        SIS provides a Correspondence Status report allowing the users to track the details of the correspondence within the system. This report can be downloaded in PDF or Excel format.
+    </p>
+
+    <p class="margin-3 bold">
+        6.6 DOWNLOAD
+    </p>
+    <p class="margin-3">
+        SIS provides an option to download the correspondence case with the complete mail trail in PDF format.
+    </p>
+<p class="bold">
+    7. SYSTEM REPORTS
+</p>
+    <p class="margin-3">
+        SIS provides a number of reports to support the member. These include:
+        <ul>
+            <li>Usage Report</li>
+            <li>User Details Report</li>
+            <li>Contact Details Report</li>
+            <li>Suspended Billings Report</li>
+            <li>MISC SIS Validation Summary</li>
+            <li>MISC SIS Validation Details</li>
+            <li>MISC Correspondence Status</li>
+        </ul>
+    </p>
+
+    <p class="margin-3">
+        A full list is available in the IS Implementation Handbook and User Guide.
+    </p>
+ 
+    <p class="bold">
+        8. GLOSSARY
+    </p>
+
+    <div class="regular-table no-page-break">
+        <table style="width: 100%;margin-left: none;">
+            <tr><th style="text-align: center;">Team</th><th style="text-align: center;">Definition</th></tr>
+            <tr><td>ACH</td><td>ACH stands for Airlines Clearing House.</td></tr>
+            <tr><td>Audit trail</td><td>A chronological sequence of audit records.</td></tr>
+            <tr><td>Batch Key</td><td>Batch Key is a set of data elements that uniquely identifies an Invoice or a transaction that needs to be linked with supporting documents.</td></tr>
+            <tr><td>Billed Entity</td><td>The Billed Airline or Supplier</td></tr>
+            <tr><td>Billing Date</td><td>The Billing Date field refers to the month period of settlement. See RAM chapter A13 for examples.</td></tr>
+            <tr><td>Billing Entity</td><td>The Billing Airline or Supplier</td></tr>
+            <tr><td>Billing Entity Code</td><td>The Numeric code of the Billing airline or the Alpha numeric code of the Supplier</td></tr>
+            <tr><td>Billing Period</td><td>Billing Period refers to the Period of the Clearance Month used for billing. As the current interline settlement is on a weekly basis, there are 4 periods in a month. The billing period is represented as 01, 02, 03 and 04.</td></tr>
+            <tr><td>Billing Record Database</td><td>This is the data store within IS which will maintain the Invoice data provided by SIS Users in SIS-Format. The data is kept in the system till the time the transactions are expired.</td></tr>
+            <tr><td>Breakdown Record</td><td>A Breakdown record provides additional information regarding the certain data elements present in the parent record.</td></tr>
+            <tr><td>Central File Repository</td><td>Central File Repository is the data store within SIS which maintains the input and output files including the Supporting documents for the billing transactions.</td></tr>
+            <tr><td>Charge Category</td><td>The major types of Miscellaneous Invoice billed between suppliers and airlines.</td></tr>
+            <tr><td>Charge Code</td><td>The sub group within the Charge Category which identifies the different reasons for the Miscellaneous Invoice claim.</td></tr>
+            <tr><td>Clearance Month</td><td>It represents the month of Interline Billing.</td></tr>
+            <tr><td>CM</td><td>Credit Memo</td></tr>
+            <tr><td>CSV File</td><td>Comma separated file</td></tr>
+            <tr><td>Detailed Validation</td><td>This is the second phase of the SIS-Validation process in which the billing data is loaded in the Billing Record Database and each and every data element in the billing data is validated.</td></tr>
+            <tr><td>Digital Signature</td><td>Digital Signature is a mathematical scheme for demonstrating the authenticity of a digital message or document. A valid digital signature gives a recipient reason to believe that the message was created by a known sender, and that it was not altered in transit</td></tr>
+            <tr><td>DS</td><td>Digital Signature</td></tr>
+            <tr><td>E-Archiving</td><td>E-archiving is an optional service provided by SIS. This service allows Participants to store digitally signed invoices in an external Legal archive for a longer period as required by the local regulations.</td></tr>
+            <tr><td>EST</td><td>Eastern Standard Time</td></tr>
+            <tr><td>File Naming Convention</td><td>Rules followed for construction of the file name</td></tr>
+            <tr><td>GL</td><td>General Ledger</td></tr>
+            <tr><td>HTML files</td><td>Files in Hypertext markup language. HTML is a structured file format used in websites, which includes tags.</td></tr>
+            <tr><td>Index File</td><td>An index file contains the mapping information of the various supporting documents and its corresponding Batch Key. There are two formats of index files supported by SIS. These are CSV and XML</td></tr>
+            <tr><td>IS</td><td>Integrated Settlement</td></tr>
+            <tr><td></td><td>Integrated Settlement is the name for the collection of systems which provide the electronic billing and settlement functionality provided as part of the service.</td></tr>
+            <tr><td>SIS Calendar</td><td>The Calendar used by SIS to trigger various automated processes. It also has deadlines for some of the processes impacting the end-users of SIS.</td></tr>
+            <tr><td>IS Calendar Billing Output Generation Date</td><td>This is the date and time stamp by which SIS will generate the billing output files and keep it ready for download,</td></tr>
+            <tr><td>SIS Format</td><td>SIS Format is a generic term used to define Invoice data provided to SIS in either automated formats like IS-XML or manually over IS-WEB</td></tr>
+            <tr><td>IS WEB</td><td>IS WEB is the online user interface of the SIS System. It allows users to capture data, pull out reports, as well as configure the User profile information.</td></tr>
+            <tr><td>IS XML</td><td>IS XML is the interface file format defined for electronic billing files</td></tr>
+            <tr><td>JPEG Image files</td><td>Image files in JPEG (Joint Photographic Experts Group) format.</td></tr>
+            <tr><td>Late Submission</td><td>Invoices submitted after the SIS Submission Deadline but within the Late Submission Acceptance Window to be considered for settlement in the previously close period</td></tr>
+            <tr><td>Late Submission Acceptance Window</td><td>Time window in which Late Submission can be submitted.</td></tr>
+            <tr><td>Location Code</td><td>Code of the User’s location.</td></tr>
+            <tr><td>Location IDs</td><td>User defined code that uniquely identifies the User’s location in the Member Profile.</td></tr>
+            <tr><td>User Profile</td><td>Centralized functionality that enables the participants to:
+                <ol>
+                    <li>Create and Manage Users of SIS</li>
+                    <li>Configure the various processes within SIS</li>
+                    <li>Set default values to be used at the time of processing</li>
+                    <li>Set up Third Party preferences, such as parameters applicable to ACH, ICH etc.</li>
+                </ol>
+            </td></tr>
+            <tr><td>User</td><td>A Non-Airline Entity which is a signatory or a potential signatory to the Services.</td></tr>
+            <tr><td>Payables</td><td>Billing received from other interline partners for a billing period is referred to as Payables</td></tr>
+            <tr><td>PDF</td><td>Portable Document Format</td></tr>
+            <tr><td>Prime Billing</td><td>First time billing or billings of original documents (like coupons, air waybills) are referred to as Prime Billings</td></tr>
+            <tr><td>Processing Dashboard</td><td>Module in SIS for:
+                <ul>
+                    <li>Viewing processing details</li>
+                    <li>Submitting of invoices/ files for late processing</li>
+                    <li>Increment the period of the invoices</li>
+                </ul>
+            </td></tr>
+            <tr><td>Protest</td><td>Protest is the action taken by a billed entity against an erroneous billing done by a billing entity before the amount in error is settled by the Clearing House.</td></tr>
+            <tr><td>RAM</td><td>Revenue Accounting Manual</td></tr>
+            <tr><td>Receivables</td><td>Invoices billed to other interline partners is referred to as Receivables</td></tr>
+            <tr><td>Reference Data</td><td>Reference data relates to the basic legal information of the Billing and Billed entity. This includes details like the Company Legal Name, Tax Registration ID, Address details etc.</td></tr>
+            <tr><td>RM</td><td>Rejection Memos</td></tr>
+            <tr><td>Sanity Check</td><td>This is the first phase of SIS-Validation, where a file is checked for Construction errors. If an error is encountered in this phase the entire file is rejected by SIS.</td></tr>
+            <tr><td>Settlement Method Indicator</td><td>The field Settlement Method Indicator in the Invoice data drives the Settlement process of the Invoice.</td></tr>
+            <tr><td>SIS Operations</td><td>User for SIS operations</td></tr>
+            <tr><td>Submissions Open Date</td><td>The date and time from which SIS starts accepting Billing Files for a particular Clearance period</td></tr>
+            <tr><td>Supporting Attachments</td><td>The additional documentation provided to support interline billing claim. The Supporting Attachments needs to be provided in electronic format</td></tr>
+            <tr><td>Supporting Attachments Linking Deadline</td><td>The date and time stamp by which the system will stop manual and automated linking of supporting documents for the clearance period</td></tr>
+            <tr><td>TIFF Image files</td><td>Tagged Image File Format (TIFF) is a file format for storing images.</td></tr>
+            <tr><td>Time Stamp</td><td>Sequence of characters, denoting the date and/or time at which a certain event occurred</td></tr>
+            <tr><td>VAT</td><td>Value added tax</td></tr>
+        </table>
+    </div>
+
+    <h2 class="panel-title new-line">
+        ATTACHMENT B – ADDITIONAL SERVICE OPTIONS
+    </h2>
+
+    <p class="bold">
+        1. PURPOSE
+    </p>
+
+    <p class="margin-3">
+        1.1 This attachment describes the Additional Services that the User elects to use in addition to the provision of the Service under the main agreement. This annex may be amended at any time by the User and communicated to IATA in order to reflect the changes in its selection of Additional Services.
+    </p>
+
+    <p class="bold">
+        2. GLOSSARY
+    </p>
+
+    <p class="margin-3">
+        See Glossary in Attachment A “Services”.
+    </p>
+
+    <p class="bold">
+        3. OPTIONAL SERVICES
+    </p>
+
+    <p class="margin-3 bold">
+        3.1 Digital Signature application
+    </p>
+    <p class="margin-3">
+        SIS offers a digital signature (DS) application service in a number of countries with the help of a trusted digital signature service provider. Based on the instructions provided by the billing entity, SIS creates an invoice subset file from the SIS-format invoice data with the necessary legal and invoice information fields. This digitally signed file is made available by SIS as one of the outputs to the billing entity at the end of the billing period, based on the configuration of the Member Profile. It can also be downloaded online over the web portal.
+    </p>
+
+    <p class="margin-3">
+        SIS allows billed entities to configure the application of Digital Signature on Payable Invoices in the Member Profile. Based on the location details specified on the payable invoice, SIS triggers the process to apply digital signature in the countries covered by the service.
+    </p>
+
+    <p class="margin-3 bold">
+        3.2 Digital Signature verification 
+    </p>
+    <p class="margin-3">
+        SIS provides an option whereby the billed entity can request verification of the digital signature applied on Payable Invoices, via the Member Profile. A verification log file is created by this process which contains the status of the applied digital signature in the countries covered by the service. 
+    </p>
+
+    <p class="margin-3 bold">
+        3.3 Legal Archiving (or E-Archiving) service
+    </p>
+    <p class="margin-3">
+        Some jurisdictions may require legal storage for the digitally signed invoices for varying amounts of time. During this period, the invoices and any applicable digital signature need to be accessible for any audits. To address this issue, SIS will provide an optional Legal Archiving service to store the digitally signed invoices and other related information on behalf of the User in an external Legal archive for a longer period as required by the local regulations.
+    </p>
+
+    <p class="margin-3 bold">
+        3.4  Summary table of Optional Services selected
+    </p>
+    <p class="margin-3">
+        By indicating that the Optional Service is “ON” in the below table, the Participant hereby confirms that IATA is to provide this additional service and that the fees described in Attachment A of this agreement applicable to the Optional Services selected will be charged to the Participant.
+    </p>
+
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 50%; margin-left: 20%;">
+            <tr>
+                <th>Optional Service</th>
+                <th>ON/OFF</th>
+            </tr>
+            <tr>
+                <td>Digital Signature application</td>
+                <td>ON {!IF(newForm.Digital_Signature_application__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Digital_Signature_application__c=='No','☑','☐')}
+                </td>
+            </tr>
+            <tr>
+                <td>Digital Signature verification</td>
+                <td>ON {!IF(newForm.Digital_Signature_verification__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Digital_Signature_verification__c=='No','☑','☐')}
+                </td>
+            </tr>
+            <tr>
+                <td>Legal Archiving</td>
+                <td>ON {!IF(newForm.Legal_Archiving__c=='Yes','☑','☐')}
+                    &nbsp;&nbsp;&nbsp;
+                    OFF {!IF(newForm.Legal_Archiving__c=='No','☑','☐')}
+                </td>
+            </tr>
+        </table>
+    </div>
+ 
+    <h2 class="panel-title new-line">
+        ATTACHMENT C – SERVICE LEVEL AGREEMENT
+    </h2>
+
+    <h1>SIS e-Invoicing Services Non Transportation - Service Level Agreement</h1>
+
+    <p class="bold">
+        1. System availability
+    </p>
+
+    <p class="margin-3">
+        a) The Service will be available on a 24 hour, 7 days per week basis, with system up-time averaging 99.5 % on a rolling annual average, excluding weekends . Maximum unplanned outage should not exceed 4 hours.
+    </p>
+
+    <p class="bold">
+        2. Processing
+    </p>
+
+    <p class="margin-3">a) IS-XML files received will be processed within twenty four hours of receipt and within four hours in 99.85% of cases.</p>
+    <p class="margin-3">b) Online entry other than for report generation or file transfer should receive a response within 3 seconds target in 97.50% of transactions based on an end to end bandwidth of at least 256kb.</p>
+
+    <p class="bold">
+        3. Helpdesk availability
+    </p>
+
+    <p class="margin-3">a) IATA and its service provider will provide access to a 24-hour web based helpdesk, 7 days per week.</p>
+
+    <p class="bold">
+        4. Fault reporting and clearance
+    </p>
+
+    <p class="margin-3">
+        a) Communication may be via web interface (primary solution) or via email (back-up).
+    </p>
+
+    <p class="margin-3">
+        b) If a fault is identified
+    </p>
+
+    <p class="margin-6">
+        i)  by the User:
+    </p>
+    <p class="margin-9 indent-1_5">i. The User will notify IATA through its Help Desk facility and indicate the severity of the fault in accordance with the categorizations below.</p>
+    <p class="margin-9 indent-1_5">ii. If the fault is confirmed, the IATA Help Desk will validate the severity classification, and communicate immediately in case of a Severity 1 issue. In case the incident is escalated, a second e-mail notification will be sent out reporting its escalation and prioritization.</p>
+    <p class="margin-9 indent-1_5">iii. All incidents will be recorded and the User will receive an e-mail notification reporting a unique tracking number associated with each case within minutes after the incident was logged via the web based solution.</p>
+    <p class="margin-9 indent-1_5">iv. If the fault is deemed by IATA Help Desk to affect other Users, IATA Help Desk will notify the Users of the fault and recommend any temporary corrective action.</p>
+
+    <p class="margin-6">
+        ii) by IATA or its service provider:
+    </p>
+    <p class="margin-9 indent-1_5">i. The IATA Help Desk will determine the severity of the fault and in case of a Severity 1 issue, communicate immediately to the User or all Users.</p>
+    <p class="margin-9 indent-1_5">ii. Communication could be via the Web portal.</p>
+
+    <p class="margin-3">
+        c) IATA Help Desk will:
+    </p>
+    <p class="margin-9 indent-1_5">i. Generate a fault report to the User or all Users, as appropriate, after full assessment of the fault (for Severity 1 issues). </p>
+    <p class="margin-9 indent-1_5">ii. In the course of defining the proper resolution, the User may be requested to provide any additional information to the IATA Help Desk in a timely manner to enable correction of the fault / problem.</p>
+    <p class="margin-9 indent-1_5">iii. Communicate a suitable fix for either data or processes or provide a workaround for other than trivial cases (severity 4).  The time allowed will be dependent upon the severity of the case.</p>
+    <p class="margin-9 indent-1_5">iv. Notify the User or all Users, as appropriate, once the fault has been fixed.</p>
+
+    <p class="margin-3">
+        d) Fault categorization and resolution timelines
+    </p>
+
+    <p class="margin-6">
+        1. IATA Help Desk will validate or determine the severity of the case based on the following definitions:
+    </p>
+
+    <p class="margin-6">
+        <span class="bold">Showstoppers (Severity 1)</span>: Showstopper faults are those which prevent global use of the application software or which stop an operational function of application globally, thereby preventing the users from completing essential operations.  IATA will endeavour to provide a resolution, either in the form of a workaround or a patch in that order of priority, within six (6) hours. However, if more time is needed, this will be advised to the respective users. Once an alternative is provided or normal functioning of the application is instituted, the IATA Help Desk will inform the Users and the Showstopper will be considered resolved.
+    </p>
+
+    <p class="margin-6">
+        The following will qualify as Showstopper faults:
+        <ul class="margin-9">
+            <li>Complete SIS platform is down</li>
+            <li>Submission of billing data is not possible</li>
+            <li>Settlement files cannot be created or are incorrect or do not arrive at their destination within the SIS perimeter</li>
+            <li>Output billing files cannot be created or are incorrect or do not arrive at their destination within SIS perimeter</li>
+            <li>Invoices cannot be digitally signed</li>
+            <li>Invoices do not contain intended values, or referential integrity is compromised </li>
+            <li>Billing data captured through the Web portal do not contain intended values, or referential integrity is compromised</li>
+            <li>Processing times for files are greater than 2 hours max to load and validate files for non-peak loads and 4 hours max for peak loads.</li>
+            <li>Response times for manual input are greater than 8 seconds for delivery of high complexity operation pages.</li>
+            <li>Users unable to log on to SIS due to problems accessing the platform (excluding invalid/lost/expired logons)</li>
+            <li>Security breach deemed to put SIS at risk.</li>
+        </ul>
+    </p>
+
+    <p class="margin-6">
+        <span class="bold">Major (Severity 2)</span>: Major defects are defined as those which impact a specific module within the system and for which workarounds are available, or prevent a non-core system process to be successfully completed. IATA will endeavour to provide a resolution, in the form of a workaround, within 1 Work Days (*). 
+    </p>
+
+    <p class="margin-6">
+        In the context of SIS, the following will qualify as Major defects:
+        <ul class="margin-9">
+            <li>Web Analysis reports cannot be viewed / downloaded</li>
+            <li>Alerts are not / incorrectly delivered</li>
+            <li>Service usage report incorrectly produced by SIS application.</li>
+        </ul>
+    </p>
+
+    <p class="margin-6">
+        <span class="bold">Minor (Severity 3)</span>: These are faults where one or more functions in the application software are not working as normal or the SIS application’s behavior deviates from expected functionality, but these do not affect the operation. 
+    </p>
+
+    <p class="margin-6">
+        <span class="bold">Trivial Defects (Severity 4)</span>: Trivial Defects are defined as those which do not affect the functionality of the SIS application and are cosmetic in nature. These will be addressed in future releases as per Section 2.3 in the SIS User Agreement.
+    </p>
+
+    <p class="margin-6">
+        2. IATA will endeavor to resolve faults reported as per the following table from the time it is allocated. 
+    </p>
+
+    <div class="regular-table no-page-break">
+        <table style="width: 50%; margin-left: 20%;">
+            <tr><th>Fault Severity</th><th>Target Resolution Time (could be via workaround)</th></tr>
+            <tr><td>Showstopper (severity 1)</td><td>6 Hours</td></tr>
+            <tr><td>Major (severity 2) *</td><td>1 Work Days</td></tr>
+            <tr><td>Minor (severity 3) *</td><td>10 Work Days</td></tr>
+            <tr><td>Trivial (severity 4)</td><td>Next planned Release</td></tr>
+        </table>
+    </div>
+    <p class="margin-6">
+        (*) These fault severity items will be responded to during ‘Work Days’. “Work Day” is defined as 09:00 hrs to 18:00 hrs EST/EDT, Monday to Friday, excluding IATA Montreal company holidays. 
+    </p>
+
+    <p class="margin-3">
+        e) The User will be able to access the status of the report on their incident(s) at any time via the internet in accordance with Attachment C.
+    </p>
+
+    <p class="bold">
+        5. Disaster recovery plan, Back-up and recovery processes
+    </p>
+    <ol style="list-style-type: none;">
+        <li>a) During the Term of this Agreement, IATA shall maintain a written Disaster Recovery (DR) Plan (“Plan”) and the wherewithal to implement such Plan.</li>
+        <li>b) IATA will test the Plan annually and produce a report containing the results of the test and recommendations for improvements, if any, to the Plan.</li>
+        <li>c) IATA will maintain a back-up process sufficient to ensure that the service is restored within 6 hours of DR site invocation in case of disaster, with not more than 3 hours of submission data needing retransmission by the Users.  </li>
+        <li>d) The Plan will provide a 3 hour switchover from the Primary site to the DR site.</li>
+        <li>e) The restoration for full service operations will be completed within 6 hours after a catastrophic failure.</li>
+        <li>f) The response time of this SLA will not apply when the Service is run from the DR site except for resolution of Severity 1 faults.</li>
+    </ol>
+
+    <p class="bold">
+        6. Service Level Credits 
+    </p>
+
+    <p class="margin-3">
+        Service Level Credits shall be applicable where IATA is unable to meet the Target Resolution Time provided in Section 4(d)(2) above for  Showstopper (severity 1) and/or Major (severity 2) incidents (“Service Level Defaults”) only and, subject to the following sentence, are equivalent to two percent (2%) of the transaction fee paid by the User to IATA during the month in which the Service Level Default has occurred, regardless of the number of defaults in the month. The maximum aggregated Service Level Credit paid by IATA annually will not exceed one percent (1%) of the yearly transaction fees paid by the User to IATA for the calendar year in which Service Level Defaults occurred. The Service Level Credits will be paid by IATA at the end of the calendar year. 
+    </p>
+ 
+    <h2 class="panel-title new-line">
+        ATTACHMENT D - PRICING SCHEDULE
+    </h2>
+
+    <p class="margin-3">
+        The below prices are effective 01 January 2018 and can be changed by IATA at any time; any such changes will be subject to Change Notice as per Section 2.3.
+    </p>
+
+    <p class="margin-3 bold">
+        1. BASIS OF CHARGING - ANNUAL SIS – NON TRANSPORTATION FLAT FEE
+    </p>
+
+    <p class="margin-6 bold">
+        Usage of IS-WEB Service only:
+    </p>
+
+    <p class="margin-6">
+        No annual fee shall be applicable to any User legal entity subscribing only to the use of the Service’ invoice submission capability through the online IS Web data capture process and functionalities (or equivalent). 
+    </p>
+    <p class="margin-6 bold">
+        Usage of file upload Service:
+    </p>
+
+    <p class="margin-6">
+        An annual flat fee of one thousand United States dollars (USD 1000.00) per User legal entity shall be applicable to any User legal entity upon the date of its certification by IATA for the use of the Service’ file upload capability, whether through the IS-XML file submission method or through any other file submission method made available by IATA from time to time. The annual flat fee shall be applied on a pro rata basis of the then current calendar year. The annual flat fee for the subsequent calendar years shall be invoiced quarterly.
+    </p>
+
+    <p class="margin-3 bold">
+        2. BASIS OF CHARGING - SIS – NON TRANSPORTATION TRANSACTION FEES
+    </p>
+
+    <p class="margin-6">
+        When using the Service, transaction fees will apply regardless of whether the User is fully or partially migrated to SIS. Transaction fees will be charged for each submission or reception of a transaction or record by the User or its agent. The amount paid per transaction depends upon the total Service transaction volume in the previous quarter and will fall into one of the following categories:
+    </p>
+
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 50%; margin-left: 20%;">
+            <tr>
+                <th colspan="2">
+                    SIS – Non Transportation Invoice Volume Ranges
+                </th>
+            </tr>
+            <tr>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+            <tr><td>0</td><td>9,999</td></tr>
+            <tr><td>10,000</td><td>39,999</td></tr>
+            <tr><td>40,000</td><td>89,999</td></tr>
+            <tr><td>90,000</td><td>159,999</td></tr>
+            <tr><td>160,000</td><td></td></tr>
+        </table>
+    </div>
+
+    <p class="margin-6">
+        After determining the proper category in the chart above, the following chart will be used to determine the actual transaction prices to be charged:
+    </p>
+
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 70%; margin-left: 10%;">
+            <tr><th></th><th colspan="5">SIS – Non Transportation Transaction Fees</th></tr>
+            <tr><td>Quarterly invoice volume threshold: </td><td>0 - 9,999</td><td>10,000 - 39,999</td><td>40,000 – 89,999</td><td>90,000 - 159,999</td><td>160,000 +</td></tr>
+            <tr><td>Submission of Invoices or Rejections</td><td>$0.57</td><td>$0.45</td><td>$0.33</td><td>$0.22</td><td>$0.16</td></tr>
+            <tr><td>Reception of Invoices or Rejections</td><td>$0.43</td><td>$0.34</td><td>$0.25</td><td>$0.17</td><td>$0.12</td></tr>
+            <tr><td>Supporting Documents – per kilobyte</td><td>$0.0016</td><td>$0.0014</td><td>$0.0012</td><td>$0.0009</td><td>$0.0008</td></tr>
+            <tr><td>Digital Signature (&amp; Validation, as appropriate)</td><td>$0.15</td><td>$0.15</td><td>$0.15</td><td>$0.15</td><td>$0.15</td></tr>
+            <tr><td>Dispute (Correspondence) item</td><td>$0.011</td><td>$0.009</td><td>$0.007</td><td>$0.004</td><td>$0.003</td></tr>
+            <tr><td>Optional legal archiving (per invoice)</td><td>$0.10</td><td>$0.10</td><td>$0.10</td><td>$0.10</td><td>$0.10</td></tr>
+        </table>
+    </div>
+
+    <p class="margin-3">
+        Additional Notes on the Service Transaction Fees:
+        <ul>
+            <li>Digital signature charges may be payable by both the billing and billed Users based on their selections.</li>
+            <li>Supporting Document charges are based on the stored document size (documents are stored unzipped), not the transmitted document size (documents are transmitted zipped).</li>
+        </ul>
+    </p>
+
+    <p class="margin-3 bold">
+        3. OTHER CHARGES
+    </p>
+
+    <p class="margin-3">
+        3.1 Access to the general file testing system (the “sandbox’) will be provided free of charge at all times.
+    </p>
+
+    <p class="margin-3">
+        3.2 Support will be charged at USD500 per day for any technical support required during the Sandbox or certification testing process. 
+    </p>
+
+    <p class="margin-3">
+        3.3 Access to the multi-account optional feature* will be charged as per the below:
+    </p>
+
+    <div class="regular-table regular-table-center no-page-break">
+        <table style="width: 60%; margin-left: 10%;">
+            <tr><th>No. of Additional Accounts</th><th>Annual Fee<br/>(x account/year)</th><th>Minimum Fee</th><th>Maximum Fee</th></tr>
+            <tr><td>Between 2  - 4</td><td>$500</td><td>$1,000</td><td>$2,000</td></tr>
+            <tr><td>Between 5 – 12</td><td>$400</td><td>$2,000</td><td>$4,800</td></tr>
+            <tr><td>More than 12</td><td>$5,000 flat fee</td><td>n/a</td><td>n/a</td></tr>
+        </table>
+    </div>
+
+    <p class="margin-3">
+        *The multi-account functionality allows SIS users of group companies, subsidiaries or merged entities to access multiple SIS member accounts using a single email address. For more information about this feature contact us via the IATA Customer Portal at www.iata.org.cs.
+    </p>
+
+</div>
+
+</apex:component>
