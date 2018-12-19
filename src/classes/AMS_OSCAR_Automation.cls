@@ -1330,6 +1330,20 @@ public with sharing class AMS_OSCAR_Automation {
         }
     }
 
+	public class AMS_OSCAR_Step46_inProgress implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step46_inProgress.processWork');
+            Boolean res = False;
+
+            if (oscar != null) {
+                oscar.Process_Start_Date__c = Date.today();
+                res = true;
+            }
+
+            return res;
+        }
+    }
+
     public class AMS_OSCAR_Step47_passed implements IClassFactory {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
             system.debug('Start AUTOMATION AMS_OSCAR_Step47_passed.processWork');
