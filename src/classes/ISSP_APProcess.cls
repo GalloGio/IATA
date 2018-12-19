@@ -1265,6 +1265,8 @@ global without sharing class ISSP_APProcess {
     ///Keeping these lines to avoid deployment issues, can be removed after successful prod deployment
     public pagereference UploadFile(){return null;}
     public List<Attachment> getAttachList(){return new List<Attachment>();}
+    public string strParentLegalName {get; set;}
+    public string strParentTradeName {get; set;}
     ///
 
     //TF
