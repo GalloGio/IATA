@@ -107,7 +107,6 @@ public with sharing class ISSP_Financial_Institutions {
 		}
 		private set;
 	}
-	private Portal_Application_Right__c gdiPar {get; set;}
 
 	public ISSP_Financial_Institutions() {}
 
@@ -207,12 +206,11 @@ public with sharing class ISSP_Financial_Institutions {
 	}
 
 	public void createPortalAppRight() {
-		gdiPar = new Portal_Application_Right__c(Contact__c = conId,
-							                     Portal_Application__c = gdiPortalAppId,
-							                     Right__c = 'Access Requested',
-							                     Terms_Acceptance__c = termsAndConditions,
-							                     Terms_Acceptance_Date__c = Datetime.now());
-		insert gdiPar;
+		insert new Portal_Application_Right__c(Contact__c = conId,
+							                   Portal_Application__c = gdiPortalAppId,
+							                   Right__c = 'Access Requested',
+							                   Terms_Acceptance__c = termsAndConditions,
+							                   Terms_Acceptance_Date__c = Datetime.now());
 
 		previousUserFailedProvisioning = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 		getSSOPermissionSet();
@@ -233,9 +231,6 @@ public with sharing class ISSP_Financial_Institutions {
         if (!gdiPermSetAssignmentList.isEmpty()) {
         	gdiPolling = false;
         	gdiAppRightGranted = true;
-
-        	gdiPar.Right__c = 'Access Granted';
-        	update gdiPar;
         } else {
         	List<UserProvisioningRequest> provRequestFailedList = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 
