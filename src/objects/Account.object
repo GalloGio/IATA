@@ -12838,6 +12838,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Identify_as_Multicountry_Key_Hierarchy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>This field can only be amended from the Global Entity (GE)</inlineHelpText>
+        <label>Identify as Multicountry Key Hierarchy</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>In_a_Airport__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -14040,6 +14050,17 @@ J-Joint Vent</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Multicountry_Key_Hierarchy__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Location_Type__c , &apos;GE&apos;) ,
+  Identify_as_Multicountry_Key_Hierarchy__c ,
+  Top_Parent__r.Identify_as_Multicountry_Key_Hierarchy__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Multicountry Key Hierarchy</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>N_Code__c</fullName>
