@@ -56,11 +56,6 @@
         <fullName>Display_On_Currency</fullName>
         <description>ANG_ChangeRHCCurrency page: controls the fields to be displayed</description>
         <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>ANG_AccountId__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -76,22 +71,12 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>ANG_RHC_Amount_Simulation__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>ANG_RHC_Amount__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
             <field>ANG_RHC_Amount_Provisional__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_Minimum_Financial_Security__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -380,38 +365,38 @@
         <masterLabel>Change the RHC currency</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT("/soap/ajax/43.0/connection.js")} 
-{!REQUIRESCRIPT("/soap/ajax/43.0/apex.js")} 
-{!REQUIRESCRIPT("/support/console/43.0/integration.js")} 
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/apex.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/support/console/43.0/integration.js&quot;)} 
 
 
 try{
-    var result = sforce.connection.query("Select ANG_AccountId__r.ANG_Accreditation_Model__c, ANG_AccountId__r.Location_Type__c From ANG_RHC_Information__c Where Id = '{!ANG_RHC_Information__c.Id}'");
+    var result = sforce.connection.query(&quot;Select ANG_AccountId__r.ANG_Accreditation_Model__c, ANG_AccountId__r.Location_Type__c From ANG_RHC_Information__c Where Id = &apos;{!ANG_RHC_Information__c.Id}&apos;&quot;);
 
-    var records = result.getArray("records");
+    var records = result.getArray(&quot;records&quot;);
     var rhc;
 
-    if (records.length > 0)
+    if (records.length &gt; 0)
         rhc = records[0];
                 else
-                    throw 'RHC record not found';
+                    throw &apos;RHC record not found&apos;;
     
-                if (rhc.ANG_AccountId__r.ANG_Accreditation_Model__c != 'Multicountry' || rhc.ANG_AccountId__r.Location_Type__c != 'GE')
-                    throw 'This functionality is only available for GoGlobal agents';       
+                if (rhc.ANG_AccountId__r.ANG_Accreditation_Model__c != &apos;Multicountry&apos; || rhc.ANG_AccountId__r.Location_Type__c != &apos;GE&apos;)
+                    throw &apos;This functionality is only available for GoGlobal agents&apos;;       
                                 
-                if (sforce.console.isInConsole()) {
+    if (sforce.console.isInConsole()) {
     
-         sforce.console.getEnclosingPrimaryTabId(openPrimarytab);   
+        sforce.console.getEnclosingPrimaryTabId(openPrimarytab);   
 
         function openPrimarytab(result) {
             var primaryTabId = result.id;
-            sforce.console.openPrimaryTab(primaryTabId , '/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}', true, 
-                'RHC Currency', null);
+            sforce.console.openPrimaryTab(primaryTabId , &apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;, true, 
+                &apos;RHC Currency&apos;, null);
         };
                                 
     } else {
-       window.open('/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}');
-                }
+       window.open(&apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;,&apos;_blank&apos;,&apos;height=450,width=400&apos;);
+    }
                                                                 
                 
 } catch (err) {
