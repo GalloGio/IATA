@@ -143,6 +143,11 @@
                     <default>false</default>
                     <label>Americas - AGM</label>
                 </value>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

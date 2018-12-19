@@ -51,7 +51,8 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
   };
 
   // List of the DeveloperNames of the Case record types that are in the scope of this customer recorvery process
-  global list<String> lstRecordTypesInScope = new list<String> { 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope'/*, 'IATA_Financial_Review' */};
+  global list<String> lstRecordTypesInScope = new list<String> { 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global'};
+  global List<String> excludedRecordTypesFromScope = new List<String> {'IATA_Financial_Review', 'ComplaintIDFS'};
 
 
 
@@ -124,7 +125,8 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                AND ContactId <> NULL AND Contact.Email <> NULL
                                AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
                                AND Instant_Survey_Feedback_requested__c = false
-                               AND RecordType.DeveloperName <> 'IATA_Financial_Review' /*exclude IFAP cases*/
+                               AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
+                               AND CaseArea__c != 'E&F Operations' AND Reason1__c != 'Debt Recovery' AND Reason1__c != 'Dispute' //ICSC-36 exclude Cases with Reason =  Debt Recovery or Dispute
                                    ORDER BY ClosedDate DESC]);
 
     CasesPart1 = new Set<Id>();
@@ -173,7 +175,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     system.debug(LoggingLevel.error, '##### lstCaseIds.size() = ' + lstCaseIds.size());
 
-    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name
+    casesToBeProcessed.addAll([SELECT Id, Status, Subject, Customer_recovery__c, RecordTypeId, OwnerId, Region__c, WhoClosedCase__r.Profile.Name, WhoClosedCase__r.UserRole.Name, Reason1__c
                                FROM Case
                                WHERE Id IN :lstCaseIds
                                AND RecordType.DeveloperName IN :lstRecordTypesInScope]);
@@ -193,10 +195,14 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     List<Case> scopepart2 = new List<Case>();
 
     for (Case c : scope) {
-      if (CasesPart1.contains(c.ID))
+      if (CasesPart1.contains(c.ID)){
         scopepart1.add(c);
-      else
+      }
+
+      else {
         scopepart2.add(c);
+      }
+
     }
 
     processSurveyEmail(scopepart1);
@@ -629,6 +635,15 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
       */
       //end INC306722 - EXCLUDE the email invitation to fill in the survey from IFAP cases
+
+
+          /****** For Cases - Global Record Type******/
+      } else if(c.RecordType.DeveloperName == 'Cases_Global' && !c.Contact.Email.contains('@iata.org') && !c.Contact.Email.contains('@salesforce.com') && c.Status == 'Closed'){
+
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
+
+
+
         /****** New rule January 2015 ******/
       } else if (c.RecordType.DeveloperName == 'FDS_ICCS_Email_to_Case' && /*FDS ICCS Generic Request Management*/
                  !c.Contact.Email.contains('@iata.org') &&
@@ -1073,7 +1088,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       Database.update(lstCasesToUpdate, false);
     }
   }
-
+  
   // to be removed
   public void fakeMethod(){
     Integer i = 0;
@@ -1122,4 +1137,4 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     i=0;
   }
 
-}
+  }

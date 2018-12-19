@@ -267,7 +267,8 @@ private class AMS_OscarCaseTriggerHelper_Test {
 			Reason1__C = 'CLO - Closure',
 			AccountId = accountList[0].Id,
 			Shut_Down_TKT_System_GDS_and_BSPlink__c = System.now(),
-			Open_TKT_System__c = System.now()
+			Open_TKT_System__c = System.now(),
+			Late_Payment_Date__c = Date.today()
 		);
 
 		insert sidraCase;
