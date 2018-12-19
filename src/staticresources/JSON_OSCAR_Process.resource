@@ -6549,6 +6549,10 @@
                   {
                     "Status": "Passed",
                     "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step46_passed"
+                  },
+                  {
+                    "Status": "in Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step46_inProgress"
                   }
                 ],
                 "DisplayFields": [
