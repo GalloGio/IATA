@@ -9643,7 +9643,7 @@ and
         <name>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label>&quot; Các Đại lý GoStandard đã nộp Bảo lãnh ngân hàng với IATA có thể quyết định không tham gia Đánh giá Tài chính Hàng năm. Trong trường hợp này, Đại lý sẽ bị giới hạn hạn mức Remittance Holding Capacity bằng với số tiền bảo lãnh ngân hàng đã cung cấp.&quot;</label>
+        <label>Các Đại lý GoStandard đã nộp Bảo lãnh ngân hàng với IATA có thể quyết định không tham gia Đánh giá Tài chính Hàng năm. Trong trường hợp này, Đại lý sẽ bị giới hạn hạn mức Remittance Holding Capacity bằng với số tiền bảo lãnh ngân hàng đã cung cấp.</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</name>
     </customLabels>
     <customLabels>
