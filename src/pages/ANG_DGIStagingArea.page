@@ -44,9 +44,9 @@
 
     <apex:form id="stagingAreaForm">
 
-        <apex:messages />
+        <!-- <apex:messages /> -->
 
-       <!-- <apex:pageMessages id="pageMessages" />-->
+<apex:pageMessages id="pageMessages" />
 
         <apex:outputpanel id="stagingAreaPanel">
 
@@ -71,10 +71,10 @@
 
                 <apex:pageBlockSection>
 
-                    <apex:inputField value="{!stagingFs.Amount__c}" />
-                    <apex:inputField value="{!stagingFs.Expiry_Date__c}" />
-                    <apex:inputField value="{!stagingFs.FS_Currency__c}" />
-                    <apex:inputField value="{!stagingFs.Validity_Start_Date__c}" />
+                    <apex:inputField value="{!stagingFs.Amount__c}" required="true" />
+                    <apex:inputField value="{!stagingFs.Expiry_Date__c}" required="true"/>
+                    <apex:inputField value="{!stagingFs.FS_Currency__c}" required="true"/>
+                    <apex:inputField value="{!stagingFs.Validity_Start_Date__c}" required="true"/>
 
                 </apex:pageBlockSection>  
 

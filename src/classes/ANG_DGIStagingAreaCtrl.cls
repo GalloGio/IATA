@@ -1,4 +1,4 @@
-public with sharing class ANG_DGIStagingAreaCtrl {
+public without sharing class ANG_DGIStagingAreaCtrl {
 
     public Boolean hasErrorMessages { get { return ApexPages.hasMessages(); } }
 
@@ -31,12 +31,12 @@ public with sharing class ANG_DGIStagingAreaCtrl {
 
     public boolean hasAdendum {get;set;}  
 
-	private final AMS_OSCAR__c oscarObj;
+	@TestVisible private final AMS_OSCAR__c oscarObj;
 
-    private final Case oscarCase {get{
+    @TestVisible private final Case oscarCase {get{
         
         if(this.oscarCase == null && oscarObj != null)
-           return [Select Id, Origin from Case where Id = :oscarObj.Oscar_Communication_Case_Id__c].get(0);
+           return [Select Id, Origin, ParentId from Case where Id = :oscarObj.Oscar_Communication_Case_Id__c].get(0);
 
         return oscarCase;
     }set;}
@@ -87,31 +87,30 @@ public with sharing class ANG_DGIStagingAreaCtrl {
     // controller.
     public ANG_DGIStagingAreaCtrl() {
         
+        hasAdendum = false;
+
         Id oscarId = ApexPages.currentPage().getParameters().get('id');
 
-        if(oscarId == null)
-            return;
+        if(oscarId == null) return;
 
         this.oscarObj = [Select Id, step50__c, Account__c, Oscar_Communication_Case_Id__c  from AMS_OSCAR__c where Id=:oscarId];
 
         List<Opportunitylineitem> lineItemsLst = [Select id from Opportunitylineitem where OSCAR_GDI__c = :oscarId];
 
-        if(!lineItemsLst.isEmpty()){
-            stagingFs = lineItemsLst.get(0); 
-            fetchStagingFs();
-        }
+        if(!lineItemsLst.isEmpty()){ stagingFs = lineItemsLst.get(0); fetchStagingFs();}
 
         List<Financial_Security__c> currentFSLst = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :oscarObj.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
 
+        System.debug('currentFSLst is:'+currentFSLst);
+
         if(!currentFSLst.isEmpty()){ 
             currentFS=currentFSLst.get(0);
-            if(stagingFs != null)
-                this.stagingFs.Financial_Security__c = currentFS.Id;
+            if(stagingFs != null) this.stagingFs.Financial_Security__c = currentFS.Id;
         }
 
     }
 
-    private void fetchStagingFs(){
+    @TestVisible private void fetchStagingFs(){
         
         List<String> fieldListoli = new List<String>();
 
@@ -122,6 +121,8 @@ public with sharing class ANG_DGIStagingAreaCtrl {
 		}
 
 		String query = 'SELECT '+ String.join(fieldListoli, ', ') + ' , OSCAR_GDI__r.Name, OSCAR_GDI__r.Account__c FROM Opportunitylineitem WHERE Id = \'' +  stagingFs.Id + '\'';
+
+        System.debug('query is:'+query);
 
         stagingFs = Database.query(query); 
 
@@ -171,23 +172,14 @@ public with sharing class ANG_DGIStagingAreaCtrl {
     }
 
     public void createStagingArea(){
-        
-        try{
             opp.CurrencyIsoCode = stagingFs.FS_Currency__c;
             update opp;
 
             upsert stagingFs;
-        }
-         catch(Exception e){
-            //ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
-            System.debug(e.getStackTraceString());
-        }
 
     }
 
     public void createStagingAreaDefault(){
-        
-        try{
         
             opp = [Select Id, currencyIsoCode, Account.Region_formula__c from Opportunity where Related_Oscar__c = :oscarObj.Id];
             
@@ -206,15 +198,11 @@ public with sharing class ANG_DGIStagingAreaCtrl {
                 stagingFs.Financial_Security__c = currentFS.Id; 
             stagingFs.Quantity = 1;
             stagingFs.Region__c = opp.Account.Region_formula__c;
-            stagingFs.Financial_Institution__c = dfltFI.Id;
+            if(dfltFI <> null)
+                stagingFs.Financial_Institution__c = dfltFI.Id;
             stagingFs.TotalPrice = 1;
             stagingFs.pricebookentryid = pbe.id;
 
-        
-        }catch(Exception e){
-            //ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
-            System.debug(e.getStackTraceString());
-        }
     }
 
     public void performAcceptancewithAdendum(Case oscarCase){
@@ -256,7 +244,12 @@ public with sharing class ANG_DGIStagingAreaCtrl {
         fs.CurrencyIsoCode = stagingFs.FS_Currency__c;
         fs.Reception_Date__c = stagingFs.Reception_Date__c;
 
+        System.debug('currentFS is:'+currentFS);
+        system.debug('new financial Security is:'+fs);
+
         insert fs;
+
+        System.debug('currentFS is:'+currentFS);
 
         //Inactivate old FS
         if(currentFS <> null && !hasAdendum){
