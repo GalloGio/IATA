@@ -802,7 +802,8 @@ public without sharing class AMS_MigrationToolHelper {
 
 			Id oscarRTId = null;
 
-			if(isNewgenAccount || (AMS_Utils.IEP_PROCESSES.contains(processType) && oscarNewgenRTMap.containsKey(processType)))
+
+            if(isNewgenAccount || (( AMS_Utils.IEP_PROCESSES.contains(processType) || processType == AMS_Utils.NGGDI ) && oscarNewgenRTMap.containsKey(processType)) )
 				oscarRTId = oscarNewgenRTMap.get(processType);
 
             if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
@@ -846,6 +847,20 @@ public without sharing class AMS_MigrationToolHelper {
 			caseToProcess.OSCAR__c = oscar.Id;
 
 			update caseToProcess;
+
+			if(processType == AMS_Utils.NGGDI){
+				Opportunity opp = new Opportunity(
+					Name = 'OPP - '+caseToProcess.CaseNumber,
+					Related_Oscar__c = oscarId,
+					StageName = 'Pending',
+					RecordTypeId = AMS_Utils.RECTYPE_GDI_FS,
+					AccountId = caseToProcess.AccountId,
+					CloseDate = Date.today().addYears(1),
+					CurrencyIsoCode = 'USD'
+				);
+
+				insert opp;
+			}
 		}
 		
 		AMS_OSCAR__c oscarUpdated = postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, false,caseStatus,caseToProcess);
