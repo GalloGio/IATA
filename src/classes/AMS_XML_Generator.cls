@@ -364,12 +364,12 @@ public with sharing class AMS_XML_Generator {
         System.debug('orderedAgencyIds:' + orderedAgencyIds);
 
         //Get AMS_Segment__c RecordType ID for "IATA Code Programs"
-        Id rtProgram = Schema.SObjectType.AMS_Segment__c.getRecordTypeInfosByName().get('IATA Code Programs').getRecordTypeId();
+        Id rtProgram = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs');
         //Get AMS_Agencies_Hierarchy__c RecordType ID for "MAIN"
-        Id rtHierarchy = Schema.SObjectType.AMS_Agencies_Hierarchy__c.getRecordTypeInfosByName().get('MAIN').getRecordTypeId();
+        Id rtHierarchy = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
 
-        Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
-        Id rtAccRoleEmployee = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Employee').getRecordTypeId();
+        Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+        Id rtAccRoleEmployee = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
         
         System.debug('XML Generator - Requested Agencies from MDM PI - ' + agency);
         sDebug += '\nAgencies List:' + agency;
@@ -462,15 +462,13 @@ public with sharing class AMS_XML_Generator {
             setAddressStateKeys.add(add.State__c);
         }
 
-        //REFERENCE
-        lCountry = [SELECT AIMS_Area_ID__c,AIMS_Area_Name__c,AIMS_Region__c,BSP_Country_free_text__c,Case_BSP_Country__c,
-                CASS_Country_free_text__c,Country_Manager__c,IATA_Regional_Office__c,Id,International_dialing_code_ISD__c,
-                ISO_Code__c,Name,Region__c,SLA_Type__c,Sub_Region__c,Country_Manager__r.Name
-                FROM IATA_ISO_Country__c where Id in :setAddressCountryKeys or Id in :setAgencyCountryKeys];
+        Set<ID> globalCountryIDList = new Set<ID>();
+        globalCountryIDList.addAll(setAddressCountryKeys);
+        globalCountryIDList.addAll(setAgencyCountryKeys);
+        lCountry = IATAISOCountryDAO.getIsoCountriesByIds(globalCountryIDList);
         
         //REFERENCE
-        lState = [SELECT Name,ISO_Code__c,ISO_CODE_STANDARD__c FROM IATA_ISO_State__c where Id in :setAddressStateKeys];
-
+        lState = IATAIsoStateDAO.getIsoStatesByIds(setAddressStateKeys);
 
         lAgenciesContacts = [SELECT AccountId,AMS_isManager__c,AMS_isTicketingAgent__c,AMS_Position__c,
                             AMS_Valid__c,FirstName,Id,LastName,Name,Person__c,Status__c,Title,Email,
@@ -738,7 +736,7 @@ public with sharing class AMS_XML_Generator {
             }
         }
 
-        Id formOfPaymentRTId   = Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId();
+        Id formOfPaymentRTId   = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
 
 /*  NEWGEN-801 */
 
@@ -1713,7 +1711,7 @@ public with sharing class AMS_XML_Generator {
                 }
             }
 
-            getElementNode(agencyNode, 'license', agency.License_Number__c);
+            getElementNode(agencyNode, 'license', AMS_Utils.cleanSpecialChars(agency.License_Number__c));
             getElementNode(agencyNode, 'lang', getPersonLanguageOfCorrespondence(sLang) );
 
             getElementTranslatedNode(agencyNode, iQta, 'AMS_Person__c.Lastname__c', 'qtal_name', sQtal_name);

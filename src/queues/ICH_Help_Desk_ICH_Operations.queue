@@ -4,8 +4,12 @@
     <name>ICH Help Desk - ICH Operations</name>
     <queueMembers>
         <roles>
-            <role>SISCustomerSupportA</role>
+            <role>SISCustomerSupport</role>
         </roles>
+        <users>
+            <user>siddiqig@iata.org</user>
+            <user>reevesj@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

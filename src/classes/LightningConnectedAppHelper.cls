@@ -62,6 +62,21 @@ public without sharing class LightningConnectedAppHelper {
 
     	return values;
     }
+ 
+    @AuraEnabled
+    public static Boolean areMandatoryFieldsFilled (String connectedapp) {
+    	if(connectedApp == 'FRED'){
+	        User userIn = [SELECT Id, contact.Salutation, Contact.Title, Contact.MobilePhone from user where Id =: UserInfo.getUserId()];
+	        
+	        if(userIn.contact.Salutation == null || userIn.contact.Title == null || userIn.contact.MobilePhone == null){
+	        	return false;
+	        }
+	        return true;
+    	}
+    	else{
+    		return true;
+    	}
+    }
 
     @AuraEnabled
     public static String getAutomaticRole (String connectedapp) {
@@ -92,12 +107,11 @@ public without sharing class LightningConnectedAppHelper {
             }
             else{
                 // Load  FRED limit and compare to account number
-                List<RecordType> recordTypes = [SELECT Id FROM RecordType WHERE SObjectType = 'One_Id_Service_Provider_Config__c' AND DeveloperName = 'Service_Provider'];
-    
+                ID rtID = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Provider');
                 One_Id_Service_Provider_Config__c config;
     
-                if(! recordTypes.isEmpty()){
-                    config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: connectedapp AND RecordTypeId =: recordTypes[0].Id LIMIT 1];
+                if(rtID != null){
+                    config = [select Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: connectedapp AND RecordTypeId =: rtID LIMIT 1];
                 }
                 else{
                     config = [select id, Max_Number_Of_Primary_User__c, Max_Number_Of_Secondary_User__c FROM One_Id_Service_Provider_Config__c  WHERE Service_Provider_Name__c =: connectedapp LIMIT 1];
@@ -108,9 +122,9 @@ public without sharing class LightningConnectedAppHelper {
                 }
                 
 				// INC431553 : For verifiers, limits don't apply
-	            List<RecordType> verifierRecordType = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'Verifiers'];
+	            Id verifierRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Verifiers');
 	            Account acc = [select RecordTypeId from Account where Id =: usr.AccountId];
-				if(verifierRecordType[0].Id != acc.RecordTypeId){
+				if(verifierRecordTypeId != acc.RecordTypeId){
                     automaticRole = 'Secondary User';
             }
         }

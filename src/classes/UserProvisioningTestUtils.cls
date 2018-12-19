@@ -26,7 +26,7 @@ public with sharing class UserProvisioningTestUtils {
         // Create a test user - changes will be reverted automatically by Salesforce        
         Profile p = [SELECT Id FROM profile WHERE name='Standard User'];
         User user = new User(
-            userName = 'john.doe@example.org', 
+            userName = DateTime.now().getTime() +'john.doe@example.org', 
             email = 'john.doe@example.org', 
             firstName = 'John',
             lastName = 'Doe',
@@ -42,7 +42,7 @@ public with sharing class UserProvisioningTestUtils {
 
         //Manuel Conde
         List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 2];
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                 License_Upgrade_Required__c= true,
@@ -67,11 +67,7 @@ public with sharing class UserProvisioningTestUtils {
         // already in the system when ConnectedTestUtil is implemented by SFDC.
         // For now our stubbed createConnectedApp() will know to strip the suffix
         // and then perform the SOQL query.
-       /* User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
-        System.runAs ( thisUser ) {
-        String fullAppName = appName + '|4t8izz2t';
-        ConnectedApplication capp = UserProvisioning.ConnectorTestUtil.createConnectedApp(fullAppName);
-        }*/
+       
         Id cAppId = getConnectedApp(appName);
         
         // Build user provisioning account linked to the test user
@@ -129,7 +125,8 @@ public with sharing class UserProvisioningTestUtils {
         
         insert ISO_Country;
         
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        ID recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -138,11 +135,7 @@ public with sharing class UserProvisioningTestUtils {
         acc.Name = 'TestAccount';
         insert acc;
 
-        RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
-
-
-
- 		Contact c = new Contact ( accountid = acc.id, FirstName = 'AAAlberto'  , LastName = 'Borges' , Phone = 'phone' , Fax = 'fax', Title='jobtitle', Membership_Function__c = 'functionpick', Preferred_Language__c='preferredlanguage', email='testddd.fff@gmail.com');
+ 		Contact c = new Contact ( accountid = acc.id, FirstName = 'AAAlberto'  , LastName = 'Borges' , Phone = 'phone' , Fax = 'fax', Title='jobtitle', Membership_Function__c = 'Aeropolitical', Preferred_Language__c='preferredlanguage', email='testddd.fff@gmail.com');
   		insert c;
 
   		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal (Partner)'];
@@ -156,7 +149,7 @@ public with sharing class UserProvisioningTestUtils {
         //Manuel Conde
         List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 2];
         
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                 License_Upgrade_Required__c= true,

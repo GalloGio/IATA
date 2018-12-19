@@ -4,7 +4,9 @@
 **/
 public without sharing class ISSP_APProcess {
 
-    private static String RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId;
+    private static Id RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+    private Map<String, String> apProcessFormRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AP_Process_Form__c');
+    
     @TestVisible private string vCaseId;
     private Id vHQAccountId;
     private Id vGSSAAccountId;
@@ -233,6 +235,7 @@ public without sharing class ISSP_APProcess {
             strOperationTypeAux = strOperationType;
             strAreaType = newCase.CaseArea__c;
             strChangeType = newCase.Reason1__c;
+            isoCountryEligible = (isocountry.Airline_EasyPay_Opt_Out_Date__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today());
 
             //Need to get Id for Account for country of application concerned
             vAccountConcernedId = newCase.Account_Concerned__c;
@@ -723,12 +726,11 @@ public without sharing class ISSP_APProcess {
 
             if(strAreaType == 'Airline Joining') {
                 SYSTEM.DEBUG('Record Type Name: ' + strLoB + ' Joining');
-              newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;
+              newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Joining');
             } else {
-                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
+                newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Change');
             }
-
-            //newForm.RecordTypeId =[Select Id,SobjectType,Name From RecordType WHERE Name = :strLoB and SobjectType ='AP_Process_Form__c'  limit 1].Id;
+            
         }
 
        upsert newForm;
@@ -839,9 +841,9 @@ public without sharing class ISSP_APProcess {
 
             newForm.Submitted_to_IATA__c = TRUE;
             if(strAreaType == 'Airline Joining') {
-                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;
+                newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Joining');
             } else {
-                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
+                newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Change');
             }
             upsert newForm;
             newCase.Status = 'For Review and Acceptance';
@@ -957,15 +959,9 @@ public without sharing class ISSP_APProcess {
     public List<SelectOption> financialCountryNameList {
         get {
             List<SelectOption> options = new List<SelectOption>();
-
-            list<IATA_ISO_Country__c> isoList;
-
-            isoList = [SELECT Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c, AMS_Pilot_Country__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        FROM IATA_ISO_Country__c
-                        ORDER BY Name];
-
+            
+            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
+                    
           options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
           for(IATA_ISO_Country__c iso : isoList){
             options.add(new SelectOption(iso.Name,iso.Name));
@@ -979,17 +975,9 @@ public without sharing class ISSP_APProcess {
     public List<SelectOption> countryNameList {
         get {
             List<SelectOption> options = new List<SelectOption>();
-
-            list<IATA_ISO_Country__c> isoList;
-
-            isoList = [SELECT Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c, AMS_Pilot_Country__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        FROM IATA_ISO_Country__c
-                        WHERE Case_BSP_Country__c!=null
-                        AND Case_BSP_Country__c!=''
-                        ORDER BY Name];
-
+            
+            list<IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
+            
           options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
           for(IATA_ISO_Country__c iso : isoList){
             options.add(new SelectOption(iso.Name,iso.Name));
@@ -1013,32 +1001,10 @@ public without sharing class ISSP_APProcess {
         }
 
         if(category <> 'IBCS consolidator'){
-        options.add(new SelectOption('CASS Export','CASS Export'));
-        options.add(new SelectOption('CASS Import','CASS Import'));
+            options.add(new SelectOption('CASS Export','CASS Export'));
+            options.add(new SelectOption('CASS Import','CASS Import'));
         }
-
-        /**
-        if(strParentMembershipStatus=='IATA member') {
-            if(!isGSSAUser) {
-                options.add(new SelectOption('BSP Direct - Member','BSP'));
-                options.add(new SelectOption('CASS Direct - Member','CASS Export'));
-                options.add(new SelectOption('CASS Import Direct - Member','CASS Import'));
-            } else {
-                options.add(new SelectOption('CASS via GSSA - Member','CASS Export'));
-                options.add(new SelectOption('CASS Import via GHA - Member','CASS Import'));
-            }
-        } else { //IATA Non-Member
-            if(!isGSSAUser) {
-                options.add(new SelectOption('BSP Direct - Non-Member','BSP'));
-                options.add(new SelectOption('CASS Direct - Non-Member','CASS Export'));
-                options.add(new SelectOption('CASS Import Direct - Non-Member','CASS Import'));
-            } else {
-                options.add(new SelectOption('CASS via GSSA - Non-Member','CASS Export'));
-                options.add(new SelectOption('CASS Import via GHA - Non-Member','CASS Import'));
-            }
-        }
-    **/
-
+                
         return options;
     }
 
@@ -1157,11 +1123,12 @@ public without sharing class ISSP_APProcess {
         List<String> countriesParam = (List<String>) System.JSON.deserialize(Apexpages.currentPage().getParameters().get('countriesParam'), List<String>.class);
         String effectiveDateParam = Apexpages.currentPage().getParameters().get('effectiveDateParam');
 
+        Set<String> countryParam = new Set<String>(countriesParam);
         String optInOutSubject = optInOutParam == 'OUT' ? 'Opt-Out' : 'Opt-In';
 
         retrieveHQAccountDetails(vHQAccountId);
 
-        Map<Id, IATA_ISO_Country__c> isoCountriesMap = new Map<Id, IATA_ISO_Country__c>([SELECT Id, ISO_Code__c, Region__c, Name FROM IATA_ISO_Country__c WHERE Id IN :countriesParam]);
+        Map<Id, IATA_ISO_Country__c> isoCountriesMap = new Map<Id, IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(countryParam));
         
         List<String> countryNames = new List<String>();
         for (IATA_ISO_Country__c country: isoCountriesMap.values()) countryNames.add(country.Name);
@@ -1377,7 +1344,7 @@ public without sharing class ISSP_APProcess {
             accountConcernedId = concernedAccount[0].Id;
         } else { //BR does not exist for this Airline, for this country of application, so create Unverified Account
             Account airlineBR = new Account();
-            airlineBR.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+            airlineBR.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
             airlineBR.Name = AL_Name;
             airlineBR.OwnerId = ISSP_Constant.newAccountOwnerId;
             airlineBR.ParentId = AL_Id;
@@ -1418,19 +1385,7 @@ public without sharing class ISSP_APProcess {
     }
 
     public IATA_ISO_Country__c fetchISOCountry(string isocode) {
-
-        IATA_ISO_Country__c isocountry = [
-            SELECT Id, Name, CurrencyIsoCode, EU_Country__c, AMS_Pilot_Country__c, Case_BSP_Country__c,IATA_Country_FR__c,IATA_Country_SP__c,IATA_COUNTRY_EN__c,
-            IATA_Contry_KR__c,IATA_Country_IT__c,IATA_Country_JP__c,IATA_Country_PT__c,IATA_Country_ZH__c,
-            Tax_Number_label__c,Tax_number_format__c,Tax_number_help_text__c, ANG_Enable_NewGen__c, ANG_Portal_Service__c, Airline_EasyPay_Opt_Out_Date__c
-            FROM IATA_ISO_Country__c
-            WHERE ISO_Code__c = :isocode
-         ];
-
-        //ISOCountry eligibility for IEP 
-        isoCountryEligible = (isocountry.Airline_EasyPay_Opt_Out_Date__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today());
-
-        return isocountry;
+        return IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{isocode}).get(0);
     }
 
     public List<SelectOption> getChangeItems() {

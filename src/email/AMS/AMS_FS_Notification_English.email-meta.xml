@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS_FS Notification EN</name>
+    <style>freeForm</style>
+    <subject>Financial Security notification</subject>
+    <textOnly>{!Today()}
+
+
+{!Financial_Security__c.Account__c}
+IATA CODE: {!Financial_Security__c.IATA_code__c}
+
+
+			Subject: Receipt of Financial Security  
+
+Dear Agent
+
+This letter is to acknowledge receipt of the following financial security in respect of your agency
+
+Type: {!Financial_Security__c.Security_Type__c}
+Provider: {!Financial_Security__c.Financial_Institution__c}
+Amount: {!Financial_Security__c.Amount__c}
+Effective date: {!Financial_Security__c.Validity_Start_Date__c}
+Expiry date: {!Financial_Security__c.Expiry_Date__c}
+
+
+
+Yours sincerely
+
+IATA Global Delivery Centre
+
+
+
+
+
+
+
+
+
+This is a computer- generated message and required no signature.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

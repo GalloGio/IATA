@@ -2,7 +2,8 @@
 public class CommentHandlerTest {
 	
 	/** TEST METHODS **/
-	public static testMethod void testsetObjectiveInfo() {
+	@isTest
+	public static void testsetObjectiveInfo() {
 		Objective__c objective = ObjectiveHandlerTest.getDivisionObjective();
 		insert objective;
 		

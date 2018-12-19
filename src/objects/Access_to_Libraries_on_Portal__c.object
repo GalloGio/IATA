@@ -43,5 +43,16 @@
         <type>TextArea</type>
     </fields>
     <label>Access to Libraries on Portal</label>
+    <listViews>
+        <fullName>All_Custom</fullName>
+        <columns>NAME</columns>
+        <columns>Sector_of_Account__c</columns>
+        <columns>Category_of_Account__c</columns>
+        <columns>Record_Type_of_Account__c</columns>
+        <columns>Library_visibility__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All - Custom</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

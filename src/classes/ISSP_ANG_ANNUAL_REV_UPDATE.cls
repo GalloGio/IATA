@@ -12,6 +12,51 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
     public string txtHelpCurrency {get; set;}
     public string txtHelpTaxNumber {get; set;}
     public String vatNumber {get; set;}
+    public list<selectOption> countryList{get{
+                if(countryList==null){
+                    countryList= new list<selectOption>();
+                    countryList.add(new selectOption('',''));
+                    map<string,IATA_ISO_Country__c> countryInfoByCountryNameMap = new map<string, IATA_ISO_Country__c>();//stores temporarely the values to be assing to a string
+
+                    for(IATA_ISO_Country__c cnt:[select name,Postal_Code_Hint_Format__c, State_Province_Mandatory__c, IEC_Zip_Postal_Code_required__c, Informatica_Value__c
+                        from IATA_ISO_Country__c 
+                        where region__c!='' and Iso_code__c not in ('IO','TF','GS','UM','UP','VI') order by name asc]){
+
+                        countryList.add(new selectOption(cnt.Informatica_Value__c.toUpperCase(), cnt.name));
+
+                        countryInfoByCountryNameMap.put(cnt.Name.toUpperCase(), cnt);
+                    }
+                    countryInfoByCountryNameMapString = JSON.serialize(countryInfoByCountryNameMap);
+                }
+                return countryList;
+        }   
+        set;}
+
+    public static map<string,IATA_ISO_Country__c> postalCodeRegexByCountryMap{
+        get{
+            if(postalCodeRegexByCountryMap==null){
+                postalCodeRegexByCountryMap= new map<string,IATA_ISO_Country__c>();
+                
+                for(IATA_ISO_Country__c cnt:[select id,name,Postal_Code_Format_regEx__c, State_Province_Mandatory__c, IEC_Zip_Postal_Code_required__c
+                    from IATA_ISO_Country__c 
+                    where region__c!='' and Iso_code__c not in ('IO','TF','GS','UM','UP','VI') order by name asc]){
+
+                    postalCodeRegexByCountryMap.put(cnt.Name.toUpperCase(), cnt);
+                }
+
+            } 
+            return postalCodeRegexByCountryMap;
+        }
+        set;
+    }
+    
+    public string countryInfoByCountryNameMapString {
+        get{
+            if(countryInfoByCountryNameMapString==null) countryInfoByCountryNameMapString='\'\'';//characters to avoid crashing stringfy method on vf page
+            return countryInfoByCountryNameMapString;
+        }
+        set;
+    }
 
 	public ISSP_ANG_ANNUAL_REV_UPDATE() {
         applyLanguage = UserInfo.getLanguage();

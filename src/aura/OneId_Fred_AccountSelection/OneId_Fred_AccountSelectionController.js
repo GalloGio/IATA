@@ -1,6 +1,6 @@
 ({
 
-	
+    
 /**
     Load customer type depending on service provider in URL
 */
@@ -14,9 +14,11 @@
             var servName = paramsMap.serviceName;
             var userTypeToCreate = paramsMap.t; //t=1  (for primary) or t=2 (for secondary) 
             var invitationId = paramsMap.token; //Invitation ID
+            console.log(invitationId);
 
             if(/\S/.test(servName)){
                 component.set("v.serviceName", servName);
+                console.log("servname "+servName);
                 if(! component.get("v.paramLoaded")) {
                     // Avoid multiple calls
                     component.set("v.paramLoaded", true);
@@ -26,8 +28,9 @@
                         component.set("v.invitationId", invitationId);
                     }
                     console.log('wwww');
+                    console.log(isInvitation);
                     component.set("v.isInvitation", isInvitation)
-                    helper.initParams(component, isInvitation, invitationId);
+                    helper.initParams(component, isInvitation, invitationId, component.get("v.contact"));
                 }
             }
             // If registration comes from FRED (not a guest) by a primary user, I can create another primary or secondary user
@@ -39,7 +42,7 @@
 /**
     When a user type inside the search box
 */
-	onKeyUp : function(component, event, helper) {
+    onKeyUp : function(component, event, helper) {
         // Unvalidate component when user tries to change input        
         component.set("v.isValid", false);
         component.set("v.accountSelected", false);
@@ -51,7 +54,7 @@
             
             var action = component.get("c.getAccountsByType");
             action.setParams({
-            	"customerType":component.get("v.customerType"),
+                "customerType":component.get("v.customerType"),
                 "userInput":userInputCmp.value
             });
 
@@ -102,11 +105,12 @@
                 $A.util.removeClass(resultDiv, 'slds-is-open');
             }
         }
-	},
+    },
 
     onRender: function(component, event, helper) {
         // Expand div according to suggestion size
         component.set("v.suggestionBoxHeight", component.find("suggestionBoxID").getElement().clientHeight);
+        helper.checkIfAccountSet(component);
     },
 
     typeOfCustomerChanged: function(component, event, helper) {
@@ -148,7 +152,7 @@
             }
             component.set("v.suggestionBoxHeight", 0 );
             component.set("v.accountSelected", true);
-            component.set("v.acc", component.get("v.response")[accountIndex]);
+            component.set("v.account", component.get("v.response")[accountIndex]);
         }
     },
 
@@ -166,7 +170,7 @@
         } 
        var action = component.get("c.registration");
         action.setParams({
-            "acc":component.get("v.acc"),
+            "acc":component.get("v.account"),
             "con":component.get("v.contact"),
             "selectedCustomerType":component.get("v.customerType"),
             "con":component.get("v.contact"),
@@ -205,8 +209,19 @@
             
             if(!result) {
 
-               console.log(a.getReturnValue());
-                alert(a.getReturnValue().error);
+                console.log(a.getReturnValue());
+                //Previous message
+                //alert(a.getReturnValue().error);
+                var result = confirm(a.getReturnValue().error);
+                var txt;
+                if (result == true) {
+                    window.location.href = 'https://fred.iata.org/contact';
+                    txt = 'User redirected...'
+                    
+                } else {
+                    txt = "User canceled the operation...";
+                }
+                console.log(txt);
                 /*
                 // Show toast not working as guest (public pages)- Wok only when logged in
                 var toastEvent = $A.get("e.force:showToast");

@@ -1,0 +1,131 @@
+<apex:page controller="ISSP_SISMembershipApplication_Ctrl"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="false"
+           action="{!initActions}">
+
+<apex:stylesheet value="{!URLFOR($Resource.ISSP_SIS_MembersipApplication,'css/main.min.css')}"/>
+
+<c:ISSP_Header ></c:ISSP_Header>
+
+<c:ISSP_WaitingStatus/>
+
+<style>
+    div.messageText {
+        display:none;
+    }
+    div.my-alert {
+        margin: 0px;
+        padding: 10px;
+    }
+</style>
+<script>
+  $( function() {
+    $( "div.messageText" ).dialog({
+      dialogClass: "alert",
+      closeText: "hide",
+      modal: true,
+      title: "Alert",
+      buttons: [
+        {
+          text: "OK",
+          click: function() {
+            $( this ).dialog( "close" );
+          }
+        }
+      ]
+    });
+  } );
+</script>
+
+<div class="container">
+  <c:ISSP_CustomNavigation />
+
+  <apex:form id="mainForm" styleclass="form-inline">
+
+    <apex:pageMessages id="page-messages"/>
+    
+    <div class="col-md-12" id="mainDiv">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3>{!$Label.ISSP_SIS_Membership_Title}</h3>
+          {!$Label.ISSP_SIS_Membership_Subtitle}
+        </div>
+
+        <apex:outputPanel styleclass="panel-body" rendered="{!listWrapperType.size=0}">
+            {!$Label.ISSP_SIS_Membership_no_services}
+        </apex:outputPanel>
+
+        <apex:outputPanel styleclass="panel-body scrollBar" rendered="{!listWrapperType.size>0}">
+            <div class="sis-types-wrapper">
+                <table>
+                    <!-- ROW 1 Type info -->
+                    <tr>
+                        <td valign="bottom">
+                            <div class="header-title">
+                                {!$Label.ISSP_SIS_Membership_Features}
+                            </div>
+                        </td>
+                        <apex:repeat value="{! listWrapperType}" var="wrapper">
+                            <td valign="top">
+                                <div class="type-info">
+                                    <div class="type-title">
+                                        <h3>{!$Label[wrapper.sisType.MasterLabel]}</h3>
+                                    </div>
+                                    <div class="type-image">
+                                        <apex:image value="{!URLFOR($Resource.ISSP_SIS_MembersipApplication,'img/' + wrapper.sisType.DeveloperName + '.png')}" alt="{!wrapper.sisType.DeveloperName}"/>
+                                    </div>
+                                    <div class="type-button">
+                                        <!-- APPLY NOW BUTTON -->
+                                        <apex:commandLink action="{!wrapper.applyNow}" value="{!$Label.ISSP_SIS_Membership_Apply_Now}"
+                                            styleClass="btn btn_iata_primary" rendered="{!wrapper.ShowApplyNow}" status="WaitingStatus"/>
+                                        <!-- CONTINUE PROCESS BUTTON -->
+                                        <apex:commandLink action="{!wrapper.continueProcess}" value="{!$Label.ISSP_SIS_Membership_Continue_Draft}"
+                                            styleClass="btn btn_iata_primary" rendered="{!wrapper.ShowContinueProcess}" status="WaitingStatus"/>
+                                        <!-- APPLY NOW BUTTON -->
+                                        <apex:commandLink action="{!wrapper.goToCase}" value="{!$Label.ISSP_SIS_Membership_View_My_Application}"
+                                            styleClass="btn btn_iata_primary" rendered="{!wrapper.ShowGoToCase}" status="WaitingStatus"/>
+                                        <!-- CURRENT MEMBERSHIP BUTTON -->
+                                        <apex:outputPanel layout="block" styleclass="alert alert-success my-alert" html-role="alert" rendered="{!wrapper.ShowCurrentMembership}">
+                                            {!$Label.ISSP_SIS_Membership_Your_Current}
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div class="type-text">
+                                        <p class="text-justify">
+                                            <small class="text-muted">
+                                                <apex:outputText escape="false" value="{!$Label[wrapper.sisType.Description_Label__c]}"/>
+                                            </small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <!-- next ROWS, Features -->
+                    <apex:repeat value="{!listFeatureNames}" var="featureName">
+                        <tr>
+                            <td>
+                                <small class="">{!$ObjectType.Sis_Management_Type__mdt.fields[featureName].label}</small>
+                            </td>
+                            <apex:repeat value="{! listWrapperType}" var="wrapper">
+                                <td style="padding-top: 8px; padding-bottom: 8px;">
+                                    <small class="text-muted">
+                                        <apex:outputText value="{!wrapper.sisType[featureName]}" rendered="{!wrapper.sisType[featureName]!='Enabled'}"/>
+                                        <apex:image value="/img/msg_icons/confirm24.png" rendered="{!wrapper.sisType[featureName]=='Enabled'}"/>
+                                    </small>
+                                </td>
+                            </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </div>
+          </apex:outputPanel>
+        </div>
+    </div>
+
+  </apex:form>
+
+  <c:ISSP_CustomFooter />
+</div>
+</apex:page>

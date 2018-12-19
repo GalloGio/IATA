@@ -7,10 +7,10 @@ public class ANG_RHCHelper {
 	//RHC Information standard record type
 	public static final String RHC_INFO_STD_RT = 'RHC_Information';
 
-	public static final String RECTYPE_STDRHCINFO = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_RHC_Information__c').get(RHC_INFO_STD_RT);
-	public static final String RECTYPE_RISKALERT_RHC = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert');
-	public static final String RECTYPE_RISKALERT_RTS = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS');
-	public static final String RECTYPE_RHCATTRIBUTE = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RHC_Risk_Alert');
+	public static final String RECTYPE_STDRHCINFO = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_RHC_Information__c', RHC_INFO_STD_RT);
+	public static final String RECTYPE_RISKALERT_RHC = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_Risk_Alert__c', 'Risk_Alert');
+	public static final String RECTYPE_RISKALERT_RTS = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_Risk_Alert__c', 'Risk_Alert_RTS');
+	public static final String RECTYPE_RHCATTRIBUTE = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Country_Specific_Attribute__c', 'RHC_Risk_Alert');
 
 	//Risk Alert 
 	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
@@ -88,7 +88,7 @@ public class ANG_RHCHelper {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
 
 		//for accounts where the RHC Amount is NOT equal to FS, we need to check the minimum
-		Id minRHCrt = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('Minimum_RHC_Amount');
+		Id minRHCrt = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
 		Set<Id> accountsIds = new Set<Id>();
 		for(ANG_RHC_Information__c rhc : rhcInfo) {

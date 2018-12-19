@@ -588,32 +588,17 @@
         <columns>OBJECT_ID</columns>
         <columns>File_Specification__c</columns>
         <columns>Status__c</columns>
+        <columns>Production_Date__c</columns>
         <columns>Size__c</columns>
         <columns>Duration__c</columns>
-        <columns>Production_Date__c</columns>
         <columns>Duration_in_minutes__c</columns>
         <columns>Message__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Production_Date__c</field>
-            <operation>equals</operation>
-            <value>11/1/2018</value>
-        </filters>
-        <filters>
             <field>File_Specification__c</field>
-            <operation>notContain</operation>
-            <value>Daily</value>
-        </filters>
-        <filters>
-            <field>File_Specification__c</field>
-            <operation>notContain</operation>
-            <value>MITA</value>
-        </filters>
-        <filters>
-            <field>File_Specification__c</field>
-            <operation>notContain</operation>
-            <value>CAC</value>
+            <operation>contains</operation>
+            <value>CGOX-Member-Master</value>
         </filters>
         <label>ZZ: Ad Hoc Production Search</label>
         <language>en_US</language>

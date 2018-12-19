@@ -1,12 +1,12 @@
 @isTest
-public class trgCaseLastSIDRADateTest{
+public class trgCaseLastSIDRADateTest {
 
-    private static final ID iFDSRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - Americas');
-    private static final ID iFAPRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-    private static final ID sidraRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+    private static final ID iFDSRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
+    private static final ID iFAPRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+    private static final ID sidraRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 
-    static testMethod void testAllMethod()
-    {
+    @isTest
+	static void testAllMethod() {
         // create test contact
         Contact contact1 = new Contact();
         contact1.FirstName = 'Dummy';
@@ -24,6 +24,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Subject = 'Test Case 1';
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Case case3 = new Case();
@@ -33,12 +34,13 @@ public class trgCaseLastSIDRADateTest{
         case3.Subject = 'Test Case 1';
         case3.Description = 'Test Case 1';
         case3.BSPCountry__c = 'Canada';
+        case3.Late_Payment_Date__c = Date.today();
         insert case3;
 
     }
 
-    static testMethod void testAllMethod2()
-    {
+    @isTest
+	static void testAllMethod2() {
         System.debug('********* ' + sidraRecordTypeId);
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -47,7 +49,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
 
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();
@@ -65,6 +67,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Subject = 'Test Case 1';
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.startTest();
@@ -76,8 +79,8 @@ public class trgCaseLastSIDRADateTest{
         Test.StopTest();
     }
 
-    static testMethod void testAllMethod3()
-    {
+    @isTest
+	static void testAllMethod3() {
         System.debug('********* ' + sidraRecordTypeId);
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -86,7 +89,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
 
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();
@@ -104,6 +107,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Subject = 'Test Case 1';
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.startTest();
@@ -115,7 +119,8 @@ public class trgCaseLastSIDRADateTest{
         Test.StopTest();
     }
 
-    static testMethod void testAddingComments_Case1() {
+    @isTest
+	static void testAddingComments_Case1() {
 
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -123,7 +128,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingCountry = 'Canada';
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();
@@ -141,6 +146,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
         case1.Remittance_Period__c = 'PERIOD1';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.StartTest();
@@ -153,11 +159,13 @@ public class trgCaseLastSIDRADateTest{
         case2.BSPCountry__c = 'Canada';
         case2.Remittance_Period__c = 'PERIOD1';
         case2.IRR_Withdrawal_Reason__c = SIDRACaseHelper.IATACHARGES;
+        case2.Late_Payment_Date__c = Date.today();
         insert case2;
         Test.StopTest();
     }
 
-    static testMethod void testAddingComments_Case2() {
+    @isTest
+	static void testAddingComments_Case2() {
 
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -165,7 +173,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingCountry = 'Canada';
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();
@@ -184,6 +192,7 @@ public class trgCaseLastSIDRADateTest{
         case1.BSPCountry__c = 'Canada';
         case1.Remittance_Period__c = 'PERIOD1';
         case1.IRR_Withdrawal_Reason__c = SIDRACaseHelper.IATACHARGES;
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.StartTest();
@@ -195,11 +204,13 @@ public class trgCaseLastSIDRADateTest{
         case2.Description = 'Test Case 2';
         case2.BSPCountry__c = 'Canada';
         case2.Remittance_Period__c = 'PERIOD1';
+        case2.Late_Payment_Date__c = Date.today();
         insert case2;
         Test.StopTest();
     }
 
-    static testMethod void testAddingComments_Case3() {
+    @isTest
+	static void testAddingComments_Case3() {
 
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -207,7 +218,7 @@ public class trgCaseLastSIDRADateTest{
         account1.BillingCountry = 'Canada';
         account1.BillingStreet = 'some street';
         account1.Location_Type__c = 'HO';
-       insert account1;
+        insert account1;
 
         // create test contact
         Contact contact1 = new Contact();
@@ -225,6 +236,7 @@ public class trgCaseLastSIDRADateTest{
         case1.Description = 'Test Case 1';
         case1.BSPCountry__c = 'Canada';
         case1.Remittance_Period__c = 'PERIOD1';
+        case1.Late_Payment_Date__c = Date.today();
         insert case1;
 
         Test.StartTest();
@@ -236,6 +248,7 @@ public class trgCaseLastSIDRADateTest{
         case2.Description = 'Test Case 2';
         case2.BSPCountry__c = 'Canada';
         case2.Remittance_Period__c = 'PERIOD1';
+        case2.Late_Payment_Date__c = Date.today();
         insert case2;
         Test.StopTest();
     }

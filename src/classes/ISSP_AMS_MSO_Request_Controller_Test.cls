@@ -3,15 +3,15 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
     
     @isTest static void test_method() {
 
-        Id  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c').get('IATA_Code_Programs');
-        Id  codeRangeRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Code_Range__c'}).get('Code_Range__c').get('IATA_Code');
+        Id  programRT  =  RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs');
+        Id  codeRangeRT  =  RecordTypeSingleton.getInstance().getRecordTypeId('Code_Range__c', 'IATA_Code');
 
         AMS_Segment__c p1 = new AMS_Segment__c (label__c='M',RecordTypeId=programRT );
         insert p1;
         
-        Id conRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact').get('Standard_Contact');//[SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Contact' AND SobjectType = 'Contact'].Id;
-        Id accRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');//[SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Airline' AND SobjectType = 'Account'].Id;
-        Id agcRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Agency');// [SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Agency' AND SobjectType = 'Account'].Id;
+        Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR', Case_BSP_Country__c='Test');       
         insert isoc;
@@ -115,8 +115,8 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
     
     @isTest static void test_method2() {
         
-        Id conRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact').get('Standard_Contact');//[SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Contact' AND SobjectType = 'Contact'].Id;
-        Id accRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');//[SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Airline' AND SobjectType = 'Account'].Id;
+        Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR', Case_BSP_Country__c='Test');       
         insert isoc;
@@ -215,8 +215,8 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 
     @isTest static void test_increase_coverage() {
         
-        Id conRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Contact'}).get('Contact').get('Standard_Contact');//[SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Contact' AND SobjectType = 'Contact'].Id;
-        Id accRtId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');//[SELECT Id FROM RecordType WHERE DeveloperName ='IATA_Airline' AND SobjectType = 'Account'].Id;
+        Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR', Case_BSP_Country__c='Test');       
         insert isoc;

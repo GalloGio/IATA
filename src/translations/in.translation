@@ -597,7 +597,7 @@
         <name>AMS_XML_GEN_ERROR_RECEIVER</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_AE_separate_Legal_Entity --></label>
+        <label>*Apakah Entitas Asosiasi ini entitas Legal yang terpisah dari Entitas Induk?</label>
         <name>ANG_AE_separate_Legal_Entity</name>
     </customLabels>
     <customLabels>
@@ -641,43 +641,43 @@
         <name>ANG_Conversion_Tool_Workaround</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Effective_Date --></label>
+        <label>Tanggal Efektif:</label>
         <name>ANG_Effective_Date</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP CashlessMessage --></label>
+        <label>&quot;&lt;a href=&quot;&quot;/ISSP_AMSCases&quot;&quot;&gt; Ajukan permohonan &lt;/a&gt; untuk berganti ke tipe akreditasi GoStandard guna menerbitkan tiket menggunakan Metode Pembayaran Tunai (FoP)&quot;</label>
         <name>ANG_ISSP_AFP_CashlessMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP CashlessMessage --></label>
+        <label>&quot;Minta akses ke layanan &lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; Akreditasi IATA &amp;amp; Perubahan&lt;/a&gt; untuk berganti ke tipe akreditasi GoLite&quot;</label>
         <name>ANG_ISSP_AFP_CashlessMessageNoAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AFP_CreditCardNoAccess --></label>
+        <label>&quot;Minta akses ke layanan &lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; Akreditasi IATA &amp;amp; Perubahan &lt;/a&gt; untuk mengirimkan bukti Kepatuhan PCI.&quot;</label>
         <name>ANG_ISSP_AFP_CreditCardNoAccess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP AFP NoCreditCardMessage --></label>
+        <label>&quot;&lt;a href=&quot;&quot;/ISSP_ANG_PCI?&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt; Minta FoP Kartu Kredit &lt;/a&gt;&quot;</label>
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationType --></label>
+        <label>Tipe Akreditasi</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationTypeRequired --></label>
+        <label>Pilih jenis operasi.</label>
         <name>ANG_ISSP_AccreditationTypeRequired</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AccreditationTypeTitle --></label>
+        <label>Tipe akreditasi</label>
         <name>ANG_ISSP_AccreditationTypeTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AnnualFees --></label>
+        <label>Biaya Tahunan:</label>
         <name>ANG_ISSP_AnnualFees</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_AssociateEntity --></label>
+        <label>Entitas Asosiasi:</label>
         <name>ANG_ISSP_AssociateEntity</name>
     </customLabels>
     <customLabels>
@@ -689,19 +689,19 @@
         <name>ANG_ISSP_ChangeContactHierarchyError</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1 --></label>
+        <label>Selamat atas terbukanya akun IATA EasyPay baru Anda.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1 --></label>
+        <label>Harap membaca</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2 --></label>
+        <label>FAQ</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3 --></label>
+        <label>untuk mempelajari lebih lanjut cara mengelola akun EasyPay Anda dan mulai menggunakannya.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</name>
     </customLabels>
     <customLabels>
@@ -709,31 +709,31 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3 --></label>
+        <label>&quot;Rekan kerja Anda kini dapat mengajukan permohonan untuk mengakses akun Anda yang baru dibuka dari Portal Layanan Pelanggan IATA. &amp;lt;a href=&quot;&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot;&gt;FAQ&amp;lt;/a&gt; di atas menjelaskan cara Anda dapat mengelola akses pengguna.&quot;</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail --></label>
+        <label>Selamat atas terbukanya akun IATA EasyPay baru Anda. Ikuti artikel ini yang menjelaskan cara mengelola akun EasyPay Anda dan langkah-langkah awal untuk mentransfer dana agar Anda dapat memulai menerbitkan tiket EasyPay. Rekan kerja Anda kini dapat mengajukan permohonan untuk mengakses akun Anda yang baru dibuka dari Portal Layanan Pelanggan IATA. Artikel di atas menjelaskan cara Anda dapat mengelola akses pengguna. Terima kasih, Layanan Pelanggan IATA</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_1 --></label>
+        <label>Pilih peran akses untuk IATA EasyPay.</label>
         <name>ANG_ISSP_ConfirmRequestIEP_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_2 --></label>
+        <label>Setelah Anda mengonfirmasinya, permintaan akses Anda akan dikirim ke administrator dan manajer dompet IATA EasyPay untuk persetujuan.</label>
         <name>ANG_ISSP_ConfirmRequestIEP_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ConfirmRequestIEP_3 --></label>
+        <label>Untuk informasi selengkapnya terkait peran yang tersedia, klik</label>
         <name>ANG_ISSP_ConfirmRequestIEP_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From --></label>
+        <label>Konversi Dari</label>
         <name>ANG_ISSP_ConversionFrom</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From GoLite Tooltip --></label>
+        <label>Konversi Dari Tooltip GoLite</label>
         <name>ANG_ISSP_ConversionFromGoLiteTooltip</name>
     </customLabels>
     <customLabels>
@@ -741,7 +741,7 @@
         <name>ANG_ISSP_ConversionFromGoStandardGoLiteTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Conversion From GoStandard Tooltip --></label>
+        <label>Konversi Dari Tooltip GoStandard</label>
         <name>ANG_ISSP_ConversionFromGoStandardTooltip</name>
     </customLabels>
     <customLabels>
@@ -749,67 +749,67 @@
         <name>ANG_ISSP_ConversionFromTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryConcerned --></label>
+        <label>Negara Relevan</label>
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsGoBack --></label>
+        <label>Kembali ke perbandingan Tipe Akreditasi</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsGoBackToOnlineAcc --></label>
+        <label>&quot;Kembali ke halaman Akreditasi Online &amp;amp; Perubahan&quot;</label>
         <name>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_CountryRequirementsTitle --></label>
+        <label>Akreditasi Agen Online IATA</label>
         <name>ANG_ISSP_CountryRequirementsTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_EasyPayLegalConfirmation --></label>
+        <label>Anda sekarang akan dibawa ke Portal EasyPay tempat Anda dapat menyelesaikan permohonan untuk membuka akun IATA EasyPay Biro.&lt;br/&gt;&lt;br/&gt;Dengan melanjutkan, Anda setuju IATA mengirimkan nama depan, nama belakang, alamat email, dan kode IATA Anda, serta semua informasi pribadi relevan lainnya yang tersedia ke Pemasok IATA EasyPay. Informasi ini hanya akan digunakan oleh Pemasok IATA EasyPay untuk tujuan membuka dan mengelola akun EasyPay Anda serta mengoperasikan layanan EasyPay secara umum, atau jika diwajibkan oleh hukum.&lt;br/&gt;&lt;br/&gt;Anda ingin melanjutkan?</label>
         <name>ANG_ISSP_EasyPayLegalConfirmation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_AccessRequest2_IEP --></label>
+        <label>Layanan telah ditransfer ke Admin/Manajer Dompet Utama IEP.</label>
         <name>ANG_ISSP_Email_AccessRequest2_IEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP --></label>
+        <label>telah diberikan peran layanan portal berikut:</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2 --></label>
+        <label>Anda dapat mengaksesnya</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3 --></label>
+        <label>atau dari halaman beranda portal pelanggan IATA Anda.</label>
         <name>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_AppReq_BeInformed --></label>
+        <label>Harap diketahui bahwa pengguna di bawah telah meminta akses ke Layanan IATA EasyPay.</label>
         <name>ANG_ISSP_Email_AppReq_BeInformed</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP --></label>
+        <label>Yth., Admin/Manajer Dompet Utama IEP,</label>
         <name>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_1 --></label>
+        <label>Dengan ini kami sampaikan bahwa</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_2 --></label>
+        <label>peran layanan portal Anda telah berubah menjadi:</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_Subject --></label>
+        <label>Portal Pelanggan IATA – Perubahan</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Email_PortalServiceRole_Change_Subject2 --></label>
+        <label>Peran Layanan Portal</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_HeadEntity --></label>
+        <label>Entitas Induk:</label>
         <name>ANG_ISSP_HeadEntity</name>
     </customLabels>
     <customLabels>
@@ -817,27 +817,27 @@
         <name>ANG_ISSP_IATA_EasyPay</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_Abroad_Account_error_msg --></label>
+        <label>Cabang Anda berlokasi di negara yang berbeda dari Kantor Pusat Anda. Mohon maaf, saat ini layanan IATA EasyPay tidak tersedia untuk kantor Anda. Hubungi Dukungan Pelanggan IATA jika Anda memerlukan informasi lebih lanjut.</label>
         <name>ANG_ISSP_IEP_Abroad_Account_error_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg --></label>
+        <label>&quot;Biro Anda saat ini tidak memiliki Akun IATA EasyPay yang terbuka.&lt;br/&gt;&lt;br/&gt;Silakan hubungi Penandatangan Sah Kantor Pusat untuk memintanya membuka Akun IATA EasyPay. Untuk membuka Akun IATA EasyPay, Anda harus menjadi Administrator Portal dan Penandatangan Sah untuk Biro Anda.&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt; Hubungi bagian dukungan &lt;/a&gt; jika Anda membutuhkan bantuan.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg --></label>
+        <label>&quot;Biro Anda saat ini tidak memiliki Akun IATA EasyPay yang terbuka.&lt;br/&gt;&lt;br/&gt;Hubungi Penandatangan Sah Entitas Induk Anda untuk memintanya membuka Akun IATA EasyPay. {0}&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt; Hubungi bagian dukungan &lt;/a&gt; jika Anda membutuhkan bantuan.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg --></label>
+        <label>&quot;Biro Anda saat ini tidak memiliki Akun IATA EasyPay yang terbuka.&lt;br/&gt;&lt;br/&gt;Hubungi Penandatangan Sah Kantor Pusat Anda untuk memintanya membuka Akun IATA EasyPay. {0}&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&gt; Hubungi bagian dukungan &lt;/a&gt; jika Anda membutuhkan bantuan.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active --></label>
+        <label>Untuk membuka Akun IATA EasyPay, Anda harus menjadi Administrator Portal dan Penandatangan Sah untuk Biro Anda.</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Active</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator --></label>
+        <label>&quot;&lt;br/&gt;&lt;br/&gt;Sebagai Administrator Portal, Anda dapat memperbarui &lt;a href=&quot;&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&quot;&gt; Informasi Pribadi &lt;/a&gt; Anda untuk menetapkan diri Anda sendiri sebagai Penandatangan Sah, atau menetapkan orang yang tepat dari halaman&lt;a href=&quot;&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&quot;&gt; Administrasi Perusahaan -&gt; Kontak &lt;/a&gt; dan minta orang tersebut untuk membuka akun EasyPay.&quot;</label>
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
@@ -853,7 +853,7 @@
         <name>ANG_ISSP_IEP_ModelBanking_link</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_OpeningInProgress --></label>
+        <label>Penandatangan Sah dari Entitas Induk telah memulai pembukaan Akun IEP Biro. Setelah Akun IEP berhasil dibuka, Anda akan dapat mengakses layanan ini.</label>
         <name>ANG_ISSP_IEP_OpeningInProgress</name>
     </customLabels>
     <customLabels>
@@ -861,15 +861,15 @@
         <name>ANG_ISSP_IEP_Portal_Access_Request_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_Portal_Request_Access_Msg --></label>
+        <label>Akses ke Akun IATA EasyPay Anda untuk pengguna yang dipilih telah diminta. Administrator dan Manajer Dompet Utama IATA EasyPay telah diberi tahu untuk mendapatkan persetujuan mereka.&lt;br/&gt;Pengguna akan mendapatkan konfirmasi setelah aksesnya telah diberikan.</label>
         <name>ANG_ISSP_IEP_Portal_Request_Access_Msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_IEP_add_users_to_account_not_open_error_msg --></label>
+        <label>Pengguna hanya bisa ditambahkan untuk membuka Akun IATA EasyPay (IEP). Harap membuka Akun IEP Anda sebelum melanjutkan.</label>
         <name>ANG_ISSP_IEP_add_users_to_account_not_open_error_msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
+        <label>Kontak berikut merupakan satu-satunya administrator IATA EasyPay yang saat ini aktif untuk biro ini dan tidak dapat dinonaktifkan. Harap menghubungi Layanan Pelanggan IATA untuk mendapatkan dukungan.</label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg</name>
     </customLabels>
     <customLabels>
@@ -877,11 +877,11 @@
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Notify_Admin_app_req_1 --></label>
+        <label>Untuk mengelola permintaan, klik</label>
         <name>ANG_ISSP_Notify_Admin_app_req_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Notify_Admin_app_req_2 --></label>
+        <label>untuk mengakses portal IATA EasyPay Anda.</label>
         <name>ANG_ISSP_Notify_Admin_app_req_2</name>
     </customLabels>
     <customLabels>
@@ -901,7 +901,7 @@
         <name>ANG_ISSP_Notify_Admin_app_req_here4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Open_IATA_EasyPay_Account --></label>
+        <label>Buka akun IATA EasyPay</label>
         <name>ANG_ISSP_Open_IATA_EasyPay_Account</name>
     </customLabels>
     <customLabels>
@@ -913,19 +913,19 @@
         <name>ANG_ISSP_OptOutEmptyDateErrorMessage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PORTAL_SERVICE_ROLE --></label>
+        <label>Peran Layanan Portal</label>
         <name>ANG_ISSP_PORTAL_SERVICE_ROLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PORTAL_SERVICE_ROLE_HINT --></label>
+        <label>Pilih peran portal yang Anda inginkan dalam layanan portal ini.</label>
         <name>ANG_ISSP_PORTAL_SERVICE_ROLE_HINT</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP Picklist None --></label>
+        <label>-Tidak Ada-</label>
         <name>ANG_ISSP_Picklist_None</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_PortalRoleErrorMessage --></label>
+        <label>Peran portal diperlukan</label>
         <name>ANG_ISSP_PortalRoleErrorMessage</name>
     </customLabels>
     <customLabels>
@@ -937,15 +937,15 @@
         <name>ANG_ISSP_ProductCashFacility</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonApplyNow --></label>
+        <label>Ajukan Permohonan Sekarang</label>
         <name>ANG_ISSP_ProductComparisonApplyNow</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonCost --></label>
+        <label>Biaya</label>
         <name>ANG_ISSP_ProductComparisonCost</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonCountrySpecificRequirements --></label>
+        <label>Persyaratan Spesifik Negara</label>
         <name>ANG_ISSP_ProductComparisonCountrySpecificRequirements</name>
     </customLabels>
     <customLabels>
@@ -953,19 +953,19 @@
         <name>ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature1 --></label>
+        <label>Kartu Kredit</label>
         <name>ANG_ISSP_ProductComparisonFeature1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature10 --></label>
+        <label>Fitur 10</label>
         <name>ANG_ISSP_ProductComparisonFeature10</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature10Tooltip --></label>
+        <label>Tooltip Fitur 10</label>
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature1Tooltip --></label>
+        <label>Tooltip Fitur 1</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
     <customLabels>
@@ -973,63 +973,63 @@
         <name>ANG_ISSP_ProductComparisonFeature2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature2Tooltip --></label>
+        <label>Tooltip Fitur 2</label>
         <name>ANG_ISSP_ProductComparisonFeature2Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature3 --></label>
+        <label>Tunai</label>
         <name>ANG_ISSP_ProductComparisonFeature3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature3Tooltip --></label>
+        <label>Tooltip Fitur 3</label>
         <name>ANG_ISSP_ProductComparisonFeature3Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature4 --></label>
+        <label>Kapasitas Pengiriman Remitansi</label>
         <name>ANG_ISSP_ProductComparisonFeature4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature4Tooltip --></label>
+        <label>Tooltip Fitur 4</label>
         <name>ANG_ISSP_ProductComparisonFeature4Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature5 --></label>
+        <label>Penilaian Keuangan Tahunan</label>
         <name>ANG_ISSP_ProductComparisonFeature5</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature5Tooltip --></label>
+        <label>Tooltip Fitur 5</label>
         <name>ANG_ISSP_ProductComparisonFeature5Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature6 --></label>
+        <label>Penilaian Induk Triwulanan</label>
         <name>ANG_ISSP_ProductComparisonFeature6</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature6Tooltip --></label>
+        <label>Tooltip Fitur 6</label>
         <name>ANG_ISSP_ProductComparisonFeature6Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature7 --></label>
+        <label>Asuransi Chargeback</label>
         <name>ANG_ISSP_ProductComparisonFeature7</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature7Tooltip --></label>
+        <label>Tooltip Fitur 7</label>
         <name>ANG_ISSP_ProductComparisonFeature7Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature8 --></label>
+        <label>Keamanan Keuangan/Asuransi Default</label>
         <name>ANG_ISSP_ProductComparisonFeature8</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature8Tooltip --></label>
+        <label>Tooltip Fitur 8</label>
         <name>ANG_ISSP_ProductComparisonFeature8Tooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature9 --></label>
+        <label>Jaminan Induk Tergabung dalam PSAA</label>
         <name>ANG_ISSP_ProductComparisonFeature9</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonFeature9Tooltip --></label>
+        <label>Tooltip Fitur 9</label>
         <name>ANG_ISSP_ProductComparisonFeature9Tooltip</name>
     </customLabels>
     <customLabels>
@@ -1037,15 +1037,15 @@
         <name>ANG_ISSP_ProductComparisonLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonTitle1 --></label>
+        <label>Akreditasi Agen Online IATA</label>
         <name>ANG_ISSP_ProductComparisonTitle1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonTitle2 --></label>
+        <label>Perbandingan Tipe Akreditasi Biro Perjalanan</label>
         <name>ANG_ISSP_ProductComparisonTitle2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductComparisonViewHere --></label>
+        <label>Lihat di sini</label>
         <name>ANG_ISSP_ProductComparisonViewHere</name>
     </customLabels>
     <customLabels>
@@ -1057,7 +1057,7 @@
         <name>ANG_ISSP_ProductIATAEasyPayTransactions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_ProductMulticountry --></label>
+        <label>Multi-negara</label>
         <name>ANG_ISSP_ProductMulticountry</name>
     </customLabels>
     <customLabels>
@@ -1093,7 +1093,7 @@
         <name>ANG_ISSP_ProgressBarNode6</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH AccessEasyPay --></label>
+        <label>Akses ke Akun IATA EasyPay Anda</label>
         <name>ANG_ISSP_REH_AccessEasyPay</name>
     </customLabels>
     <customLabels>
@@ -1101,59 +1101,59 @@
         <name>ANG_ISSP_REH_DateAssigned</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH DateIssued --></label>
+        <label>Tanggal Penerbitan</label>
         <name>ANG_ISSP_REH_DateIssued</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP REH RiskDescription --></label>
+        <label>Deskripsi Risiko</label>
         <name>ANG_ISSP_REH_RiskDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RHC Information --></label>
+        <label>Informasi RHS</label>
         <name>ANG_ISSP_RHC_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC - Request Balance Update --></label>
+        <label>Minta Update Saldo</label>
         <name>ANG_ISSP_RHC_Request_Balance_Update</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RHC Request ICE --></label>
+        <label>&quot;Untuk melihat tanggal pembayaran &amp;amp; pengiriman uang yang akan datang&lt;br/&gt;&lt;a href=&quot;&quot;/ISSP_AvailableServices?MainNav=Services&amp;subNav=Access&amp;mid=M3S1&quot;&quot;&gt; Minta akses ke ICE - E-Statement Pelanggan IATA &lt;/a&gt;&quot;</label>
         <name>ANG_ISSP_RHC_Request_ICE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Cash Conditions --></label>
+        <label>Ketentuan Tunai</label>
         <name>ANG_ISSP_RP_Cash_Conditions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Financial Review --></label>
+        <label>Tinjauan Keuangan</label>
         <name>ANG_ISSP_RP_Financial_Review</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG ISSP RP Risk History --></label>
+        <label>Riwayat Risiko</label>
         <name>ANG_ISSP_RP_Risk_History</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_Request_Access_IATA_EasyPay --></label>
+        <label>Minta akses ke IATA EasyPay</label>
         <name>ANG_ISSP_Request_Access_IATA_EasyPay</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_SelectContacts --></label>
+        <label>Pilih satu kontak atau lebih</label>
         <name>ANG_ISSP_SelectContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_TypeAccreditadionQuestion --></label>
+        <label>Saya ingin mengajukan permohonan untuk akreditasi sebagai:</label>
         <name>ANG_ISSP_TypeAccreditadionQuestion</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_UserProvisioningError --></label>
+        <label>Maaf, ada masalah menyiapkan akses IATA EasyPay Anda. Coba lagi dan jika masalah berlanjut, hubungi bagian Dukungan Pelanggan</label>
         <name>ANG_ISSP_UserProvisioningError</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_UserProvisioningWait --></label>
+        <label>Harap tunggu. Anda akan diarahkan ke Portal EasyPay dalam beberapa saat.</label>
         <name>ANG_ISSP_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_ISSP_e_mail_address --></label>
+        <label>Alamat email</label>
         <name>ANG_ISSP_e_mail_address</name>
     </customLabels>
     <customLabels>
@@ -1213,15 +1213,15 @@
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_VR_SELECTED_CODES --></label>
+        <label>Anda meminta pelepasan sukarela Kode IATA berikut:</label>
         <name>ANG_VR_SELECTED_CODES</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Voluntary_Relinquishment_to_NOC --></label>
+        <label>&quot;Kirimkan &lt;a href=&quot;&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt; Pemberitahuan Perubahan &lt;/a&gt; jika Anda ingin melepaskan Entitas Induk Biro Anda saja&quot;</label>
         <name>ANG_Voluntary_Relinquishment_to_NOC</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_Voluntary_Relinquishment_to_NOC_Legacy --></label>
+        <label>&quot;Kirimkan &lt;a href=&quot;&quot;/ISSP_AMS_Accreditation?isNoticeOfChange=true&amp;isBankAccountChange=false&amp;retUrl=/ISSP_HomePage&quot;&quot;&gt; Pemberitahuan Perubahan &lt;/a&gt; jika Anda ingin melepaskan Kantor Pusat Biro Anda saja&quot;</label>
         <name>ANG_Voluntary_Relinquishment_to_NOC_Legacy</name>
     </customLabels>
     <customLabels>
@@ -1239,6 +1239,10 @@
     <customLabels>
         <label><!-- Acceptance date --></label>
         <name>Acceptance_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account --></label>
+        <name>Account</name>
     </customLabels>
     <customLabels>
         <label><!-- Account Invoicing Collection Cases Report ID --></label>
@@ -1263,6 +1267,14 @@
     <customLabels>
         <label><!-- AddToCart --></label>
         <name>AddToCart</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add an attachment --></label>
+        <name>Add_an_attachment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add_attachment_Action --></label>
+        <name>Add_attachment_Action</name>
     </customLabels>
     <customLabels>
         <label><!-- Add campaign member error --></label>
@@ -1510,6 +1522,10 @@
     <customLabels>
         <label><!-- Button View all --></label>
         <name>Button_View_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Buy Now --></label>
+        <name>BuyNow</name>
     </customLabels>
     <customLabels>
         <label>Layanan ini memfasilitasi interaksi dan pertukaran informasi antara perantara kargo/agen serta maskapai yang berpartisipasi dalam Skema Tagihan dan Penyelesaian (BSP) IATA.</label>
@@ -2150,6 +2166,14 @@
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Documents POP --></label>
+        <name>Documents_POP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Done --></label>
+        <name>Done</name>
     </customLabels>
     <customLabels>
         <label><!-- Download Invoice --></label>
@@ -3414,6 +3438,10 @@
     <customLabels>
         <label><!-- ICCS will replace Label --></label>
         <name>ICCS_will_replace_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICE_POP_Sidra_Msg --></label>
+        <name>ICE_POP_Sidra_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- ICE Portal Service --></label>
@@ -5565,7 +5593,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_ACCR_Submit_Msg_CargoHO</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS AE NoC Change for --></label>
+        <label>Perubahan rincian bank untuk</label>
         <name>ISSP_AMS_AE_NoC_Change_for</name>
     </customLabels>
     <customLabels>
@@ -5573,7 +5601,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Accept_TOS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Add Company --></label>
+        <label>Tambahkan Perusahaan</label>
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
@@ -5589,7 +5617,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Add_Manager</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS  Add Person --></label>
+        <label>Tambahkan Orang</label>
         <name>ISSP_AMS_Add_Person</name>
     </customLabels>
     <customLabels>
@@ -5597,7 +5625,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Additional_Data</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Address --></label>
+        <label>Alamat:</label>
         <name>ISSP_AMS_Address</name>
     </customLabels>
     <customLabels>
@@ -5637,11 +5665,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Apply_New_Travel_Head_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Associate Entity Cash --></label>
+        <label>Entitas Asosiasi Baru - GoStandard</label>
         <name>ISSP_AMS_Associate_Entity_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <label>Entitas Asosiasi Baru - GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
     </customLabels>
     <customLabels>
@@ -5765,7 +5793,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4 --></label>
+        <label>Tanggal Kedaluwarsa</label>
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION5_header4</name>
     </customLabels>
     <customLabels>
@@ -5993,15 +6021,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM CANCEL --></label>
+        <label>Apakah yakin ingin dibatalkan?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM DELETE --></label>
+        <label>Yakin ingin menghapus data ini?</label>
         <name>ISSP_AMS_CONFIRM_DELETE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS CONFIRM DISCARD --></label>
+        <label>Apakah yakin pembaruan ini akan dibuang?</label>
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
@@ -6225,11 +6253,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Case_PDF_Download</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Cases Notify IATA Changes Error --></label>
+        <label>Hanya pengguna dari Entitas Induk Biro dapat memberitahu IATA mengenai perubahan.</label>
         <name>ISSP_AMS_Cases_Notify_IATA_Changes_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS City --></label>
+        <label>Kota:</label>
         <name>ISSP_AMS_City</name>
     </customLabels>
     <customLabels>
@@ -6241,11 +6269,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Click_here</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Compare Accreditation Types --></label>
+        <label>Bandingkan Tipe Akreditasi</label>
         <name>ISSP_AMS_Compare_Accreditation_Types</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Compare Accreditation Types in RHC page --></label>
+        <label>Klik di sini untuk membandingkan Tipe Akreditasi</label>
         <name>ISSP_AMS_Compare_Accreditation_Types_RHC</name>
     </customLabels>
     <customLabels>
@@ -6273,11 +6301,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Create_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Director --></label>
+        <label>Direktur/Pejabat</label>
         <name>ISSP_AMS_Director</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Director --></label>
+        <label>Petugas Direktur</label>
         <name>ISSP_AMS_Director_NG</name>
     </customLabels>
     <customLabels>
@@ -6561,7 +6589,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Fin_Contact</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Financial Interest --></label>
+        <label>Keuangan&lt;br/&gt;Bunga(%)</label>
         <name>ISSP_AMS_Financial_Interest</name>
     </customLabels>
     <customLabels>
@@ -6569,7 +6597,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_First_8_Digits</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_First_Name_Chinese --></label>
+        <label>Nama Depan (Mandarin)</label>
         <name>ISSP_AMS_First_Name_Chinese</name>
     </customLabels>
     <customLabels>
@@ -6605,11 +6633,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Gross_Amnt_Second_year</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Head Entity Cash --></label>
+        <label>Entitas Induk Baru - GoStandard</label>
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Head Entity No Cash --></label>
+        <label>Entitas Induk Baru - GoLite</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
     <customLabels>
@@ -6649,7 +6677,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS IS Separate Entity Null --></label>
+        <label>Silakan pilih jika Entitas Asosiasi merupakan Entitas Hukum terpisah.</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
@@ -6677,7 +6705,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Invalid_IATAN_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Invalid IATA Code --></label>
+        <label>Kode IATA tidak valid: Masukkan kode yang valid.</label>
         <name>ISSP_AMS_Invalid_IATA_Code</name>
     </customLabels>
     <customLabels>
@@ -6745,7 +6773,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_LS_Trust_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Last_Name_Chinese --></label>
+        <label>Nama Belakang (Mandarin)</label>
         <name>ISSP_AMS_Last_Name_Chinese</name>
     </customLabels>
     <customLabels>
@@ -6873,7 +6901,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Loading_Agency_details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Loading Contact --></label>
+        <label>Memuat detail Kontak…</label>
         <name>ISSP_AMS_Loading_Contact</name>
     </customLabels>
     <customLabels>
@@ -6881,11 +6909,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Local_Details_Change_Please_Enter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Company Name ENG --></label>
+        <label>Nama Perusahaan (bahasa Inggris)</label>
         <name>ISSP_AMS_Local_Details_Company_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Company Name Local --></label>
+        <label>Nama Perusahaan (Bahasa lokal)</label>
         <name>ISSP_AMS_Local_Details_Company_Name_Local</name>
     </customLabels>
     <customLabels>
@@ -6897,19 +6925,19 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Local_Details_Correspondence_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details First Name ENG --></label>
+        <label>Nama Depan (bahasa Inggris)</label>
         <name>ISSP_AMS_Local_Details_First_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details First Name Local --></label>
+        <label>Nama Depan (bahasa Lokal)</label>
         <name>ISSP_AMS_Local_Details_First_Name_Local</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Last Name ENG --></label>
+        <label>Nama Belakang (bahasa Inggris)</label>
         <name>ISSP_AMS_Local_Details_Last_Name_ENG</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details Last Name Local --></label>
+        <label>Nama Belakang (bahasa Lokal)</label>
         <name>ISSP_AMS_Local_Details_Last_Name_Local</name>
     </customLabels>
     <customLabels>
@@ -6925,15 +6953,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Local_Details_No_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local CompanyName --></label>
+        <label>Tidak ada nama Perusahaan dalam bahasa Lokal? Masukkan nama dalam karakter Latin</label>
         <name>ISSP_AMS_Local_Details_No_Local_CompanyName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local FirstName --></label>
+        <label>Tidak Ada Nama Lokal? Masukkan kembali Nama Depan dalam Karakter Latin</label>
         <name>ISSP_AMS_Local_Details_No_Local_FirstName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Local Details No Local LastName --></label>
+        <label>Tidak Ada Nama Lokal? Masukkan kembali Nama Belakang dalam karakter Latin</label>
         <name>ISSP_AMS_Local_Details_No_Local_LastName</name>
     </customLabels>
     <customLabels>
@@ -7053,7 +7081,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_MSO_GSA_GSA_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_MSO_GSA_IATA_Code --></label>
+        <label>Kode</label>
         <name>ISSP_AMS_MSO_GSA_IATA_Code</name>
     </customLabels>
     <customLabels>
@@ -7165,7 +7193,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_MSO_Update_Request_Successfull</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Manager --></label>
+        <label>Manajer</label>
         <name>ISSP_AMS_Manager</name>
     </customLabels>
     <customLabels>
@@ -7173,39 +7201,39 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Means_Agency_Identified</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_April --></label>
+        <label>April</label>
         <name>ISSP_AMS_Month_April</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_August --></label>
+        <label>Agustus</label>
         <name>ISSP_AMS_Month_August</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_December --></label>
+        <label>Desember</label>
         <name>ISSP_AMS_Month_December</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_February --></label>
+        <label>Februari</label>
         <name>ISSP_AMS_Month_February</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_January --></label>
+        <label>Januari</label>
         <name>ISSP_AMS_Month_January</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_July --></label>
+        <label>Juli</label>
         <name>ISSP_AMS_Month_July</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_June --></label>
+        <label>Juni</label>
         <name>ISSP_AMS_Month_June</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_March --></label>
+        <label>Maret</label>
         <name>ISSP_AMS_Month_March</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_May --></label>
+        <label>Mei</label>
         <name>ISSP_AMS_Month_May</name>
     </customLabels>
     <customLabels>
@@ -7213,15 +7241,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Month_None</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_November --></label>
+        <label>November</label>
         <name>ISSP_AMS_Month_November</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_October --></label>
+        <label>Oktober</label>
         <name>ISSP_AMS_Month_October</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_September --></label>
+        <label>September</label>
         <name>ISSP_AMS_Month_September</name>
     </customLabels>
     <customLabels>
@@ -7253,15 +7281,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NOC_StepD_ProgressBar_CNS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Companies --></label>
+        <label>Perbarui Kepemilikan - Perusahaan</label>
         <name>ISSP_AMS_NOC_Updated_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Legal Status --></label>
+        <label>Perbarui Status Legal</label>
         <name>ISSP_AMS_NOC_Updated_Legal_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NOC Updated Owners Managers --></label>
+        <label>Pemilik/Pejabat/Direktur yang Diperbarui - Individu</label>
         <name>ISSP_AMS_NOC_Updated_Owners_Managers</name>
     </customLabels>
     <customLabels>
@@ -7297,7 +7325,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_Agency_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Associate Entity --></label>
+        <label>Entitas Asosiasi, kecuali Entitas Induk</label>
         <name>ISSP_AMS_NoC_Associate_Entity</name>
     </customLabels>
     <customLabels>
@@ -7381,7 +7409,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_Change_submitted_for</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Choose Associate Entities --></label>
+        <label>Entitas Asosiasi Terakreditasi</label>
         <name>ISSP_AMS_NoC_Choose_Associate_Entities</name>
     </customLabels>
     <customLabels>
@@ -7389,7 +7417,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_Choose_Branch_Account</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Confirm_Ownership_details --></label>
+        <label>Pastikan Tipe badan hukum dan detail Kepemilikan sudah benar</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
     </customLabels>
     <customLabels>
@@ -7405,7 +7433,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_Current_Accreditation_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Current_Companies --></label>
+        <label>Pemilik Sekarang - Perusahaan</label>
         <name>ISSP_AMS_NoC_Current_Companies</name>
     </customLabels>
     <customLabels>
@@ -7417,7 +7445,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_Current_Owner</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Current_Owners_Managers --></label>
+        <label>Pemilik Sekarang - Individu</label>
         <name>ISSP_AMS_NoC_Current_Owners_Managers</name>
     </customLabels>
     <customLabels>
@@ -7429,11 +7457,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_Direct_Debit_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC HE All Branches --></label>
+        <label>&quot;Entitas Induk &amp;amp; Semua Entitas Asosiasi&quot;</label>
         <name>ISSP_AMS_NoC_HE_All_Branches</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC HE Some Branches --></label>
+        <label>&quot;Entitas Induk &amp;amp; satu Entitas Asosiasi atau lebih&quot;</label>
         <name>ISSP_AMS_NoC_HE_Some_Branches</name>
     </customLabels>
     <customLabels>
@@ -7445,7 +7473,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_HO_Some_Branches</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC Head Entity --></label>
+        <label>Entitas Induk</label>
         <name>ISSP_AMS_NoC_Head_Entity</name>
     </customLabels>
     <customLabels>
@@ -7525,15 +7553,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_No_Company_Owners</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC No Company Owners New --></label>
+        <label>Tidak ada perusahaan yang terdaftar sebagai pemilik Perusahaan Anda yang sekarang.</label>
         <name>ISSP_AMS_NoC_No_Company_Owners_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Non_IATA_Owner_Estimates --></label>
+        <label>Estimasikan jumlah kotor penjualan transportasi udara internasional dari maskapai IATA:</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Non_IATA_Owner_Title --></label>
+        <label>&quot;Jika pemilik baru adalah perusahaan yang tidak terakreditasi IATA, silakan:&quot;</label>
         <name>ISSP_AMS_NoC_Non_IATA_Owner_Title</name>
     </customLabels>
     <customLabels>
@@ -7545,7 +7573,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_Online_Agency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Other_Owner --></label>
+        <label>&quot;Jika agensi perjalanan Anda dimiliki satu organisasi selain kantor pusat, jawab pertanyaan berikut terkait organisasi induk&quot;</label>
         <name>ISSP_AMS_NoC_Other_Owner</name>
     </customLabels>
     <customLabels>
@@ -7577,7 +7605,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_Previous_Owners_Managers</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_NoC_Provide_Registeration_Or_License --></label>
+        <label>&quot;Jika pendaftaran dan/atau lisensi diwajibkan oleh hukum di negara Anda, berikan informasi berikut setelah perubahan/di bawah kepemilikan yang baru&quot;</label>
         <name>ISSP_AMS_NoC_Provide_Registeration_Or_License</name>
     </customLabels>
     <customLabels>
@@ -7601,7 +7629,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_NoC_Q3_Contact_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_NoC_Q4 --></label>
+        <label>* Apakah salah seorang pemilik, pejabat (direktur), manajer yang baru dari individu yang berwenang untuk bertindak atau menandatangani atas nama perusahaan tersebut terlibat dalam kepailitan atau dinyatakan bersalah atas pelanggaran disengaja dari kewajiban fidusia selama berjalannya proses bisnis atau wanprestasi?</label>
         <name>ISSP_AMS_NoC_Q4</name>
     </customLabels>
     <customLabels>
@@ -7797,7 +7825,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Noc_Type_of_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Not Listed Msg --></label>
+        <label>&quot;Sebagai Organisasi yang sahamnya tidak terdaftar, Anda wajib memasukkan semua detail pemegang saham di bagian Orang dan Perusahaan di bawah ini.&quot;</label>
         <name>ISSP_AMS_Not_Listed_Msg</name>
     </customLabels>
     <customLabels>
@@ -7881,7 +7909,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Office_Full_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Owner --></label>
+        <label>Pemilik</label>
         <name>ISSP_AMS_Owner</name>
     </customLabels>
     <customLabels>
@@ -7913,7 +7941,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_PDF_Page</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Partner --></label>
+        <label>Mitra</label>
         <name>ISSP_AMS_Partner</name>
     </customLabels>
     <customLabels>
@@ -7945,7 +7973,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Position</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS PostCode --></label>
+        <label>Kode Pos</label>
         <name>ISSP_AMS_PostCode</name>
     </customLabels>
     <customLabels>
@@ -8045,7 +8073,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Section_2_SubSection_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Selected Associate Entities --></label>
+        <label>* Entitas Asosiasi yang Dipilih</label>
         <name>ISSP_AMS_Selected_Associate_Entities</name>
     </customLabels>
     <customLabels>
@@ -8053,7 +8081,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Selected_Branch_Offices</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Shareholder --></label>
+        <label>Pemegang Saham</label>
         <name>ISSP_AMS_Shareholder</name>
     </customLabels>
     <customLabels>
@@ -8129,7 +8157,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step0_Intro_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <label>&quot;Perubahan kecil pada Agensi Anda misalnya Nomor telepon, Alamat email, dll. dapat dilakukan langsung dari halaman &lt;a href=&quot;&quot;/ISSP_CompanyInformation?mid=M5S2&quot;&quot; target=&quot;&quot;_self&quot;&quot;&gt;Informasi Perusahaan&lt;/a&gt;.&quot;</label>
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
@@ -8193,7 +8221,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step1_Approval_Sought</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step1_Approval_Sought_Cash/Cashless --></label>
+        <label>Tipe Akreditasi yang diminta</label>
         <name>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</name>
     </customLabels>
     <customLabels>
@@ -8233,7 +8261,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step1_Operation_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step1_PCI --></label>
+        <label>A. Pilihan Kode IATA</label>
         <name>ISSP_AMS_Step1_PCI</name>
     </customLabels>
     <customLabels>
@@ -8241,7 +8269,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step1_ProgressBar</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step1 ProgressBar New --></label>
+        <label>&quot;A. Pilih Jenis &amp;amp; Lokasi Operasi&quot;</label>
         <name>ISSP_AMS_Step1_ProgressBar_New</name>
     </customLabels>
     <customLabels>
@@ -8265,7 +8293,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step2 Check List --></label>
+        <label>Periksa Daftar untuk</label>
         <name>ISSP_AMS_Step2_Check_List</name>
     </customLabels>
     <customLabels>
@@ -8273,7 +8301,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step2_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step2_PCI --></label>
+        <label>B. Unggah File</label>
         <name>ISSP_AMS_Step2_PCI</name>
     </customLabels>
     <customLabels>
@@ -8357,7 +8385,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step3_4_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 4 Companies New --></label>
+        <label>Jika perusahaan seluruhnya atau sebagian dimiliki oleh satu atau beberapa perusahaan, masukkan detail di bawah ini (kecuali apabila organisasi Anda adalah entitas hukum yang sahamnya terdaftar di bursa saham atau secara berkala diperdagangkan di pasar ‘di luar bursa’).</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
     </customLabels>
     <customLabels>
@@ -8517,7 +8545,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step3_4_Q9</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step3_5_Event_of_inspection --></label>
+        <label>&quot;Apabila terdapat pemeriksaan, Pemohon diwajibkan untuk memberikan bukti bahwa telah memenuhi persyaratan keamanan untuk penerbitan Tiket Elektronik, sesuai dengan ketentuan bagian 8, dan khususnya Standar Keamanan Data Industri Kartu Pembayaran (PCI) sebagaimana disebutkan dalam Resolusi 890 bagian 2.1.6.&quot;</label>
         <name>ISSP_AMS_Step3_5_Event_of_inspection</name>
     </customLabels>
     <customLabels>
@@ -8689,7 +8717,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 Office FullAddress --></label>
+        <label>Alamat Lengkap Kantor  yang menjadi tempat persetujuan aplikasi</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
     <customLabels>
@@ -8709,7 +8737,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Step3_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 PersonModal CheckBoxes --></label>
+        <label>&quot;Centang kotak untuk menyatakan peran orang yang Anda tambahkan, lalu masukkan detailnya. Jika orang tersebut tidak mempunyai peran apa pun, tidak perlu dicentang dan masukkan detailnya.&quot;</label>
         <name>ISSP_AMS_Step3_PersonModal_CheckBoxes</name>
     </customLabels>
     <customLabels>
@@ -8845,7 +8873,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_StepsAll_Travel_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Street --></label>
+        <label>Jalan &amp; No.</label>
         <name>ISSP_AMS_Street</name>
     </customLabels>
     <customLabels>
@@ -8853,7 +8881,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_AMS_Submit_CNS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Submit IATA --></label>
+        <label>Kirim ke IATA</label>
         <name>ISSP_AMS_Submit_IATA</name>
     </customLabels>
     <customLabels>
@@ -9301,51 +9329,51 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_ANG_PCI_Process_Notification_Mail_Body</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Accreditation - Annual Revalidation --></label>
+        <label>Akreditasi IATA - Validasi Tahunan</label>
         <name>ISSP_ANG_ANNUAL_REVALIDATION</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION --></label>
+        <label>Informasi Lainnya</label>
         <name>ISSP_ANG_ANNUAL_REV_ADDITIONAL_INFORMATION</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation cancel update button --></label>
+        <label>Buang Pembaruan</label>
         <name>ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation confirm button --></label>
+        <label>Konfirmasikan jika detail sudah benar</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation confirm update button --></label>
+        <label>Konfirmasikan Pembaruan</label>
         <name>ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding --></label>
+        <label>Kepemilikan/Pemegang Saham dan Status Legal Agensi</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_Ownership_Shareholding</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name --></label>
+        <label>Detail Hukum Agensi</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_of_Legal_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Change_of_Location --></label>
+        <label>Lokasi Agensi</label>
         <name>ISSP_ANG_ANNUAL_REV_Change_of_Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation discard button --></label>
+        <label>Buang</label>
         <name>ISSP_ANG_ANNUAL_REV_DISCARD_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS --></label>
+        <label>Masukkan detail kepemilikan yang baru di bawah ini</label>
         <name>ISSP_ANG_ANNUAL_REV_ENTER_OWNER_DETAILS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_1 --></label>
+        <label>Perlu mengonfirmasi detail dan memberi tahu minimal satu perubahan</label>
         <name>ISSP_ANG_ANNUAL_REV_ERROR_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_ERROR_2 --></label>
+        <label>Diharuskan setidaknya memilih satu perubahan</label>
         <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
     </customLabels>
     <customLabels>
@@ -9361,27 +9389,27 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Q2 --></label>
+        <label>* Apakah perusahaan Anda memiliki hubungan langsung atau tidak langsung dengan organisasi yang memegang penunjukan GSA dari anggota?</label>
         <name>ISSP_ANG_ANNUAL_REV_Q2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_Q3 --></label>
+        <label>* Mohon konfirmasikan GDS manakah yang digunakan di perusahaan Anda?</label>
         <name>ISSP_ANG_ANNUAL_REV_Q3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation save changes button --></label>
+        <label>Simpan Perubahan</label>
         <name>ISSP_ANG_ANNUAL_REV_SAVE_CHANGES_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW --></label>
+        <label>Pastikan bahwa detail Agensi sudah dikonfirmasi atau diperbarui untuk setiap Kode IATA di hierarki Anda.</label>
         <name>ISSP_ANG_ANNUAL_REV_SUBMIT_NOT_ALLOW</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual revalidation update button --></label>
+        <label>Perbarui detail</label>
         <name>ISSP_ANG_ANNUAL_REV_UPDATE_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation work area title --></label>
+        <label>Silakan konfirmasi atau perbarui detail untuk setiap Kode IATA di hierarki Anda</label>
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
@@ -9389,23 +9417,23 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation confirmed status --></label>
+        <label>Konfirmasi Detail</label>
         <name>ISSP_ANG_ANNUAL_STATUS_CONFIRMED</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation open status --></label>
+        <label>Belum Dimulai</label>
         <name>ISSP_ANG_ANNUAL_STATUS_OPEN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation update completed status --></label>
+        <label>Pembaruan Selesai</label>
         <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_COMPLETED</name>
     </customLabels>
     <customLabels>
-        <label><!-- Annual Revalidation update in progress status --></label>
+        <label>Pembaruan Sedang Berlangsung</label>
         <name>ISSP_ANG_ANNUAL_STATUS_UPDATE_PROGRESS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Validation status label --></label>
+        <label>Status Validasi :</label>
         <name>ISSP_ANG_ANNUAL_VAL_STATUS</name>
     </customLabels>
     <customLabels>
@@ -9417,11 +9445,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_AccreditationsAndChangesDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Assoc_Entity --></label>
+        <label>Entitas Asosiasi Baru</label>
         <name>ISSP_ANG_Assoc_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Authorized_Signatory --></label>
+        <label>Hanya Penandatangan Sah yang dapat memberi tahu IATA tentang penutupan kantor. Anda bisa menetapkan Penandatangan Sah Biro Anda di halaman &apos;Administrasi Perusahaan -&gt; bagian Kontak&apos;.</label>
         <name>ISSP_ANG_Authorized_Signatory</name>
     </customLabels>
     <customLabels>
@@ -9445,47 +9473,47 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_CODE_SEARCH_SA</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Click_Here_PCI --></label>
+        <label>Klik di sini untuk melanjutkan dengan Kepatuhan PCI</label>
         <name>ISSP_ANG_Click_Here_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Click_Here_VR --></label>
+        <label>Klik di sini untuk melanjutkan dengan Pelepasan Sukarela</label>
         <name>ISSP_ANG_Click_Here_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Country_Req --></label>
+        <label>Lihat Persyaratan Negara</label>
         <name>ISSP_ANG_Country_Req</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ENTIRE_HIERARCHY --></label>
+        <label>Seluruh Hierarki</label>
         <name>ISSP_ANG_ENTIRE_HIERARCHY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Effective_Date_Not_Past --></label>
+        <label>Tanggal Efektif tidak bisa pada masa lalu.</label>
         <name>ISSP_ANG_Effective_Date_Not_Past</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Effective_Date_Of_Change --></label>
+        <label>Pilih Tanggal Efektif yang bukan pada masa lalu.</label>
         <name>ISSP_ANG_Effective_Date_Of_Change</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email AE Subject --></label>
+        <label>Permohonan Draf Entitas Asosiasi Akreditasi Biro</label>
         <name>ISSP_ANG_Email_AE_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email HE Cash Subject --></label>
+        <label>Permohonan Draf GoStandard Entitas Induk Akreditasi Biro</label>
         <name>ISSP_ANG_Email_HE_Cash_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP ANG Email HE Cashless Subject --></label>
+        <label>Permohonan Draf GoLite Entitas Induk Akreditasi Biro</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Enabel_Credit_Card_Codes --></label>
+        <label>Aktifkan Metode Pembayaran Kartu Kredit untuk Kode</label>
         <name>ISSP_ANG_Enabel_Credit_Card_Codes</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_FoP_Management --></label>
+        <label>Manajemen Bentuk Pembayaran</label>
         <name>ISSP_ANG_FoP_Management</name>
     </customLabels>
     <customLabels>
@@ -9493,11 +9521,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_GenericError</name>
     </customLabels>
     <customLabels>
-        <label><!-- Link to the IATAs CheckACode page --></label>
+        <label>Silakan merujuk ke layanan &lt;a target=&quot;_blank&quot; href=&quot;https://customer-portal-iata.force.com/iec/ieccacfree&quot;&gt;CheckACode&lt;/a&gt; berbayar kami jika Anda membutuhkan detail kontak untuk agensi mana saja.</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_CHECK_A_CODE_LINK</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION --></label>
+        <label>Layanan ini memudahkan Anda mencari Agen Perjalanan dan Kargo di BSP/CASS yang diikuti Maskapai Anda. Cukup ketik kode IATA di kolom cari  untuk melihat rincian informasi terkait risiko seperti metode pembayaran</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
     </customLabels>
     <customLabels>
@@ -9505,7 +9533,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</name>
     </customLabels>
     <customLabels>
-        <label><!-- Financial Security Exists --></label>
+        <label>Ada Jaminan Keuangan</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
@@ -9513,23 +9541,23 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
-        <label><!-- He message --></label>
+        <label>Kode IATA &lt;strong&gt;%IATA_CODE%&lt;/strong&gt; adalah untuk %CHILD_LOCATION%. Detail %PARENT_LOCATION% adalah sebagai berikut</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Code (HO / HE) --></label>
+        <label>Kode IATA (HO / HE)</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_IATA_CODE_HO_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- An invalid iata code was inputed in the search --></label>
+        <label>Anda telah memasukkan Kode IATA yang salah. Format yang diterima adalah 7 atau 8 digit untuk Agen Perjalanan dan 10 hingga 11 digit untuk Kargo.</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_INVALID</name>
     </customLabels>
     <customLabels>
-        <label><!-- The entered IATA code does not exists --></label>
+        <label>Tidak ada Agensi %TYPE% untuk Kode IATA ini</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_NOTHING_FOUND</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_RHC --></label>
+        <label>Remittance Holding Capacity setara dengan Jaminan Keuangan</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_RHC</name>
     </customLabels>
     <customLabels>
@@ -9541,19 +9569,19 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY --></label>
+        <label>Jaminan Keuangan yang Valid</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_VALID_FINANCIAL_SECURITY</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_TO_PROVIDE --></label>
+        <label>Pilih Kode IATA di mana bukti Kepatuhan PCI disediakan:</label>
         <name>ISSP_ANG_IATA_CODE_TO_PROVIDE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Iata_Codes_Relinquish --></label>
+        <label>Kode IATA untuk dilepaskan</label>
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Least_One_Branch --></label>
+        <label>Pilih setidaknya satu Kantor Cabang</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
@@ -9577,95 +9605,95 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_MustAddUsersToService</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ONE_OR_MORE_AE --></label>
+        <label>Satu Entitas Asosiasi atau lebih</label>
         <name>ISSP_ANG_ONE_OR_MORE_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_AE --></label>
+        <label>Penjualan Penumpang IATA - Entitas Asosiasi</label>
         <name>ISSP_ANG_OPTION_PAX_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_HE_lite --></label>
+        <label>Penjualan Penumpang IATA</label>
         <name>ISSP_ANG_OPTION_PAX_HE_lite</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OPTION_PAX_HE_standard --></label>
+        <label>Penjualan Penumpang IATA</label>
         <name>ISSP_ANG_OPTION_PAX_HE_standard</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is both IFAP and admin --></label>
+        <label>&quot;Sesuai dengan data kami, Anda terdaftar sebagai Kontak IFAP untuk agensi Anda. Jika ini masih berlaku, silakan lanjutkan untuk memilih proses Tinjauan Keuangan, atau tugaskan personel yang benar sebagai kontak IFAP di halaman &lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informasi Perusahaan&lt;/a&gt; dan lanjutkan dengan permintaan ini.&quot;</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is both IFAP and regular user --></label>
+        <label>&quot;Sesuai dengan data kami, Anda terdaftar sebagai Kontak IFAP untuk agensi Anda. Jika ini masih berlaku, silakan lanjutkan untuk memilih proses Tinjauan Keuangan, atau minta Portal Administrator untuk menunjuk orang yang tepat sebagai kontak IFAP dan lanjutkan permintaan layanan ini.&quot;</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is not IFAP nut is a portal admin --></label>
+        <label>&quot;Hanya Kontak user IFAP Agensi Anda yang dapat memilih proses Tinjauan Keuangan ini. Anda dapat melihat Kontak IFAP ini di halaman&lt;a href=&apos;/ISSP_CompanyInformation?mid=M5S2&apos;;&gt;Informasi Perusahaan&lt;/a&gt;, tempat Anda dapat menugaskan orang yang tepat jika diperlukan, sebelum meminta mereka menindaklanjuti permintaan ini.&quot;</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_3</name>
     </customLabels>
     <customLabels>
-        <label><!-- Message that appears when the portal user is neither IFAP or portal admin --></label>
+        <label>&quot;Hanya Kontak IFAP dari Agensi Anda yang bisa meminta proses Tinjauan Keuangan. Jika Anda menjabat peran ini di dalam Agensi Anda, hubungi Administrator Portal untuk menunujuk Anda sebagai Kontak IFAP sehingga Anda dapat menindaklanjuti permintaan ini.&quot;</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_MESSAGE_4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-in of Financial Review button label --></label>
+        <label>Permintaan untuk mendapatkan Tinjauan Keuangan</label>
         <name>ISSP_ANG_OPT_IN_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-in of Financial Review modal --></label>
+        <label>Permintaan untuk mendapatkan Tinjauan Keuangan</label>
         <name>ISSP_ANG_OPT_IN_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Success messagem on opt-in --></label>
+        <label>Terima kasih telah meminta Berlangganan proses Tinjauan Keuangan. IATA akan segera menghubungi Anda terkait permintaan ini.</label>
         <name>ISSP_ANG_OPT_IN_SUCCESS_MESSAGE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Opt-out of Financial Review button label --></label>
+        <label>Permintaan Keluar dari Tinjauan Keuangan</label>
         <name>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirmation text in the modal window to opt out the financial review --></label>
+        <label>Agen GoStandard yang Jaminan Keuangannya berlaku di IATA dapat memilih untuk tidak mengikuti Review Keuangan Tahunan. Dalam hal ini , Agen akan diberi Remittance Holding Capacity setara dengan jumlah penjaminan yang diberikan.</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</name>
     </customLabels>
     <customLabels>
-        <label><!-- Title in the modal window to opt out the financial review --></label>
+        <label>Permintaan Keluar dari Tinjauan Keuangan</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error message when the contact is not an IFAP contact --></label>
+        <label>Hanya Kontak IFAP Agensi Anda yang dapat meminta keluar dari Tinjauan Keuangan</label>
         <name>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</name>
     </customLabels>
     <customLabels>
-        <label><!-- Success messagem on opt-out --></label>
+        <label>Terima kasih atas permintaan Berhenti menerima proses Tinjauan Keuangan. IATA akan segera menghubungi Anda terkait permintaan ini.</label>
         <name>ISSP_ANG_OPT_OUT_SUCCESS_MESSAGE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_One_or_More --></label>
+        <label>Satu Kantor Cabang atau lebih</label>
         <name>ISSP_ANG_One_or_More</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_OptIn_OptOut_DateInfo --></label>
+        <label>Tanggal dimana Maskapai dapat Berhenti Berlangganan IATA EasyPay untuk negara ini melalui portal.</label>
         <name>ISSP_ANG_OptIn_OptOut_DateInfo</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Choose_IATA_Code --></label>
+        <label>Kode IATA Terakreditasi</label>
         <name>ISSP_ANG_PCI_Choose_IATA_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Compliance --></label>
+        <label>Kepatuhan PCI</label>
         <name>ISSP_ANG_PCI_Compliance</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_DSS_Compliant --></label>
+        <label>Pemenuhan Standar PCI DSS</label>
         <name>ISSP_ANG_PCI_DSS_Compliant</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PCI_Selected_IATA_Code --></label>
+        <label>* Kode IATA yang dipilih</label>
         <name>ISSP_ANG_PCI_Selected_IATA_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_PROOF_OF_PCI --></label>
+        <label>Bukti Kepatuhan PCI untuk Kode IATA berikut:</label>
         <name>ISSP_ANG_PROOF_OF_PCI</name>
     </customLabels>
     <customLabels>
@@ -9673,7 +9701,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_Portal_Admin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Portal_Admin_Authorized_Signature --></label>
+        <label>&quot;Hanya Penandatangan Sah yang dapat memberi tahu IATA tentang penutupan kantor. Anda bisa menetapkan Penandatangan Sah Biro Anda di halaman &lt;a href=&quot;&quot;/ISSP_ContactList?MainNav=Admin&quot;&quot;subNav=contacts&quot;&quot;mid=M4S1&quot;&quot; target=&quot;&quot;_self&quot;&quot;&gt; Administrasi Perusahaan -&gt; bagian Kontak&lt;/a&gt;.&quot;</label>
         <name>ISSP_ANG_Portal_Admin_Authorized_Signature</name>
     </customLabels>
     <customLabels>
@@ -9681,23 +9709,23 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_Portal_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Agency Read Only --></label>
+        <label>&lt;ul&gt;&lt;li&gt;Akses baca saja ke Dompet Utama dan/atau Sub-dompet yang ditetapkan ke pengguna&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_AgencyReadOnly</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role IEP Admin --></label>
+        <label>&lt;ul&gt; &lt;li&gt;Akses penuh ke Dompet Utama dan Sub-dompet&lt;/li&gt; &lt;li&gt;Menghasilkan Dompet yang didanai secara langsung&lt;/li&gt; &lt;li&gt;Menghasilkan dan mengelola Sub-dompet yang didanai secara tidak langsung&lt;/li&gt; &lt;li&gt;Manajemen Akun IEP Lengkap, termasuk penutupan akun&lt;/li&gt; &lt;li&gt;Manajemen pengguna lengkap, dan penetapan pengguna Dompet Utama dan Sub-Dompet, termasuk menanggapi permintaan akses pengguna&lt;/li&gt; &lt;li&gt;Menambah, menarik, dan mentransfer dana untuk Dompet Utama dan semua Sub-Dompet&lt;/li&gt; &lt;li&gt;Mengelola pendaftaran dan penutupan Rekening Bank&lt;/li&gt; &lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Master Wallet Manager --></label>
+        <label>&lt;ul&gt;&lt;li&gt;Mengelola pendaftaran dan penutupan Rekening Bank&lt;/li&gt;&lt;li&gt;Diperbolehkan untuk Menambahkan dana dari Rekening Bank terdaftar ke dompet yang didanai secara langsung&lt;/li&gt;&lt;li&gt;Menarik dana dari dompet yang didanai secara langsung&lt;/li&gt;&lt;li&gt;Mentransfer dana antara Dompet Utama dan Sub-Dompet&lt;/li&gt;&lt;li&gt;Mengelola akses pengguna sebagai peran “Manajer Sub-Dompet” atau “Penerbit Tiket”&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Sub-wallet Manager --></label>
+        <label>&lt;ul&gt; &lt;li&gt;Mengelola dana Sub-dompet yang ditetapkan&lt;/li&gt; &lt;li&gt;Mengelola akses dan Sub-dompet pengguna IATA EasyPay “Penerbit Tiket”&lt;/li&gt; &lt;li&gt;Menghasilkan Nomor IATA EasyPay dari dompet yang ditetapkan untuk digunakan menerbitkan tiket melalui GDS&lt;/li&gt; &lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_SubwalletManager</name>
     </customLabels>
     <customLabels>
-        <label><!-- Help text for Portal Role Ticket Issuer --></label>
+        <label>&lt;ul&gt;&lt;li&gt;Menghasilkan Nomor IATA EasyPay dari dompet mana saja yang ditetapkan untuk digunakan menerbitkan tiket melalui GDS&lt;/li&gt;&lt;/ul&gt;</label>
         <name>ISSP_ANG_Portal_Role_TicketIssuer</name>
     </customLabels>
     <customLabels>
@@ -9705,11 +9733,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_Portal_TicketIssuer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ProdCompAnnualFees --></label>
+        <label>Biaya tahunan untuk 2018</label>
         <name>ISSP_ANG_ProdCompAnnualFees</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ProdCompCostTooltip --></label>
+        <label>Semua biaya permohonan dapat dikembalikan jika akreditasi tidak tercapai: Kecil – penjualan tahunan kotor hingga USD 200.000 Menengah – penjualan tahunan kotor USD 200.001 – USD 2.000.000 Besar – penjualan tahunan kotor lebih dari USD 2.000.000</label>
         <name>ISSP_ANG_ProdCompCostTooltip</name>
     </customLabels>
     <customLabels>
@@ -9717,11 +9745,11 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_ProdCompCostTooltipConvert</name>
     </customLabels>
     <customLabels>
-        <label><!-- RHC Information description --></label>
+        <label>Layanan ini memungkinkan Anda memantau penggunaan Remittance Holding Capacity (RHC) kapan saja. Layanan ini mencakup metode pembayaran yang resmi dan tersedia serta profil Risiko dan Riwayat Anda. Layanan ini akan mengirim pemberitahuan kepada Anda saat mencapai persentase RHC yang telah digunakan untuk membantu Anda memantau dan mengambil tindakan.</label>
         <name>ISSP_ANG_RHC_InformationDescription</name>
     </customLabels>
     <customLabels>
-        <label><!-- Risk Event Status --></label>
+        <label>Status Peristiwa Risiko</label>
         <name>ISSP_ANG_RHC_Risk_Event_Status</name>
     </customLabels>
     <customLabels>
@@ -9749,23 +9777,23 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search for Contacts String --></label>
+        <label>Cari Kontak</label>
         <name>ISSP_ANG_SearchContacts</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents --></label>
+        <label>&quot;Permintaan Perubahan Tipe Akreditasi dan/atau pemberitahuan kepada IATA mengenai perubahan Lokasi, Nama Perusahaan, Status Hukum, Kepemilikan/Pemegang Saham.&quot;</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
     </customLabels>
     <customLabels>
-        <label><!-- STEP 1 - Annual Revalidation --></label>
+        <label>LANGKAH A - Konfirmasi Detail Agensi</label>
         <name>ISSP_ANG_Step1_ANNUAL_REV</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Step1_HE --></label>
+        <label>&lt;strong&gt; Entitas Asosiasi &lt;/strong&gt; agen yang Disetujui IATA berikut:</label>
         <name>ISSP_ANG_Step1_HE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step1  Lang Display Help --></label>
+        <label>*Apakah Entitas Asosiasi ini entitas Legal yang terpisah dari Entitas Induk?</label>
         <name>ISSP_ANG_Step1_Legal_Display_Help</name>
     </customLabels>
     <customLabels>
@@ -9777,7 +9805,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_Step1_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- STEP 2 - Annual Revalidation --></label>
+        <label>LANGKAH B - Kirim ke IATA</label>
         <name>ISSP_ANG_Step2_ANNUAL_REV</name>
     </customLabels>
     <customLabels>
@@ -9789,27 +9817,27 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_ANG_StepFinal_AE_Thanks</name>
     </customLabels>
     <customLabels>
-        <label><!-- Voluntary Relinquishment Disclaimer --></label>
+        <label>&lt;p&gt;Dengan ini saya menyerahkan Akreditasi IATA  secara sukarela terkait Lokasi yang terdaftar di atas&lt;/p&gt;</label>
         <name>ISSP_ANG_VR_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_Voluntary_Relinquishment --></label>
+        <label>Pelepasan Sukarela</label>
         <name>ISSP_ANG_Voluntary_Relinquishment</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_WISH_TO_RELINQUISH --></label>
+        <label>Saya ingin melepaskan:</label>
         <name>ISSP_ANG_WISH_TO_RELINQUISH</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_choose_what_to_relinquish --></label>
+        <label>Pilih apa yang Anda ingin lepaskan.</label>
         <name>ISSP_ANG_choose_what_to_relinquish</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step0_Other_Changes --></label>
+        <label>Bukti Kepatuhan PCI</label>
         <name>ISSP_ANG_proof_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Step0_Other_Changes_Info --></label>
+        <label>Kepatuhan PCI merupakan prasyarat untuk mengaktifkan Metode Pembayaran Kartu Kredit untuk Kode IATA.</label>
         <name>ISSP_ANG_proof_PCI_Info</name>
     </customLabels>
     <customLabels>
@@ -9881,7 +9909,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_Access_Service</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Access_Under_Provisioning --></label>
+        <label>Akses menurut Ketentuan</label>
         <name>ISSP_Access_Under_Provisioning</name>
     </customLabels>
     <customLabels>
@@ -10025,15 +10053,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_Apply_Filter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1 --></label>
+        <label>Satu pengguna atau lebih telah ditambahkan ke IATA EasyPay dari Portal Layanan Pelanggan IATA.</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2 --></label>
+        <label>Sebagai Admin atau Manajer Dompet Utama IEP, Anda kini harus menyetujui pengguna tersebut di IATA EasyPay dan menetapkan mereka ke satu dompet atau lebih sebelum mereka bisa menggunakan layanan.&lt;br/&gt;&lt;br/&gt;Pengguna akan diberi tahu melalui email setelah akses diberikan.</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3 --></label>
+        <label>IATA EasyPay dapat diakses dari halaman beranda</label>
         <name>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3</name>
     </customLabels>
     <customLabels>
@@ -10215,6 +10243,10 @@ In order to upload your financial documents, please, login to Customer Portal on
     <customLabels>
         <label><!-- ISSP_CNS_quote2 --></label>
         <name>ISSP_CNS_quote2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <name>ISSP_CalendarDisclaimer</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
@@ -10960,11 +10992,11 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_Email_Draft_Change_Process</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Email_Draft_Change_Process_PCI --></label>
+        <label>Terima kasih telah membuat draf formulir online bukti kepatuhan PCI.</label>
         <name>ISSP_Email_Draft_Change_Process_PCI</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Email_Draft_Change_Process_VR --></label>
+        <label>Terima kasih telah membuat draf formulir online Pelepasan Sukarela.</label>
         <name>ISSP_Email_Draft_Change_Process_VR</name>
     </customLabels>
     <customLabels>
@@ -11284,6 +11316,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_Fill_Profile_Fields</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Filter By Product Type --></label>
+        <name>ISSP_Filter_By_Product_Type</name>
+    </customLabels>
+    <customLabels>
         <label>Berdasarkan Negara/Wilayah</label>
         <name>ISSP_Filter_by_Country</name>
     </customLabels>
@@ -11302,6 +11338,26 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
     <customLabels>
         <label>Pilih berdasarkan jenis partisipasi</label>
         <name>ISSP_Filter_by_Type_Of_Participation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <name>ISSP_Financial_Securities_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <name>ISSP_Financial_Securities_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <name>ISSP_Financial_Securities_Summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
         <label>Kami senang menerima pujian dari Anda</label>
@@ -11832,7 +11888,7 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_Loading_IATAN_Agency_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Loading Travel Agency Details --></label>
+        <label>Memuat detail Agensi Perjalanan…</label>
         <name>ISSP_Loading_Travel_Agency_Details</name>
     </customLabels>
     <customLabels>
@@ -12256,7 +12312,11 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
         <name>ISSP_Ongoing_TIP_Requests</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar --></label>
+        <label>Arahkan ke kasus</label>
+        <name>ISSP_OpenCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Kalender Operasional</label>
         <name>ISSP_OperationalCalendar</name>
     </customLabels>
     <customLabels>
@@ -12264,31 +12324,31 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
         <name>ISSP_OperationalCalendar_BSPCASSFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_BSPCASS_Filter_Required --></label>
+        <label>Mohon di pilih BSP/CASS</label>
         <name>ISSP_OperationalCalendar_BSPCASS_Filter_Required</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Billing_Period --></label>
+        <label>Periode Billing</label>
         <name>ISSP_OperationalCalendar_Billing_Period</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_CountryFilter --></label>
+        <label>Negara / Teritori</label>
         <name>ISSP_OperationalCalendar_CountryFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Country_Filter_Required --></label>
+        <label>Mohon di pilih Negara / Teritori</label>
         <name>ISSP_OperationalCalendar_Country_Filter_Required</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_CurrencyFilter --></label>
+        <label>Mata Uang</label>
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_DownloadDate --></label>
+        <label>Tanggal Unduh</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_EnableFilters --></label>
+        <label>Aktifkan Filter</label>
         <name>ISSP_OperationalCalendar_EnableFilters</name>
     </customLabels>
     <customLabels>
@@ -12300,27 +12360,27 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
         <name>ISSP_OperationalCalendar_Export_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_FilterTitle --></label>
+        <label>Filter</label>
         <name>ISSP_OperationalCalendar_FilterTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_FrequencyFilter --></label>
+        <label>Frekuensi Pembayaran</label>
         <name>ISSP_OperationalCalendar_FrequencyFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Full_Details --></label>
+        <label>Rincian Lengkap dan Download</label>
         <name>ISSP_OperationalCalendar_Full_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Header --></label>
+        <label>{0} Kalender</label>
         <name>ISSP_OperationalCalendar_Header</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_LastModifiedDate --></label>
+        <label>Tanggal terakhir modifikasi</label>
         <name>ISSP_OperationalCalendar_LastModifiedDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_No_Events --></label>
+        <label>Tidak ada kejadian untuk ditampilkan</label>
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
@@ -12328,11 +12388,11 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Show_Calendar --></label>
+        <label>Tunjukkan Kalender</label>
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Sync_Calendar --></label>
+        <label>Sync Kalender</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
     </customLabels>
     <customLabels>
@@ -12372,19 +12432,19 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
         <name>ISSP_PAX_Validating_VAT_Number_error</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance --></label>
+        <label>Kode Biro - Bukti Kepatuhan PCI</label>
         <name>ISSP_PCI_Agency_Codes_Proof_of_PCI_Compliance</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Agency_Codes_VR --></label>
+        <label>Kode Biro - Pelepasan Sukarela</label>
         <name>ISSP_PCI_Agency_Codes_VR</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Case_Submited --></label>
+        <label>Terima kasih telah mengirimkan permintaan metode Pembayaran Kartu Kredit.</label>
         <name>ISSP_PCI_Case_Submited</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_PCI_Least_One_IATA_CODE --></label>
+        <label>Pilih setidaknya satu Kode IATA</label>
         <name>ISSP_PCI_Least_One_IATA_CODE</name>
     </customLabels>
     <customLabels>
@@ -12698,43 +12758,43 @@ Harap diperhatikan bahwa faktur (invoice) IATA untuk agen yang terakreditasi dik
         <name>ISSP_Quantity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB --></label>
+        <label>Kapasitas Pengiriman Remitansi</label>
         <name>ISSP_RHC_HUB</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP --></label>
+        <label>Metode Pembayaran yang Tersedia</label>
         <name>ISSP_RHC_HUB_AFP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP Cash --></label>
+        <label>Tunai</label>
         <name>ISSP_RHC_HUB_AFP_Cash</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB AFP Credit Card --></label>
+        <label>Kartu Kredit</label>
         <name>ISSP_RHC_HUB_AFP_Credit_Card</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Curr Financial Security --></label>
+        <label>Jaminan Keuangan Saat Ini</label>
         <name>ISSP_RHC_HUB_Curr_Financial_Security</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Current Usage --></label>
+        <label>Penggunaan saat ini</label>
         <name>ISSP_RHC_HUB_Current_Usage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Last Updated --></label>
+        <label>Terakhir Diperbarui</label>
         <name>ISSP_RHC_HUB_Last_Updated</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Percentage Usage --></label>
+        <label>Persentase penggunaan</label>
         <name>ISSP_RHC_HUB_Percentage_Usage</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB Risk History --></label>
+        <label>Riwayat Peristiwa Risiko</label>
         <name>ISSP_RHC_HUB_RH</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP RHC HUB RP --></label>
+        <label>Profil Risiko</label>
         <name>ISSP_RHC_HUB_RP</name>
     </customLabels>
     <customLabels>
@@ -13134,6 +13194,454 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_SIS_Help_Desk</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_SIS_Membership_Agreement --></label>
+        <name>ISSP_SIS_Membership_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Airline_Designator_Code --></label>
+        <name>ISSP_SIS_Membership_Airline_Designator_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Application_no_access --></label>
+        <name>ISSP_SIS_Membership_Application_no_access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Application_ongoing --></label>
+        <name>ISSP_SIS_Membership_Application_ongoing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Apply Now --></label>
+        <name>ISSP_SIS_Membership_Apply_Now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership AutoBilling Helptext --></label>
+        <name>ISSP_SIS_Membership_AutoBilling_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_BankMandateDescription --></label>
+        <name>ISSP_SIS_Membership_BankMandateDescription</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Billing Value Confirmation Helptext --></label>
+        <name>ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Billing Value Determination Helptext --></label>
+        <name>ISSP_SIS_Membership_Billing_Value_Determination_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Choose_an_Option --></label>
+        <name>ISSP_SIS_Membership_Choose_an_Option</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_City_Name --></label>
+        <name>ISSP_SIS_Membership_City_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Continue_Draft --></label>
+        <name>ISSP_SIS_Membership_Continue_Draft</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Description --></label>
+        <name>ISSP_SIS_Membership_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Description ISPA --></label>
+        <name>ISSP_SIS_Membership_Description_ISPA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Description ISUA --></label>
+        <name>ISSP_SIS_Membership_Description_ISUA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Description TOU --></label>
+        <name>ISSP_SIS_Membership_Description_TOU</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Digital_Signature Application Helptext --></label>
+        <name>ISSP_SIS_Membership_Digital_Signature_Application_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Digital Signature Verification Helptext --></label>
+        <name>ISSP_SIS_Membership_Digital_Signature_Verification_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Disclaimer_Line1 --></label>
+        <name>ISSP_SIS_Membership_Disclaimer_Line1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Download_PDF --></label>
+        <name>ISSP_SIS_Membership_Download_PDF</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext --></label>
+        <name>ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA --></label>
+        <name>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionB --></label>
+        <name>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionB</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Features --></label>
+        <name>ISSP_SIS_Membership_Features</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Fill_The_Form --></label>
+        <name>ISSP_SIS_Membership_Fill_The_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_FormDescription --></label>
+        <name>ISSP_SIS_Membership_FormDescription</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_City_Name --></label>
+        <name>ISSP_SIS_Membership_Head_Office_City_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_Country --></label>
+        <name>ISSP_SIS_Membership_Head_Office_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_Postal_Code --></label>
+        <name>ISSP_SIS_Membership_Head_Office_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_State_Name --></label>
+        <name>ISSP_SIS_Membership_Head_Office_State_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_Street --></label>
+        <name>ISSP_SIS_Membership_Head_Office_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section1_CopyButton --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section1_CopyButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section1_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section1_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section1_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section1_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section1_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section2_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section2_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section2_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section3_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section3_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section3_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section3_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section3_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section4_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section4_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section4_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section4_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section4_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section5_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section5_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section5_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section5_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section6_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section6_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section6_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section7_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section7_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section7_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section7_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section8_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section8_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section8_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section8_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section8_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section8_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Question --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Subtitle3 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Subtitle3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section1_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section1_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section1_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section2_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section2_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section2_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section3_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section3_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section3_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section3_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section3_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section4_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section4_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section4_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section5_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section5_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section5_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section6_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section6_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section6_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section6_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section7_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section7_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section7_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section7_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section8_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section8_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section8_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section8_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section8_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section8_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Incorporated_Under_Laws --></label>
+        <name>ISSP_SIS_Membership_Incorporated_Under_Laws</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Join_ICH --></label>
+        <name>ISSP_SIS_Membership_Join_ICH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Legal Archiving Helptext --></label>
+        <name>ISSP_SIS_Membership_Legal_Archiving_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Legal_Name_Of_The_Company --></label>
+        <name>ISSP_SIS_Membership_Legal_Name_Of_The_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Legal_Name_of_the_Airline --></label>
+        <name>ISSP_SIS_Membership_Legal_Name_of_the_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Missing_Input_File --></label>
+        <name>ISSP_SIS_Membership_Missing_Input_File</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Name_Writte_out_in_full --></label>
+        <name>ISSP_SIS_Membership_Name_Writte_out_in_full</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Only_One_File --></label>
+        <name>ISSP_SIS_Membership_Only_One_File</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Originals_To_IATA --></label>
+        <name>ISSP_SIS_Membership_Originals_To_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Participation_Agreement --></label>
+        <name>ISSP_SIS_Membership_Participation_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Position --></label>
+        <name>ISSP_SIS_Membership_Position</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Put_a_valid_email --></label>
+        <name>ISSP_SIS_Membership_Put_a_valid_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Requirements --></label>
+        <name>ISSP_SIS_Membership_Requirements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Review_Country_Req --></label>
+        <name>ISSP_SIS_Membership_Review_Country_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Save_Draft_And_Leave --></label>
+        <name>ISSP_SIS_Membership_Save_Draft_And_Leave</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_State_Name --></label>
+        <name>ISSP_SIS_Membership_State_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Submit_To_IATA --></label>
+        <name>ISSP_SIS_Membership_Submit_To_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Subtitle --></label>
+        <name>ISSP_SIS_Membership_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section1_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_TOU_Section1_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section1_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_TOU_Section1_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section1_Title --></label>
+        <name>ISSP_SIS_Membership_TOU_Section1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section2_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_TOU_Section2_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section2_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_TOU_Section2_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section2_Title --></label>
+        <name>ISSP_SIS_Membership_TOU_Section2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Terms_Disclaimer --></label>
+        <name>ISSP_SIS_Membership_Terms_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Title --></label>
+        <name>ISSP_SIS_Membership_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Title ISPA --></label>
+        <name>ISSP_SIS_Membership_Title_ISPA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Title ISUA --></label>
+        <name>ISSP_SIS_Membership_Title_ISUA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Title TOU --></label>
+        <name>ISSP_SIS_Membership_Title_TOU</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Trade_Name --></label>
+        <name>ISSP_SIS_Membership_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Type_Not_Valid --></label>
+        <name>ISSP_SIS_Membership_Type_Not_Valid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_View_My_Application --></label>
+        <name>ISSP_SIS_Membership_View_My_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Who_requested_to_join_TOU --></label>
+        <name>ISSP_SIS_Membership_Who_requested_to_join_TOU</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Your_Current --></label>
+        <name>ISSP_SIS_Membership_Your_Current</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_no_services --></label>
+        <name>ISSP_SIS_Membership_no_services</name>
+    </customLabels>
+    <customLabels>
         <label>Gelar panggilan</label>
         <name>ISSP_Salutation</name>
     </customLabels>
@@ -13260,6 +13768,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label><!-- ISSP Showing total records --></label>
         <name>ISSP_Showing_total_records</name>
+    </customLabels>
+    <customLabels>
+        <label>Mohon diperhatiakn ada tunggakan yang harus  segera diselesaikan dan kirimkan bukti pembayaran untuk menghindari tindakan selanjutnya terhadap agensi Anda</label>
+        <name>ISSP_SidraPopMessage</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
@@ -13638,6 +14150,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_TopicsAndArticlesTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Topics To Exclude Country PL --></label>
+        <name>ISSP_Topics_To_Exclude_Country_PL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Tracking ID Google Analitycs --></label>
         <name>ISSP_Tracking_ID</name>
     </customLabels>
@@ -13706,7 +14222,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_UserInactivation_ServiceMsg_5</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_VR_Case_Submited --></label>
+        <label>Terima kasih telah mengirimkan permintaan Pelepasan Sukarela</label>
         <name>ISSP_VR_Case_Submited</name>
     </customLabels>
     <customLabels>
@@ -13730,7 +14246,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_View_PWC_Lithuania_DC</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Add FAP Contact --></label>
+        <label>Lihat semua Pengguna untuk layanan ini</label>
         <name>ISSP_View_Portal_Users</name>
     </customLabels>
     <customLabels>
@@ -14869,6 +15385,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_FRED_ContactUs_Link --></label>
         <name>OneId_FRED_ContactUs_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
+        <name>OneId_FRED_Missing_Mandatory_Fields</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
@@ -16122,6 +16642,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>Payment_number</name>
     </customLabels>
     <customLabels>
+        <label><!-- Period --></label>
+        <name>Period</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Personal information --></label>
         <name>Personal_information</name>
     </customLabels>
@@ -16276,6 +16800,18 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label><!-- RE --></label>
         <name>RE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification Message --></label>
+        <name>RTS_TAR_Notification_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification MessageB --></label>
+        <name>RTS_TAR_Notification_MessageB</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification Title --></label>
+        <name>RTS_TAR_Notification_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- Reader Main Content --></label>
@@ -17164,6 +17700,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customTabs>
         <label><!-- Purge IATA Code Process --></label>
         <name>Purge_IATA_Code_Process</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Report Red Alerts --></label>
+        <name>Report_Red_Alerts</name>
     </customTabs>
     <customTabs>
         <label>Sumber informasi</label>

@@ -24,7 +24,7 @@ private  class LightningConnectedAppHelper_Test {
 
         Profile p = [SELECT Id FROM Profile WHERE Name='Developer'];
         USER user = new USER (Alias = 'newUser',Email = 'ze@ze.pt', LastName = 'ze',  ProfileId = p.Id, UserName='ze@testorg.com',TimeZoneSidKey='America/Los_Angeles', LocaleSidKey='en_US',EmailEncodingKey='UTF-8', LanguageLocaleKey='en_US');
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
         
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                                                                                      License_Upgrade_Required__c= true,
@@ -97,7 +97,7 @@ private  class LightningConnectedAppHelper_Test {
     static testMethod void TestResetSCIMProvisioning(){
 
         List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 5];
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                 License_Upgrade_Required__c= true,
                 Profile_Id__c='a1',
@@ -193,7 +193,7 @@ private  class LightningConnectedAppHelper_Test {
         IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
         
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
         acc.IATA_ISO_Country__c = ISO_Country.Id;
@@ -202,12 +202,12 @@ private  class LightningConnectedAppHelper_Test {
         acc.Name = 'TestAccount';
         insert acc;
 
-         RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+         Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.LastName = 'test';
         con.Email = 'test.issp.registration@testisspregistration.com';
-        con.RecordTypeId = rt.Id;
+        con.RecordTypeId = rtId;
         insert con;
 
         System.assert(con.id !=null,'Contact must be created');

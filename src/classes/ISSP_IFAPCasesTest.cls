@@ -10,7 +10,7 @@ public class ISSP_IFAPCasesTest {
         ISO_Country.AIMS_Area_ID__c = '1';
         insert ISO_Country;
         
-        String recordtypeid = [SELECT Id FROM RecordType WHERE Name = 'IATA Financial Review'].Id;
+        Id recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
         Account account = ISSP_ObjectFactory.createNewAccount();
         account.Type = 'IATA Passenger Sales Agent';
         account.IATACode__c = '12345678';

@@ -32,9 +32,7 @@ private class ISSP_AmazonS3_Test {
 
         insert ac1;
 
-        Id rtIdBr = [ SELECT Id FROM RecordType 
-        WHERE SobjectType = 'Account'
-        AND DeveloperName = 'IATA_Agency'][0].Id; 
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';

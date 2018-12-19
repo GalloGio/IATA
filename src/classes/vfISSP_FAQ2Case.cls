@@ -73,6 +73,7 @@ global class vfISSP_FAQ2Case
     public list<SelectOption> lst_selectsubTopics {get;set;}
     public list<SelectOption> lst_selectTopics_Emergencies {get;set;}
     public list<SelectOption> lst_selectAreasOfConcern {get;set;}
+    public Boolean excludeCountryPicklist {get; set;}
 
     public String topic { get; set; }
     public String topicLabel { get; set; }
@@ -129,6 +130,9 @@ global class vfISSP_FAQ2Case
     //public ISSP_CreateButtonURL__c ISSP_CreateButtonURL {get;set;}
     public String CreateButtonURL {get;set;}
 
+    //Map structure to keep Topic, and LiveAgentButtonSettings for global buttons in Portal
+    public Map<String, LiveAgentButtonSettings__c> TopicToLiveAgentButtonSettingMap {get; set;}
+
     //Sector field of the Account
     public string Sector {get; set;}
     public string AccountISOCountry {get; set;}
@@ -175,6 +179,7 @@ global class vfISSP_FAQ2Case
         }
         set;}
     public String callUsFinalString {get; set;}
+	public Boolean showCallUsButton {get; set;}
     // Map < Phone number, Available hours >
     public Map <String, String> callUsMap { get; set; }
 
@@ -237,7 +242,7 @@ global class vfISSP_FAQ2Case
                 introVideoCookie = new Cookie(cookieNameStr,'1',null,-1,false);
             }
 			else{ // If this isn't the first time the user is accessing the page
-				CookieValCount = Integer.valueOf(introVideoCookie.getValue());
+				CookieValCount = convertIndex(introVideoCookie.getValue());
 //introVideoCookie = new Cookie(cookieNameStr, '0', null, -1, false);//basto1p - for tests
 				if (CookieValCount != LVA_INTRO_VID_COOKIE_DEACTIVATED) {
 					// create a new cookie, incrementing the value of the original count by 1
@@ -334,8 +339,29 @@ global class vfISSP_FAQ2Case
 
     public vfISSP_FAQ2Case()
     {
+        TopicToLiveAgentButtonSettingMap = new Map<String,LiveAgentButtonSettings__c>();
+        for(LiveAgentButtonSettings__c buttonSettings : [
+            SELECT
+                ID,
+                Name,
+                ButtonId__c,
+                Button_Per_Topic__c,
+                DeploymentId__c,
+                Language__c,
+                Region__c,
+                Sectors__c,
+                Topic__c
+            FROM
+                LiveAgentButtonSettings__c
+            WHERE
+                Button_Per_Topic__c = true
+            LIMIT 9999]){
+
+            TopicToLiveAgentButtonSettingMap.put(buttonSettings.Topic__c, buttonSettings);
+        }
         //basto1p - live agent v2
         this.resetLiveAgentVars();
+		this.showCallUsButton=false;
     }
 
     global class CustomerSupporWrapperGet {
@@ -385,7 +411,7 @@ global class vfISSP_FAQ2Case
                 // calculate sub topic for each topic 
 
                 faq2Case.lst_selectsubTopics = new list<SelectOption>();
-                Integer index = Integer.valueOf(faq2Case.topic.trim());
+                Integer index = convertIndex(faq2Case.topic.trim());
 
                 clsDataCategory selectDataCategory = faq2Case.DataCategoryContainer.lst_DataCategories[index];
 
@@ -456,7 +482,14 @@ global class vfISSP_FAQ2Case
         faq2Case.refreshSubTopicPickList();
         faq2Case.newCase.IFAP_Country_ISO__c = countryIsoCode;
         // calculate buttons and phone contact information
+
+        // bypass for button per Topic
+        if(faq2Case.TopicToLiveAgentButtonSettingMap.containsKey(faq2Case.topicLabel)){
+            faq2Case.setButtonForTopic(faq2Case.topicLabel);
+        } else {
         faq2Case.setLiveAgentButtonsNames();
+        }
+
 
         customerSupport.csButtonsMap = faq2Case.csButtonsList;
         customerSupport.callUsMap = faq2Case.callUsMap;
@@ -676,6 +709,92 @@ global class vfISSP_FAQ2Case
         return null;
     }
 
+    /*******************************************************************************************************
+    * @description Sets chat button for specific topic. If LiveAgentButtonSettings
+    * 				custom settings contains record created for selected topic in the Portal,
+    * 				then current logic is bypassed, and this method used to create chat button.
+    *
+    *
+    * @return {Void} Updates this class list of buttons to display in visualsource page
+    * @param buttonName - API name of the topic
+    *
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2018-11-11   lukasz.waszkiewicz@b-i.com        Creation
+    ********************************************************************************************************/
+    public void setButtonForTopic(String buttonName){
+
+        LiveAgentButtonSettings__c buttonToShow = TopicToLiveAgentButtonSettingMap.get(buttonName);
+
+        ButtonsInfoType butInfoAux=new ButtonsInfoType();
+        butInfoAux.Name=buttonToShow.Name;
+        butInfoAux.Category=BUT_CAT_ENGLISH;
+        butInfoAux.ButtonId=buttonToShow.ButtonId__c;
+        butInfoAux.DeploymentId=buttonToShow.DeploymentId__c;
+        butInfoAux.Language=buttonToShow.Language__c;
+        butInfoAux.Order=3;
+
+        this.csButtonsList.put(BUT_CAT_ENGLISH,butInfoAux);
+
+        this.currentButtonsToShow = 'CancelAndCreateACase';
+    }
+
+    /*******************************************************************************************************
+    * @description Check, selected Topic is on the list to exclude Country Picklist from Portal.
+    *               List of the Topics APIs located in: Label.ISSP_Topics_To_Exclude_Country_PL
+    *
+    *
+    * @return {Boolean}
+    * @param topicName - API name of the topic
+    *
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2018-11-28   lukasz.waszkiewicz@b-i.com        Creation
+    ********************************************************************************************************/
+    public Boolean isExcludedCountryPicklist(String topicName){
+        List<String> toExclude = new List<String>();
+        toExclude = Label.ISSP_Topics_To_Exclude_Country_PL.split(',');
+
+        if(toExclude.contains(topicName)){
+            excludeCountryPicklist = true;
+        } else {
+            excludeCountryPicklist = false;
+        }
+
+        return excludeCountryPicklist;
+    }
+
+    /*******************************************************************************************************
+    * @description If Country Picklist is excluded from Portal, then populate IFAP_Country_ISO__c field for new case
+    *               with Account.Country_ISO_Code__c, and if global button is created for this topic, then add
+    *               it to the buttons list.
+    *
+    *
+    *
+    * @return {Void} Updates newCase with ISO_Country
+    * @param topicName - API name of the topic
+    *
+    *
+    * @history
+    * -----------------------------------------------------------------------------------------------
+    * Date         Created by                        Description
+    * 2018-11-11   lukasz.waszkiewicz@b-i.com        Creation
+    ********************************************************************************************************/
+    public void updateCaseForExcludedCountryPicklist(String topicName){
+        ID uContactId = [SELECT ContactId FROM User WHERE id =: Userinfo.getUserid()].contactId;
+        ID uAccId = [SELECT AccountId FROM Contact WHERE id =: uContactId].AccountId;
+        newCase.IFAP_Country_ISO__c = [SELECT Country_ISO_Code__c FROM Account WHERE Id =: uAccId LIMIT 1].Country_ISO_Code__c;
+
+        if(TopicToLiveAgentButtonSettingMap.containsKey(topicName)){
+            this.setButtonForTopic(topicName);
+        } else {
+            this.currentButtonsToShow = 'CancelAndCreateACase';
+            }
+    }
 
     /*******************************************************************************************************
     * @description Sets chat buttons names according with:
@@ -730,7 +849,7 @@ global class vfISSP_FAQ2Case
 
                 //Fill live agent configuration button map where map key is composed by sector and language in iso format
                 for (LiveAgentButtonSettings__c butItem : liveAgentConfList.values()) {
-
+                    if(butItem.Button_Per_Topic__c == false){
                     Set<String> itemSectors = new Set<String>(butItem.sectors__c.split(','));
                     regionToAdd = butItem.Region__c;
                     if (regionToAdd == null) {
@@ -773,6 +892,9 @@ global class vfISSP_FAQ2Case
                         System.debug('basto1p - keyToAdd=' + keyToAdd);
                         this.livAgConfButtonsMapBySectAndIsoC.put(keyToAdd, butItem);
                     }
+                }
+
+
                 }
             } catch (Exception e) {
                 System.debug('basto1p - setLiveAgentButtonsNames Error getting buttons config: ' + e);
@@ -823,11 +945,8 @@ global class vfISSP_FAQ2Case
 
             //if there is a mapping in iso country Object to its languages,
             //use that otherwise use country iso code for language code above
-            List<IATA_ISO_Country__c> countryAux =
-            [SELECT LVA_CountryLanguage__c FROM IATA_ISO_Country__c
-                    WHERE (    ISO_Code__c =:languageToConfigure
-                            OR ISO_Code__c =:languageToConfigure.toUpperCase() )
-            ];
+            List<IATA_ISO_Country__c> countryAux = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{languageToConfigure, languageToConfigure.toUpperCase()});
+            
             if (    countryAux.size() > 0 &&
                     String.isNotBlank(countryAux[0].LVA_CountryLanguage__c)) {
                 choseenCountrySuppLangs = countryAux[0].LVA_CountryLanguage__c;
@@ -979,6 +1098,25 @@ global class vfISSP_FAQ2Case
     }
 
 
+
+
+	//WMO356 Start 29/10/2018
+	@testVisible static List<LVA_CallUsConfig__mdt> callUsCM { 
+    get {
+        if ( callUsCM == null )
+            callUsCM = [ SELECT DeveloperName,
+								IsoCountry__c, 
+								Sector__c,
+								Topic__c,
+								PhoneNumber__c,
+								AvailableHours__c 
+								FROM LVA_CallUsConfig__mdt LIMIT 1]; 
+        return callUsCM;
+    } set; 
+	}
+	//End
+
+
     /*******************************************************************************************************
     * @description Gets and sets "Call Us" user interface modal dialog content string (using phone number
     *              and Available hours) according with configuration in metadata type LVA_CallUsConfig__mdt
@@ -995,42 +1133,209 @@ global class vfISSP_FAQ2Case
     *
     * @history
     * -----------------------------------------------------------------------------------------------
-    * Date         Created by                        Description
-    * 2017-09-29   paulo.bastos@rightitservices.com  Creation
+    * Date         Created by								Description
+    * 2017-09-29   paulo.bastos@rightitservices.com					Creation
+    * 2018-10-24   francisco.estanqueiro@rightitservices.com		Add filter by topic - WMO-356 - Call Us config by product
+    * 2018-10-25   francisco.estanqueiro@rightitservices.com		Add 'All' option - WMO-356 - Call Us config by product
     ********************************************************************************************************/
     public String getAndSetCallUsString(){
         String retVal=Label.LVA_CallUsNoConfigAvailable;
         List<LVA_CallUsConfig__mdt> ListOfCallUsconfigs=new List<LVA_CallUsConfig__mdt>();
+		
+		//WMO356 - Call Us config by product - Start 24 10 20018
+
+		//System.debug('### WMO356 ### Topic: ' + topic);
+		//System.debug('### WMO356 ### Topic Label: ' + topiclabel);
+		
+		Integer index = Integer.valueOf(topic.trim());
+        clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+		System.debug(selectDataCategory);
+		System.debug('### FME ### Category Label: '+ selectDataCategory.CategoryLabel);
+		System.debug('### FME ### Category Name: ' + selectDataCategory.CategoryName);
+		String apiTopicSlected = selectDataCategory.CategoryName;
+		List<LVA_CallUsConfig__mdt> ListOfCallUsconfigsAux = new List<LVA_CallUsConfig__mdt>();
 
         // Check configration for user account sector and country selected for case
-        if (newCase.IFAP_Country_ISO__c!=null) {
-            ListOfCallUsconfigs = [SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
-                    FROM LVA_CallUsConfig__mdt
-                    WHERE Sector__c=:sector
-                    AND (IsoCountry__c=:newCase.IFAP_Country_ISO__c.toLowerCase()
-                         OR IsoCountry__c=:newCase.IFAP_Country_ISO__c.toUpperCase())
-                    ];
+        if (newCase.IFAP_Country_ISO__c!=null && apiTopicSlected!= null) {
+			//search custom metadata by Topic, Sector, Country
+			ListOfCallUsconfigsAux = [SELECT DeveloperName,
+										     IsoCountry__c, 
+										     Sector__c,
+											 Topic__c,
+											 PhoneNumber__c,
+											 AvailableHours__c
+											 FROM LVA_CallUsConfig__mdt
+											 WHERE Topic__c =:apiTopicSlected
+											 AND (Sector__c=:sector 
+												 OR Sector__c=''
+											     OR Sector__c = null
+												 OR Sector__c='all'
+												 OR Sector__c='All'
+												 OR Sector__c='ALL')
+											 AND (IsoCountry__c=:newCase.IFAP_Country_ISO__c.toLowerCase()
+												 OR IsoCountry__c=:newCase.IFAP_Country_ISO__c.toUpperCase()
+												 OR IsoCountry__c='' 
+												 OR IsoCountry__c=null
+												 OR IsoCountry__c='all'
+												 OR IsoCountry__c='All'
+												 OR IsoCountry__c='ALL')
+										  ];
+
+			if(ListOfCallUsconfigsAux.size()>0 || Test.isRunningTest())
+			{	
+				if(Test.isRunningTest())
+				{
+
+					ListOfCallUsconfigsAux = callUsCM;
+					ListOfCallUsconfigsAux[0].Topic__c=apiTopicSlected;
+					ListOfCallUsconfigsAux[0].Sector__c ='all';
+					ListOfCallUsconfigsAux[0].IsoCountry__c='all';
+
+				}
+
+				LVA_CallUsConfig__mdt configWithTopicSectorCountry;
+				LVA_CallUsConfig__mdt configWithTopicSector;
+				LVA_CallUsConfig__mdt configWithTopicCountry;
+				LVA_CallUsConfig__mdt configWithTopic;
+				for (LVA_CallUsConfig__mdt aux : ListOfCallUsconfigsAux)
+				{
+					if(aux.Topic__c == apiTopicSlected
+					    && aux.Sector__c!=null  
+						&& aux.IsoCountry__c != null
+						&& aux.Sector__c==sector 
+						&& (aux.IsoCountry__c == newCase.IFAP_Country_ISO__c.toLowerCase() ||  aux.IsoCountry__c == newCase.IFAP_Country_ISO__c.toUpperCase()) )
+					{
+						configWithTopicSectorCountry = new LVA_CallUsConfig__mdt();
+						configWithTopicSectorCountry = aux;
+						System.debug(aux);
+					}
+					else if(aux.Topic__c == apiTopicSlected
+							&& aux.Sector__c!=null 
+							&& aux.Sector__c==sector 
+							&& (aux.IsoCountry__c == null || aux.IsoCountry__c == '' || aux.IsoCountry__c == 'all' || aux.IsoCountry__c == 'All' || aux.IsoCountry__c == 'ALL'))
+					{
+						configWithTopicSector = new LVA_CallUsConfig__mdt();
+						configWithTopicSector =  aux;
+						System.debug(aux);
+					}
+					else if(aux.Topic__c == apiTopicSlected
+							&& aux.IsoCountry__c != null 
+							&& (aux.Sector__c == null || aux.Sector__c =='' || aux.Sector__c == 'all' || aux.Sector__c == 'All' || aux.Sector__c == 'ALL') 
+							&& (aux.IsoCountry__c == newCase.IFAP_Country_ISO__c.toLowerCase() ||  aux.IsoCountry__c == newCase.IFAP_Country_ISO__c.toUpperCase()))
+					{
+						configWithTopicCountry = new LVA_CallUsConfig__mdt();
+						configWithTopicCountry = aux;
+						System.debug(aux);
+					}
+					else if(aux.Topic__c == apiTopicSlected 
+							&& (aux.Sector__c == null || aux.Sector__c =='' || aux.Sector__c == 'all' || aux.Sector__c == 'All' || aux.Sector__c == 'ALL') 
+							&& (aux.IsoCountry__c == null || aux.IsoCountry__c == '' || aux.IsoCountry__c == 'all' || aux.IsoCountry__c == 'All' || aux.IsoCountry__c == 'ALL'))
+					{
+						configWithTopic = new LVA_CallUsConfig__mdt();
+						configWithTopic = aux;
+						System.debug(aux);
+					}
+				}
+
+				if(configWithTopicSectorCountry != null){
+					ListOfCallUsconfigs.add(configWithTopicSectorCountry);
+					System.debug(configWithTopicSectorCountry);
+				}
+				else
+				{
+					if(configWithTopicSector!= null)
+					{
+						ListOfCallUsconfigs.add(configWithTopicSector);
+						System.debug(configWithTopicSector);
+					}
+					else
+					{
+						if(configWithTopicCountry!= null)
+						{
+							ListOfCallUsconfigs.add(configWithTopicCountry);
+							System.debug(configWithTopicCountry);
+						}
+						else
+						{
+							if(configWithTopic!= null)
+							{
+								ListOfCallUsconfigs.add(configWithTopic);
+								System.debug(configWithTopic);
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				ListOfCallUsconfigs=[SELECT DeveloperName,
+				        				    IsoCountry__c, 
+						    				Sector__c,
+											Topic__c,
+											PhoneNumber__c,
+											AvailableHours__c
+											FROM LVA_CallUsConfig__mdt
+											WHERE Sector__c=:sector
+											AND (Topic__c=''
+											     OR Topic__c = null)
+											AND (IsoCountry__c=:newCase.IFAP_Country_ISO__c.toLowerCase()
+												 OR IsoCountry__c=:newCase.IFAP_Country_ISO__c.toUpperCase())
+											];
+				System.debug(ListOfCallUsconfigs);
+			}
         }
 
         // if nothing found for previous search
         //Check configration for user account sector only
+		if(Test.isRunningTest()){
+			ListOfCallUsconfigs=new List<LVA_CallUsConfig__mdt>();
+		}
+
         if (ListOfCallUsconfigs.size()==0){
-            ListOfCallUsconfigs=[SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
-                    FROM LVA_CallUsConfig__mdt
-                    WHERE Sector__c=:sector AND (IsoCountry__c='' OR IsoCountry__c=null)];
+            ListOfCallUsconfigs=[SELECT DeveloperName,
+									    IsoCountry__c, 
+										Sector__c,
+										Topic__c,
+										PhoneNumber__c,
+										AvailableHours__c
+										FROM LVA_CallUsConfig__mdt
+									    WHERE Sector__c=:sector
+										AND (Topic__c=''
+											  OR Topic__c = null)
+										AND (IsoCountry__c='' 
+											 OR IsoCountry__c=null
+											 OR IsoCountry__c='all'
+											 OR IsoCountry__c='All'
+											 OR IsoCountry__c='ALL')
+										];
+			System.debug(ListOfCallUsconfigs);
         }
 
         // if nothing found for previous searchs
         // Check generic configuration
         if (ListOfCallUsconfigs.size()==0){
-            ListOfCallUsconfigs=[SELECT DeveloperName,IsoCountry__c, Sector__c,PhoneNumber__c,AvailableHours__c
-                    FROM LVA_CallUsConfig__mdt
-                    WHERE DeveloperName=:LVA_CALL_US_GEN];
+            ListOfCallUsconfigs=[SELECT DeveloperName,
+										IsoCountry__c, 
+										Sector__c,
+										Topic__c,
+										PhoneNumber__c,
+										AvailableHours__c
+									    FROM LVA_CallUsConfig__mdt
+										WHERE DeveloperName=:LVA_CALL_US_GEN];
+			System.debug(ListOfCallUsconfigs);
         }
 
         if (ListOfCallUsconfigs.size()>0){
             retVal=createCallUsString(ListOfCallUsconfigs[0]);
+			this.showCallUsButton=true;
         }
+		else
+		{
+			this.showCallUsButton=false;
+		}
+
+		System.debug(retVal);
+		System.debug(this.showCallUsButton);
 
         this.callUsFinalString=retVal;
 
@@ -1351,10 +1656,7 @@ for (string topicver:listofAllowedTopics){
     private List<IATA_ISO_Country__c> countries{
         get{
             if (countries == null){
-                countries = [SELECT Id, Name, ISO_Code__c, Region__c
-                            FROM IATA_ISO_Country__c
-                            WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != ''
-                            LIMIT 10000 ];
+                countries = IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull();
             }
             return countries;
         }
@@ -1382,7 +1684,7 @@ for (string topicver:listofAllowedTopics){
         String addDecsription ;
         if (isCompliment1 == false)
         {
-             Integer index = Integer.valueOf(topic.trim());
+             Integer index = convertIndex(topic.trim());
              clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
              
              String areaOfConcernStr='';
@@ -1574,7 +1876,7 @@ for (string topicver:listofAllowedTopics){
         if (!isArticleStatisticExist(theArticle, statisticType)) {
             try
             {
-                Integer index = Integer.valueOf(this.topic.trim());
+                Integer index = convertIndex(this.topic.trim());
                 clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
                 // Set the record's field values
@@ -1605,13 +1907,19 @@ for (string topicver:listofAllowedTopics){
         GenerateCreateCaseButtonURL();
         if (CreateButtonURL != null && CreateButtonURL != '')
         {
-            Integer index = Integer.valueOf(topic.trim());
+            Integer index = convertIndex(topic.trim());
             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
             String extraURL = '&topic='+selectDataCategory.CategoryLabel+'&subtopic='+selectDataCategory.getLabelByNameCategory(subtopic);
             return new Pagereference(CreateButtonURL+extraURL);
         }
         else
         {
+
+            clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(topic)];
+            String CategoryNameItem='';
+            CategoryNameItem=cdc.CategoryName;
+
+            isExcludedCountryPicklist(CategoryNameItem);
             this.currentButtonsToShow = CancelAndSubmit;
             createArticleStatisticsRecords(SelectedArticleModalView.SelectedArticle, ENV.ArticleStatType.UnSatisfied);
             return null;
@@ -1665,7 +1973,7 @@ for (string topicver:listofAllowedTopics){
         System.debug('basto1p - FAQ2Case.save isIFG='+isIFG);
         if( ((subtopic == null ||subtopic == '' ||subtopic == '-- Select --' || subTopic == topic))||//added &&iscompliment to bypass error message
             ((areaOfConcern == null || areaOfConcern == '') && isIFG==true && this.lst_selectareasOfConcern.size()>1) ||
-            (newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')||
+            ((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '') && excludeCountryPicklist == false)||
             (newCase.Subject == null ||newCase.Subject == '')||
             (newCase.Description == null ||newCase.Description == '')){
 
@@ -1676,7 +1984,7 @@ for (string topicver:listofAllowedTopics){
             if((areaOfConcern == null || areaOfConcern == '') && isIFG==true && this.lst_selectareasOfConcern.size()>1){
                ErrFields += System.Label.ISSP_Area_of_Concern;
             }
-            if((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')){
+            if(((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')) && excludeCountryPicklist == false){
                ErrFields += System.Label.Country_concerned_by_the_query +', ';
             }
             if(newCase.Subject == null ||newCase.Subject == ''){
@@ -1698,6 +2006,12 @@ for (string topicver:listofAllowedTopics){
 
         newCase.Area_of_Concern__c=areaOfConcern;
         
+        if(excludeCountryPicklist == true) {
+            ID uContactId = [SELECT ContactId FROM User WHERE id =: Userinfo.getUserid()].contactId;
+            ID uAccId = [SELECT AccountId FROM Contact WHERE id =: uContactId].AccountId;
+            newCase.IFAP_Country_ISO__c = [SELECT Country_ISO_Code__c FROM Account WHERE Id =: uAccId LIMIT 1].Country_ISO_Code__c;
+        }
+
         addDecsription();
         setRecordType(); //TF - SP11
         
@@ -1922,6 +2236,7 @@ for (string topicver:listofAllowedTopics){
     public   PageReference IwishtoComplain()
     {system.debug('JK22 isComplain IwishtoComplain START: ' + isComplain);
         resetCase();
+        excludeCountryPicklist = false;
         Clicked_SISHelpDesk = false;
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
@@ -1956,12 +2271,15 @@ for (string topicver:listofAllowedTopics){
         subtopic = Env.SelectOptionDefaultValue ;
         System.debug('createAnEmergency END: ' + this.Clicked_EmergencyRequest);
         labelSubTopic = 'I wish to create an emergency about';
+        isComplain1 = false ;
+        isCompliment1 = false ;
         errorMessage = new list<string>();
         return null;
     }
 
     public PageReference GeneralQueueMethod(){
         resetCase();
+        excludeCountryPicklist = false;
         Clicked_SISHelpDesk = false;
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
@@ -1982,6 +2300,7 @@ for (string topicver:listofAllowedTopics){
 // Compliment additions ED sept 2015
      public PageReference ComplimentGeneralQueueMethod(){
         resetCase();
+        excludeCountryPicklist = false;
         Clicked_SISHelpDesk = false;
         Clicked_IATAServiceRequest = false;
         Clicked_PWCServiceRequest = false;
@@ -2000,7 +2319,7 @@ for (string topicver:listofAllowedTopics){
         create();
 
         if(isCNS ) {
-            List<IATA_ISO_Country__c> lsIsoCountries = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1];
+            List<IATA_ISO_Country__c> lsIsoCountries = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{'United States'});
             if(!lsIsoCountries.isEmpty()) {
                 this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
                 this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
@@ -2031,7 +2350,7 @@ for (string topicver:listofAllowedTopics){
         {system.debug('Kerensen refreshTopicPickList: After  resetCase(); ELSE'  );
             this.lst_selectsubTopics = new list<SelectOption>();
             system.debug('TOPIC: ' + topic);
-            Integer index = Integer.valueOf(topic.trim());
+            Integer index = convertIndex(topic.trim());
             system.debug('INTEGER: ' + index);
             isToShowFAQs = true;
 
@@ -2085,11 +2404,15 @@ for (string topicver:listofAllowedTopics){
         resetCase();
        System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
         system.debug('TOPIC: ' + topic);
-        Integer index = Integer.valueOf(topic.trim());
+        Integer index = convertIndex(topic.trim());
         system.debug('INTEGER: ' + index);
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
         system.debug('JK subtopic: ' + subtopic);
 
+        //if Country Picklist is excluded, then updateCaseForExcludedCountryPicklist() else old logic
+        if(isExcludedCountryPicklist(selectDataCategory.CategoryName)){
+            updateCaseForExcludedCountryPicklist(selectDataCategory.CategoryName);
+        } else {
         // if strings are equals (subtopic empty)
         if (subtopic.compareTo(Env.SelectOptionDefaultValue) == 0)
         {
@@ -2117,7 +2440,7 @@ for (string topicver:listofAllowedTopics){
         system.debug('JK this.currentButtonsToShow: ' + this.currentButtonsToShow);
 
         if(selectDataCategory.CategoryName.startsWith('CNS')) {
-            List<IATA_ISO_Country__c> lsIsoCountries = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1];
+            List<IATA_ISO_Country__c> lsIsoCountries = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{'United States'});
             if(!lsIsoCountries.isEmpty()) {
                 this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
                 this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
@@ -2158,6 +2481,7 @@ for (string topicver:listofAllowedTopics){
            this.lst_selectareasOfConcern = new list<SelectOption>();
            this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
        }
+    }
     }
     
     public void refreshAreasOfConcernPickList(){
@@ -2203,85 +2527,32 @@ for (string topicver:listofAllowedTopics){
         String currentLanguage = UserInfo.getLanguage();
         List<SelectOption> options = new List<SelectOption>();
         list<IATA_ISO_Country__c> isoList;
-        /*list<IATA_ISO_Country__c> isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                                            IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                                            IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                                            from IATA_ISO_Country__c
-                                            where Case_BSP_Country__c!=null
-                                            and Case_BSP_Country__c!=''
-                                            order by Name];*/
+
         if (currentLanguage == 'es'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_SP__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
         }
         else if (currentLanguage == 'ko'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Contry_KR__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Contry_KR__c');
         }
         else if (currentLanguage == 'zh_CN'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_ZH__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_ZH__c');
         }
         else if (currentLanguage == 'pt_BR'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_PT__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_PT__c');
         }
         else if (currentLanguage == 'fr'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_FR__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_FR__c');
         }
         else if (currentLanguage == 'ja'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_JP__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_JP__c');
         }
         else if (currentLanguage == 'it'){
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by IATA_Country_IT__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_IT__c');
         }
         else{
-            isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c,
-                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                        from IATA_ISO_Country__c
-                        where Case_BSP_Country__c!=null
-                        and Case_BSP_Country__c!=''
-                        order by Name];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
         }
+
         options.add(new SelectOption('', '--None--'));
         for(IATA_ISO_Country__c iso : isoList){
             if (currentLanguage == 'es'){
@@ -2475,11 +2746,7 @@ for (string topicver:listofAllowedTopics){
     */
     public static list<IATA_ISO_Country__c> getIsoCountryList()
     {
-        return [SELECT Id, Name
-                FROM IATA_ISO_Country__c
-                WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != ''
-                ORDER BY Name
-                LIMIT 10000 ];
+        return IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
     }
 
     /**
@@ -2711,7 +2978,14 @@ for (string topicver:listofAllowedTopics){
                 airlines.add(new SelectOption(thisService.Services_Rendered_to_Airline__r.Site, thisService.Services_Rendered_to_Airline__r.Name));
             }
         }
+
+        //bypass for button per Topic
+        if(TopicToLiveAgentButtonSettingMap.containsKey(topicLabel)){
+            this.setButtonForTopic(topicLabel);
+        } else {
         this.setLiveAgentButtonsNames();
+    }
+
     }
     public void getGsaCountryList_2() {
         system.debug('IN getGsaCountryList');
@@ -2747,8 +3021,9 @@ for (string topicver:listofAllowedTopics){
         //set the Topic__c "English Value"
         if (isCompliment1 == false)
         {
-            clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(topic)];
-            newCase.Topic__c = ((cdc.CategoryName).replace('__c',' ')).replace('_',' ') ;
+            clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[convertIndex(topic)];
+            //newCase.Topic__c = ((cdc.CategoryName).replace('__c',' ')).replace('_',' ') ;
+            newCase.Topic__c = cdc.CategoryLabel;
             //set the Topic__c "English Value"
 
             for(Integer cIndex = 0; cIndex < cdc.lst_childs.size(); cIndex++)
@@ -2756,7 +3031,8 @@ for (string topicver:listofAllowedTopics){
                 clsDataCategory.CategoryChildWrapper childCat = cdc.lst_childs[cIndex];
                 if(subtopic == childCat.CategoryName)
                 {
-                     newCase.SubTopic__c =  ((childCat.CategoryName).replace('__c',' ')).replace('_',' ') ;
+                    //newCase.SubTopic__c =  ((childCat.CategoryName).replace('__c',' ')).replace('_',' ') ;
+                    newCase.SubTopic__c = childCat.CategoryLabel;
                 }
             }
         }else
@@ -2773,7 +3049,7 @@ for (string topicver:listofAllowedTopics){
         }
 
 
-        Integer index = Integer.valueOf(topic.trim());
+        Integer index = convertIndex(topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
         String topicName = selectDataCategory.CategoryName;
 
@@ -2784,10 +3060,7 @@ for (string topicver:listofAllowedTopics){
         //String to be used in the LIKE query
         string varCountry = '%' + newCase.IFAP_Country_ISO__c + '%';
 
-        list<IATA_ISO_Country__c> lst_Country = new list<IATA_ISO_Country__c>([SELECT Id, Name , Case_BSP_Country__c , ISO_Code__c
-                                                                                FROM IATA_ISO_Country__c
-                                                                                WHERE ISO_Code__c  =: newCase.IFAP_Country_ISO__c
-                                                                                LIMIT 1 ]);
+        list<IATA_ISO_Country__c> lst_Country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{newCase.IFAP_Country_ISO__c});
         if(lst_Country != null && lst_Country.size() > 0){
             newCase.BSPCountry__c =  lst_Country[0].Case_BSP_Country__c ;
             newCase.Country_concerned_by_the_query__c = lst_Country[0].Case_BSP_Country__c ;
@@ -2893,15 +3166,12 @@ for (string topicver:listofAllowedTopics){
             system.debug('basto1p: FinalMatch_Lst NOT EMPTY');
             ChoosenCS = FinalMatch_Lst[0];
             //Select the choosen Record Type
-            String recordType = ChoosenCS.RecordType__c;
-            List <RecordType> recordTypeList = [SELECT Id, Name FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
+            Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', ChoosenCS.RecordType__c);
 
-            if (!recordTypeList.isEmpty()){
+            if (String.isNotBlank(recordTypeId)){
                 //Assign RecordType according to custom Settings
-                newCase.RecordTypeId = recordTypeList[0].Id;
+                newCase.RecordTypeId = recordTypeId;
 
-                system.debug('basto1p: FinalMatch_Lst recordType='+recordTypeList[0].Name);
-                
                 //Assign owenerId according to custom Settings
                 if (ChoosenCS.OwnerId__c != null && ChoosenCS.OwnerId__c != ''){
                     newCase.OwnerId = ChoosenCS.OwnerId__c;
@@ -3147,19 +3417,12 @@ for (string topicver:listofAllowedTopics){
     //Output : record Type ID
     @TestVisible
     private Id getCaseRecordTypeIdByName(String inRecordTypeName){
-        SObjectType ObjType;
-        map<String, Schema.RecordTypeInfo> TypeInfoMap;
-        Schema.RecordTypeInfo TypeInfo;
-        Id RecTypeId;
-
-        // use Account sObject type as an example
-        ObjType =  Case.SObjectType;
-        TypeInfoMap = ObjType.getDescribe().getRecordTypeInfosByName();
-        TypeInfo = TypeInfoMap.get(inRecordTypeName);
-        if (TypeInfo != null) {
-            return RecTypeId = TypeInfo.getRecordTypeId();
-        }
-        else return null ;
+        if (inRecordTypeName != null) {
+            return RecordTypeSingleton.getInstance().getRecordTypeId('Case', inRecordTypeName);
+        } else {
+            return null;
+        } 
+            
     }
 
 
@@ -3202,7 +3465,7 @@ for (string topicver:listofAllowedTopics){
 
     public PageReference GenerateTopicHelpText(){
         if(topic != Env.SelectOptionDefaultValue){ // INC263231 - IF topic was the default don't do the logic
-            Integer index = Integer.valueOf(this.topic.trim());
+            Integer index = convertIndex(this.topic.trim());
             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
             List<ISSP_HelpText__c> ISSP_TopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
@@ -3226,7 +3489,7 @@ for (string topicver:listofAllowedTopics){
 
         System.debug('Kerensen1 START GenerateTopicHelpText ==>'+subtopic);
         if(subtopic != Env.SelectOptionDefaultValue){  // INC263231 - IF topic was the default don't do the logic
-            Integer index = Integer.valueOf(this.topic.trim());
+            Integer index = convertIndex(this.topic.trim());
             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
             List<ISSP_HelpText__c> ISSP_SubTopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
@@ -3248,6 +3511,7 @@ for (string topicver:listofAllowedTopics){
 
     // Method display topic and subtopic according to Custom Setting "ISSP_FAQ2Case_Permissions__c" Permissions
     private void setTopicByPermissions(){
+        List<String> sectors = new List<String>();
         //Help Selectoptuion List
         list<SelectOption> tmpselectTopicsList = new list<SelectOption>();
         boolean isIFGUser = ISSP_Utilities.isIFGUser();
@@ -3269,7 +3533,7 @@ for (string topicver:listofAllowedTopics){
                 String CategoryNameItem='';
                 if (top.getValue() != '-- Select --')
                 {
-                    clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(top.getValue())];
+                    clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[convertIndex(top.getValue())];
                     TopicinEnglish = ((cdc.CategoryName).replace('__c','')) ;//.replace('_',' ')
                     CategoryNameItem=cdc.CategoryName;
                 }else{
@@ -3280,11 +3544,13 @@ for (string topicver:listofAllowedTopics){
                 boolean FoundExcludePermission = false ;
                 for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
                 {
+                    sectors = new List<String>();
+                    sectors = per.Sector_Permission__c.split(',');
                     //Check if the topic has matched Custom setting record
                     if (per.topic__c != null && per.topic__c.contains(TopicinEnglish))
                     {
                     if ( per.Sector_Permission__c != null
-                        && ( (per.Sector_Permission__c.contains(Sector) && !isCNS && !per.Sector_Permission__c.startsWith('CNS')) ||
+                            && ( (sectors.contains(Sector) && !isCNS && !per.Sector_Permission__c.startsWith('CNS')) ||
                             per.Sector_Permission__c.contains('All') ||
                             (isCNS && per.Sector_Permission__c.startsWith('CNS')) )
                         && per.ISO_Country__c != null
@@ -3319,7 +3585,8 @@ for (string topicver:listofAllowedTopics){
 
     // Method display topic and subtopic according to Custom Setting "ISSP_FAQ2Case_Permissions__c" Permissions
     private void setSubTopicByPermissions(){
-        Integer index = Integer.valueOf(topic.trim());
+        List<String> sectors2 = new List<String>();
+        Integer index = convertIndex(topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
         //Help Selectoptuion List
@@ -3338,8 +3605,10 @@ for (string topicver:listofAllowedTopics){
                 string subtopicVal = subtop.getValue() == 'Fees__c' || subtop.getValue() == 'Changes__c' ? ','+(subtop.getValue()).replace('__c','') : (subtop.getValue()).replace('__c','') ;
                 for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
                 {
+                    sectors2 = new List<String>();
+                    sectors2 = per.Sector_Permission__c.split(',');
                     //Check if the topic has matched Custom setting record
-                    if ( per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector)
+                    if ( per.Sector_Permission__c != null && sectors2.contains(Sector)
                         && per.Subtopic__c != null && per.Subtopic__c.contains(subtopicVal)
                         && (selectDataCategory.CategoryName == per.topic__c || per.topic__c == null || per.topic__c == '')
                         && per.ISO_Country__c != null
@@ -3366,7 +3635,14 @@ for (string topicver:listofAllowedTopics){
     public PageReference copyCountryISO(){
         this.newCase.IFAP_Country_ISO__c = newCase1.IFAP_Country_ISO__c ;
 
+
+        //bypass for button per Topic
+        if(TopicToLiveAgentButtonSettingMap.containsKey(topicLabel)){
+            setButtonForTopic(topicLabel);
+        }else {
         setLiveAgentButtonsNames();
+        }
+
 
         return null;
     }
@@ -3375,7 +3651,7 @@ for (string topicver:listofAllowedTopics){
 
     public void GenerateCreateCaseButtonURL(){
         System.debug('Kerensen2 START GenerateCreateButtonURL ==>');
-        Integer index = Integer.valueOf(this.topic.trim());
+        Integer index = convertIndex(this.topic.trim());
         clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
         List<ISSP_FAQ2Case_CreateCaseURL__c> ISSP_CreateButtonURL_Lst = new List<ISSP_FAQ2Case_CreateCaseURL__c> ([ select Id ,Topic__c , SubTopic__c , URL__c
@@ -3383,12 +3659,21 @@ for (string topicver:listofAllowedTopics){
                                                                                       WHERE
                                                                                           Topic__c =: selectDataCategory.CategoryName
                                                                                       And SubTopic__c =:subtopic
-                                                                                      And SubTopic__c != null]);
+        And SubTopic__c != null
+        AND Active__c = true]);
 
         System.debug('Kerensen2 ISSP_CreateButtonURL_Lst ==>' + ISSP_CreateButtonURL_Lst);
         if(ISSP_CreateButtonURL_Lst != null && ISSP_CreateButtonURL_Lst.size() > 0){
             CreateButtonURL = ISSP_CreateButtonURL_Lst[0].URL__c;
 
+        }
+    }
+    
+    private static Integer convertIndex(String index) {
+        try {
+            return Integer.valueOf(index.trim());
+        } catch(Exception e) {
+            return 0;
         }
     }
 }
