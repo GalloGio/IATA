@@ -45,7 +45,14 @@ public with sharing class ISSP_Financial_Institutions {
 		}
 		private set;
 	}
-	private Integer userFailedProvisioningCount {get; set;}
+	private List<UserProvisioningRequest> previousUserFailedProvisioning {
+		get {
+			if (previousUserFailedProvisioning == null) return new List<UserProvisioningRequest>();
+
+			return previousUserFailedProvisioning;
+		}
+		set;
+	}
 	public ApexPages.StandardSetController ssController {
 		get {
 			if (ssController == null) fetchFinancialInstitutions();
@@ -207,7 +214,7 @@ public with sharing class ISSP_Financial_Institutions {
 							                     Terms_Acceptance_Date__c = Datetime.now());
 		insert gdiPar;
 
-		userFailedProvisioningCount = [SELECT COUNT() FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
+		previousUserFailedProvisioning = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 		getSSOPermissionSet();
 	}
 
@@ -232,7 +239,7 @@ public with sharing class ISSP_Financial_Institutions {
         } else {
         	List<UserProvisioningRequest> provRequestFailedList = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 
-        	if (provRequestFailedList.size() != userFailedProvisioningCount) {
+        	if (provRequestFailedList.size() != previousUserFailedProvisioning.size()) {
         		gdiPolling = false;
         		currentErrorMessage = System.Label.ANG_ISSP_GDI_UserProvisioningError;
         	}
