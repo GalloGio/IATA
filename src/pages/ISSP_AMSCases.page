@@ -193,6 +193,10 @@
                 $('.loadingBox').hide();
             }
 
+            function multiCountryNewAE() {
+                navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_AMSCases&isMultiCountryNewAE=true');
+            }
+
             </script>
         <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
@@ -214,7 +218,7 @@
             
             <div class="container" style="width: 100%">
                 <div class="row">
-                    <section name="left-side-agency-accred" class="col-md-7" style="min-height: 350px;">
+                    <section name="left-side-agency-accred" class="col-md-7" style="min-height: 350px; display: {!IF(isMultiCountryStarted, 'none', '')};">
                         <header>
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -224,8 +228,6 @@
                             
                         <div class="row" style="padding-top: 20px">
                             <div class="col-md-7">
-                                        
-                                <!--<input type="button" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>-->
                                 <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')};" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
 
                                 <input type="button" style="display:{!IF(isHOAccredited,'','none')};" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
@@ -250,9 +252,7 @@
                                         <apex:outputText escape="false" value="{!$Label.ISSP_ANG_proof_PCI_Info}"/>
                             </div>
                                     
-                            <div class="col-md-5" >
-                                
-                            </div>
+                            <div class="col-md-5"/>
                         </div>
 
                         <div class="row" style="padding-bottom: 20px">
@@ -261,9 +261,7 @@
                                 <input style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')};" type="button" class="btn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
                             </div>
                                     
-                            <div class="col-md-5" >
-                                
-                            </div>
+                            <div class="col-md-5"/>
                         </div>
 
                          <div class="row" style="padding-bottom: 20px">
@@ -273,6 +271,47 @@
                                 <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Specific_Sales_Activity}" id="SACommandLink" rendered="{!AND(isHOAccredited, NOT(isoCountry.ANG_Enable_NewGen__c), sector=='Travel Agent')}">
                                     <apex:param assignTo="{!agentCaseType}" value="SA" />
                                 </apex:commandLink>
+                            </div>
+                         </div>   
+                    </section>
+
+                    <section name="left-side-agency-accred-multicountry" class="col-md-7" style="min-height: 350px; display: {!IF(isMultiCountryStarted, '', 'none')};">
+                        <header>
+                            <div class="section-header">
+                                <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
+                                <strong>{!$Label.ISSP_AMS_Agency_Accreditation}</strong>
+                            </div>
+                        </header>
+                            
+                        <div class="row" style="padding-top: 20px">
+                            <div class="col-md-7">
+                                <input type="button" class="btn btn_iata_primary" onClick="multiCountryNewAE();" value="Add New Associate Entity"/>
+                            </div>
+                                    
+                            <div class="col-md-5">
+                                
+                            </div>
+                        </div>
+                                
+                        <div class="row" style="padding-bottom: 20px">
+                            <div class="col-md-7">
+                                
+                            </div>
+                                    
+                            <div class="col-md-5"/>
+                        </div>
+
+                        <div class="row" style="padding-bottom: 20px">
+                            <div class="col-md-7">
+                                
+                            </div>
+                                    
+                            <div class="col-md-5"/>
+                        </div>
+
+                         <div class="row" style="padding-bottom: 20px">
+                            <div class="col-md-7">
+                                
                             </div>
                          </div>   
                     </section>
@@ -306,7 +345,7 @@
                 </div>
                 
                 <div class="row">
-                    <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px">
+                    <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(isMultiCountryStarted, 'none', '')};">
                         <header>
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -340,7 +379,7 @@
                             
                     </section>
                         
-                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(OR(isUserAccAccredited, isMultiCountryStarted), '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
                         <header>
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
