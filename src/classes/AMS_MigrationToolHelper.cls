@@ -802,7 +802,8 @@ public without sharing class AMS_MigrationToolHelper {
 
 			Id oscarRTId = null;
 
-			if(isNewgenAccount || (AMS_Utils.IEP_PROCESSES.contains(processType) && oscarNewgenRTMap.containsKey(processType)))
+
+            if(isNewgenAccount || (( AMS_Utils.IEP_PROCESSES.contains(processType) || processType == AMS_Utils.NGGDI ) && oscarNewgenRTMap.containsKey(processType)) )
 				oscarRTId = oscarNewgenRTMap.get(processType);
 
             if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
