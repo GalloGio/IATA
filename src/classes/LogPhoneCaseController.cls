@@ -15,7 +15,8 @@ public with sharing class LogPhoneCaseController {
 				'Africa & ME' => 'Cases - Africa & Middle East',
 				'A&P' => 'Cases - Asia & Pacific',
 				'Americas' => 'Cases - Americas',
-				'IATAN' => 'Cases - Americas'};
+				'IATAN' => 'Cases - Americas',
+                'Cases - Global' => 'Cases - Global'};
 	
     private Map<String, String> caseRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('Case');
 	

@@ -340,7 +340,7 @@
             <script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
 
             <script type="text/javascript">
-                var creditCards = JSON.parse('{!creditCardsJSON}'); 
+                var creditCards = {!creditCardsJSON}; 
 
                 var closeModal = function(modal_id){
                     $(modal_id).addClass(className.hidden);

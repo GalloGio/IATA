@@ -89,10 +89,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>charlierc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>danielovd@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -7426,7 +7422,8 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
 (IF(CONTAINS( $UserRole.Name, &quot;Operations Manager&quot;),&quot;Operations&quot;,
 (IF(OR(CONTAINS( $UserRole.Name, &quot;Operations Staff&quot;),CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)),&quot;Operations&quot;, 
 (IF(CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,
-(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))))))))))</formula>
+(IF(CONTAINS($Profile.Name, &quot;GCS -&quot;), &quot;Customer Service&quot;,
+(IF(CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),&quot;Airline Management&quot;,&quot;IATA Other&quot;))))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -15151,6 +15148,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Update_AIMS_DEF__c</field>
             <operation>equals</operation>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.Outs_Amount_equals_IATA_charges__c</field>
+            <operation>equals</operation>
+            <value>NO</value>
+        </criteriaItems>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -15188,7 +15190,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20 AND (NOT(23) AND 15))) AND 16 AND 18 AND 19 AND 21 AND 22 AND NOT(23 AND 24)) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>25 AND (1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20 AND (NOT(23) AND 15))) AND 16 AND 18 AND 19 AND 21 AND 22 AND NOT(23 AND 24)) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15247,7 +15249,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>,CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
+            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
@@ -15309,6 +15311,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>equals</operation>
             <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Cases - Global</value>
+        </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -15319,7 +15326,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR (19 AND 20) OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
+        <booleanFilter>25 OR (((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15) OR (10 AND 19 AND 20)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15378,7 +15385,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,New TIDS,New MSO,New HE lite,New HE standard,New AE,GSA / MSO / Handling Agent</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,New TIDS,New MSO,New HE lite,New HE standard,New AE,GSA / MSO / Handling Agent</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -15439,6 +15446,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
             <value>CHG – Data Maintenance</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Global</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
