@@ -114,7 +114,7 @@ global class ANG_ChinaConversionsHelper {
     	List<AMS_Agencies_relationhip__c> allRelations = 
 				[SELECT Id, Child_Account__c, Child_Account__r.Name, Child_Account__r.Top_Parent__c, Child_Account__r.ParentId, Parent_Account__c, Child_Account__r.Top_Parent__r.Location_Type__c, Is_Newgen_Relation__c
 				 from AMS_Agencies_relationhip__c 
-				 where Child_Account__c = :accountId or Child_Account__r.Top_Parent__c = :accountId or Child_Account__r.ParentId = :accountId];
+				 where Child_Account__c = :accountId or Child_Account__r.Top_Parent__c = :accountId or Parent_Account__c = :accountId];
 
 		return allRelations;
     }
@@ -124,6 +124,25 @@ global class ANG_ChinaConversionsHelper {
 											ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c
 									 FROM Account
 									 WHERE Id = :accountId OR ParentId = :accountId OR Top_Parent__c = :accountId]);
+    }
+
+    public static List<Account> getAllAccountsFromRelationships(Id accountId) {
+		List<AMS_Agencies_relationhip__c> allRelations = getAllAccountRelations(accountId);
+
+		Set<Id> accountIdsSet = new Set<Id>();
+
+		for(AMS_Agencies_relationhip__c rel : allRelations) {
+			accountIdsSet.add(rel.Parent_Account__c);
+			accountIdsSet.add(rel.Child_Account__r.Top_Parent__c);
+			accountIdsSet.add(rel.Child_Account__c);
+		}
+
+		List<Account> accountsList = [SELECT Id, Name, Location_Class__c, Location_Type__c, ANG_Accreditation_Model__c, Status__c, ParentId, Top_Parent__c,
+											ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c
+									  FROM Account
+									  WHERE Id in :accountIdsSet];
+
+		return accountsList;
     }
 
 }
