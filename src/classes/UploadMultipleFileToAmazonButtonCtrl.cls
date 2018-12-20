@@ -136,7 +136,10 @@ global class UploadMultipleFileToAmazonButtonCtrl {
 
             if (parentId.startsWith('500')) {
                 amazonFile.Case__c = parentId;
-            }
+            }//Fix: use sObject_id__c field!
+            else
+                amazonFile.sObject_Id__c = parentId;
+            
             upsert amazonFile;
 
             return true;

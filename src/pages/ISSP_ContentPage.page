@@ -109,12 +109,16 @@
             var allFileTypes ='{!allFileTypesList}';
             var allDocumentCategory ='{!allDocumentCategoryList}';
             var userCountry = '{!UserPortalCountry}';
- 
+            //+++
+            var allProductCategory ='{!allProductCategoryList}';
+
             allCountriesOfPublication = allCountriesOfPublication.replace(/]|\[/g, '');
             allLanguages = allLanguages.replace(/]|\[/g, '');
             allFileTypes = allFileTypes.replace(/]|\[/g, '');
             allDocumentCategory = allDocumentCategory.replace(/]|\[/g, '');
-          
+
+            //+++
+            allProductCategory = allProductCategory.replace(/]|\[/g, '');
             this.api().columns([5,2]).every( function (columnIndex) {// search only available for country of publication and document category columns
                        
                 var column = this;
@@ -281,6 +285,10 @@
                                             </div>
                                         </div>
                                         <div class="col-md-3" id="leftFilter">
+                                            {!$Label.ISSP_Filter_By_Product_Type }
+                                            <apex:selectList id="DocProdCat" value="{!selectedValProd}" multiselect="false" size="1" styleClass="form-control">
+                                                <apex:selectOptions value="{!allProductCategoryList}"/>
+                                            </apex:selectList>
                                             {!$Label.ISSP_Filter_by_Document_Category}
                                             <apex:selectList id="DocCat" value="{!selectedValCat}" multiselect="false" size="1" styleClass ="form-control">
                                                 <apex:selectOptions value="{!allDocumentCategoryList}"/>
@@ -289,6 +297,7 @@
                                             <apex:selectList id="DocCountPub" value="{!selectedValPub}" multiselect="false" size="1" styleClass ="form-control">
                                                 <apex:selectOptions value="{!allCountriesList}"/>
                                             </apex:selectList>
+
                                         <!--  <apex:commandButton value="{!$Label.PKB2_Reset_Search}" styleClass=" btn btn-danger" rerender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors" oncomplete="loadTableDocs();"/> -->
                                           <apex:commandButton value="Apply Filter" action="{!Init}" styleClass="btn btn-success" reRender="body-results,opp_results,mainFrm,results1,docstable,resulttable,errors"  oncomplete="loadTableDocs();" />
                                          </div>      

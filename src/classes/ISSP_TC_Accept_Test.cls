@@ -188,5 +188,18 @@ private class ISSP_TC_Accept_Test {
         	cttr.CheckLogoutorSurvey();
     	}
     }
+	
+    static testMethod void myUnitTest_5() {
+        ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
+        insert issc;
+        Test.startTest();
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+        cttr.getOperationalCalendarPermission();
+        cttr.CheckLogoutorSurvey();
+        PageReference pageRef = Page.ISSP_TC_Accept;
+        Test.setCurrentPage(pageRef);
+        PageReference pr1 = cttr.pageLoad();
+		Test.stopTest();        
+    }
 
 }
