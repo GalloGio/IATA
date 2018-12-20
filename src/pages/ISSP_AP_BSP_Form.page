@@ -74,7 +74,9 @@
         }
     }
     </script>
-    
+
+    <apex:variable var="localAddressMandatory" value="{!countryRequirement.Type_of_address_accepted__c=='Local'}" />
+
     <!-- Modal -->
 <div class="modal fade" id="ModalCountryReqs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -378,18 +380,18 @@
                     <tr><td colspan="4" class="aplabel">Airline local address in BSP {!apcountry}</td></tr>
                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel for="aladdress" value="Address" styleclass="ap-required" />
+                            <apex:outputLabel for="aladdress" value="Address" styleclass="{!IF(localAddressMandatory,'ap-required','')}"/>
                             <apex:inputField id="aladdress" value="{!newForm.BSP_Local_address__c}" />
                         </apex:pageBlockSectionItem>
                         <apex:outputText ><!--empty: move following field to next row --></apex:outputText> 
                         
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel for="zip" value="Zip code" styleclass="ap-required" />
+                            <apex:outputLabel for="zip" value="Zip code" styleclass="{!IF(localAddressMandatory,'ap-required','')}"/>
                              <apex:inputText id="zip" value="{!newForm.BSP_Local_Zip_Code__c}" />
                         </apex:pageBlockSectionItem>
                         
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel for="city" value="City" styleclass="ap-required" />
+                            <apex:outputLabel for="city" value="City" styleclass="{!IF(localAddressMandatory,'ap-required','')}"/>
                             <apex:inputField id="city" value="{!newForm.BSP_Local_City__c}" />
                         </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>

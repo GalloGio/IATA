@@ -856,7 +856,7 @@ global without sharing class ISSP_APProcess {
 
     public Pagereference goToFinalStep(){
         List<String> listMandatoryFiles = new list<String>();
-        if (newForm.Airline_wish_to_join_ICCS__c=='Yes' && hqaccount.ICCS_Membership_Status__c!='Member') {
+        if (getShowJoinICCS()) {
             //check ICCS_Join
             listMandatoryFiles.add('ICCS_Join');
         }
@@ -1602,6 +1602,16 @@ global without sharing class ISSP_APProcess {
             } 
         }
         return true;
+    }
+    
+    /**
+        Returns true if the hq account meets the conditions to show ICCS Joining section
+    **/
+    public Boolean getShowJoinICCS() {
+        return this.newForm.Airline_wish_to_join_ICCS__c=='Yes'
+            && this.hqaccount.ICCS_Membership_Status__c!='Prospect'
+            && this.hqaccount.ICCS_Membership_Status__c!='Active'
+            && this.hqaccount.ICCS_Membership_Status__c!='Member';
     }
     
     /**

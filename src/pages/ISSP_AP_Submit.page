@@ -61,8 +61,12 @@
 
                     <!-- Without ICCS -->
                     <apex:outputPanel layout="block" rendered="{!OR(ISNULL(ICCSProductCountry),newForm.Airline_wish_to_join_ICCS__c == 'No')}">
-                        Scenario A and B<br/>
-                        This panel shows because the account has no ICCS Product country OR user selected No in last question<br/>
+                        <p>
+                            <b>Please download the Bank Mandate form using the link below:</b>
+                            <div id="bankmandatelink_p">
+                                <u><a href="{!BankMAndateUrl}" target="_blank">BSP / CASS Local Bank Account Beneficiary</a></u>
+                            </div>
+                        </p>
 
                         <apex:outputPanel layout="block" styleclass="red-box" rendered="{!AuthorizedSignatories.size=0}">
                             No authorized signatories. Text to be defined
@@ -83,7 +87,7 @@
 
                 <!-- With ICCS and is not a Member -->
                 <apex:pageBlockSection title="Information required to join ICCS" columns="1"
-                    rendered="{!AND(newForm.Airline_wish_to_join_ICCS__c=='Yes',hqaccount.ICCS_Membership_Status__c!='Member')}">
+                    rendered="{!showJoinICCS}">
                     Scenario D<br/>
                     <a href="#" style="text-decoration: underline">Download a file</a><br/>
                     
@@ -103,7 +107,7 @@
                 </apex:pageBlockSection>
 
                 <apex:pageBlockSection title="Upload Bank Mandate" columns="1"
-                        rendered="newForm.Airline_wish_to_join_ICCS__c=='No'">
+                        rendered="{!newForm.Airline_wish_to_join_ICCS__c=='No'}">
                     Please upload the completed Bank Mandates.
                     <apex:iframe scrolling="false" height="160px"
                         src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription=&reqIdentifier=Bank_Mandate&onlyOne=true"/>
@@ -222,7 +226,14 @@
 
                 <!-- Counter Indemnity Agreement -->
                 <apex:pageBlockSection title="Counter Indemnity Agreement" columns="1"
-                    rendered="{!AND(strAreaType=='Airline Joining',OR(AND(isBSP,hqAccount.BSP_CI_Valid__c),AND(isCASS,hqAccount.CASS_CI_Valid__c)))}">
+                    rendered="{!
+                            AND(strAreaType=='Airline Joining',
+                                hqAccount.Sector__c=='Airline',
+                                OR(
+                                    AND(isBSP,NOT(hqAccount.BSP_CI_Valid__c)),
+                                    AND(isCASS,NOT(hqAccount.CASS_CI_Valid__c))
+                                )
+                            )}">
                     <div class="aplabel">
                         <p>
                             According to our records, your airline needs to provide a counter indemnity agreement in order to join this operation. Please sondlowad in the download it in the following link and attach an escaned copy using the button below
@@ -231,15 +242,18 @@
                     <p>
                         <a href="#" style="text-decoration: underline;">Counter indemnity agreement</a>
                     </p>
-                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=Please upload the completed Bank Mandates&reqIdentifier=CounterIndemnityAgreement" height="180px" width="100%" scrolling="false"/>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=Please upload the completed Bank Mandates&reqIdentifier=CounterIndemnityAgreement" height="180px" width="100%" scrolling="false"/>
                 </apex:pageBlockSection>
 
-                <!-- Form of Authorization -->
-                <apex:pageBlockSection title="Form of Authorization" columns="1"
-                    rendered="{!AND(strAreaType=='Airline Joining',OR(
-                        AND(isBSP,NOT(hqAccount.BSP_FOC_Valid__c),hqAccount.Membership_status__c!='IATA Member'),
-                        AND(isCASS,NOT(hqAccount.CASS_FOC_Valid__c),hqAccount.Membership_status__c!='IATA Member')
-                    ))}">
+                <!-- Form of concurrence -->
+                <apex:pageBlockSection title="Form of concurrence" columns="1"
+                    rendered="{!AND(
+                        strAreaType=='Airline Joining',
+                        hqAccount.Sector__c=='Airline',
+                        isBSP,
+                        NOT(hqAccount.BSP_FOC_Valid__c),
+                        hqAccount.Membership_status__c!='IATA Member'
+                    )}">
                     <div class="aplabel">
                         <p>
                             According to our records, your airline needs to provide a form of authorization document signed. This document needs to be provided only once. Please download using the following link and attach an escaned copy using the button below. The hard copy must be send to the address below.
@@ -248,7 +262,37 @@
                     <p>
                         <a href="#" style="text-decoration: underline;">Form of Authorization</a>
                     </p>
-                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Form of Authorization&reqDescription=&reqIdentifier=FormOfAuthorization" height="180px" width="100%" scrolling="false"/>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName=Form of Authorization&reqDescription=&reqIdentifier=FormOfAuthorization" height="180px" width="100%" scrolling="false"/>
+                </apex:pageBlockSection>
+
+                <!-- Form Of Application -->
+                <apex:pageBlockSection title="Form of Application" columns="1"
+                    rendered="{!
+                            AND(strAreaType=='Airline Joining',
+                                hqAccount.Sector__c=='Airline',
+                                isBSP
+                            )}">
+                    <div class="aplabel">
+                        <p>
+                            Text to be defined
+                        </p>
+                    </div>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=6&reqRequired=Mandatory&reqName=Form of Application&reqDescription=&reqIdentifier=FormOfApplication" height="180px" width="100%" scrolling="false"/>
+                </apex:pageBlockSection>
+
+                <!-- Form Of Application and Concurrence -->
+                <apex:pageBlockSection title="Form of Application and Concurrence" columns="1"
+                    rendered="{!
+                            AND(strAreaType=='Airline Joining',
+                                hqAccount.Sector__c=='Airline',
+                                isCASS
+                            )}">
+                    <div class="aplabel">
+                        <p>
+                            Text to be defined
+                        </p>
+                    </div>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=7&reqRequired=Mandatory&reqName=Form of Application and Concurrence&reqDescription=&reqIdentifier=FormOfApplicationAndConcurrence" height="180px" width="100%" scrolling="false"/>
                 </apex:pageBlockSection>
 
                 <!-- Accept terms and conditions -->   
@@ -278,19 +322,18 @@
                     </div>
                     <div class="aplabel">
                     By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.
-                         
+
                     <br/>
                     <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/>
                     </div>
                     
-                </apex:pageBlockSection>   
+                </apex:pageBlockSection>
             </div>
             
-        </apex:pageBlock>    
+        </apex:pageBlock>
     </apex:form>
-    
-        </div>
-    </div>    
-        
-        
+
+    </div>
+    </div>
+
 </apex:page>

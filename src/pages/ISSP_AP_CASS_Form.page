@@ -46,7 +46,9 @@
 
     </script>
 
-    <apex:variable var="localVATMandatory" value="{!countryRequirement.Local_VAT_Mandatory__c='YES'}" />
+    <apex:variable var="localVATMandatory" value="{!countryRequirement.Local_VAT_Mandatory__c=='YES'}" />
+    <apex:variable var="VATAlwaysInserted" value="{!countryRequirement.VAT_no_always_inserted_into_ISS_systems__c=='YES'}" />
+    <apex:variable var="localAddressMandatory" value="{!countryRequirement.Type_of_address_accepted__c=='Local'}" />
 
     <!-- Modal -->
 <div class="modal fade" id="ModalCountryReqs" tabIndex="-1" data-backdrop='false' role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -343,15 +345,15 @@
                     </tr>
                     
                     <apex:pageBlockSectionItem helpText="Only if applicable. Please refer to country specifics.">
-                        <apex:outputLabel styleclass="ap-required" value="Address"/>
+                        <apex:outputLabel styleclass="{!IF(localAddressMandatory,'ap-required','')}" value="Address"/>
                         <apex:inputField value="{!newForm.BSP_Local_address__c}" />
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel styleclass="ap-required" value="Zip Code"/>
+                        <apex:outputLabel styleclass="{!IF(localAddressMandatory,'ap-required','')}" value="Zip Code"/>
                         <apex:inputField value="{!newForm.BSP_Local_Zip_Code__c}" />
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel styleclass="ap-required" value="City" />
+                        <apex:outputLabel styleclass="{!IF(localAddressMandatory,'ap-required','')}" value="City" />
                         <apex:inputField value="{!newForm.BSP_Local_City__c}" />
                     </apex:pageBlockSectionItem>
                     <apex:outputText >&nbsp;<!--empty: move following field to next row --></apex:outputText>
@@ -393,7 +395,7 @@
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem rendered="{!NOT(apcountryisocode='BR')}">
-                        <apex:outputLabel value="VAT/Tax Registration number of the Airline's Home Country / Head Office" styleClass="{!IF(localVATMandatory,'','ap-required')}"/>
+                        <apex:outputLabel value="VAT/Tax Registration number of the Airline's Home Country / Head Office" styleClass="{!IF(VATAlwaysInserted,'ap-required','')}"/>
                         <apex:inputField value="{!newForm.VAT_Tax_number_in_your_home_country__c}" label=""/>
                     </apex:pageBlockSectionItem>
                     <apex:outputText rendered="{!OR(apcountryisocode='EC',apcountryisocode='VE')}"><!--empty: move following field to next row --></apex:outputText>
@@ -523,7 +525,7 @@
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
                 <span id="nav_six"></span>        
-                <apex:pageBlockSection title="6. Report Options" columns="2" >
+                <apex:pageBlockSection id="section-product-subscriptions" title="6. Report Options" columns="2" >
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="6.  Report Options"/>
@@ -531,10 +533,17 @@
                     </apex:facet>           
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Does the Airline wish to receive HOT files?" style="color:#a31717; font-weight: bold !important;"/>
-                        <apex:inputField value="{!newForm.Receive_HOT_files__c}" label=""/>
-                    </apex:pageBlockSectionItem>            
-                    <apex:inputField label="HOT file receipt preference" value="{!newForm.Hot_files_delivery_format__c}"/>
-                    
+                        <apex:inputField value="{!newForm.Receive_HOT_files__c}">
+                            <apex:actionSupport event="onchange" rerender="section-product-subscriptions"/>
+                        </apex:inputField>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:actionRegion>
+                            <apex:outputLabel value="HOT file receipt preference"
+                                styleclass="{!IF(OR(newForm.Receive_HOT_files__c=='YES - Billing Period HOT',newForm.Receive_HOT_files__c=='YES - Remittance Period HOT') ,'ap-required','')}"/>
+                        </apex:actionRegion>
+                        <apex:inputField value="{!newForm.Hot_files_delivery_format__c}"/>
+                    </apex:pageBlockSectionItem>
                     <div class="aplabel">              
                         If E-mail and Download, Please list up to 4 email addresses for distribution of the HOT file
                     </div>   
