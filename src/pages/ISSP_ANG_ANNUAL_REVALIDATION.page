@@ -1,5 +1,4 @@
-<apex:page controller="ISSP_ANG_ANNUAL_REVALIDATION" cache="false" sidebar="false" showHeader="false" standardStylesheets="true"
-    applyBodyTag="false" applyHtmlTag="false" action="{!securityCheck}">
+<apex:page controller="ISSP_ANG_ANNUAL_REVALIDATION" cache="false" sidebar="false" showHeader="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false" action="{!securityCheck}">
 
     <html>
 
@@ -11,6 +10,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
         <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->
         <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
@@ -356,22 +357,24 @@
                                 <apex:inputHidden id="currentIataCode" value="{!currentIataCode}"/>
 
                                 <apex:actionFunction name="loadIataCode" action="{!loadIataCode}" status="WaitingStatus" rerender="componentsArea, buttonsArea" />
-                                <apex:actionFunction name="cancelUpdate" action="{!cancelUpdate}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage" />
-                                <apex:actionFunction name="discardDetails" action="{!discardDetails}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage" />
+                                <apex:actionFunction name="cancelUpdate" action="{!cancelUpdate}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
+                                <apex:actionFunction name="discardDetails" action="{!discardDetails}" status="WaitingStatus" reRender="treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
 
-                                <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage"/>
-                                <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage"/>
+                                <apex:actionFunction name="bodyRerender" status="WaitingStatus" rerender="componentsArea, buttonsArea" />
+                                
+                                <apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact, ownershipMessage, noUpdateMessage"/>
+                                <apex:actionFunction name="cancelCompanyUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newCompany, ownershipMessage, noUpdateMessage"/>
 
-                                <apex:actionFunction name="deleteContact" immediate="true" action="{!deleteAgencyContact}" rerender="currContactList, currCompanyList, updated-company-owners,currOwnerSummaryList, ownershipMessage">
+                                <apex:actionFunction name="deleteContact" immediate="true" action="{!deleteAgencyContact}" rerender="currContactList, currCompanyList, updated-company-owners,currOwnerSummaryList, ownershipMessage, noUpdateMessage">
                                     <apex:param value="" name="recordId" assignTo="{!editContactId}" />
                                 </apex:actionFunction>
 
                                 <apex:actionFunction name="createAgencyCompany" action="{!createAgencyContact}"
-                                        rerender="currContactList, currCompanyList, updated-company-owners,currOwnerSummaryList, ownershipMessage"
+                                        rerender="currContactList, currCompanyList, updated-company-owners,currOwnerSummaryList, ownershipMessage, noUpdateMessage"
                                         oncomplete="if ({!contactSaved==true}){hideNewCompanyDialog(); cancelCompanyUpdate();} $('[id$=companySubmitBut]').removeAttr('disabled');">
                                     <apex:param value="" name="contype" assignTo="{!contactType}" />
                                 </apex:actionFunction>
-                                <apex:actionFunction name="fetchTravelAgent3" action="{!fetchAgentDetails}" status="loadingDetailsCompanyModal" reRender="companyModalIataCodeValidation, ownershipMessage">
+                                <apex:actionFunction name="fetchTravelAgent3" action="{!fetchAgentDetails}" status="loadingDetailsCompanyModal" reRender="companyModalIataCodeValidation, ownershipMessage, noUpdateMessage" oncomplete="if({!ownerWithSameIATACode} || ({!companyModalNameOfEmployer == ''} && {!iatacode != ''} && {!iatacode != null})) {$('[id$=companySubmitBut]').attr('disabled','disabled');} else {$('[id$=companySubmitBut]').removeAttr('disabled');}">
                                     <apex:param name="travelAgentCode" assignTo="{!iatacode}" value=""/>
                                     <apex:param name="AgentSector" assignTo="{!agentsector}" value="Both"/>
                                     <apex:param name="isAddCompanyModal" assignTo="{!isAddCompanyModal}" value="true"/>
@@ -438,6 +441,7 @@
 
                                                         $j(document).ready(function () {
                                                             flag = 1;
+                                                            bodyRerender();
                                                         });
 
                                                     </script>
@@ -452,7 +456,7 @@
 
                                             <div>
                                                 <div>
-                                                    <apex:outputPanel id = "panel2">
+                                                    <apex:outputPanel id="panel2">
                                                         <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE}"></apex:outputText>
                                                         <div class="panel panel-default">
 
@@ -474,14 +478,14 @@
                                                                         <apex:outputpanel>{!$Label.ISSP_Status}</apex:outputpanel>
                                                                     </apex:facet-->
 
-                                                                    <apex:pageBlockSectionItem>
+                                                                    <apex:pageBlockSectionItem >
                                                                         <apex:outputLabel value="{!$Label.ISSP_AMS_MSO_GSA_IATA_Code}" />
                                                                         <apex:outputField value="{!currentAccount.account.IATACode__c}" />
                                                                     </apex:pageBlockSectionItem>
 
-                                                                    <apex:pageBlockSectionItem>
+                                                                    <apex:pageBlockSectionItem >
                                                                         <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_VAL_STATUS}" />
-                                                                        <apex:outputPanel>
+                                                                        <apex:outputPanel >
                                                                             <apex:outputText value="{!currentAccount.statusDesc}" />
 
                                                                             <apex:commandLink id="bla" style="margin-left: 20px"
@@ -515,11 +519,13 @@
                                                             <apex:outputPanel id="buttonsArea">
 
                                                                     <div class="center" style="display:{!IF(currentAccount.status == 'O','inline-block','none')}">
+                                                                        <apex:pageMessage summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE}" severity="error" strength="3" rendered="{!NOT(ownershipCompleted)}"/>
                                                                         <apex:commandButton styleclass="btn btn-default"
                                                                             action="{!confirmDetails}" onclick=""
                                                                             status="WaitingStatus"
                                                                             reRender="treeArea, componentsArea, buttonsArea"
-                                                                            value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"/>
+                                                                            value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"
+                                                                            disabled="{!NOT(ownershipCompleted)}"/>
 
                                                                         <apex:commandButton styleclass="btn btn-default"
                                                                             action="{!updateDetails}" onclick=""
@@ -558,7 +564,7 @@
                                     <apex:pageBlockButtons location="bottom" style="padding-left:218px">
                                         <apex:actionStatus id="buttonLoadingStep1">
                                             <apex:facet name="stop">
-                                                <apex:outputPanel>
+                                                <apex:outputPanel >
                                                     <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
                                                         immediate="true" status="buttonLoadingStep1" reRender="step1Form" />
                                                     <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');"
@@ -567,7 +573,7 @@
                                                 </apex:outputPanel>
                                             </apex:facet>
                                             <apex:facet name="start">
-                                                <apex:outputPanel>
+                                                <apex:outputPanel >
                                                     <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true"
                                                         reRender="step1Form" />
                                                     <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form" />
@@ -589,7 +595,7 @@
                             <h3 class="panel-title">{!$Label.ISSP_ANG_ANNUAL_REVALIDATION}</h3>
                         </div>
                         <div class="panel-body" id="body-enquiries">
-                            <apex:form>
+                            <apex:form >
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%">
                                         <apex:commandLink status="WaitingStatus" styleclass="btn btn-default" action="{!goToStep1}" value="{!$Label.ISSP_ANG_Step1_ANNUAL_REV}" id="Prev1Submit"
@@ -601,7 +607,7 @@
                                 </div>
                             </apex:form>
 
-                            <apex:pageBlock>
+                            <apex:pageBlock >
                                 <c:ISSP_ANG_ANNUAL_REV_SUBMIT_REPORT helper="{! submitHelper}" id="submitReport"/>
                             </apex:pageBlock>
                         </div>
@@ -613,11 +619,11 @@
                     <apex:form id="tCondiForm">
                         <!--apex:pageMessages /-->
 
-                        <apex:pageBlock>
+                        <apex:pageBlock >
                             <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                                 <apex:actionStatus id="buttonLoadingStep3">
                                     <apex:facet name="stop">
-                                        <apex:outputPanel>
+                                        <apex:outputPanel >
                                             <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep1}" value="{!$Label.ISSP_Back}"
                                                 immediate="true" status="buttonLoadingStep3" reRender="tCondiForm" />
 
@@ -628,7 +634,7 @@
                                         </apex:outputPanel>
                                     </apex:facet>
                                     <apex:facet name="start">
-                                        <apex:outputPanel>
+                                        <apex:outputPanel >
                                             <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm" />
                                             <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
                                         </apex:outputPanel>
@@ -894,7 +900,7 @@
                         <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" id="submitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
                             oncomplete="if ({!contactSaved==true}){hideNewContactDialog(); cancelAgentUpdate();} this.removeAttribute('disabled');"
                             onclick="this.disabled='disabled';"
-                            reRender="currContactList, theMessages, ownershipMessage">
+                            reRender="currContactList, theMessages, ownershipMessage, noUpdateMessage">
                             <apex:param value="Current Owner" name="ownertype" assignTo="{!contactType}" />
                         </apex:commandButton>&nbsp;
                         <button type="button" class="btn btn-default" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
@@ -975,7 +981,7 @@
 
                                 <apex:inputField value="{!currentAccount.newContact.Registration_number__c}" required="true" />
 
-                                <apex:inputField value="{!currentAccount.newContact.IATACode__c}" onblur="fetchTravelAgent3(this.value.trim())"/>
+                                <apex:inputField value="{!currentAccount.newContact.IATACode__c}" onblur="fetchTravelAgent3(this.value.trim());"/>
 
                                 <apex:actionStatus id="loadingDetailsCompanyModal" startStyleClass="bg-info">
                                     <apex:facet name="start">
@@ -984,7 +990,8 @@
                                 </apex:actionStatus>
 
                                 <apex:outputPanel id="companyModalIataCodeValidation">
-                                    <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(companyModalNameOfEmployer=='', iatacode!='')}"/>
+                                    <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(NOT(ownerWithSameIATACode),companyModalNameOfEmployer=='', iatacode!='')}"/>
+                                    <apex:outputText value="{!$Label.ISSP_ANG_ANNUAL_SAME_OWNER_ERROR}" styleClass="bg-danger" escape="false" rendered="{!AND(ownerWithSameIATACode, iatacode!='')}"/>
                                     <apex:outputPanel rendered="{!AND(companyModalNameOfEmployer!='', iatacode!='')}">
                                         <span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_Agency_name} </span>{!companyModalNameOfEmployer} <br/>
                                         <span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_AMS_Address} </span> {!companyModalAddress}

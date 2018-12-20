@@ -117,7 +117,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 	public void executeAdhoc(){
 		initData();
-		backupData();
+		//backupData();
 	}
 
 	public void setNewParentHierarchyId(Id newParentHierarchyId){
@@ -125,6 +125,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 	}
 
 	private void initData(){
+
+		system.debug('[ANG_BackupEngineHelper] (1) Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
 
 		oscar = (AMS_OSCAR__c)getObject('AMS_OSCAR__c',new Set<Id>{oscarId},toUpperCase(new Set<String>{'account__c','ANG_Type_Of_Change__c','New_parent__c'}),whereClausesMap.get('AMS_OSCAR__C')).get(0);
 
@@ -162,6 +164,32 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountFields.add('ANG_IEP_Status__c');
 		accountFields.add('ANG_IEP_HE_AccntNum__c');
 		
+		Set<String> contactFields = new Set<String>();
+		
+		contactFields.add('FirstName');
+		contactFields.add('LastName');
+		contactFields.add('Title');
+		contactFields.add('AccountId');
+		contactFields.add('Membership_Main_Contact__c');
+		contactFields.add('Financial_Assessment_Contact__c');
+		contactFields.add('Phone');
+		contactFields.add('Mobilephone');
+		contactFields.add('Fax');
+		contactFields.add('Birthdate');
+		contactFields.add('Email');
+		contactFields.add('ISO_Country__c');
+		contactFields.add('RecordTypeId');
+		contactFields.add('Training_dangerous_goods_completed__c');
+		contactFields.add('list_Dangerous_Goods_Awareness__c');
+		contactFields.add('Authorized_Signatory__c');
+		contactFields.add('Designated_Portal_Admin__c');
+		contactFields.add('Invoicing_Contact__c');
+		contactFields.add('OtherStreet');
+		contactFields.add('OtherCity');
+		contactFields.add('OtherPostalCode');
+		contactFields.add('OtherCountry');
+
+
 		Set<String> entitiesToRollback = new Set<String>();
 
 		for(String typeOfChange: oscar.ANG_Type_Of_Change__c.split(';'))
@@ -171,17 +199,39 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			accountIds.add(newParentHierarchyId);	
 		}
 
+		system.debug('[ANG_BackupEngineHelper] (2) Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
+
 		entitiesToBackup.put('Account',getObject('Account',accountIds,toUpperCase(accountFields),whereClausesMap.get('ACCOUNT')));
 		// we are using DefaultChange in the Map, but later we need to define which entities should we backup for each type of change...
 
+		backupData(); // for Account
+
+		system.debug('[ANG_BackupEngineHelper] (3) Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
+
 		For(String entity : entitiesToRollback){
+
+			system.debug('[ANG_BackupEngineHelper] Cleanup : (3.1) Before Entity '+entity +' Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
+
+			this.entitiesToBackup = null;
+			this.entitiesToBackup = new Map<String,List<sObject>>();
+
+			system.debug('[ANG_BackupEngineHelper] Cleanup done : (3.1) Before Entity '+entity +' Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
 
 			if(newParentHierarchyId != null && (entity == 'AMS_Agencies_Hierarchy__c'|| entity == 'AMS_Agencies_relationhip__c')){
 				accountIds.add(newParentHierarchyId);	
 			}
 			
-			entitiesToBackup.put(entity,getObject(entity,accountIds,null,whereClausesMap.get(entity.toUpperCase())));
+			Set<String> fieldSet = entity == 'Contact' ? contactFields : null;
+
+			entitiesToBackup.put(entity,getObject(entity,accountIds,fieldSet,whereClausesMap.get(entity.toUpperCase())));
+			system.debug('[ANG_BackupEngineHelper] (4) after Entity '+entity +' Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
+
+			backupData();
 		}
+
+		oscar.Backup_In_Progress__c	= false;
+		update oscar;
+
 
 	}
 
@@ -204,17 +254,20 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 					Operation__c= 'Rollback');
 
 				backupToInsert.add(backupData);
+                
+				system.debug('[ANG_BackupEngineHelper] (5) after Entity '+entity +' and object ' + sobjectToInsert.Id+' Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
+
 			}
 
 		}
 
 		if(!backupToInsert.isEmpty()){
-			System.debug('backupToInsert are' + backupToInsert);
+			System.debug('[ANG_BackupEngineHelper] backupToInsert are' + backupToInsert);
 			insert backupToInsert;
 		}
 
-		oscar.Backup_In_Progress__c	= false;
-		update oscar;
+		//oscar.Backup_In_Progress__c	= false;
+		//update oscar;
 
 	}
 

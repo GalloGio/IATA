@@ -24,21 +24,5 @@ public class Auto_Queue_Triggers
 				q.addError('Invalid Queue Name');
 		}
 	}	
-	//******************************************
-	// T.E.S.T  M.E.T.H.O.D
-	//******************************************
-	public static testmethod void test()
-	{
-		Group g= [select Id, Name from Group where Type = 'Queue' limit 1];
-		Auto_Queue__c q=new Auto_Queue__c(Name='TESTXX');
-		// Test with incorrect Queue Name
-		try 
-		{
-			insert q;
-		} 
-		catch (Exception e){system.debug('Normal Exception');}
-		// Test with correct Queue Name
-		q.Name=g.Name;
-		insert q;
-	}		
+	
 }

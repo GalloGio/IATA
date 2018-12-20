@@ -128,9 +128,9 @@ global class UploadMultipleFileToAmazonButtonCtrl {
             );
 
             if(recordType != null) {
-                RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get(recordType.replaceAll('_', ' '));
-                if (rtInfo!=null) {
-                    amazonFile.RecordTypeId = rtInfo .getRecordTypeId();
+                Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', recordType);
+                if (rtId != null) {
+                    amazonFile.RecordTypeId =rtId;
                 }
             }
 

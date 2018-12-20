@@ -153,7 +153,10 @@
             <apex:pageBlockButtons location="bottom" id="pbb">
                 <apex:outputPanel id="pnlBtn">
                     <apex:commandButton action="{!doNothing}" id="bntConsumedRHC" value="Mass Request Consumed RHC" reRender="resultKO,resultOK,theResultPanel,pnlBtn,theForm,btnNewSearch,thePBT" onclick="UserAction('ConsumedRHC', '{!TypeOfCall}');return false;" rendered="{!!bQueryExecuted}"/>
+                    <!-- INC424176
+                         Disable the Provisional RHC re-calculation call from RME
                     <apex:commandButton action="{!doNothing}" id="btnProvisionalRHC" value="Mass Request Provisional RHC" reRender="resultKO,resultOK,theResultPanel,pnlBtn,theForm,btnNewSearch,thePBT" onclick="UserAction('ProvisionalRHC', '{!TypeOfCall}');return false;" rendered="{!!bQueryExecuted}"/>
+                    -->
                     <apex:commandButton action="{!NewSearch}" id="btnNewCountry" value="Process other country" rendered="{!bQueryExecuted}"/>
                 </apex:outputPanel>
             </apex:pageBlockButtons>

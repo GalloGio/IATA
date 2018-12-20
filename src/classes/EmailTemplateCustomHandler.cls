@@ -3,7 +3,7 @@
 **/
 public with sharing class EmailTemplateCustomHandler {
 
-	public final Recordtype RECORDTYPE_FSM = [Select Id, DeveloperName From RecordType where developerName like 'FSM' and sObjectType = 'EmailTemplate__c'];
+	public final Recordtype RECORDTYPE_FSM = RecordTypeSingleton.getInstance().getRecordType('EmailTemplate__c', 'FSM');
 	public final EmailTemplate__c DEFAULT_FSM_TEMPLATE;
 	private map<String,EmailTemplate__c> mapFSMTemplates;
 	

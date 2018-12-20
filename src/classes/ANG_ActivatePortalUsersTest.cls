@@ -9,7 +9,7 @@ private class ANG_ActivatePortalUsersTest {
         IATA_ISO_State__c isos = new IATA_ISO_State__c(Name= 'Winterfell', ISO_Code__c = 'TS', IATA_Iso_Country__c = isoc.Id);
    		insert isos;
 
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
    		Account acc1 = new Account(RecordTypeId = agencyRT, Name = 'Stardust Travels', Sector__c = 'Travel Agent',  Category__c = 'IATA Passenger Sales Agent', IATA_ISO_Country__c = isoc.id, Iso_State__c = isos.id, Location_Type__c = 'HE', Location_Class__c = 'P', Reason_for_creation__c = 'Account is missing');
         insert acc1;
 
@@ -19,7 +19,7 @@ private class ANG_ActivatePortalUsersTest {
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id);
         oscar.Account__c = acc1.Id;
         oscar.Process__c = 'ANG.NEW.HE.LITE.1.0';
-        oscar.RecordTypeId = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_New_HE');
+        oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
         oscar.Status__c = 'Open';
         insert oscar;
         
@@ -32,7 +32,7 @@ private class ANG_ActivatePortalUsersTest {
         testCase.Origin = 'Email';
         testCase.OSCAR__c = oscar.Id;
         testCase.Reason1__c = 'New HE lite';
-        testCase.RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        testCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         testCase.Region__c = 'Europe';
         testCase.Status = 'Open';
         insert testCase;
@@ -55,7 +55,7 @@ private class ANG_ActivatePortalUsersTest {
         ac.Mobile__c = '+4112345678';
         ac.Phone__c = '3424322343';
         ac.Email__c = 'unique@email.com';
-        ac.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        ac.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
         ac.Portal_administrator__c = true;
         ac.Contact__c = c1.id;
         insert ac;
@@ -84,5 +84,35 @@ private class ANG_ActivatePortalUsersTest {
 		system.assertEquals(u.ContactId, c.Id);
 
 	}
+
+    @isTest static void updatePortalUser() {
+        Account acc = ISSP_ObjectFactory.createNewAccount();  
+        insert acc; 
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = acc.Id;
+        insert contact;
+        
+        User u = new User(
+            Alias = 'dsfsdfds', 
+            Email = contact.email, 
+            Emailencodingkey = 'UTF-8', 
+            Firstname = contact.firstName, 
+            Lastname = contact.lastname, 
+            Languagelocalekey = 'en_US', 
+            Localesidkey = 'en_US', 
+            ContactId = contact.Id,
+            Timezonesidkey = 'Asia/Dubai',
+            Username = contact.email+'dfgdf',
+            PortalRole = 'Manager',
+            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+            ProfileId = ISSP_Constant.TEST_User_ProfileID,
+            IsActive = true
+        );
+        insert u;
+
+        Test.startTest();
+        System.enqueueJob(new ANG_ActivatePortalUsersBatch.UpdateUserStatus(contact.Id, contact.Email, null));        
+        Test.stopTest();
+    }
 
 }

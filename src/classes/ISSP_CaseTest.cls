@@ -11,7 +11,7 @@ public class ISSP_CaseTest {
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
         update contact;
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Email_to_Case'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
         Case c = new Case();
         c.Subject = 'test 1';
         c.Status = 'Open';
@@ -54,7 +54,7 @@ public class ISSP_CaseTest {
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
         update contact;
-        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'Cases - SIS Help Desk'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
         Case c = new Case();
         c.Subject = 'test 1';
         c.Status = 'Open';
@@ -103,7 +103,7 @@ public class ISSP_CaseTest {
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
         update contact;
-        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'IDFS Airline Participation Process'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
         Case c = new Case();
         c.Subject = 'test 1';
         c.Status = 'Draft';
@@ -163,7 +163,7 @@ public class ISSP_CaseTest {
         art2.KnowledgeArticleId = kId2;
         insert art2;
 
-        String recordTypeId2 = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        Id recordTypeId2 = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account account2 = ISSP_ObjectFactory.createNewAccount();
         account2.Name = 'Account2';
         account2.RecordTypeId = recordTypeId2;
@@ -219,7 +219,7 @@ public class ISSP_CaseTest {
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
         update contact;
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'DPC_Service_Request'].Id;
+        String recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
         Case c = new Case();
         c.Subject = 'test 1';
         c.Status = 'Draft';
@@ -280,7 +280,7 @@ public class ISSP_CaseTest {
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
         update contact;
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'DPC_Service_Request'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
         Case c = new Case();
         c.Subject = 'test 1';
         c.Status = 'Draft';
@@ -341,7 +341,7 @@ public class ISSP_CaseTest {
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
         update contact;
-        String recordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Africa & Middle East').RecordTypeId;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case','CasesMENA');
         
         // insert a case using json to set the field ClosedDate
         String caseJSON = '{"attributes":{'
@@ -419,42 +419,12 @@ public class ISSP_CaseTest {
 		Boolean isDPCAccepted = cttr.isDPCAccepted;
 		Boolean isACRAccepted = cttr.isACRAccepted;
 		Boolean disableCaseComments = cttr.getDisableCaseComments();
-		// PageReference pr = cttr.getSelectArtical();
 		Id i = cttr.getAMSRegionalQueue();
-		// ISSP_Case.articleWrapper selectedArtical = ctrl.selectedArtical;
 
         cttr.edit();
 
 		Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Feature Request');
 
-
-        /*
-        cttr.filterCaseClassificationItems();
-        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'General Question');
-        cttr.getCaseClassificationItems();
-        cttr.filterCaseClassificationItems();
-        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Problem / Issue');
-        cttr.getCaseClassificationItems();
-        cttr.filterCaseClassificationItems();
-        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'ICH Finance');
-        cttr.getCaseClassificationItems();
-        cttr.filterCaseClassificationItems();
-        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'ICH General');
-        cttr.getCaseClassificationItems();
-        cttr.filterCaseClassificationItems();
-        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'ICH Membership');
-        cttr.getCaseClassificationItems();
-        cttr.filterCaseClassificationItems();
-        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'ICH Operations');
-        cttr.getCaseClassificationItems();
-        cttr.filterCaseClassificationItems();
-        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Problem Issue');
-        cttr.getCaseClassificationItems();
-        cttr.filterCaseClassificationItems();
-        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'test');
-        cttr.getCaseClassificationItems();
-        cttr.filterCaseClassificationItems();
-        */
         Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Application Error');
         cttr.getCaseDefectItems();
         Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'Application Error - ICH');
@@ -526,8 +496,6 @@ public class ISSP_CaseTest {
         Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'test');
         cttr.getCaseDefectItems();
 
-        //cttr.retCaseClassificationItems();
-
         cttr.newCase.CaseArea__c = 'ICH';
         cttr.getCaseTypeItems();
         cttr.newCase.CaseArea__c = 'SIS';
@@ -553,7 +521,7 @@ public class ISSP_CaseTest {
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
         update contact;
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Email_to_Case'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case','FDS_ICCS_Email_to_Case');
         Case c = new Case();
         c.Subject = 'test 1';
         c.Status = 'Open';
@@ -606,7 +574,7 @@ public class ISSP_CaseTest {
 
     public static testMethod void testDCPnewCase() {
         Account account = ISSP_ObjectFactory.createNewAccount();
-        account.Name = 'Account1';
+        account.Name = 'iDPC';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
@@ -615,7 +583,7 @@ public class ISSP_CaseTest {
         contact.Email = 'teamcontact@email.com';
         insert contact;
 
-       Id p = [select id from profile where name='ISS Portal DPC'].id;
+       Id p = [select id from profile where name='ISS Portal DPC Admin'].id;
 
         User user = new User(alias = 'test123', email=contact.Email,
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
@@ -639,24 +607,7 @@ public class ISSP_CaseTest {
        mcs.add(dpcSector);
        mcs.add(dpcCategory);
        insert mcs;
-        // String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Inter_DPCs'].Id;
-        // Case c = new Case();
-        // c.Subject = 'test 1';
-        // c.Status = 'Open';
-        // c.AccountId = account.id;
-        // c.ContactId = contact.id;
-        // c.Region__c = 'Europe';
-        // c.RecordTypeId = recordTypeId;
-        // c.CaseArea__c = 'test';
-        // c.Reason1__c = 'test';
-        // c.Visible_on_ISS_Portal__c = true;
-        // insert c;
-        //
-        // ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
-        // ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
-        // ApexPages.currentPage().getParameters().put('topic', 'test');
-        // ApexPages.currentPage().getParameters().put('subtopic', 'test1');
-        // ApexPages.currentPage().getParameters().put('origin', 'Portal');
+       
         ApexPages.currentPage().getParameters().put('caseArea', 'Area1');
         Test.startTest();
         // system.runAs(thisUser){
@@ -709,7 +660,7 @@ public class ISSP_CaseTest {
         teamContact.Email = 'teamcontact@email.com';
         insert teamContact;
 
-       Id p = [select id from profile where name='ISS Portal DPC'].id;
+       Id p = [select id from profile where name='ISS Portal DPC Admin'].id;
        ISSP_UserTriggerHandler.preventTrigger = true;
         User user = new User(alias = 'test123', email=teamContact.Email,
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
@@ -718,7 +669,7 @@ public class ISSP_CaseTest {
                 timezonesidkey='America/Los_Angeles', username=teamContact.Email);
 
         insert user;
-        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Inter_DPCs'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case','Inter_DPCs');
         Case c = new Case();
         c.Subject = 'test 1';
         c.Status = 'Open';
@@ -733,9 +684,7 @@ public class ISSP_CaseTest {
 
         ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
         ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
-        // ApexPages.currentPage().getParameters().put('topic', 'test');
-        // ApexPages.currentPage().getParameters().put('subtopic', 'test1');
-        // ApexPages.currentPage().getParameters().put('origin', 'Portal');
+
         Test.startTest();
         system.runAs(user) {
             ISSP_Case cttr = new ISSP_Case();
@@ -752,6 +701,7 @@ public class ISSP_CaseTest {
             update cttr.newCase;
             cttr.getAccountConcernedName();
             cttr.getCaseContactName();
+            cttr.getListDPCValidCaseStatus();
         }
         Test.stopTest();
     }
@@ -759,7 +709,6 @@ public class ISSP_CaseTest {
 
     public static testMethod void tesTIP() {
       
-       
         Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
         insert account;
@@ -779,8 +728,6 @@ public class ISSP_CaseTest {
         c.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS;
         c.Visible_on_ISS_Portal__c = true;
        
-       
-
        User user = ISSP_ObjectFactory.createPortalUser(con);
 
        Portal_Applications__c pa = new Portal_Applications__c(name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);

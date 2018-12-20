@@ -1,5 +1,5 @@
 public class ISSP_AddAttachment {
-  private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+  private static Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
   public String CaseId;
   public Case tmpCase {get; set;}
   public String claimId;
@@ -149,7 +149,7 @@ public class ISSP_AddAttachment {
                         /** AMS to create non-verified SA account as part of OSCAR Integration
                        	Account newSAAccount = new Account(Name = hqAccount.Name, ParentId = vAccountConcerned);
                         newSAAccount.Location_type__c = 'SA';
-                       	newSAAccount.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+                       	newSAAccount.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         				if (!test.isRunningTest()) {
             				newSAAccount.OwnerId = ISSP_Constant.newAccountOwnerId;
         				} else if (test.isRunningTest()) {

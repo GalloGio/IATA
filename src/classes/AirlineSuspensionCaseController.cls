@@ -99,7 +99,7 @@ global with sharing class AirlineSuspensionCaseController {
                 // if SVP_FDS_Approval__c != null => pre-suspension locked; otherwise, fill the BSP and CASS participation info
                 if (asrecord.SVP_FDS_Approval__c == null) {
                     
-                    map<String,List<String>> tempResultsMap = getParticipations('BSP Participation,BSP via IBCS');
+                    map<String,List<String>> tempResultsMap = getParticipations('BSP');
                     if (tempResultsMap.get('countries').size() != 0) {
                         asrecord.BSP_Participations_locked__c = String.join(tempResultsMap.get('countries'), ', ');
                     } else {
@@ -109,7 +109,7 @@ global with sharing class AirlineSuspensionCaseController {
                     Set<String> tempSet = new Set<String>(tempResultsMap.get('regions'));
                     
                     
-                    tempResultsMap = getParticipations('CASS Participation,CASS via GSSA');
+                    tempResultsMap = getParticipations('CASS');
                     if (tempResultsMap.get('countries').size() != 0) {
                         asrecord.CASS_Participations_locked__c = String.join(tempResultsMap.get('countries'), ', ');
                     } else {
@@ -138,11 +138,11 @@ global with sharing class AirlineSuspensionCaseController {
     
     
     /*
-     * Returns a map with the list of countries in which the airline appears either as the provider or the consumer, or the parent of a provider or a consumer of at least one of the services 
-     * that are passed as a parameter (Set<String>) and a list of the regions involved (Set<String>)
+     * Returns a map with the list of countries in which the airline appears either as the provider or the consumer, or the parent of a provider or a consumer of at least one of the type of service
+     * that are passed as a parameter ('BSP' or 'CASS') and a list of the regions involved (Set<String>)
      */
-    private map<String,List<String>> getParticipations (String participationTypes) {
-        List<String> lstParticipationTypes = participationTypes.split( ',' , 0 );
+    private map<String,List<String>> getParticipations (String participationType) {
+        List<String> lstParticipationTypes = AirlineSuspensionChildCaseCreationBatch.MAP_PARTICIPATION_TYPE_PER_NAME.get(participationType);
         List<Services_Rendered__c> lstServicesRendered = new List<Services_Rendered__c>();
         
         if (c.RecordType.DeveloperName == 'Airline_Deactivation') {

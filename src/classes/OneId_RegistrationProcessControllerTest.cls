@@ -190,7 +190,7 @@ private class OneId_RegistrationProcessControllerTest {
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
             OneId_RegistrationProcessController.registration(a,c,serviceName);
-            OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@registest.com');
+            OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@lls.com', OneId_RegistrationProcessController.returnExistingContact('xpto@lls.com'));
             OneId_RegistrationProcessController.getAccountLabels();
             OneId_RegistrationProcessController.getSectors();
 

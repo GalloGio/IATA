@@ -4,10 +4,10 @@ global class IDCard_RenewalReminder_Batch_Test
 
     static testMethod void myUnitTest()
     {
-        List<RecordType> CtsRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Contact' limit 1];
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         list<Contact> AllContacts = new list<Contact>();
         Contact thisContact = new Contact();
-		thisContact.RecordTypeId = CtsRecordTypes.get(0).Id;
+		thisContact.RecordTypeId = recordTypeId;
 		thisContact.LastName = 'Contact1';
 		thisContact.Email = 'abc@abc.com';
 		AllContacts.add(thisContact);

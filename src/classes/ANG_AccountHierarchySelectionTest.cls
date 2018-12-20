@@ -38,7 +38,7 @@ private class ANG_AccountHierarchySelectionTest {
 		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
 		insert stt;
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account HE = new Account();
 		HE.Name = 'Main HE Account HE';
@@ -126,12 +126,12 @@ private class ANG_AccountHierarchySelectionTest {
 		AE.ANG_Accreditation_Model__c = 'Cash';
 		HE.ANG_Accreditation_Model__c = 'Cashless';
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = AE.id, New_parent__c = AE.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
 
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
 		List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -139,7 +139,7 @@ private class ANG_AccountHierarchySelectionTest {
 		
 		insert agenciesinvolved;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
 		oscarCase.AccountId = AE.Id;
@@ -157,7 +157,7 @@ private class ANG_AccountHierarchySelectionTest {
 
 		// let's start !!
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		// Create the Staging area for the Account
 		AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -191,10 +191,14 @@ private class ANG_AccountHierarchySelectionTest {
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION+';'+AMS_Utils.LOCATION_TYPE+';'+AMS_Utils.ANG_HIERARCHY+';'+AMS_Utils.ANG_VMFR;
 		update oscar;
 
-		insert new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = HE.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person'));
+		insert new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, 
+			AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = HE.Id, First_name__c='NameToUse1', Last_name__c='Last1', 
+			Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', 
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
 	}
 
-	static testMethod void test_controller() {
+	@isTest
+	static void test_controller() {
 
 		Account HE = [SELECT Id FROM Account WHERE Name = 'Main HE Account HE'];
 		AMS_OSCAR__c oscar = [SELECT Account__c, ANG_Type_Of_Change__c, New_parent__c, Change_of_location_type_behavior__c, STEP6__c, Process__c, RecordTypeId FROM AMS_OSCAR__c LIMIT 1];

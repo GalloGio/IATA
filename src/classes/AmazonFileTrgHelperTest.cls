@@ -59,8 +59,6 @@ private class AmazonFileTrgHelperTest {
         Test.startTest();
         loadCredentials();
 
-        RecordType IFAPcaseRecordType = [Select r.Id, r.Name from RecordType r where r.Name = 'IATA Financial Review' limit 1];
-
         Case case1 =  initializeCase();
   
         AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
@@ -108,14 +106,11 @@ private class AmazonFileTrgHelperTest {
 
         Test.setMock(HttpCalloutMock.class, multiCalloutMock);
         undelete AmzFile;
-   //  System.assertEquals(/*check for expected results here...*/);
-
 
         list<AmazonFile__C> amzFileUndelete = [SELECT Id FROM AmazonFile__C WHERE isDeleted =: true and id =: AmzFile.id All ROWS];
 
         system.assert(amzFileUndelete == null || amzFileUndelete.size() == 0);
         
-
 
     }
 

@@ -30,6 +30,7 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('DataLoader');
 
         for(Account ag : accs){
+            validateCharacters(ag);//AMSU-179
             if(!disallowedSources.contains(ag.Source_System__c)){
                 if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
                     setCassNumberOnHO(ag);
@@ -65,6 +66,7 @@ public class AMS_AccountTriggerHandler {
     public static void handleBeforeUpdate(List<Account> accs, Map<Id,Account> oldMap){
         //resizeNumericString
         for(Account  ag: accs){
+            validateCharacters(ag);//AMSU-179
             if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
                 
                 if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric() && oldMap.get(ag.Id).Cass_number__c!=ag.Cass_number__c){
@@ -98,6 +100,17 @@ public class AMS_AccountTriggerHandler {
         // copy information to related regulation objects if Is_your_firm_handling_Dangerous_Goods__c changed
         copyHandlingInformationToRegulations(accs, oldMap);
 
+    }
+
+    public static void validateCharacters(Account acc) {
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        if(acc.RecordTypeId == agencyRT) {
+            List<String> errors = AMS_Utils.validateCharacters(acc, AMS_Utils.ACCOUNT_FIELDS_TO_VALIDATE);
+            if(!errors.isEmpty()) {
+                String error = String.join(errors, '\r\n');
+                acc.addError(error);
+            }
+        }
     }
 
     public static void handleAgenciesOperations(List<Account> accs, Map<Id,Account> oldMap){
@@ -199,7 +212,7 @@ public class AMS_AccountTriggerHandler {
 
     private static List<Account> filterValidAgencies(List<Account> accts){
 
-        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 
         List<Account> toReturn = new List<Account>();
 
@@ -474,8 +487,8 @@ public class AMS_AccountTriggerHandler {
     public static void handleDDUpdates(List<Account> accs, Map<Id,Account> oldMap){
 
         Set<Id> accountsToCheck = new Set<Id>();
-        accountsToCheck.add(AMS_Utils.getId('Account', 'Standard_Account'));
-        accountsToCheck.add(AMS_Utils.getId('Account', 'IATA_Agency'));
+        accountsToCheck.add(RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'));
+        accountsToCheck.add(RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'));
 
 
         Set<String> closedStatus = new Set<String>{

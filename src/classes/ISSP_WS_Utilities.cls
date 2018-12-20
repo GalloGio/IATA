@@ -155,12 +155,16 @@ public without sharing class ISSP_WS_Utilities {
     @Future(callout=true)
 	public static void invokeSisActivateUsers(list<Id> listContactId) {
         //find incoming users
+        List<String> allowRT = new List<String>();
+        for(ISSP_SIS_Account_Status__c setting: ISSP_SIS_Account_Status__c.getAll().values()){
+            allowRT.add(setting.Recordtype__c);
+        }
         list<User> listUser = [
             SELECT Id, FederationIdentifier,
                 contact.Id, contact.FirstName, contact.LastName, contact.Email, contact.SIS_Contact_Type__c,
-                contact.Account.SIS_ID__c
+                contact.Account.SIS_ID__c, contact.account.RecordType.DeveloperName
             FROM User
-            WHERE ContactId in :listContactId];
+            WHERE ContactId in :listContactId and contact.account.RecordType.DeveloperName in :allowRT];
         System.debug('listUser ' + listUser);
         
         list<ISSP_Web_Service_Log__c> listLogs = new list<ISSP_Web_Service_Log__c>();

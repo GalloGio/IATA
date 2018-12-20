@@ -349,7 +349,7 @@ rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amou
 
 var result = sforce.connection.update([rhcInfo]); 
 
-console.info(&quot;result&quot;); 
+console.info(&quot;result&quot;);
 console.info(result[0]); 
 
 if (result[0].success == &quot;true&quot;) { 

@@ -2279,6 +2279,14 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Course_title__c</fullName>
+        <externalId>false</externalId>
+        <label>Course title</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Crisis_Communications_Members__c</fullName>
         <defaultValue>false</defaultValue>
         <description>From: ALBA MANRIQUE Mariana 
@@ -4412,44 +4420,6 @@ albam@iata.org</description>
                 </value>
             </valueSetDefinition>
         </valueSet>
-    </fields>
-    <fields>
-        <fullName>SFGA__CorrelationID__c</fullName>
-        <defaultValue>&quot;none&quot;</defaultValue>
-        <deprecated>false</deprecated>
-        <description>The Correlation ID Field is used by Salesforce for Google AdWords for automatic correlation of web information with new leads created through a standard web-to-lead form</description>
-        <externalId>false</externalId>
-        <label>CorrelationID</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>SFGA__Correlation_Data__c</fullName>
-        <defaultValue>&quot;none&quot;</defaultValue>
-        <deprecated>false</deprecated>
-        <description>The Correlation Data field is designed for use by Salesforce for Google AdWords to store all relevant lead tracking information about a web generated lead</description>
-        <externalId>false</externalId>
-        <label>Correlation Data</label>
-        <length>32000</length>
-        <trackHistory>false</trackHistory>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
-        <fullName>SFGA__Web_Source__c</fullName>
-        <defaultValue>&quot;none&quot;</defaultValue>
-        <deprecated>false</deprecated>
-        <description>This field is designed for future use by Salesforce for Google AdWords as an alternative to the Lead Source field for web generated leads.</description>
-        <externalId>false</externalId>
-        <label>Web Source</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Sales_Process_aborted_del__c</fullName>

@@ -1,0 +1,267 @@
+<apex:page controller="ISSP_SISMembershipApplicationForm_Ctrl" showHeader="false" sidebar="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false">
+
+<style>
+    #main-form-panel .step-container div {
+        border-top: 0px !important;
+    }
+
+    #main-form-panel .step-container div .intl-tel-input {
+        border: 0;
+    }
+
+    #main-form-panel .bPageBlock .pbBody .pbSubheader {
+        background-image: url('') !important;
+        background-color:  #1797C0 !important;
+        color: #fff !important;
+    }
+
+    #main-form-panel .bPageBlock {
+        border-top-width : thin;
+    }
+
+    #main-form-panel .pbSubheader {
+        font-weight:bold;
+        font-size:15px;
+        margin-top: 10px;
+    }
+
+    #main-form-panel .pbTitle h2 {
+        color: #1797C0 !important;
+    }
+
+    #main-form-panel .brandSecondaryBrd {
+        border: none !important;
+    }
+
+    #main-form-panel .secondaryPalette.bPageBlock {
+        background-color: #fff !important;
+    }
+
+    #main-form-panel .bPageBlock .detailList tr td, .bPageBlock .detailList tr th, .hoverDetail .bPageBlock .detailList tr td, .hoverDetail .bPageBlock .detailList tr th {
+        border: none !important;
+    }
+    
+    #main-form-panel .progress-bar-off {
+        color:#6BBBEA;
+        font-weight:bold;
+        background-image:none !important;
+        background-color:transparent !important;
+        border-right:2px solid white;
+    } 
+
+    #form-container .account-field-label {
+        color: green;
+    }
+    #form-container .copy-info {
+        text-decoration: underline;
+        cursor: pointer;
+        color: #1797C0 !important;
+        font-weight: bold;
+    }
+    #form-container .requiredBlock{
+        display: none;
+    }
+    #form-container .invalid {
+        -webkit-box-shadow: 0px 0px 5px 1px #c00;
+        -moz-box-shadow: 0px 0px 5px 1px #c00;
+        box-shadow: 0px 0px 5px 1px #c00;
+    }
+    #form-container :invalid {
+        -webkit-box-shadow: 0px 0px 5px 1px #c00;
+        -moz-box-shadow: 0px 0px 5px 1px #c00;
+        box-shadow: 0px 0px 5px 1px #c00;
+    }
+    #form-container fieldset:invalid {
+        -webkit-box-shadow: 0px 0px 0px 0px transparent;
+        -moz-box-shadow: 0px 0px 0px 0px transparent;
+        box-shadow: 0px 0px 0px 0px transparent;
+    }
+
+    #form-container fieldset {
+        display:inline;
+    }
+    #form-container input[type="email"]{
+        width: 90%;
+    }
+    #form-container input[type="text"] {
+        width: 90%;
+    }
+    #form-container textarea {
+        width: 90%;
+        resize: vertical;
+    }
+    #form-container .select2 {
+        width: 90% !important;
+    }
+    #form-container .select2-selection {
+        border-radius: 0px !important;
+    }
+    #form-container table.radio-short[role="presentation"] {
+        width: 120px;
+    }
+    #form-container table.radio-short[role="presentation"]>tbody>tr>td {
+        padding-left: 3px;
+    }
+    #form-container table.radio-short[role="presentation"]>tbody>tr>td>label {
+        vertical-align: text-top;
+        padding-left: 3px;
+    }
+
+    #form-container table.radio-select-bank-account[role="presentation"] {
+        width: 50%;
+        margin-left: 20%;
+        font-size : 13px;
+    }
+    #form-container table.radio-select-bank-account[role="presentation"]>tbody>tr>td {
+        padding: 10px 10px 10px 30px;
+    }
+    #form-container table.radio-select-bank-account[role="presentation"]>tbody>tr>td>label {
+        vertical-align: text-top;
+        padding-left: 12px;
+        display: inline;
+    }
+
+    #form-container table.radio-data-privacy-laws[role="presentation"] {
+        width: 90%;
+        font-size : 13px;
+    }
+    #form-container table.radio-data-privacy-laws[role="presentation"]>tbody>tr>td {
+        padding: 10px 10px 10px 30px;
+    }
+    #form-container table.radio-data-privacy-laws[role="presentation"]>tbody>tr>td>label {
+        vertical-align: text-top;
+        padding-left: 12px;
+        display: inline;
+    }
+
+    #form-container img.help {
+        padding-top: 3px;
+        vertical-align: top;
+    }
+
+    #form-container .strong-label {
+        font-weight: bold;
+        color: #000;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 0px solid #fff !important;
+    }
+    #form-container .strong-label a {
+        text-decoration: underline;
+        color: rgb(32, 107, 164) !important;
+    }
+
+    #form-container .blue-label {
+        background-color: rgb(217, 237, 247);
+        font-size: 13px;
+        width: 98%;
+        padding: 10px;
+        font-weight:700;
+    }
+    #form-container .blue-label-title{
+        color: rgb(32, 107, 164);
+        font-weight:700;
+    }
+    #form-container .blue-label-text{
+        font-weight:300;
+    }
+    .link-highlighted {
+        text-decoration: underline;
+        color: rgb(32, 107, 164) !important;
+    }
+
+    #table-requirements th>div  {
+        background-color: rgb(217, 237, 247);
+        width: 100%;
+        height: 2em;
+    }
+    #table-requirements tr>td  {
+        vertical-align: top;
+        height: 3em;
+    }
+    #table-requirements tr>td:first-child  {
+        text-align: center;
+    }
+    #table-requirements tr:not(:last-child)>td  {
+        border-bottom: 2px solid rgb(221, 221, 221);
+    }
+</style>
+
+    <c:ISSP_Header ></c:ISSP_Header>
+    
+    <c:ISSP_WaitingStatus />
+
+    <div class="container">
+        <c:ISSP_CustomNavigation />
+        <div id="main-form-panel" class="panel-primary">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">{!$Label.ISSP_SIS_Membership_Title}</h3>
+                <p><b>{!$Label[sisType.MasterLabel]}</b></p>
+            </div>
+
+            <div class="panel-body" id="body-enquiries">
+
+                <apex:form id="mainform" styleClass="inline">
+
+                    <div class="progress">
+                        <apex:variable var="stepcounter" value="{!IF(isTOU,1,0)}"/>
+                        <apex:repeat value="{!steps}" var="step">
+                            <apex:variable var="stepcounter" value="{!stepcounter+1}"/>
+                            <div class="progress-bar {!IF(currentStep==stepcounter,'','progress-bar-off')}" role="progressbar" aria-valuenow="{!stepcounter}" aria-valuemin="0" aria-valuemax="{!steps.size}" style="width: {!100/steps.size}%;">
+                                {!step}
+                            </div>
+                        </apex:repeat>
+                    </div>
+
+                    <!-- BEGIN STEP 2 -->
+                    <apex:pageBlock mode="edit">
+
+                        <apex:pageBlockButtons location="bottom">
+                            <apex:outputPanel layout="none">
+                                <apex:commandButton action="{!saveFormAndGoBack}" status="WaitingStatus" value="{!$Label.ISSP_Previous}" rendered="{!OR(currentStep==1,currentStep==2,currentStep==3)}" html-novalidate="" html-formnovalidate=""/>
+                                <apex:commandButton action="{!saveFormAndGoForward}" status="WaitingStatus" value="{!$Label.ISSP_Next}" rendered="{!OR(currentStep==1,currentStep==2)}"/>
+                                <apex:commandButton action="{!submitForm}" status="WaitingStatus" value="{!$Label.ISSP_Submit}" rendered="{!currentStep==3}"/>
+                                <apex:commandButton action="{!saveFormAndLeave}" status="WaitingStatus" value="{!$Label.ISSP_SIS_Membership_Save_Draft_And_Leave}" styleclass="pull-right" rendered="{!OR(currentStep==1,currentStep==2,currentStep==3)}" html-novalidate="" html-formnovalidate=""/>
+                            </apex:outputPanel>
+                        </apex:pageBlockButtons>
+
+                        <apex:pageMessages />
+
+                        <!-- STEP 1 -->
+                        <apex:outputPanel styleclass="step-container" rendered="{!currentStep=1}">
+                            <table id="table-requirements" style="background-color:white">
+                                <thead>
+                                    <tr>
+                                        <th><div style="width:40px; height:2em;"></div></th>
+                                        <th><div>{!$Label.ISSP_SIS_Membership_Requirements}</div></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:outputText value="{!sisType.Requirements_Text__c}" escape="false" />
+                                </tbody>
+                            </table>
+                        </apex:outputPanel>
+
+                        <!-- STEP 2 -->
+                        <apex:outputPanel styleclass="step-container" rendered="{!currentStep=2}">
+                            <c:ISSP_SISMembershipApplicationISPA newForm="{!newform}" account="{!account}" rendered="{!isISPA}"/>
+                            <c:ISSP_SISMembershipApplicationISUA newForm="{!newform}" rendered="{!isISUA}"/>
+                            <c:ISSP_SISMembershipApplicationTOU newForm="{!newform}" rendered="{!isTOU}"/>
+                        </apex:outputPanel>
+
+                        <!-- STEP 3 -->
+                        <apex:outputPanel styleclass="step-container" rendered="{!currentStep=3}">
+                            <c:ISSP_SISMembershipApplicationTerms newForm="{!newform}" showParticipation="{!OR(isISPA,isISUA)}"/>
+                        </apex:outputPanel>
+
+                    </apex:pageBlock>
+
+                </apex:form>
+
+            </div>
+        </div>
+
+        <c:ISSP_CustomFooter />
+    </div>
+</apex:page>

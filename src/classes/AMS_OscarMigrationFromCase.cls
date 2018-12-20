@@ -146,6 +146,13 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         }
         ////
 
+        /*** AMSU-174 ***/
+        if (processType == AMS_Utils.new_TIDS) {
+            container.c.CaseArea__c = 'Accreditation Products';
+            container.c.Reason1__c = 'New TIDS';
+            update container.c;
+        }
+
 		if((container.errorMessage != null && container.errorMessage != '') || (childCaseCreationResult.get('errorMessage') != null && childCaseCreationResult.get('errorMessage') != '')){
 	        
 	        result.put('oscarId',oscarId);
@@ -174,7 +181,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
     @future
     static void updateAccreditationForm(String caseId, String scopeOfChange, String concernedAgencyCodes) {
-        RecordType rt = [SELECT Id FROM RecordType WHERE SObjectType = 'AMS_Pax_Accreditation_Form__c' AND DeveloperName = 'Change_of_Bank_Account_Details'];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Change_of_Bank_Account_Details');
 
         list<AMS_Pax_Accreditation_Form__c> accreditationFormsList = [SELECT Id, SAAM_Case__c, Scope_of_Change__c,Agency_Codes_Concerned__c, Is_change_bank_account_details__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseId];
         if (accreditationFormsList.isEmpty()) {
@@ -186,10 +193,10 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         accreditationForm.Scope_of_Change__c = scopeOfChange;
         accreditationForm.Agency_Codes_Concerned__c = concernedAgencyCodes;
         accreditationForm.Is_change_bank_account_details__c = true;
-        accreditationForm.RecordTypeId = rt.Id;
+        accreditationForm.RecordTypeId = rtId;
 
         update accreditationForm;
-        system.debug('accreditation form updated with scope of change "' + scopeOfChange + '" and concerned agency codes "' + concernedAgencyCodes + '" and record type id ' + rt.Id);
+        system.debug('accreditation form updated with scope of change "' + scopeOfChange + '" and concerned agency codes "' + concernedAgencyCodes + '" and record type id ' + rtId);
     }
 
     // Used for processType == AMS_Utils.BANKACCCHANGES

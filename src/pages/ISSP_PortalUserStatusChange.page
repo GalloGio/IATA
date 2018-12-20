@@ -55,9 +55,9 @@
     }
 	</script>
 
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
  	<div class="container">
-        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
-        
+        <div id="contentWrapper">
         <div class="alert alert-danger" style="display:{!if(errorMessages.size == null,'none','')}">
 	        <strong>{!$Label.ISSP_Error}</strong>
 	        <apex:repeat value="{!errorMessages}" var="er" id="theRepeat">
@@ -86,11 +86,15 @@
 		       <apex:outputText value="{!$Label.ISSP_InactiveUser_Subscription}" rendered="{!hasProducts}" />
 		       </apex:pageBlockSection>
 		       </div>
-		       
-		       <apex:pageBlockSection title="" columns="1">
-		           <apex:inputField value="{!con.User_Portal_Status__c}" styleClass="UserStatus form-control" id="theStatus" onchange="showHideReason('{!$Component.theStatus}', '{!$Component.theButtons.saveButton}');" />
-		       </apex:pageBlockSection>
-		       
+
+                <apex:pageBlockSection title="" columns="1">
+                    <apex:outputLabel value="{!$ObjectType.Contact.fields.User_Portal_Status__c.label}" rendered="{!hasIdCard}" />
+                    <apex:selectList id="theStatus" value="{!con.User_Portal_Status__c}" size="1" styleClass="UserStatus form-control"
+                            onchange="showHideReason('{!$Component.theStatus}', '{!$Component.theButtons.saveButton}');">
+                        <apex:selectOptions value="{!portalStatusOptions}" />
+                    </apex:selectList>
+                </apex:pageBlockSection>
+
 		       <div id="reasonDiv" style="{!IF (con.User_Portal_Status__c == 'Deactivated', '', 'display:none')}" >
 		       <apex:pageBlockSection title="" columns="1">
 		       		<apex:outputText value="{!$Label.ISSP_InactiveUser_IdCard}" rendered="{!hasIdCard}" />
@@ -118,8 +122,9 @@
 		</apex:form>
             
 	</div><!-- panel -->
- <c:ISSP_CustomFooter communityName="{!communityName}"/>
+ </div>
 </div><!-- container -->
+<c:ISSP_CustomFooter communityName="{!communityName}"/>
 </body>
 </html>
 </apex:page>

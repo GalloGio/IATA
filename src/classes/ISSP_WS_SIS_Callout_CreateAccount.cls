@@ -68,11 +68,13 @@ public with sharing class ISSP_WS_SIS_Callout_CreateAccount {
         }
         
         public ResponseData(String xmlString, String requestString) {
+
             try {
                 this.requestString = requestString;
                 Dom.Document doc = new Dom.Document();
                 doc.load(xmlString);
-                map<String,String> mapValues = new map<String,String>();
+                map<String,String> mapValues = new map<String,String>();                
+
                 for (Dom.XmlNode node : doc.getRootElement().getChildElements()) {
                     mapValues.put(node.getName(), node.getText());
                 }
@@ -82,6 +84,10 @@ public with sharing class ISSP_WS_SIS_Callout_CreateAccount {
                 this.ErrorDescription = mapValues.get('ErrorDescription');
             } catch (Exception e) {
                 e.setMessage('Error parsing response ' + xmlString);
+                this.IsSuccess = false;
+                this.ErrorCode = e.getTypeName();
+                this.ErrorDescription = e.getMessage();
+                this.requestString = requestString;
             }
         }
     }
@@ -128,7 +134,7 @@ public with sharing class ISSP_WS_SIS_Callout_CreateAccount {
             //make ws call
             ISSP_WS_SIS_Callout.IcpWsInterfaceSoap ws = ISSP_WS_SIS_Callout_Common.getWSInterface();
             String xmlResponse = Test.isRunningTest()? TEST_RESPONSE: ws.CreateAccount(requestString);
-            
+
             //prepare response
             ResponseData response = new ResponseData(xmlResponse, requestString);
             response.account = account;

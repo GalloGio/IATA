@@ -17,7 +17,7 @@ public class AMS_OscarCaseTriggerHelper {
         private set;
     }
 
-    private static Id OSCARCaseRecordTypeID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+    private static Id OSCARCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
     //remove OSCAR from child case, if case is being cloned from OSCAR parent
     public static void removeOscarFromChild(list<Case> triggerNew){
@@ -29,6 +29,8 @@ public class AMS_OscarCaseTriggerHelper {
         for(Case c: triggerNew)
             if(c.ParentId != null)
                 parentcaseIds.add(c.ParentId);
+
+        if(parentcaseIds.isEmpty()) return;
                 
         Map<Id, Case> parentCase = new Map<Id, Case>([SELECT Id, Oscar__c, RecordTypeId FROM Case WHERE Id IN :parentcaseIds AND RecordTypeId = :OSCARCaseRecordTypeID]);
         
@@ -86,8 +88,10 @@ public class AMS_OscarCaseTriggerHelper {
         Map<Id, Case> caseOSCARMap = new Map<Id, Case>();
 
         //see if the oscars had a case before the insert/update
-        for(Case c :  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscarIds AND ParentId = null AND Id NOT IN :oscarCases]){
-            caseOSCARMap.put(c.OSCAR__c, c);
+        if(!oscarIds.isEmpty() && !oscarCases.isEmpty()) {
+            for(Case c :  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscarIds AND ParentId = null AND Id NOT IN :oscarCases]){
+                caseOSCARMap.put(c.OSCAR__c, c);
+            }
         }
 
         for(Case c: oscarCases){
@@ -250,8 +254,8 @@ public class AMS_OscarCaseTriggerHelper {
     public static void checkIrregularityThreshold() {
         List<Case> triggerNew = (List<Case>)Trigger.new;
 
-        Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
-        Id sidraLiteRecTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+        Id sidraRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+        Id sidraLiteRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
 
         List<Case> newSidraCases = new List<Case>();
         Map<Id, Account> accounts = new Map<Id, Account>();
@@ -271,21 +275,12 @@ public class AMS_OscarCaseTriggerHelper {
         }
 
         Map<String, Decimal> thresholds = new Map<String, Decimal>();
-        for(IATA_ISO_Country__c country : [SELECT
-                                                        Id
-                                                        , (SELECT
-                                                                Id
-                                                                , Threshold__c
-                                                                , Location_Class__c
-                                                            FROM AMS_Country_Specific_Attributes__r
-                                                            WHERE RecordType.DeveloperName = 'Irregularity_Threshold'
-                                                            AND Threshold__c != null
-                                                            AND Location_Class__c != null)
-                                                    FROM IATA_ISO_Country__c
-                                                    WHERE Id IN :isoCountries])
-        {
+        for(IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(isoCountries)){
+
             for(AMS_Country_Specific_Attribute__c att : country.AMS_Country_Specific_Attributes__r){
-                thresholds.put(''+country.Id+att.Location_Class__c, att.Threshold__c);
+                if(att.RecordType.DeveloperName == 'Irregularity_Threshold' && att.Threshold__c != null && att.Location_Class__c != null){
+                    thresholds.put(''+country.Id+att.Location_Class__c, att.Threshold__c);
+                }
             }
         }
         System.debug(loggingLevel.Debug, '____ [trg AMS_OscarCaseTriggerHelper - checkIrregularityThresold] thresholds - ' + thresholds);
@@ -305,7 +300,7 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> IRRCases = new List<Case>();
         List<Case> IRRWDCases = new List<Case>();
 
-        Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+        Id sidraRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         for(Case c : (List<Case>)Trigger.new){
             Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
             if(c.RecordTypeId == sidraRecTypeId){
@@ -339,8 +334,8 @@ public class AMS_OscarCaseTriggerHelper {
     }
 
     
-    private static id RTSidra = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-    private static id RTSidraLite = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+    private static id RTSidra = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    private static id RTSidraLite = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     
     public static void CreateRiskChangeCode(){
         if(AMS_OscarCase_RiskMgmt.runOnce()){
@@ -399,8 +394,12 @@ public class AMS_OscarCaseTriggerHelper {
         }
 
         if(oscarCases.isEmpty()) return;
-
-        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c, Location_Class__c, Account__r.Category__c, Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, Type_of_change__c FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
+        /*** AMSU-205 added the process details list ***/
+        oscars = new Map<Id, AMS_OSCAR__c>([
+            SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c, Location_Class__c, Account__r.Category__c, 
+                Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, 
+                Type_of_change__c, (SELECT AMS_IATAcode__c FROM AMS_Process_Detail__r) 
+            FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
         for(Case c : oscarCases){
             
@@ -416,6 +415,7 @@ public class AMS_OscarCaseTriggerHelper {
                 c.Type_of_customer__c = typeOfCustomer;
 
             String newCaseSubject = null;
+            String newDescription = null;//AMSU-205
             
             if(c.reason1__c != null)
                 if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGVR && oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
@@ -436,7 +436,15 @@ public class AMS_OscarCaseTriggerHelper {
 					newCaseSubject = null;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.COR && oscars.get(c.Oscar__c).Location_Class__c == 'I' && c.Origin == 'Portal') //AMSU-140
                     newCaseSubject = 'Agency Changes - ' +oscars.get(c.Oscar__c).Account__r.Name;
-				else {
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.VOLRELINQUISH || oscars.get(c.Oscar__c).Process__c == AMS_Utils.VOLRELINQUISH_CA) { //AMSU-205
+                    AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
+                    newCaseSubject = c.Reason1__c + ' - ' + oscar.Account__r.Name + ' - ' + oscar.Account__r.IATACode__c;
+                    newDescription = oscar.Account__r.IATACode__c;
+
+                    for(AMS_Process_Detail__c detail : oscar.AMS_Process_Detail__r) {
+                        newDescription += '\n' + detail.AMS_IATAcode__c;
+                    }
+                } else {
                     AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
                     newCaseSubject = c.reason1__c + ' - ' + oscar.Account__r.Name;
                     /*** AMSU-133 Start ***/
@@ -448,6 +456,11 @@ public class AMS_OscarCaseTriggerHelper {
 
             if(newCaseSubject != null && c.Subject != newCaseSubject && (c.Subject == null || !c.Subject.startsWith(newCaseSubject)) && AMS_OscarMigrationFromCase.changeSubject)
                 c.Subject = newCaseSubject;
+
+            //AMSU-205
+            if(newDescription <> null) {
+                c.Description = newDescription;
+            }
         }
     }
 

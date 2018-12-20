@@ -306,6 +306,17 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>CNS_Agency__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the Agent is under a CNS Agency Program</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if the Agent is under a CNS Agency Program</inlineHelpText>
+        <label>CNS Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Cash_Conditions_Override__c</fullName>
         <description>Formula on Related Accreditation (Cash_Conditions_Override__c)</description>
         <externalId>false</externalId>
@@ -1213,6 +1224,18 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Total_Ownership_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum of all Percentages from related Agency Owners Records</inlineHelpText>
+        <label>Total Ownership Percentage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
         <fullName>Trading_Name_1_Upper__c</fullName>
         <externalId>false</externalId>
         <formula>UPPER(Trading_Name_1__c)</formula>
@@ -1378,6 +1401,33 @@ X = Not NewGen OR NewGen GoLite OR NewGen Financial Review Opt-Out</inlineHelpTe
         <columns>Accredited_By__c</columns>
         <filterScope>Everything</filterScope>
         <label>All - No Criteria</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>GoLite_Agents</fullName>
+        <columns>NAME</columns>
+        <columns>Agency_Code__c</columns>
+        <columns>Accreditation_Class__c</columns>
+        <columns>Location_Type__c</columns>
+        <columns>Location_Type_Code_Interpreted__c</columns>
+        <columns>Agency_Status__c</columns>
+        <columns>Agency_Status_Code__c</columns>
+        <columns>Agency_Status_Code_Interpreted__c</columns>
+        <columns>Country_Name__c</columns>
+        <columns>Sub_Continent__c</columns>
+        <columns>Parent_GDP_Account_View__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Location_Type__c</field>
+            <operation>equals</operation>
+            <value>Associate Entity,Head Entity</value>
+        </filters>
+        <filters>
+            <field>Accreditation_Model__c</field>
+            <operation>equals</operation>
+            <value>L</value>
+        </filters>
+        <label>GoLite Agents</label>
         <language>en_US</language>
     </listViews>
     <listViews>
