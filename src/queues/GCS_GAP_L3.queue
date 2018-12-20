@@ -3,9 +3,9 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <name>GCS-GAP-L3</name>
     <queueMembers>
-        <users>
-            <user>krishnanh@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>GCS_BIS_GAP_L3</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

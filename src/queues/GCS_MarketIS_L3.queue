@@ -3,10 +3,9 @@
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <name>GCS-MarketIS-L3</name>
     <queueMembers>
-        <users>
-            <user>itania@iata.org</user>
-            <user>zhuj@iata.org</user>
-        </users>
+        <publicGroups>
+            <publicGroup>GCS_BIS_MarketIS_L3</publicGroup>
+        </publicGroups>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
