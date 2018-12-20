@@ -4,7 +4,7 @@
     <description>Email list of the Risk Alert Stakeholders</description>
     <enableFeeds>false</enableFeeds>
     <fields>
-        <fullName>Stakeholder_Email__c</fullName>
+        <fullName>Email__c</fullName>
         <externalId>false</externalId>
         <label>Stakeholder Email</label>
         <required>true</required>
