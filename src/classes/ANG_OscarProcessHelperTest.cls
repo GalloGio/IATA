@@ -130,7 +130,14 @@ private class ANG_OscarProcessHelperTest {
                 Name = 'NEW-AMS', Change_Code__c = 'NEW', Integration_RecId__c = 'A'
             ),
             new AMS_ChangeCodes__c(
-                Name = 'DOM', Change_Code__c = 'DOM', Integration_RecId__c = 'C', Reason_Code__c = '43', Reason_Code_Description__c = 'Voluntary relinquishment', Bulletin_Memo_Text__c = 'Agent is upgrading from Domestic to International', Published_in_bulletin__c = true
+                Name = 'DOM', 
+                Change_Code__c = 'DOM', 
+                Integration_RecId__c = 'C', 
+                Reason_Code__c = '43', 
+                Reason_Code_Description__c = 'Voluntary relinquishment', 
+                Bulletin_Memo_Text__c = 'Agent is upgrading from Domestic to International', 
+                Published_in_bulletin__c = true,
+                Account_status_change__c = '4'
             )
         };
 
@@ -719,10 +726,10 @@ private class ANG_OscarProcessHelperTest {
 		insert a1;
 
 		ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
-		AMS_OSCAR__c oscar_china = new AMS_OSCAR__c(Process__c = AMS_Utils.NGCHINACONVERSION, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = chinaRT);
+		AMS_OSCAR__c oscar_china = new AMS_OSCAR__c(Process__c = AMS_Utils.NGCHINACONVERSION, Account__c = a1.id, Is_using_credit_card__c = true, RecordTypeId = chinaRT, ANG_Type_Of_Change__c = 'Conversion to International');
 		insert oscar_china;
 
-		List<AMS_Oscar__c> oscars = [select id, Account__c, Process__c, Is_NewGen__c, RecordTypeId from AMS_Oscar__c where Process__c = :AMS_Utils.NGCHINACONVERSION limit 1];
+		List<AMS_Oscar__c> oscars = [select id, Account__c, Process__c, Is_NewGen__c, RecordTypeId, ANG_Type_Of_Change__c from AMS_Oscar__c where Process__c = :AMS_Utils.NGCHINACONVERSION AND Account__c = :a1.Id limit 1];
 
 		Test.startTest();
 
