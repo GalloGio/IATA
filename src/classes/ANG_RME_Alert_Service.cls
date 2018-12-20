@@ -370,7 +370,6 @@ global class ANG_RME_Alert_Service {
 
 			if(result.res.iataCode != iataCode){ 
 				log.Error_Code__c = 'Iata Code Mismatch';
-				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 				ServiceNow_Helper.sendRequestToSNOWRME('SNOW19',iataCode, log, result);
 			}
 
@@ -431,7 +430,9 @@ global class ANG_RME_Alert_Service {
 
 				log.Error_Code__c = String.valueOf(res.getStatusCode());
 				log.Error_Message__c = res.getBody();
-				if(res.getStatusCode() >= 400) //ServiceNow_Helper.sendRequestToSNOW('Mulesoft', (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), 'featurespace-system-service', 'RME', String.valueOf(result),  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				if(mappingName == 'ENDORS_CERT' && res.getStatusCode() >= 400)
+					ServiceNow_Helper.sendRequestToSNOWRME('SNOW19',iataCode, log, result);
+				else if(res.getStatusCode() >= 400) //ServiceNow_Helper.sendRequestToSNOW('Mulesoft', (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), 'featurespace-system-service', 'RME', String.valueOf(result),  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 					ServiceNow_Helper.sendRequestToSNOWRME((params.name == 'BTN_Bal' ?  'SNOW9': 'SNOW9.1'), iataCode, log, result);
 				result.description = 'An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.';
 			}
