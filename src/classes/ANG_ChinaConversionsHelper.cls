@@ -129,18 +129,18 @@ global class ANG_ChinaConversionsHelper {
     public static List<Account> getAllAccountsFromRelationships(Id accountId) {
 		List<AMS_Agencies_relationhip__c> allRelations = getAllAccountRelations(accountId);
 
-		List<Id> accountIdsList = new List<Id>();
+		Set<Id> accountIdsSet = new Set<Id>();
 
 		for(AMS_Agencies_relationhip__c rel : allRelations) {
-			if(!accountIdsList.contains(rel.Parent_Account__c)) accountIdsList.add(rel.Parent_Account__c);
-			if(!accountIdsList.contains(rel.Child_Account__r.Top_Parent__c)) accountIdsList.add(rel.Child_Account__r.Top_Parent__c);
-			accountIdsList.add(rel.Child_Account__c);
+			accountIdsSet.add(rel.Parent_Account__c);
+			accountIdsSet.add(rel.Child_Account__r.Top_Parent__c);
+			accountIdsSet.add(rel.Child_Account__c);
 		}
 
 		List<Account> accountsList = [SELECT Id, Name, Location_Class__c, Location_Type__c, ANG_Accreditation_Model__c, Status__c, ParentId, Top_Parent__c,
 											ANG_IsNewGenAgency__c, ANG_RiskStatus__c, ANG_RiskHistoryAssessment__c
 									  FROM Account
-									  WHERE Id in :accountIdsList];
+									  WHERE Id in :accountIdsSet];
 
 		return accountsList;
     }
