@@ -20,6 +20,8 @@ public class ISSP_Ctrl_ContentPage
   public String search {get;set;}
   public String selectedValCat {get;set;}
   public String selectedValPub {get;set;}
+  //+++
+  public String selectedValProd {get;set;}
 
   public List<ContentVersion> getContentVersions() {      
       return (List<ContentVersion>) setCon.getRecords();
@@ -43,6 +45,8 @@ public class ISSP_Ctrl_ContentPage
   public List<SelectOption> allFileTypesList {get;set;}
   public List<SelectOption> allDocumentCategoryList {get;set;}
   public List<SelectOption> allLanguagesList {get;set;}
+  public List<SelectOption> allProductCategoryList {get;set;}
+
 
   //CNS
   public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -58,6 +62,9 @@ public class ISSP_Ctrl_ContentPage
     search = '';
     selectedValPub = '';
     selectedValCat = '';
+
+    //+++
+    selectedValProd = '';
     Init();
   }
 
@@ -74,7 +81,9 @@ public class ISSP_Ctrl_ContentPage
 
     //Get Parameters ACcording to the Contact Related to User
     Contact PortalContact = [select Id ,Name, Status__c ,User_Portal_Status__c,OwnerId ,Account.BillingCountry ,Account.sector__c, Account.Category__c, Account.RecordType.Name,
-                             Account.IATA_ISO_Country__r.Name ,Account.IATA_ISO_Country__r.Region__c
+                             Account.IATA_ISO_Country__r.Name ,Account.IATA_ISO_Country__r.Region__c,
+                             // TODO: all products membership fields
+                             Account.ICH_Member__c
                              From Contact
                              where Id =: tmpPortalUSer.ContactId][0];
 
@@ -188,6 +197,8 @@ public class ISSP_Ctrl_ContentPage
     }
     string filterCat = '';
     string filterCountryP = '';
+    //+++
+    string filterProdCat = '';
     system.debug('##RN selectedValCat: ' + selectedValCat);
     if(selectedValCat!='' && selectedValCat != null && String.isNotBlank(selectedValCat)){
       system.debug('##RN filterCat: ' + filterCat);
@@ -198,18 +209,41 @@ public class ISSP_Ctrl_ContentPage
       filterCountryP = ' and Country_of_publication__c includes (\'' + selectedValPub  + '\')';
     }
 
+    //+++
+    if(selectedValProd!='' && selectedValProd != null && String.isNotBlank(selectedValProd)){
+      filterProdCat = ' and Product_Category__c = \'' + selectedValProd  + '\'';
+    }
+
    // init the controller and display some sample data when the page loads
-    soql = 'select id, Title, Description, FileType,OwnerId,Owner.Name, VersionNumber ,Country_visibilty__c ,User_status_access__c,Region__c,TagCsv ,ContentSize,Language__c,ContentDocumentId,Document_Category__c,Country_of_publication__c,ContentUrl '+
+    soql = 'select id, Title, Description, FileType,OwnerId,Owner.Name, '+
+           'VersionNumber ,Country_visibilty__c ,User_status_access__c,Region__c,TagCsv , '+
+           'ContentSize,Language__c,ContentDocumentId,Document_Category__c,Country_of_publication__c,ContentUrl,'+
+          //+++ TODO: product membership
+        'ICH_Member_Only__c' +
          ' From ContentVersion '+
          ' Where IsLatest = true '+
          ' AND User_status_access__c includes (\''+String.escapeSingleQuotes(UserPortalStatus)+'\')'+
          ' AND ((ContentDocumentId IN: DocIds_set'+
          ' AND Country_visibilty__c includes (\'All - Globally\',\''+String.escapeSingleQuotes(UserPortalCountry)+'\', \'All - Region '+String.escapeSingleQuotes(UserPortalRegion)+'\'))'+
-         ' OR (ContentDocumentId IN: PublicDocIds_set))' + filterSearch + filterCat + filterCountryP;
+         ' OR (ContentDocumentId IN: PublicDocIds_set))' + filterSearch + filterCat + filterCountryP + filterProdCat;
 
 
     system.debug('susana soql ' + soql);
-    setCon = new ApexPages.StandardSetController(sortContentVersions(Database.query(soql)));
+    ContentVersion[] contents = Database.query(soql);
+    ContentVersion[] filteredContents = new List<ContentVersion>();
+    // filtering by products membership (ICH only, SIS only...)
+      for(Integer j = 0; j < contents.size(); j++){
+          if(contents[j].ICH_Member_Only__c) {
+              if(!PortalContact.Account.ICH_Member__c) {
+                  System.debug('+++ you don\'t have exclusive access to: '+contents[j]+'. Removing...');
+                  contents.remove(j);
+
+              }
+
+          }
+          // TODO: other checks
+      }
+    setCon = new ApexPages.StandardSetController(sortContentVersions(contents));
     system.debug('##RN: ' + Database.query(soql));
  //   system.debug('##RN setCon.getRecords(): ' + setCon.getRecords().size);
     //ContentVersions = sortContentVersions(;
@@ -219,6 +253,9 @@ public class ISSP_Ctrl_ContentPage
     allLanguagesList = getPicklistValues('ContentVersion', 'Language__c');
     allFileTypesList = getPicklistValues('ContentVersion', 'FileType');
     allDocumentCategoryList = getPicklistValues('ContentVersion', 'Document_Category__c');
+
+    //+++
+    allProductCategoryList = getPicklistValues('ContentVersion', 'Product_Category__c');
     refreshPageSize();
 
 }

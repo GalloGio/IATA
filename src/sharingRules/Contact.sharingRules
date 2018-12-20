@@ -74,7 +74,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>IDFS ACCA Contact,GDP Contact,MACS Sales,Senior,IATA Service Provider Contact,IATA SIS Contact,IATA Standard Contact,IATA TTBS Contact,New contact for iss portal</value>
+            <value>MACS Sales</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -82,7 +82,7 @@
         <accessLevel>Edit</accessLevel>
         <label>SIS visibility</label>
         <sharedTo>
-            <roleAndSubordinates>SISCustomerSupport</roleAndSubordinates>
+            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
         </sharedTo>
         <criteriaItems>
             <field>Email</field>

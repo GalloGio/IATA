@@ -439,6 +439,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Change_Code__c</columns>
         <columns>Reason_Code__c</columns>
         <columns>Reason_Code_Description__c</columns>
+        <columns>Published_in_bulletin__c</columns>
         <columns>Record_Type__c</columns>
         <columns>Field1__c</columns>
         <columns>Field2__c</columns>
@@ -506,7 +507,6 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
     </listViews>
     <listViews>
         <fullName>AMS_debug</fullName>
-        <columns>OBJECT_ID</columns>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
         <columns>Record_Type__c</columns>
@@ -518,19 +518,13 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Reason_Code__c</columns>
         <columns>Reason_Code_Description__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
-        <columns>LAST_UPDATE</columns>
         <columns>CREATED_DATE</columns>
         <columns>SETUP_OWNER_NAME</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Change_Code__c</field>
+            <field>Reason_Code_Description__c</field>
             <operation>equals</operation>
-            <value>IRW,LSP,LSW,MCF,NOT,NWD,ONL,PCA,PCI,PCR,RCR,RVW,RWD,SDR,TRW,VRR</value>
-        </filters>
-        <filters>
-            <field>Billable__c</field>
-            <operation>equals</operation>
-            <value>1</value>
+            <value>ACTIVE,ENDORSED,PENDING</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>

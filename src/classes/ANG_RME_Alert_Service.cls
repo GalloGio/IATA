@@ -25,6 +25,10 @@ global class ANG_RME_Alert_Service {
 		public String thresholdLevel;
 		public String direction;
 
+		//Used only on RTS ALert
+		public String RTSSeverity;
+		public Decimal AgentSales;
+		
 		//Used on INT 033: Request Provisional RHC (button)
 		public String title;
 		public String transactionId;
@@ -115,6 +119,10 @@ global class ANG_RME_Alert_Service {
 			System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doPut] accs - ' + accs);
 
 			if(accs.isEmpty()) 								setResponse('No agent found with IATA Code '+req.iataCode, 404);
+
+			//handle Real Time Sales alert request 
+			else if(req.eventType == 'RTSAlert') 			saveRTSAlert(req, accs[0].Id);
+
 			else if(accs[0].RHC_Informations__r.isEmpty())	setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
 			else if(accs[0].RHC_informations__r.size()>1)	setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
 			else{
@@ -177,10 +185,71 @@ global class ANG_RME_Alert_Service {
 		setResponse(null, 202);
 	}
 
+	private static void saveRTSAlert(RHCMessage req, Id accountId){
+
+		if(!validateRTSAlert(req)) return;
+
+		ANG_Risk_Alert__c rtsAlert = new ANG_Risk_Alert__c(
+			RecordTypeId = Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+			ANG_Severity__c= req.rtsSeverity,
+			ANG_Agent_Sales__c = req.agentSales,
+			CurrencyIsoCode = req.storedBaseCurrency,
+			ANG_Account__c = accountId,
+			ANG_EventId__c = req.eventId
+		);
+    	insert rtsAlert;
+    	setResponse(null, 202);
+	}
+
+	private static Boolean validateRTSAlert(RHCMessage req) {
+
+		// validate fields required
+		if (String.isBlank(req.rtsSeverity) || req.agentSales == null || String.isBlank(req.eventId)) {
+			setResponse('Required values missing: '
+				+ (String.isBlank(req.rtsSeverity) ? 'rtsSeverity ' : '') 
+				+ (req.agentSales == null ? 'agentSales ' : '' )
+				+ (String.isBlank(req.eventId) ? 'eventId ' : '')
+				, 400);
+			return false;
+		}
+
+		//validate severity value - check if exists on picklist
+		String severPLvals = '';
+		for (Schema.PicklistEntry entry :ANG_Risk_Alert__c.ANG_Severity__c.getDescribe().getPicklistValues()){
+				
+			if(String.isBlank(severPLvals))
+				severPLvals = entry.getValue();
+			else 
+				severPLvals += ',' + entry.getValue();
+		}
+
+		if (!(new Set<String>(severPLvals.split(','))).contains(req.rtsSeverity)) {
+
+			setResponse('Invalid rtsSeverity: "'+req.rtsSeverity+'". Field is case Sensitive. Allowed values are: '+severPLvals, 400);
+			return false;
+		}
+
+		//validate currency
+		Set<String> currencyPLvals = new Set<String>();
+
+		for (Schema.Picklistentry entry: ANG_Risk_Alert__c.getSObjectType().getDescribe().fields.getMap().get('CurrencyIsoCode').getDescribe().getPickListValues()){
+			currencyPLvals.add(entry.getValue());
+		}
+
+		if (!currencyPLvals.contains(req.storedBaseCurrency)){
+			setResponse('Invalid storedBaseCurrency: "'+req.storedBaseCurrency+'". Currency code must have 3 upper case characters.', 400);
+			return false; 
+		}
+
+		return true;
+
+	}
+
 	global class WebserviceResult {
 		webservice Boolean isSuccess;
 		webservice String description;
 		webservice String iataCode;
+		webservice ISSP_Web_Service_Log__c log; 
 
 		private RHCMessage res;
 
@@ -189,27 +258,54 @@ global class ANG_RME_Alert_Service {
 		}
 	}
 
+	public static WebserviceResult testWebserviceResult(){
+		if(Test.isRunningTest()){
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess=true;
+			result.description='test description';
+			return result;
+		}
+		return null;
+	}
+
 	//webservice called by salesforce (javascript button and portal) to request an update of RHC Consumption Status
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
 
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 
-		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
+		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', false); //results are saved on the private varible "result"
 
 		if(result.isSuccess) {
 
 			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
 				result.isSuccess = false;
+				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				ServiceNow_Helper.sendRequestToSNOWRME('SNOW3', acc.IATACode__c, log, result);
+				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
 				result.isSuccess = false;
 				log.Error_Code__c = 'Currency Mismatch';
+				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				ServiceNow_Helper.sendRequestToSNOWRME('SNOW4', acc.IATACode__c, log, result);
+				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
+			}
+			else if (result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+				result.isSuccess = false;
+				log.Error_Code__c = 'RHC Value Mismatch';
+				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_068', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c,  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				ServiceNow_Helper.sendRequestToSNOWRME('SNOW5', acc.IATACode__c, log, result);
+				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else
 				updateRHC(result.res, acc.RHC_Informations__r[0]);
 
 		}
+
+		if(result.log != null)
+			insert result.log;
+
 		//
 		// To reset the singleton for future calls
 		//
@@ -227,8 +323,21 @@ global class ANG_RME_Alert_Service {
 
 		if(result.isSuccess){
 
-			if(result.res.iataCode != acc.IATACode__c) log.Error_Code__c = 'Iata Code Mismatch';
-			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode) log.Error_Code__c = 'Currency Mismatch';
+			if(result.res.iataCode != acc.IATACode__c){ 
+				log.Error_Code__c = 'Iata Code Mismatch';
+				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				ServiceNow_Helper.sendRequestToSNOWRME('SNOW6', acc.IATACode__c, log, result);
+			}
+			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){ 
+				log.Error_Code__c = 'Currency Mismatch';
+				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+				ServiceNow_Helper.sendRequestToSNOWRME('SNOW7', acc.IATACode__c, log, result);
+			}
+			//COMMENTED - we should not validate this for provisional RHC
+			/*else if (result.res.storedRHCValue != acc.RHC_Informations__r[0].ANG_RHC_Amount__c){
+				log.Error_Code__c = 'RHC Value Mismatch';
+				ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+			}*/
 			else{
 				ANG_RHC_Information__c rhcInfo = acc.RHC_Informations__r[0];
 				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
@@ -252,6 +361,10 @@ global class ANG_RME_Alert_Service {
 	}
 
 	private static WebserviceResult doRequest(String iataCode, String mappingName){
+		return doRequest(iataCode, mappingName, true);
+	}
+
+	private static WebserviceResult doRequest(String iataCode, String mappingName, boolean commitLog){
 
 		ANG_CalloutMapping__c params = ANG_CalloutMapping__c.getInstance(mappingName);
 
@@ -290,18 +403,24 @@ global class ANG_RME_Alert_Service {
 
 				log.Error_Code__c = String.valueOf(res.getStatusCode());
 				log.Error_Message__c = res.getBody();
+				if(res.getStatusCode() >= 400) //ServiceNow_Helper.sendRequestToSNOW('Mulesoft', (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), (params.name == 'BTN_Bal' ?  'INT_068': 'INT_033'), 'featurespace-system-service', 'RME', String.valueOf(result),  String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
+					ServiceNow_Helper.sendRequestToSNOWRME((params.name == 'BTN_Bal' ?  'SNOW9': 'SNOW9.1'), iataCode, log, result);
+				result.description = 'An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.';
 			}
 		} catch(Exception e) {
 			result.isSuccess = false;
 
 			log.Error_Code__c = 'Unexpected Exception on Apex Class';
 			log.Error_Message__c = e.getMessage();
+			result.description = 'An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin';
 		}
 
 		log.Success__c = result.isSuccess;
-		if(!result.isSuccess) result.description = 'An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin';
 		
-		insert log;
+		if(commitLog)
+			insert log;
+
+		result.log = log;
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] log - ' + log);
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] result - ' + result);

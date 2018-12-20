@@ -18,7 +18,7 @@
         var self = this;
         action.setCallback(this, function(actionResult) {
             //console.log(JSON.stringify(actionResult.getReturnValue()));
-            component.set("v.relatedAccounts", actionResult.getReturnValue());
+            component.set("v.relatedAccounts", actionResult.getReturnValue().amsAccountRoleList);
         });
         $A.enqueueAction(action);
     },

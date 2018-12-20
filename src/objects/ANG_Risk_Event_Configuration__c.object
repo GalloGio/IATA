@@ -428,6 +428,7 @@ HE Account: Create risk event on the HE of the current hierarchy</description>
         <fullName>All1</fullName>
         <columns>NAME</columns>
         <columns>ANG_Object_Type__c</columns>
+        <columns>ANG_Risk_Event_Type__c</columns>
         <columns>ANG_Field01__c</columns>
         <columns>ANG_Field02__c</columns>
         <columns>ANG_Field03__c</columns>
@@ -435,6 +436,7 @@ HE Account: Create risk event on the HE of the current hierarchy</description>
         <columns>ANG_Field05__c</columns>
         <columns>ANG_Field06__c</columns>
         <columns>ANG_Field07__c</columns>
+        <columns>ANG_Risk_Event_Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

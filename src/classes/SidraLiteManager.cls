@@ -5,13 +5,13 @@ public with sharing class SidraLiteManager {
 
     public static Boolean BLOCK_EXECUTION = false;
 
-    public static final Id RECORDTYPE_SIDRA_LITE = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
-    public static final Id RECORDTYPE_SIDRA = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
-    public static final Id RECORDTYPE_IFAP = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
-    public static final Id RECORDTYPE_SMAP = Schema.SObjectType.Case.getRecordTypeInfosByName().get('sMAP(sales Monitoring Alert Process)').getRecordTypeId();
-    public static final Id RECORDTYPE_SAAM = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-    public static final Id RECORDTYPE_OSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-    public static final Id RECORDTYPE_INVOICING = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Invoicing Collection Cases').getRecordTypeId();
+    public static final Id RECORDTYPE_SIDRA_LITE = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+    public static final Id RECORDTYPE_SIDRA = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    public static final Id RECORDTYPE_IFAP = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+    public static final Id RECORDTYPE_SMAP = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'sMAP_sales_Monitoring_Alert_Process');
+    public static final Id RECORDTYPE_SAAM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
+    public static final Id RECORDTYPE_OSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+    public static final Id RECORDTYPE_INVOICING = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases');
 
     public class SidraLiteException extends Exception {}
 
@@ -150,7 +150,7 @@ public with sharing class SidraLiteManager {
         map<Id,Account> mapAccounts = new map<Id,Account>();
         if (!listAccountId.isEmpty()) {
             mapAccounts = new map<Id,Account>(
-            [Select Id, Type, Status__c, Accumulated_Irregularities__c, Category__c
+            [Select Id, Type, Status__c, Accumulated_Irregularities__c, Category__c, ANG_IsNewGenAgency__c 
             from Account
             where id in :listAccountId]);
         }
@@ -493,7 +493,12 @@ public with sharing class SidraLiteManager {
             // finally update SIDRA lite case
             parentCase.FirstFSnonComplianceDate__c = Date.today();
             if (SidraLiteUtil.isPassenger(account)) {
-                parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(31);
+                
+                if(Account.ANG_IsNewGenAgency__c)
+                    parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(60);
+                else
+                    parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(31);
+
                 if (SidraLiteUtil.isAccountActive(account)) {
                     //cse.Propose_Irregularity__c = Date.today();
                     cse.SIDRA_Lite_Default_Date__c = Date.today();

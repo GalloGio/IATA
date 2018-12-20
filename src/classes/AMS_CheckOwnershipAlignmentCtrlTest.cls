@@ -6,9 +6,8 @@ public class AMS_CheckOwnershipAlignmentCtrlTest {
 
         
        System.debug('inserting dummy data');
-        Id ownerRecTypeId = Schema.AMS_Account_Role__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
-        Id agencyownershipId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        //IATA_ISO_Country__c country = [select id from IATA_ISO_Country__c where name='Canada'];
+        Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+        Id agencyownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'suzilandia', region__c = 'aaa', ISO_Code__c= '21', ISO_Code_Numeric__c = 212,CurrencyIsoCode = 'AUD'); 
         insert country;
@@ -27,7 +26,8 @@ public class AMS_CheckOwnershipAlignmentCtrlTest {
         insert acc;
        system.debug('## acc: '+acc);
         
-        //insert Contact
+		
+		/*
         Contact c = new Contact();
         c.Email = 'randomwell@email.com';
         c.LastName = ' rnadom cenas';
@@ -240,6 +240,7 @@ public class AMS_CheckOwnershipAlignmentCtrlTest {
         insert badOwnerBR6;
         
 		system.debug('## done inserting!');
+		*/
 	}
     
     @isTest()

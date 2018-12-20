@@ -52,7 +52,7 @@ Please note that IATA will monitor your Agency’s sales reports to ensure that 
 
 
 
-The above requested documentation (Attestation of Compliance or Nil Credit Card Self-Declaration) should be sent to IATA through our Customer Service Portal web page: http://www.iata.org/cs to arrive no later than {!Today() + 30}. Please attach a scanned copy to case {!AMS_OSCAR__c.Name}  visible on your portal home page under ‘My recent cases’ section.
+The above requested documentation (Attestation of Compliance or Nil Credit Card Self-Declaration) should be sent to IATA through our Customer Service Portal web page: http://www.iata.org/cs to arrive no later than {!Today() + 30} (mm/dd/yyyy). Please attach a scanned copy to case {!AMS_OSCAR__c.Name}  visible on your portal home page under ‘My recent cases’ section.
 
 
 

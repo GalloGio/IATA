@@ -7,10 +7,10 @@ public class ANG_RHCHelper {
 	//RHC Information standard record type
 	public static final String RHC_INFO_STD_RT = 'RHC_Information';
 
-	public static final String RECTYPE_STDRHCINFO = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_RHC_Information__c').get(RHC_INFO_STD_RT);
-	public static final String RECTYPE_RISKALERT_RHC = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert');
-	public static final String RECTYPE_RISKALERT_RTS = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Risk_Alert__c').get('Risk_Alert_RTS');
-	public static final String RECTYPE_RHCATTRIBUTE = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('RHC_Risk_Alert');
+	public static final String RECTYPE_STDRHCINFO = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_RHC_Information__c', RHC_INFO_STD_RT);
+	public static final String RECTYPE_RISKALERT_RHC = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_Risk_Alert__c', 'Risk_Alert');
+	public static final String RECTYPE_RISKALERT_RTS = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_Risk_Alert__c', 'Risk_Alert_RTS');
+	public static final String RECTYPE_RHCATTRIBUTE = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Country_Specific_Attribute__c', 'RHC_Risk_Alert');
 
 	//Risk Alert 
 	public static final String RISK_ALERT_DIRECTION_UP = 'UP';
@@ -26,7 +26,7 @@ public class ANG_RHCHelper {
 
 	public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
 		
-		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_CashCondition__c, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c FROM RHC_Informations__r WHERE RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
+		List<Account> accountsRetreived = [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c , ANG_CashCondition__c, (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c FROM Financial_Securities__r), (SELECT Id, ANG_Financial_Security__c FROM RHC_Informations__r WHERE RecordTypeId = :RECTYPE_STDRHCINFO) FROM Account WHERE Id IN :accountIds];
 		List<Account> accountsToProcess = new List<Account>();
 		List<Account> accountsToSUMFS = new List<Account>();
 
@@ -56,7 +56,8 @@ public class ANG_RHCHelper {
 				RecordTypeId = RECTYPE_STDRHCINFO,
 				ANG_UniqueKey__c = a.Id+RHC_INFO_STD_RT,
 				ANG_CashCondition__c = a.ANG_CashCondition__c,
-				CurrencyIsoCode = a.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode
+				CurrencyIsoCode = a.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+				ANG_RHC_Amount_Equals_FS__c = a.IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 			));
 		}
 		
@@ -87,7 +88,7 @@ public class ANG_RHCHelper {
 		//calculates RHC and forescasted RHC amount based on business rules. this is not done on a formula field, because terminated accounts should not have the value changed
 
 		//for accounts where the RHC Amount is NOT equal to FS, we need to check the minimum
-		Id minRHCrt = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('Minimum_RHC_Amount');
+		Id minRHCrt = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
 		Set<Id> accountsIds = new Set<Id>();
 		for(ANG_RHC_Information__c rhc : rhcInfo) {
@@ -118,9 +119,9 @@ public class ANG_RHCHelper {
 
 		for(ANG_RHC_Information__c rhc : rhcInfo){
 
-			if(rhc.ANG_CashCondition__c && rhc.ANG_Financial_Security__c > 0){
-				rhc.ANG_RHC_Amount__c = rhc.ANG_Financial_Security__c;
-				rhc.ANG_RHC_Amount_Forecasted__c = rhc.ANG_Financial_Security__c;
+			if((rhc.ANG_CashCondition__c && rhc.ANG_Financial_Security__c > 0) || rhc.ANG_RHC_Amount_Equals_FS__c){
+				rhc.ANG_RHC_Amount__c = (rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c);
+				rhc.ANG_RHC_Amount_Forecasted__c = (rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c);
 			}else{
 				Decimal fsAmount = rhc.ANG_Financial_Security__c == null ? 0 : rhc.ANG_Financial_Security__c;
 				Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;

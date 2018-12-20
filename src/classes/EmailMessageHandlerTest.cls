@@ -30,7 +30,7 @@ private class EmailMessageHandlerTest {
             + '"Subject":"Test Case Subject",'
             + '"Status":"Closed",'
             + '"ClosedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
-            + '"RecordTypeId":"' + RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get(EmailMessageHandler.LIST_VALID_RT.get(0)) + '"'
+            + '"RecordTypeId":"' + RecordTypeSingleton.getInstance().getRecordTypeId('Case', EmailMessageHandler.LIST_VALID_RT.get(0)) + '"'
             + '}';
             //+ '"ContactId":"' + contact.id + '",'
             //+ '"AccountId":"' + account.id + '",'
@@ -40,8 +40,9 @@ private class EmailMessageHandlerTest {
     static testMethod void test_SetTheNOISentDateOnParentCase() {
         // create a SIDRA case
         Case aCase = new Case();
-        acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+        acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
         
         // create an attachment to it
@@ -145,37 +146,4 @@ private class EmailMessageHandlerTest {
         //System.assertEquals(2,listEmails.size());
     }
     
-    /* 
-    static testMethod void test_PreventEmailDeletion() {
-        // create a SIDRA case
-        Case aCase = new Case();
-        acase.RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-        acase.Subject = 'Test Case Subject';
-        insert aCase;
-        
-        //create an email message attached to the case
-        EmailMessage em = new EmailMessage();
-        em.ParentId = aCase.Id;
-        em.Incoming = false;
-        em.FromAddress = 'test@example.com';
-        em.ToAddress = 'test@example.com';
-        em.Subject = 'Test email';
-        em.TextBody = 'Hello';
-        insert em;
-        
-        test.startTest();
-            
-        Boolean exceptionRaised = false;
-        
-        // test that the email deletion is prevented
-        try {
-            delete em;
-        } catch (Exception e) {
-            exceptionRaised = true;
-        }
-        
-        system.assertEquals(true, exceptionRaised);
-             
-        test.stopTest();
-    }*/
 }

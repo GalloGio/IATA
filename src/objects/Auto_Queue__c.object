@@ -132,6 +132,11 @@
                     <default>false</default>
                     <label>Europe</label>
                 </value>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

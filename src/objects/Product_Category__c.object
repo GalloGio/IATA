@@ -580,6 +580,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Section_7_Show__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Show/Hide Section #7 - Interactive Statistics</description>
+        <externalId>false</externalId>
+        <label>Section 7 Show</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Short_Description__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Short description can be used at the top of the page under the product display name.</inlineHelpText>

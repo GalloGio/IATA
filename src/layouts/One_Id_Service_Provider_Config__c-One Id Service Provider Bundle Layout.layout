@@ -12,8 +12,16 @@
                 <field>Service_Provider_Name__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Role_Selectable__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Logo__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Customer_Type_Activation__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -35,6 +43,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>TermConditions__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Max_Number_Of_Primary_User__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Max_Number_Of_Secondary_User__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invitation_Primary_Max__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invitation_Secondary_Max__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -142,7 +166,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4E000000FsSR</masterLabel>
+        <masterLabel>00hw000000hfWe9</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

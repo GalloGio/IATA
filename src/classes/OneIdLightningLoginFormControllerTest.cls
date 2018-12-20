@@ -3,86 +3,6 @@ private class  OneIdLightningLoginFormControllerTest {
 
     public static User userFrozen;
     public static User userUnfrozen;
-/*
-  @IsTest
-  static void createTestData() {
-    
-    RecordType rt = [SELECT Id FROM RecordType WHERE SobjectType='Account' AND Name = 'MACS Sales Account' LIMIT 1];
-    
-    // Frozen User Account
-    Account accountFrozen = new Account (name= 'New TAP Account Frozen', RecordType = rt);
-    upsert accountFrozen;
-
-    // Unfrozen User Account
-    Account accountUnfrozen = new Account (name= 'New TAP Account Unfrozen', RecordType = rt);
-    upsert accountUnfrozen;
-    
-    // Frozen Contact
-    Contact contactFrozen = new Contact(
-      Accountid = accountFrozen.id, 
-      FirstName = 'FirstNameFrozen', 
-      LastName = 'LastNameFrozen', 
-      Phone = 'phone', 
-      Fax = 'fax', 
-      Title='jobtitle', 
-      Membership_Function__c='functionpick', 
-      Preferred_Language__c='preferredlanguage'
-    );
-    upsert contactFrozen;
-
-    Contact contactUnfrozen = new Contact(
-      Accountid = accountUnfrozen.id, 
-      FirstName = 'FirstNameUnFrozen', 
-      LastName = 'LastNameUnFrozen', 
-      Phone = 'phone', 
-      Fax = 'fax', 
-      Title='jobtitle', 
-      Membership_Function__c='functionpick', 
-      Preferred_Language__c='preferredlanguage'
-    );
-    upsert contactUnfrozen;
-
-    userFrozen = new User(
-     ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)'].Id,
-     LastName = 'lastFrozen',
-     Email = 'puser.frozen000@salesforce.com',
-     Username = 'puser.frozen000@salesforce.com' + System.currentTimeMillis(),
-     CompanyName = 'TestCompany',
-     Title = 'Title',
-     Alias = 'frozen',
-     TimeZoneSidKey = 'America/Los_Angeles',
-     EmailEncodingKey = 'UTF-8',
-     LanguageLocaleKey = 'en_US',
-     LocaleSidKey = 'en_US',
-     UserRoleId = [SELECT Id  FROM UserRole WHERE DeveloperName = 'TAPPartnerUser'].Id,
-     Portal_User_Frozen_Checkbox__c = true,
-     ContactId=contactFrozen.Id,
-     License_Cost_Center__c ='ITO005CH01'
-    );
-    insert userFrozen;
-
-    userUnfrozen = new User(
-     ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)'].Id,
-     LastName = 'lastFrozen',
-     Email = 'puser.frozen000@salesforce.com',
-     Username = 'puser.frozen000@salesforce.com' + System.currentTimeMillis(),
-     CompanyName = 'TestCompany',
-     Title = 'Title',
-     Alias = 'Unfrozen',
-     TimeZoneSidKey = 'America/Los_Angeles',
-     EmailEncodingKey = 'UTF-8',
-     LanguageLocaleKey = 'en_US',
-     LocaleSidKey = 'en_US',
-     UserRoleId = [SELECT Id  FROM UserRole WHERE DeveloperName = 'TAPPartnerUser'].Id,
-     Portal_User_Frozen_Checkbox__c = false,
-     ContactId=contactUnfrozen.Id,
-     License_Cost_Center__c ='ITO005CH01'
-    );
-    insert userUnfrozen;
-
-   
- }
-*/
 
     @testSetup static void customSettingSetup() {
         insert new ISSP_CS__c(Name = 'ipinfo_token',Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)([.])(([a-zA-Z]{3})|([a-zA-Z]{2}))');
@@ -176,27 +96,6 @@ private class  OneIdLightningLoginFormControllerTest {
         System.debug('child Id: ' + child.Id);
         Contact con = ISSP_ObjectFactory.createNewContact();
 
-        /*
-        con.AccountId= child.Id;
-        con.Email = 'Test@test11.com';
-        con.User_Portal_Status__c = 'Approved Admin';
-        insert con;
-        System.debug('con Id: ' + con.Id);
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
-        con.OwnerId = newUser.Id;
-        update con;
-
-        User ui  = [SELECT id, username  FROM User where id = :newUser.id];
-
-        //createTestData();
-
-        Test.startTest();
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
-        OneIdLightningLoginFormController.login(ui.username, 'fakepwd', 'https://iata--OneIdConde.cs83.my.salesforce.com/oneidentity');
-        Test.stopTest();
-        */
-
     }
 
     @isTest
@@ -231,55 +130,8 @@ private class  OneIdLightningLoginFormControllerTest {
 
     }
 
-    @isTest
-    static void testLoginWithValidCredentialsFrozen() {
-    /*
-        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(ISO_Code__c='PT',Name='Portugal',Region__c='Europe');
-        insert isoCountry;
-
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        insert parent;
-        System.debug('parent Id: ' + parent.Id);
-
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.ParentId = parent.Id;
-        child.IATA_ISO_Country__c = isoCountry.Id ;
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.Top_Parent__c = parent.Id;
-        child.Sector__c = 'Airline';
-        child.BillingCountry = 'Italy';
-        insert child;
-        System.debug('child Id: ' + child.Id);
-        Contact con = ISSP_ObjectFactory.createNewContact();
-
-        con.AccountId= child.Id;
-        con.Email = 'Test@test11.com';
-        con.User_Portal_Status__c = 'Approved Admin';
-        insert con;
-        System.debug('con Id: ' + con.Id);
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
-        con.OwnerId = newUser.Id;
-        update con;
-
-        User ui  = [SELECT id, username  FROM User where id = :newUser.id];
-
-        Test.startTest();
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
-        OneIdLightningLoginFormController.login(ui.username, 'fakepwd', 'https://iata--OneIdConde.cs83.my.salesforce.com/oneidentity');
-        Test.stopTest();
-        */
-
-    }
-
     @IsTest
     static void testReactivateUser() {
-
-
 
         Contact con = [select id,email,accountid,firstname,lastname from contact where email ='Test@test11111.com'];
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -287,6 +139,7 @@ private class  OneIdLightningLoginFormControllerTest {
 
         User ui  = [SELECT id, username  FROM User where id = :newUser.id];
         OneIdLightningLoginFormController.reactivateUser(ui,'');
+        
     }
 
     @IsTest
@@ -321,7 +174,7 @@ private class  OneIdLightningLoginFormControllerTest {
     static void testGetSelfRegistrationURL() {
         OneIdLightningLoginFormController.getSelfRegistrationUrl();
         OneIdLightningLoginFormController.getSelfRegistrationUrl();
-		OneIdLightningLoginFormController.fakemethod();
+        OneIdLightningLoginFormController.fakemethod();
     }
 
 
@@ -335,7 +188,5 @@ private class  OneIdLightningLoginFormControllerTest {
         Auth.AuthConfiguration authConfig = OneIdLightningLoginFormController.getAuthConfig();
         System.assertNotEquals(null, authConfig);
     }
-    
-
 
 }

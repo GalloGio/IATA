@@ -33,6 +33,23 @@ global class ISSP_AmazonS3_Ctrl {
     public String uploadedFileIdentifier {get; set;}
     public string message {get; private set;}
     public boolean archived {get; private set;}
+    
+    public String currentIdentifier {
+        get;
+        set {
+            if(currentIdentifier!=null) return;
+            currentIdentifier = value;
+            list<AmazonFile__c> listAmazonFile = [
+                Select Id
+                From AmazonFile__c
+                Where Case__c = :this.cse.Id
+                AND File_Identifier__c = :currentIdentifier
+            ];
+            this.countFiles = listAmazonFile.size();
+        }
+    }
+    public Integer countFiles {private set; get;}
+    
 
     private Case cse;
     private Account acc {get;set;}
@@ -159,6 +176,32 @@ global class ISSP_AmazonS3_Ctrl {
         this.refreshAmazonFileMap();
         this.refreshReviewStatusMap();
     }
+
+    public ISSP_AmazonS3_Ctrl(ISSP_ModelA_Onboarding modelACtrl){
+        //system.debug('aqui ISSP_AmazonS3_Ctrl pci ' + modelACtrl.onBoardingOSCARCase.Id);
+        this.Id = modelACtrl.onBoardingOSCARCase.Id;
+        
+        if (this.id == null) return;
+        
+        this.cse = [Select id, Status,CaseNumber,ArchivedDate__c,account.type,
+                 account.IATA_ISO_Country__r.iso_code__c ,
+                 IFAP_Agent_Code__c,AccountId ,Financial_Review_Type__c,IsComplaint__c,
+                 Reason1__c, CaseArea__c, Owner.Name
+                 from Case where id = : this.id];
+        
+        AMAZONURL = AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).EndpointBaseURL
+             + AmazonCredentials.getCredentials(AMAZON_CREDENTIALS_NAME).Bucket;
+        
+        allowedExtensions = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 ALLOWED EXTS').Value__c;
+        maxFileSize = ISSP_CS__c.getValues('ISSP AMS AMAZON S3 MAX FILE SIZE').Value__c;
+        
+        this.actionStatus = '201';
+        accessid =  CREDENTIALS.AWSAccessKeyId;
+        calculePolicy('');        
+        this.refreshAmazonFileMap();
+        this.refreshReviewStatusMap();
+    }
+
     public ISSP_AmazonS3_Ctrl(ISSP_AddAttachment amsCtrl) {
         this.Id = amsCtrl.tmpCase.Id;
 
@@ -201,6 +244,10 @@ global class ISSP_AmazonS3_Ctrl {
 
     public Boolean getCaseOwnerNewgenPCI() {
         return this.cse.Owner.Name.startsWith('NewGen PCI');
+    }
+
+    public Boolean getCaseOwnerModelA() {
+        return this.cse.Owner.Name.startsWith('Model A Onboarding');
     }
 
     private static String make_sig(string canonicalBuffer) {
@@ -330,6 +377,7 @@ global class ISSP_AmazonS3_Ctrl {
         AmazonFileAMS newAmazonFile;
         reqIdentifierList = new List<String>();
 
+        this.countFiles = 0;
         for ( AmazonFile__c amazonFile: listAmazonFile) {
 
             newAmazonFile = new AmazonFileAMS(amazonFile);
@@ -339,6 +387,9 @@ global class ISSP_AmazonS3_Ctrl {
             } else {
                 amazonFileMap.put(amazonFile.File_Identifier__c, new List<AmazonFileAMS>{newAmazonFile});
                 reqIdentifierList.add(amazonFile.File_Identifier__c);
+            }
+            if (this.currentIdentifier==amazonFile.File_Identifier__c) {
+                this.countFiles++;
             }
         }
 
@@ -481,7 +532,7 @@ global class ISSP_AmazonS3_Ctrl {
                 File_Identifier__c = uploadedFileIdentifier,
                 File_Identifier_picklist__c = uploadedFileIdentifier,
                 Review_Status__c = 'Pending',
-                RecordTypeId = Schema.SObjectType.AmazonFile__c.RecordTypeInfosByName.get('AMS File').RecordTypeId,
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'AMS_File'),
                 Size_MB__c = uploadedFileSize* 0.000001, //convert to MB
                 isPublic__c = true,
                 Case__c = Id

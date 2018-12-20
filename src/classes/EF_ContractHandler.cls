@@ -283,7 +283,7 @@ public class EF_ContractHandler
             //loop over accounts to check if any of them need to trigger a notification.
             for(Contract c: contracts){
                 //check fields for Clients
-                if(c.RecordTypeId==AMS_Utils.getId('Contract', 'EF_Client_Agreement')){
+                if(c.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Contract', 'EF_Client_Agreement')){
                     
                     for(String s: criticalContractFieldList){
                         SObjectField f = fields.get(s);                 

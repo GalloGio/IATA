@@ -14,7 +14,7 @@ global class ANG_Migration_MassRMECallout {
     public list<selectOption> lsCountry	{get{
     		lsCountry = new list<SelectOption>();
     		lsCountry.add(new selectOption('-','None'));
-    		for(IATA_Iso_country__c cnt :[select Id, ISO_Code__c, Name from IATA_Iso_Country__c order by Name asc])
+    		for(IATA_Iso_country__c cnt : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name'))
     			lsCountry.add(new selectOption(cnt.ISO_Code__c, cnt.Name));
     		
     		return lsCountry;

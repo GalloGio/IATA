@@ -25,17 +25,61 @@
 
         var emailCmp = c.find("email");
         var emailValue = emailCmp.get("v.value");
+        var serviceName = c.get("v.serviceName");
+
+        if(serviceName == null){
+            console.log('Warning : No service name provided!');
+        }
 
         //check if username is available (insert + rollback)
-        var action = c.get("c.checkIsUsernameIsAvailableInGlobalSalesforce");
+        var action = c.get("c.getUserInformationFromEmail");
         action.setParams({
-            "email":emailValue
+            "email":emailValue,
+            "serviceName": serviceName
         });
 
-        action.setCallback(this, function(a) {
-            var isUserCanBeCreated = a.getReturnValue();
-
-            if(isUserCanBeCreated){
+        action.setCallback(this, function(resp) {
+            var params = resp.getReturnValue();
+            console.log('Params received : ' + params);
+            c.set("v.isEmailAddressAvailable", params.isEmailAddressAvailable);
+            c.set("v.isServiceUser", params.isServiceUser);
+            c.set("v.isServiceEligible", params.isServiceEligible);
+            
+            if(params.isContactInserted){
+            	if(serviceName != 'FRED'){
+                	var e = c.getEvent("StepCompletionNotification");
+                	e.setParams({
+                	    "stepNumber" : 3,
+                	    "isComplete" : true,
+                	     });
+                	e.fire();
+                	
+                	emailCmp.set("v.errors", null);
+                	emailCmp.set("v.disabled", true);
+                	c.find("termsaccepted").set("v.disabled", true);
+            	}
+            	else{
+            		if(! params.isServiceEligible){
+                        emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+                        c.set("v.Terms", false);
+            		}
+            		else{
+	                    c.set("v.contact",params.con);
+	                    c.set("v.account",params.acc);
+	                    //notify parent component that step is completed
+	                    var e = c.getEvent("StepCompletionNotification");
+	                    e.setParams({
+	                        "stepNumber" : 1,
+	                        "isComplete" : true,
+	                         });
+	                    e.fire();
+	                    emailCmp.set("v.errors", null);
+	                    emailCmp.set("v.disabled", true);
+	                    c.find("termsaccepted").set("v.disabled", true);
+            		}
+            	}
+            }
+            else if(params.isEmailAddressAvailable && !params.isContactInserted){
                 //notify parent component that step is completed
                 var e = c.getEvent("StepCompletionNotification");
                 e.setParams({
@@ -47,8 +91,11 @@
                 emailCmp.set("v.errors", null);
                 emailCmp.set("v.disabled", true);
                 c.find("termsaccepted").set("v.disabled", true);
-            }else{
-                emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+            }
+            else{
+                if(c.get("v.serviceName") != 'FRED'){
+                    emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+                }
                 c.set("v.Terms", false);
             }
             $A.util.toggleClass(spinner, "slds-hide");

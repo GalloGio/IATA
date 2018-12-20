@@ -307,6 +307,12 @@ src/workflows/ZMG_Send_Survey_Email_to_Case_Contact_after_Case_Closed.workflow
 src/workflows/Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application.workflow
 src/workflows/RequestsForAccessSIQ.workflow
 src/workflows/StreamActivityAccess.workflow
+src/queues/CasesAmericasemails.queue
+src/queues/E_F_Airline_Services.queue
+src/queues/E_F_Client_Services.queue
+src/queues/E_F_Data_Transformation.queue
+src/queues/E_F_Invoice_and_accounting.queue
+src/queues/Local_Office_New_Zealand.queue
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace
@@ -337,3 +343,4 @@ config/*
 out
 config/*
 README.md
+uncrustify.cfg

@@ -70,7 +70,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
     public Boolean IsExpediteDeliveryAddedtoIDCardPrice {
         get {
             
-                IATA_ISO_Country__c contactCountry =  [Select i.Name, i.Id, i.ISO_Code__c, i.IATA_Regional_Office__c,i.AIMS_Area_Name__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+                IATA_ISO_Country__c contactCountry = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
                 Price_Table__c[] listPriceTables = [Select p.Expedite_Delivery_added_to_IDCard_Price__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
                 if (listPriceTables == null || listPriceTables.size() == 0) {
                     throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
@@ -113,7 +113,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
                                      i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, 
                                      i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, 
                                      i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, 
-                                     i.ConnectionSentId, i.ConnectionReceivedId, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
+                                     i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
                                      i.Tax_2_Name__c,  i.Tax_1_Name__c,  i.Tax_1_Value__c,  i.Tax_2_Value__c    
                                      From ID_Card_Application__c i 
                                      where i.Id = :applicationId 
@@ -124,30 +124,30 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
                 
                Map<String,String> taxes =  IDCardTaxUtil.GetTaxes(a.BillingState,a.BillingCountry);
                if(taxes.keySet().Size()==1){   
-		             List<String> taxPercentage =  taxes.values();
-		             List<String> taxName = new List<String>();
-		             taxName.addAll(taxes.keySet());
-		             idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
-		             idCardApplication.Tax_1_Value__c = IDCardTaxUtil.CalculateTaxes(String.ValueOf(taxPercentage[0]), String.ValueOf(idCardApplication.Applicable_Fee__c)) + ' '+ idCardApplication.CurrencyIsoCode;
-	              
-	           }else if(taxes.keySet().Size()==2){
-					 List<String> taxPercentage =  taxes.values();
-		             List<String> taxName = new List<String>();
-		             taxName.addAll(taxes.keySet());
-		             idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
-	                 idCardApplication.Tax_2_Name__c = taxName[1] + '(' + String.ValueOf(taxPercentage[1]) + '%)' ;
-	                 
-	                 // If I have 2 taxes, I must consider both in the calculation
-	                 // As first I retrieve the total amount of the taxes
-					 decimal totaltaxpercentage = decimal.valueOf(taxPercentage[0])+decimal.valueOf(taxPercentage[1]);
-	                 decimal totaltaxamount = decimal.valueOf(IDCardTaxUtil.CalculateTaxes(String.valueOf(totaltaxpercentage), String.ValueOf(idCardApplication.Applicable_Fee__c)));
+                     List<String> taxPercentage =  taxes.values();
+                     List<String> taxName = new List<String>();
+                     taxName.addAll(taxes.keySet());
+                     idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
+                     idCardApplication.Tax_1_Value__c = IDCardTaxUtil.CalculateTaxes(String.ValueOf(taxPercentage[0]), String.ValueOf(idCardApplication.Applicable_Fee__c)) + ' '+ idCardApplication.CurrencyIsoCode;
+                  
+               }else if(taxes.keySet().Size()==2){
+                     List<String> taxPercentage =  taxes.values();
+                     List<String> taxName = new List<String>();
+                     taxName.addAll(taxes.keySet());
+                     idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
+                     idCardApplication.Tax_2_Name__c = taxName[1] + '(' + String.ValueOf(taxPercentage[1]) + '%)' ;
+                     
+                     // If I have 2 taxes, I must consider both in the calculation
+                     // As first I retrieve the total amount of the taxes
+                     decimal totaltaxpercentage = decimal.valueOf(taxPercentage[0])+decimal.valueOf(taxPercentage[1]);
+                     decimal totaltaxamount = decimal.valueOf(IDCardTaxUtil.CalculateTaxes(String.valueOf(totaltaxpercentage), String.ValueOf(idCardApplication.Applicable_Fee__c)));
 
-					 // Now I split the total tax amount in the two separate ones
-					 decimal taxamount1 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[0]);
-					 decimal taxamount2 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[1]);			  
-		             idCardApplication.Tax_1_Value__c = taxamount1.setScale(2) + ' '+ idCardApplication.CurrencyIsoCode;
-	                 idCardApplication.Tax_2_Value__c = taxamount2.setScale(2)+ ' '+ idCardApplication.CurrencyIsoCode;
-		         }
+                     // Now I split the total tax amount in the two separate ones
+                     decimal taxamount1 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[0]);
+                     decimal taxamount2 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[1]);            
+                     idCardApplication.Tax_1_Value__c = taxamount1.setScale(2) + ' '+ idCardApplication.CurrencyIsoCode;
+                     idCardApplication.Tax_2_Value__c = taxamount2.setScale(2)+ ' '+ idCardApplication.CurrencyIsoCode;
+                 }
             }
             catch (Exception ex) {
                 throw new IDCardApplicationException(Label.IDCard_IDCardAppNotFound);
@@ -160,7 +160,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
              ////Checks if User can pay by Cheque
              // Map the account agent type to the Price Table agent type
              accountType = IDCardUtil.GetAgentTypeFromAccountType(theAccount.type);
-             IATA_ISO_Country__c contactCountry =  [Select i.Name, i.Id, i.ISO_Code__c, i.IATA_Regional_Office__c,i.AIMS_Area_Name__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+             IATA_ISO_Country__c contactCountry =  IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry)[0];
              Price_Table__c[] listPriceTables = [Select p.Can_Pay_by_Cheque__c, p.CurrencyIsoCode, p.Profit_Center__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
              CanPayByCheque = listPriceTables[0].Can_Pay_by_Cheque__c;
              if (listPriceTables[0].Profit_Center__c != null && listPriceTables[0].Profit_Center__c != '')
@@ -264,7 +264,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
     
     public Pagereference buyNow() {
         try {
-        	showPopup();
+            showPopup();
             orderPage_timestamp = String.valueOf(System.currentTimeMillis());
             //String theData = merchantID + amount + curr + orderPage_timestamp + orderPage_transactionType;
             calculatedSignature = machash(buildDataToSign(), sharedSecret);

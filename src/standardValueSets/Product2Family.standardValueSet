@@ -27,6 +27,11 @@
         <label>Airsat</label>
     </standardValue>
     <standardValue>
+        <fullName>APCS Products</fullName>
+        <default>false</default>
+        <label>APCS Products</label>
+    </standardValue>
+    <standardValue>
         <fullName>Application Charges</fullName>
         <default>false</default>
         <label>Application Charges</label>
@@ -129,17 +134,7 @@
     <standardValue>
         <fullName>FSS (FDS Division)</fullName>
         <default>false</default>
-        <label>FSS (FDS Division)</label>
-    </standardValue>
-    <standardValue>
-        <fullName>FSS-Fraud (FDS Division)</fullName>
-        <default>false</default>
-        <label>FSS-Fraud (FDS Division)</label>
-    </standardValue>
-    <standardValue>
-        <fullName>FSS-Tools (FDS Division)</fullName>
-        <default>false</default>
-        <label>FSS-Tools (FDS Division)</label>
+        <label>FSS Products</label>
     </standardValue>
     <standardValue>
         <fullName>GAP</fullName>
@@ -159,7 +154,7 @@
     <standardValue>
         <fullName>ICCS</fullName>
         <default>false</default>
-        <label>ICCS</label>
+        <label>ICCS Products</label>
     </standardValue>
     <standardValue>
         <fullName>ID Cards/TIDS</fullName>
@@ -169,7 +164,7 @@
     <standardValue>
         <fullName>IFG (FDS Division)</fullName>
         <default>false</default>
-        <label>IFG (FDS Division)</label>
+        <label>IFG Products</label>
     </standardValue>
     <standardValue>
         <fullName>Interest</fullName>
@@ -199,7 +194,7 @@
     <standardValue>
         <fullName>MER (MER Division)</fullName>
         <default>false</default>
-        <label>MER (MER Division)</label>
+        <label>MER Products</label>
     </standardValue>
     <standardValue>
         <fullName>Meteorology</fullName>
@@ -284,7 +279,7 @@
     <standardValue>
         <fullName>SFO (SFO Division)</fullName>
         <default>false</default>
-        <label>SFO (SFO Division)</label>
+        <label>SFO Products</label>
     </standardValue>
     <standardValue>
         <fullName>Strategic Partnerships</fullName>
@@ -335,10 +330,5 @@
         <fullName>Training: Self Study</fullName>
         <default>false</default>
         <label>Training: Self Study</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Weblink</fullName>
-        <default>false</default>
-        <label>Weblink</label>
     </standardValue>
 </StandardValueSet>

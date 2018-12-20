@@ -2,7 +2,7 @@
 public class tgrUserCreateUpdateRightsTest {
 	static testMethod void test1() {
 
-        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
@@ -28,12 +28,12 @@ public class tgrUserCreateUpdateRightsTest {
 
 		insert new List<Portal_Applications__c>{easyPay1,easyPay2};
 
-        RecordType rt = [Select id From RecordType where developerName = 'Biller_Direct']; 
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Application_Right__c', 'Biller_Direct');
 
         Portal_Application_Right__c appRight = new Portal_Application_Right__c(
                 Portal_Application__c = easyPay1.id,
                 Right__c = 'Access Requested',
-                RecordTypeId = rt.id,
+                RecordTypeId = rtId,
                 Invoice_Type__c = 'Invoices',
                 Contact__c = contact.Id
         );

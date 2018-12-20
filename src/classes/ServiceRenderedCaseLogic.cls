@@ -10,11 +10,11 @@ public class ServiceRenderedCaseLogic {
    
  /* it returns the list of cases with errors
      this method has the sideeffect of updating the accounts recordtypes */
-  public static map<Id,Case> changeRTtoBranchAccts(map<Id,Id> caseIDPerAccId,map<string,id> AcccRtNamePerId, map<Id,Case> caseMap){
+  public static map<Id,Case> changeRTtoBranchAccts(map<Id,Id> caseIDPerAccId, map<Id,Case> caseMap){
    
             set<Id> AcctIDs = caseIDPerAccId.keySet();
-            ID Standard = AcccRtNamePerId.get('Standard_Account');
-            Id Branch = AcccRtNamePerId.get('IATA_Airline_BR');
+            ID Standard = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+            Id Branch = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
             integer i=0;
             
             map<Integer,Account> AccPerIntAcc = new map<Integer,Account>();
@@ -134,8 +134,7 @@ public class ServiceRenderedCaseLogic {
   
  
    
-   public static void reparentProvider(list<Case>  casesToTrigger,map<string,id> AcccRtNamePerId,
-                                         set<String> ServicesToCheck, map<String,Case_Reason_Service__c> ServicesPerReason){
+   public static void reparentProvider(list<Case>  casesToTrigger, set<String> ServicesToCheck, map<String,Case_Reason_Service__c> ServicesPerReason){
    
                          list<Case> casesWithoutProvider = new list<Case>();
                            for (Case c : casesToTrigger) {
@@ -151,7 +150,7 @@ public class ServiceRenderedCaseLogic {
                      
                            }
                        if(!casesWithoutProvider.isEmpty())
-                           ServiceRenderedCaseLogic.ReassignProvider(casesWithoutProvider,AcccRtNamePerId);
+                           ServiceRenderedCaseLogic.ReassignProvider(casesWithoutProvider);
    
    }
  
@@ -206,7 +205,7 @@ public class ServiceRenderedCaseLogic {
     
  
         
-     private static void ReassignProvider(List<Case> Cases,map<string,id> AcccRtNamePerId){
+     private static void ReassignProvider(List<Case> Cases){
           
            map<Id,list<Case>>  CasesPerConsumer = new map<Id,list<Case>>();
             
@@ -222,7 +221,7 @@ public class ServiceRenderedCaseLogic {
                     
             for(Account a :[SELECT ParentID,RecordTypeID,ID FROM Account WHERE Id IN:accIDs]){
             
-                    if(a.RecordTypeID == AcccRtNamePerId.get('IATA_Airline')){                          
+                    if(a.RecordTypeID == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')){                          
                         for(Id accID:CasesPerConsumer.keyset()) 
                             for(case c:CasesPerConsumer.get(accID))
                                 c.provider__c = a.id;
@@ -240,18 +239,38 @@ public class ServiceRenderedCaseLogic {
      }   
      
 
-    private static list<Services_Rendered__c> joiningCase(list<Case> cases, map<String,Case_Reason_Service__c> ServicesPerReason ){
+    private static List<Services_Rendered__c> joiningCase(List<Case> cases, Map<String,Case_Reason_Service__c> ServicesPerReason ){
 
-        list<Services_Rendered__c> services = new list<Services_Rendered__c>();
+        List<Services_Rendered__c> services = new List<Services_Rendered__c>();
+        Set<String> caseIDs = new Set<String>();
+
         for (Case c :cases) {
+          	caseIDs.add(c.Id);
+        }
 
-            services.add(new Services_Rendered__c(Name = 'name shall be copied',
+        List<AP_Process_Form__c> appforms = [SELECT Id, IATA_EasyPay_Opt_In_Opt_Out__c, ANG_Airline_accepts_EasyPay_tr_in_BSP__c, Case__c
+                                        FROM AP_Process_Form__c
+                                        WHERE Case__c IN :caseIDs];
+
+        for (Case c: cases) {
+        	Services_Rendered__c sr = new Services_Rendered__c(Name = 'name shall be copied',
                                                   Services_Rendered_to_Airline__c = c.AccountId,
                                                   Services_Rendered_By__c = c.Provider__c,
                                                   Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,//c.Service__c,
                                                   Services_Rendered_Status__c ='Active',
                                                   Source_Case__c = c.Id,
-                                                  Joining_Date__c = Date.ValueOf(c.ClosedDate)));
+                                                  Joining_Date__c = Date.ValueOf(c.ClosedDate));
+        	
+        	if (c.Origin == 'Portal') {
+        		for (AP_Process_Form__c appform: appforms) {
+        			if (appform.Case__c == c.Id && appform.ANG_Airline_accepts_EasyPay_tr_in_BSP__c == 'No') {
+        				sr.ANG_IATA_EasyPay_Opt_out__c = true;
+        				break;
+        			}
+        		}
+        	}
+
+        	services.add(sr);
         }
             
         return services;
@@ -362,13 +381,11 @@ public class ServiceRenderedCaseLogic {
           }
              
             set<Id> accIDs = CasesPerConsumer.keySet();          
-            map<string,id> AcccRtNamePerId = TransformationHelper.AccRtNamePerIds();
-                    
                     
             for(Account a :[SELECT RecordTypeID,ID FROM Account WHERE Id IN:accIDs]){
             
-                    if(a.RecordTypeID == AcccRtNamePerId.get('IATA_Airline')  
-                            || a.RecordTypeID == AcccRtNamePerId.get('IATA_Airline_BR')){
+                    if(a.RecordTypeID == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')  
+                            || a.RecordTypeID == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR')){
                         
                         for(Id accID:CasesPerConsumer.keyset()) 
                             casesOkConsumer.addAll(CasesPerConsumer.get(accID));

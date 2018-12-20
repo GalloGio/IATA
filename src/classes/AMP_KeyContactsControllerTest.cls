@@ -27,7 +27,7 @@ private class AMP_KeyContactsControllerTest
 			ceoContact.Email = 'CEO@testAccount.com';
 			ceoContact.AccountId = a.Id;
 			ceoContact.CEO_CFO__c = 'CEO';
-			ceoContact.Membership_Function__c = 'General Management';
+			ceoContact.Membership_Function__c = 'Aeropolitical';
 			insert ceoContact;
 
 			Contact mainContact = new Contact();
@@ -37,7 +37,7 @@ private class AMP_KeyContactsControllerTest
 			mainContact.Email = 'main@testAccount.com';
 			mainContact.AccountId = a.Id;
 			mainContact.Membership_Main_Contact__c = true;
-			mainContact.Membership_Function__c = 'General Management';
+			mainContact.Membership_Function__c = 'Aeropolitical';
 			insert mainContact;
 
 			Contact primaryContact = new Contact();
@@ -46,8 +46,8 @@ private class AMP_KeyContactsControllerTest
 			primaryContact.Title = 'primary';
 			primaryContact.Email = 'primary@testAccount.com';
 			primaryContact.AccountId = a.Id;
-			primaryContact.Membership_Function__c = 'Cargo';
-			primaryContact.Function__c = 'Cargo';
+			primaryContact.Membership_Function__c = 'Aeropolitical';
+			primaryContact.Function__c = 'Aeropolitical';
 			insert primaryContact;
 
 			Contact notCEO = new Contact();
@@ -64,7 +64,15 @@ private class AMP_KeyContactsControllerTest
 			AMP_KeyContactsController keyContactsController  = new AMP_KeyContactsController(stdController);
 
 			System.assertEquals((String)a.Id, keyContactsController.getRecordId(), 'The account Id should match');
-			System.assertEquals(3, keyContactsController.getKeyContacs().size(), 'There should be 3 Key Contacts');
+			System.assertEquals(3, keyContactsController.lsKeyContactsWrapped.size(), 'There should be 3 Key Contacts');
+			
+			// Test the printable page part
+			ApexPages.currentPage().getParameters().put('accountId',a.id);
+			keyContactsController  = new AMP_KeyContactsController();
+
+			System.assertEquals(a.Name, keyContactsController.accountName);
+
+			String reportId = AMP_KeyContactsController.getReportId();
 		}
 	}
 }

@@ -4,18 +4,20 @@
 @IsTest
 private class OneIdProvisioningDaemonTest {
 
-    static testMethod void OneIdProvisioningDaemonTest1(){
+    @isTest
+    static void OneIdProvisioningDaemonTest1(){
         List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 5];
-        Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get('Service_Bundle');
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
         One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'Bundle',
                 License_Upgrade_Required__c= true,
                 Profile_Id__c='a1',
                 Description__c='qualquer',
                 Is_Active__c = true, Portal_Visible__c = true,
-                RecordTypeid = recTypeId, App_Picture_Url__c='oi');
+                RecordTypeid = recTypeId, App_Picture_Url__c='oi',
+                Customer_Type_Activation__c = 'Airline');
         insert oi;
 
-        One_Id_Service_Provider_Config__c rr = new One_Id_Service_Provider_Config__c (Service_Provider_Name__c = 'App 1', Is_Active__c = true, Portal_Visible__c = true, Service_Bundle__c=oi.id);
+        One_Id_Service_Provider_Config__c rr = new One_Id_Service_Provider_Config__c (Service_Provider_Name__c = 'App 1', Is_Active__c = true, Portal_Visible__c = true, Service_Bundle__c=oi.id,Customer_Type_Activation__c = 'Airline');
         insert rr;
 
         One_Id_App_Config_Detail__c r = new One_Id_App_Config_Detail__c (One_Id_Service_Provider_Config__c=rr.id, PermissionSet_SSO__c = psIds[0].name, PermissionSet_Provisioning__c = psIds[1].name );
@@ -42,10 +44,11 @@ private class OneIdProvisioningDaemonTest {
                 Profile_Id__c='a1',
                 Description__c='qualquer',
                 Is_Active__c = true, Portal_Visible__c = true,
-                RecordTypeid = recTypeId, App_Picture_Url__c='oi');
+                RecordTypeid = recTypeId, App_Picture_Url__c='oi',
+                Customer_Type_Activation__c = 'Airline');
         insert oi1;
 
-        One_Id_Service_Provider_Config__c rr1 = new One_Id_Service_Provider_Config__c (Service_Provider_Name__c = 'App 1', Is_Active__c = true, Portal_Visible__c = true, Service_Bundle__c=oi1.id);
+        One_Id_Service_Provider_Config__c rr1 = new One_Id_Service_Provider_Config__c (Service_Provider_Name__c = 'App 1', Is_Active__c = true, Portal_Visible__c = true, Service_Bundle__c=oi1.id,Customer_Type_Activation__c = 'Airline');
         insert rr1;
 
         One_Id_App_Config_Detail__c r1 = new One_Id_App_Config_Detail__c (One_Id_Service_Provider_Config__c=rr1.id, PermissionSet_SSO__c = psIds[0].name, PermissionSet_Provisioning__c = psIds[1].name );

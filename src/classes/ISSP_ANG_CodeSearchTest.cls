@@ -17,7 +17,7 @@ private class ISSP_ANG_CodeSearchTest {
 
         insert portugal;
         
-        Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
 
         //TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
 
@@ -54,16 +54,17 @@ private class ISSP_ANG_CodeSearchTest {
                 Location_type__c = AMS_Utils.HE,
                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                 OwnerId = UserInfo.getUserId(),
-                IATACode__c = '12345678'
+                IATACode__c = '12345678',
+                Location_Class__c = 'P'
             );
 
         Account a2 = new Account (
                 name = 'Cargo agency',
                 RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
-                IATA_ISO_Country__c = portugal.id,
+                IATA_ISO_Country__c = switzerland.id,
                 Sector__c = Ams_Utils.SECTOR_CARGO,
                 Status__c = Ams_Utils.ACC_S9_APPROVED,
-                Location_type__c = AMS_Utils.HE,
+                Location_type__c = AMS_Utils.HO,
                 OwnerId = UserInfo.getUserId(),
                 IATACode__c = '12345678901'
             );
@@ -80,7 +81,8 @@ private class ISSP_ANG_CodeSearchTest {
                 Location_type__c = AMS_Utils.AE,
                 ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
                 OwnerId = UserInfo.getUserId(),
-                IATACode__c = '87654321'
+                IATACode__c = '87654321',
+                Location_Class__c = 'P'
             );
 
         insert a3;

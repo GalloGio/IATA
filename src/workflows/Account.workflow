@@ -69,7 +69,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/SURVEY_a1Q20000000UD7AEAW</template>
+        <template>All/SURVEY_a1Q20000000UD7AEAW</template>
     </alerts>
     <fieldUpdates>
         <fullName>AIMS_Accounts_RT_Assignment</fullName>
@@ -219,32 +219,12 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIS_Assign_account_recordtype</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IATA_SIS_Account</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>SIS - Assign account recordtype</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIS_Update_Account_Site</fullName>
         <field>Site</field>
         <formula>Airline_designator__c +  Member_Code_Numeric__c</formula>
         <name>SIS - Update Account Site</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Update_Record_Owner</fullName>
-        <field>OwnerId</field>
-        <lookupValue>smitha@iata.org</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>SIS Update Record Owner</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -745,24 +725,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>SIS</value>
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS HelpDesk - Assign SIS recordtype when new account source system is SIS</fullName>
-        <actions>
-            <name>SIS_Assign_account_recordtype</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Update_Record_Owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Account.Source_System__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Send Irregularity Email</fullName>

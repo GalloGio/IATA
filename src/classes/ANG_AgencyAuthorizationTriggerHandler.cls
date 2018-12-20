@@ -1,15 +1,44 @@
 public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 
-    public static final ID formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+    public static final ID formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
     public static Map<Id,String> accountsName = new Map<Id,String>();
     public static void handleBeforeInsert(List<Agency_Authorization__c> newMap){
 		verifyAAUniqueness(newMap);
 	}
 
     public static void handleBeforeUpdate(List<Agency_Authorization__c> newMap, Map<Id,Agency_Authorization__c> oldMap){
+		
 		verifyAAUniqueness(newMap);
 		removeUniqueId(newMap);
 	}
+
+	 public static void handleAfterInsert(List<Agency_Authorization__c> triggerNew){
+
+	 	List<Agency_Authorization__c> listAuthP = new List<Agency_Authorization__c>();
+	 	map<Id,Agency_Authorization__c> mapOldAuthP = new map<Id,Agency_Authorization__c>();
+         
+         for(Agency_Authorization__c a : triggerNew){
+             if(a.recordtypeid == Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId()){
+                 listAuthp.add(a);
+                 mapOldAuthP.put(a.id, new Agency_Authorization__c(id = a.id));
+             }
+         }
+
+ 		new ANG_AgencyEventsGenerator(listAuthP,mapOldAuthP,'AgencyAuthorization','Account__c').run(); 
+	}
+
+	public static void handleAfterUpdate(List<Agency_Authorization__c> triggerNew, Map<Id,Agency_Authorization__c> oldMap){
+
+ 		List<Agency_Authorization__c> listAuthP = new List<Agency_Authorization__c>();
+ 		
+ 		for(Agency_Authorization__c a : triggerNew){
+ 			if(a.recordtypeid == Schema.Agency_Authorization__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('Form Of Payment').getRecordTypeId())
+ 				listAuthp.add(a);
+ 		}
+
+ 		new ANG_AgencyEventsGenerator(listAuthP,oldMap,'AgencyAuthorization','Account__c').run(); 
+	}
+
 
 	public static void removeUniqueId(List<Agency_Authorization__c> newMap){
 
@@ -88,10 +117,10 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
     // when the Agency Authorizations are deleted
     public static void removeAuthorizedFormsOfPayment(List<Agency_Authorization__c> aaValues){
         List<Id> lsAccountIds = new List<Id>();
-        RecordType rt = [SELECT Id FROM RecordType WHERE SObjectType='Agency_Authorization__c' AND RecordType.DeveloperName = 'FormOfPayment'];
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
         List<Agency_Authorization__c> lsFormsOfPayment = new List<Agency_Authorization__c>();
         for(Agency_Authorization__c aa: aaValues){
-            if(aa.RecordTypeId == rt.Id) lsFormsOfPayment.add(aa);
+            if(aa.RecordTypeId == rtId) lsFormsOfPayment.add(aa);
         }
         for(Agency_Authorization__c aa: lsFormsOfPayment){
             lsAccountIds.add(aa.Account__c);

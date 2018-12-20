@@ -96,7 +96,7 @@
         <description>Status</description>
         <externalId>false</externalId>
         <label>Status</label>
-        <length>20</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -115,23 +115,20 @@
     <listViews>
         <fullName>AMS</fullName>
         <columns>NAME</columns>
-        <columns>Log__c</columns>
-        <columns>Operation__c</columns>
-        <columns>Record__c</columns>
-        <columns>Status__c</columns>
-        <columns>start_date__c</columns>
-        <columns>End_Date__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>CURRENCY_ISO_CODE</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CONNECTION_RECEIVED.NAME</columns>
+        <columns>CONNECTION_SENT.NAME</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>start_date__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>11/22/2017 12:00 AM</value>
-        </filters>
-        <filters>
-            <field>Record__c</field>
-            <operation>contains</operation>
-            <value>001w000001jq7w0</value>
-        </filters>
         <label>AMS</label>
         <language>en_US</language>
     </listViews>
@@ -148,7 +145,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>9628247</value>
+            <value>60240246</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -164,9 +161,14 @@
         <columns>End_Date__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Record__c</field>
-            <operation>contains</operation>
-            <value>9521159</value>
+            <field>CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>9/27/2018 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>Operation__c</field>
+            <operation>equals</operation>
+            <value>AMS 2 MDM - AgencyDetails</value>
         </filters>
         <label>AMS - Error</label>
         <language>en_US</language>
@@ -174,23 +176,20 @@
     <listViews>
         <fullName>AMS_Errors</fullName>
         <columns>NAME</columns>
-        <columns>Log__c</columns>
-        <columns>Operation__c</columns>
-        <columns>Record__c</columns>
-        <columns>Status__c</columns>
-        <columns>start_date__c</columns>
-        <columns>End_Date__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>CURRENCY_ISO_CODE</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CONNECTION_RECEIVED.NAME</columns>
+        <columns>CONNECTION_SENT.NAME</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Error</value>
-        </filters>
-        <filters>
-            <field>start_date__c</field>
-            <operation>equals</operation>
-            <value>11/14/2016 12:00 AM</value>
-        </filters>
         <label>AMS Errors</label>
         <language>en_US</language>
     </listViews>

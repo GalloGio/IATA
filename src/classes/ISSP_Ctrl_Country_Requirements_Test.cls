@@ -8,7 +8,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 			listCountries = new list<IATA_ISO_Country__c>();
 			listCountries.add( new IATA_ISO_Country__c( Name = 'Switzerland', ISO_Code__c = 'CH', ANG_Enable_NewGen__c = true));
 			listCountries.add( new IATA_ISO_Country__c( Name = 'Canada', ISO_Code__c = 'CA'));
-			listCountries.add( new IATA_ISO_Country__c( Name = 'Portugal', ISO_Code__c = 'PT'));
+			listCountries.add( new IATA_ISO_Country__c( Name = 'Portugal', ISO_Code__c = 'PT',ANG_Enable_NewGen__c = true));
 			insert listCountries;
 		}
 		return listCountries;
@@ -246,7 +246,8 @@ private class ISSP_Ctrl_Country_Requirements_Test {
                 IATA_ISO_Country__c = listCountries.get(2).id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
-                Location_type__c = 'HE'
+                Location_type__c = 'HE',
+				Location_Class__c = 'P'
             );
 
         insert topParent;
@@ -258,7 +259,8 @@ private class ISSP_Ctrl_Country_Requirements_Test {
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
                 status__c = 'Approved',
-                Top_Parent__c = topParent.id
+                Top_Parent__c = topParent.id,
+				Location_Class__c = 'P'
             );
 
         insert a;
@@ -319,7 +321,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
         User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
         Account acc = [Select Sector__c from Account limit 1];
-        acc.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        acc.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         acc.Sector__c = 'Travel Agent';
         acc.IATACode__c = '1234567890';
         acc.Location_type__c = 'HO';

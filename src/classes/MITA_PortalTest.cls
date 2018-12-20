@@ -9,7 +9,7 @@ public class MITA_PortalTest {
     public static User myself;
 
     public static void initData(){
-        Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+        Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         MyAirline = new Account(
             RecordTypeId = rtHQ,
             Name='MyAirline',

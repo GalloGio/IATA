@@ -44,7 +44,7 @@ private class AMS_VouchersCreationBatch_Test {
 			Company_Type__c = 'A',
 			IATACode__c = '100',
 			IATA_ISO_Country__c = country.Id,
-			RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 		);
 
 		insert hqAccount;

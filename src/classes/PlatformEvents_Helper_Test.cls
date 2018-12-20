@@ -7,9 +7,6 @@ private class PlatformEvents_Helper_Test {
 
 		
 		Account provider = new Account(Name = 'ProviderTest1',
-			TIP_Provider_Type__c = 'Open Loop',
-			TIP_HQ_Location__c = country.Id,
-			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
 			status__C='Active'
@@ -33,9 +30,6 @@ private class PlatformEvents_Helper_Test {
         insert country;
 
 		Account provider = new Account(Name = 'ProviderTest1',
-			TIP_Provider_Type__c = 'Open Loop',
-			TIP_HQ_Location__c = country.Id,
-			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
 			status__C='Active'
@@ -64,21 +58,40 @@ private class PlatformEvents_Helper_Test {
         insert country;
 
 		
-		Account provider = new Account(Name = 'ProviderTest1',
-			TIP_Provider_Type__c = 'Open Loop',
-			TIP_HQ_Location__c = country.Id,
-			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
+		Account account = new Account(Name = 'ProviderTest1',
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
 			status__C='Active'
 			);
+		insert account;
 
-		insert provider;
+		Account_Role__c provider = new Account_Role__c();
+		provider.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
+        provider.Account__c = account.Id;
+        provider.Provider_Code__c = '1000';
+        provider.HQ_Location__c = country.Id;
+        insert provider;
+
+        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
+        insert contact;
+
+        Account_Contact_Role__c acr = new Account_Contact_Role__c();
+        acr.Account__c = account.Id;
+        acr.Account_Role__c = provider.Id;
+        acr.Contact_Role__c = 'Primary Contact';
+        acr.Contact__c = contact.Id;
+        acr.Service_Rendered__c = 'TIP';
+        insert acr;
+
+        //provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
+        provider.Effective_From_Date__c = System.today();
+		update provider;
 		
 		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
 			PP_Payment_Product_Code__c = 'co',
 			PP_Form_of_payment__c = 'CC',
-			Provider__c = provider.Id,
+			Provider__c = account.Id,
+			Payment_Provider_Account_Role__c = provider.Id,
 			PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE',
 			PP_Accepted_transactions__c = 'PAYMENT',
 			PP_Pay_in_model__c = 'PREPAID',
@@ -109,22 +122,40 @@ private class PlatformEvents_Helper_Test {
     	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
 
-		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-
-		Account provider = new Account(Name = 'ProviderTest1',
-			TIP_Provider_Type__c = 'Open Loop',
-			TIP_HQ_Location__c = country.Id,
-			RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
+		Account account = new Account(Name = 'ProviderTest1',
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
 			status__C='Active'
 			);
-		insert provider;
+		insert account;
+
+		Account_Role__c provider = new Account_Role__c();
+		provider.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
+        provider.Account__c = account.Id;
+        provider.Provider_Code__c = '1000';
+        provider.HQ_Location__c = country.Id;
+        insert provider;
+
+        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
+        insert contact;
+
+        Account_Contact_Role__c acr = new Account_Contact_Role__c();
+        acr.Account__c = account.Id;
+        acr.Account_Role__c = provider.Id;
+        acr.Contact_Role__c = 'Primary Contact';
+        acr.Contact__c = contact.Id;
+        acr.Service_Rendered__c = 'TIP';
+        insert acr;
+
+        //provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
+        provider.Effective_From_Date__c = System.today();
+		update provider;
 		
 		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
 			PP_Payment_Product_Code__c = 'co',
 			PP_Form_of_payment__c = 'CC',
-			Provider__c = provider.Id,
+			Provider__c = account.Id,
+			Payment_Provider_Account_Role__c = provider.Id,
 			PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE',
 			PP_Accepted_transactions__c = 'PAYMENT',
 			PP_Pay_in_model__c = 'PREPAID',
@@ -164,22 +195,40 @@ private class PlatformEvents_Helper_Test {
     	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
         insert country;
 
-		Id paymentProviderRecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('TIP_Payment_Provider');
-
-		Account provider = new Account(Name = 'ProviderTest1',
-					TIP_Provider_Type__c = 'Open Loop',
-					TIP_HQ_Location__c = country.Id,
-					RecordTypeId =TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID,
+		Account account = new Account(Name = 'ProviderTest1',
 					Accreditation_date__c = Date.today(),
 					IataCode__c = '1234',
 					status__C='Active'
 					);
-		insert provider;
+		insert account;
+
+		Account_Role__c provider = new Account_Role__c();
+		provider.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
+        provider.Account__c = account.Id;
+        provider.Provider_Code__c = '1000';
+        provider.HQ_Location__c = country.Id;
+        insert provider;
+
+        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
+        insert contact;
+
+        Account_Contact_Role__c acr = new Account_Contact_Role__c();
+        acr.Account__c = account.Id;
+        acr.Account_Role__c = provider.Id;
+        acr.Contact_Role__c = 'Primary Contact';
+        acr.Contact__c = contact.Id;
+        acr.Service_Rendered__c = 'TIP';
+        insert acr;
+
+        //provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
+        provider.Effective_From_Date__c = System.today();
+		update provider;
 		
 		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
 			PP_Payment_Product_Code__c = 'co',
 			PP_Form_of_payment__c = 'CC',
-			Provider__c = provider.Id,
+			Provider__c = account.Id,
+			Payment_Provider_Account_Role__c = provider.Id,
 			PP_Payment_guarantee__c = 'COMMERCIAL_DISPUTE',
 			PP_Accepted_transactions__c = 'PAYMENT',
 			PP_Pay_in_model__c = 'PREPAID',
