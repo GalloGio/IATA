@@ -163,6 +163,10 @@
                     <apex:outputText value="{!attach.name}"/>
                 </apex:column>
 
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.File_Identifier__c.Label}">
+                    <apex:outputText value="{!attach.fileAmazon.amazonFile.File_Identifier__c}"/>
+                </apex:column>
+
                 <apex:column headerValue="{!$Label.File_Size}">
                     <apex:outputText value="{0,number,0.##} MB">
                         <apex:param value="{!attach.size}" />
