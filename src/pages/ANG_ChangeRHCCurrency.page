@@ -3,6 +3,7 @@
 	<apex:form>		
 
 		<apex:pageBlock id="infoBlock" mode="detail" tabStyle="ANG_RHC_Information__c" title="Current RHC" rendered="{!rhc != null}">
+			<apex:pageMessages />
 			<apex:pageBlockButtons>
 				<apex:commandButton action="{!toggleEditMode}" value="Edit" id="editButton"/>
 			</apex:pageBlockButtons>

@@ -85,7 +85,7 @@ public with sharing class ANG_ChangeRHCCurrency {
             }
         }
 
-        ANG_RHCHelper.calculateRHCAmount(new List<ANG_RHC_Information__c>{rhc});
+        //ANG_RHCHelper.calculateRHCAmount(new List<ANG_RHC_Information__c>{rhc});
         rhc.recalculateFormulas();
         oldCurrency = rhc.CurrencyIsoCode;
         
