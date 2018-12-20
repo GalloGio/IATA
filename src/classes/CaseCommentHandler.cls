@@ -14,10 +14,8 @@ public with sharing class CaseCommentHandler {
     }
     
     public void doAfterInsert(List<CaseComment> listOfComments) {
-        System.debug('LW listOfComments: ' + listOfComments.size());
         List<ISSP_KPI_Reporting__mdt> config = new List<ISSP_KPI_Reporting__mdt>();
-        config = getKPIConfig();
-        System.debug('LW config: ' + config.size());
+        Map<String, ISSP_KPI_Reporting__mdt> rtToConfigMap = new Map<String, ISSP_KPI_Reporting__mdt>();
 
         Set<String> ccIds = new Set<String>();
         for(CaseComment cc : listOfComments) {
@@ -25,23 +23,20 @@ public with sharing class CaseCommentHandler {
         }
 
         List<CaseComment> fullCaseComments = [SELECT id, ParentId, Parent.RecordType.DeveloperName FROM CaseComment WHERE ID IN: ccIds];
-
         List<String> recordTypesToProcess = new List<String>();
-        String recordTypes = '';
-        recordTypes = config.get(0).Case_Record_Type__c;
-        recordTypes = recordTypes.toLowerCase();
-        recordTypesToProcess = recordTypes.split(',');
-        System.debug('LW record types: ' + recordTypesToProcess);
 
-        System.debug('LW beforeIf: ' + config.size());
+        config = getKPIConfig(CASE_COMMENT_ACTION);
+        for(ISSP_KPI_Reporting__mdt cfg : config){
+            recordTypesToProcess.add(cfg.Case_Record_Type__c);
+            rtToConfigMap.put(cfg.Case_Record_Type__c, cfg);
+        }
 
         if(config.size() > 0) {
             String kpiReportingId = kpiReportingExistsOrCreate();
 
-            for(CaseComment cc : fullCaseComments) {
-                System.debug('LW ccRecordtype: ' + cc.Parent.RecordType.DeveloperName.toLowerCase());
-                if(recordTypesToProcess.contains(cc.Parent.RecordType.DeveloperName.toLowerCase())){
-                    createKPIReportingValue(cc, Integer.valueOf(config.get(0).Points__c), kpiReportingId);
+            for (CaseComment cc : fullCaseComments) {
+                if (recordTypesToProcess.contains(cc.Parent.RecordType.DeveloperName)) {
+                    createKPIReportingValue(cc, Integer.valueOf(rtToConfigMap.get(cc.Parent.RecordType.DeveloperName).Points__c), kpiReportingId);
                 }
             }
         }
@@ -65,8 +60,20 @@ public with sharing class CaseCommentHandler {
      * @param null
      * @return List<ISSP_KPI_Reporting__mdt> - list of configs
      */
-    private List<ISSP_KPI_Reporting__mdt> getKPIConfig() {
-        return [SELECT Action__c, Case_Record_Type__c, DeveloperName, Id, Points__c FROM ISSP_KPI_Reporting__mdt WHERE Action__c =: CASE_COMMENT_ACTION];
+    private List<ISSP_KPI_Reporting__mdt> getKPIConfig(String actionType) {
+        String queryString = '';
+        queryString = 'SELECT ' +
+                        'Action__c, ' +
+                        'Case_Record_Type__c, ' +
+                        'DeveloperName, ' +
+                        'Id, ' +
+                        'Points__c ' +
+                      'FROM ' +
+                        'ISSP_KPI_Reporting__mdt ' +
+                      'WHERE ' +
+                        'Action__c =: actionType ';
+
+        return Database.query(queryString);
     }
 
     /**

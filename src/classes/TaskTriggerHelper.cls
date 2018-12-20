@@ -8,8 +8,9 @@ public with sharing class TaskTriggerHelper {
     public static final String CASE_ACTION_CREATING_A_TASK = 'Creating a Task';
 
     public static String cscRTId = [SELECT Id FROM RecordType WHERE sObjectType = 'FDS_KPI_Reporting__c' and DeveloperName = 'CSC' LIMIT 1].Id;
-    public static List<ISSP_KPI_Reporting__mdt> config = getKPIConfig();
+    public static List<ISSP_KPI_Reporting__mdt> config = new List<ISSP_KPI_Reporting__mdt>();
     public static Map<String, ISSP_KPI_Reporting__mdt> configToPointsMap = new Map<String, ISSP_KPI_Reporting__mdt>();
+    public static Map<String, ISSP_KPI_Reporting__mdt> configMap = new Map<String, ISSP_KPI_Reporting__mdt>();
     public static List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name =: CASE_ACTION_CREATING_A_TASK AND Type_Of_Action__c =: CASE_ACTION_CREATING_A_TASK];
     public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
 
@@ -27,9 +28,14 @@ public with sharing class TaskTriggerHelper {
 
         Map<Id, Case> idToCaseMap = new Map<Id, Case>([SELECT ID, RecordTypeId FROM Case WHERE Id IN: caseIds]);
 
-        System.debug('LW 4: ' + idToCaseMap);
+        List<Case> cases = [SELECT ID, RecordTypeId, RecordType.DeveloperName FROM Case WHERE Id IN: caseIds];
+        Set<Id> taskIds = new Set<Id>();
 
-        List<Case> cases = [SELECT ID, RecordTypeId FROM Case WHERE Id IN: caseIds];
+        for(Task t : newList) {
+            taskIds.add(t.Id);
+        }
+
+        List<Task> tasks = [SELECT ID, WhatId, What.RecordType.DeveloperName, TaskSubType, What.RecordTypeId FROM Task WHERE ID IN: taskIds];
 
         for(Case c : cases){
             for(RecordType rt : recordTypes){
@@ -39,25 +45,30 @@ public with sharing class TaskTriggerHelper {
             }
         }
 
+        config = getKPIConfig(CASE_ACTION_CREATING_A_TASK);
+
         if(config.size() > 0) {
             for(ISSP_KPI_Reporting__mdt setting : config){
                 configToPointsMap.put(setting.Action__c, setting);
             }
         }
 
-        caseCreateTaskRecordTypes = configToPointsMap.get(CASE_ACTION_CREATING_A_TASK).Case_Record_Type__c.split(',');
+        if(config.size() > 0) {
+            for(ISSP_KPI_Reporting__mdt setting : config){
+                caseCreateTaskRecordTypes.add(setting.Case_Record_Type__c);
+                configMap.put(setting.Case_Record_Type__c, setting);
+            }
+        }
 
-        System.debug('LW 5: ' + caseCreateTaskRecordTypes);
+        String kpiReportingId = kpiReporting.size() > 0 ? kpiReporting.get(0).Id : createKPIReporting();
 
-        for(Task t : newList) {
+        for(Task t : tasks) {
 
-            if(configToPointsMap.containsKey(CASE_ACTION_CREATING_A_TASK) &&
-            caseCreateTaskRecordTypes.contains(rtIdToDeveloperName.get(idToCaseMap.get(newMap.get(t.Id).WhatId).RecordTypeId)) &&
+            if(caseCreateTaskRecordTypes.contains(rtIdToDeveloperName.get(idToCaseMap.get(newMap.get(t.Id).WhatId).RecordTypeId)) &&
             t.TaskSubType == configToPointsMap.get(CASE_ACTION_CREATING_A_TASK).Type_of_Task__c) {
                 System.debug('LW criteria are met - if 1');
 
-                String kpiReportingId = kpiReporting.size() > 0 ? kpiReporting.get(0).Id : createKPIReporting();
-                valueToInsert = createKPIReportingValue(t.WhatId, Integer.valueOf(configToPointsMap.get(CASE_ACTION_CREATING_A_TASK).Points__c), kpiReportingId);
+                valueToInsert = createKPIReportingValue(t.WhatId, Integer.valueOf(configMap.get(t.What.RecordType.DeveloperName).Points__c), kpiReportingId);
                 kpiValuesToInsert.add(valueToInsert);
             }
         }
@@ -78,17 +89,21 @@ public with sharing class TaskTriggerHelper {
      *
      * @return List<ISSP_KPI_Reporting__mdt> - list of configs
      */
-    public static List<ISSP_KPI_Reporting__mdt> getKPIConfig() {
+    public static List<ISSP_KPI_Reporting__mdt> getKPIConfig(String actionType) {
         String queryString = '';
-
         queryString = 'SELECT ' +
-                'Id, Action__c, Case_Record_Type__c, Field_API_Name__c, Points__c, Reopening_Reason__c, Status_From__c, Status_To__c, Type_of_Task__c, Value_From__c, Value_To__c ' +
+                'Action__c, ' +
+                'Case_Record_Type__c, ' +
+                'DeveloperName, ' +
+                'Id, ' +
+                'Points__c, ' +
+                'Type_of_Task__c ' +
                 'FROM ' +
-                'ISSP_KPI_Reporting__mdt';
-        queryString += ' WHERE Action__c =: CASE_ACTION_CREATING_A_TASK';
+                'ISSP_KPI_Reporting__mdt ' +
+                'WHERE ' +
+                'Action__c =: actionType ';
 
         return Database.query(queryString);
-
     }
 
     /**

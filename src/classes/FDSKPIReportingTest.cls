@@ -1,5 +1,5 @@
 
-@IsTest
+@IsTest(SeeAllData=false)
 private class FDSKPIReportingTest {
 
     private static final String CASE_COMMENT_ACTION = 'Public Case Comment';
@@ -121,8 +121,6 @@ private class FDSKPIReportingTest {
     static testMethod void testNewCommentKPIReporting() {
 
         setup();
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
 
         Test.startTest();
 
@@ -142,7 +140,7 @@ private class FDSKPIReportingTest {
         Test.stopTest();
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Public Case Comment'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify parent record
@@ -162,8 +160,6 @@ private class FDSKPIReportingTest {
     static testMethod void testNew2CommentsKPIReporting() {
 
         setup();
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
 
         Test.startTest();
 
@@ -192,7 +188,7 @@ private class FDSKPIReportingTest {
         Test.stopTest();
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Public Case Comment'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify parent record
@@ -210,8 +206,6 @@ private class FDSKPIReportingTest {
     static testMethod void testCaseClosureKPIReporting(){
 
         setup();
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
 
         Case caseToProcess = [SELECT Id, Status, RecordTypeId, Reason1__c FROM Case LIMIT 1];
 
@@ -224,11 +218,10 @@ private class FDSKPIReportingTest {
         }
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Case Closure'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify parent record
-        System.assertEquals(1, kpiReportings.size());
         System.assertEquals(CASE_ACTION_CASE_CLOSURE, kpiReportings.get(0).Type_Of_Action__c);
 
         //verify child
@@ -243,8 +236,6 @@ private class FDSKPIReportingTest {
 
     static testMethod void testCaseClosureKPIReporting2(){
         setup2();
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
 
         Test.startTest();
 
@@ -260,7 +251,7 @@ private class FDSKPIReportingTest {
         Test.stopTest();
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Case Closure'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify child
@@ -273,8 +264,6 @@ private class FDSKPIReportingTest {
     static testMethod void testCaseEscalatedKPIReporting(){
 
         setup();
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
 
         Case caseToProcess = [SELECT Id, Status, RecordTypeId, Reason1__c FROM Case LIMIT 1];
 
@@ -287,11 +276,10 @@ private class FDSKPIReportingTest {
         }
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Case Escalation'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify parent record
-        System.assertEquals(1, kpiReportings.size());
         System.assertEquals(CASE_ACTION_CASE_ESCALATION, kpiReportings.get(0).Type_Of_Action__c);
 
         //verify child
@@ -306,8 +294,6 @@ private class FDSKPIReportingTest {
 
     static testMethod void testCaseEscalatedKPIReporting2(){
         setup2();
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
 
         Test.startTest();
 
@@ -323,7 +309,7 @@ private class FDSKPIReportingTest {
         Test.stopTest();
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Case Escalation'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify child
@@ -354,9 +340,6 @@ private class FDSKPIReportingTest {
         caseOpened.AccountId = contact.AccountId;
         insert caseOpened;
 
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
-
         Case caseToProcess = [SELECT Id, Status, RecordTypeId, Reason1__c, Reopening_reason__c FROM Case LIMIT 1];
 
         try{
@@ -368,11 +351,10 @@ private class FDSKPIReportingTest {
         }
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Case Reopening'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify parent record
-        System.assertEquals(1, kpiReportings.size());
         System.assertEquals(CASE_ACTION_CASE_REOPENING, kpiReportings.get(0).Type_Of_Action__c);
 
         //verify child
@@ -413,10 +395,6 @@ private class FDSKPIReportingTest {
         caseOpened2.AccountId = contact.AccountId;
         insert caseOpened2;
 
-
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
-
         Test.startTest();
 
         List<Case> casesToProcess = [SELECT Id, Status, Reason1__c, Reopening_reason__c FROM Case];
@@ -431,7 +409,7 @@ private class FDSKPIReportingTest {
         Test.stopTest();
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Case Reopening'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify child
@@ -445,9 +423,6 @@ private class FDSKPIReportingTest {
 
         setup();
 
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
-
         Case caseToProcess = [SELECT Id, Status, RecordTypeId, Reason1__c, Reopening_reason__c, NOI_sent__c FROM Case LIMIT 1];
 
         try{
@@ -458,11 +433,10 @@ private class FDSKPIReportingTest {
         }
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Send NOI' ];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify parent record
-        System.assertEquals(1, kpiReportings.size());
         System.assertEquals(CASE_ACTION_SEND_NOI, kpiReportings.get(0).Type_Of_Action__c);
 
         //verify child
@@ -479,9 +453,6 @@ private class FDSKPIReportingTest {
 
         setup2();
 
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
-
         Test.startTest();
 
         List<Case> casesToProcess = [SELECT Id, Status, Reason1__c, Reopening_reason__c, NOI_sent__c FROM Case];
@@ -495,7 +466,7 @@ private class FDSKPIReportingTest {
         Test.stopTest();
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Send NOI'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify child
@@ -507,9 +478,6 @@ private class FDSKPIReportingTest {
 
     static testMethod void testCaseCreateTaskKPIReporting(){
         setup();
-
-        System.assertEquals(0, [SELECT ID FROM FDS_KPI_Reporting__c].size());
-        System.assertEquals(0, [SELECT ID FROM KPI_Value__c].size());
 
         Test.startTest();
 
@@ -524,11 +492,10 @@ private class FDSKPIReportingTest {
         Test.stopTest();
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Creating a Task'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify parent record
-        System.assertEquals(1, kpiReportings.size());
         System.assertEquals(CASE_ACTION_CREATING_A_TASK, kpiReportings.get(0).Type_Of_Action__c);
 
         //verify child
