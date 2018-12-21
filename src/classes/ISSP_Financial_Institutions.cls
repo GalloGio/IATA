@@ -237,6 +237,7 @@ public with sharing class ISSP_Financial_Institutions {
         	if (provRequestFailedList.size() != previousUserFailedProvisioning.size()) {
         		gdiPolling = false;
         		currentErrorMessage = System.Label.ANG_ISSP_GDI_UserProvisioningError;
+        		gdiAppRightRequested = true;
         	}
         }            
     }

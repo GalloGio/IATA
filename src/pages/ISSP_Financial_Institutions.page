@@ -49,6 +49,10 @@
   					$('[id$="tcModalCloseButtonSecondary"]').removeAttr('disabled');
   				}
 
+  				function hideContinue() {
+  					$('[id$="tcModalConfirmButton"]').css('display', 'none');
+  				}
+
   				function navigateToGDIPortal() {
   					window.open('{!gdiPortalAppURL}', '_blank')
   				}
@@ -147,7 +151,7 @@
 						            		</p>
 						            		<apex:outputPanel id="requestLoading">
 						            			<div style="text-align: center; display:{!IF(gdiPolling,'','none')}">
-						            				<apex:actionPoller id="provisioningPoller" action="{!pollingStatus}" reRender="requestLoading, errorMessagesTCModal" interval="5" enabled="{!gdiPolling}" oncomplete="if(!{!gdiPolling}) { enableTCModalButtons(); } if({!gdiAppRightGranted}) { hideTermsAndConditionsModal(); reRenderFinancialInstitutions(); navigateToGDIPortal(); }"/>
+						            				<apex:actionPoller id="provisioningPoller" action="{!pollingStatus}" reRender="requestLoading, errorMessagesTCModal" interval="5" enabled="{!gdiPolling}" oncomplete="if(!{!gdiPolling}) { enableTCModalButtons(); hideContinue(); } if({!gdiAppRightGranted}) { hideTermsAndConditionsModal(); reRenderFinancialInstitutions(); navigateToGDIPortal(); }"/>
 						         	 				<img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
 						         	 				<b>{!$Label.ANG_ISSP_GDI_UserProvisioningWait}</b>
 						         	 			</div>
@@ -155,7 +159,7 @@
 						         	 	</div>
 						         	 	<div class="modal-footer">
 						         	 		<apex:commandButton id="tcModalConfirmButton" styleClass="btn_iata_success btn" value="{!$Label.ISSP_PCI_Stay}" onclick="disableTCModalButtons(); submitTCModal(); return false;" reRender=""/>
-						         	 		<apex:commandButton id="tcModalCloseButton" styleClass="btn btn-secondary" value="{!$Label.IFAP_close}" onclick="hideTermsAndConditionsModal(); return false;" reRender=""/>
+						         	 		<apex:commandButton id="tcModalCloseButton" styleClass="btn btn-secondary" value="{!$Label.IFAP_close}" onclick="hideTermsAndConditionsModal(); reRenderFinancialInstitutions(); return false;" reRender=""/>
 									    </div>
 						        	</div>
 						      	</div>
