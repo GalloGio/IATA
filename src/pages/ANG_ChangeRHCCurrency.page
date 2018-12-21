@@ -16,18 +16,23 @@
 
 		<apex:pageBlock mode="edit" tabStyle="ANG_RHC_Information__c" title="Change RHC Currency" rendered="{!AND(isEdit, rhc != null)}">
 			 <apex:pageBlockSection title="RHC Information" columns="2">
-				 <apex:pageBlockSectionItem labelStyleClass="field.styleClass" dataStyleClass="field.styleClass" >      
+				<apex:pageBlockSectionItem labelStyleClass="field.styleClass" dataStyleClass="field.styleClass" >      
                     <apex:outputLabel id="plLabel" value="Currency"/> 
-                        <apex:selectList id="currencyPL" value="{!rhc.CurrencyIsoCode}" multiselect="false" size="1" onchange="forecast(),rerenderInfo()"> 
+                        <apex:selectList id="currencyPL" value="{!rhc.CurrencyIsoCode}" multiselect="false" size="1" onchange="forecast(); rerenderInfo(); return false;"> 
                             <apex:selectOptions value="{!plOptions}"/>
                         </apex:selectList>
                 </apex:pageBlockSectionItem>
+               	<apex:inputText value="{!caseNumber}" onblur="setCase(); return false;">
+               		<apex:outputLabel value="    Case Number    " />
+               	</apex:inputText>
                 <apex:commandButton action="{!save}" value="Save" id="saveButton"/>           
 			</apex:pageBlockSection>
 		</apex:pageBlock>
 
 		<apex:actionFunction name="rerenderInfo" rerender="infoBlock" />
 		<apex:actionFunction name="forecast" action="{!forecast}"/>
+		<apex:actionFunction name="setCase" action="{!setCaseToUpdate}"/>
+
 
 	</apex:form>
 	
