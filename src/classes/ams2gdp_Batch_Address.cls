@@ -27,13 +27,9 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 
 		String idsCondition;
 		//-- Query conditions
-		List<String> conditions = new List<String>{'RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''
-		, 'IATACode__c != null'
-		, 'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-		, 'CNS_Agency__c = false'
-		, 'CNS_Account__c = false'
-		// ,	idsCondition
-		};
+	    List<String> conditions = new List<String>{'RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''};
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+	
 		if(extraIds!=null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
 			if(extraIds[0]=='none'){

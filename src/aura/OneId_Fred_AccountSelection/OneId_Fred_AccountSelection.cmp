@@ -13,11 +13,11 @@
   <aura:attribute name="customerTypesByServiceName" type="Object[]" access="private"/>
   
   <aura:attribute name="customerType" type="String" access="private"/>
-  <aura:attribute name="userInput" type="String" access="private"/>
+  <aura:attribute name="userInput" type="String" access="public"/>
   <aura:attribute name="isValid" type="Boolean" default="false" access="private"/>
   <aura:attribute name="accountSelected" type="Boolean" default="false" access="private"/>
 
-  <aura:attribute name="acc" type="Account" access="private"/>
+  <aura:attribute name="account" type="Account" access="public"/>
   <aura:attribute name="contact" type="Contact" access="public"/>
   <aura:attribute name="searchPlaceholder" type="String" default="Please enter an account name"/>
 
@@ -33,6 +33,7 @@
   <aura:attribute name="isInvitation" type="Boolean" default="false" />
 
   <aura:attribute name="invitationId" type="String" /> <!-- invitation id in the url -->
+  <aura:attribute name="isAlreadyPartner" type="Boolean" />
   
 
   
@@ -63,8 +64,7 @@
         <div class="slds-combobox slds-dropdown-trigger_click" aura:id="agencies" aria-expanded="true" aria-haspopup="listbox" role="combobox">
           <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
            
-
-         <aura:if isTrue="{!v.isFredPrimaryUser || v.invitationId != undefined}" >
+         <aura:if isTrue="{!v.isFredPrimaryUser || v.invitationId != undefined || v.account.Id != undefined}">
             <lightning:input  aura:id="AI_userInput2" type="text" class="slds-input slds-combobox__input" value="{!v.userInput}" disabled="true"/>
             <aura:set attribute="else">
                <input aura:id="AI_userInput" type="text" class="slds-input slds-combobox__input" id="combobox-unique-id-32" aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" placeholder="{!v.searchPlaceholder}"  onkeyup="{!c.onKeyUp}" value="{!v.userInput}" data-value="agencies" disabled="{!disableInput}"/>

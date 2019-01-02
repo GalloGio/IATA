@@ -1,0 +1,132 @@
+<apex:page controller="ISSP_FinancialSecInformationController" standardStylesheets="false" showHeader="false" sidebar="false" 
+	applyBodyTag="false" applyHtmlTag="false" action="{!redirect}">
+	<html>
+		<head>
+			<meta charset="utf-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+			<c:ISSP_Header ></c:ISSP_Header>
+			<c:iss_ap_css />
+		</head>
+
+		<body>
+			<style type="text/css">
+				.section-header {
+					background-color: rgb(43, 120, 228);
+					color: white;
+					line-height: 1.42857143;
+					padding: 8px;
+					vertical-align: top;
+					border-top: 1px solid #ddd;
+				}
+				.tableFormat {
+					padding-left : 5px !important;
+					padding-right : 15px !important;
+					padding-bottom: 2px !important;
+					padding-top :  2px !important;
+					vertical-align: middle !important;
+				}
+
+				div.customTable {
+					width: 100%;
+				}
+
+				.formArea {
+					background: white;
+				}
+			</style>
+			<main class="container">
+				<c:ISSP_CustomNavigation />
+				<apex:form styleClass="formArea">
+					<div class="row">
+						<section name="left-side" class="col-md-3 col-sm-12">
+							<table class="table" style="width: 100%">
+								<tr>
+									<th class="section-header">
+										{!$Label.ISSP_Financial_Securities_Summary}
+									</th>
+								</tr>
+								<tr>
+									<td>
+										<div class="customTable">
+											<strong>
+												{!IF(showConvertedAmount,$Label.ISSP_Financial_Securities_Converted_Total_Amount, $Label.ISSP_Financial_Securities_Total_Amount)}
+											</strong>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="border-top: none">
+										<apex:outputText value="{0, number, ###,###,##0.00} {1}" rendered="{!showConvertedAmount}">
+                                           <apex:param value="{!totalConvertedAmount}" />
+                                           <apex:param value="{!localCurrency}" />
+                                        </apex:outputText>
+                                        <apex:outputText value="{0, number, ###,###,##0.00} {1}" rendered="{!NOT(showConvertedAmount)}">
+                                           <apex:param value="{!totalSecuredAmount}" />
+                                           <apex:param value="{!currencyCode}" />
+                                        </apex:outputText> 
+									</td>
+								</tr>
+							</table>							
+						</section>												
+						<section name="right-side" class="col-md-9 col-sm-12">
+							<section class="row">
+								<header class="col-xs-12">
+									<div class="section-header">
+										<strong>{!$Label.ISSP_Financial_Securities_Details}</strong>
+									</div>
+								</header>
+							</section>
+							<section class="col-md-12 col-sm-12">
+								<table class="table table-striped" cellspacing="0" width="100%">	
+									<thead>
+										<tr>
+											<th>{!$ObjectType.Financial_Security__c.fields.Financial_Institution__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Security_Type__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Amount__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Validity_Start_Date__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Expiry_Date__c.Label}</th>
+											<th>{!$ObjectType.Financial_Security__c.fields.Security_Status__c.Label}</th>
+											<th></th>
+										</tr>										
+									</thead>
+									<tbody>
+										<apex:repeat value="{!listFinSec}" var="item">
+											<tr>
+												<td>{!item.financialInstitution}</td>
+												<td>{!item.securityType}</td>
+												<td>
+													<apex:outputText value="{0, number, ###,###,##0.00} {1}">
+                                                       <apex:param value="{!item.amount}" />
+                                                       <apex:param value="{!item.currencyIsoCode}" />
+                                                    </apex:outputText>
+												</td>
+												<td>
+													<apex:outputText value="{0,date,dd/MM/yyyy}"> 
+														<apex:param value="{!item.validityStartDate}" /> 
+													</apex:outputText>
+												</td>
+												<td>
+													<apex:outputText value="{0,date,dd/MM/yyyy}"> 
+														<apex:param value="{!item.expiryDate}" /> 
+													</apex:outputText>
+												</td>
+												<td>{!item.securityStatus}</td>
+												<td>
+													<apex:image value="/img/msg_icons/error16.png" rendered="{!item.cssRow == 'expiredRow'}"/>
+													<apex:image value="/img/msg_icons/warning16.png" rendered="{!item.cssRow == 'closeExpireRow'}"/>
+													<apex:image value="/img/msg_icons/confirm16.png" rendered="{!item.cssRow == 'activeRow'}"/>
+												</td>
+											</tr>
+										</apex:repeat>
+									</tbody>
+								</table>
+							</section>
+						</section>
+					</div>
+				</apex:form>
+				<c:ISSP_CustomFooter />
+			</main>			
+		</body>
+	</html>
+</apex:page>

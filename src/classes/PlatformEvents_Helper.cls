@@ -46,7 +46,8 @@ public class PlatformEvents_Helper {
                 for(string FieldSource:MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
                         if(!rtList.isEmpty()) 
-                            sObj.put(MapMapping.get(FieldSource) , RecordTypeSingleton.getInstance().getRecordTypeById(ObjSource, (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))).Name);
+                            //sObj.put(MapMapping.get(FieldSource) , RecordTypeSingleton.getInstance().getRecordTypeById(ObjSource, (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))).Name);
+                            sObj.put(MapMapping.get(FieldSource) , RTName(string.valueOf(ObjId.getsobjecttype()), (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))));
                         else
                             sObj.put(MapMapping.get(FieldSource), null);
                         
@@ -83,6 +84,11 @@ public class PlatformEvents_Helper {
         }
         
         if(!lsLogs.isEmpty()) insert lsLogs;
+    }
+    
+    private static string RTName(string theObject, id RTId){
+        if(RTId==null)  return null;
+        return Schema.getGlobalDescribe().get(theObject).getDescribe().getRecordTypeInfosById().get(RTId).getName();
     }
     
     private static map<string, string> getMappingMap(string sObj){
@@ -122,6 +128,9 @@ public class PlatformEvents_Helper {
     private static Map<Id,sObject> getAccountRoleToPublish(Map<Id,sObject> mapAccnt){
     	map<id, sObject> mapToRet = new map<id, sObject>();
     	mapToRet.putAll(mapAccnt);
+
+        if(mapAccnt.keyset().isEmpty()) return mapToRet;
+
     	for(Account_Role__c AccntRole: [select id, RecordTypeId, Account__c from Account_Role__c where Account__c in:mapAccnt.keyset() and recordtypeId=:TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID]){
 //    		if(mapToRet.ContainsKey(accntRole.Account__c))
 //    			mapToRet.remove(accntRole.Account__c);
