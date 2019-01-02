@@ -229,6 +229,17 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Email_Template_Internal_Stakeholders__c</fullName>
+        <description>API name of the Email Template that will be sent to internal stakeholders. The mailing list is defined in the custom setting Risk_Alert_Stakeholders__c.</description>
+        <externalId>false</externalId>
+        <label>Email Template - Internal Stakeholders</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IATA_ISO_Country__c</fullName>
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
@@ -440,6 +451,7 @@ J-Joint Vent</description>
         <columns>ANG_Create_Process_Case__c</columns>
         <columns>ANG_EmailTemplate_Legacy__c</columns>
         <columns>ANG_EmailTemplate_NG__c</columns>
+        <columns>Email_Template_Internal_Stakeholders__c</columns>
         <columns>ANG_PortalNotificationTemplate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>

@@ -390,12 +390,11 @@ try{
 
         function openPrimarytab(result) {
             var primaryTabId = result.id;
-            sforce.console.openPrimaryTab(primaryTabId , &apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;, true, 
-                &apos;RHC Currency&apos;, null);
+			sforce.console.openSubtab(primaryTabId , &apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;, true, &apos;RHC Currency&apos;, null);
         };
                                 
     } else {
-       window.open(&apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;,&apos;_blank&apos;,&apos;height=450,width=400&apos;);
+       window.open(&apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;,&apos;_blank&apos;,&apos;height=450,width=600&apos;);
     }
                                                                 
                 

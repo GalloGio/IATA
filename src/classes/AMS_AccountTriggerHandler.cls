@@ -49,6 +49,7 @@ public class AMS_AccountTriggerHandler {
         
         for(Account ag : accs){
             validateCharacters(ag);//AMSU-179
+	    System.debug('[AMS_AccountTriggerHandler]ag: ' + ag);
             if(!disallowedSources.contains(ag.Source_System__c)){
                 if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
                     setCassNumberOnHO(ag);
