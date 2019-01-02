@@ -28,7 +28,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
    	global void execute(Database.BatchableContext BC, List<sObject> scope) {
 	
-		System.SavePoint sp;
+		System.SavePoint sp = Database.setSavepoint();
 
 		Account acct = null;
 		AMS_OSCAR__c oscar = null;
