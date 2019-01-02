@@ -70,6 +70,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		
 		if(!disableContactIdSet.isEmpty()){
 			HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.DISABLE_EXISTING_MEMBERS, disableContactIdSet, null);
+            HigherLogicIntegrationHelper.assignHLPermissionSet(disableContactIdSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
 		}
 		
 		return;

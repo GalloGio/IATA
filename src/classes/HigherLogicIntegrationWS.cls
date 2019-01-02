@@ -97,7 +97,7 @@ public class HigherLogicIntegrationWS {
 			request.setHeader('content-type', 'application/json');
 			request.setBody(requestBodyJSON);
 			
-			System.debug(LoggingLevel.FINE, '____ [cls HigherLogicIntegrationWS - invoke] WS Request Body: ' + requestBodyJSON);
+			System.debug(LoggingLevel.FINE, '____ [cls HigherLogicIntegrationWS - invoke] WS Request Body: ' + request.getBody());
 			
 			Http http = new Http();
 			
@@ -143,6 +143,9 @@ public class HigherLogicIntegrationWS {
 		if(sObj instanceof User){
 			
 			User user = (User) sObj;
+
+			Id accountId = user.ContactId == null ? ProvisionKaviAccess.getFakeAccount().Id : user.Contact.AccountId;
+			String accountName = user.ContactId == null ? ProvisionKaviAccess.getFakeAccount().Name : user.Contact.Account.Name;
 			
 			// Active status is defined based on the Portal Application Right
 			// PAR with Access Granted => ACTIVE
@@ -150,6 +153,8 @@ public class HigherLogicIntegrationWS {
 			Boolean activeUser = activeUserMap.get(user.Id);
 			
 			memberDetails.LegacyContactKey 	= user.Id;
+			memberDetails.ParentMemberKey	= accountId;
+			memberDetails.CompanyName		= accountName;
 			memberDetails.FirstName 		= user.FirstName;
 			memberDetails.LastName 			= user.LastName;
 			memberDetails.Title 			= user.Title;
@@ -166,6 +171,7 @@ public class HigherLogicIntegrationWS {
 			memberDetails.Phone3			= user.Fax;
 			memberDetails.Phone3Type		= 'Fax';
 			memberDetails.IsActive			= activeUser;
+			memberDetails.IsMember			= true;
 			memberDetails.IsOrganization	= false;
 			
 		}
@@ -176,44 +182,23 @@ public class HigherLogicIntegrationWS {
 			
 			Id legacyContactId = legacyContactsMap.get(acct.Id);
 			
-			memberDetails.ParentMemberKey	 = acct.Id;
-			memberDetails.CompanyName		 = acct.Name; 
-			memberDetails.WebsiteURL		 = acct.Website;
-			memberDetails.EmailAddress		 = acct.Email__c;
-			memberDetails.LegacyContactKey	 = legacyContactId;
-			memberDetails.Address1			 = acct.BillingStreet;
-			memberDetails.City				 = acct.BillingCity;
-			memberDetails.State 			 = acct.BillingState;
-			memberDetails.Country			 = acct.BillingCountry;
-			memberDetails.PostalCode		 = acct.BillingPostalCode;
-			memberDetails.IsActive			 = true;
-			memberDetails.IsOrganization	 = true;
+			memberDetails.CompanyName						= acct.Name; 
+			memberDetails.WebsiteURL						= acct.Website;
+			memberDetails.EmailAddress						= acct.Email__c;
+			memberDetails.PrimaryContactLegacyContactKey	= legacyContactId;
+			memberDetails.LegacyContactKey					= acct.Id;
+			memberDetails.Address1			 				= acct.BillingStreet;
+			memberDetails.City				 				= acct.BillingCity;
+			memberDetails.State 			 				= acct.BillingState;
+			memberDetails.Country			 				= acct.BillingCountry;
+			memberDetails.PostalCode		 				= acct.BillingPostalCode;
+			memberDetails.IsActive			 				= true;
+			memberDetails.IsOrganization	 				= true;
 			
 		}
 		
 		return memberDetails;
 		
-	}
-	
-	/**
-	* Creates a new MemberDetails instance 
-	* considering only the userId and acctId
-	*
-	* @param userId: Id
-	* @param acctId: Id
-	*
-	* @return memberDetails: MemberDetails
-	*
- 	*/
-	private static MemberDetails createMemberDetail(Id userId, Id acctId){
-		
-		MemberDetails memberDetails = new MemberDetails();
-		
-		memberDetails.LegacyContactKey 	= userId;
-		memberDetails.ParentMemberKey 	= acctId;
-		
-		return memberDetails;
-			
 	}
 	
 	/**
@@ -252,41 +237,6 @@ public class HigherLogicIntegrationWS {
 	}
 	
 	/**
-	* Creates a new request body for Higher Logic Push API
-	* considering the relationships given (User/Account)
-	*
-	* @param relationshipMap: Map<Id, Id>  
-	*
-	* @return hlRequest: HigherLogicRequest
-	*
-	*/
-	private static HigherLogicRequest createRequestBody(Map<Id, Id> relationshipMap){
-		
-		HigherLogicRequest hlRequest = new HigherLogicRequest();
-		
-		List<Items> itemsLst = new List<Items>();
-		
-		for(Id userId : relationshipMap.keySet()){
-			
-			Id acctId = relationshipMap.get(userId);
-			
-			MemberDetails memberDetails = createMemberDetail(userId, acctId);
-
-			Items items = new Items();
-			
-			items.MemberDetails = memberDetails;
-			
-			itemsLst.add(items);
-
-		}
-		
-		hlRequest.Items = itemsLst;
-		
-		return hlRequest;	
-	
-	}
-	
-	/**
 	* Pushes members (users & accounts) to HigherLogic
 	*
 	* @param sObjectLst: List<sObject>  
@@ -301,22 +251,6 @@ public class HigherLogicIntegrationWS {
 		HigherLogicResponse response = invoke(request);
 		
 		processHigherLogicResponse('pushMembers', response);
-		
-	}
-	
-	/**
-	* Pushes member relationships to HigherLogic
-	*
-	* @param relationshipMap: Map<Id, String> 
-	*
-	*/
-	public static void pushMembersRelationships(Map<Id, Id> relationshipMap){
-		
-		HigherLogicRequest request = createRequestBody(relationshipMap);
-		
-		HigherLogicResponse response = invoke(request);
-		
-		processHigherLogicResponse('pushMembersRelationships', response);
 		
 	}
 	
