@@ -394,7 +394,7 @@ try{
         };
                                 
     } else {
-       window.open(&apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;,&apos;_blank&apos;,&apos;height=450,width=400&apos;);
+       window.open(&apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;,&apos;_blank&apos;,&apos;height=450,width=600&apos;);
     }
                                                                 
                 

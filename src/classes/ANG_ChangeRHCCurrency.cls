@@ -36,6 +36,19 @@ public with sharing class ANG_ChangeRHCCurrency {
 
     public List<FieldWrapper> displayFields{get; set;}
 
+    public String caseNumber{get; set;}
+
+    public void setCaseToUpdate(){
+        List<case> cse = [Select Id, CaseNumber, Subject, Reason1__c, CaseArea__c FROM Case Where CaseNumber = :caseNumber];
+        if (cse.isEmpty()){
+            ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.ERROR,'Incorrect Case Number'));
+        } else {
+            this.caseToUpdate = cse[0];
+        }
+    }
+
+    private Case caseToUpdate {get; set;}
+
     private Set<String> fieldsToQuery{
         get{
             if(fieldsToQuery == null){
@@ -96,9 +109,17 @@ public with sharing class ANG_ChangeRHCCurrency {
     }
 
     public void save(){
-        update rhc;
-        queryRHC();
-        ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.INFO,'Currency Saved'));
+        if(caseToUpdate != null){
+            caseToUpdate.Reason1__c = 'RHC Changes';
+            caseToUpdate.CaseArea__c = 'Risk Management Process';
+            update caseToUpdate;
+            update rhc;
+            queryRHC();
+            ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.INFO,'Currency Saved'));
+
+        }else{
+            ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.ERROR,'Please input a valid Case Number'));
+        }
     }
 
     private void queryRHC(){
