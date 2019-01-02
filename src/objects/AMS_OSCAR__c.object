@@ -47121,25 +47121,6 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>STEP45__c</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>STEP4__c</picklist>
             <values>
                 <fullName>Failed</fullName>
