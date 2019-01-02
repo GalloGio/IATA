@@ -106,7 +106,6 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	        For(Account acct : listAccount){
 	
 	            if(acct.id == null){
-	                acct.Location_Type__c = 'AE';
 	                acct.ParentId = mainAccount.Id;
 	                acct.Top_Parent__c = mainAccount.Id;
 	                acct.Category__c = mainAccount.Category__c;
