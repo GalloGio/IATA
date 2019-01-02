@@ -1,0 +1,387 @@
+<apex:component controller="ISSP_SISMembershipApplicationForm_Ctrl">
+    <apex:attribute name="newForm" description="AP_Process_Form__c" type="AP_Process_Form__c" required="true"/>
+    <apex:attribute name="account" description="Account" type="account"/>
+
+<div id="form-container">
+    <center>
+        <h2 class="panel-title">
+            STANDARD PARTICIPATION AGREEMENT FOR SIS E-INVOICING SERVICES – INVOICE RECEIVER
+        </h2>
+    </center>
+    
+    <p>
+        This Standard Participation Agreement for SIS e-Invoicing Services – Invoice Receiver (“<span class="bold">Agreement</span>”) is entered into by and between <span class="bold">{!newForm.Legal_Name_of_company__c}</span> a company incorporated under the laws of <span class="bold">{!newForm.Company_Country__r.Name}/{!newForm.Company_State__c}</span> with its head office located at <span class="bold">{!newForm.Company_address__c}, {!newForm.Company_city__c}, {!newForm.Company_State__c}, {!newForm.Company_Country__r.Name}, {!newForm.Postal_code__c}</span> and the <span class="bold">INTERNATIONAL AIR TRANSPORT ASSOCIATION</span>, an association incorporated by Special Act of the Parliament of Canada, with its head office at 800 Place Victoria. P.O. Box 113, Montreal, Quebec, Canada, H4Z 1M1 (“<span class="bold">IATA</span>”) (each a <span class="bold">Party</span>” and collectively, the “<span class="bold">Parties</span>”).
+    </p>
+
+    <p>
+        BY CLICKING AN “ENTER”, “I AGREE” OR “I ACCEPT” OR ANY OTHER SIMILAR ICON OR BUTTON WHEN PROMPTED TO DO SO AT THE TIME OF SIGNING UP TO ACCESS AND USE THE SITE (AS DEFINED BELOW) OR AT ANY TIME THEREAFTER, OR BY ACTUALLY SIMPLY ACCESSING OR OTHERWISE USING THE SITE RECIPIENT SHALL BE DEEMED TO HAVE IRREVOCABLY AGREED TO BE BOUND BY ALL TERMS AND CONDITIONS OF THIS AGREEMENT. 
+    </p>
+
+    <center class="bold underline">PREAMBLE</center>
+
+    <p>
+        <span class="bold">WHEREAS</span> IATA is an international association of airlines that promotes safe, regular and economical air transport and facilitates collaboration among air transport enterprises engaged directly or indirectly in international air transport services;
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> RECIPIENT is a user or purchaser of goods or services provided or sold by Air Transport Industry Participants (as defined below in Section 1.1);
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> IATA operates and manages one or more industry clearing houses and other, billing, settlement and other electronic or computerized platforms, systems and solutions as a service to or in relation to the air transport industry (“Electronic Services”), and makes these (or portions thereof) available to certain Air Transport Industry Participants;
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> the Site allows authorized users that are purchasers of goods or services provided or sold by Air Transport Industry Participants to receive and/or download electronic invoices from relevant Air Transport Industry Participants;
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> the Site solely permits the reception and/or download of invoices and does not, without limitation, enable authorized users to submit or transmit documents or to make any payments;
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> RECIPIENT desires to access and use the Site to receive and download electronic invoices from relevant Air Transport Industry Participants; and
+    </p>
+    <p>
+        <span class="bold">WHEREAS</span> The Parties now wish to set out the terms and conditions pursuant to which IATA, through its sub-contractors located worldwide, agrees to make the Site available to RECIPIENT, and RECIPIENT agrees to access and use such Site. 
+    </p>
+
+    <p>
+        This Preamble shall form an integral part of this Agreement.
+    </p>
+
+    <p class="bold">
+        NOW THEREFORE THE PARTIES AGREE AS FOLLOWS:
+    </p>
+
+    <p class="bold">
+        1. DEFINITIONS
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        1.1 For the purposes of this Agreement “<span class="bold">Site</span>” means an IATA owned or controlled website through which RECIPIENT may receive and/or download electronic invoices from relevant Air Transport Industry Participants; “<span class="bold">Air Transport Industry Participants</span>” includes any airlines, airports, airport management, ground handling, in-flight catering, aviation manufacturing, in-flight entertainment, aviation maintenance, repair and overhaul providers, fuel suppliers  and air traffic control companies, as well as other companies or agencies that supply materials or services to the air transport industry or its participants, in each case that uses the Solution or portions thereof; “<span class="bold">Solution</span>” means   any and all platforms, systems, solutions, applications, APIs, software, websites, servers, hardware, devices, databases, equipment and other technology or intellectual property owned, used or licensed by IATA to provide or in support of its Electronic Services and related activities; and “<span class="bold">includes</span>” and “<span class="bold">including</span>” mean “including (or includes) without limitation.
+    </p>
+
+    <p class="bold">
+        2. ACCESS AND USE OF SITE
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.1 As of the effective date of this Agreement and during its Term, IATA shall, subject to this Agreement and any other conditions or requirements included in the registration process, make available to RECIPIENT the Site for the purpose of allowing RECIPIENT to receive and/or download certain electronic invoices from relevant Air Transport Industry Participants, and RECIPIENT agrees and covenants to access and use the Site in strict conformity with this Agreement and any other requirements or policies separately imposed by IATA at any time in its discretion.
+    </p>
+    <p class="margin-3">
+        RECIPIENT (AT ITS SOLE COST AND EXPENSE), IS SOLELY RESPONSIBLE FOR PROVIDING, PROCURING AND MAINTAINING, AND FOR ENSURING THAT ALL HARDWARE, SOFTWARE, ELECTRICAL AND OTHER PHYSICAL REQUIREMENTS FOR RECIPIENT'S USE OF THE SERVICE, INCLUDING TELECOMMUNICATIONS AND INTERNET ACCESS CONNECTIONS AND LINKS, WEB BROWSERS, BANDWIDTH OR OTHER EQUIPMENT, PROGRAMS AND SERVICES REQUIRED TO ACCESS AND USE THE SERVICE, ARE COMPATIBLE WITH THE SOLUTION, THE SERVICE AND THE IATA SERVICES.  
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.2 RECIPIENT must provide all required registration information in order to create an account to access and use the any Site. RECIPIENT represents and warrants to IATA that RECIPIENT shall: (i) provide current, true, accurate, legal and complete information as required for registration of RECIPIENT's account; and (ii) maintain and promptly update any required registration information required of RECIPIENT. Upon completing the registration process, RECIPIENT will be provided a password and account designation. RECIPIENT is solely responsible for maintaining the confidentiality of RECIPIENT's password(s) and account(s), and is fully responsible for all activities that occur under RECIPIENT's password(s) and account(s). If any unauthorized use of RECIPIENT's account(s) or password(s) occurs, RECIPIENT must notify IATA via phone and/or email immediately so that IATA may take appropriate measures. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.3 Notwithstanding anything contrary in this Agreement, IATA may at any time in its sole discretion modify, amend, change, alter, enhance, suspend, disable, terminate or discontinue the Site or any underlying functionality, or the terms and conditions governing these including, starting to charge fees for the Site and the applicable pricing, this Agreement or any part thereof (each a “<span class="bold">Change</span>”). Any and all such Changes shall become effective immediately.  
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.4 RECIPIENT agrees that IATA will be generating electronic invoices on behalf of IATA system users, and agrees to accept receipt of such electronic invoices through the Site, including by download. It is RECIPIENT’s responsibility to secure any permissions or authorizations that may be required in its country or countries of base regarding the use of electronic invoices, and to comply with laws that those countries may apply to the creation of invoices, determination of applicable taxes, management of access controls, record keeping and legal archiving. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.5 For clarity, settlement of invoices received or downloaded from the Site is outside the scope of this Agreement and is to be made and arranged for separately by RECIPIENT directly with the relevant Air Transport Industry Participants having issued such electronic invoices using such channels as may have been separately agreed between RECIPIENT and such Air Transport Industry Participants, IATA having no liability or responsibility whatsoever in the above respects. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.6 RECIPIENT shall and covenants to comply with all procedures and standards, formats provided for or required by IATA in or in relation to this Agreement. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.7 It is the sole responsibility of RECIPIENT to ensure that its access and use of the Site is in compliance with applicable laws, including applicable privacy laws.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.8 RECIPIENT shall not provide IATA with any Personal Data. For the purposes of this Agreement, “Personal Data” means any data, which permits the identification of an individual.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.9 For the purpose of this Agreement “<span class="bold">RECIPIENT Data</span>” means the registration data and information owned by RECIPIENT and that is provided to or otherwise made available to or uploaded on the Site for purposes of or in relation to this Agreement or the Site.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        2.10 For the purpose of this Agreement “<span class="bold">IATA Data</span>” means all data and information included in, accessible through, or related to the Site, the Solution or the Electronic Services other than and excluding only RECIPIENT Data, including all (i) data and information provided to or otherwise made available to or uploaded in the Solution or the Electronic Services, by IATA, any Air Transport Industry Participant or any third party acting on their behalf for purposes of or in relation to this Agreement, the Solution or the Electronic Services, (ii) Collated Data (but subject to the restrictions set out in Section 8.3), (iii) data and information obtained in relation to or pursuant to Article 10, and (iv) any and all performance, usage, statistical, data mining related, secondary, operational, processing or other similar or related data or information within, resulting, generated, gathered, obtained, collected and/or used by or in relation to the Site, the Solution or the Electronic Service. For clarity, except only as for “Collated Data”, IATA Data does not include any RECIPIENT Data.
+    </p>
+
+    <p class="bold">
+        3. NO SERVICE LEVEL
+    </p>
+
+    <p class="margin-3">
+        NO COVENANTS, PROMISES, UNDERTAKINGS OR SERVICE LEVELS ARE OFFERED OR APPLICABLE HEREUNDER IN RELATION TO THE SITE OR ANY UNDERLYING FUNCTIONALITY (INCLUDING THAT DESCRIBED IN SECTION 2.1), EACH AND ALL OF WHICH ARE PROVIDED ON AN “AS IS” BASIS ONLY, WITHOUT ANY WARRANTY AS PER SECTION 5.2. WITHOUT LIMITING THE GENERALITY OF THE ABOVE, RECIPIENT UNDERSTANDS AND AGREES THAT FROM TIME TO TIME, THE SITE AND/OR ANY UNDERLYING FUNCTIONALITY MAY BE INACCESSIBLE, UNAVAILABLE OR INOPERABLE FOR ANY REASON, INCLUDING: (I) EQUIPMENT MALFUNCTIONS; (II) PERIODIC MAINTENANCE PROCEDURES OR REPAIRS WHICH IATA MAY UNDERTAKE FROM TIME TO TIME; (III) THE RELEVANT AIR TRANSPORT INDUSTRY PARTICIPANTS OR THEIR APIS, OR (IV) CAUSES BEYOND THE REASONABLE CONTROL OF IATA.
+    </p>
+
+    <p class="bold">
+        4. TAXES 
+    </p>
+
+    <p class="margin-3">
+        Should any taxes, levies, charges or duties (including any goods and services or other VAT) be imposed, levied or become payable in relation to or by reason of RECIPIENT accessing or using the Site or any functionality, or otherwise in relation to or as a result of this Agreement, RECIPIENT shall pay any and all such taxes, levies, charges and duties, in addition to any other payments due under this Agreement. In the event IATA pays any such tax or assessment, RECIPIENT shall immediately reimburse IATA upon request. Notwithstanding the foregoing, neither Party shall be responsible for the other Party’s taxes which are based on net or gross income or capital.
+    </p>
+
+    <p class="bold">
+        5. WARRANTIES AND LIABILITIES
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        5.1 RECIPIENT hereby represents and warrants that:
+    </p>
+
+    <p class="margin-6 indent-3">
+        5.1.1 it has obtained all operating licenses or government authorizations required for engaging in business;
+    </p>
+
+    <p class="margin-6 indent-3">
+        5.1.2 it is not an individual, but rather an entity, organisation, merchant or business using or purchasing goods or services provided or sold by Air Transport Industry Participants and accessing and using the Site solely for business purposes;
+    </p>
+
+    <p class="margin-6 indent-3">
+        5.1.3 it is not a party to the Chapter B16 Standard Agreement for SIS Participation, to the <span class="bold">[Standard Participation Agreement for SIS e-Invoicing Services – Non Transportation]</span> or to any variations of such agreements with IATA;
+    </p>
+
+    <p class="margin-6 indent-3">
+        5.1.4 it owns or has obtained all required rights, consents and waivers in respect of any and all RECIPIENT Data, including in relation to its collection, processing, provision, use, disclosure, validation, disposal, storage, anonymization, deletion and/or management as part of or in relation to this Agreement or the Site and all required rights, consents and waivers otherwise necessary for the purposes of this Agreement, the whole in compliance with all applicable laws, including data privacy and data security laws;
+    </p>
+
+    <p class="margin-6 indent-3">
+        5.1.5 it shall use, handle, protect, dispose of and otherwise deal with any and all data of any and all other users made available to it via the Site and/or otherwise by or through IATA solely for the purposes contemplated by this Agreement and in compliance with the terms and conditions of this Agreement and all applicable laws, and with a degree of care at least as high as the one that is applied to its own RECIPIENT Data hereunder; 
+    </p>
+
+    <p class="margin-6 indent-3">
+        5.1.6 it shall be responsible for ensuring that RECIPIENT Data or any attachment supplied by itself, its respective employees, agents, and contractors does not contain or introduce any Destructive Elements.  If RECIPIENT becomes aware that a Destructive Element has been so introduced, RECIPIENT shall eliminate the effects of the Destructive Element and, if the Destructive Element causes a loss (e.g., of operational efficiency or data), assist IATA to mitigate and restore such losses provided that it shall not prevent IATA from exercising any recourse it may have against RECIPIENT under this Agreement or at law.  <span class="bold">“Destructive Elements”</span> means any software, data or tool (e.g., “viruses”, “worms” or “trojan” programs) that (i) are intentionally designed to disrupt, disable, harm or otherwise impede in any manner, including aesthetical disruptions or distortions, the operation of the  Site, the Solution or other systems of IATA, including, for example, based on the elapsing of a period of time, exceeding an authorized number of copies, advancement to a particular date or other numeral (e.g., “time bombs”, “time locks” or “drop dead” devices), (ii) would permit RECIPIENT or third parties to access the Site, the Solution or related systems, to cause such disablement or impairment, or otherwise to circumvent the security features of the Site, the Solution or related systems, or (iii) contain any other harmful, malicious or hidden procedures, routines or mechanisms which would cause the Site, the Solution or related systems to cease functioning, or to damage or corrupt software, data or communications, or otherwise interfere with operations; and 
+    </p>
+
+    <p class="margin-6 indent-3">
+        5.1.7 it shall not, directly or indirectly: (i) seek or gain access to any object code, source code, trade secrets, or any sensitive or proprietary information of, or included in or related to the Site, the Solution, the Electronic Services, or any Confidential Information of IATA, (ii) decompile, transform, modify, translate, disassemble, reverse engineer or otherwise attempt to decrypt or derive the source code, any trade secrets, or any sensitive or proprietary information of, or included in or related to the Site, the Solution, the Electronic Services, or any Confidential Information of IATA, (iii) modify, merge, alter, copy, distribute or otherwise reproduce or tamper with the Site, the Solution, the Electronic Services, or any Confidential Information of IATA or produce or create any other applications whatsoever or any derivative works thereof (except to the extent expressly permitted by applicable law despite this limitation), (iii) destroy or remove any copyright, trade secret, patent, trademark or other proprietary or legal markings or notices placed upon or contained within the Site, the Solution, the Electronic Services, or any Confidential Information of IATA, (iv) copy, rent, resale, lease, access, share, operate on a time share or service bureau or managed service basis, distribute as part of an ASP, VAR, OEM, SaaS or other arrangement, the Site, the Solution, the Electronic Services, or any Confidential Information of IATA, (v) use or access the Site, the Solution, the Electronic Services, or any Confidential Information of IATA to publish, transfer, display, store, distribute or disseminate or otherwise transmit, load upon or make available anything (including any information, files, software, photographs, images, data or other content) that is inappropriate, inaccurate, illegal, unlawful, profane, defamatory, obscene, or indecent, or that is protected by or contravenes or violates any applicable laws or regulations, or (vi) otherwise use or access the Site, the Solution, the Electronic Services, or any Confidential Information of IATA to for any unlawful, prohibited, illegal, inappropriate, offensive, damaging or otherwise unsuitable purposes, including in connection with activities involving tax evasion, money laundering, pyramid schemes, chain letters, junk email, spamming, hacking, defamation, abuse, harassment, stalking, threatening or otherwise violating the rights of any person or government.
+    </p>
+
+    <p class="margin-6 indent-3">
+        5.1.8 This Agreement has been duly and validly authorized, executed and delivered by or on behalf of RECIPIENT and constitutes a valid and binding agreement of RECIPIENT, enforceable in accordance with its terms.
+    </p>
+
+    <p class="margin-4 indent-2">
+        5.2  TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IATA DISCLAIMS AND EXCLUDES ALL EXPRESS, IMPLIED, STATUTORY OR OTHER REPRESENTATIONS, WARRANTIES, AND CONDITIONS WHATSOEVER, INCLUDING THOSE PERTAINING TO TITLE, NON-INFRINGEMENT, SATISFACTORY CONDITION, QUALITY, MERCHANTABILITY AND FITNESS FOR PARTICULAR OR GENERAL PURPOSE.  FOR CLARITY, IATA DOES NOT WARRANT THAT THE OPERATION OF THE SITE, SOLUTION AND/OR THE ELECTRONIC SERVICES WILL BE UNINTERRUPTED, AND/OR ERROR-FREE.  
+    </p>
+
+    <p class="margin-4 indent-2">
+        5.3 THE SOLE AND ENTIRE AGGREGATE LIABILITY OF IATA FOR ANY AND ALL CLAIMS, DAMAGES, LOSSES, LIABILITIES AND PREJUDICES IN ANY MANNER RELATED TO THIS AGREEMENT, INCLUDING AS THEY MAY RELATE TO THE SITE, THE SOLUTION, THE ELECTRONIC SERVICES OR RECIPIENT DATA, WILL BE THE PAYMENT OF DIRECT DAMAGES, NOT TO EXCEED (IN THE AGGREGATE FOR ALL CLAIMS, DAMAGES, LOSSES, LIABILITIES AND PREJUDICE) AN ABSOLUTE AGGREGATE MAXIMUM LIMIT OF $100.  EXCEPT FOR THE SPECIFIC REMEDIES EXPRESSLY IDENTIFIED AS SUCH IN THIS AGREEMENT, RECIPIENT’S EXCLUSIVE REMEDY FOR ANY SUCH CLAIM, DAMAGE, LOSS, LIABILITY AND PREJUDICE ARISING OUT OF THIS AGREEMENT WILL BE FOR IATA, UPON RECEIPT OF WRITTEN NOTICE, TO USE COMMERCIALLY REASONABLE EFFORTS TO CURE THE BREACH AT ITS EXPENSE. IN ADDITION, IATA SHALL NOT BE LIABLE FOR ANY DEFAULT, DELAY, FAILURE OR BREACH CAUSED DIRECTLY OR INDIRECTLY BY ANY CAUSE OR CIRCUMSTANCE BEYOND IATA’S REASONABLE CONTROL (“<span class="bold">Force Majeure Event</span>”).
+    </p>
+
+    <p class="margin-4 indent-2">
+        5.4 NOTWITHSTANDING ANY OTHER PROVISION OF THIS AGREEMENT TO THE CONTRARY AND TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IATA SHALL NOT BE LIABLE UNDER OR IN RELATION TO THIS AGREEMENT FOR ANY LOST PROFITS, LOST SAVINGS, LOST GAINS AND OPPORTUNITIES OR OTHER ECONOMIC LOSS (INCLUDING BUSINESS INTERRUPTION, LOST BUSINESS AND LOST DATA), OR FOR ANY CONSEQUENTIAL, SPECIAL, PUNITIVE, INDIRECT, OR INCIDENTAL DAMAGES, OR FINES, EVEN IF IATA KNEW OR SHOULD HAVE KNOWN OF THE EXISTENCE OR POSSIBILITY OF SUCH DAMAGES, LOSSES, LIABILITIES OR PREJUDICES.
+    </p>
+
+    <p class="bold">
+        6. INDEMNIFICATION
+    </p>
+
+    <p class="margin-3">
+        RECIPIENT shall fully indemnify and hold IATA, its directors, officers, employees, agents and representatives, harmless from any and all claims, actions, proceedings, damages, losses, liabilities, costs (including reasonable legal and attorney’s fees), fines, penalties, sanctions, orders and prejudices suffered or incurred by IATA or its directors, officers, employees, agents and representatives arising out of, or relating to, directly or indirectly, any act, omission, fault or breach of this Agreement by RECIPIENT (including any breach or inaccuracy of any representation or warranty in Section 5.1) or resulting from or related in any way to any RECIPIENT Data, including in relation to its use or re-use, distribution, protection or loss by any party or person. 
+    </p>
+
+    <p class="bold">
+        7.  VALIDATION OF DATA
+    </p>
+
+    <p class="margin-3">
+        IATA will not be responsible for nor have any liability to RECIPIENT for the content, correctness and validation of any invoices of any Air Transport Industry Participants, or of RECIPIENT Data provided hereunder by RECIPIENT or any third party acting on behalf of RECIPIENT, and RECIPIENT shall indemnify and hold IATA, and its directors, officers, employees and agents harmless from and against any and all claims, actions, proceedings, damages, losses, liabilities, costs (including reasonable legal and attorney’s fees), fines, penalties, sanctions, orders and prejudices suffered or incurred by IATA or its directors, officers employees and agents arising out of, or relating to, directly or indirectly, the content, correctness and validation of such invoices or of data transmitted by RECIPIENT or any third party acting on behalf of RECIPIENT hereunder or otherwise in connection with any access or use of the Site.
+    </p>
+
+    <p class="bold">
+        8. INTELLECTUAL PROPERTY RIGHTS
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        8.1 IATA or its licensors, suppliers or subcontractors shall have sole and exclusive ownership of all rights, titles and interests in and to the Site, the Solution, the IATA Data, the IATA Confidential Information and the Electronic Services, including all intellectual property rights and any accompanying written or printed materials and copies thereof, and including all changes, derivations, modifications and enhancements thereto (together, the “<span class="bold">Materials</span>”). This Agreement does not provide RECIPIENT with title or ownership of the Materials, but only a right of limited access and use to the Site as per this Agreement. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        8.2  During the Term, RECIPIENT grants IATA an irrevocable license to use, reuse, modify, create derivative works from and sublicense RECIPIENT Data solely for the purpose of the Site or any underlying functionality or the Electronic Services or the Solution, or as otherwise permitted under this Agreement.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        8.3 IATA reserves the right to perpetually and irrevocably use, exploit and sublicense RECIPIENT Data in a Collated Data form (hereinafter further defined, and which Collated Data is and shall be deemed not to be RECIPIENT Data for all purposes hereunder) in any manner and for any purpose whatsoever, whether commercial or non-commercial, including in relation to business intelligence products and services and/or in promoting and reporting performance of the Site, the Solution, and/or Electronic Services to present and prospective users of the Site or the Electronic Services, including operational efficiency, training and international trending and benchmarking initiatives with respect to the Site or the Electronic Services. For the purpose of this Agreement “Collated Data” means any set of de-identified and aggregated RECIPIENT Data collated by IATA from RECIPIENT and other users of or in the Site, which contains no names or information that would, in any way, allow identification of RECIPIENT or any other user. In addition and for clarity, IATA is the sole and exclusive owner of all IATA Data (as defined in Section 2.10) and may use any and all IATA Data in any manner whatsoever, including for commercial reasons and with third parties, with the exception of the Collated Data where its use shall be in accordance with the limited purpose set out in this Section 8.3. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        8.4  The terms and conditions set forth in this Section 8 shall survive termination or expiry of this Agreement.
+    </p>
+
+    <p class="bold">
+        9.  CONFIDENTIALITY
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        9.1 RECIPIENT may be given access to information (verbally or in hardcopy and/or electronic form) relating to IATA’s past, present, and future research, development, business activities, products, services, and technical knowledge, which is identified by the discloser as confidential or that would be treated as confidential by a reasonable person given the nature of the information or the circumstances surrounding its disclosure or access (“Confidential Information”). Notwithstanding the foregoing, Confidential Information shall not include any information that (i) at the time of its disclosure, is publicly known or within the public domain without RECIPIENT’s breach of this Agreement (ii) prior to its initial disclosure hereunder, is in the possession of RECIPIENT as evidenced in a documentary form and has not been the subject of an earlier confidential relationship with IATA; (iii) is independently developed by RECIPIENT without use of or reference to any of IATA’s Confidential Information; or (iv) is acquired by RECIPIENT from any third party having a right to disclose it to RECIPIENT.  RECIPIENT may disclose Confidential Information to the extent required by a court of competent jurisdiction or other governmental authority or otherwise as required by law, provided that RECIPIENT will, to the extent permitted pursuant to such disclosure order or law, use commercially reasonable efforts to notify IATA in advance of such disclosure so as to permit IATA to request confidential treatment or a protective order prior to such disclosure.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        9.2 RECIPIENT shall keep confidential, and shall not disclose to any third party for any reason, any Confidential Information of IATA without the prior written consent of IATA at its sole discretion, except to its respective employees, agents and contractors on a need to know basis, but only to the extent necessary for purposes of this Agreement provided that such individuals are bound by same or substantially similar terms and conditions than those contained in this Section 9.  Furthermore, RECIPIENT may use or make copies of IATA’s Confidential Information only to the extent necessary for purposes of or permitted by this Agreement. 
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        9.3  RECIPIENT hereby grants IATA the right to use RECIPIENT Data for purposes of allowing IATA to provide the Site and/or perform the Electronic Service.
+    </p>
+
+    <p class="margin-3 indent-1_5">
+        9.4  The terms and conditions set forth in this Section 9 shall survive termination or expiry of this Agreement.
+    </p>
+
+    <p class="bold">
+        10. MONITORING
+    </p>
+
+    <p class="margin-3">
+        IATA may monitor individual use of and access to the Site to ensure compliance with this Agreement and the rules, policies, deadlines and instructions applicable thereto.  RECIPIENT expressly consents to such monitoring.  If such monitoring reveals possible criminal activity or unauthorized use, IATA may immediately suspend RECIPIENT’s access to and/or use of the Site and/or provide the evidence of such monitoring to law enforcement officials.  IATA reserves the right to maintain and, for any legitimate reason, review logs containing any inquiry details and other activities performed by RECIPIENT in connection with RECIPIENT’s access to or use of the Site. RECIPIENTs will be notified if any potential fraud or breach of security is identified.  
+    </p>
+
+    <p class="bold">
+        11. PUBLICATION AND NOTIFICATION
+    </p>
+
+    <p class="margin-3">
+        All notices and documents to be issued by IATA under this Agreement may be issued by IATA through the posting of an electronic bulletin on the Site, as applicable, or by email at the email address provided by RECIPIENT as part of its registration.
+    </p>
+
+    <p class="bold">
+        12. TERM AND TERMINATION
+    </p>
+
+    <p class="margin-3 indent-2_5">
+        12.1 This Agreement shall commence on the date of its acceptance by RECIPIENT as per the second paragraph of this Agreement and, subject to Sections 12.2 and 12.3, shall continue for an initial term of one (1) year, and thereafter shall automatically renew for successive periods of one (1) year each (the “<span class="bold">Term</span>”). 
+    </p>
+
+    <p class="margin-3 indent-2_5">
+        12.2 Either Party may terminate this Agreement at any time on notice, which notice shall be given in accordance with Section 16.
+    </p>
+
+    <p class="margin-3 indent-2_5">
+        12.3 IATA shall suspend RECIPIENT’s active access to the Site immediately upon the receipt or issuance of a termination notice.
+    </p>
+
+    <p class="bold">
+        13. ASSIGNMENT
+    </p>
+
+    <p class="margin-3">
+        Neither Party may assign its respective rights and/or obligations under this Agreement without the prior written consent of the other subject to the following exceptions: IATA may (effective on notice sent by IATA to RECIPIENT) assign its relevant respective rights and/or obligations under this Agreement in its discretion without the consent of RECIPIENT to (i) an affiliate of IATA, (ii) to any service provider servicing IATA or its affiliates, and/or (iii) to any third party, person or entity as part of or in relation to a merger, amalgamation or sale of all or a substantial part of its business, activities or assets related to the Solution, the Service, or any part thereof. 
+    </p>
+
+    <p class="bold">
+        14. NOTICE
+    </p>
+
+    <p class="margin-3">
+        Except as expressly stated otherwise herein any and all notices under this Agreement shall be as permitted pursuant to Section 11, the Site or in writing and sent either by first class post, by facsimile or e-mail, to the address of the other Party (which, in the case of IATA, is as set forth immediately below) and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.
+    </p>
+
+    <div class="align-left margin-6 no-page-break">
+        <div class="grey-box bold">
+            To User: {!newForm.Legal_Name_of_company__c}
+        </div>
+        <p class="margin-3 indent-3">
+            <span class="bold">Address:</span><br/>
+            {!newForm.Company_address__c}<br/>
+            {!newForm.Company_city__c}, {!newForm.Company_State__c}<br/>
+            {!newForm.Company_Country__r.Name}<br/>
+            {!newForm.Postal_code__c}
+        </p>
+        <p>
+            <span class="bold">Attn:</span> {!newForm.Billing_File_Emrgcy_Contact_F_Name__c} {!newForm.Billing_File_Emrgcy_Contact_L_Name__c}<br/>
+            <span class="bold">E-mail:</span> {!newForm.Billing_File_Emrgcy_Contact_Email__c}
+        </p>
+    </div>
+    <div class="align-left margin-6 no-page-break">
+        <div class="grey-box bold">
+            To IATA:
+        </div>
+        <br/>
+        <p class="bold">International Air Transport Association</p>
+        <p>
+            800 Place Victoria, P.O. Box 113<br/>
+            Montréal, Québec<br/>
+            Canada<br/>
+            H4Z 1M1<br/>
+            <span class="bold">Attn:</span> GDC Participation <br/>
+            www.iata.org/cs
+        </p>
+    </div>
+
+    <p class="bold">
+        15. GOVERNING LAW AND DISPUTE RESOLUTION
+    </p>
+
+    <p class="margin-3 indent-2_5">
+        15.1 <span class="bold">Laws</span>
+    </p>
+
+    <p class="margin-3">
+        This Agreement shall be governed by and construed in accordance with the laws of the State of New York, United States of America, without regards to any conflict of law provisions. To the extent applicable, the Parties expressly agree to exclude the application of the U.N. Convention on Contracts for the International Sale of Goods (1980) to this Agreement.  
+    </p>
+
+    <p class="margin-3 indent-2_5">
+        15.2 <span class="bold">Dispute Resolution</span>
+    </p>
+
+    <p class="margin-6 indent-2_5">
+        15.2.1 <span class="underline">Amicable Resolution</span>
+    </p>
+    <p class="margin-6">
+        The Parties shall attempt to amicably resolve any dispute, controversy or claim relating directly or indirectly to, or arising out of, or in connection with, this Agreement (the “<span class="bold">Dispute</span>”).  In the event the Parties have failed to resolve such Dispute within twenty (20) calendar days after receipt of a notice, then the Parties shall refer such Dispute for settlement to their respective officers who shall make every effort to reach an agreement on such Dispute.  In the event the Parties’ respective officers fail to resolve such Dispute within fifteen (15) calendar days, either Party may, without further notice, submit such Dispute to arbitration in accordance with Section 15.2.2.
+    </p>
+
+    <p class="margin-6 indent-2_5">
+        15.2.2 <span class="underline">Arbitration</span>
+    </p>
+    <p class="margin-6">
+        If the Parties fail to amicably settle a Dispute in accordance with Section 15.2.1 above, either Party may, without further notice, submit the Dispute to arbitration. The Parties agree that such Dispute shall be exclusively and finally settled by arbitration conducted in accordance with the Rules of Arbitration of the International Chamber of Commerce (the “<span class="bold">Rules</span>”) in effect on the date of notification of arbitration hereunder submitted in accordance with the Rules, or such other procedures as the parties may agree in writing.  The Parties agree to permit an ICC arbitration panel to grant preliminary or permanent relief available pursuant to the Rules and New York law.  The arbitration shall take place in Montreal (Quebec, Canada) and the language for the proceedings shall be English. The arbitral tribunal shall be composed of three (3) arbitrators appointed in accordance with the Rules.  The arbitration award shall be final and binding upon the Parties, the Parties renouncing to appeal against the arbitration award by any ordinary or extraordinary means. The arbitration award may be enforced by action before any court of competent jurisdiction.  The Parties shall treat as confidential the arbitration, the content of the proceedings, the terms of any order or award and any documentary or other evidence disclosed during the arbitration.  Unless the Rules otherwise require, service of any request for arbitration made pursuant to this Section 15.2.2 must be made in accordance with the Notice provisions in Section 14.
+    </p>
+
+    <p class="margin-6 indent-2_5">
+        15.2.3 <span class="underline">Arbitration – Joining Disputes</span>
+    </p>
+    <p class="margin-6">
+        If any dispute arising out of or relating to this Agreement (hereinafter referred to as a “<span class="bold">Related Dispute</span>”) raises issues which are substantially the same as or connected with issues raised in another dispute which has already been referred to arbitration by another user of the Site, the tribunal appointed or to be appointed in respect of any such Existing Dispute shall also be appointed as the tribunal in respect of any such Related Dispute, if:
+    </p>
+
+    <p class="margin-9 indent-1_5">
+        (a) the request for arbitration in the Related Dispute is submitted, in accordance with Section 15.2.1, prior to the terms of reference of the Existing Dispute being signed or approved in the Existing Dispute in accordance with Article 18(2) or 18(3) of the Rules effective on May 1, 2013; or
+    </p>
+    <p class="margin-9 indent-1_5">
+        (b) IATA requests that the disputes be heard together. 
+    </p>
+
+    <p class="margin-3">
+        Where, pursuant to the foregoing provisions, the same tribunal has been appointed in relation to two or more disputes (i.e. an Existing Dispute and a Related Dispute), the tribunal shall order that the whole or part of the matters at issue shall be heard together upon such terms or conditions as the tribunal thinks fit.  The appointment of arbitrators where there are multiple parties to the arbitration shall be in accordance with Article 10 of the Rules effective on May 1, 2013.
+    </p>
+
+    <p class="bold">
+        16. NATURE OF THIS AGREEMENT
+    </p>
+
+    <p class="margin-3">
+        This Agreement constitutes the entire agreement between the Parties regarding the subject matter contained herein, and supersedes any and all prior and contemporaneous understandings, agreements, representations and warranties, both written and oral, with respect to such subject matter.  Except as otherwise expressly set forth herein, this Agreement shall be solely for the benefit of, and shall be enforceable only by the Parties and their respective successors and permitted assigns, and no other person or entity is or shall be entitled to bring any action to enforce any provision of this Agreement against either Party. Neither the failure nor the delay of a Party to enforce any provision of this Agreement shall constitute a waiver of such provision or of either Party to enforce each and every provision.  The electronically executed copy of this Agreement shall be deemed to have the same legal effect as delivery of an original executed copy.  
+    </p>
+
+    <p class="bold">
+        17.  SEVERABILITY
+    </p>
+
+    <p class="margin-3">
+        The invalidity, illegality or unenforceability of the whole or part of any clause or term or condition does not affect or impair the continuation in full force and effect of the remainder of this Agreement.
+    </p>
+
+    <p class="bold">
+        18. SURVIVAL
+    </p>
+
+    <p class="margin-3">
+        Notwithstanding any termination of this Agreement, either Party’s rights and obligations under Sections 4 (“Taxes”), 5 (“Warranties and Liabilities”), 6 ("Indemnification"), 7, 8 ("Intellectual Property Rights"), 9 ("Confidentiality"), 12.4, 13 (“Assignment”), 14 (“Notice”), 15 ("Governing Law and Dispute Resolution"), 18 (“Survival”) and any other Sections or clauses which by their nature should survive termination of this Agreement, shall survive any such termination.
+    </p>
+    
+    <center>********</center>
+
+</div>
+
+</apex:component>

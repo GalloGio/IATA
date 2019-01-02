@@ -99,6 +99,11 @@
                     <default>false</default>
                     <label>China &amp; North Asia</label>
                 </value>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
