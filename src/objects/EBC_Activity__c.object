@@ -200,6 +200,30 @@
         <label>SENDS</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>X00_Credit_Activities_10_000</fullName>
+        <columns>NAME</columns>
+        <columns>Related_Billing_Account__c</columns>
+        <columns>Activity_Date_Time__c</columns>
+        <columns>Activity_Type__c</columns>
+        <columns>EBC_Campaign__c</columns>
+        <columns>Total_Count__c</columns>
+        <columns>Reason__c</columns>
+        <columns>New_Balance__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Total_Count__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>10000</value>
+        </filters>
+        <filters>
+            <field>Activity_Type__c</field>
+            <operation>notEqual</operation>
+            <value>Send</value>
+        </filters>
+        <label>00-Credit Activities &gt; 10,000</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>EBC Activity Name</label>
         <type>Text</type>

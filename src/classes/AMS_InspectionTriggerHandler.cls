@@ -10,6 +10,7 @@ public with sharing class AMS_InspectionTriggerHandler {
 
 		processAgency(cleanListWithoutAgencyId(oldValues),cleanListWithoutAgencyId(newValues));
 		enforce1To1RelationshipAppointmentMSO();
+		AMS_InspectionHelper.createTerritoryForAppointments(newValues); //AMSU-188
 	
 	}
 

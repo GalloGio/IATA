@@ -233,22 +233,25 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
     public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
     public static final String RECTYPE_BANK_ACCOUNT_SETUP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
-    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL A ONBOARDING');
-    public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','NG MODEL B SCREENING');
-
-    public static final String RECTYPE_GDI    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
+    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_A_ONBOARDING');
+    public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_B_SCREENING');
+    public static final String RECTYPE_GDI          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
     public static final String RECTYPE_SIDRA        = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
     public static final String RECTYPE_IFAP         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+
     public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
     
     public static final String RECTYPE_IATAEASYPAY  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c', 'IATA_EasyPay_Opt_in_Out');
+
     public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c','IEP_Model_A');
 
-    public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+    public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+
+    public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
@@ -2755,7 +2758,15 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     }
 
     //20-06-2017 - Change AMSU-93 - special chars replacement
+    // AMSU-195 - new method signature below 
     public static String cleanSpecialChars(String s){
+        return cleanSpecialChars(s, true);
+    }
+
+
+    //20-06-2017 - Change AMSU-93 - special chars replacement
+    //AMSU-195 - in order to not remove chars that don't exist on the SPECIAL CHAR list
+    public static String cleanSpecialChars(String s, Boolean replaceWithSpace){
 
         String sRes = '';
 
@@ -2771,44 +2782,36 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
                 Map<String, String> mSpecialChars = JsonSpecialChars;
 
-                //String regex = '[^a-zA-Z0-9]';
-                //String regex = '[a-zA-Z\\d\\!@#\\$%&,;\'"\\(\\-º\\){}?:+ª\\*]';
-                //String regex = '[^a-zA-Z\\d\\!@#\\$%&;\'"\\-{}()\\[\\]?:_. ,+\\*\\\\/]';
                 String regex = AMS_SAP_Settings__c.getOrgDefaults().RegEx_Special_Chars__c;
 
                 String specialCharsToEscape = AMS_SAP_Settings__c.getOrgDefaults().Special_Chars_to_Escape_List__c;
-
-                //System.debug('specialCharsToEscape: ' + specialCharsToEscape);
 
                 sRes = s;
 
                 Matcher m = Pattern.compile(regex).matcher(s);
 
-                //System.debug('m: ' + m);
-                //System.debug('m.groupCount(): ' + m.groupCount() );
-
-                //Pattern p = Pattern.compile('regex');
-                //Matcher mo = p.matcher('string');
                 while (m.find()) {
 
-                    //System.debug('m.group: ' + m.group());
                     if(mSpecialChars.containsKey( m.group() )) {
-                        //System.debug('replace by value: ' + m.group() + ' by ' + mSpecialChars.get(m.group()) );
-                        //System.debug('contains by value: ' + m.group() + ' by ' + specialCharsToEscape.contains(m.group()) );
-                        //if(m.group() == '|'){
                         if(specialCharsToEscape.contains(m.group())){
                             sRes = sRes.replaceAll('\\'+m.group(), mSpecialChars.get(m.group()));
                         }else{
                             sRes = sRes.replaceAll(m.group(), mSpecialChars.get(m.group()));
                         }
                     }else{
-                        //System.debug('replace by space: ' + m.group() + ' by ' + mSpecialChars.get('SPACE') );
-                        //sRes = sRes.replaceAll(m.group(), '_');
-                        sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
-                        //System.debug('sRes1: ' + sRes);
+                        if(replaceWithSpace) sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
                     }
 
+				}
+
+                //Check for TAB (\t)
+                if(s.contains('\t')) {
+                    sRes = sRes.replaceAll('\t', mSpecialChars.get('SPACE'));
                 }
+
+                //remove inner double spaces
+                sRes = sRes.replaceAll('\\s+',' '); 
+                
             }
             System.debug('sRes: ' + sRes);
 
@@ -2817,7 +2820,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
             sRes = s;
         }
 
-        return sRes;
+        return sRes.trim();
 
     }
 
@@ -3113,4 +3116,32 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
     /*** AMSU-173 ***/
     public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
+    
+	/*** AMSU-195 Start ***/
+    /**
+    *   Method that validates if the record fields contain only latin characters
+    **/
+    public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate) {
+        List<String> res = new List<String>();
+        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
+
+        for(Schema.FieldSetMember field : fieldsToCheck) {
+            String fieldAPIName = field.getFieldPath();
+            String fieldLabel = field.getLabel();
+            Object value = record.get(fieldAPIName);
+            Object newvalue;
+            if( value == null || !(value instanceof String)) {
+                continue; //Skip non String fields
+            }
+            newvalue = AMS_Utils.cleanSpecialChars((String) value, false);
+            record.put(fieldAPIName, newvalue);
+
+            if(value != newvalue){
+                res.add(fieldLabel + ': Old = ' + value + ' : New = ' + newvalue);
+            }
+        }
+        return res;
+    }
+    /*** AMSU-195 End ***/
 }

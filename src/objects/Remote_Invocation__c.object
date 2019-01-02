@@ -92,6 +92,11 @@
                     <label>NewGen - Easy Pay Model A</label>
                 </value>
                 <value>
+                    <fullName>GDI</fullName>
+                    <default>false</default>
+                    <label>GDI</label>
+                </value>
+                <value>
                     <fullName>TIP_IFG_REPORT</fullName>
                     <default>false</default>
                     <label>TIP - IFG Report</label>

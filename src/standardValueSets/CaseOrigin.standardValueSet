@@ -1227,6 +1227,11 @@
         <label>Portal</label>
     </standardValue>
     <standardValue>
+        <fullName>Risk Monitoring Engine</fullName>
+        <default>false</default>
+        <label>Risk Monitoring Engine</label>
+    </standardValue>
+    <standardValue>
         <fullName>Voicemail</fullName>
         <default>false</default>
         <label>Voicemail</label>
@@ -1245,10 +1250,5 @@
         <fullName>Web SAF</fullName>
         <default>false</default>
         <label>Web SAF</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Risk Monitoring Engine</fullName>
-        <default>false</default>
-        <label>Risk Monitoring Engine</label>
     </standardValue>
 </StandardValueSet>
