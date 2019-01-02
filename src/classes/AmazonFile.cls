@@ -27,7 +27,14 @@ public class AmazonFile {
     public String getInternalComments() {
         return amazonFile==null? '': this.amazonFile.Internal_Comments__c;
     }
-    
+
+    //used to set the Name in AmazonFile Recods used in ICE Service WMO-358
+    public static String ICE_proofOfPayment{
+        get{
+            return 'ICE POP';
+        }
+    }
+
     public String getFullName() {
         return this.s3File.getFullName();
     }
@@ -249,6 +256,16 @@ public class AmazonFile {
         Returns a map of all AmazonFile__c related to an object with Full_Name_Unique__c as key
     **/
     private static map<String,AmazonFile__c> getMapAmazonFiles(Id sobjectId) {
+        //the sObjectId received in input is 15 digits
+        //However, the sObject_Id__c field value might be 15 or 18.. when is 18, records are not found
+        //this trick queries for both 15 and 18 digits value
+        set<string> setIds = new set<string>();
+        if(sobjectId!=null){
+            string sIdString = sobjectId;
+            setIds.add(sIdString);
+            setIds.add(sIdString.left(15));
+        }
+        
         list<AmazonFile__c> listFiles = new list<AmazonFile__c>();
         // for cases
         if (String.ValueOf(sobjectId.getSObjectType()) == 'Case' && !EF_AttachmentListController.runningForEF) {
@@ -262,14 +279,14 @@ public class AmazonFile {
             ];
         }
         
-        if (EF_AttachmentListController.runningForEF) {
+        if (EF_AttachmentListController.runningForEF || String.ValueOf(sobjectId.getSObjectType()) != 'Case') {
             listFiles = [
                 Select Id, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
                 File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c, 
                 Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
                 Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c
                 From AmazonFile__c
-                Where sObject_Id__c = :sobjectId
+                Where sObject_Id__c in :setIds
             ];
         }
         
@@ -278,5 +295,26 @@ public class AmazonFile {
             mapFiles.put(file.Full_Name_Unique__c, file);
         }
         return mapFiles;
+    }
+
+    /**
+	Returns a list of all AmazonFile__c related to an Account Object and a specific Name
+	WMO-358
+    **/
+    public static List<AmazonFile__c> getAccountRelatedAmazonFiles(Id sobjectId, String amazonFileName)
+    {
+        List<AmazonFile__c> accountlistFiles = new List<AmazonFile__c>();
+
+        accountlistFiles=[Select Id, Name, Full_Name_Unique__c, Account__c, CreatedDate,
+                          CreatedById, CreatedBy.Name, Case__c, isPublic__c, Description__c, File_Identifier__c,
+                          File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, RecordType.DeveloperName, Internal_Comments__c,
+                          Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c,
+                          Additional_Information__c, EF_Private__c, AMS_Updated_By__c, AMS_Updated_Date__c
+                          From AmazonFile__c
+                          Where Account__c = :sobjectId
+                          And Name =: amazonFileName];
+
+        return accountlistFiles;
+
     }
 }

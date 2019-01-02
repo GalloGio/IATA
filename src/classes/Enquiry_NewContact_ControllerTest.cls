@@ -56,7 +56,7 @@ public class Enquiry_NewContact_ControllerTest {
 		controller.con.LastName = 'mondo';
 		controller.con.Title = 'predisnde';
 		controller.con.FirstName = 'asdasd';
-		controller.con.Membership_Function__c = 'asdasdasd';
+		controller.con.Membership_Function__c = 'Aeropolitical';
 
 		controller.con.ISO_Country__c = isoCountries[0].id;
 
@@ -94,7 +94,7 @@ public class Enquiry_NewContact_ControllerTest {
 		controller.con.LastName = 'mondo';
 		controller.con.Title = 'predisnde';
 		controller.con.FirstName = 'asdasd';
-		controller.con.Membership_Function__c = 'asdasdasd';
+		controller.con.Membership_Function__c = 'Aeropolitical';
 
 		controller.con.ISO_Country__c = isoCountries[0].id;
 
@@ -134,7 +134,7 @@ public class Enquiry_NewContact_ControllerTest {
 		controller.con.Salutation = 'ciao';
 		controller.con.Title = 'predisnde';
 		controller.con.FirstName = 'asdasd';
-		controller.con.Membership_Function__c = 'asdasdasd';
+		controller.con.Membership_Function__c = 'Aeropolitical';
 		controller.CustomerType = 'General Public';
 		controller.con.ISO_Country__c = isoCountries[0].id;
 
@@ -161,7 +161,7 @@ public class Enquiry_NewContact_ControllerTest {
 		controller.con.LastName = 'mondo';
 		controller.con.Title = 'predisnde';
 		controller.con.FirstName = 'asdasd';
-		controller.con.Membership_Function__c = 'asdasdasd';
+		controller.con.Membership_Function__c = 'Aeropolitical';
 		controller.CustomerType = 'General Public';
 		controller.con.ISO_Country__c = isoCountries[0].id;
 
@@ -187,7 +187,7 @@ public class Enquiry_NewContact_ControllerTest {
 		controller.con.LastName = 'mondo';
 		controller.con.Title = 'predisnde';
 		controller.con.FirstName = 'asdasd';
-		controller.con.Membership_Function__c = 'asdasdasd';
+		controller.con.Membership_Function__c = 'Aeropolitical';
 		controller.CustomerType = 'Airline';
 		controller.con.ISO_Country__c = isoCountries[0].id;
 
@@ -223,7 +223,7 @@ public class Enquiry_NewContact_ControllerTest {
 		controller.con.LastName = 'mondo';
 		controller.con.Title = 'predisnde';
 		controller.con.FirstName = 'asdasd';
-		controller.con.Membership_Function__c = 'asdasdasd';
+		controller.con.Membership_Function__c = 'Aeropolitical';
 		controller.CustomerType = 'Airline';
 		controller.con.ISO_Country__c = isoCountries[0].id;
 

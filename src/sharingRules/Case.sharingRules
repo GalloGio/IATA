@@ -259,6 +259,34 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>KPI_values</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>KPI values</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>VPIDFS</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Internal Cases (IDFS ISS)</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CaseArea__c</field>
+            <operation>equals</operation>
+            <value>&quot;Salesforce, Web and KPIs&quot;</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Reason1__c</field>
+            <operation>equals</operation>
+            <value>Report/Dashboard</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Subject</field>
+            <operation>startsWith</operation>
+            <value>KPI Values Reporting</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>PwC_Case</fullName>
         <accessLevel>Edit</accessLevel>
         <label>PwC Case</label>

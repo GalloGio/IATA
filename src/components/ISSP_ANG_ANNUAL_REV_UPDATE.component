@@ -144,7 +144,7 @@
                 
                     <apex:pageBlockSectionItem >
                         <apex:outputlabel value="{!IF(ca.isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, ca.isocountry.Tax_Number_label__c)}" />
-                        <apex:outputField value="{!ca.fw.newForm.ISSP_AMS_VAT_number__c}" />
+                        <apex:outputField value="{!ca.account.VAT_Number__c}" />
                     </apex:pageBlockSectionItem>
 
                     <apex:pageBlockSectionItem labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">

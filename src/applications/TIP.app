@@ -12,4 +12,5 @@
     <tabs>TIP_BIN_Range__c</tabs>
     <tabs>TIP_Pay_Prov_Prod_Country_Config__c</tabs>
     <tabs>standard-Case</tabs>
+    <tabs>ISSP_External_Report__c</tabs>
 </CustomApplication>

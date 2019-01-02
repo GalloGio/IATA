@@ -207,6 +207,7 @@ private class SIDRARnSIntegrationWS_Test {
 
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -222,6 +223,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -237,6 +239,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -252,6 +255,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -267,6 +271,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -282,6 +287,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -302,6 +308,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -317,6 +324,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -332,6 +340,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -347,6 +356,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -361,6 +371,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -375,6 +386,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -389,6 +401,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -403,6 +416,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -417,6 +431,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -431,6 +446,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -445,6 +461,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -459,6 +476,7 @@ private class SIDRARnSIntegrationWS_Test {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -475,6 +493,7 @@ private class SIDRARnSIntegrationWS_Test {
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         acase.AccountId = accnt.id;
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -495,6 +514,7 @@ private class SIDRARnSIntegrationWS_Test {
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         acase.AccountId = accnt.id;
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -515,6 +535,7 @@ private class SIDRARnSIntegrationWS_Test {
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
         acase.AccountId = accnt.id;
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
 
         Case[] theCase = [SELECT CaseNumber FROM Case WHERE id =: aCase.id];
@@ -564,6 +585,7 @@ private class SIDRARnSIntegrationWS_Test {
                               ,Subject = 'Test Case Subject'
                               ,BSP_CASS__c = 'BSP'
                               ,Currency__c = 'USD'
+                              ,Late_Payment_Date__c = Date.today()
                               ,Remittance_Period__c='RemittancePeriod');
         insert aCase;
         string RetVal = SIDRARnSIntegrationWS.DeleteCasesByPeriod('','BSP','RemittancePeriod','USD','SIDRA');
@@ -578,6 +600,7 @@ private class SIDRARnSIntegrationWS_Test {
                               ,BSP_CASS__c = 'BSP'
                               ,Currency__c = 'USD'
                               ,Remittance_Period__c='RemittancePeriod'
+                              ,Late_Payment_Date__c = Date.today()
                               ,BSPCountry__c='Italy');
         insert aCase;
         string RetVal = SIDRARnSIntegrationWS.DeleteCasesByPeriod('Italy','BSP','RemittancePeriod','USD','SIDRA');
