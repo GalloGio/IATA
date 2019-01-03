@@ -550,7 +550,7 @@
                             <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label>
                             <div class="col-lg-9">
 
-                                <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%;float:left" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1">
+                                <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%;float:left" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, ''); if ({!isMultiCountryNewAE} == false) { toggleCountries(this.value); }" size="1">
                                     <apex:selectOptions value="{!OfficeTypes}" />
                                 </apex:selectList>
 
@@ -559,6 +559,8 @@
                                 </apex:outputPanel>
 
                                 <script>
+                                    if ({!isMultiCountryNewAE} == true) $('[id$=officetypelist]').prop('disabled', true);
+
                                     if(showProductComparisonLink) {
                                         $('[name$=ProductComparisonLink]').show();
                                     }
@@ -570,7 +572,7 @@
                         </div>
 
                         <!-- NEWGEN-1249-->
-                        <apex:outputpanel id="isSameLegal" rendered="{!AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent',isHOAccredited)}">
+                        <apex:outputpanel id="isSameLegal" rendered="{!AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent', OR(isHOAccredited, isMultiCountryNewAE))}">
                             <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
                                 <div class="form-group" id='isLegal'>
                                     <label for="isLegal" class="col-lg-3 control-label">{!$Label.ANG_AE_separate_Legal_Entity}</label>
@@ -694,7 +696,7 @@
                             <div class="form-group">
                                 <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
 
-                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px; display:{!IF(isMultiCountryNewAE, '', 'none')};">
+                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
                                     </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
@@ -948,7 +950,7 @@
                 <apex:form id="PAXForm">
                 <apex:pageMessages />
                 <apex:pageBlock >
-                <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false" rendered="{!AND(BEGINS(sectorValue, 'Travel_Agent'), NOT(isocountry.Multicountry_Enabled__c))}">
+                <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false" rendered="{!AND(BEGINS(sectorValue, 'Travel_Agent'), NOT(isMultiCountry))}">
                     <div class="aplabel">
                         <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>

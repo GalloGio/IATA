@@ -10554,6 +10554,14 @@ IFG Customer Services</value>
         <value>New Associate Entity - GoLite</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Associate_Entity_Multicountry</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
+        <value>New Associate Entity - GoGlobal</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
         <language>en_US</language>
         <protected>false</protected>
