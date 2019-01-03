@@ -33,7 +33,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 
 	@TestVisible private final AMS_OSCAR__c oscarObj;
 
-    @TestVisible private final Case oscarCase {get{
+    public final Case oscarCase {get{
         
         if(this.oscarCase == null && oscarObj != null)
            return [Select Id, Origin, ParentId from Case where Id = :oscarObj.Oscar_Communication_Case_Id__c].get(0);
@@ -180,9 +180,14 @@ public without sharing class ANG_DGIStagingAreaCtrl {
     }
 
     public void createStagingAreaDefault(){
+
+            if(!addCertificate)
+                return;
         
             opp = [Select Id, currencyIsoCode, Account.Region_formula__c from Opportunity where Related_Oscar__c = :oscarObj.Id];
             
+            Case oscarCase = [Select id, ParentId from Case where id = :oscarObj.Oscar_Communication_Case_Id__c];
+
             pricebook2 pb = [select id from pricebook2 where name = 'NewGen Generic'];
             PricebookEntry pbe = [select id,unitprice,product2id,product2.name from pricebookentry where pricebook2id = :pb.id limit 1];
 
@@ -193,7 +198,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
             stagingFs.OSCAR_GDI__c = oscarObj.Id;
             stagingFs.Security_Type__c = 'GDI';
             stagingFs.Security_Status__c = 'Draft';
-            stagingFs.Reception_Case__c = oscarObj.Oscar_Communication_Case_Id__c;
+            stagingFs.Reception_Case__c = oscarCase.ParentId;
             if(currentFS != null)
                 stagingFs.Financial_Security__c = currentFS.Id; 
             stagingFs.Quantity = 1;
