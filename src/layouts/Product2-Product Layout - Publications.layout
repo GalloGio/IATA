@@ -422,10 +422,6 @@
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Readonly</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
