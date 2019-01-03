@@ -1,9 +1,12 @@
 @isTest
 private class ISSP_AMS_Accreditation_Test {
     @testSetup static void customSettingSetup() {
-        insert new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL', Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)([.])(([a-zA-Z]{3})|([a-zA-Z]{2}))');
-        insert new ISSP_CS__c(Name = 'No Notification Email Contact Id', Value__c = null);
-        insert new ISSP_CS__c(Name = 'ISSP Portal Login URL', Value__c = 'anything');
+        List<ISSP_CS__c> csSettings = new List<ISSP_CS__c>();
+        csSettings.add(new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL', Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)([.])(([a-zA-Z]{3})|([a-zA-Z]{2}))'));
+        csSettings.add(new ISSP_CS__c(Name = 'No Notification Email Contact Id', Value__c = null));
+        csSettings.add(new ISSP_CS__c(Name = 'ISSP Portal Login URL', Value__c = 'anything'));
+
+        insert csSettings;
 
         insert new Amazon_Cred__c(Name = 'ACLI', Prod_Configuration__c = 'aprodconf', Dev_Configuration__c = 'adevconf');
 
@@ -18,15 +21,15 @@ private class ISSP_AMS_Accreditation_Test {
         creds.add(genericAttach);
         creds.add(recycleBin);
         insert creds;
-
+        
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'testOptOut', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
                                     IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
                                     IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tp',
                                     IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test', Region__c = 'Europe',
                                     Informatica_Value__c = 'test');
-        insert country;
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'testOptOut2', ISO_Code__c = 'tl', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
-        insert country2;
+
+        insert new List<IATA_ISO_Country__c>{country, country2};
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_1() {

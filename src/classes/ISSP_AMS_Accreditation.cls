@@ -264,6 +264,31 @@ public without sharing class ISSP_AMS_Accreditation {
     public Boolean isMultiCountryStarted {get; private set;}
     public Boolean isMultiCountryNewAE {get; private set;}
 
+    public List<Case> multiCountryApplicationCases {
+        get {
+            return (ssConMCCases != null) ? (List<Case>) ssConMCCases.getRecords() : fetchMultiCountryApplicationCases();
+        } 
+        private set;
+    }
+
+    public ApexPages.StandardSetController ssConMCCases {
+        get {
+            if (ssConMCCases == null) fetchMultiCountryApplicationCases();
+            return ssConMCCases;
+        }
+        private set;
+    }
+
+    public Boolean mcApplicationCasesFound {
+        get {
+            if (mcApplicationCasesFound == null) mcApplicationCasesFound = false;
+            return mcApplicationCasesFound;
+        }
+        private set;
+    }
+
+    public String mcCaseIdToDelete {get; set;}
+
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
         isNewCase = true;
@@ -363,6 +388,8 @@ public without sharing class ISSP_AMS_Accreditation {
             isHOcontact = false;
         }
 
+        if (isMultiCountryStarted) fetchMultiCountryApplicationCases();
+
         if(hqAccount.Status__c == 'Terminated')
             isTerminatedAgent = true;
 
@@ -443,6 +470,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         if (ApexPages.currentPage().getParameters().containsKey('isMultiCountryNewAE'))
             isMultiCountryNewAE = Boolean.valueOf(ApexPages.currentPage().getParameters().get('isMultiCountryNewAE'));
+
+        if (isMultiCountryNewAE) amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
 
         if (isNoticeOfChange)
             Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Change_Summary.pdf');
@@ -1213,13 +1242,15 @@ public without sharing class ISSP_AMS_Accreditation {
                         options.add(new SelectOption(AMS_Utils.TYPE_PAX_AE_CASH, Label.ISSP_AMS_Associate_Entity_Cash));
                     }else if(con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS){
                         options.add(new SelectOption(AMS_Utils.TYPE_PAX_AE_NO_CASH, Label.ISSP_AMS_Associate_Entity_Cashless));
-                    } //NEWGEN - 552 END
+                    }  
+                    //NEWGEN - 552 END
                 }
             }else {
                 if(isocountry.ANG_Enable_NewGen__c == true){
                     options.add(new SelectOption(AMS_Utils.TYPE_HE_ST_CASH, Label.ISSP_AMS_Head_Entity_Cash));  //can only apply for New Accreditaiton Models enable
                     options.add(new SelectOption(AMS_Utils.TYPE_HE_LITE_NO_CASH, Label.ISSP_AMS_Head_Entity_No_Cash));  //can only apply for New Accreditaiton Models enable
                     if (isocountry.Multicountry_Enabled__c) options.add(new SelectOption(AMS_Utils.TYPE_HE_MULTICOUNTRY, Label.ISSP_AMS_Head_Entity_Multicountry));
+                    if (isMultiCountryNewAE) options.add(new SelectOption(AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY, Label.ISSP_AMS_Associate_Entity_Multicountry));
                 }else{    //Not an Accredited PAX Agent, or any type of Cargo Agent
                      options.add(new SelectOption(AMS_Utils.TYPE_PAX_HO, Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
                 }
@@ -3539,10 +3570,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithCash;
         } else if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
             return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithNoCash;
-        } else {
+        } else if (accreditationModel == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
+            return ' - ' + Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry;
+        }else {
             return '';
         }
-
     }
 
     private string getAgentTypeLabel(string agentType) {
@@ -3577,10 +3609,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return Label.ISSP_AMS_OPTION_PAX_HO;
         } else if (amsLocationType == AMS_Utils.TYPE_PAX_BRANCH_ABROAD_PSA) {
             return Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD;
-        } else if (amsLocationType == AMS_Utils.TYPE_PAX_AE_CASH || amsLocationType == AMS_Utils.TYPE_PAX_AE_NO_CASH){ //NEWGEN - 552
+        } else if (amsLocationType == AMS_Utils.TYPE_PAX_AE_CASH || amsLocationType == AMS_Utils.TYPE_PAX_AE_NO_CASH || amsLocationType == AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY){ //NEWGEN - 552
             return Label.ISSP_ANG_OPTION_PAX_AE;
         }
-        else if (amsLocationType == AMS_Utils.TYPE_HE_ST_CASH){
+        else if (amsLocationType == AMS_Utils.TYPE_HE_ST_CASH || amsLocationType == AMS_Utils.TYPE_HE_MULTICOUNTRY){
             return Label.ISSP_ANG_OPTION_PAX_HE_standard;
         }
          else if (amsLocationType == AMS_Utils.TYPE_HE_LITE_NO_CASH){
@@ -3728,6 +3760,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     }
 
     public void fetchHQAccountDetails () {
+        Set<string> closedStatusesList = createListOfClosedStatuses();
         hqAccount = [SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
                         TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
                         Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
@@ -3735,10 +3768,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
-                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, (SELECT Id FROM Cases WHERE AccountId = :vHQAccountId AND Reason1__c LIKE '%multicountry%')
+                        IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, 
+                        (SELECT Id, Status FROM Cases WHERE AccountId = :vHQAccountId AND Reason1__c LIKE '%multicountry%')
                     FROM Account
                     WHERE Id = :vHQAccountId
                     LIMIT 1];
+                    //AND Status NOT IN :closedStatusesList
 
         if (!hqAccount.Cases.isEmpty()) isMultiCountryStarted = true;
     }
@@ -7141,14 +7176,18 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         //Get owners related to the account
 
         Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+
+        List<String> rtDeveloperNamesAccredContact = new List<String>{'Person', 'Company', 'Previous_Owner', 'Current_Owner', 'Previous_Company_Owner', 'Current_Company_Owner'};
+
+        Map<String, Id> rtIdsPerDevNameAccredContact = RecordTypeSingleton.getInstance().getRecordTypeObjIdMapForSpecfifiedNames('AMS_Accreditation_Contact__c', rtDeveloperNamesAccredContact);
         //BR
-        Id rtAccreditContPersonOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
-        Id rtAccreditContCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
+        //Id rtAccreditContPersonOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
+        //Id rtAccreditContCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
         //NoC
-        Id rtAccreditContPreviousOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Owner');
-        Id rtAccreditContCurrentOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
-        Id rtAccreditContPreviousCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
-        Id rtAccreditContCurrentCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
+        //Id rtAccreditContPreviousOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Owner');
+        //Id rtAccreditContCurrentOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
+        //Id rtAccreditContPreviousCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
+        //Id rtAccreditContCurrentCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
 
         List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id, ANG_contactFromAccount__c, RecordTypeId FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
         //NEWGEN-205
@@ -7157,7 +7196,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         if (isScopeOfChangeChanged && countAccreditationContact.size() != 0) {
             List<AMS_Accreditation_Contact__c> prevAndCurrOwnersList = new List<AMS_Accreditation_Contact__c>();
             for (AMS_Accreditation_Contact__c lCont: countAccreditationContact) {
-                if (lCont.RecordTypeId == rtAccreditContPreviousOwner || lCont.RecordTypeId == rtAccreditContCurrentOwner) {
+                if (lCont.RecordTypeId == rtIdsPerDevNameAccredContact.get('Previous_Owner') || lCont.RecordTypeId == rtIdsPerDevNameAccredContact.get('Current_Owner')) {
                     prevAndCurrOwnersList.add(lCont);
                 }
             }
@@ -7193,13 +7232,13 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
                 if(type.equalsIgnoreCase('NoC')){
 
-                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner ) );
-                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContCurrentOwner, rtAccreditContCurrentCompanyOwner ) );
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtIdsPerDevNameAccredContact.get('Previous_Owner'), rtIdsPerDevNameAccredContact.get('Previous_Company_Owner')));
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtIdsPerDevNameAccredContact.get('Current_Owner'), rtIdsPerDevNameAccredContact.get('Current_Company_Owner')));
                 }
 
                 if(type.equalsIgnoreCase('Branch')){
 
-                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtAccreditContPersonOwner, rtAccreditContCompanyOwner ) );
+                    lstAccreditationContact.add( ISSP_AMS_Accreditation.setAccreditationContact(accRole, newForm.Id, rtIdsPerDevNameAccredContact.get('Person'), rtIdsPerDevNameAccredContact.get('Company')));
 
                 }
 
@@ -7321,8 +7360,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             } catch (Exception e) {
                 system.debug('Add notification ERROR: ' + e.getmessage());
             }
-        } else {
-            system.debug('Add notification ERROR: no portal admins found on HO account');
         }
     }
     
@@ -7369,5 +7406,25 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, AMS_Utils.NGOPTINOUT, newCase.Id);
 
         return null;
+    }
+
+    private List<Case> fetchMultiCountryApplicationCases() {
+        List<Case> multiCountryApplicationCases = [SELECT Id, CaseNumber, Portal_Case_Status__c, Subject, Reason1__c
+                                                   FROM Case
+                                                   WHERE AccountId = :vHQAccountId AND Reason1__c LIKE '%multicountry%'];
+
+        if (!multiCountryApplicationCases.isEmpty()) {
+            mcApplicationCasesFound = true;
+            ssConMCCases = new ApexPages.StandardSetController(multiCountryApplicationCases);
+        }
+
+        return multiCountryApplicationCases;
+    }
+
+    public void deleteMCCase() {
+        List<Case> caseToDelete = [SELECT Id FROM Case WHERE Id = :mcCaseIdToDelete LIMIT 1];
+        if (caseToDelete != null) delete caseToDelete;
+
+        fetchMultiCountryApplicationCases();
     }
 }

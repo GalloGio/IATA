@@ -135,6 +135,22 @@ public class RecordTypeSingleton {
 
 	}
 
+	/**
+	 * Method that returns a map of record types Ids for a specified object and a list of developer names
+	 * @param  objectName  the name of the object
+	 * @param  devNameList List of the name of the record type (DeveloperName)
+	 * @return             Map of record type Ids for the passed object per developer name of record type 
+	 */
+	public Map<String, Id> getRecordTypeObjIdMapForSpecfifiedNames(String objectName, List<String> devNameList) {
+		Map<String, Id> returnRecTypeObjIdMap = new Map<String, Id>();
+
+		if(!recordTypesByName.containsKey(objectName)) return new Map<String, Id>();
+
+		for (String devName: devNameList)
+			returnRecTypeObjIdMap.put(devName, getRecordTypeId(objectName, devName));
+
+		return returnRecTypeObjIdMap;
+	}
 
 	/**
 	 * Method that returns a list of record types Ids for a specified object and that are not on the list of developer names
