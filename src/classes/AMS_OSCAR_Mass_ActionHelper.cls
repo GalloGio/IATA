@@ -8,7 +8,7 @@ public class AMS_OSCAR_Mass_ActionHelper {
 		update oscar;
 	}
 
-	public static void create_VR(Account acc) {
+	public static void create_VR(Account acc, Map<String,Object> params) {
 		/*** Create OSCAR ***/
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
 		oscar.Account__c = acc.Id;
@@ -42,6 +42,8 @@ public class AMS_OSCAR_Mass_ActionHelper {
 		oscar.Name = cse.CaseNumber;
 		oscar.Change_Effective_as_of__c = Date.today();
 		oscar.OwnerId = AMS_Utils.getRegionalQueue(cse);
+		oscar.Form_Effective_Date__c = Date.valueOf(((String) params.get('Form_Effective_Date__c')));
+		oscar.Financial_Security_expiry_date__c = Date.valueOf(((String) params.get('Financial_Security_expiry_date__c')));
 		update oscar;		
 	}
 
