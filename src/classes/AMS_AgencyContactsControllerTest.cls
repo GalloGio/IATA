@@ -5,7 +5,7 @@ private class AMS_AgencyContactsControllerTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
-        Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
+        Id accountRoleRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
 
         Account acc1 = new Account(Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         insert acc1;
@@ -24,10 +24,10 @@ private class AMS_AgencyContactsControllerTest {
         AMS_Person__c p4 = new AMS_Person__c(Name='test4');
         insert new List<AMS_Person__c>{p1, p2, p3, p4};
 
-        AMS_Account_Role__c e1 = new AMS_Account_Role__c(recordTypeId = accountRoleRT.get('Employee'), Account__c = acc1.id, Person__c = p1.id, Contact__c = c1.id);
-        AMS_Account_Role__c e2 = new AMS_Account_Role__c(recordTypeId = accountRoleRT.get('Employee'), Account__c = acc1.id, Person__c = p2.id, Contact__c = c2.id);
-        AMS_Account_Role__c e3 = new AMS_Account_Role__c(recordTypeId = accountRoleRT.get('Employee'), Account__c = acc1.id, Person__c = p3.id, Contact__c = c3.id);
-        AMS_Account_Role__c e4 = new AMS_Account_Role__c(recordTypeId = accountRoleRT.get('Employee'), Account__c = acc1.id, Person__c = p4.id);
+        AMS_Account_Role__c e1 = new AMS_Account_Role__c(recordTypeId = accountRoleRTId, Account__c = acc1.id, Person__c = p1.id, Contact__c = c1.id);
+        AMS_Account_Role__c e2 = new AMS_Account_Role__c(recordTypeId = accountRoleRTId, Account__c = acc1.id, Person__c = p2.id, Contact__c = c2.id);
+        AMS_Account_Role__c e3 = new AMS_Account_Role__c(recordTypeId = accountRoleRTId, Account__c = acc1.id, Person__c = p3.id, Contact__c = c3.id);
+        AMS_Account_Role__c e4 = new AMS_Account_Role__c(recordTypeId = accountRoleRTId, Account__c = acc1.id, Person__c = p4.id);
         insert new List<AMS_Account_Role__c>{e1, e2, e3, e4};
     }
 

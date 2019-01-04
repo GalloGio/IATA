@@ -120,9 +120,9 @@ public with sharing class NewParticipantByEmailCtrl {
 
     // NOTE: the contact MUST include the fields c.Account.Parent, c.Account.RecordTypeId and c.Account.Top_Parent__c!!!
     public static Id calculateMainAccount(Contact c){
-    	Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
-        Id rtBr =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId();
-        Id rtAg =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+    	Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id rtBr =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+        Id rtAg =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
  		if(c.Account.RecordTypeId==rtHQ)
  			return c.AccountId;
@@ -140,19 +140,18 @@ public with sharing class NewParticipantByEmailCtrl {
     {
 
         String idGroup = ApexPages.currentPage().getParameters().get('paramTestGroup');
+        
         if(idGroup == null)
         {
             idGroup = p.Local_Governance__c;
         }
-        lg = [SELECT Name, Local_governance_type__c, RecordTypeId FROM LocalGovernance__c WHERE Id = :idGroup];
-        RecordType rtGroup = [SELECT Name FROM RecordType WHERE Id = :lg.RecordTypeId];
-        RecordType rtParticipantLocal = [SELECT Id FROM RecordType WHERE Name = 'Local Group Participants'];
-        RecordType rtParticipantRegDiv = [SELECT Id FROM RecordType WHERE Name = 'Reg/Div Group Participants'];
-        if(rtGroup.Name == 'Local Groups')
-        {
-            p.RecordTypeId = rtParticipantLocal.Id;
+        
+        lg = [SELECT Name, Local_governance_type__c, RecordTypeId, RecordType.Name FROM LocalGovernance__c WHERE Id = :idGroup];
+        
+        if(lg.RecordType.Name == 'Local Groups'){
+            p.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Participant__c', 'Local_Group_Participants');
         } else {
-            p.RecordTypeId = rtParticipantRegDiv.Id;
+            p.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Participant__c', 'Reg_Div_Group_Participants');
         }
 
     }

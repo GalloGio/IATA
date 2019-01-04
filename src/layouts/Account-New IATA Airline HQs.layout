@@ -5,9 +5,6 @@
     <customButtons>Chatter_Broadcast_Tool</customButtons>
     <customButtons>Key_Account_Plan</customButtons>
     <customButtons>Web_App_View</customButtons>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -762,6 +759,14 @@
                 <behavior>Edit</behavior>
                 <field>Level_of_risk__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Clearance_level__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Date_of_last_clearance__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -959,7 +964,6 @@
         <relatedList>RelatedOrderList</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>Load_Member_Contacts</customButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
         <fields>Airline_Contact_Type__c</fields>
@@ -1114,6 +1118,26 @@
         <fields>RECORDTYPE</fields>
         <fields>Status__c</fields>
         <relatedList>Account_Role__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <customButtons>Mass_Update_Contracts</customButtons>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>Product_Family__c</fields>
+        <fields>CONTRACT.START_DATE</fields>
+        <fields>CONTRACT.END_DATE</fields>
+        <fields>CONTRACT_TERM</fields>
+        <fields>Current_Cycle_Start_Date__c</fields>
+        <fields>Current_Cycle_End_Date__c</fields>
+        <fields>Contract_Renewal_Cycle_in_months__c</fields>
+        <fields>Status_formula__c</fields>
+        <relatedList>RelatedContractList</relatedList>
+        <sortField>CONTRACT.END_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Report_ID__c</fields>
+        <relatedList>ISSP_External_Report__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

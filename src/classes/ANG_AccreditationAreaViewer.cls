@@ -93,6 +93,8 @@ global with sharing class ANG_AccreditationAreaViewer {
                                                                 ,'ANG_Accreditation_type__c' => 'ANG_Accreditation_Model__c'
                                                                 ,'ISSP_AMS_GDS_with_signed_contract__c' => 'GDS__c'
                                                                 ,'ISSP_AMS_Legal_Status__c' => 'Company_Type__c'
+                                                                ,'Shipping_Country__c' => 'ShippingCountry'
+                                                                ,'Shipping_State__c' => 'ShippingState'
 
         };
             }
@@ -245,7 +247,9 @@ global with sharing class ANG_AccreditationAreaViewer {
                 , AMS_Pax_Accreditation_Form__c.Shipping_Street__c
                 , AMS_Pax_Accreditation_Form__c.Shipping_Postal_Code__c
                 , AMS_Pax_Accreditation_Form__c.Shipping_ISO_Country__c
+                , AMS_Pax_Accreditation_Form__c.Shipping_Country__c
                 , AMS_Pax_Accreditation_Form__c.Shipping_ISO_State__c
+                , AMS_Pax_Accreditation_Form__c.Shipping_State__c
                 , AMS_Pax_Accreditation_Form__c.Shipping_City__c
                 , AMS_Pax_Accreditation_Form__c.Branch_Office_Email__c
                 , AMS_Pax_Accreditation_Form__c.Website__c
@@ -260,7 +264,7 @@ global with sharing class ANG_AccreditationAreaViewer {
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
                 , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
                 , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
-                , AMS_Pax_Accreditation_Form__c.HO_Account__c 
+                , AMS_Pax_Accreditation_Form__c.HO_Account__c
             };
         }
     }

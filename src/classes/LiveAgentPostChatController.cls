@@ -111,7 +111,7 @@ public without sharing class LiveAgentPostChatController {
 						survey.Chat_Channel__c = channelAnswer;
 						survey.Chat_Comment__c = commentAnswer;
 						survey.Chat_Agent_Experience__c = agentExperienceAnswer;
-						survey.RecordTypeId  = Schema.SObjectType.Instant_Surveys__c.getRecordTypeInfosByName().get('Live Agent Chat').getRecordTypeId();
+						survey.RecordTypeId  = RecordTypeSingleton.getInstance().getRecordTypeId('Instant_Surveys__c', 'Live_Agent_Chat');
 						try{
 							insert survey;
 							isSuccess = true;

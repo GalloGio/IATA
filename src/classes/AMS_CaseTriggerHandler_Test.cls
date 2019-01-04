@@ -19,8 +19,8 @@ private class AMS_CaseTriggerHandler_Test {
 		Case supportRequest2;
 		Case supportRequest3;
 		List<Case> supportRequestList = new List<Case>();
-		RecordType agencyRecordType;
-		RecordType sidraRecordType;
+		Id agencyRecordTypeId;
+		Id sidraRecordTypeId;
 
 		Test.startTest();
 
@@ -41,8 +41,8 @@ private class AMS_CaseTriggerHandler_Test {
 
 		insert country;
 
-		agencyRecordType = [SELECT Id, Name, DeveloperName FROM RecordType WHERE sObjectType = 'Account' AND DeveloperName = 'IATA_Agency' LIMIT 1];
-		sidraRecordType = [SELECT Id, Name, DeveloperName FROM RecordType WHERE sObjectType = 'Case' AND DeveloperName = 'SIDRA' LIMIT 1];
+		agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		sidraRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 
 		parentAccount3 = ISSP_ObjectFactory.createNewAccount();
 
@@ -50,7 +50,7 @@ private class AMS_CaseTriggerHandler_Test {
 		parentAccount3.Name = 'Test';
 		parentAccount3.sector__c = 'Travel Agent';
 		parentAccount3.Location_Type__c = 'HO';
-		parentAccount3.RecordTypeId = agencyRecordType.Id;
+		parentAccount3.RecordTypeId = agencyRecordTypeId;
 		parentAccount3.Status__c = 'Approved';
 		parentAccount3.IATA_ISO_Country__c = country.Id;
 		parentAccount3.ParentId = null;
@@ -64,7 +64,7 @@ private class AMS_CaseTriggerHandler_Test {
 		parentAccount2.Name = 'Test';
 		parentAccount2.sector__c = 'Travel Agent';
 		parentAccount2.Location_Type__c = 'HO';
-		parentAccount2.RecordTypeId = agencyRecordType.Id;
+		parentAccount2.RecordTypeId = agencyRecordTypeId;
 		parentAccount2.Status__c = 'Approved';
 		parentAccount2.IATA_ISO_Country__c = country.Id;
 		parentAccount2.ParentId = parentAccount3.Id;
@@ -78,7 +78,7 @@ private class AMS_CaseTriggerHandler_Test {
 		parentAccount.Name = 'Test';
 		parentAccount.sector__c = 'Travel Agent';
 		parentAccount.Location_Type__c = 'HO';
-		parentAccount.RecordTypeId = agencyRecordType.Id;
+		parentAccount.RecordTypeId = agencyRecordTypeId;
 		parentAccount.Status__c = 'Approved';
 		parentAccount.IATA_ISO_Country__c = country.Id;
 		parentAccount.ParentId = parentAccount2.Id;
@@ -92,7 +92,7 @@ private class AMS_CaseTriggerHandler_Test {
 		childAccount.Name = 'Test';
 		childAccount.sector__c = 'Travel Agent';
 		childAccount.Location_Type__c = 'HO';
-		childAccount.RecordTypeId = agencyRecordType.Id;
+		childAccount.RecordTypeId = agencyRecordTypeId;
 		childAccount.IATACode__c = '100';
 		childAccount.Status__c = 'Approved';
 		childAccount.IATA_ISO_Country__c = country.Id;
@@ -113,8 +113,9 @@ private class AMS_CaseTriggerHandler_Test {
 		supportRequest.Reopened_case__c = 0.0;
 		supportRequest.Account_Concerned__c = childAccount.Id;
 		supportRequest.IFAP_Country_ISO__c = 'T2';
-		supportRequest.RecordTypeId = sidraRecordType.Id;
+		supportRequest.RecordTypeId = sidraRecordTypeId;
 		supportRequest.AccountId = childAccount.Id;
+		supportRequest.Late_Payment_Date__c = Date.today();
 
 		supportRequestList.add(supportRequest);
 
@@ -129,8 +130,9 @@ private class AMS_CaseTriggerHandler_Test {
 		supportRequest1.Reopened_case__c = 0.0;
 		supportRequest1.Account_Concerned__c = parentAccount.Id;
 		supportRequest1.IFAP_Country_ISO__c = 'T2';
-		supportRequest1.RecordTypeId = sidraRecordType.Id;
+		supportRequest1.RecordTypeId = sidraRecordTypeId;
 		supportRequest1.AccountId = parentAccount.Id;
+		supportRequest1.Late_Payment_Date__c = Date.today();
 
 		supportRequestList.add(supportRequest1);
 
@@ -145,8 +147,9 @@ private class AMS_CaseTriggerHandler_Test {
 		supportRequest2.Reopened_case__c = 0.0;
 		supportRequest2.Account_Concerned__c = parentAccount2.Id;
 		supportRequest2.IFAP_Country_ISO__c = 'T2';
-		supportRequest2.RecordTypeId = sidraRecordType.Id;
+		supportRequest2.RecordTypeId = sidraRecordTypeId;
 		supportRequest2.AccountId = parentAccount2.Id;
+		supportRequest2.Late_Payment_Date__c = Date.today();
 
 		supportRequestList.add(supportRequest2);
 
@@ -161,8 +164,9 @@ private class AMS_CaseTriggerHandler_Test {
 		supportRequest3.Reopened_case__c = 0.0;
 		supportRequest3.Account_Concerned__c = parentAccount3.Id;
 		supportRequest3.IFAP_Country_ISO__c = 'T2';
-		supportRequest3.RecordTypeId = sidraRecordType.Id;
+		supportRequest3.RecordTypeId = sidraRecordTypeId;
 		supportRequest3.AccountId = parentAccount3.Id;
+		supportRequest3.Late_Payment_Date__c = Date.today();
 
 		supportRequestList.add(supportRequest3);
 

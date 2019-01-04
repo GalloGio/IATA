@@ -73,6 +73,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSP_non_air__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -206,6 +210,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Is_Branch_Abroad__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Opt_out_PCI_DSS__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -740,6 +748,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>ANG_Severity__c</fields>
+        <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_RHC_Information__c</fields>
         <fields>CREATED_DATE</fields>
         <fields>CURRENCY_ISO_CODE</fields>
@@ -763,6 +774,10 @@
         <relatedList>Account_Statement__c.Account__c</relatedList>
         <sortField>Remittance_Date__c</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AmazonFile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>

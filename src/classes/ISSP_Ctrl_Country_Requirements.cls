@@ -16,7 +16,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public String countryIsoCode {get; set;}
     public String selectedLang {get; set;}
     public String accredModel {get; set;}
-    public RecordType TravelReqRecType {get; set;}
+    public Id TravelReqRecTypeId {get; set;}
     public String amsOfficeType {get; set;}
     public String amsCountryLabel {get; set;}
     public IATA_ISO_Country__c isocountry {get; set;}
@@ -102,10 +102,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                         FROM Account
                         WHERE Id = :vHQAccountId LIMIT 1];
              
-            TravelReqRecType = [Select Id 
-                                  From RecordType
-                                 Where SobjectType = 'AMS_Accreditation_Requirement__c'
-                                   and DeveloperName = 'Travel_Agent'];
+            TravelReqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Travel_Agent');
 
             userLanguage = UserInfo.getLanguage();
 
@@ -216,8 +213,9 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public List<SelectOption> getCountries() {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('', '--None--'));
-        for (IATA_ISO_Country__c isoCountry : [Select Id, Name From IATA_ISO_Country__c Where Name != 'All Countries' order by Name asc]) {
-            options.add(new SelectOption(isoCountry.Id, isoCountry.Name));
+        for (IATA_ISO_Country__c isoCountry : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+            if(isoCountry.Name != 'All Countries')
+                options.add(new SelectOption(isoCountry.Id, isoCountry.Name));
         }
         return options;
     }
@@ -301,7 +299,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                                           AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
                                           AND Location_type__c INCLUDES (:amsOfficeType)
                                           AND ANG_Accreditation_Model__c INCLUDES (:accredModel)                                          
-                                          AND RecordTypeId = :TravelReqRecType.Id                                          
+                                          AND RecordTypeId = :TravelReqRecTypeId                                          
                                           ORDER BY Sort_Order__c ASC];
 
 

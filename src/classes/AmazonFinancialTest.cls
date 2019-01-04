@@ -1,7 +1,7 @@
-@istest
+@isTest
 private class AmazonFinancialTest {
 
-    static void createAmazonCredential() {
+    private static void createAmazonCredential() {
         insert new UtilityCS__c(name='ifapBatchSize', Value__c = '5');
 
         Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(
@@ -22,45 +22,9 @@ private class AmazonFinancialTest {
         );
         insert credential;
     }
-/*
-Temporary commented
-    static testMethod void testArchivedCase_withIFAPCase(){
-        createAmazonCredential();
 
-        Id recordtypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
-
-        Account account = new Account();
-        account.Name = 'TestAccount';
-        account.Type = 'Airport';
-        account.IATACode__c = '1234567';
-        insert account;
-
-        Case caseObj = new Case();
-        caseObj.ArchivedDate__c = Date.today();
-        caseObj.RecordTypeId = recordtypeId;
-        caseObj.status = 'Open';
-        caseObj.IFAP_Financial_Year__c = '2015';
-        caseObj.AccountId = account.Id;
-        insert caseObj;
-
-        ENZ__FTPAttachment__c attach = new ENZ__FTPAttachment__c();
-        attach.Name = 'testAttachment';
-        attach.Case__c = caseObj.Id;
-        insert attach;
-
-        PageReference pageRef = Page.ISSP_IFAPCases;
-        String caseId = caseObj.Id;
-        pageRef.getParameters().put('id', caseId);
-        Test.setCurrentPage(Page.ISSP_IFAPCases);
-
-        Test.startTest();
-        ISSP_IFAPCases ifapCase = new ISSP_IFAPCases();
-        AmazonFinancialCtrl controller = new AmazonFinancialCtrl(ifapCase);
-        Test.stopTest();
-
-    }
-*/
-    static testMethod void testArchivedCase(){
+    @isTest
+    private static void testArchivedCase(){
         createAmazonCredential();
 
         Case caseObj = new Case();
@@ -80,7 +44,8 @@ Temporary commented
 
     }
 
-    static testMethod void testNotArchivedCase_ErrorAgentCode(){
+    @isTest
+    private static void testNotArchivedCase_ErrorAgentCode(){
         createAmazonCredential();
 
         Case caseObj = new Case();
@@ -95,7 +60,7 @@ Temporary commented
         Test.stopTest();
     }
     
-    static Case initializeCase() {
+    private static Case initializeCase() {
         Account account = new Account();
         account.Name = 'TestAccount';
         account.Type = 'Airport';
@@ -109,7 +74,7 @@ Temporary commented
         return caseObj;
     }
 
-    static void testNotArchivedCase(){
+    private static void testNotArchivedCase(){
         createAmazonCredential();
         Case caseObj = initializeCase();
 
@@ -128,7 +93,8 @@ Temporary commented
         Test.stopTest();
     }
 
-    static testMethod void testProcessResponse_Exception(){
+    @isTest
+    private static void testProcessResponse_Exception(){
         createAmazonCredential();
         Case caseObj = initializeCase();
 
@@ -143,7 +109,8 @@ Temporary commented
         System.AssertEquals(response, null);
     }
 
-    static testMethod void testProcessResponse_Error(){
+    @isTest
+    private static void testProcessResponse_Error(){
         createAmazonCredential();
         Case caseObj = initializeCase();
 
@@ -160,7 +127,8 @@ Temporary commented
         System.AssertEquals(response, null);
     }
 
-    static testMethod void testProcessResponse_Success(){
+    @isTest
+    private static void testProcessResponse_Success(){
         createAmazonCredential();
         Case caseObj = initializeCase();
 
@@ -177,7 +145,8 @@ Temporary commented
         System.AssertEquals(response, null);
     }
 
-    static testMethod void testRemoteFunctions(){
+    @isTest
+    private static void testRemoteFunctions(){
         createAmazonCredential();
         Case caseObj = initializeCase();
 
@@ -211,7 +180,8 @@ Temporary commented
     }
 
 
-    static testMethod void secondNotArchived(){
+    @isTest
+    private static void secondNotArchived(){
         insert new UtilityCS__c(name='ifapBatchSize', Value__c = '5');
         PageReference pageRef = Page.AmazonFinancial;
         Test.setCurrentPage(pageRef);
@@ -242,7 +212,7 @@ Temporary commented
         insert isoCountry;
 
         Account agent = New Account(name = 'The Agent',
-                                    recordtypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'Account'}).get('Account').get('IATA_Agency'),
+                                    recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
                                     IATACode__c = '1234567' ,
                                     IATA_ISO_Country__c=isoCountry.id,
                                     Type = 'Passenger'      );
@@ -333,11 +303,8 @@ Temporary commented
     }   
     
 
-
-
-    
-
-    static testMethod void firstMethodArchivedPath(){
+    @isTest
+    private static void firstMethodArchivedPath(){
         insert new UtilityCS__c(name='ifapBatchSize', Value__c = '5');
         PageReference pageRef = Page.AmazonFinancial;
         Test.setCurrentPage(pageRef);
@@ -372,7 +339,7 @@ Temporary commented
         insert isoCountry;
 
         Account agent = New Account(name = 'The Agent',
-                                    recordtypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'Account'}).get('Account').get('IATA_Agency'),
+                                    recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
                                     IATACode__c = '1234567' ,
                                     IATA_ISO_Country__c=isoCountry.id,
                                     Type = 'Passenger'      );
@@ -408,6 +375,4 @@ Temporary commented
     
     }
     
-    
-
 }

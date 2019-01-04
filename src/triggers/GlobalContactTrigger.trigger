@@ -1,6 +1,6 @@
 trigger GlobalContactTrigger on Contact (after delete, after insert, after undelete, after update, before delete, before insert, before update) {   
 
-    ID standardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');
+    ID standardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
     boolean Contacts = true;
     boolean AMP_ContactTrigger = true;
@@ -214,7 +214,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     //Shows a warning when the contact last name is update if an active IDCard is linked to the contact
                     Profile currentUserProfile = [SELECT ID, Name FROM Profile WHERE id = : UserInfo.getProfileId() limit 1];
                     Set<ID> ids = Trigger.newMap.keySet();
-                    ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
+                    ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
                     List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Valid ID Card' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
                     for (Contact CurrentContact : standardContacts) {                
                         IDCardUtil.isFirstTime = false;
@@ -373,6 +373,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 system.debug('\n\n contactsWithStatusEqualToInactivList '+contactsWithStatusEqualToInactivList+'\n\n');
                 if(contactsWithStatusEqualToInactivList.size()>0){
                     list<Portal_Application_Right__c> parList = [select Id,Right__c from Portal_Application_Right__c where Contact__c in:contactsWithStatusEqualToInactivList];
+
                     for(Portal_Application_Right__c par :parList ){
                         par.Right__c = 'Access Denied';
                     }
@@ -387,6 +388,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 Set<Id> contactIdSet = new Set<Id>();
                 
                 if (contactsToDisable_TD.size() > 0){
+
                     list<Portal_Application_Right__c> tdList = [SELECT Id, Right__c FROM Portal_Application_Right__c WHERE Contact__c in:contactsToDisable_TD
                                                 AND Right__c = 'Access Granted' AND Portal_Application__r.Name LIKE 'Treasury Dashboard%'];
                     if (!tdList.isEmpty()){
@@ -485,16 +487,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             || (con.User_Portal_Status__c == 'Regional Administrator' && con.Regional_Administrator_Countries__c != trigger.oldMap.get(con.Id).Regional_Administrator_Countries__c))
                         conIdSet.add(con.Id);
 
-                    //TF - SP9-A5
-                    /*if ((con.Email != trigger.oldMap.get(con.Id).Email) && con.Email != ''){
-                        system.debug('ISSP_ContactUpdaetPortalUser, email being changed');
-                        if (!conEmailMap.containsKey(con.Id)){
-                            conEmailMap.put(con.Id, con.Email);
-                            conEmailIdSet.add(con.Id);
-                        }
-                    }*/
-
-                    if ((con.Email != '' && (con.Email != trigger.oldMap.get(con.Id).Email || con.FirstName != trigger.oldMap.get(con.Id).FirstName || con.LastName != trigger.oldMap.get(con.Id).LastName))){
+                    if ((con.Email != '' && (con.Email != trigger.oldMap.get(con.Id).Email 
+                            || con.FirstName != trigger.oldMap.get(con.Id).FirstName 
+                            || con.LastName != trigger.oldMap.get(con.Id).LastName))){
+                        
                         if (!conEmailMap.containsKey(con.Id)){
                             conEmailMap.put(con.Id, con.Email);
                             conEmailIdSet.add(con.Id);
@@ -542,6 +538,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 system.debug('ISSP_ContactStatusTrigger AfterUpdate');
                 Set<Id> contactIds = new Set<Id>();
                 Map<String, List<Id>> inactivationReasonMap = new Map<String, List<Id>> ();
+
                 for(Contact newCon : trigger.new){
                     Contact oldCon = trigger.oldMap.get(newCon.Id);
                     if (newCon.Status__c != oldCon.Status__c){
@@ -589,9 +586,9 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             thisReason = 'UnknownContact';
                         }
                         for (Id thisId : contactIdList){
-                            system.debug('contactIds: ' + thisId);
                             contactIdSet.add(thisId);
                         }
+
                         ISSP_ContactList ctrl = new ISSP_ContactList();
                         ctrl.processMultiplePortalUserStatusChange(contactIdSet, 'Deactivated', thisReason);
                     }

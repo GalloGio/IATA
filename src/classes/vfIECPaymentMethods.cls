@@ -506,7 +506,7 @@ public class vfIECPaymentMethods extends IECPageController {
             errorCode = '';
             
             // create a dummy page reference just to parse the parameters returned by the HPM
-            PageReference curPage = new Pagereference(URL.getSalesforceBaseUrl().toExternalForm() + Site.getPrefix() + sErrorMsgFromHPM);
+            PageReference curPage = new Pagereference(URL.getSalesforceBaseUrl().toExternalForm() + Site.getPathPrefix() + sErrorMsgFromHPM);
             
             errorMessage = Test.isRunningTest() ? 'General system error(s) have occurred' : curPage.getParameters().get('errorMessage');
             errorCode = Test.isRunningTest() ? 'GeneralSystemError' : curPage.getParameters().get('errorCode');

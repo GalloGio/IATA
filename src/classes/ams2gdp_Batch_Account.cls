@@ -20,7 +20,6 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		processNextBatch = runNext;
 		extraIds = ids;
 		secondRun = secondR;
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
 		//-- Fields used for Sync
 
@@ -28,40 +27,30 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		                +	', License_Number__c, Location_Category__c, Location_Type__c, Manager_First_Name__c, Manager_Last_Name__c, Name, PAX_Cargo__c, Preferred_Language__c'
 		                +	', Short_Name__c , Ticketing_Agent_First_Name__c, Ticketing_Agent_Last_Name__c, TradeName__c, TTY__c, VAT_Number__c, VAT_Number_2__c, Website'
 						+   ', ANG_IsNewGenAgency__c, ANG_Accreditation_Model__c, Remittance_frequency__c, ANG_IEP_Status_FF__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c, Due_Diligence_Status__c'
-		                +	', ParentId, AIMS_ID__c, Parent.AIMS_ID__c, WebStar_ID__c, Parent.WebStar_ID__c, Location_Class__c ';
+		                +	', ParentId, AIMS_ID__c, Parent.AIMS_ID__c, WebStar_ID__c, Parent.WebStar_ID__c, Location_Class__c, CNS_Agency__c ';
 
 		String idsCondition;
 		if (extraIds != null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\'' + String.join(extraIds, '\', \'') + '\')';
 		} else {
-			idsCondition = 'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') ';
 			if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
 				statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
-				idsCondition += ' AND Status__c IN  :statusSet ';
+				if (idsCondition!=null) idsCondition += ' AND '; else idsCondition='';
+                idsCondition += 'Status__c IN :statusSet ';
 
 			}
 			if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
 				locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
-				idsCondition += ' AND Location_Class__c IN:  locationsSet';
+				if (idsCondition!=null) idsCondition += ' AND '; else idsCondition='';
+                idsCondition += 'Location_Class__c IN :locationsSet';
 			}
 		}
-		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
-		// } else {
-		// }
-		// }else if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
-		// 	locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
-		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Location_Class__c IN:  locationsSet';
-		// } else {
-		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
-		// }
 
 		//-- Query conditions
-		List<String> conditions = new List<String> {'RecordTypeId= \'' + recordTypes.get('Agency') + '\''
-		        ,	'IATACode__c != null'
-		        ,	'CNS_Agency__c = false'
-		        ,	'CNS_Account__c = false'
-		        ,	idsCondition
-		                                           };
+		List<String> conditions = new List<String> {'RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''};
+        if (idsCondition!=null) conditions.add(idsCondition);
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+
 
 		if (extraIds != null && extraIds.size() > 0) {
 			if (extraIds[0] == 'none') {

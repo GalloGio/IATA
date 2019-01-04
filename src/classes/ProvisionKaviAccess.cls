@@ -39,36 +39,6 @@ global with sharing class ProvisionKaviAccess {
         }
     }
     
-    /*public static void createKaviUserMethod (List <User> listUsers) {
-
-List <Contact> contacts2Create = new List <Contact> ();
-Account acc = new Account();
-for(User usr: listUsers){
-if(usr.Profile_Name__c == 'KaviProvisioningUser') {
-
-//Creation of Contact...
-acc = getFakeAccount(); 
-Contact contact = new Contact();
-contact.FirstName = usr.FirstName;
-contact.LastName = usr.LastName;
-contact.AccountId = acc.Id;
-contact.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-contact.Status__c = 'Active';
-//We insert the new Contact using DML sentence        
-//try{ insert contact;} catch(DmlException e){System.debug('Error when inserting the new contact ...: ' + e);}
-//We associate the new Contact with the user
-usr.ContactId= contact.Id;
-//usr.AccountId = acc.Id;
-//try{update usr;} catch(DmlException e) {System.debug('Error when updating the existing user associating the new contact ...: ' + e);}
-//Database.update(usr);             
-contacts2Create.add(contact);
-
-}
-}
-
-try{ insert contacts2Create;}catch(Exception e){System.debug('Error when inserting contacts ' +e);}
-}*/
-    
     
     public static String createContact (string userId) {
         
@@ -77,18 +47,18 @@ try{ insert contacts2Create;}catch(Exception e){System.debug('Error when inserti
         acc = getFakeAccount();     
         User usr = [Select Id, FirstName, LastName,Profile_Name__c, Email From User Where id = :userId limit 1][0];
         if(usr.Id != null){
-            Contact contact = new Contact();
-            contact.FirstName = usr.FirstName;
-            contact.LastName = usr.LastName;
-            contact.AccountId = acc.Id;
-            contact.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-            contact.Email = usr.Email;
-            contact.Status__c = 'Active';
-            //We associate the new Contact with the user thru the lookup(User) field
-            contact.Kavi_User__c= usr.Id;
-            //We insert the new Contact using DML sentence
-            try{ insert contact;} catch(DmlException e){System.debug('Error when inserting the new contact ...: ' + e);}
-            return contact.Id;
+                Contact contact = new Contact();
+                contact.FirstName = usr.FirstName;
+                contact.LastName = usr.LastName;
+                contact.AccountId = acc.Id;
+                contact.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+                contact.Email = usr.Email;
+                contact.Status__c = 'Active';
+            	   //We associate the new Contact with the user thru the lookup(User) field
+            	   contact.Kavi_User__c= usr.Id;
+                //We insert the new Contact using DML sentence
+        		try{ insert contact;} catch(DmlException e){System.debug('Error when inserting the new contact ...: ' + e);}
+                return contact.Id;
         }
         else return null;
         
@@ -106,7 +76,7 @@ try{ insert contacts2Create;}catch(Exception e){System.debug('Error when inserti
             Account acc = new Account();
             acc = new Account();
             acc.Name = 'IATA SSW ACCOUNT';
-            acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
+            acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
             //acc.Sector__c = 'IATA';
             //acc.Category__c = 'IATA Cargo Agent';
             try {insert acc;}

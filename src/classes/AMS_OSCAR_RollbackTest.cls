@@ -45,7 +45,7 @@ private class AMS_OSCAR_RollbackTest {
 		List<AMS_Account_Role__c> owners = new List<AMS_Account_Role__c>();
 		AMS_Account_Role__c ownerHO = new AMS_Account_Role__c();
 		ownerHO.Account__c = ho.Id;
-		ownerHO.RecordTypeId = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+		ownerHO.RecordTypeId = AMS_Utils.AccountRoleOwnershipRT;
 		ownerHO.Contact__c = con.Id;
 		ownerHO.Percentage__c = 100;
 		AMS_Account_Role__c ownerBR = ownerHO.clone();
@@ -96,8 +96,7 @@ private class AMS_OSCAR_RollbackTest {
 		acc.Reason__c = '91-ACCREDITED-MEETS-STANDARDS';
 		acc.Sector__c = 'Travel Agent';
 		acc.Category__c = 'IATA Passenger Sales Agent';
-		acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-
+		acc.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
 		return acc;
 	}
 
@@ -110,7 +109,7 @@ private class AMS_OSCAR_RollbackTest {
 		/*** Set OSCAR ***/
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(); 
 		oscar.Name = '123456789';
-		oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+		oscar.RecordTypeId = AMS_Utils.RECTYPE_CHANGE;
 		oscar.Account__c = [SELECT Id FROM Account WHERE Location_Type__c = 'HO' LIMIT 1].Id;
 		oscar.Type_of_change__c = 'Ownership to non-IATA Agent';
 		insert oscar;
@@ -148,7 +147,7 @@ private class AMS_OSCAR_RollbackTest {
 		String tradeName = acc.TradeName__c;
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(); 
 		oscar.Name = '123456789';
-		oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+		oscar.RecordTypeId = AMS_Utils.RECTYPE_CHANGE;
 		oscar.Account__c = acc.Id;
 		oscar.Type_of_change__c = 'Minor Change';
 		insert oscar;
@@ -176,7 +175,7 @@ private class AMS_OSCAR_RollbackTest {
 		Account acc = [SELECT Id, Name, TradeName__c, ParentId, Top_Parent__c, Location_Type__c FROM Account WHERE Location_Type__c = 'BR' LIMIT 1];
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(); 
 		oscar.Name = '123456789';
-		oscar.RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+		oscar.RecordTypeId = AMS_Utils.RECTYPE_CHANGE;
 		oscar.Account__c = acc.Id;
 		oscar.Type_of_change__c = 'Ownership to non-IATA Agent';
 		insert oscar;

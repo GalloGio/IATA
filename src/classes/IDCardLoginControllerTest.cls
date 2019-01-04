@@ -1,5 +1,5 @@
 @isTest
-public class IDCardLoginControllerTest{
+public class IDCardLoginControllerTest {
 
     private static IDCardTestData testData;
 
@@ -14,7 +14,7 @@ public class IDCardLoginControllerTest{
 
         List<ID_Card_Application__c> idCardAppToInsert = new List<ID_Card_Application__c>();
 
-        Id idCardAppRT =  Schema.SObjectType.ID_Card_Application__c.getRecordTypeInfosByName().get('Single ID Card Operation').getRecordTypeId();
+        Id idCardAppRT =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
         testData.IDCards_IDCardApplications[3].RecordTypeId = idCardAppRT;
         idCardAppToInsert.add(testData.IDCards_IDCardApplications[1]);
         idCardAppToInsert.add(testData.IDCards_IDCardApplications[3]);
@@ -26,12 +26,12 @@ public class IDCardLoginControllerTest{
 
         relatedContact = [SELECT Id, LastName, FirstName, VER_Number__c, VER_Number_2__c, IATA_Code__c, Account.RecordType.Name, Account.Status__c, Date_of_Birth__c, Account.BillingCountry FROM Contact WHERE Id IN (:contactId1, :contactId3)];
 
-        System.debug('## relatedContact[0]: '+relatedContact[0]);
-        System.debug('## relatedContact[1]: '+relatedContact[1]);
-        Set<Id> relatedContactAccountId = new Set<Id>{relatedContact[0].AccountId, relatedContact[1].AccountId};
+        System.debug('## relatedContact[0]: ' + relatedContact[0]);
+        System.debug('## relatedContact[1]: ' + relatedContact[1]);
+        Set<Id> relatedContactAccountId = new Set<Id> {relatedContact[0].AccountId, relatedContact[1].AccountId};
 
         List<Account> accs = [SELECT Id, Status__c, IDCard_Key_Account__c, IATACode__c FROM Account WHERE id in :relatedContactAccountId];
-        for (Account acc : accs){
+        for (Account acc : accs) {
             acc.IDCard_Key_Account__c = true;
         }
         update accs;
@@ -47,8 +47,7 @@ public class IDCardLoginControllerTest{
         system.debug('Billing Country: ' + relatedContact[1].Account.BillingCountry + 'IATA_Code__c: ' + relatedContact[1].IATA_Code__c + 'FirstName: ' + relatedContact[1].FirstName);
 
         //insert Case
-        clsCaseRecordTypeIDSingleton caseRT = clsCaseRecordTypeIDSingleton.getInstance();
-        Id caseRTId = caseRT.RecordTypes.get('ID Card Application');
+        Id caseRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application');
         Case pendingCase = new Case();
         pendingCase.ContactId = relatedContact[1].Id;
         pendingCase.Status = 'new';
@@ -64,18 +63,20 @@ public class IDCardLoginControllerTest{
         IDCardLoginController idCardLogingController_NoCookies = new IDCardLoginController();
 
         // TestPage with cookies
-        Cookie languageCookies = new Cookie('idcard_portal_lang','en_US',null,-1,false);
-         ISSP_CS__c cs = new ISSP_CS__c(name ='ipinfo_token', value__c = '871e08ecd39325');
-         insert cs;
+        Cookie languageCookies = new Cookie('idcard_portal_lang', 'en_US', null, -1, false);
+        ISSP_CS__c cs = new ISSP_CS__c(name = 'ipinfo_token', value__c = '871e08ecd39325');
+        insert cs;
         controllerPage = Page.IDCardLogin;
-        controllerPage.setCookies(new Cookie[]{languageCookies});
-      Test.setCurrentPage (controllerPage);
+        controllerPage.setCookies(new Cookie[] {languageCookies});
+        Test.setCurrentPage (controllerPage);
         idCardLoginController = new IDCardLoginController();
-      idCardLoginController.getLangItems();
-      idCardLoginController.findLocation();
+        idCardLoginController.getLangItems();
+        idCardLoginController.findLocation();
+		idCardLoginController.fakemethod();
     }
 
-    public static TestMethod void TestVerify(){
+    @isTest
+    public static void TestVerify() {
         TestIDCardLoginController();
 
         Test.startTest();
@@ -83,23 +84,23 @@ public class IDCardLoginControllerTest{
         // IATACode is Null
         IdCardLoginController.IATACodeLocation = '';
         nextPage = idCardLoginController.verify();
-        System.assert(checkMessages(ApexPages.getMessages(),Label.IDCard_IATACodeRequired), 'Label.IDCard_IATACodeRequired message should be added');
+        System.assert(checkMessages(ApexPages.getMessages(), Label.IDCard_IATACodeRequired), 'Label.IDCard_IATACodeRequired message should be added');
 
         // IATACode has less than 8 digits
         IdCardLoginController.IATACodeLocation = '123';
         nextPage = idCardLoginController.verify();
-        System.assert(checkMessages(ApexPages.getMessages(),Label.IDCard_IATACodeNot8Digits), 'Label.IDCard_IATACodeNot8Digits message should be added');
+        System.assert(checkMessages(ApexPages.getMessages(), Label.IDCard_IATACodeNot8Digits), 'Label.IDCard_IATACodeNot8Digits message should be added');
 
         // VER is null
         IdCardLoginController.IATACodeLocation = relatedContact[1].IATA_Code__c;
         nextPage = idCardLoginController.verify();
-        System.assert(checkMessages(ApexPages.getMessages(),Label.IDCard_VERrequired), 'Label.IDCard_VERrequired message should be added');
+        System.assert(checkMessages(ApexPages.getMessages(), Label.IDCard_VERrequired), 'Label.IDCard_VERrequired message should be added');
 
         // VER and IATA Code not numeric
         IdCardLoginController.IATACodeLocation = 'abcdefgh';
         IdCardLoginController.VERNumber = 'abcdefgh';
         nextPage = idCardLoginController.verify();
-        System.assert(checkMessages(ApexPages.getMessages(),Label.IDCard_NumericFieldError), 'Label.IDCard_NumericFieldError message should be added');
+        System.assert(checkMessages(ApexPages.getMessages(), Label.IDCard_NumericFieldError), 'Label.IDCard_NumericFieldError message should be added');
 
         // IATACode and VER are valid
         Account acc = [SELECT id, IATACode__c, IATA_ISO_Country__c, IDCard_Key_Account__c , Status__c, BillingCountry FROM Account WHERE id = :relatedContact[1].AccountId];
@@ -109,7 +110,7 @@ public class IDCardLoginControllerTest{
         // managedAccountList size is bigger than 0: method returns PageReference
         Managed_agency__c managedAccount = new Managed_agency__c (Contact__c = relatedContact[1].Id, Account__c = relatedContact[1].AccountId);
         insert managedAccount;
-        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?')+']', String.valueOf(Page.IDCard_PortalKeyContact), 'IDCard_PortalKeyContact PageReference should be returned');
+        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?') + ']', String.valueOf(Page.IDCard_PortalKeyContact), 'IDCard_PortalKeyContact PageReference should be returned');
 
         // managedAccountList size is = 0
         delete managedAccount;
@@ -117,14 +118,14 @@ public class IDCardLoginControllerTest{
         // VER not found - contact list == null
         IdCardLoginController.VERNumber = '784512369';
         nextPage = idCardLoginController.verify();
-        System.assert(checkMessages(ApexPages.getMessages(),Label.IDCard_NoContactsFound), 'Label.IDCard_NoContactsFound message should be added');
+        System.assert(checkMessages(ApexPages.getMessages(), Label.IDCard_NoContactsFound), 'Label.IDCard_NoContactsFound message should be added');
 
         // VER found - contact list > 0
         IdCardLoginController.VERNumber = relatedContact[1].VER_Number__c + '';
 
         IATA_ISO_Country__c country = [SELECT Id, AIMS_Area_Name__c, Name, ISO_Code_Numeric__c, AIMS_Area_ID__c, ISO_Code__c
-                                               FROM IATA_ISO_Country__c
-                                               WHERE AIMS_Area_Name__c = :acc.BillingCountry LIMIT 1][0];
+                                       FROM IATA_ISO_Country__c
+                                       WHERE AIMS_Area_Name__c = :acc.BillingCountry LIMIT 1][0];
 
         List<Price_Table__c> priceTables = [SELECT Type_Class_of_Agent__c, Expedite__c, Name, ISO_Country__c
                                             FROM Price_Table__c
@@ -135,12 +136,18 @@ public class IDCardLoginControllerTest{
 
         // country not found
         delete country;
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
+
         nextPage = idCardLoginController.verify();
+
         System.assert(checkMessages(ApexPages.getMessages(),'ISO Country not found for the following Account:' + idCardLoginController.IATACodeLocation ), 'ISO Country not found message should be added');
 
         // country found
         country.id = null;
         insert country;
+
+        //Work around to reset the static Iata Iso Country maps
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
 
         // ID_Card__c.Blacklisted = true;
         String IDCardQuery = 'Select Id, Blacklisted__c, Card_Status__c From ID_Card__c where Related_Contact__c  = \'' + relatedContact[1].Id + '\' order by createddate desc';
@@ -148,17 +155,17 @@ public class IDCardLoginControllerTest{
         cards[0].Blacklisted__c = true;
         update cards;
         nextPage = idCardLoginController.verify();
-        System.assert(checkMessages(ApexPages.getMessages(),'Your IATA/IATAN ID Card has been blacklisted'), 'ID Card blacklisted message should be added');
+        System.assert(checkMessages(ApexPages.getMessages(), 'Your IATA/IATAN ID Card has been blacklisted'), 'ID Card blacklisted message should be added');
 
         // ID_Card__c.Blacklisted = false;
         // listPriceTables is empty
         cards[0].Blacklisted__c = false;
         update cards;
         nextPage = idCardLoginController.verify();
-        System.assert(checkMessages(ApexPages.getMessages(),'Price Table not found for the following Country:' + country.name), 'Price Table not found message should be added');
+        System.assert(checkMessages(ApexPages.getMessages(), 'Price Table not found for the following Country:' + country.name), 'Price Table not found message should be added');
 
         // insert Price_Table__c
-        for (Price_Table__c pt :priceTables){
+        for (Price_Table__c pt : priceTables) {
             pt.Id = null;
             pt.ISO_Country__c = country.Id;
         }
@@ -166,27 +173,27 @@ public class IDCardLoginControllerTest{
 
         // pendingCase is not null
         nextPage = idCardLoginController.verify();
-        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?')+']', String.valueOf(Page.IDCard_PendingCase_Details), 'IDCard_PendingCase_Details PageReference should be returned');
+        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?') + ']', String.valueOf(Page.IDCard_PendingCase_Details), 'IDCard_PendingCase_Details PageReference should be returned');
 
         // delete case: pendingCase is null
         Case pendingCase = [SELECT Id FROM Case WHERE Contact.Id = :relatedContact[1].Id LIMIT 1][0];
         delete pendingCase;
 
         // pendingIdCardsApp is not empty
-        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?')+']', String.valueOf(Page.IDCard_PendingIdCardApp_Details), 'IDCard_PendingIdCardApp_Details PageReference should be returned');
+        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?') + ']', String.valueOf(Page.IDCard_PendingIdCardApp_Details), 'IDCard_PendingIdCardApp_Details PageReference should be returned');
 
         // pendingIdCardsApp is empty
         ID_Card_Application__c pendingIdCardApp = [Select id, VER_Number__c, IATA_Code__c, Application_Status__c, RecordType.Name FROM ID_Card_Application__c
-                                                        WHERE RecordType.Name = 'Single ID Card Operation'
-                                                        AND VER_Number__c = :relatedContact[1].VER_Number__c+'' LIMIT 1][0];
+                WHERE RecordType.Name = 'Single ID Card Operation'
+                                        AND VER_Number__c = :relatedContact[1].VER_Number__c + '' LIMIT 1][0];
 
-        pendingIdCardApp.Application_Status__c ='Paid';
+        pendingIdCardApp.Application_Status__c = 'Paid';
         update pendingIdCardApp;
 
         // account status = 'terminated'
         acc.Status__c = 'Terminated';
         update acc;
-        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?')+']', String.valueOf(Page.IDCard_Portal), 'IDCard_Portal PageReference should be returned');
+        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?') + ']', String.valueOf(Page.IDCard_Portal), 'IDCard_Portal PageReference should be returned');
 
         // account status = 'approved'
         acc.Status__c = 'Approved';
@@ -196,11 +203,12 @@ public class IDCardLoginControllerTest{
         ApexPages.currentPage().getParameters().put('g-recaptcha-response', 'test');
 
         // login verified
-        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?')+']', String.valueOf(Page.IDCard_MultipleAgency_Details), 'IDCard_MultipleAgency_Details PageReference should be returned');
+        System.assertEquals(String.valueOf(idCardLoginController.verify()).substringBefore('?') + ']', String.valueOf(Page.IDCard_MultipleAgency_Details), 'IDCard_MultipleAgency_Details PageReference should be returned');
         Test.stopTest();
     }
 
-    public static TestMethod void TestVerifyAlternative(){
+    @isTest
+    public static void TestVerifyAlternative() {
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
         TestIDCardLoginController();
 
@@ -211,9 +219,9 @@ public class IDCardLoginControllerTest{
         // IATACode, Firstname, Lastname and Date of birth are null
         nextPage = idCardLoginController.verifyAlternative();
 
-        controllerPage.getParameters().put('recaptcha_challenge_field','challengeTest');
+        controllerPage.getParameters().put('recaptcha_challenge_field', 'challengeTest');
         controllerPage.getParameters().put('recaptcha_response_field', 'responseTest');
-    idCardLoginController.reset();
+        idCardLoginController.reset();
         string t = idCardLoginController.publicKey;
         idCardLoginController.setSelectedLanguage('en_US');
         t = idCardLoginController.getSelectedLanguage();
@@ -227,7 +235,7 @@ public class IDCardLoginControllerTest{
         Test.startTest();
         Date dateTemp = testData.IDCards_IDCardApplications[0].Date_of_Birth__c;
         idCardLoginController.IATACodeLocation2 = testData.IDCards_IDCardApplications[0].IATA_Code__c;
-         idCardLoginController.FNAME = testData.IDCards_IDCardApplications[0].First_Name__c;
+        idCardLoginController.FNAME = testData.IDCards_IDCardApplications[0].First_Name__c;
         idCardLoginController.LNAME = testData.IDCards_IDCardApplications[0].Last_Name__c;
         idCardLoginController.DOB = dateTemp.month() + '/' + dateTemp.day() + '/' + dateTemp.year();
         nextPage = idCardLoginController.verifyAlternative();
@@ -240,7 +248,7 @@ public class IDCardLoginControllerTest{
         idCardLoginController.DOB = dateTemp.month() + '/' + dateTemp.day() + '/' + dateTemp.year();
         nextPage = idCardLoginController.verifyAlternative();
 
-         // New ID Application
+        // New ID Application
         dateTemp = testData.IDCards_IDCardApplications[2].Date_of_Birth__c;
         idCardLoginController.IATACodeLocation2 = testData.IDCards_IDCardApplications[2].IATA_Code__c;
         idCardLoginController.FNAME = testData.IDCards_IDCardApplications[2].First_Name__c;
@@ -249,7 +257,7 @@ public class IDCardLoginControllerTest{
         nextPage = idCardLoginController.verifyAlternative();
 
 
-      // New ID Application for limited keyAccount
+        // New ID Application for limited keyAccount
         dateTemp = testData.IDCards_IDCardApplications[2].Date_of_Birth__c;
         idCardLoginController.IATACodeLocation2 = testData.IDCard_keyAccounts[1].IATACode__c;
         idCardLoginController.FNAME = testData.IDCards_IDCardApplications[2].First_Name__c;
@@ -273,8 +281,8 @@ public class IDCardLoginControllerTest{
 
     //Checks if ApexPages.Message contains a specific message
     private static Boolean checkMessages(List<ApexPages.Message> pageMessages, String expectedMessage) {
-        for (ApexPages.Message message : pageMessages){
-            if (message.getDetail().contains(expectedMessage)){
+        for (ApexPages.Message message : pageMessages) {
+            if (message.getDetail().contains(expectedMessage)) {
                 return true;
             }
         }

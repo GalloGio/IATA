@@ -6,7 +6,7 @@ private class ANG_AgencyAuthorizationTriggerTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
         insert ctry ;
 
-        Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 
@@ -31,9 +31,9 @@ private class ANG_AgencyAuthorizationTriggerTest {
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-        ID BSPLinkRT = AMS_Utils.getId('Agency_Authorization__c','BSPLink');
+        ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink');
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		Account acct1 = accts.get(0);
 
@@ -85,9 +85,7 @@ private class ANG_AgencyAuthorizationTriggerTest {
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-        // ID BSPLinkRT = AMS_Utils.getId('Agency_Authorization__c','BSPLink');
-
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		Account acct1 = accts.get(0);
 
@@ -130,9 +128,9 @@ private class ANG_AgencyAuthorizationTriggerTest {
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-        ID BSPLinkRT = AMS_Utils.getId('Agency_Authorization__c','BSPLink');
+        ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink');
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		Account acct1 = accts.get(0);
 
@@ -204,9 +202,9 @@ private class ANG_AgencyAuthorizationTriggerTest {
 
         List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-        ID BSPLinkRT = AMS_Utils.getId('Agency_Authorization__c','BSPLink');
+        ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink');
 
-		ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		Account acct1 = accts.get(0);
 

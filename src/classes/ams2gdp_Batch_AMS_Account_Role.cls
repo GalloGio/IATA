@@ -4,8 +4,7 @@
  * @version 1.0
  */
 
- global class ams2gdp_Batch_AMS_Account_Role implements Database.Batchable<sObject>, Database.Stateful 
- {
+global class ams2gdp_Batch_AMS_Account_Role implements Database.Batchable<sObject>, Database.Stateful {
 	public String query;
 	public Integer errorsCount;
 	public Integer totalRecords;
@@ -15,120 +14,100 @@
 	public Boolean throwException;
 	public String batchName;
 	public List<String> extraIds;
-    Set<String> locationsSet;
-    Set<String> statusSet;
-    public Boolean isManual;
+	Set<String> locationsSet;
+	Set<String> statusSet;
+	public Boolean isManual;
 
-	public void init(Boolean runNext, List<String> ids, Boolean manual)
-	{
-		isManual = manual==null ? false : manual;
-		batchName = 'Job 7: Agency Owner'; 
+	public void init(Boolean runNext, List<String> ids, Boolean manual) {
+		isManual = manual == null ? false : manual;
+		batchName = 'Job 7: Agency Owner';
 		processNextBatch = runNext;
 		extraIds = ids;
 
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
+		String fields = ' Id,Account__c ';
 
-		String fields = ' Id, Owner_Name__c,Percentage__c,Account__c, Contact__r.Name, Unified_Owner_Name__c';
+		List<String> conditions = new List<String> {'Account__r.RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''
+		    ,'Active__c = true'
+            ,'RecordType.Name = \'Ownership\''}; 
+        conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
 
-		//-- Query conditions 
-		// String accreditation_condition = 'SELECT Related_Account__c '
-		// 	+	'FROM Accreditation__c '
-		// 	+	'WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\')'
-		// 	+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
 
-		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
-			, 'Account__r.IATACode__c != null'
-            , 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-            , 'Account__r.CNS_Agency__c = false'
-			, 'Account__r.CNS_Account__c = false'
-            , 'Active__c = true'
-            , 'RecordType.Name = \'Ownership\''
-			// , 'Account__c IN ('+accreditation_condition+')'
-		}; 
+		if (extraIds != null && extraIds.size() > 0) {
+			if (extraIds[0] == 'none') {
+				conditions.add('Id=null');
+			} else {
+				//Run batch on specific Ids
+				List<String> specificIds = new List<String>();
+				for (String s : extraIds) {
+					if (s.length() >= 15)
+						specificIds.add(s.left(15));
+				}
 
-		if(extraIds!=null && extraIds.size() > 0) {
-			 if(extraIds[0]=='none'){	
-			 conditions.add('Id=null');}
-			 else{
-			//Run batch on specific Ids 
-			List<String> specificIds = new List<String>(); 
-			for(String s: extraIds)
-			{
-				if(s.length() >= 15)
-					specificIds.add(s.left(15));
+				if (specificIds.size() > 0)	conditions.add('Id IN (\'' + String.join(specificIds, '\', \'') + '\')');
 			}
-
-			if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');}
-		}else{
-            if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
+		} else {
+			if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
 				statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
 				conditions.add('Account__r.Status__c IN  :statusSet ');
 
 			}
-			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+			if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
 				locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
 				conditions.add('Account__r.Location_Class__c IN:  locationsSet');
 			}
 
 			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
-			if(batchInfo != null)
-			{
-				//Run only on the deltas 
+			if (batchInfo != null) {
+				//Run only on the deltas
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+				                                       , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
 
-				if(String.isNotBlank(batchInfo.Failed_Records__c))
-				{
-					// Reprocess failed records 
-					List<String> failedRecordIds = new List<String>(); 
-					for(String s: batchInfo.Failed_Records__c.split(';'))
-					{
-						if(s.length() >= 15)
+				if (String.isNotBlank(batchInfo.Failed_Records__c)) {
+					// Reprocess failed records
+					List<String> failedRecordIds = new List<String>();
+					for (String s : batchInfo.Failed_Records__c.split(';')) {
+						if (s.length() >= 15)
 							failedRecordIds.add(s.left(15));
 					}
-					if(failedRecordIds.size() > 0)
+					if (failedRecordIds.size() > 0)
 						deltaConditions += ' OR Id IN (\'' + String.join(failedRecordIds, '\' , \'') + '\') ';
 				}
 
-				conditions.add('('+deltaConditions+')');
+				conditions.add('(' + deltaConditions + ')');
 			}
 		}
 
 		query = String.format('SELECT {0} '
-			+	'FROM AMS_Account_Role__c '
-			+ 	'WHERE {1} '
-			+	'ORDER BY Account__c ASC, Percentage__c DESC', 
-			new List<String>{fields,String.join(conditions, ' AND ')}
-		);
+		                      +	'FROM AMS_Account_Role__c '
+		                      + 	'WHERE {1} '
+		                      +	'ORDER BY Account__c ASC, Percentage__c DESC',
+		                      new List<String> {fields, String.join(conditions, ' AND ')}
+		                     );
 	}
-	
-	global ams2gdp_Batch_AMS_Account_Role() 
-	{
+
+	global ams2gdp_Batch_AMS_Account_Role() {
 		init(false, null, null);
 	}
-	
-	global ams2gdp_Batch_AMS_Account_Role(Boolean runNext, Boolean manual)
-	{
-		init(runNext,null, manual);
+
+	global ams2gdp_Batch_AMS_Account_Role(Boolean runNext, Boolean manual) {
+		init(runNext, null, manual);
 	}
 
-	global ams2gdp_Batch_AMS_Account_Role(Boolean runNext, List<String> extra, Boolean manual)
-	{
-		init(runNext,extra,manual);	
+	global ams2gdp_Batch_AMS_Account_Role(Boolean runNext, List<String> extra, Boolean manual) {
+		init(runNext, extra, manual);
 	}
 
-	global Database.QueryLocator start(Database.BatchableContext BC) 
-	{
+	global Database.QueryLocator start(Database.BatchableContext BC) {
 		//-- No error when the batch starts
-		errorsCount = 0;	
+		errorsCount = 0;
 		totalRecords = 0;
 		failed_records = new List<String>();
-		syncStartedDate =Datetime.now();
+		syncStartedDate = Datetime.now();
 
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_Account_Role__c> scope) {
+	global void execute(Database.BatchableContext BC, List<AMS_Account_Role__c> scope) {
 
    		//-- Total records to be processed
    		totalRecords += scope.size();
@@ -137,17 +116,21 @@
 		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
    		List<Agency_Owner__c> records2Save = new List<Agency_Owner__c>();
+   		List<Agency_Owner__c> records2Delete = new List<Agency_Owner__c>();
+
 
         // delete the old ones
-   		List<Agency_Owner__c> records2Delete = ams2gdp_BusinessLogic.getAgencyOwnersToDelete(scope);
+   		Map<String,List<Agency_Owner__c>> CRUD_map = ams2gdp_BusinessLogic.getAgencyOwnersToDelete(scope);
+
+   		if (CRUD_map.ContainsKey('D')) records2Delete = CRUD_map.get('D');
+   		if (CRUD_map.ContainsKey('S')) records2Save= CRUD_map.get('S');
+   		//records2Save=ams2gdp_BusinessLogic.formatAccountRole2AgencyOwner(scope);
+
         Savepoint sp = Database.setSavepoint();
 
    		try
    		{
-            delete records2Delete;
-
-   			records2Save=ams2gdp_BusinessLogic.formatAccountRole2AgencyOwner(scope);
-
+            if (records2Delete.size()>0) delete records2Delete;
    			//-- Raise exception for Unit Tests
 			if(Test.isRunningTest() &&   throwException) insert new Account();	
    		}
@@ -156,8 +139,8 @@
             Database.rollback(sp);
    			errors.add(ams2gdp_Error.Exception2Error(batchName, ex));
    		}
-
-		List<Database.UpsertResult> save_results = Database.upsert(records2Save,Agency_Owner__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
+   		List<Database.UpsertResult> save_results = new List<Database.UpsertResult>();
+        if (records2Save.size()>0) save_results = Database.upsert(records2Save,Agency_Owner__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
 
 		//--Check if there is orphan GDP records 
 		for(Agency_Owner__c ao: records2Save)
@@ -187,11 +170,11 @@
 		}
 						
 	}
-	
+
 	global void finish(Database.BatchableContext BC) {
-		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Airport(true, isManual));
+		if (processNextBatch)Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Airport(true, isManual));
 		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
-		//--Send completion notification 
+		//--Send completion notification
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);
 	}
 }

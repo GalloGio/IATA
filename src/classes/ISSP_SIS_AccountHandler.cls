@@ -5,7 +5,7 @@
 **/
 public with sharing class ISSP_SIS_AccountHandler {
     
-    public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+    public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
     public static set<ID> ALLOWED_COUNTRIES = null;
     public static Boolean BLOCK_EXECUTION = false;
     
@@ -17,9 +17,8 @@ public with sharing class ISSP_SIS_AccountHandler {
         //initialize map only once
         if (MAP_SIS_ACCOUNT_STATUS == null) {
             MAP_SIS_ACCOUNT_STATUS = new map<String,list<ISSP_SIS_Account_Status__c>>();
-            Map<String,Id> mapAccountRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account');
             for (ISSP_SIS_Account_Status__c setting: ISSP_SIS_Account_Status__c.getAll().values()) {
-                String key = mapAccountRT.get(setting.Recordtype__c) + ' ' + setting.Status__c;
+                String key = RecordTypeSingleton.getInstance().getRecordTypeId('Account', setting.Recordtype__c) + ' ' + setting.Status__c;
                 list<ISSP_SIS_Account_Status__c> listSettings = MAP_SIS_ACCOUNT_STATUS.get(key);
                 if (listSettings==null) {
                     listSettings = new list<ISSP_SIS_Account_Status__c>();
@@ -74,6 +73,7 @@ public with sharing class ISSP_SIS_AccountHandler {
     **/
     public static void beforeUpdate(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
         if (BLOCK_EXECUTION) return;
+        validateFieldAvailableSISManagement(mapNews, mapOlds);
         updateSISStatusFields(mapNews, mapOlds);
         
         if (!ISSP_WS_SIS_Callout_Common.SIS_CALLOUTS_ENABLED) return;
@@ -116,10 +116,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         try {
             // if is null initialize list of allowed countries using the CS
             if (ALLOWED_COUNTRIES==null) {
-                ALLOWED_COUNTRIES = new map<Id,IATA_ISO_Country__c>(
-                    [SELECT Id
-                    FROM IATA_ISO_Country__c
-                    WHERE ISO_Code__c IN :ISSP_SIS_Account_Allowed_Countries__c.getAll().keyset()]).keyset();
+                ALLOWED_COUNTRIES = new map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountryByIsoCodes(ISSP_SIS_Account_Allowed_Countries__c.getAll().keyset())).keyset();
             }
             return account.RecordtypeId==RT_AGENCY &&
                 (account.Quality__c.contains('YES') || account.Quality__c.contains('015w0000001yCfW')) &&
@@ -185,6 +182,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         for (Account account: listAccount) {
             setCountryId.add(account.IATA_ISO_Country__c);
         }
+        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(setCountryId));
         
         for (Account account: listAccount) {
             // include country objetct in the account
@@ -223,5 +221,29 @@ public with sharing class ISSP_SIS_AccountHandler {
         }
         // if no country is found use the setting with the keyword 'All'
         return allCountriesSettings;
+    }
+    
+    /**
+        Give_SIS_Membership__c can only be changed from empty to some value
+        if there is at least one portal contact having access to SIS joining application
+    **/
+    private static void validateFieldAvailableSISManagement(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
+        list<Id> listAccountId = new list<Id>();
+        for (Account accountNew: mapNews.values()) {
+            Account accountOld = mapOlds.get(accountNew.Id);
+            if (accountOld.Give_SIS_Membership__c==null && accountNew.Give_SIS_Membership__c!=null) {
+                listAccountId.add(accountNew.Id);
+            }
+        }
+        if (listAccountId.isEmpty()) return;
+        list<Account> listQueryAccount = [
+            SELECT Id, (SELECT id, Available_Services__c FROM Contacts WHERE Available_Services__c INCLUDES (:ISSP_SISMembershipApplication_Ctrl.APP_NAME))
+            FROM Account
+            WHERE id IN :listAccountId];
+        for (Account account: listQueryAccount) {
+            if (account.Contacts.isEmpty()) {
+                mapNews.get(account.Id).Give_SIS_Membership__c.addError('Required at least one contact with "' + ISSP_SISMembershipApplication_Ctrl.APP_NAME + '"');
+            } 
+        }
     }
 }

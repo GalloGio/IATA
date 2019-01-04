@@ -17,7 +17,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         System.debug('Checkpoint 2');
         ANG_EntityCreator.checkSFDCLimits();
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         Map<String,Object> fieldsOfObject;
 
@@ -38,7 +38,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         System.debug('Checkpoint 3');
         ANG_EntityCreator.checkSFDCLimits();
 
-        ID contactRt = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        ID contactRt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
        
         fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('Firstname','John');
@@ -58,7 +58,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('Process__c',AMS_Utils.NEWHESTANDARD);
         fieldsOfObject.put('Is_using_credit_card__c',true);
 
-        ID oscarNewHeRt = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+        ID oscarNewHeRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
         AMS_OSCAR__c oscar = ANG_EntityCreator.createOscar(oscarNewHeRt, a.Id, fieldsOfObject);
         insert oscar;
@@ -66,7 +66,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         System.debug('Checkpoint 5');
         ANG_EntityCreator.checkSFDCLimits();
 
-        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -90,7 +90,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         System.debug('Checkpoint 7');
         ANG_EntityCreator.checkSFDCLimits();
 
-        ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c','Travel_Agent_Head_Entity_Standard_no_Cash');
 
         fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('Account_Name__c','NEWGEN-559 HE5');
@@ -115,7 +115,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         System.debug('Checkpoint 8');
         ANG_EntityCreator.checkSFDCLimits();
 
-        ID personRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+        ID personRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('First_name__c','Bugs');
@@ -175,7 +175,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         Map<String,Object> fieldsOfObject;
 
@@ -198,7 +198,7 @@ private class GeneralSOQLQueriesAnalyserTest {
 
         a = ANG_EntityCreator.updateAccount(a, fieldsOfObject);
 
-        ID contactRt = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        ID contactRt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
        
         fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('Firstname','John');
@@ -230,7 +230,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         Map<String,Object> fieldsOfObject;
 
@@ -248,7 +248,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         Account a = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
         insert a;
 
-        ID contactRt = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        ID contactRt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
        
         fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('Firstname','John');
@@ -284,7 +284,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         Map<String,Object> fieldsOfObject;
 
@@ -302,7 +302,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         Account a = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
         insert a;
 
-        ID contactRt = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        ID contactRt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
        
         fieldsOfObject.clear();
         fieldsOfObject.put('Firstname','John');
@@ -315,7 +315,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         Contact co1 = ANG_EntityCreator.createContact(contactRt, a.Id, fieldsOfObject);
         insert co1;
 
-        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject = new Map<String,Object>();
         fieldsOfObject.put('ContactId',co1.Id);
@@ -343,7 +343,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 
-        Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         
         Map<String,Object> fieldsOfObject;
 
@@ -361,7 +361,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         Account a = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
         insert a;
 
-        ID contactRt = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        ID contactRt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
        
         fieldsOfObject.clear();
         fieldsOfObject.put('Firstname','John');
@@ -378,12 +378,12 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('Process__c',AMS_Utils.NEWHESTANDARD);
         fieldsOfObject.put('Is_using_credit_card__c',true);
 
-        ID oscarNewHeRt = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+        ID oscarNewHeRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
         AMS_OSCAR__c oscar = ANG_EntityCreator.createOscar(oscarNewHeRt, a.Id, fieldsOfObject);
         insert oscar;
 
-        Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -401,7 +401,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         );
         insert aFile;
 
-        ID rtNew = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Travel Agent - Head Entity Standard no Cash').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_Head_Entity_Standard_no_Cash');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Account_Name__c','NEWGEN-559 HE5');
@@ -428,7 +428,7 @@ private class GeneralSOQLQueriesAnalyserTest {
 
         theAccreditation = ANG_EntityCreator.updateStagingArea(theAccreditation,fieldsOfObject);
 
-        ID personRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+        ID personRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('First_name__c','Bugs');
