@@ -175,6 +175,10 @@ public without sharing class ANG_DGIStagingAreaCtrl {
             opp.CurrencyIsoCode = stagingFs.FS_Currency__c;
             update opp;
 
+            pricebook2 pb = [select id from pricebook2 where name = 'NewGen Generic'];
+            PricebookEntry pbe = [select id,unitprice,product2id,product2.name from pricebookentry where pricebook2id = :pb.id and currencyIsoCode = :opp.CurrencyIsoCode limit 1];
+
+            stagingFs.pricebookentryid = pbe.id;
             upsert stagingFs;
 
     }
