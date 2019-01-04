@@ -1,14 +1,16 @@
 public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocationINT{
 
+	private static Map<String, PricebookEntry> mapCurrencyISOCodePBE = new map<String,pricebookentry>();
+
 	private static Map<ID,Remote_Invocation_Artefact__c> artifactsWithParents;
+	private static List<Remote_Invocation_Artefact__c> listArtifactsToUpdate;
 	private static Map<string,Account> mapIATACodeAccs;
 
 	private static Financial_Institution__c dfltFI;
 	private static Id pb;
-	private static PricebookEntry pbe;
 
 	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
-
+		listArtifactsToUpdate = new List<Remote_Invocation_Artefact__c>();
 		Set<Remote_Invocation__c> remoteInvocationsGDI = new Set<Remote_Invocation__c>();
 
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess)
@@ -36,9 +38,10 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 
 			if(artifactsWithParents.get(ri.Id) == null){
 				ri.addError('The Remote invocation does not have a match for a remote invocation artifact. [Id:'+ri.Id+'].');
+				ri.Status__c = 'Failed';
+				ri.Status_detail__c = 'The Remote invocation does not have a match for a remote invocation artifact. [Id:'+ri.Id+'].';
 				remoteInvocationsIdToProcess.remove(ri); // one less to process
 				remoteInvocationsGDI.remove(ri);
-				artifactsWithParents.remove(ri.Id);
 			}
 		}
 
@@ -54,6 +57,12 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 				ri.addError('The Remote invocation does not have a match for the IATA Code provided ('+ri.Internal_ID__c+') invocation artifact. [Id:'+ri.Id+'].');
 				remoteInvocationsIdToProcess.remove(ri); // one less to process
 				remoteInvocationsGDI.remove(ri); 
+				ri.Status__c = 'Failed';
+				ri.Status_detail__c = 'The Remote invocation does not have a match for the IATA Code provided ('+ri.Internal_ID__c+') invocation artifact. [Id:'+ri.Id+'].';
+
+				artifactsWithParents.get(ri.id).Request_Result__c = 'Failed';
+				listArtifactsToUpdate.add(artifactsWithParents.get(ri.id));
+				artifactsWithParents.remove(ri.Id);
 			}
 		}
 
@@ -62,11 +71,14 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 	}
 
 	public void doProcess(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
-		
+
 		list<Remote_Invocation__c> remoteInvocationsGDI = new List<Remote_Invocation__c>();
-		
-		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess)
-			if(ri.Request_Type__c == 'GDI') remoteInvocationsGDI.add(ri);	
+		Set<String> currencyIsoCodeToFetch = new Set<String>();
+
+		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
+			if(ri.Request_Type__c == 'GDI') remoteInvocationsGDI.add(ri);
+			currencyIsoCodeToFetch.add(ri.currencyISOCode);	
+		}
 
 		if(remoteInvocationsGDI.isEmpty()) return;
 
@@ -90,12 +102,10 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 		if(!Test.isRunningTest()) pb = [select id from pricebook2 where name = 'NewGen Generic'].id;
 		else pb = Test.getStandardPricebookId();
 		
-		pbe = [select id,unitprice,product2id,product2.name from pricebookentry where pricebook2id = :pb limit 1];
+		for(pricebookentry pbe : [SELECT id,unitprice,product2id,product2.name,CurrencyIsoCode FROM pricebookentry WHERE pricebook2id = :pb AND currencyISOCode in :currencyIsoCodeToFetch])
+			mapCurrencyISOCodePBE.put(pbe.CurrencyISOCode, pbe);
 
 
-
-		//fetch and store OSCARS by iata code (FALTA VALIDAR PELA POIA DO TIPO GDI)
-		
 		for (AMS_OSCAR__c oscar : [SELECT ID, name, Account__r.IATACode__c,Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Process__c = :AMS_Utils.NGGDI AND Account__c IN :mapIATACodeAccs.values() ]){
 			mapIATACodeOSCARs.put(oscar.Account__r.IATACode__c, oscar);
 			oscarIDs.add(oscar.id);
@@ -129,27 +139,31 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 			}
 
 			stagingFSs.add(createStagingArea(oscar,ri,opp,fs));
+
+			//lets update the status of the ones that went well
+			if(ri.Status__c != 'Failed'){
+				ri.Status__c = 'Completed';
+				artifactsWithParents.get(ri.id).Request_Result__c = 'Completed';
+				listArtifactsToUpdate.add(artifactsWithParents.get(ri.id));
+				artifactsWithParents.remove(ri.Id);
+			}
 		}
 
 		update updatedOpportunities;
 		update updatedCases;
 		update mapIATACodeOSCARs.values();
 		insert stagingFSs;
+		update listArtifactsToUpdate;
 	}
 
-	//aqui vai ter que receber a oportunidade e o financial security
 	public Opportunitylineitem createStagingArea(AMS_Oscar__c oscar, Remote_Invocation__c ri, Opportunity opp, Financial_Security__c fsList){
 	    
 		Opportunitylineitem stagingFs;
 
 		try{
         
-            //Opportunity opp = [Select Id, currencyIsoCode, Account.Region_formula__c from Opportunity where Related_Oscar__c = :oscar.Id];
-            
 			stagingFs = new Opportunitylineitem();
 
-			//List<Financial_Security__c> fsList = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
-			
             stagingFs.OpportunityId = opp.Id;
             stagingFs.OSCAR_GDI__c = oscar.Id;
             stagingFs.Security_Type__c = 'GDI';
@@ -161,13 +175,19 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
             stagingFs.Region__c = opp.Account.Region_formula__c;
             stagingFs.Financial_Institution__c = dfltFI.Id; 
             stagingFs.TotalPrice = 1;
-            stagingFs.pricebookentryid = pbe.id;
+            stagingFs.pricebookentryid = mapCurrencyISOCodePBE.get(opp.currencyISOCode).id;//pbe.id;
 
             stagingFs.Reception_Case__c = oscar.Oscar_Communication_Case_Id__c;
         
         }catch(Exception e){
             System.debug(e.getStackTraceString());
 			ri.addError('Unable to create staging are for the certificate of endorsment [Id:'+ri.Id+'] - Reason:'+e.getStackTraceString());
+			ri.Status__c = 'Failed';
+			ri.Status_detail__c = 'Unable to create staging are for the certificate of endorsment [Id:'+ri.Id+'] - Reason:'+e.getStackTraceString();
+
+			artifactsWithParents.get(ri.id).Request_Result__c = 'Failed';
+			listArtifactsToUpdate.add(artifactsWithParents.get(ri.id));
+			artifactsWithParents.remove(ri.Id);
         }
         system.debug('##final stagingFs' + stagingFs);
 		return stagingFs;

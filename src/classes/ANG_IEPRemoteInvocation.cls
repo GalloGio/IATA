@@ -95,8 +95,8 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 
 	public void doProcess(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
 		
+		//not realy required but...
 		system.debug('##remoteInvocationsIdToProcess: ' + remoteInvocationsIdToProcess);
-
 		if(remoteInvocationsIdToProcess.isEmpty()) return; //nothing to do here
 		
 
@@ -122,6 +122,7 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 				for(AMS_OSCAR__c oscar : listOSCARs){
 					String iataCode = mapIDAccs.get(oscar.Account__c).IATACode__c;
 					system.debug('##iata code: ' + iatacode);
+					mapRemoteInvocations.get(mapRemoteInvocationArtifacts.get(iataCode).Remote_Invocation__c).status__c = 'Completed';
 					mapRemoteInvocationArtifacts.get(iataCode).Request_Result__c = 'Completed';
 					mapRemoteInvocationArtifacts.get(iataCode).Object_ID_Created__c = oscar.id;
 					artifactRequestsToUpdate.add(mapRemoteInvocationArtifacts.get(iataCode));	
@@ -135,8 +136,8 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 				mapRemoteInvocations.get(artifact.Remote_Invocation__c).Status__c = 'Failed';
 				mapRemoteInvocations.get(artifact.Remote_Invocation__c).Status_detail__c = e.getMessage();
 				requestsToUpdate.add(mapRemoteInvocations.get(artifact.Remote_Invocation__c));
-				//status details should be filled with error description but...
-				
+
+				artifact.Request_Result__c = 'Failed';
 				artifactRequestsToUpdate.add(artifact);
 				mapRemoteInvocationArtifacts.remove(artifact.Internal_Id__c);
 			}	
@@ -156,7 +157,6 @@ public class ANG_IEPRemoteInvocation implements ANG_RemoteInvocationINT {
 				//mark parent with error
 				mapRemoteInvocations.get(artifact.Remote_Invocation__c).Status__c = 'Failed';
 				mapRemoteInvocations.get(artifact.Remote_Invocation__c).Status_detail__c = 'Unknown Error occurred';
-				//status details should be filled with error description but...
 				requestsToUpdate.add(mapRemoteInvocations.get(artifact.Remote_Invocation__c));
 
 			}
