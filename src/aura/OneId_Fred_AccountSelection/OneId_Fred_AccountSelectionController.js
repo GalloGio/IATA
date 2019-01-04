@@ -30,7 +30,7 @@
                     console.log('wwww');
                     console.log(isInvitation);
                     component.set("v.isInvitation", isInvitation)
-                    helper.initParams(component, isInvitation, invitationId);
+                    helper.initParams(component, isInvitation, invitationId, component.get("v.contact"));
                 }
             }
             // If registration comes from FRED (not a guest) by a primary user, I can create another primary or secondary user
@@ -110,6 +110,7 @@
     onRender: function(component, event, helper) {
         // Expand div according to suggestion size
         component.set("v.suggestionBoxHeight", component.find("suggestionBoxID").getElement().clientHeight);
+        helper.checkIfAccountSet(component);
     },
 
     typeOfCustomerChanged: function(component, event, helper) {
@@ -151,7 +152,7 @@
             }
             component.set("v.suggestionBoxHeight", 0 );
             component.set("v.accountSelected", true);
-            component.set("v.acc", component.get("v.response")[accountIndex]);
+            component.set("v.account", component.get("v.response")[accountIndex]);
         }
     },
 
@@ -169,7 +170,7 @@
         } 
        var action = component.get("c.registration");
         action.setParams({
-            "acc":component.get("v.acc"),
+            "acc":component.get("v.account"),
             "con":component.get("v.contact"),
             "selectedCustomerType":component.get("v.customerType"),
             "con":component.get("v.contact"),
@@ -208,8 +209,19 @@
             
             if(!result) {
 
-               console.log(a.getReturnValue());
-                alert(a.getReturnValue().error);
+                console.log(a.getReturnValue());
+                //Previous message
+                //alert(a.getReturnValue().error);
+                var result = confirm(a.getReturnValue().error);
+                var txt;
+                if (result == true) {
+                    window.location.href = 'https://fred.iata.org/contact';
+                    txt = 'User redirected...'
+                    
+                } else {
+                    txt = "User canceled the operation...";
+                }
+                console.log(txt);
                 /*
                 // Show toast not working as guest (public pages)- Wok only when logged in
                 var toastEvent = $A.get("e.force:showToast");

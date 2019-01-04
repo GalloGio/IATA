@@ -181,6 +181,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>TradeName__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>AMS_ACCOUNT_FIELDS_TO_VALIDATE</label>
     </fieldSets>
     <fieldSets>
@@ -5635,6 +5640,31 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </valueSet>
     </fields>
     <fields>
+        <fullName>BSP_non_air__c</fullName>
+        <externalId>false</externalId>
+        <label>BSP non air</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>BSPlink_code__c</fullName>
         <externalId>false</externalId>
         <label>BSPlink code</label>
@@ -5933,7 +5963,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Apartment &amp; Villa Rental</fullName>
                     <default>false</default>
-                    <label>Apartment &amp; Villa Rental</label>
+                    <label>Apartment and Villa Rental</label>
                 </value>
                 <value>
                     <fullName>Banking Service</fullName>
@@ -6153,7 +6183,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <value>
                     <fullName>Non Governmental Organization</fullName>
                     <default>false</default>
-                    <label>Non Governmental Organization</label>
+                    <label>Non-Governmental Organization</label>
                 </value>
                 <value>
                     <fullName>Non-IATA Cargo Agent</fullName>
@@ -6572,10 +6602,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Payment Provider</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>DPC</controllingFieldValue>
-                <valueName>DPC</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
                 <valueName>Civil Aviation Authority</valueName>
             </valueSettings>
@@ -6614,6 +6640,42 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Clearance_level__c</fullName>
+        <description>Clearance level performed on account by due diligence</description>
+        <externalId>false</externalId>
+        <label>Clearance level</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>Level 1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>Level 2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>Level 3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>Level 4</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Collection_Case_Indicator__c</fullName>
@@ -9256,6 +9318,16 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Date_of_last_clearance__c</fullName>
+        <description>Date due diligence performed last clearance on an account</description>
+        <externalId>false</externalId>
+        <label>Date of last clearance</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Date_of_most_recent_name_change__c</fullName>
         <externalId>false</externalId>
         <label>Date of most recent name change</label>
@@ -9529,7 +9601,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <label>SIS 3-Digit Code</label>
         <length>15</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -9541,7 +9613,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <label>SIS 2-Letter Code</label>
         <length>2</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -10131,6 +10203,38 @@ WSPN-Worldspan</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Give_SIS_Membership__c</fullName>
+        <description>Allow ISS portal users under this account to access to Join SIS e-Invoicing application</description>
+        <externalId>false</externalId>
+        <label>Give SIS Membership</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ISPA</fullName>
+                    <default>false</default>
+                    <label>ISPA</label>
+                </value>
+                <value>
+                    <fullName>ISUA</fullName>
+                    <default>false</default>
+                    <label>ISUA</label>
+                </value>
+                <value>
+                    <fullName>TOU</fullName>
+                    <default>false</default>
+                    <label>TOU</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Guaranteed_amount__c</fullName>
@@ -15068,6 +15172,11 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <value>
                     <fullName>B</fullName>
                     <default>false</default>
+                    <label>Twice a week</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
                     <label>Every 3 days</label>
                 </value>
                 <value>
@@ -15082,7 +15191,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://sap.iata.org/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=ZACCMGT_KF%26X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
+        <formula>IF(ISBLANK(Higher_Level_Customer__c) || Higher_Level_Customer__c = 0,&quot;&quot;, HYPERLINK(&quot;https://bw.iata.org/redirect?url=/irj/servlet/prt/portal/prtroot/com.sap.ip.bi.designstudio.nw.portal.ds?APPLICATION=TDS_LO_SD_SABYACC&amp;X_SOLDTO=&quot; &amp; TEXT( Higher_Level_Customer__c ) , &quot; SAP/BW report with sales figures &quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Products Purchased</label>
         <required>false</required>
@@ -15414,11 +15523,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                     <fullName>Cargo Agent</fullName>
                     <default>false</default>
                     <label>Cargo Agent</label>
-                </value>
-                <value>
-                    <fullName>DPC</fullName>
-                    <default>false</default>
-                    <label>DPC</label>
                 </value>
                 <value>
                     <fullName>Education</fullName>
@@ -18933,6 +19037,16 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <description>Check if aircraft operator is eligible</description>
         <externalId>false</externalId>
         <label>FRED Aircraft Operator Eligibility</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>iiNet_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field is used to set Account as part of iiNet</description>
+        <externalId>false</externalId>
+        <label>iiNet Account</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -23127,6 +23241,36 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </filters>
         <label>GDP - My Accounts</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>GDS_s</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.Others</value>
+        </filters>
+        <filters>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>Global Distribution System</value>
+        </filters>
+        <filters>
+            <field>Identify_as_Key_Customer__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>GDS&apos;s Key accounts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>DistributionOperationalMgmtHO</role>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>GeneralPublicAccounts</fullName>
@@ -29763,6 +29907,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -29857,6 +30012,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30282,6 +30456,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32452,6 +32641,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35438,6 +35631,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -35476,6 +35680,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36521,6 +36744,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42447,6 +42685,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -42485,6 +42734,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42844,6 +43112,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48465,6 +48748,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -48503,6 +48797,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48830,6 +49143,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54441,6 +54769,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -54755,6 +55094,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -56852,6 +57210,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -59758,10 +60131,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DPC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63837,6 +64206,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -64135,6 +64515,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -66224,6 +66623,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73028,6 +73442,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -73334,6 +73759,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Customer_Type__c</picklist>
             <values>
                 <fullName>Accredited Training Center %28ATC%29</fullName>
@@ -73607,6 +74051,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75890,10 +76349,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DPC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -78911,6 +79366,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -79201,6 +79667,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -79626,6 +80111,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -82120,6 +82620,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85337,6 +85841,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>BSP_non_air__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Branch_Type__c</picklist>
             <values>
                 <fullName>Normal</fullName>
@@ -85651,6 +86166,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -87748,6 +88282,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -90657,10 +91206,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>DPC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Education</fullName>
                 <default>false</default>
             </values>
@@ -93477,7 +94022,7 @@ ISCHANGED(IATA_ISO_Country__c),
 ISCHANGED(RecordTypeId))
 ,
 NOT
-(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;Restricted Profile - automated process&quot;))
+(CONTAINS($Profile.Name, &quot;System Administrator&quot;) || CONTAINS($Profile.Name, &quot;Restricted Profile - automated process&quot;))
 )</errorConditionFormula>
         <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>
@@ -93564,6 +94109,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 1 ),
 
@@ -93579,6 +94125,7 @@ IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;W&quot;),1,0) + 
 IF(INCLUDES(Remittance_frequency__c , &quot;V&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;B&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;T&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;S&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
 

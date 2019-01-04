@@ -754,6 +754,14 @@ background-color:#428bca;
      <ul  class="nav navbar-nav collapse" id="five">
          <li><a href="/ISSP_PersonalInformation?MainNav=Personalinfor&subNav=perso&mid=M5S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S1"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Registration_MyInformation}</a></li>
          <li><a href="/ISSP_CompanyInformation?MainNav=Companyinfor&subNav=account&mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S2">{!$Label.ISSP_Account_Information}</a></li>
+                <!-- AMSU-201 -->
+                <apex:outputPanel layout="none" rendered="{!showFinancialSec}">
+                  <li>
+                    <a href="/ISSP_FinancialSecInformation?MainNav=FinInfo&subNav=financial_securities&mid=M5S3{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S3">
+                      {!$Label.ISSP_Financial_Securities_Information}
+                    </a>
+                  </li>
+                </apex:outputPanel>
       </ul>
 
       <ul  class="nav navbar-nav collapse" id="six">

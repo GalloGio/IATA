@@ -106,6 +106,8 @@ global with sharing class IDCardUtil {
     public static final String ACCOUNT_STATUS_CASE_COMMISSION = 'Cash basis/with commission';
     @RemoteAction
     public static final   Set<String> ALLOWED_ACCOUNT_STATUS = new  Set<String> { ACCOUNT_STATUS_LISTED, ACCOUNT_STATUS_APPROVED , ACCOUNT_STATUS_CHANGES_PROCESSED, ACCOUNT_STATUS_UNDER_REVIEW, ACCOUNT_STATUS_CASH_NOCOMMISSION, ACCOUNT_STATUS_CASE_COMMISSION};
+     @RemoteAction
+    public static final   Set<String> ALLOWED_ACCOUNT_LOCATION_CLASS = new  Set<String> {'D', 'P', 'T'};    
     @RemoteAction
     public static final String ACCOUNT_STATUS_TERMINATED = 'Terminated';
 
