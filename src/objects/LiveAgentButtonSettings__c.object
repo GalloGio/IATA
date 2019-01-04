@@ -14,6 +14,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Button_Per_Topic__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If is checked, then bypass code and show this button for selected topic in Portal.</description>
+        <externalId>false</externalId>
+        <label>Button Per Topic</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>DeploymentId__c</fullName>
         <externalId>false</externalId>
         <label>DeploymentId</label>
@@ -52,6 +61,17 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Topic__c</fullName>
+        <description>Topic API Name taken from Data Categories, to specify button per Topic</description>
+        <externalId>false</externalId>
+        <label>Topic</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>LiveAgentButtonSettings</label>
     <listViews>

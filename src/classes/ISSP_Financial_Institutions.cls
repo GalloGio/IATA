@@ -45,7 +45,14 @@ public with sharing class ISSP_Financial_Institutions {
 		}
 		private set;
 	}
-	private Integer userFailedProvisioningCount {get; set;}
+	private List<UserProvisioningRequest> previousUserFailedProvisioning {
+		get {
+			if (previousUserFailedProvisioning == null) return new List<UserProvisioningRequest>();
+
+			return previousUserFailedProvisioning;
+		}
+		set;
+	}
 	public ApexPages.StandardSetController ssController {
 		get {
 			if (ssController == null) fetchFinancialInstitutions();
@@ -100,7 +107,6 @@ public with sharing class ISSP_Financial_Institutions {
 		}
 		private set;
 	}
-	private Portal_Application_Right__c gdiPar {get; set;}
 
 	public ISSP_Financial_Institutions() {}
 
@@ -200,14 +206,13 @@ public with sharing class ISSP_Financial_Institutions {
 	}
 
 	public void createPortalAppRight() {
-		gdiPar = new Portal_Application_Right__c(Contact__c = conId,
-							                     Portal_Application__c = gdiPortalAppId,
-							                     Right__c = 'Access Requested',
-							                     Terms_Acceptance__c = termsAndConditions,
-							                     Terms_Acceptance_Date__c = Datetime.now());
-		insert gdiPar;
+		insert new Portal_Application_Right__c(Contact__c = conId,
+							                   Portal_Application__c = gdiPortalAppId,
+							                   Right__c = 'Access Requested',
+							                   Terms_Acceptance__c = termsAndConditions,
+							                   Terms_Acceptance_Date__c = Datetime.now());
 
-		userFailedProvisioningCount = [SELECT COUNT() FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
+		previousUserFailedProvisioning = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 		getSSOPermissionSet();
 	}
 
@@ -226,15 +231,13 @@ public with sharing class ISSP_Financial_Institutions {
         if (!gdiPermSetAssignmentList.isEmpty()) {
         	gdiPolling = false;
         	gdiAppRightGranted = true;
-
-        	gdiPar.Right__c = 'Access Granted';
-        	update gdiPar;
         } else {
         	List<UserProvisioningRequest> provRequestFailedList = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
 
-        	if (provRequestFailedList.size() != userFailedProvisioningCount) {
+        	if (provRequestFailedList.size() != previousUserFailedProvisioning.size()) {
         		gdiPolling = false;
         		currentErrorMessage = System.Label.ANG_ISSP_GDI_UserProvisioningError;
+        		gdiAppRightRequested = true;
         	}
         }            
     }

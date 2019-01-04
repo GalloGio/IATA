@@ -345,8 +345,8 @@ public class AMS_OSCARTriggerHandler {
 
         for(AMS_Oscar__c oscar : oscars) {
             AMS_Oscar__c oldRecord = oldMap.get(oscar.Id);
-            if(processToCheck.contains(oscar.Process__c) && oldRecord.RPM_Approval__c <> oscar.RPM_Approval__c && 
-                oscar.RPM_Approval__c == 'Authorize Approval' && 
+            //AMSU-206 changed to validation step
+            if(processToCheck.contains(oscar.Process__c) && oscar.STEP15__c == AMS_Utils.PASSED && oscar.STEP15__c <> oldRecord.STEP15__c &&
                 oscar.AMS_Online_Accreditation__c != null && !String.isBlank(oscar.Country_ISO_Code__c)) {
                 oscarsToValidate.add(oscar);
                 mapClassAttributes.put(oscar.Country_ISO_Code__c, null);
@@ -4433,7 +4433,7 @@ public class AMS_OSCARTriggerHandler {
     }
 
     // NEWGEN-4426
-    public static void handleGDIRequestEndorsementCertificate(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap) {
+    public static void handleGDIRequestEndorsementCertificate(Map<Id, AMS_OSCAR__c> newMap, Map<Id, AMS_OSCAR__c> oldMap) {
 
         //START validation 1: Check if Endorsement_Requested__c was set to true
         Map<Id,AMS_OSCAR__c> oscarsToProcessMap = new Map<Id,AMS_OSCAR__c>();
@@ -4447,29 +4447,25 @@ public class AMS_OSCARTriggerHandler {
         //END Validation 1
 
         //START Validation 2: check if oscar has an opportunity created
-        Set<Id> oppOscarIDSet = new Set<Id>();
-        for(Opportunity opp : [SELECT Id, Related_Oscar__c FROM Opportunity WHERE Related_Oscar__c IN :oscarsToProcessMap.keySet()])
-            oppOscarIDSet.add(opp.Related_Oscar__c);
+        Map<Id,Opportunity> oppOscarIdMap = new Map<Id,Opportunity>();
+        for(Opportunity opp : [SELECT Id, Related_Oscar__c, GDI_Offer_Id__c FROM Opportunity WHERE Related_Oscar__c IN :oscarsToProcessMap.keySet()])
+            oppOscarIdMap.put(opp.Related_Oscar__c, opp);
 
-        Set<String> iataCodes = new Set<String>();
+        Map<String,String> iataCodes = new Map<String,String>();
 
         for(AMS_OSCAR__c oscar :oscarsToProcessMap.values()) {
-            if(!oppOscarIDSet.contains(oscar.Id)) {
+            if(!oppOscarIdMap.containsKey(oscar.Id) || String.isBlank(oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c) ) {
                oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
             } else {
-                iataCodes.add(oscar.IATACode__c);
+                iataCodes.put(oscar.IATACode__c,oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c);
             }
         }
 
         if(iataCodes.isEmpty())
             return;
-        //END Validation 2
 
-        //TODO: do callout (confirm endpoint)
-
-        //create overload for following method? 
-        //ANG_RME_Alert_Service.requestProvisionalRHC(String accountId, Boolean flagUpdateProvisioning){
-
+        for(String key : iataCodes.keySet())
+            ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
         
     }          
 

@@ -6,6 +6,10 @@
         <roles>
             <role>SISCustomerSupportA</role>
         </roles>
+        <users>
+            <user>torromeoa@iata.org</user>
+            <user>macneillb@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

@@ -25,7 +25,7 @@ public class ANG_GDIRemoteInvocationTest {
 		insert acc;
 
 
-		AMS_OSCAR__c oscar = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = acc.id,Change_effective_as_of__c = Date.today());
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = acc.id,Change_effective_as_of__c = Date.today(), Process__c = AMS_Utils.NGGDI);
 		insert oscar;
 
 		Contact contact = new Contact(AccountId = acc.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
@@ -55,9 +55,10 @@ public class ANG_GDIRemoteInvocationTest {
 
 		testSetup('USD',false);
 
-		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567', 
-			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
-			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
+		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567',
+                                                           RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c','ANG_IEP_MODEL_A'),
+															Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+															status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
 		
 		insert ri;
 

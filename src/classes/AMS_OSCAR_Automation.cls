@@ -1323,6 +1323,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 oscar.Invoice_Requested__c = Date.today();
+                oscar.Process_Start_Date__c = Date.today();
                 res = true;
             }
 

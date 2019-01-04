@@ -9,7 +9,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 	//Remote Invocation Request Types
 	public static final String NEWGEN_EASY_PAY = 'ANG_IEP_MODEL_A';
 	public static final String TIP_IFG_REPORT  = 'TIP_IFG_REPORT';
-	public static final String NEWGEN_GDI_ENDO  = 'TIP_IFG_REPORT';
+	public static final String NEWGEN_GDI_ENDO  = 'GDI';
 
 	//Remote Invocation Status
 	public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
@@ -63,7 +63,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 
 	public void assignRecordtypeToRequest(){
 		for(Remote_Invocation__c er : triggerNew){
-			er.recordtypeid = (er.Request_Type__c == NEWGEN_EASY_PAY ? RECTYPE_NEWGEN : RECTYPE_TIP);
+			er.recordtypeid = ((er.Request_Type__c == NEWGEN_EASY_PAY || er.Request_Type__c == NEWGEN_GDI_ENDO) ? RECTYPE_NEWGEN : RECTYPE_TIP);
 		}
 	}
 

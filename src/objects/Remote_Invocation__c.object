@@ -193,6 +193,10 @@ When MS sets “In Progress”, trigger to fire</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDI</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIP_IFG_REPORT</fullName>
                 <default>false</default>
             </values>
