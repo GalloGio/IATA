@@ -174,7 +174,7 @@
             <apex:pageBlockSection columns="2" rendered="{!NOT(OR(ISNULL(newFSId),ISBLANK(newFSId)))}" collapsible="false">
                 <script type="text/javascript">
                     openSubtab('/{!newFSId}', 'New Financial Security');
-                    closeTab();
+                	//closeTab();
                     refreshTab();
                 </script>
             </apex:pageBlockSection>
