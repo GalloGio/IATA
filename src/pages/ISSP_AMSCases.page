@@ -207,15 +207,6 @@
                 });
                 return false;
             }
-
-            /*function showDeleteMCModal() {
-                $('[id$="deleteMCCaseModal"]').css('display', 'block');
-                //deleteContact(conid);
-            }
-
-            function hideDeleteMCModal() {
-                $('[id$="deleteMCCaseModal"]').css('display', 'none');
-            }*/
             </script>
         <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
@@ -317,9 +308,9 @@
                                         <apex:pageBlockTable id="onGoingMultiCountryCases" value="{!multiCountryApplicationCases}" var="mcCase" styleClass="table" rendered="{!mcApplicationCasesFound}">
                                             
                                             <apex:column headerValue="">
-                                                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!mcCase.Id}&step=5{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}">Modify &nbsp;</apex:outputLink>
+                                                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!mcCase.Id}&step=5{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}">Modify &nbsp;</apex:outputLink>
                                                 
-                                                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!mcCase.Id}&step=3{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}">Edit &nbsp;</apex:outputLink>
+                                                <apex:outputLink value="/ISSP_ANG_PAX_AE?caseId={!mcCase.Id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}">Edit &nbsp;</apex:outputLink>
 
                                                 <apex:commandLink immediate="true" onfocus="confirmMCCaseDelete('{!mcCase.Id}'); return false;" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}" reRender="">Remove</apex:commandLink>
                                                 
@@ -413,28 +404,6 @@
                             </div>
                         </section>
                     </div>
-                </div>
-
-                <div class="modal" id="deleteMCCaseModal" tabindex="-1" role="dialog">
-                    <apex:outputPanel layout="block" id="myModalContent"> 
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button id="deleteMCModalCloseButtonSecondary" type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="hideDeleteMCModal();">&times;</button>
-                                    <h4 class="modal-title">{!$Label.OneId_TermsAndConditions}</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>
-                                        <apex:outputText value="{!$Label.ANG_ISSP_GDI_Terms_Conditions}"/>
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <apex:commandButton id="deleteMCModalConfirmButton" styleClass="btn_iata_success btn" value="{!$Label.ISSP_PCI_Stay}" onclick="deleteMCCase(); return false;" reRender=""/>
-                                    <apex:commandButton id="deleteMCModalCloseButton" styleClass="btn btn-secondary" value="{!$Label.IFAP_close}" onclick="hideDeleteMCModal(); return false;" reRender=""/>
-                                </div>
-                            </div>
-                        </div>
-                    </apex:outputPanel>
                 </div>
 
                 <div class="modal" id="modalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

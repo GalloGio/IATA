@@ -144,7 +144,7 @@ public class RecordTypeSingleton {
 	public Map<String, Id> getRecordTypeObjIdMapForSpecfifiedNames(String objectName, List<String> devNameList) {
 		Map<String, Id> returnRecTypeObjIdMap = new Map<String, Id>();
 
-		if(!recordTypesByName.containsKey(objectName)) return new Map<String, Id>();
+		if(!recordTypesByName.containsKey(objectName)) return returnRecTypeObjIdMap;
 
 		for (String devName: devNameList)
 			returnRecTypeObjIdMap.put(devName, getRecordTypeId(objectName, devName));
