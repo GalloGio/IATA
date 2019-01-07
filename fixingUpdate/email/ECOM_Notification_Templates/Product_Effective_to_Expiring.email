@@ -1,0 +1,21 @@
+<html> 
+<head> 
+</head> 
+<body> 
+<p>Dear {!Product2.Product_Manager_lookup__c},</p>
+<p>The validity date for your product #{!Product2.SAP_Material_Number__c} is expiring in {!Product2.Number_of_days__c} days. Please update your product’s validity end date by performing one of the following actions:</p> 
+<ul> 
+<li>Extend the validity date to a future period if you still wish to sell the remaining inventory</li> 
+<li>Should you not complete this action, the product will automatically be removed from the Online on the product <b>Effective To</b> date + 1 day.</li> 
+</ul> 
+
+Removing the check boxes "Sell through eCommerce" and "Display to eCommerce" if the product should no longer be offered for sale
+
+<p></p>
+<p></p>
+<p>Best regards,<br />
+eCommerce Support Team
+</p>
+
+</body> 
+</html>

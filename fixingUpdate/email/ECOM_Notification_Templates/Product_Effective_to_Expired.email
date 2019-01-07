@@ -1,0 +1,20 @@
+<html> 
+<head> 
+</head> 
+<body> 
+<p>Dear Product Owner,</p>
+<p>This is a final notice to let you know that the validity date for your product #{!Product2.SAP_Material_Number__c} has expired. This is your last chance to change or extend your product’s <b>Effective To</b> date. Please perform one of the following actions:</p> 
+<ul> 
+<li>Extend the <b>Effective To</b> date to a future period if you still wish to sell the remaining inventory</li> 
+<li>Should you not complete this action, the product will automatically be removed from the Online catalog<b> tomorrow.</b></li> 
+</ul> 
+
+
+<p></p>
+<p></p>
+<p>Best regards,<br />
+eCommerce Support Team
+</p>
+
+</body> 
+</html>

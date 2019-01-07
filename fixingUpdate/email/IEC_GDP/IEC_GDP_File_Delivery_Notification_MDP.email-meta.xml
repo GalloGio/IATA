@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>IATA_Training</letterhead>
+    <name>IEC GDP File Delivery Notification - MDP</name>
+    <style>freeForm</style>
+    <subject>IINET File Delivery Notification</subject>
+    <textOnly>Dear {!GDP_File_Delivery__c.Technical_Contact_Name__c},
+
+This is to inform you that on the {!GDP_File_Delivery__c.Delivery_Date_Text__c}, files for your Marketing Data Package subscription ({!GDP_File_Delivery__c.GSS_Subscription_Detail__c}) have been submitted to your IINET Account.
+
+Below is some information on IINET as well as the files themselves.
+
+
+Types of Files:
+
+You have received {!GDP_File_Delivery__c.Quantity_of_file_in_delivery__c} file(s).
+
+{!GDP_File_Delivery__c.List_of_files_delivered__c}
+
+The file is sorted the following way:
+ 
+- By IATA Area (smallest to largest)
+- By Location Country ISO Code (Alphabetically)
+- By Agency Legal Name 1 (Alphabetically)
+
+Filters are in place on all columns for your convenience.
+ 
+
+Fields Information:
+------------------------------------------------------------------------------------------------
+IATA Area
+1	=	The Americas
+2	=	Europe, Africa, Middle East
+3	=	Asia, Australia, Oceania
+
+Site Type
+AO	=	Administrative Office
+BR	=	Branch Office
+EB	=	ERSP Branch
+EP	=	ERSP Parent
+ES	=	European STP
+ET	=	ERSP linked to TIDS
+HO	=	Head/Home office
+SA	=	Specific Sales Activity
+SE	=	Special Event
+SP	=	Service Provider
+ST	=	Satellite Ticket Printer
+TD	=	Ticket Delivery Office
+
+Legal Name 1				Agency Legal Name
+
+Legal Name 2				Agency Legal Name (continued) -/- Optional
+
+Legal Name 3				Agency Legal Name (continued) -/- Optional
+
+Trade Name 1				Agency Trading Name
+
+Trade Name 2				Agency Trading Name (continued) -/- Optional
+
+Location City				The city where the agency is located
+
+Location Region/State		The state, province or territory within a country where the location is located
+
+Location Region ISO Code	The location state postal abbreviation.
+
+Location Country			The country where the agency office is located
+
+Location Country ISO Code	The ISO 2-letter country-code for the country where the location is 
+located
+
+Email					Email Address of Location
+
+Location Class
+D	=	Domestic
+P	=	Passenger
+T	=	Travel Industry Designator Service (TIDS)
+V	=	Travel Service Intermediaries-TSI (USA Only)
+
+Language
+ENG	=	English
+FRE	=	French
+SPA	=	Spanish
+
+FocusL					Market Focus Leisure:
+L1	=	0 to 25%
+L2	=	26 to 50%
+L3	=	51 to 75%
+L4	=	over 75%
+
+FocusC					Market Focus Corporate:
+C1	=	0 to 25%
+C2	=	26 to 50%
+C3	=	51 to 75%
+C4	=	over 75%
+
+ModeAir					Percentage sold of Air:
+A1	=	0 to 25%
+A2	=	26 to 50%
+A3	=	51 to 75%
+A4	=	over 75%
+
+ModeSea					Percentage sold of Sea/Cruise:
+S1	=	0 to 25%
+S2	=	26 to 50%
+S3	=	51 to 75%
+S4	=	over 75%
+
+ModeLand				Percentage sold of Land/Car:
+L1	=	0 to 25%
+L2	=	26 to 50%
+L3	=	51 to 75%
+L4	=	over 75%
+
+Mark1					Location Principal Market Specialization (Choice 1):
+AD	=	Adventure
+BH	=	Resorts/Beach
+CF	=	Conference/Exhibitions
+CP	=	Corporate/Business Travel
+CR	=	Cruises
+ED	=	Educational
+HL	=	Fitness/Health
+GA	=	Gay/Lesbian
+GN	=	General
+HC	=	Historical/Cultural
+HP	=	Handicapped
+IN	=	Incentive
+ML	=	Military
+OT	=	Other
+RL	=	Religious
+SF	=	Safari
+SG	=	Singles
+SN	=	Seniors
+SP	=	Sports
+
+Mark2					Location Secondary Market Specialization (Choice 2)
+
+Mark3					Location Other Market Specialization (Choice 3)
+
+Dest1					Location Principal Destinations (Choice 1):
+AF	=	Africa
+AH	=	Asia
+AL	=	Caribbean
+AS	=	Europe
+AZ	=	Middle East
+CB	=	North America
+EU	=	Mexico
+FR	=	Alaska/Hawaiian Islands
+GB	=	South &amp; Central America
+ME	=	South Pacific
+MX	=	British Isles
+NA	=	France
+SA	=	Australia/New Zealand
+SC	=	Scandinavia
+SP	=	General
+
+Dest2					Location Secondary Destination (Choice 2)
+
+Dest3					Location Other Destination (Choice 3)
+
+Act						Location Principal Activity:
+CN	=	Consolidator
+MC	=	Meeting/Conference Planner
+RT	=	Retailer
+TO	=	Tour Operator
+
+ModeAcc					Percentage sold of Accommodation/Hotel:
+H1	=	0 to 25%
+H2	=	26 to 50%
+H3	=	51 to 75%
+H4	=	over 75%
+
+ModeTour				Percentage sold of Tour Packages:
+R1	=	0 to 25%
+R2	=	26 to 50%
+R3	=	51 to 75%
+R4	=	over 75%
+------------------------------------------------------------------------------------------------
+
+Your IINET Account Information:
+
+As mentioned previously, IINET is IATA proprietary Secure File Transfer platform.
+In order to retrieve your files on a {!GDP_File_Delivery__c.Delivery_Frequency__c} basis, we have created an account in your name.
+
+To access the site, please use the below information:
+
+Website : https://iata-s.iinet.org
+
+I hope this introduction provides you enough information.
+Should you have questions, as always, please feel free to contact me.
+
+Sincerely</textOnly>
+    <type>html</type>
+</EmailTemplate>
