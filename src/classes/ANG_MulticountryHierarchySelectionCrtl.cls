@@ -43,8 +43,6 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					,'BillingPostalCode'
 					,'IATACODE__c'
 					,'Status__c'
-
-
 				};
 			}
 			return accountFields;
@@ -320,13 +318,11 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 			Savepoint sp = Database.setSavepoint();
 			try {
-				
-
 
 				adjustAccountsParentship();
 
 				List<Account> accountsToUpdate = fetchAccounts();
-
+                
 				if(!accountsToUpdate.isEmpty()){
 					update accountsToUpdate;
 					createHierarchy(accountsToUpdate);
@@ -343,8 +339,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				
 				for(Account a: accountsToUpdate)
 					AcctId.Add(a.id);
-				
-				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
+
+                ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
 				Id batchId = Database.executeBatch(myBatchObject,1);
 			
 			} catch(Exception e) {
@@ -360,7 +356,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		Set<String> alreadyCreatedRelations = new Set<String>();
 
-		For(AMS_Agencies_relationhip__c ar : [Select Id, Parent_Account__c, Child_Account__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__c = :oscar.account__c])
+		for(AMS_Agencies_relationhip__c ar : [Select Id, Parent_Account__c, Child_Account__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__c = :oscar.account__c])
 			alreadyCreatedRelations.add(String.valueof(ar.Child_Account__c)+String.valueOf(ar.Parent_Account__c));
 
 		if(acctLst.size() < 2)
@@ -446,13 +442,17 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		for(HierarchyItem item: hierarchyValues){
 
-			if(item.acc.Location_Type__c == AMS_Utils.AE && item.isHE){
+			if(item.isHE){
 				item.acc.Location_type__c = AMS_Utils.HE;
 				item.wasChanged = true;
 			}
-			if(item.acc.Location_Type__c == AMS_Utils.HE && item.isAE){
+			if(item.isAE){
 				item.acc.Location_type__c = AMS_Utils.AE;
 				item.wasChanged = true;			
+			}
+			if(!item.isHE && !item.isAE){
+				item.acc.Location_type__c = AMS_Utils.GE;
+				item.wasChanged = true;
 			}
 		}
 	}
