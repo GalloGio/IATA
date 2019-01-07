@@ -693,6 +693,11 @@
                     <default>false</default>
                     <label>ICE_POP</label>
                 </value>
+                <value>
+                    <fullName>GDI_ENDORSEMENT</fullName>
+                    <default>false</default>
+                    <label>GDI_ENDORSEMENT</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -836,6 +841,11 @@
                     <fullName>Internal</fullName>
                     <default>false</default>
                     <label>Internal</label>
+                </value>
+                <value>
+                    <fullName>External</fullName>
+                    <default>false</default>
+                    <label>External</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1289,6 +1299,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ID_PASSP</fullName>
                 <default>false</default>
             </values>
@@ -1450,6 +1464,10 @@
         </picklistValues>
         <picklistValues>
             <picklist>Source__c</picklist>
+            <values>
+                <fullName>External</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Internal</fullName>
                 <default>false</default>
@@ -1697,6 +1715,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ID_PASSP</fullName>
                 <default>false</default>
             </values>
@@ -1854,6 +1876,10 @@
         </picklistValues>
         <picklistValues>
             <picklist>Source__c</picklist>
+            <values>
+                <fullName>External</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Internal</fullName>
                 <default>false</default>
@@ -2113,6 +2139,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ID_PASSP</fullName>
                 <default>false</default>
             </values>
@@ -2266,6 +2296,10 @@
         </picklistValues>
         <picklistValues>
             <picklist>Source__c</picklist>
+            <values>
+                <fullName>External</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Internal</fullName>
                 <default>false</default>
