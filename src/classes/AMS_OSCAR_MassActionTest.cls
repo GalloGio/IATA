@@ -59,7 +59,7 @@ private class AMS_OSCAR_MassActionTest {
 		Test.startTest();		
 		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr ctr = new AMS_PCI_Compliant_Mass_OSCAR_CreationCtr();
 		ctr.operation = 'CVR';
-		ctr.csvFileContent = 'Record Id\n' + acc.Id;
+		ctr.csvFileContent = 'Record Id,Effective Date,Expiry Date\n' + acc.Id + ',' + Date.today() + ',' + Date.today().addDays(365);
 		ctr.uploadFile(); 
 		Test.stopTest();
 	}
