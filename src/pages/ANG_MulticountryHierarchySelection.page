@@ -46,13 +46,58 @@
 
 
 		function bindCheckboxes() {
-			$('[data-group]').on("change", function () {
-                              
-                var $clicked = $(this);
+			$('[data-type="GE"]').on("change", function () {
+				
+				var $clicked = $(this);
 
-				$('[data-group="'+$(this).data("group")+'"]').not($clicked).each(function () {
-                    $(this).prop("checked", !$clicked.prop("checked"));						
+				if($clicked.prop("checked")){
+					$('[data-type="GE"]').not($clicked).each(function () {
+						if($(this).prop("checked")){
+							$(this).prop("checked", false);
+							$('[data-group="'+$(this).data("group")+'"][data-type="AE"]').prop("checked", true);
+							$('[data-group="'+$(this).data("group")+'"][data-type="HE"]').prop("checked", false);
+
+						}						
 					});
+					$('[data-group="'+$clicked.data("group")+'"]').not($clicked).prop("checked", false);
+
+				}else{
+					var selection = false;
+					$('[data-type="main"]').not($clicked).each(function () {
+						if($(this).prop("checked")) selection = true;
+					});
+
+					if(!selection){
+						$clicked.prop("checked", true);
+						alert('Main account must always be selected');
+					}
+				}
+			});
+			$('[data-type="HE"],[data-type="AE"]').on("change", function () {
+			
+				var $clicked = $(this);
+
+				if($clicked.prop("checked")){
+
+					$('[data-group="'+$clicked.data("group")+'"]').not($clicked).prop("checked", false);
+
+					var selection = false;
+					$('[data-type="GE"]').each(function () {
+						if($(this).prop("checked")) selection = true;
+					});
+
+					if(!selection){
+						$clicked.prop("checked", false);
+						$('[data-group="'+$clicked.data("group")+'"][data-type="GE"]').prop("checked",true);
+                        alert('Main account must always be selected!');
+
+					}else{
+						$('[data-group="'+$clicked.data("group")+'"]').not($clicked).prop("checked", false);
+					}
+				}else{
+					$('[data-group="'+$clicked.data("group")+'"]').not($clicked).not('[data-type="GE"]').prop("checked", true);
+
+				}
 			});
 		}
 	</script>
@@ -106,17 +151,15 @@
                 <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
 					
 					<apex:column headerValue="GE">
-						<apex:inputCheckbox value="{!hi.main}" disabled="true"/>
+						<apex:inputCheckbox html-data-type="GE" html-data-group="{!hi.acc.Id}" value="{!hi.main}" disabled="{!!editable}"/>
 					</apex:column>
 
 					<apex:column headerValue="HE">
-					    <apex:inputCheckbox html-data-group="{!hi.acc.Id}" value="{!hi.isHE}" disabled="{!!editable}"/>
+					    <apex:inputCheckbox html-data-type="HE" html-data-group="{!hi.acc.Id}" value="{!hi.isHE}" disabled="{!!editable}"/>
                     </apex:column>
 
-
 					<apex:column headerValue="AE">
-                        <apex:inputCheckbox html-data-group="{!hi.acc.Id}" value="{!hi.isAE}" disabled="{!!editable}"/>
-
+                        <apex:inputCheckbox html-data-type="AE" html-data-group="{!hi.acc.Id}" value="{!hi.isAE}" disabled="{!!editable}"/>
                     </apex:column>
 
 					<apex:column value="{!hi.acc['Name']}"/>
