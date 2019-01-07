@@ -268,15 +268,6 @@ Default value: In Progress</description>
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Validity_Start_Date__c</fullName>
-        <description>The validity Start Date for GDI Certificate of Endorsement</description>
-        <externalId>false</externalId>
-        <label>Validity Start Date</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>Version_Notes__c</fullName>
         <description>Version notes</description>
         <externalId>false</externalId>
