@@ -70,24 +70,16 @@ public  class ISSP_TC_Accept {
 
         if (!userList.isEmpty()){
             if (userList[0].LastPasswordChangeDate != null){
-                system.debug('LastPasswordChangeDate: ' + userList[0].LastPasswordChangeDate);
                 system.debug('LastPasswordChangeDate addDays: ' + userList[0].LastPasswordChangeDate.addDays(passwordDays));
-                system.debug('LastPasswordChangeDate now: ' + system.now());
-                //if (userList[0].LastPasswordChangeDate.addMinutes(10) < system.now() && userList[0].Email == 'tiago.ferreira+newportal_01_01@kerensen.com'){
-                if (userList[0].LastPasswordChangeDate.addDays(passwordDays) < system.now()){
-                    toChangePassword = true;
-                    system.debug('password date passed');
-                }
-                else{
-                    system.debug('password date not passed');
-                }
+
+                if (userList[0].LastPasswordChangeDate.addDays(passwordDays) < system.now()) toChangePassword = true;
             }
-            if (userList[0].UID__c != '' && userList[0].UID__c != null){
-                toChangePassword = true;
-            }
+            if (userList[0].UID__c != '' && userList[0].UID__c != null) toChangePassword = true;
+                
             if (!userList[0].ToU_Accepted__c){
                 toAcceptTC = true;
             }
+
             if (userList[0].ContactId != null){
                 ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
                 String appId = serviceIdInstance.BSPLink__c;
@@ -95,9 +87,7 @@ public  class ISSP_TC_Accept {
                                                             WHERE Portal_Application__c = :appId
                                                             AND Contact__c = :userList[0].ContactId
                                                             AND Right__c = 'Access Granted'];
-                if (!bspList.isEmpty()){
-                    isBSP = true;
-                }
+                if (!bspList.isEmpty()) isBSP = true;
             }
             //AMSU-142 (AMSU-26)
             isCargoDGR = false;
@@ -123,7 +113,6 @@ public  class ISSP_TC_Accept {
         }
         
         selectedLanguage = UserInfo.getLanguage();
-        system.debug('IS BSP: ' + isBSP);
     }
     
     public PageReference redirectChangePassword(){
@@ -131,15 +120,12 @@ public  class ISSP_TC_Accept {
             integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
             if (userList[0].UID__c != '' && userList[0].UID__c != null){
                 PageReference pr = new PageReference('/ISSP_ChangePassword'+commParam);
-                system.debug('REDIRECTING TO CHANGE PASSWORD');
                 pr.setRedirect(true);
                 return pr;
             }
             else if (userList[0].LastPasswordChangeDate != null){
-                //if (userList[0].LastPasswordChangeDate.addMinutes(10) < system.now() && userList[0].Email == 'tiago.ferreira+newportal_01_01@kerensen.com'){
                 if (userList[0].LastPasswordChangeDate.addDays(passwordDays) < system.now()){
                     PageReference pr2 = new PageReference('/ISSP_ChangePassword'+commParam);
-                    system.debug('REDIRECTING TO CHANGE PASSWORD');
                     pr2.setRedirect(true);
                     return pr2;
                 }
@@ -169,24 +155,19 @@ public  class ISSP_TC_Accept {
 
     public PageReference pageLoad(){
         String strUrl = ApexPages.currentPage().getUrl();
-        system.debug('URL: ' + strUrl);
-        if (!strUrl.contains('ISSP_TC_Accept')){// && !strUrl.contains('ISSP_2FA')){
+
+        if (!strUrl.contains('ISSP_TC_Accept')){
             system.debug('DOES NOT CONTAIN ISSP_CHANGEPASSWORD');
             List <User> userList = [SELECT Id, ToU_Accepted__c, UID__c
-                                //X2FA_Session__c, TD_User__c
                                 FROM User WHERE Id =:UserInfo.getUserId()];
             if (!userList.isEmpty()){
                 if (!userList[0].ToU_Accepted__c){
-                    //PageReference pr = new PageReference('/ISSP_TC_Redirect');
                     PageReference pr = new PageReference('/ISSP_TC_Accept');
-                    system.debug('REDIRECTING TO TC ACCEPT');
                     pr.setRedirect(true);
                     return pr;
                 }
                 else if (userList[0].UID__c != '' && userList[0].UID__c != null){
-                    //PageReference pr = new PageReference('/ISSP_ChangePasswordRedirect');
                     PageReference pr = new PageReference('/ISSP_ChangePassword' + commParam);
-                    system.debug('REDIRECTING TO CHANGE PASSWORD');
                     pr.setRedirect(true);
                     return pr;
                 }
