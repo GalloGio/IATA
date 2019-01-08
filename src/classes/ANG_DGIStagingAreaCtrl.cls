@@ -150,7 +150,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
   
         }
         catch(Exception e){
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getStackTraceString()));
+            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getMessage()));
             System.debug(e.getStackTraceString());
         }
     }
@@ -215,6 +215,11 @@ public without sharing class ANG_DGIStagingAreaCtrl {
     }
 
     public void performAcceptancewithAdendum(Case oscarCase){
+
+        if(currentFS == null){
+            throw new AMS_ApplicationException('There is no Financial Security or no correct Financial Security type/Status on the Account.');
+        }
+
 
         ANG_AmendFS plugin = new ANG_AmendFS();
 
