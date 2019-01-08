@@ -174,11 +174,14 @@
             <apex:pageBlockSection columns="2" rendered="{!NOT(OR(ISNULL(newFSId),ISBLANK(newFSId)))}" collapsible="false">
                 <script type="text/javascript">
                     openSubtab('/{!newFSId}', 'New Financial Security');
-                	//closeTab();
                     refreshTab();
                 </script>
             </apex:pageBlockSection>
-
+            <apex:pageBlockSection columns="2" rendered="{!oscarObj.step50__c == 'Failed'}" collapsible="false">
+                <script type="text/javascript">
+                    refreshTab();
+                </script>
+            </apex:pageBlockSection>
         </apex:pageBlock>
  
         <apex:pageBlock mode="read">
