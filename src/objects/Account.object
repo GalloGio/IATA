@@ -94275,7 +94275,7 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
     <validationRules>
     	<fullName>Edit_Identify_Multicountry_for_GE_only</fullName>
     	<active>true</active>
-        <description>Only Accounts with the Location type GE can edit the &quot;Identify as Multicountry Key Hierarchy&quot; field.</description>
+    	<description>The &quot;Identify as Multicountry Key Hierarchy&quot; field can only be edited in Accounts with location type GE.</description>
         <errorConditionFormula>AND(
   ISCHANGED( Identify_as_Multicountry_Key_Hierarchy__c ),
   NOT(ISPICKVAL( Location_Type__c , &apos;GE&apos;))
