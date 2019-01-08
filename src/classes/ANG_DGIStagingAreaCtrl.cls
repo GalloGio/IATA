@@ -211,6 +211,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
                 stagingFs.Financial_Institution__c = dfltFI.Id;
             stagingFs.TotalPrice = 1;
             stagingFs.pricebookentryid = pbe.id;
+            stagingFs.FS_Currency__c = opp.currencyIsoCode;
 
     }
 

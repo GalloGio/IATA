@@ -162,6 +162,8 @@ private class ANG_DGIStagingAreaCtrlTest {
 
 		ANG_DGIStagingAreaCtrl controller = new ANG_DGIStagingAreaCtrl();
 
+		controller.addCertificate = true;
+
 		controller.createStagingAreaDefault();
 
 		controller.createStagingArea();
@@ -200,6 +202,8 @@ private class ANG_DGIStagingAreaCtrlTest {
 		Test.setCurrentPage(pg);
 
 		ANG_DGIStagingAreaCtrl controller = new ANG_DGIStagingAreaCtrl();
+
+		controller.addCertificate = true;
 
 		controller.createStagingAreaDefault();
 
@@ -240,6 +244,8 @@ private class ANG_DGIStagingAreaCtrlTest {
 		Test.setCurrentPage(pg);
 
 		ANG_DGIStagingAreaCtrl controller = new ANG_DGIStagingAreaCtrl();
+
+		controller.addCertificate = true;
 
 		controller.createStagingAreaDefault();
 
@@ -287,7 +293,9 @@ private class ANG_DGIStagingAreaCtrlTest {
 		Test.setCurrentPage(pg);
 
 		ANG_DGIStagingAreaCtrl controller = new ANG_DGIStagingAreaCtrl();
-
+		
+		controller.addCertificate = true;
+        
 		controller.createStagingAreaDefault();
 
 		controller.createStagingArea();
