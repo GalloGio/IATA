@@ -31,7 +31,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 
     public boolean hasAdendum {get;set;}  
 
-	@TestVisible private final AMS_OSCAR__c oscarObj;
+	public AMS_OSCAR__c oscarObj {get;set;}
 
     public final Case oscarCase {get{
         
@@ -163,6 +163,8 @@ public without sharing class ANG_DGIStagingAreaCtrl {
         
         AMS_OSCAR__c oscar = new AMS_OSCAR__c (Id =stagingFs.OSCAR_GDI__c);
         oscar.step50__c = 'Failed';
+        oscarObj.step50__c = 'Failed';
+
         update oscar;
 
         opp = new Opportunity(Id=stagingFs.OpportunityId);
