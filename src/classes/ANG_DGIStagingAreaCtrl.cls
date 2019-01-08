@@ -86,7 +86,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
     // variable mysObject by using the getRecord method from the standard
     // controller.
     public ANG_DGIStagingAreaCtrl() {
-        
+                
         hasAdendum = false;
 
         Id oscarId = ApexPages.currentPage().getParameters().get('id');
@@ -100,8 +100,6 @@ public without sharing class ANG_DGIStagingAreaCtrl {
         if(!lineItemsLst.isEmpty()){ stagingFs = lineItemsLst.get(0); fetchStagingFs();}
 
         List<Financial_Security__c> currentFSLst = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :oscarObj.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
-
-        System.debug('currentFSLst is:'+currentFSLst);
 
         if(!currentFSLst.isEmpty()){ 
             currentFS=currentFSLst.get(0);
@@ -121,8 +119,6 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 		}
 
 		String query = 'SELECT '+ String.join(fieldListoli, ', ') + ' , OSCAR_GDI__r.Name, OSCAR_GDI__r.Account__c FROM Opportunitylineitem WHERE Id = \'' +  stagingFs.Id + '\'';
-
-        System.debug('query is:'+query);
 
         stagingFs = Database.query(query); 
 
@@ -178,6 +174,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
             update opp;
 
             pricebook2 pb = [select id from pricebook2 where name = 'NewGen Generic'];
+
             PricebookEntry pbe = [select id,unitprice,product2id,product2.name from pricebookentry where pricebook2id = :pb.id and currencyIsoCode = :opp.CurrencyIsoCode limit 1];
 
             stagingFs.pricebookentryid = pbe.id;
@@ -222,10 +219,10 @@ public without sharing class ANG_DGIStagingAreaCtrl {
         ANG_AmendFS plugin = new ANG_AmendFS();
 
         Map<String, Object> inputParams = new Map<String, Object>();
-    
+    	        
         inputParams.put('NewFSAmount',stagingFs.Amount__c);
         inputParams.put('SelectedCaseId',oscarCase.ParentId);
-        inputParams.put('SelectedCurrency',stagingFs.CurrencyIsoCode );
+        inputParams.put('SelectedCurrency',stagingFs.FS_Currency__c );
         inputParams.put('FSToCloneId',currentFS.Id);
         inputParams.put('ExpiryDate',system.today());
         inputParams.put('UnlimitedValidity',false);
@@ -238,8 +235,6 @@ public without sharing class ANG_DGIStagingAreaCtrl {
     }
 
     public void createNewFinancialSecurity(Case oscarCase){
-
-        System.debug('stagingFs:'+stagingFs);
 
         Financial_Security__c fs = new Financial_Security__c();
 
@@ -256,12 +251,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
         fs.CurrencyIsoCode = stagingFs.FS_Currency__c;
         fs.Reception_Date__c = stagingFs.Reception_Date__c;
 
-        System.debug('currentFS is:'+currentFS);
-        system.debug('new financial Security is:'+fs);
-
         insert fs;
-
-        System.debug('currentFS is:'+currentFS);
 
         //Inactivate old FS
         if(currentFS <> null && !hasAdendum){
