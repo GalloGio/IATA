@@ -22261,7 +22261,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Financial_Insititutions</shortDescription>
-        <value>Financial Insititutions</value>
+        <value>Financial Institutions</value>
     </labels>
     <labels>
         <fullName>ISSP_Financial_Insititutions_Header</fullName>

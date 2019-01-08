@@ -65,8 +65,6 @@
   						{!$Label.ISSP_services} 
   						<span class="glyphicon glyphicon-chevron-right small" aria-hidden="true"></span>
          				{!$Label.ISSP_Financial_Insititutions}
-         				<span class="glyphicon glyphicon-chevron-right small" aria-hidden="true"></span>
-        				<small>missing description</small>
         			</h4>
   					<div>
 		                <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float: left;"/>
