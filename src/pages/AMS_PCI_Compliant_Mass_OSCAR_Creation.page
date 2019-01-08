@@ -5,6 +5,8 @@
     .alignTop td { vertical-align: baseline; }
     .resultsTable td { width: 150px }
     .resultsTable tfoot td:first-child { font-weight: bold; }
+    .col1 {width: 30% !important; max-width: 30% !important;}
+    .col2 {width: 70% !important; min-width: 70% !important;}
     </style>
 
     <apex:includeScript value="{!$Resource.cometd}"/>
@@ -51,7 +53,7 @@
             <apex:pageMessage severity="warning" 
                     strength="1" 
                     summary="For PCI operation New Gen countries will be excluded"/>
-            <apex:panelGrid columns="2" rowClasses="alignTop">
+            <apex:panelGrid columns="2" rowClasses="alignTop" columnClasses="col1, col2">
                 <apex:pageBlockSection id="filters" title="Filters" columns="1">
                     
                     <apex:pageBlockSectionItem labelTitle="Operation Type">
@@ -145,9 +147,13 @@
                                 <apex:commandButton value="Reset" action="{!reset}" rerender="mainForm" status="Loading"/>
                    			</apex:outputPanel>
                    		</apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <c:AMS_MassAction_Info operation="{!operation}"/>
+                        </apex:pageBlockSectionItem>
                    	</apex:outputPanel>
                 </apex:pageBlockSection>
 
+                <apex:outputPanel id="resultsColumn" layout="block">
                 <apex:pageBlockSection id="uploadExection" title="Upload Execution" columns="1" rendered="{!operation == 'PCI_C' || operation == 'CVR'}">
                 	<c:AMS_Batch_Progress_Bar id="progressBar"
                             cNumberOfJobs="1" 
@@ -207,6 +213,7 @@
                         </div>
                     </apex:outputPanel>
                 </apex:pageBlockSection>
+                </apex:outputPanel>
             </apex:panelGrid>
         </apex:pageBlock>
     </apex:form>
