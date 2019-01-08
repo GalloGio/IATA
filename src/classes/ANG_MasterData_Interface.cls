@@ -25,6 +25,7 @@ global class ANG_MasterData_Interface{
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
                                             VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c,
+                                            Multicountry_Key_Hierarchy__c,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
                                             (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r), //RHC Information
@@ -157,6 +158,7 @@ global class ANG_MasterData_Interface{
         public string email;
         public string fax;
         public string IATACode;
+        public boolean isMulticountryKeyHierarchy;
         //public string id; //Silence for now
         public string IEPStatus;
         public string LocationClass;
@@ -208,6 +210,7 @@ global class ANG_MasterData_Interface{
                 this.email = acc.Email__c;
                 this.fax = acc.fax;
                 this.IATACode = acc.IATACode__c;
+                this.isMulticountryKeyHierarchy = acc.Multicountry_Key_Hierarchy__c;
                 //this.id = acc.Id; // Silence for now
                 this.IEPStatus = acc.ANG_IEP_Status_FF__c;
                 this.LocationClass = acc.Location_Class__c;
