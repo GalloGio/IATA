@@ -496,7 +496,6 @@ public without sharing class ISSP_AMS_Accreditation {
             fetchCase(vSAAMCaseId);
 
             if (newCase != null) {
-                system.debug('newCase.IFAP_Country_ISO__c ' + newCase.IFAP_Country_ISO__c);
                 if (newCase.IFAP_Country_ISO__c == null) {
                     //If case created internally by IATA, for user, then set country from the contact's Account
                     newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
@@ -571,8 +570,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     amsLocationType = newCase.Reason1__c + ' - ' + newForm.Agent_Type__c;
                 }
 
-                SYSTEM.DEBUG('sectorValue init: ' + sectorValue);
-
                 if (sectorValue != null) {
                     sector = sectorValue.replace('_', ' ');
 
@@ -613,7 +610,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     isStep2 = true;
                 } else if (stepNumber == '3') {
                     isStep3 = true;
-                    System.Debug('SAAM Case Id: ' + newCase.Id);
 
                     if (isNoticeOfChange && con.Account.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASH) {
                         refreshCntIFAPContacts();
@@ -1091,17 +1087,6 @@ public without sharing class ISSP_AMS_Accreditation {
             isUKTerritory = true;
         }
 
-        system.debug('sectorValue before get from URL: ' + sectorValue);
-        system.debug('defaultSectorValue before get from URL: ' + defaultSectorValue);
-
-        /*if (Apexpages.currentPage().getParameters().get('sectorValue') != null && defaultSectorValue == null)
-          sectorValue = Apexpages.currentPage().getParameters().get('sectorValue');
-        else {
-            sectorValue = defaultSectorValue;
-        }*/
-
-        system.debug('sectorValue after get from URL: ' + sectorValue);
-
         List<SelectOption> options = new List<SelectOption>();
 
         if (sectorValue.StartsWith('Cargo_Agent')) { //User has selected Cargo in STEP A
@@ -1411,10 +1396,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             newCase.recordTypeId = RECORD_TYPE_ID;
             newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
-            //newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c ;
             newCase.Country_concerned_by_the_query__c = isocountry.Name;
-
-            system.debug('Salesforce sectorValue-->' + sectorValue);
 
             if(sectorValue == 'Travel_Agent') {
                 newCase.Type_of_customer__c = 'IATA Travel Agent';
@@ -1442,13 +1424,13 @@ public without sharing class ISSP_AMS_Accreditation {
                 /*** AMSU-37 End ***/
 
                 if ((draftHQCaseExists) || isDupeSAAMCase) {
+                    System.debug('rui trying cenas: ' + newCase.Reason1__c);
                     agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
                     newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
                     newCase.Case_Language__c = applyLanguage;
                     newCase.IFAP_Country_ISO__c = newIsoCountry;
                     isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
                     newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
-                    //newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c ;
                     newCase.Country_concerned_by_the_query__c = isocountry.Name;
                     newCase.Description = Label.ISSP_Email_Draft_Process1 + ' ' + getApplicationTypeLabel(amsLocationType) + getAccreditationModel(hqAccount.ANG_Accreditation_Model__c) + '.';
 
@@ -1460,12 +1442,15 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) //NEWGEN-1249
                         upsert newform;
-                    //upsert newCase;
+
                     fetchAMSProcessForm();
 
                 }
                 // Creation of first draft case (either HO or BR)
-                upsert newCase;
+                if (!isMultiCountryNewAE) upsert newCase;
+                else {
+                    newCase = hqAccount.Cases[0];
+                }
 
                 if (isNewCase) {
 
@@ -2654,11 +2639,12 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Pagereference goToStep3() {
-        if (isNoticeOfChange)
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=3' );
-        else if (isMultiCountryNewAE)
-            return new Pagereference('&isMultiCountryNewAE=true');
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3' );
+        String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3';
+
+        if (isNoticeOfChange) pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
+        else if (isMultiCountryNewAE) pageURL += '&isMultiCountryNewAE=true';
+
+        return new Pagereference(pageURL);
     }
 
     public Pagereference goToStep4() {
@@ -3707,7 +3693,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
                         VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c,
                         IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Ownership, 
-                        (SELECT Id, Status 
+                        (SELECT Id, Status, Reason1__c 
                          FROM Cases WHERE AccountId = :vHQAccountId 
                             AND Reason1__c LIKE '%multicountry%'
                             AND Status NOT IN :closedStatusesList)
