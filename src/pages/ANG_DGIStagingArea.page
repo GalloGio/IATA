@@ -124,13 +124,13 @@
     <apex:pageMessages id="pageMessages" rendered="{!addCertificate}"/>
 
         <apex:outputpanel id="stagingAreaPanel">
-
-            <apex:pageBlock mode="detail" tabStyle="Account" id="stagingWarning" rendered="{!!waitingForEndorsement && (stagingFs = null || stagingFs.Id = null)}">
+                
+            <apex:pageBlock mode="detail" tabStyle="Account" id="stagingWarning" rendered="{!(stagingFs == null || stagingFs.Id == null)}">
  
                 <apex:pageMessage severity="warning" strength="1" summary="The certificate of endorsement has not been received from GDI yet." rendered="{!oscarCase.Origin == 'GDI Portal'}" />
                 <apex:pageMessage severity="warning" strength="1" summary="The certificate of endorsement has not been created yet." rendered="{!oscarCase.Origin <> 'GDI Portal'}" />
 
-                <apex:pageBlockSection>
+                <apex:pageBlockSection rendered="{!!waitingForEndorsement && (stagingFs = null || stagingFs.Id = null)}">
 
                     <apex:actionRegion>
 
