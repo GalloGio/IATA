@@ -448,7 +448,7 @@ public class AMS_InspectionHelper {
                     appt.Date_Organisation_Status_attained__c = System.today();
                 }
                 //If Account__c is not null means that the appointment is being created in an Account
-                if(appt.Account__c != null){
+                else if(appt.Account__c != null){
                     String accStatus = mAccounts.get(appt.Account__c).Status__c;
                     if(accStatus == 'Approved'){
                         appt.Accreditation_Endorsement_Status_code__c = '9';
