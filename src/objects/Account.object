@@ -94272,6 +94272,17 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;IATA_Airline_BR&apos;, ISPICKVAL( Branch_Type__c , &apos;Virtual&apos;),  ISBLANK(  IATA_ISO_Country__c ) )</errorConditionFormula>
         <errorMessage>For a Virtual Branch Iso Country is mandatory</errorMessage>
     </validationRules>
+    <validationRules>
+    	<fullName>Edit_Identify_Multicountry_for_GE_only</fullName>
+    	<active>true</active>
+        <description>Only Accounts with the Location type GE can edit the &quot;Identify as Multicountry Key Hierarchy&quot; field.</description>
+        <errorConditionFormula>AND(
+  ISCHANGED( Identify_as_Multicountry_Key_Hierarchy__c ),
+  NOT(ISPICKVAL( Location_Type__c , &apos;GE&apos;))
+)</errorConditionFormula>
+        <errorDisplayField>Identify_as_Multicountry_Key_Hierarchy__c</errorDisplayField>
+        <errorMessage>This field can only be amended from the Global Entity (GE)</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>APXTConga4__Conga_Composer_OAuth</fullName>
         <availability>online</availability>
