@@ -1,32 +1,31 @@
+// *************************************
+// Vanja Djurdjevic | vanja.djurdjevic@b-i.com
+// 20/11/2018
+// 
+// *************************************
 @isTest
-private class AgentStatusExtensionTest {
-
-	@isTest
-	static void test() {
-		TestUtilities.setupDefaultSystemSettings();
-		TestUtilities.setupSkillType('Priority', 'Priority');
-		Skill_Types__c aSkillType = [Select name, Case_Location__c from Skill_Types__c where Case_Location__c = : 'Priority' and Name = : 'Priority' limit 1];
-		TestUtilities.setupSkill(aSkillType.id, 'Low');
-
-		// Create agent
-		Agents__c agent = new Agents__c(Name = 'Test User', User__c = UserInfo.getUserId());
-		insert agent;
-
-		PageReference ref = new PageReference(Page.Agent_Status_Page.getUrl());
-		Test.setCurrentPage(ref);
-		AgentStatusExtension con = new AgentStatusExtension();
-		system.assertEquals(con.save(), ref);
-
-		con.agent.Request_next_case__c = true;
-		con.save();
-
-		con.agent.Log_on_picklist__c = 'Log on';
-		con.save();
-		system.assertEquals(con.agent.Logged_on__c, true);
-
-		con.agent.Log_on_picklist__c = 'Log off';
-		con.save();
-		system.assertEquals(con.agent.Logged_on__c, false);
-	}
-
+public class AgentStatusExtensionTest {
+    @isTest public static void agentLoggedOnTest() {
+        Agents__c agent = new Agents__c(name='test', Logged_on__c=True, User__c=UserInfo.getUserId());
+        insert agent;
+        Test.startTest();
+        AgentStatusExtension c = new AgentStatusExtension();
+        System.debug([SELECT Id, Name, User__c FROM Agents__c]);
+        System.debug(UserInfo.getUserId());
+        c.agent = agent;
+        c.save();
+        Test.stopTest();
+    }
+    
+    @isTest public static void agentLoggedNoRegionTest() {
+        Agents__c agent = new Agents__c(name='test', Logged_on__c=True, User__c=UserInfo.getUserId(), Region__c='non-existing');
+        insert agent;
+        Test.startTest();
+        AgentStatusExtension c = new AgentStatusExtension();
+        System.debug([SELECT Id, Name, User__c FROM Agents__c]);
+        System.debug(UserInfo.getUserId());
+        c.agent = agent;
+        c.save();
+        Test.stopTest();
+    }
 }

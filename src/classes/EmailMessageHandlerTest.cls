@@ -42,6 +42,7 @@ private class EmailMessageHandlerTest {
         Case aCase = new Case();
         acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         acase.Subject = 'Test Case Subject';
+        acase.Late_Payment_Date__c = Date.today();
         insert aCase;
         
         // create an attachment to it
