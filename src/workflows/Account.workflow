@@ -191,7 +191,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-    <fieldUpdates>
         <fullName>PCI_Not_Compliant</fullName>
         <field>Is_PCI_compliant__c</field>
         <literalValue>No</literalValue>
