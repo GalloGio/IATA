@@ -1,19 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Hierarchy Custom Setting to Manage Trigger Execution</description>
+    <enableFeeds>false</enableFeeds>
     <fields>
-        <fullName>Contact_Triggers__c</fullName>
+        <fullName>AMS_Agency_Ownership_c_Triggers__c</fullName>
         <externalId>false</externalId>
-        <label>Contact Triggers</label>
+        <label>AMS_Agency_Ownership__c Triggers</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Lead_Triggers__c</fullName>
+        <fullName>Account_Triggers__c</fullName>
+        <description>Naming convention for field Label: sObject_API_Name+&apos; Triggers&apos;</description>
         <externalId>false</externalId>
-        <label>Lead Triggers</label>
+        <inlineHelpText>Comma separated trigger API names to prevent execution</inlineHelpText>
+        <label>Account Triggers</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
+    <fields>
+        <fullName>All__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Prevent execution for all triggers using AMS_TriggerExecutionManager</inlineHelpText>
+        <label>All</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Case_Triggers__c</fullName>
+        <externalId>false</externalId>
+        <label>Case Triggers</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>AMS Trigger Execution Manager</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>SETUP_OWNER_NAME</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>All__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <visibility>Public</visibility>
 </CustomObject>
