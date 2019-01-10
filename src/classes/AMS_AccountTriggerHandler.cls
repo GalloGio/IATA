@@ -37,7 +37,7 @@ public class AMS_AccountTriggerHandler {
         }
         
         //since ParentId is a hierarchy field and not a lookup, we need a Id -> Account map
-        List<Account> aList = [select id, name, Top_Parent__c, ParentId, Location_Type__c, Location_Class__c, IATA_ISO_Country__c, IATA_ISO_Country__r.name, ANG_IsNewGenAgency__c from account where (Id in :parentIds OR ParentId in :parentIds) AND ANG_IsNewGenAgency__c = true AND (Top_Parent__r.Location_Type__c = 'GE' OR Location_Type__c = 'GE')];
+        List<Account> aList = [select id, name, Top_Parent__c, ParentId, Location_Type__c, Location_Class__c, IATA_ISO_Country__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.name, ANG_IsNewGenAgency__c from account where (Id in :parentIds OR ParentId in :parentIds) AND ANG_IsNewGenAgency__c = true AND (Top_Parent__r.Location_Type__c = 'GE' OR Location_Type__c = 'GE')];
         
         Map<Id,Account> aAccounts = new Map<Id,Account>();
         for(Account pa : aList)
@@ -73,7 +73,7 @@ public class AMS_AccountTriggerHandler {
             		
             		for(Account brotherAccount1: accMap.get(ag.ParentId)){
             		
-            			if(brotherAccount1.Id != null && (brotherAccount1.IATA_ISO_Country__c == ag.IATA_ISO_Country__c))
+            			if(brotherAccount1.Id != null && (brotherAccount1.IATA_ISO_Country__r.AMS_Settlement_System__c == ag.IATA_ISO_Country__r.AMS_Settlement_System__c))
             				ag.addError('The BSP is already in the multicountry hierarchy, the new agency can only be an AE in that BSP');
             		}
             	}
@@ -85,13 +85,13 @@ public class AMS_AccountTriggerHandler {
             		if(aAccounts.get(ag.parentId).Location_Type__c == 'AE')
             			ag.addError('AE Accounts must have a GE or HE Parent Account');
             		
-            		else if(aAccounts.get(ag.parentId).IATA_ISO_Country__c != ag.IATA_ISO_Country__c)
+            		else if(aAccounts.get(ag.parentId).IATA_ISO_Country__r.AMS_Settlement_System__c != ag.IATA_ISO_Country__r.AMS_Settlement_System__c)
             			ag.addError('The BSP is not in the multicountry hierarchy yet, the new agency can only be an HE in that BSP');
             		
             		//restriction caused by simbing accounts
             		for(Account brotherAccount2: accMap.get(ag.ParentId)){
             			
-            			if(((brotherAccount2.IATA_ISO_Country__c == ag.IATA_ISO_Country__c && brotherAccount2.Location_Type__c == 'HE') || ag.IATA_ISO_Country__c != aAccounts.get(ag.parentId).IATA_ISO_Country__c) && brotherAccount2.Id != null)
+            			if(((brotherAccount2.IATA_ISO_Country__r.AMS_Settlement_System__c == ag.IATA_ISO_Country__r.AMS_Settlement_System__c && brotherAccount2.Location_Type__c == 'HE') || ag.IATA_ISO_Country__r.AMS_Settlement_System__c != aAccounts.get(ag.parentId).IATA_ISO_Country__r.AMS_Settlement_System__c) && brotherAccount2.Id != null)
             				ag.addError('The BSP is not in the multicountry hierarchy yet, the new agency can only be an HE in that BSP');
             		}
             	}
