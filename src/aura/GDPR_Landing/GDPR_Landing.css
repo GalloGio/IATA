@@ -1,0 +1,14 @@
+.THIS .titleParagraph {
+    font-weight: bold;
+    font-size:15px;
+}
+
+.THIS .fields{
+    max-width: 300px;
+    height: 40px !important;
+}
+.THIS .labels{
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+}

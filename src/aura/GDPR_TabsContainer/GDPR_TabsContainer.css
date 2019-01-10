@@ -1,0 +1,30 @@
+.THIS .bar{
+}
+
+.THIS .element{
+    font-weight:bold;
+}
+.THIS .first {
+    margin-left:10px;
+}
+
+.THIS .slds-tabs_default__nav {
+    border-bottom: 8px solid #dedede;
+}
+
+
+.THIS .slds-tabs_default__item {
+    background-color:white;
+    color: black;
+    min-width: 245px;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.THIS .slds-is-active {
+        background-color:#1E32FA;
+    color:white;
+}

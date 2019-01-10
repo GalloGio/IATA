@@ -39,7 +39,8 @@ public without sharing class OneIdLightningLoginFormController {
         username = (null != username) ? username.trim() : username;
                                    
         try{
-            System.debug('Controller.login.Begin');            
+            System.debug('Controller.login.Begin');     
+            System.debug('serviceName'+serviceName);            
             list<User> userList = DAL_ISSP.getUserListByNameOrEmail(username);
             system.debug('userList: ' + userList);
             system.debug('username: ' + username);
@@ -64,10 +65,10 @@ public without sharing class OneIdLightningLoginFormController {
 //to developer Testing user frozen reactivate user reset password and send password email  - uncoment line below
 //oneUser.Portal_User_Frozen_Checkbox__c=true; 
                 
-                system.debug('user id: ' + oneUser.Id);
+                system.debug('user idX: ' + oneUser.Id);
                 system.debug('contact id: ' + oneUser.ContactId);
                 system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);                
-                
+                system.debug('serviceName: ' + serviceName);
                 
                 //sometimes, javascript from component is passing "undefined". Must be interpreted as NULL
                 if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
@@ -84,6 +85,9 @@ public without sharing class OneIdLightningLoginFormController {
                 	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
                 	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
 			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+                } else if( String.isNotBlank(serviceName) && serviceName == 'GDPR'){
+                    //  GP-17: GDPR need a direct redirection to the GDPR portal not to OneId home page
+                    pageLink = '/apex/CommunitiesLanding?serviceName=GDPR';
                 }
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){

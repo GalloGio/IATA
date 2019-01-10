@@ -1,0 +1,74 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" access="global" controller="GDRP_UserInfo_CTRL">
+        <ltng:require styles="{!$Resource.GDPR_Portal  + '/css/screen.css'}" />
+
+        <aura:attribute name="individual"  type="Object"  />
+        <aura:attribute name="email" type="String" />
+        <aura:attribute name="isValidLink" type="Boolean" default="true"/>
+        <aura:attribute name="termsChecked" type="Boolean" default="false"/>
+        <aura:attribute name="submit" type="Boolean" default="false"/>
+        
+        
+        <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+        <div class="slds-p-horizontal--small slds-size--1-of-1 page-body-2">
+                <aura:if isTrue="{!v.isValidLink}">
+                    
+                    <h3>Complete your profile</h3>
+                    <br />
+                    
+                    <p>We certify that all information collected will be only used for the following purposes:
+                        <ul class="IATA_UlLi">
+                           <li>Manage Your Profile; </li>
+                           <li>Manage Your Subscriptions (newsletters, products and services);</li>
+                           <li>Manage Your Interests for Our Products &amp; Services (events, training, publications, travel agent ID card); </li>
+                           <li>Exercise Your Privacy Rights (access, modify, and object). </li>
+                        </ul>
+                    </p>
+                    <br />
+                    <div class="slds-grid slds-wrap ">
+                        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2 ">
+                            <label class="slds-form-element__label labels" ><abbr class="slds-required" title="required">*</abbr>First Name</label>
+                            <ui:inputText aura:id="firstName" value="{!v.individual.FirstName}" class="slds-input fields" />
+                        </div>
+
+                        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                            <label class="slds-form-element__label labels" ><abbr class="slds-required" title="required">*</abbr>Last Name</label>
+                            <ui:inputText aura:id="lastName" value="{!v.individual.LastName}" class="slds-input required-input fields" required="true"/>
+                        </div>
+
+                        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                            <label class="slds-form-element__label labels" ><abbr class="slds-required" title="required">*</abbr>Company</label>
+                            <ui:inputText aura:id="company" value="{!v.individual.Company__c}" class="slds-input required-input fields"  />
+                        </div>
+
+
+                        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                            <label class="slds-form-element__label labels" ><abbr class="slds-required" title="required">*</abbr>Email</label>
+                            <ui:inputText aura:id="email" value="{!v.individual.Email__c}" class="slds-input required-input fields" disabled="true"  />
+                        </div>
+
+                        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                <ui:inputCheckbox value="{!v.termsChecked}" aura:id="terms" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" required="true"  />
+                                <a class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">I accept IATA privacy policy</a>
+                                <aura:if isTrue="{!v.submit &amp;&amp; !v.termsChecked}">
+                                    <ul class="has-error uiInputDefaultError uiInput uiInputText uiInput--default uiInput--input">
+                                        <li class="form-element__help" >Please accept terms and conditions</li>
+                                    </ul>
+                                </aura:if>
+                            </div>
+
+                        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                            <button class="btn btn-primary btn-greyL slds-float_right" type="submit" onclick="{!c.submit}">Submit</button>
+                        </div>
+                        
+
+                    </div>
+
+                    <aura:set attribute="else">
+                        <p>Invalid link</p>
+                    </aura:set>
+
+
+                </aura:if>
+            </div>
+</aura:component>

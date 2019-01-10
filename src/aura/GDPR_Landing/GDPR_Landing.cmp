@@ -1,0 +1,34 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" controller="GDPR_Landing_CTRL">
+        <ltng:require styles="{!$Resource.GDPR_Portal  + '/css/screen.css'}" />
+<div class="container">
+<h3>Privacy Statement</h3>
+<p><a class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Learn more</a></p>
+<br/>
+
+<p>
+    Welcome to the IATA Preferences &amp; Privacy Portal. <br /><br />
+    This portal is available for You; our Registered Users, Customers and Guests showing interest in IATA.  <br /><br />
+    As a first step We, IATA, require Your email address to grant You access to the Portal in order to:  <br />
+    <ul class="IATA_UlLi">
+        <li>Manage Your Profile; </li>
+        <li>Manage Your Subscriptions (newsletters, products and services);</li>
+        <li>Manage Your Interests for Our Products &amp; Services (events, training, publications, travel agent ID card);</li>
+        <li>Exercise Your Privacy Rights (access, modify, and object). </li>
+    </ul>
+</p>
+<br/>
+ 
+<div class="slds-align_absolute-center" style="height: 5rem;">
+
+<p>
+    <ui:inputEmail aura:id="inputEmail" label="Email" class="form-control" required="true" placeholder="Enter your email address"/>
+</p>
+</div>
+<div class="slds-align_absolute-center" style="height: 3rem;">
+<button class="btn btn-primary btn-greyL" type="submit" onclick="{!c.checkUserTrue}">Submit</button>
+</div>
+<div class="slds-align--absolute-center" style="height:100%">
+<lightning:spinner aura:id="spinner" variant="brand" size="large" class="slds-hide"/>
+</div>
+</div>
+</aura:component>

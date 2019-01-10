@@ -1,0 +1,39 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" access="global" controller="GDPR_SubscriptionsAndInterests_CTRL">
+    
+    <ltng:require scripts="{!$Resource.GDPR_Helper}" />
+
+    <aura:attribute name="interests" type="GDPR_SubscriptionsAndInterests_CTRL.InterestsWrapper[]"  />
+    <aura:attribute name="email" type="String"  />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+   
+    <p>Email Address: {!v.email}</p>
+    
+    <div class="slds-p-horizontal--small slds-size--1-of-1 ">
+        <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
+            Interests
+        </div>
+        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+         <p>Select your Products and Services interests* </p>
+         </div>
+        <div class="slds-grid slds-wrap" >
+            <aura:iteration items="{!v.interests}" var="i">
+                <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                    <ui:inputCheckbox  aura:id="interestsCbx" value="{!i.selected}" class="slds-p-horizontal--small cbx" />
+                    <span class="label">{!i.label}</span>
+                    
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+
+<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+<p>*Selecting your interests personalizes your experience with IATA Products and Services Communication. Interests are not additional subscriptions.</p>
+</div>
+<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+    <button class="btn btn-primary slds-float_right" type="submit" onclick="{!c.saveAll}">Save All Changes</button> <br />
+</div>
+<br />
+
+<div class="slds-text-heading_large slds-m-vertical_large IATA_sectionEndSeparator"></div>
+</aura:component>

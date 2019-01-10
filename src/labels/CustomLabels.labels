@@ -33567,4 +33567,63 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+	<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>IATA_GDPR_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA_GDPR_URL</shortDescription>
+        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/gdprportal</value>
+    </labels>
+    <labels>
+        <fullName>IATA_GDPR_White_Logo</fullName>
+        <categories>Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA GDPR White Logo</shortDescription>
+        <value>https://iata--gdprsalim--c.cs106.content.force.com/servlet/servlet.ImageServer?id=0150D000000EJAd&amp;oid=00D0D0000000PrE&amp;lastMod=1547018185000</value>
+    </labels>
+    <labels>
+        <fullName>TECH_PARDOT_API_VERSION</fullName>
+        <categories>Pardot</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pardot API version to use (3 or 4)</shortDescription>
+        <value>4</value>
+    </labels>
+    <labels>
+        <fullName>TECH_PARDOT_ASSGINED_USER</fullName>
+        <categories>Pardot</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pardot Id of the user who will be assigned during prospect creation</shortDescription>
+        <value>18601663</value>
+    </labels>
+    <labels>
+        <fullName>TECH_PARDOT_INTEGRATION_EMAIL</fullName>
+        <categories>Pardot</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pardot username for authentification</shortDescription>
+        <value>salim.mohamed.isup@gmail.com</value>
+    </labels>
+    <labels>
+        <fullName>TECH_PARDOT_INTEGRATION_PWD</fullName>
+        <categories>Pardot</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pardot password</shortDescription>
+        <value>zYG5JDmk#</value>
+    </labels>
+    <labels>
+        <fullName>TECH_PARDOT_INTEGRATION_USER_KEY</fullName>
+        <categories>Pardot</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pardot API KEY</shortDescription>
+        <value>113c05f5396378cfdbbab5991a046739</value>
+    </labels>
+</CustomLabels>
+
 </CustomLabels>

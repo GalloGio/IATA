@@ -1,0 +1,3 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" access="global" controller="GDPR_Helper">
+<ltng:require scripts="{!$Resource.GDPR_Helper}" afterScriptsLoaded="{!c.initGDPR}"/>
+</aura:component>

@@ -1,0 +1,92 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" access="global" controller="GDRP_UserInfo_CTRL">
+    <ltng:require scripts="{!$Resource.GDPR_Helper}" afterScriptsLoaded="{!c.initGDPR}"/>
+
+    <aura:attribute name="iid" type="String" />
+    <aura:attribute name="individual"  type="Map" default="{ 'sobjectType': 'Individual' }" />
+    <aura:attribute name="prospect"  type="Pardot_API.Pardot_Prospect"  />
+    <aura:attribute name="picklists"  type="GDRP_UserInfo_CTRL.PicklistWrapper"  />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+        <div class="slds-p-horizontal--small slds-size--1-of-1 page-body-2">
+                <div class="slds-text-heading_large slds-m-vertical_large section">
+                        My Profile
+                    </div>
+                <div class="slds-grid slds-wrap ">
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <label class="slds-form-element__label labels" >Salutation</label>
+                        <ui:inputSelect aura:id="salutation" class="slds-select fields" value="{!v.individual.Salutation}">
+                                <ui:inputSelectOption text="" label=""/>
+                                <aura:iteration items="{!v.picklists.salutations}" var="row" indexVar="i">
+                                    <ui:inputSelectOption text="{!row.value}" label="{!row.label}"/>
+                                </aura:iteration>
+                        </ui:inputSelect>
+                    </div>
+                    
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                            <label class="slds-form-element__label labels" >Job title</label>
+                            <ui:inputText value="{!v.individual.Job_Title__c}" class="slds-input required-input fields" />
+                        </div>
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <label class="slds-form-element__label labels" >First Name</label>
+                        <ui:inputText value="{!v.individual.FirstName}" class="slds-input fields" />
+                    </div>
+
+                  
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <label class="slds-form-element__label labels" >Company</label>
+                        <ui:inputText value="{!v.individual.Company__c}" class="slds-input required-input fields"  />
+                    </div>
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                            <label class="slds-form-element__label labels" ><abbr class="slds-required" title="required">*</abbr>Last Name</label>
+                            <ui:inputText value="{!v.individual.LastName}" class="slds-input required-input fields" required="true"/>
+                        </div>
+                   
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <label class="slds-form-element__label labels" >Industry</label>
+                        <ui:inputSelect aura:id="industry" class="slds-select fields" value="{!v.individual.Industry__c}">
+                                <ui:inputSelectOption text="" label=""/>
+                                <aura:iteration items="{!v.picklists.industries}" var="row" indexVar="i">
+                                    <ui:inputSelectOption text="{!row.value}" label="{!row.label}"/>
+                                </aura:iteration>
+                        </ui:inputSelect>
+                    </div>
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <label class="slds-form-element__label labels" >Phone</label>
+                        <ui:inputText value="{!v.individual.Phone__c}" class="slds-input required-input fields" />
+                    </div>
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <label class="slds-form-element__label labels" >Country / Territory</label>
+                        <ui:inputSelect aura:id="salutation" class="slds-select fields" value="{!v.individual.Country__c}">
+                                <ui:inputSelectOption text="" label=""/>
+                                <aura:iteration items="{!v.picklists.countries}" var="row" indexVar="i">
+                                    <ui:inputSelectOption text="{!row.value}" label="{!row.label}"/>
+                                </aura:iteration>
+                        </ui:inputSelect>
+                    </div>
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <label class="slds-form-element__label labels" >Email</label>
+                        <ui:inputText value="{!v.individual.Email__c}" class="slds-input required-input fields" disabled="true"/>
+                    </div>
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                           
+                        </div>
+                        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                           
+                            </div>
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <button class="btn btn-primary btn-greyL slds-float_right" type="submit" onclick="{!c.save}">Save</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="slds-text-heading_large slds-m-vertical_large IATA_sectionEndSeparator"></div>
+</aura:component>

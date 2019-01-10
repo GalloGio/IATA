@@ -1,0 +1,6 @@
+Dear user,
+
+Your case, with number {!Case.CaseNumber} was updated.
+Status is {!Case.Status}
+
+Best regards

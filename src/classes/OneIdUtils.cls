@@ -1,6 +1,6 @@
 public without sharing class OneIdUtils {
 	
-    public Enum Mode {CURRENT, ISSP, IDENTITY}
+    public Enum Mode {CURRENT, ISSP, IDENTITY, GDPR}
     
 	@AuraEnabled
 	public static String ORG_URL {get; set;}
@@ -44,6 +44,7 @@ public without sharing class OneIdUtils {
     @AuraEnabled
     public Static String getCommunityRedirection (Mode m, String startUrl){
         String networdUrl = '/servlet/networks/switch?networkId=';
+        //'/servlet/networks/switch?networkId=0DB0D00000000KLWAY&startURL=%2F'
         String sUrl = '';
         
         if(startUrl != '') sUrl = '&startURL='+EncodingUtil.urlEncode(startUrl, 'UTF-8');        
@@ -55,6 +56,7 @@ public without sharing class OneIdUtils {
             
             if(m == Mode.ISSP) netMode = 'IATA Portal';
             if(m == Mode.IDENTITY) netMode = 'identity';
+            if(m == Mode.GDPR) netMode = 'GDPR Portal';
             
             String networkId = networks.get(netMode);
             
