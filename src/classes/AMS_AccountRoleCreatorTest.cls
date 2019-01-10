@@ -132,7 +132,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         acList.add(new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = onlineAccreditation.Id, 
                                                     Company__c = acc1.id, First_name__c = 'NameToUse', 
                                                     Last_name__c = 'Last', Job_title__c = 'ABC', Mobile__c = '+4112345678', 
-                                                    Phone__c = '3424322343', Email__c = 'unique@email.com', 
+                                                    Phone__c = '3424322343', Email__c = DateTime.now().getTime() +'unique@email.com', 
                                                     RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person')));
         insert acList;
         
