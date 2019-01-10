@@ -211,7 +211,7 @@ private class ISSP_SIS_AccountHandlerTest {
             SIS_Status__c='Active',
             SIS_Substatus__c='TOU'
         );
-        insert new Portal_Applications__c(Name = ISSP_Ctrl_SISMembershipApplication.APP_NAME);
+        insert new Portal_Applications__c(Name = ISSP_SISMembershipApplication_Ctrl.APP_NAME);
         IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='SP'];
         Account account = new Account(
             RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,

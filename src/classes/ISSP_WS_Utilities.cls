@@ -309,7 +309,7 @@ public without sharing class ISSP_WS_Utilities {
     **/
     public static void grantAccessToSIS(list<Id> listContactId) {
         Portal_Applications__c app = [
-            SELECT Id, Name FROM Portal_Applications__c WHERE Name = :ISSP_Ctrl_SISMembershipApplication.APP_NAME];
+            SELECT Id, Name FROM Portal_Applications__c WHERE Name = :ISSP_SISMembershipApplication_Ctrl.APP_NAME];
 
         map<Id,Portal_Application_Right__c> mapContactAppId = new map<Id,Portal_Application_Right__c>();
         for (Portal_Application_Right__c appRight:

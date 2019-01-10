@@ -83,7 +83,7 @@ private  class ISSP_UtilitiesTest {
 
     static testMethod void test_grantAccessToSIS() {
         // Create portal App
-        Portal_Applications__c app = new Portal_Applications__c(Name = ISSP_Ctrl_SISMembershipApplication.APP_NAME);
+        Portal_Applications__c app = new Portal_Applications__c(Name = ISSP_SISMembershipApplication_Ctrl.APP_NAME);
         insert app;
         //test account
         Account account = ISSP_ObjectFactory.createNewAccount();
