@@ -11,11 +11,13 @@ private class ISSP_APProcess_Test
             new ISSP_CS__c(Name = 'EasyPay Opt-In Days', Value__c = '0'),
             new ISSP_CS__c(Name = 'EasyPay Opt-Out Days', Value__c = '30')
         };
-        insert settings;
+        insert settings;    
     }
 
     @isTest static void test_method_a()
     {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal', Airline_EasyPay_Opt_Out_Date__c = Date.today());
+        insert country;
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -40,7 +42,7 @@ private class ISSP_APProcess_Test
         User newUser = ISSP_ObjectFactory.createPortalUser(con);
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
-        update con;
+        update con;        
         /*
         AccountShare newShare = new AccountShare();
         newShare.AccountAccessLevel = 'Edit';
@@ -64,7 +66,7 @@ private class ISSP_APProcess_Test
         {
             //Case testCase = (Case)ISSP_ObjectFactory.createSObject('Case',false,1);
             Case testCase = ISSP_ObjectFactory.createNewCase();
-            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
+            testCase.BSPCountry__c = 'Portugal';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
             //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
@@ -72,6 +74,8 @@ private class ISSP_APProcess_Test
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
+            testCase.IFAP_Country_ISO__c = 'PT';
+             
             //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
@@ -232,6 +236,8 @@ private class ISSP_APProcess_Test
     {
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal', Airline_EasyPay_Opt_Out_Date__c = Date.today());
+        insert country;
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -280,6 +286,7 @@ private class ISSP_APProcess_Test
             testCase.Status = 'Action Needed';
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
+            testCase.IFAP_Country_ISO__c = 'PT';
             insert testCase;
             System.debug('testCase Id: ' + testCase.Id);
 
@@ -334,6 +341,8 @@ private class ISSP_APProcess_Test
     {
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal', Airline_EasyPay_Opt_Out_Date__c = Date.today());
+        insert country;
         Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -382,6 +391,7 @@ private class ISSP_APProcess_Test
             testCase.Status = 'Action Needed';
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
+            testCase.IFAP_Country_ISO__c = 'PT';
             insert testCase;
             System.debug('testCase Id: ' + testCase.Id);
 
@@ -548,6 +558,9 @@ private class ISSP_APProcess_Test
             AMS_Settlement_System__c = issOperation.Id
         );
         insert country;
+
+        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c(name = 'Portugal', ISO_Code__c = 'PT', Case_BSP_Country__c = 'Portugal', Airline_EasyPay_Opt_Out_Date__c = Date.today());
+        insert countryPT;
         
         //ISSP_ObjectFactory.fiilIncludedFields();
         //Account parent =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
@@ -601,6 +614,7 @@ private class ISSP_APProcess_Test
             testCase.Account_Concerned__c = child.Id;
             testCase.Verification__c = 'BSP';
             testCase.CaseArea__c = 'Airline Joining';
+            testCase.IFAP_Country_ISO__c = 'PT';
             insert testCase;
             System.debug('testCase Id: ' + testCase.Id);
 
