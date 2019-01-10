@@ -154,12 +154,12 @@
         <columns>TCA_Not_Applicable_Steps__c</columns>
         <columns>TC_Legal_Name__c</columns>
         <columns>TC_Legal_Status__c</columns>
-        <columns>TC_Ownership__c</columns>
         <columns>TC_Location__c</columns>
+        <columns>TC_Ownership__c</columns>
+        <columns>TC_Hierarchy__c</columns>
         <columns>TC_Location_Type__c</columns>
         <columns>TC_Major_Shareholding__c</columns>
         <columns>TC_Minor_Shareholding__c</columns>
-        <columns>TC_Hierarchy__c</columns>
         <columns>TC_Trade_name__c</columns>
         <columns>TCA_Sanity_check__c</columns>
         <columns>TCA_Manager_approval__c</columns>
