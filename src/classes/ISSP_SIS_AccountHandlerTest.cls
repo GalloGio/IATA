@@ -201,4 +201,30 @@ private class ISSP_SIS_AccountHandlerTest {
         System.assertEquals('Terminated', result.SIS_Status__c);
         System.assertEquals('TERMINATED', result.SIS_Sub_Status__c);
     }
+
+    static testMethod void test_giveSISAppToAccountUsers() {
+        insert new ISSP_SIS_Account_Status__c(
+            Name='test',
+            Recordtype__c='IATA_Agency',
+            Status__c='Open',
+            Country_ISO_Codes__c='All',
+            SIS_Status__c='Active',
+            SIS_Substatus__c='TOU'
+        );
+        insert new Portal_Applications__c(Name = ISSP_Ctrl_SISMembershipApplication.APP_NAME);
+        IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE ISO_Code__c='SP'];
+        Account account = new Account(
+            RecordtypeId=ISSP_SIS_AccountHandler.RT_AGENCY,
+            Status__c = 'Open',
+            Name = 'test'
+        );
+        insert account;
+        
+        Test.startTest();
+        account.Sector__c = 'Airline';
+        account.Category__c = 'CASS Associate';
+        update account;
+        Test.stopTest();
+    }
+
 }

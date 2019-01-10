@@ -283,4 +283,63 @@ public without sharing class ISSP_WS_Utilities {
             System.debug('ERROR inserting logs ' + e.getMessage());
         }
     }
+
+    /**
+        Find all valid SIS contacts from the input accounts to give them access
+        to SIS Joining app
+    **/
+    @future
+    public static void invokeGiveSISAppToAccountUsers(list<Id> listAccountId) {
+        list<User> listUser =
+            [SELECT Id, ContactId
+            FROM User
+            WHERE ProfileId IN :ISSP_Constant.adminIdSet
+            AND (Contact.AccountId IN :listAccountId
+                OR Contact.Account.Top_Parent__c IN :listAccountId)];
+
+        list<Id> listContactId = new list<Id>();
+        for (User user: listUser) {
+            listContactId.add(user.contactId);
+        }
+        grantAccessToSIS(listContactId);
+    }
+
+    /**
+        Grant access to SIS Membership application (not SIS App) to a list of contacts
+    **/
+    public static void grantAccessToSIS(list<Id> listContactId) {
+        Portal_Applications__c app = [
+            SELECT Id, Name FROM Portal_Applications__c WHERE Name = :ISSP_Ctrl_SISMembershipApplication.APP_NAME];
+
+        map<Id,Portal_Application_Right__c> mapContactAppId = new map<Id,Portal_Application_Right__c>();
+        for (Portal_Application_Right__c appRight:
+                [SELECT Id, Right__c, Contact__c
+                FROM Portal_Application_Right__c
+                WHERE Contact__c IN :listContactId
+                AND Portal_Application__c = :app.Id]) {
+            mapContactAppId.put(appRight.Contact__c, appRight);
+        }
+
+        list<Portal_Application_Right__c> listRightsToUpsert = new list<Portal_Application_Right__c>();
+        for (Id contactId: listContactId) {
+            Portal_Application_Right__c appRight = mapContactAppId.get(contactId);
+            if (appRight==null){
+                //create new app right
+                try {
+                    listRightsToUpsert.add(createApp(app.Id, contactId));
+                } catch (Exception e) {
+                    System.debug('Error adding ' + app.Name + ' to Contact ' + contactId + ': ' + e.getMessage());
+                }
+            } else {
+                //grant access to already existing app right
+                if (appRight.Right__c != 'Access Granted'){
+                    appRight.Right__c = 'Access Granted';
+                    listRightsToUpsert.add(appRight);
+                }
+            }
+        }
+        if (!listRightsToUpsert.isEmpty()) {
+            Database.upsert(listRightsToUpsert,false);
+        }
+    }
 }

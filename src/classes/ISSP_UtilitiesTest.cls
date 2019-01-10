@@ -80,4 +80,35 @@ private  class ISSP_UtilitiesTest {
 
 
 	    }
+
+    static testMethod void test_grantAccessToSIS() {
+        // Create portal App
+        Portal_Applications__c app = new Portal_Applications__c(Name = ISSP_Ctrl_SISMembershipApplication.APP_NAME);
+        insert app;
+        //test account
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        insert account;
+        // test contacts
+        Contact contact1 = ISSP_ObjectFactory.createNewContact();
+        contact1.AccountId= account.Id;
+        Contact contact2 = ISSP_ObjectFactory.createNewContact();
+        contact2.AccountId= account.Id;
+        insert new list<Contact>{contact1,contact2};
+        // create portal right as denied to test the change to granted
+        insert new Portal_Application_Right__c(
+            Portal_Application__c = app.Id,
+            Contact__c = contact2.Id,
+            Right__c = 'Access Denied'
+        );
+        
+        Test.StartTest();
+        ISSP_WS_Utilities.grantAccessToSIS(new list<Id>{contact1.Id,contact2.Id});
+        Test.stopTest();
+        
+        list<Portal_Application_Right__c> listResult = [
+            SELECT Id
+            FROM Portal_Application_Right__c
+            WHERE Right__c = 'Access Granted'];
+        System.assertEquals(2,listResult.size());
+    }
 }
