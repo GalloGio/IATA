@@ -253,6 +253,7 @@
         <columns>Expedite_Delivery_added_to_IDCard_Price__c</columns>
         <columns>IATA_Package__c</columns>
         <columns>Can_Pay_by_Cheque__c</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
