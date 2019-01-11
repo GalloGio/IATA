@@ -1897,7 +1897,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
                 <operation>notEqual</operation>
-                <value>Risk Management Process</value>
+                <value>Agency Risk Management,Risk Management Process</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
