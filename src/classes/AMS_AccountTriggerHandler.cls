@@ -46,11 +46,7 @@ public class AMS_AccountTriggerHandler {
         							AND ANG_IsNewGenAgency__c = true 
         							AND (Top_Parent__r.Location_Type__c = 'GE' OR Location_Type__c = 'GE')];
         
-        List<IATA_ISO_Country__c> countryL = [Select id, name, AMS_Settlement_System__c from IATA_ISO_Country__c where Id in :countries];
-        Map<Id,IATA_ISO_Country__c> countryMap = new Map<Id,IATA_ISO_Country__c>();
-        for(IATA_ISO_Country__c country: countryL){
-            countryMap.put(country.Id, country);
-        }
+        Map<Id,IATA_ISO_Country__c> countryMap = new Map<Id,IATA_ISO_Country__c>([Select id, name, AMS_Settlement_System__c from IATA_ISO_Country__c where Id in :countries]);
         
         Map<Id,Account> aAccounts = new Map<Id,Account>();
         for(Account pa : aList)
@@ -60,7 +56,7 @@ public class AMS_AccountTriggerHandler {
 		Map<Id,List<Account>> accMap = new Map<Id,List<Account>>();
         accMap = accountMapBuild(aList);
         
-        IATA_ISO_Country__c ctxCountry = new IATA_ISO_Country__c();
+        IATA_ISO_Country__c ctxCountry;
         
         for(Account ag : accs){
             validateCharacters(ag);//AMSU-179
