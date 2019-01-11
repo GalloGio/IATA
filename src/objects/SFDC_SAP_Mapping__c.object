@@ -248,6 +248,23 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>SAP_Distribition_Channel</fullName>
+        <columns>NAME</columns>
+        <columns>SAP_Distribition_Channel__c</columns>
+        <columns>SAP_Order_Type__c</columns>
+        <columns>SFDC_Order_Channel__c</columns>
+        <columns>SFDC_Order_Source__c</columns>
+        <columns>SFDC_Order_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SAP_Distribition_Channel__c</field>
+            <operation>equals</operation>
+            <value>02</value>
+        </filters>
+        <label>SAP Distribition Channel</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>{00000000}</displayFormat>
         <label>SFDC SAP Mapping  Name</label>
