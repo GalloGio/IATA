@@ -122,7 +122,7 @@ public class ISSP_PersonalInformationWithoutSharing {
                 uw = new ISSP_PersonalInformation.UserWrapper(c.Salutation, c.Name, c.Email, c.Account.BillingCountry, 'SIS Super User', c.AccountId, c.Id);
                 mapContacts.put(c.Id, uw);
             } else {
-                uw.userRole += 'and SIS Super User';
+                uw.userRole += ' and SIS Super User';
             }
         }
 
