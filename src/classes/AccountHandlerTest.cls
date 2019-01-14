@@ -5,19 +5,22 @@ private class AccountHandlerTest {
     private static Account acc2;
     private static Account acc1child;
     private static Account acc2child;
+    private static List<Account> listAccount;
+
 
     private static void loadAccounts() {
         acc1 = new Account(Name='testAccount1', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO');
         acc2 = new Account(Name='testAccount2', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO');
 
-        list<Account> listAccount = new list<Account>();
-        listAccount.add(acc1);
-        listAccount.add(acc2);
-        insert listAccount;
+        list<Account> listAccount1 = new list<Account>();
+        listAccount1.add(acc1);
+        listAccount1.add(acc2);
+        insert listAccount1;
+		listAccount = listAccount1;
 
         acc1 = getAccount(acc1.id);
         acc2 = getAccount(acc2.id);
-
+        
         System.assertEquals(false, acc1.Has_a_Financial_Assessment_Contact__c);
 		System.assertEquals(false, acc1.Has_a_Financial_Assessment_Contact_Sum__c);
 		System.assertEquals(false, acc1.Has_a_Financial_Assessment_Contact_Formu__c);
@@ -53,8 +56,7 @@ private class AccountHandlerTest {
         acc1 = getAccount(acc1.id);
         acc2 = getAccount(acc2.id);
         acc1child = getAccount(acc1child.id);
-        acc2child = getAccount(acc2child.id);
-
+        acc2child = getAccount(acc2child.id);		
         System.assertEquals(false, acc1.Has_a_Financial_Assessment_Contact__c);
 		System.assertEquals(false, acc1.Has_a_Financial_Assessment_Contact_Sum__c);
 		System.assertEquals(false, acc1.Has_a_Financial_Assessment_Contact_Formu__c);
@@ -115,7 +117,8 @@ private class AccountHandlerTest {
 		System.assertEquals(false, acc1child.Has_a_Financial_Assessment_Contact_Formu__c);
 		System.assertEquals(false, acc1child.Has_an_Administrator_User_Portal__c);
 		System.assertEquals(false, acc1child.Has_an_Administrator_User_Portal_Sum__c);
-		System.assertEquals(false, acc1child.Has_an_Administrator_User_Portal_Formula__c);
+		System.assertEquals(false, acc1child.Has_an_Administrator_User_Portal_Formula__c);  
+		System.enqueueJob(new AsyncDML_Util(listAccount, AsyncDML_Util.DML_INSERT, false));       
 	}
 
 	@isTest
@@ -148,6 +151,9 @@ private class AccountHandlerTest {
 		System.assertEquals(true, acc1child.Has_an_Administrator_User_Portal__c);
 		System.assertEquals(false, acc1child.Has_an_Administrator_User_Portal_Sum__c);
 		System.assertEquals(true, acc1child.Has_an_Administrator_User_Portal_Formula__c);
+		System.enqueueJob(new AsyncDML_Util(listAccount, AsyncDML_Util.DML_UPDATE, false));
+        System.enqueueJob(new AsyncDML_Util(listAccount, AsyncDML_Util.DML_UPSERT, false));
+        
 	}
 
 	@isTest
@@ -171,6 +177,7 @@ private class AccountHandlerTest {
 		System.assertEquals(false, acc1.Has_an_Administrator_User_Portal__c);
 		System.assertEquals(false, acc1.Has_an_Administrator_User_Portal_Sum__c);
 		System.assertEquals(false, acc1.Has_an_Administrator_User_Portal_Formula__c);
+		System.enqueueJob(new AsyncDML_Util(listAccount, AsyncDML_Util.DML_DELETE, false));
 	}
 
 	@isTest
@@ -202,7 +209,8 @@ private class AccountHandlerTest {
 		System.assertEquals(true, acc1child.Has_a_Financial_Assessment_Contact_Formu__c);
 		System.assertEquals(true, acc1child.Has_an_Administrator_User_Portal__c);
 		System.assertEquals(false, acc1child.Has_an_Administrator_User_Portal_Sum__c);
-		System.assertEquals(true, acc1child.Has_an_Administrator_User_Portal_Formula__c);
+		System.assertEquals(true, acc1child.Has_an_Administrator_User_Portal_Formula__c);		
+        System.enqueueJob(new AsyncDML_Util(listAccount, AsyncDML_Util.DML_UNDELETE, false));
 	}
 
 }

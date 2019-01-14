@@ -1,8 +1,20 @@
 public class PlatformEvents_Helper {
     
     public static void publishEvents(Map<Id,sObject> ObjectMap, string PE_Name, string ObjSource, boolean bIsInsert, boolean bIsUpdate, boolean bIsDelete, boolean bIsUndelete){
+    	//Map that stores the name of the platform event based on the type of object received
+    	map<string, string> PEObjName = new map<String,String>{
+                'Account' => 'Account__e',
+                'Contact' => 'Contact__e',
+                'Account_Contact_Role__c' => 'AccountContactRole__e',
+                'Account_Role__c' => 'AccountRole__e',
+                'Partner_products__c' => 'PartnerProduct__e',
+                'TIP_Pay_Prov_Prod_Country_Config__c' => 'Product_Country_Config__e',
+                'TIP_BIN_Range__c' => 'Product_Bin_Range__e'
+		};
+          
+    	
         string sEventType = '';
-        if(bIsInsert) sEventType = 'Insert';
+        if(bIsInsert) sEventType = 'Create';
         if(bIsUpdate) sEventType = 'Update';
         if(bIsDelete) sEventType = 'Delete';
         if(bIsUndelete) sEventType = 'Undelete';
@@ -12,21 +24,30 @@ public class PlatformEvents_Helper {
         list<ISSP_Web_Service_Log__c> lsLogs = new list<ISSP_Web_Service_Log__c>();
         
         try{
-            map<string, string> MapMapping = getMappingMap(PE_Name);
+            Map<Id,sObject> InternalObjectMap = new map<id, sObject>();
+            List<RecordType> rtList = RecordTypeSingleton.getInstance().getRecordTypesBySObject(ObjSource);
             
-            if(MapMapping==null) return;
-            
-            Map<ID, Schema.RecordTypeInfo> mapRT = Schema.getGlobalDescribe().get(ObjSource).getDescribe().getRecordTypeInfosById();
+            if(ObjSource == 'Account'){
+            	rtList.addAll(RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Role__c'));
+            	InternalObjectMap = getAccountRoleToPublish(ObjectMap);
+            }
+            else if( ObjSource =='Contact'){
+                rtList.addAll(RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Contact_Role__c'));
+            	InternalObjectMap = getAccountContactRoleToPublish(ObjectMap);
+            }
+            else InternalObjectMap = ObjectMap;
             
             List<SObject> lstSObjs = new list<SObject>();
             
-            for(Id ObjId : ObjectMap.keySet()){
-                SObject sObj = Schema.getGlobalDescribe().get(PE_Name).newSObject();
-    
+            for(Id ObjId : InternalObjectMap.keySet()){
+            	map<string, string> MapMapping = getMappingMap(PEObjName.get(string.valueOf(ObjId.getsobjecttype())));
+            	if(MapMapping==null) continue;
+                SObject sObj = Schema.getGlobalDescribe().get(PEObjName.get(string.valueOf(ObjId.getsobjecttype()))).newSObject();
                 for(string FieldSource:MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
-                        if(mapRT.size()>1) //master is there. check if there is anything else. if no other recortyoe but master, field "RecorDTypeId" doesn't exist....
-                            sObj.put(MapMapping.get(FieldSource) , RTName(ObjSource, (Id)(ObjectMap.get(ObjId).get('RecordtypeId'))));
+                        if(!rtList.isEmpty()) 
+                            //sObj.put(MapMapping.get(FieldSource) , RecordTypeSingleton.getInstance().getRecordTypeById(ObjSource, (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))).Name);
+                            sObj.put(MapMapping.get(FieldSource) , RTName(string.valueOf(ObjId.getsobjecttype()), (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))));
                         else
                             sObj.put(MapMapping.get(FieldSource), null);
                         
@@ -74,12 +95,13 @@ public class PlatformEvents_Helper {
         if(sObj=='Account__e'){
             return new map<String,String>{
                 'Id' => 'AccountId__c',
-                'Recordtype' => 'Recordtype__c',
+                'Recordtype' => 'RecordType__c',
                 'EventType' => 'Type__c'
             };
         }
         
-        if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' || sObj=='Product_Country_Config__e' ){
+        if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' 
+        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e'){
             return new map<String,String>{
                 'Id' => 'RecordId__c',
                 'Recordtype' => 'RecordType__c',
@@ -99,5 +121,33 @@ public class PlatformEvents_Helper {
                         Method__c = theMethod,
                         Input_Description__c = theDesc
                         );
+    }
+    
+    
+    //In case there is an Account Role related to TIP, it enrich the map with it
+    private static Map<Id,sObject> getAccountRoleToPublish(Map<Id,sObject> mapAccnt){
+    	map<id, sObject> mapToRet = new map<id, sObject>();
+    	mapToRet.putAll(mapAccnt);
+
+        if(mapAccnt.keyset().isEmpty()) return mapToRet;
+
+    	for(Account_Role__c AccntRole: [select id, RecordTypeId, Account__c from Account_Role__c where Account__c in:mapAccnt.keyset() and recordtypeId=:TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID]){
+//    		if(mapToRet.ContainsKey(accntRole.Account__c))
+//    			mapToRet.remove(accntRole.Account__c);
+    		mapToRet.put(accntRole.Id, AccntRole);
+    	}
+    	return mapToRet;
+    }
+    
+     //In case there is an Account Contact Role related to TIP, it enrich the map with it
+    private static Map<Id,sObject> getAccountContactRoleToPublish(Map<Id,sObject> mapCnt){
+    	map<id, sObject> mapToRet = new map<id, sObject>();
+    	mapToRet.putAll(mapCnt);
+    	for(Account_Contact_Role__c AccntConRole: [select id, RecordTypeId, Account__c from Account_Contact_Role__c where Account__c in:mapCnt.keyset() and Service_Rendered__c = 'TIP']){
+//    		if(mapToRet.ContainsKey(AccntConRole.Account__c))
+//    			mapToRet.remove(AccntConRole.Account__c);
+    		mapToRet.put(AccntConRole.Id, AccntConRole);
+    	}
+    	return mapToRet;
     }
 }

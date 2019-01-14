@@ -292,9 +292,10 @@ global class AMS_OSCAR_Attachments {
     /*** AMSU-168 ***/
     public PageReference acceptFiles() {
         for(WrapperAttach attach : listAttachments) {            
-            if(attach.isSelected) {
+            if(attach.isSelected && attach.fileAmazon != null && attach.fileAmazon.amazonFile != null) {
                 attach.reviewStatus = 'Accepted';
                 attach.isSelected = false;
+                attach.fileAmazon.amazonFile.Review_Status__c = 'Accepted';
             }
         }
         return null;
@@ -302,11 +303,47 @@ global class AMS_OSCAR_Attachments {
 
     public PageReference rejectFiles() {
         for(WrapperAttach attach : listAttachments) {            
-            if(attach.isSelected) {
+            if(attach.isSelected && attach.fileAmazon != null && attach.fileAmazon.amazonFile != null) {
                 attach.reviewStatus = 'Rejected';
                 attach.isSelected = false;
+                attach.fileAmazon.amazonFile.Review_Status__c = 'Rejected';
             }
         }
+        return null;
+    }
+
+    /*** AMSU-186 ***/
+    public PageReference deleteFiles() {
+        List<SObject> recordsToDelete = new List<SObject>();
+        Set<String> amazonFilesNames = new Set<String>();
+        List<WrapperAttach> amazonFilesToDelete = new List<WrapperAttach>();
+        for(WrapperAttach attach : listAttachments) {  
+            if(attach.isSelected && attach.fileAmazon != null && attach.fileAmazon.amazonFile != null) { //AMAZON
+                Boolean result = attach.cloneToRecicleBin();
+                if(result) {
+                    amazonFilesToDelete.add(attach);
+                    amazonFilesNames.add(attach.fileAmazon.amazonFile.Full_Name_Unique__c);
+                }
+            } else if(attach.isSelected && attach.fileAttachment != null) { //STANDARD
+                recordsToDelete.add(attach.fileAttachment);
+            } else if(attach.isSelected && attach.fileArchived != null) { //Archived
+                recordsToDelete.add(attach.fileArchived);
+            }
+        }
+
+        if(!AmazonFilesToDelete.isEmpty()) {
+            Boolean result = AmazonRest.deleteFiles(amazonFilesNames, ('/500/' + cse.Id), AmazonCredentials.getCredentials('GenericAttach'));
+            if(result) {
+                for(WrapperAttach attach : amazonFilesToDelete) {
+                    recordsToDelete.add(attach.fileAmazon.amazonFile);
+                }
+            }
+        }
+
+        if(!recordsToDelete.isEmpty()) {
+            delete recordsToDelete;
+        }
+
         return null;
     }
 

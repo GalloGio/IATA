@@ -7,6 +7,19 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public Boolean isBatchRunning { get; set; }
     public Boolean isBatchFinished { get; set; }
     public Id batchId { get; set; }
+    public list<jsonError> allErrorMessages { get; set; }
+    public list<jsonError> errorMessagesToShow { get; set; }
+    private integer counter=0;  //keeps track of the offset
+    private integer list_size=10; //sets the page size or number of rows
+    public boolean updateTable {
+        get{
+            if(updateTable == null)
+                this.updateTable = false;
+
+            return this.updateTable;
+        }
+        set;
+    }
 
     public String operation {
         get;
@@ -39,15 +52,11 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         get{
             if(availableCountries == null){
                 availableCountries = new List<SelectOption>();
-                for (IATA_ISO_Country__c c : [SELECT Name, Id, ANG_Enable_NewGen__c
-                                                FROM IATA_ISO_Country__c
-                                                WHERE Case_BSP_Country__c != null
-                                                AND Case_BSP_Country__c != ''
-                                                AND Region__c = :region
-                                                AND Sub_Region__c not in ('USA')
-                                                ORDER BY Name]) {
-                    if((operation == 'PCI' && !c.ANG_Enable_NewGen__c) || (operation != 'PCI' && c.ANG_Enable_NewGen__c)) {//AMSU-159
-                        availableCountries.add(new SelectOption(c.Id , c.Name));
+                for (IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name')) {
+                    if(c.Region__c == region && c.Sub_Region__c != 'USA'){
+                        if((operation == 'PCI' && !c.ANG_Enable_NewGen__c) || (operation != 'PCI' && c.ANG_Enable_NewGen__c)) {//AMSU-159
+                            availableCountries.add(new SelectOption(c.Id , c.Name));
+                        }
                     }
                 }
                 if(availableCountries.isEmpty()){
@@ -155,6 +164,7 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     // ****************************************
     public AMS_PCI_Compliant_Mass_OSCAR_CreationCtr(){
         //constructor
+        allErrorMessages = new list<jsonError>();
     }
 
     // ****************************************
@@ -240,10 +250,20 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         isBatchRunning = true;
     }
 
+    public void compareIDs(){
+        String receivedID = Apexpages.currentPage().getParameters().get('batch');
+        String message = Apexpages.currentPage().getParameters().get('message');
+
+        if (receivedID == batchId){
+            allErrorMessages = (List<jsonError>) System.JSON.deserialize(message , List<jsonError>.class);
+            counter = 0;
+            setErrorToShow();            
+        } 
+    }
+
     public void checkBatchStatus(){
 
         AsyncApexJob batchRecord = [SELECT Id, Status FROM AsyncApexJob WHERE Id = :this.batchId];
-
         System.debug(loggingLevel.FINE, '____ [cls AMS_PCI_Compliant_Mass_OSCAR_CreationCtr - checkBatchStatus] batchRecord - ' + batchRecord);
         
         isBatchRunning = batchRecord.Status != 'Aborted' && batchRecord.Status != 'Completed' &&  batchRecord.Status != 'Failed';
@@ -284,6 +304,67 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         }
     }
 
+
+    //methods used for pagination of the errors
+
+    public void setErrorToShow(){
+        updateTable = false;
+        errorMessagesToShow = new List<jsonError>();
+        for(Integer i = 0 + counter; i < allErrorMessages.size() && i < counter + list_size ; i ++){
+            errorMessagesToShow.add(allErrorMessages[i]);
+        }
+        updateTable = true;
+    }
+
+   public PageReference Beginning() { //user clicked beginning
+      counter = 0;
+      setErrorToShow();
+      return null;
+   }
+
+   public PageReference Previous() { //user clicked previous button
+      counter -= list_size;
+      setErrorToShow();
+      return null;
+   }
+
+   public PageReference Next() { //user clicked next button
+      counter += list_size;
+      setErrorToShow();
+      return null;
+   }
+
+   public PageReference End() { //user clicked end
+      counter = (math.mod(allErrorMessages.size(), list_size) == 0 ? allErrorMessages.size() - list_size : allErrorMessages.size() - math.mod(allErrorMessages.size(), list_size) );
+      setErrorToShow();
+      return null;
+   }
+
+   public Boolean getDisablePrevious() { 
+      //this will disable the previous and beginning buttons
+      if (counter>0) return false; else return true;
+   }
+
+   public Boolean getDisableNext() { //this will disable the next and end buttons
+      if (counter + list_size < allErrorMessages.size()) return false; else return true;
+   }
+
+   public Integer getTotal_size() {
+      return allErrorMessages.size();
+   }
+
+   public Integer getPageNumber() {
+    return counter/list_size + 1;
+   }
+
+   public Integer getTotalPages() {
+      if (math.mod(allErrorMessages.size(), list_size) > 0) {
+         return allErrorMessages.size()/list_size + 1;
+      } else {
+         return (allErrorMessages.size()/list_size);
+      }
+   }
+
     // ****************************************
     // ************* helper methods ***********
     // ****************************************
@@ -300,5 +381,12 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
             errors = 0;
             created = 0;
         }
+    }
+
+    public class jsonError{
+        public String iataCode{get;set;}
+        public String errorMessage{get;set;}  
+        
+        public jsonError(){}    
     }
 }

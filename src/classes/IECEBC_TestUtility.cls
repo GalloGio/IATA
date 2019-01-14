@@ -692,9 +692,8 @@ public with sharing class IECEBC_TestUtility {
  
         // create Bill To contact info
         oContact = new Contact();
-        oContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
+        oContact.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Contact', 'Standard_Contact');
         oContact.AccountId = oAccount.Id;
-        oContact.OwnerId = IECUserManager.getIECContactOwnerId();
         oContact.FirstName = 'Test';
         oContact.LastName = 'User';
         oContact.Title = 'TestTitle';

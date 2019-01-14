@@ -125,7 +125,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	Location_Class__c= AMS_Utils.LC_PASSENGER,
         	Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
         	ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
-        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
+        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
+            IATA_ISO_Country__c = isoCountry.Id
         	);
         insert acc;
     }
@@ -204,6 +205,9 @@ public class ANG_RiskAssessmentEngine_Test{
 
     TestMethod static void testFailAssessmentOneAccountPassOther(){
     	//tests assessments for two different accounts in the same process
+
+		IATA_ISO_Country__c country = [Select Id from IATA_ISO_Country__c];
+
     	list<account> accList = new list<account>();
     	Account acc2 = new Account(
         	name='acc2',
@@ -211,7 +215,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	Location_Class__c= AMS_Utils.LC_PASSENGER,
         	Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
         	ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
-        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
+        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
+			IATA_ISO_Country__c = country.Id
         	);
         accList.add(acc2);
 
@@ -221,7 +226,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	Location_Class__c= AMS_Utils.LC_PASSENGER,
         	Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
         	ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
-        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
+        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
+			IATA_ISO_Country__c = country.Id
         	);
         accList.add(acc3);
     	
@@ -269,6 +275,9 @@ public class ANG_RiskAssessmentEngine_Test{
     }
     TestMethod static void testInsertREnotTriggeringAssessment(){
     	//Passes agency risk assessment with one occurence because assessment shouldnt be runned
+
+		IATA_ISO_Country__c country = [Select Id from IATA_ISO_Country__c];
+
     	Account acc = new Account(
         	name='acc4',
         	Location_Type__c=AMS_Utils.HE,
@@ -276,7 +285,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
         	ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASHLESS,
         	ANG_HE_RiskHistoryAssessment__c=AMS_Utils.PASSED,
-        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
+        	recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY,
+			IATA_ISO_Country__c = country.Id
         	);	
 
         insert acc;	 
@@ -288,6 +298,9 @@ public class ANG_RiskAssessmentEngine_Test{
     }
 
     TestMethod static void testIgnoreAssessmentForTerminatedAccounts(){
+
+		IATA_ISO_Country__c country = [Select Id from IATA_ISO_Country__c];
+
     	//Ignores assessment for terminated Accounts
     	   	Account acc = new Account(
         	name='acc4',
@@ -297,7 +310,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	ANG_Accreditation_Model__c ='Cash',
         	Status__c='Terminated',
         	ANG_HE_RiskHistoryAssessment__c='Passed',
-        	recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+        	recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeID('Account', 'IATA_Agency'),
+			IATA_ISO_Country__c = country.Id
         	);	
 
         insert acc;	

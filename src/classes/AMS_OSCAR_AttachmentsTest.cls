@@ -86,22 +86,6 @@ private class AMS_OSCAR_AttachmentsTest {
 		Case cse = [SELECT Id FROM Case WHERE OSCAR__c = :oscar.Id];
 		AmazonFile amazonFile = WrapperAttachTest.createAmazonFile(cse);
 
-		Attachment a = new Attachment(
-			OwnerId = UserInfo.getUserId(),
-			IsPrivate = true,
-			ParentId = cse.Id,
-			Body = Blob.valueOf('Test'),
-			Name = 'test'
-		);
-		insert a;
-
-		Archived_Attachment__c att = new Archived_Attachment__c(
-			Case__c = cse.Id,
-			Bucket__c = 'bucket',
-			Name = 'testname'
-		);
-		insert att;
-
 		EF_AttachmentListController.runningForEF = false;
 
 		PageReference pg = Page.AMS_OSCAR_Attachment_List;
@@ -112,10 +96,31 @@ private class AMS_OSCAR_AttachmentsTest {
 		Test.startTest();
 		con.listAttachments[0].isSelected = true;
 		con.acceptFiles();
-		System.assertEquals('Accepted', con.listAttachments[0].reviewStatus);
+		System.assertEquals('Accepted', con.listAttachments[0].fileAmazon.amazonFile.Review_Status__c);
 		con.listAttachments[0].isSelected = true;
 		con.rejectFiles();	
-		System.assertEquals('Rejected', con.listAttachments[0].reviewStatus);	
+		System.assertEquals('Rejected', con.listAttachments[0].fileAmazon.amazonFile.Review_Status__c);	
+		Test.stopTest();
+	}
+
+	/*** AMSU-186 ***/
+	static testMethod void deleteMultipleFiles() {
+		AMS_Oscar__c oscar = [SELECT Id FROM AMS_Oscar__c LIMIT 1];
+		Case cse = [SELECT Id FROM Case WHERE OSCAR__c = :oscar.Id];
+		AmazonFile amazonFile = WrapperAttachTest.createAmazonFile(cse);
+
+		EF_AttachmentListController.runningForEF = false;
+
+		PageReference pg = Page.AMS_OSCAR_Attachment_List;
+		pg.getParameters().put('Id', oscar.Id);
+		Test.setCurrentPage(pg);
+
+		AMS_OSCAR_Attachments con = new AMS_OSCAR_Attachments();
+		Test.startTest();
+		WrapperAttach wa = new WrapperAttach(amazonFile);
+		wa.isSelected = true;
+		con.listAttachments.add(wa);
+		con.deleteFiles();
 		Test.stopTest();
 	}
 	

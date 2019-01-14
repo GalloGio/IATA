@@ -32,12 +32,31 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
     public list<SelectOption> itdiCourses;
     public String[] selectedITDICourses;
     
-    public String geographyinTravelPlanning_Description {get;set;}
-    public String destinationGeography_Description {get;set;}
-    public String servingtheTravelTourismCustomer_Description {get;set;}
-    public String introductiontoBSPLink_Description {get;set;}
-    public String leserviceauclientvoyageur_Description {get;set;}
-    public String sellingInternationalRailTransportation_Description {get;set;}
+    public String geographyinTravelPlanning_Description {get; set;}
+    public String destinationGeography_Description {get; set;}
+    public String servingtheTravelTourismCustomer_Description {get; set;}
+    public String introductiontoBSPLink_Description {get; set;}
+    public String leserviceauclientvoyageur_Description {get; set;}
+    public String sellingInternationalRailTransportation_Description {get; set;}
+    public String introduccionAlBSPlink_Description {get; set;}
+    public String introduccionAlSistemaBSPyLenguajeBSP_Description {get; set;}
+    public String losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description {get; set;}
+    public String socialMediaForTheTravelIndustry_Description {get; set;}
+ 
+    public String fundamentalsJourneyPricing_Description {get; set;}
+    public String repricingExchangeReissue_Description {get; set;}
+    public String travelAgencyFees_Description {get; set;}
+
+    //RN-INC419676
+    public String assisttravelersspecialneeds_Description {get; set;}
+    public String notionsessentlentarifetbillet_Description {get; set;}
+    public String advskillsjourneypriceticket_Description {get; set;}
+    public String servingthetravelcustomer_Description {get; set;}
+    public String socialmediafortravelindustry_Description {get; set;}
+    public String accfinmgmtforagencies_Description {get; set;}
+
+
+    
     
     private ID_Card__c[] idCardTemp;
     //private Contact associatedContact {get; set;}
@@ -68,12 +87,28 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
        detailledFees = new Map<String, decimal>();
        selectedITDICourses = new String[]{}; 
        
-       geographyinTravelPlanning_Description = Label.IDCard_GeographyinTravelPlanning_Description;
-       destinationGeography_Description = Label.IDCard_DestinationGeography_Description;
-       servingtheTravelTourismCustomer_Description = Label.IDCard_ServingtheTravelTourismCustomer_Description;
-       introductiontoBSPLink_Description = Label.IDCard_IntroductiontoBSPLink_Description;
-       leserviceauclientvoyageur_Description = Label.IDCard_Leserviceauclientvoyageur_Description;
-       sellingInternationalRailTransportation_Description = Label.IDCard_SellingInternationalRailTransportation_Description;
+        geographyinTravelPlanning_Description = Label.IDCard_GeographyinTravelPlanning_Description;
+        destinationGeography_Description = Label.IDCard_DestinationGeography_Description;
+        servingtheTravelTourismCustomer_Description = Label.IDCard_ServingtheTravelTourismCustomer_Description;
+        introductiontoBSPLink_Description = Label.IDCard_IntroductiontoBSPLink_Description;
+        leserviceauclientvoyageur_Description = Label.IDCard_Leserviceauclientvoyageur_Description;
+        sellingInternationalRailTransportation_Description = Label.IDCard_SellingInternationalRailTransportation_Description;
+        introduccionAlBSPlink_Description = Label.IDCard_IntroduccionAlBSPlink_Description;
+        introduccionAlSistemaBSPyLenguajeBSP_Description = Label.IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description;
+        losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
+        socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description; 
+
+        fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing_Description;
+        repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
+        travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
+
+        //RN-INC419676
+        assisttravelersspecialneeds_Description = Label.Assist_Travelers_Special_Needs_Description; 
+        notionsessentlentarifetbillet_Description = Label.Notions_Essentl_Tarif_Billet_Description;
+        advskillsjourneypriceticket_Description = Label.Adv_Skills_Journey_Price_Ticket_Description;
+        servingthetravelcustomer_Description = Label.Serving_The_Travel_Customer_Description;
+        socialmediafortravelindustry_Description = Label.Social_Media_Travel_Industry_Description;
+        accfinmgmtforagencies_Description = Label.Acc_Fin_Mgmt_Agencies_Description;
        
        // Check the login and get Vernumber of the keycontact
        initialize();         
@@ -345,7 +380,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
       
         /*
         ID_Card__c[] card =[ Select i.Valid_To_Date__c, i.Valid_From_Date__c, i.Type_of_ID_Card__c, i.Title__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Sent_to_AIMS_on__c, i.Renewal_From_Replace__c, i.Related_Contact__c, i.Position__c, i.Photo__c, i.Photo_Flag__c, i.Phone__c, i.Payment_Type__c, i.Paid__c, i.OwnerId, i.Nature_of_ID_Card__c, i.Name_on_ID_Card__c, i.Name, i.MustSyncWithAIMS__c,
-                i.Middle_Initial__c, i.LastName__c, i.LastModifiedDate, i.LastModifiedById, i.Is_Active_Card__c, i.IsDeleted, i.Id, i.ID_Card_Application__c, i.Hours_per_week__c, i.Gender__c, i.FirstName__c, i.Fee_Applicable__c, i.Email__c, i.Duties__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId, i.Card_Variation__c, i.Card_Variation_Code__c, i.Card_Status__c, i.Card_Code__c,
+                i.Middle_Initial__c, i.LastName__c, i.LastModifiedDate, i.LastModifiedById, i.Is_Active_Card__c, i.IsDeleted, i.Id, i.ID_Card_Application__c, i.Hours_per_week__c, i.Gender__c, i.FirstName__c, i.Fee_Applicable__c, i.Email__c, i.Duties__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Card_Variation__c, i.Card_Variation_Code__c, i.Card_Status__c, i.Card_Code__c,
                  i.Cancellation_Date__c, i.Blacklisted__c, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Agency_Name__c, i.Agency_IATA_Code__c From ID_Card__c i
                  where i.VER_Number__c =: VER and (i.Card_Status__c =: IDCardUtil.CARDSTATUS_PRINTED_DELIVERED or i.Card_Status__c =:IDCardUtil.CARDSTATUS_APPROVED or i.Card_Status__c =: IDCardUtil.CARDSTATUS_CANCELED ) ORDER BY i.Valid_To_Date__c DESC limit 1];  
         */
@@ -353,7 +388,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
         // Kofi: 12/09/2013. Card_Status__c is removed from the criteria.
         
         ID_Card__c[] card =[ Select i.Valid_To_Date__c, i.Valid_From_Date__c, i.Type_of_ID_Card__c, i.Title__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Sent_to_AIMS_on__c, i.Renewal_From_Replace__c, i.Related_Contact__c, i.Position__c, i.Photo__c, i.Photo_Flag__c, i.Phone__c, i.Payment_Type__c, i.Paid__c, i.OwnerId, i.Nature_of_ID_Card__c, i.Name_on_ID_Card__c, i.Name, i.MustSyncWithAIMS__c,
-                i.Middle_Initial__c, i.LastName__c, i.LastModifiedDate, i.LastModifiedById, i.Is_Active_Card__c, i.IsDeleted, i.Id, i.ID_Card_Application__c, i.Hours_per_week__c, i.Gender__c, i.FirstName__c, i.Fee_Applicable__c, i.Email__c, i.Duties__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId, i.Card_Variation__c, i.Card_Variation_Code__c, i.Card_Status__c, i.Card_Code__c,
+                i.Middle_Initial__c, i.LastName__c, i.LastModifiedDate, i.LastModifiedById, i.Is_Active_Card__c, i.IsDeleted, i.Id, i.ID_Card_Application__c, i.Hours_per_week__c, i.Gender__c, i.FirstName__c, i.Fee_Applicable__c, i.Email__c, i.Duties__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Card_Variation__c, i.Card_Variation_Code__c, i.Card_Status__c, i.Card_Code__c,
                  i.Cancellation_Date__c, i.Blacklisted__c, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Agency_Name__c, i.Agency_IATA_Code__c From ID_Card__c i
                  where i.VER_Number__c =: VER  ORDER BY i.Valid_To_Date__c DESC limit 1];  
                  
@@ -538,7 +573,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
         
         Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(iataCode);
         
-        IATA_ISO_Country__c[] listCountries = [Select i.Name, i.AIMS_Area_Name__c, i.Id, i.ISO_Code__c, IATA_Regional_Office__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+        List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
         if (listCountries == null || listCountries.size() == 0) {
                 throw new IDCardApplicationException(string.format(Label.ID_Card_Invalid_ISO_Country, new string[] { theAccount.BillingCountry }));
         }

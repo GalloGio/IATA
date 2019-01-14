@@ -122,7 +122,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/Kavi_Notify_contact_of_access_grantedVF</template>
+        <template>All/Kavi_Notify_contact_of_access_grantedVF</template>
     </alerts>
     <alerts>
         <fullName>Notification_that_user_receive_after_an_access_request</fullName>
@@ -520,48 +520,6 @@
             <value>True</value>
         </criteriaItems>
         <description>Send an email to notify that the request for kavi service has been granted</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP Notify contact of access granted to TD Premium</fullName>
-        <actions>
-            <name>Notify_contact_of_access_granted_to_TD_Premium</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Granted</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Portal_Applications__c.Name</field>
-            <operation>equals</operation>
-            <value>Treasury Dashboard - Premium</value>
-        </criteriaItems>
-        <description>Send email to the contact who requested acces to the Service &apos;Treasury Dashboard - Premium&apos; 
-Field update of user &apos;Treasury Dashboard User&apos; = True</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP Notify contact of access granted to Treasury Dashboard</fullName>
-        <actions>
-            <name>Notify_contact_of_access_granted_to_Treasury_Dashboard</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Granted</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Portal_Applications__c.Name</field>
-            <operation>equals</operation>
-            <value>Treasury Dashboard</value>
-        </criteriaItems>
-        <description>Send email to the contact who requested acces to the Service &apos;Treasury Dashboard&apos;
-Field update of user &apos;Treasury Dashboard User&apos; = True</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

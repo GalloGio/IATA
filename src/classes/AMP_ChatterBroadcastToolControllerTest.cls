@@ -13,7 +13,7 @@ private class AMP_ChatterBroadcastToolControllerTest {
         insert country_qr;
 
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
                                 RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'IATA member');
         insert acct_hq;
@@ -25,6 +25,7 @@ private class AMP_ChatterBroadcastToolControllerTest {
         	system.assertEquals(1, ctrl.lstAccounts.size());
         	system.assertEquals(6, ctrl.getlstRegions().size());
 
+        	ctrl.GoToStep2();
         	ctrl.lstAccounts[0].isSelected = true;
         	ctrl.GoToStep2();
         	ctrl.GoBackToStep1();
@@ -47,6 +48,15 @@ private class AMP_ChatterBroadcastToolControllerTest {
 
         	system.assertEquals(1, lstTAs.size());
 
+        	ctrl.RestartFromStep1();
+        	
+        	ctrl.lstAccounts[0].isSelected = true;
+        	
+    		ctrl.message = null;
+        	ctrl.BroadcastMessage();
+        	
+        	ctrl.message = 'Invalid Topic';
+        	ctrl.BroadcastMessage();
 
         test.stopTest();
 	}

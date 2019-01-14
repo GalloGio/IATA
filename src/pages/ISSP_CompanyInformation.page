@@ -21,7 +21,7 @@
            	.btn-success2 {color: #ffffff;background-color: #a1bc00;border: 1px solid #4E8E15;font-weight: bold;cursor: pointer;}
          	.required {color: #C90435;font-size: 24px;padding: 0 5px 0 0;}
     </style>
-
+    
     <div class="container">
         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="panel panel-primary">
@@ -49,12 +49,14 @@
                                 </div>
                             </apex:outPutPanel>
                             </div>
+                            <apex:outPutPanel layout="block" rendered="{!isIATAAirlineAcct}">
                             <div class="row">
                                 <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Name_on_AOC__c.Label}</label>
                                 <div class="col-lg-7">
                                     {!con.Account.Top_Parent__r.Name_on_AOC__c}
-                                </div>
+                                </div>                            
                             </div>
+                            </apex:outPutPanel>
                             <apex:outputText rendered="{!isIATAAgencyAcct}">
                                 <div class="row form-group">
                                      <div class="col-lg-5">
@@ -67,10 +69,10 @@
                       				</div>
                                    	<span class="saveMode saveModeTradeName" style="line-height: 24px;">
                                     	<apex:outputField value="{!con.Account.TradeName__c}"/>
-                                        <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent, NOT(bBlockTradeNameChange))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
-                                        </span>
-                                	</div>
-                                </div>
+                                        <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!canChangeTradeName}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
+                                    </span>
+                            	</div>
+                            </div>
                             </apex:outputText>
                             <!-- end row -->
                            
@@ -285,7 +287,7 @@
                              <div class="row">
            						<div class="col-md-12 col-md-offset-9"  style="clear: both; ">
                						<apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtn" onClick="if(!validateCompanyProfile())return false;" action="{!saveAccount}" value="{!$Label.site.save}" id="loginButton" reRender="companyProfile"/>
-                					<button type="button" class="btn_iata btn-danger btn_cancel editModeBtn" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.editModeBtn').hide();$('.alert').hide();$('.selected-flag').hide();" >{!$Label.site.cancel}</button>
+                                    <button type="button" class="btn_iata btn-danger btn_cancel editModeBtn" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.editModeBtn').hide();$('.alert').hide();$('.selected-flag').hide();" >{!$Label.site.cancel}</button>
             					</div>
          					</div>
                              
@@ -559,7 +561,7 @@
                                 </div>
                                 <span class="saveModeBR saveModeTradeNameBR" style="line-height: 24px;">
                                 	<apex:outputField value="{!branchOffice.TradeName__c}"/>
-                                    <apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeTradeNameBR').hide();$('.editModeTradeNameBR').show();$('.editModeBtnBR').show();" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgentBR, NOT(bBlockTradeNameChangeBR))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
+                                    <apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeTradeNameBR').hide();$('.editModeTradeNameBR').show();$('.editModeBtnBR').show();" rendered="{!canChangeTradeNameBR}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
                                     </span>
                             	</div>
                             </div>
@@ -753,17 +755,17 @@
                </div>
             <div class="ol-md-3 col-md-offset-10 "  style="clear: both; ">
                		<apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtnBR" onClick="if(!validateCompanyProfileBR())return false;" action="{!saveAccountBR}" value="{!$Label.site.save}" id="loginButton" reRender="branchOffice"/>
-                	<button type="button" class="btn_iata btn-danger btn_cancel editModeBtnBR" onClick="clearErrorMessagesBR();$('.saveModeBR').show();$('.editModeBR').hide();$('.editModeBtnBR').hide();$('.alert').hide();$('.phoneBR .selected-flag').hide();$('.faxBR .selected-flag').hide();" >{!$Label.site.cancel}</button>
+                	
+                    <button type="button" class="btn_iata btn-danger btn_cancel editModeBtnBR" onClick="clearErrorMessagesBR();$('.saveModeBR').show();$('.editModeBR').hide();$('.editModeBtnBR').hide();$('.alert').hide();$('.phoneBR .selected-flag').hide();$('.faxBR .selected-flag').hide();" >{!$Label.site.cancel}</button>
             	</div>
                 </apex:outputPanel>
             </div>
           </div>
             
         </apex:form>
-        
-        
-          <c:ISSP_CustomFooter communityName="{!communityName}"/>
+       <c:ISSP_CustomFooter communityName="{!communityName}"/> 
     </div>
+    
     <script>
       function validateCompanyProfile(){
       	var flag = true;

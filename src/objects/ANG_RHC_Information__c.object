@@ -190,6 +190,17 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>ANG_RHC_Amount_Equals_FS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked the RHC amount will be equal to the total Financial Securities</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked the RHC amount will be equal to the total Financial Securities</inlineHelpText>
+        <label>RHC Amount Equals FS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_RHC_Amount_Forecasted__c</fullName>
         <description>Holds the information regarding what is the expected RHC Amount if the user clicks on the button &quot;Confirm Forecasted RHC&quot;</description>
         <externalId>false</externalId>
@@ -338,7 +349,7 @@ rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amou
 
 var result = sforce.connection.update([rhcInfo]); 
 
-console.info(&quot;result&quot;); 
+console.info(&quot;result&quot;);
 console.info(result[0]); 
 
 if (result[0].success == &quot;true&quot;) { 

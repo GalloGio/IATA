@@ -3,7 +3,7 @@ private class ANG_RiskForecastPropertiesControllerTest {
     
     @testSetup static void testSetup(){
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
         Account a1 = new Account(Remittance_frequency__c = 'S' , ANG_Accreditation_Model__c = 'Cash', Financial_Review_Result__c = 'Satisfactory - No Action' ,ANG_HE_CashCondition__c = false , ANG_HE_RiskStatus__c = 'B' , IATA_ISO_Country__c = ctry.id, RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY, IATACode__c='1234561',Location_Type__c='HE',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = 'Approved');
@@ -19,7 +19,7 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
         list<ANG_Agency_Risk_Calculation__c> adjustmentList = new list<ANG_Agency_Risk_Calculation__c>();
 
-        Id risk_Status_AssessmentRTId =RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Risk_Status_Assessment');
+        Id risk_Status_AssessmentRTId =RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment');
 
         ANG_Agency_Risk_Calculation__c adj1= new ANG_Agency_Risk_Calculation__c(
             ANG_Financial_Review_Result__c = 'Satisfactory' ,

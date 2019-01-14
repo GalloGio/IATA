@@ -66,7 +66,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
         for (Auto_Queue__c a : aAutoQueue)
             sAutoQueueId.add(a.Queue_ID__c);
 
-    case[] aCases=[select id, First_Business_Day__c from Case where status in ('Open', 'Action Needed') AND RecordType.Name <> 'Invoicing_Collection_Cases' AND OwnerId in :sAutoQueueId ORDER BY CreatedDate ASC LIMIT 1000]; // RDJ:1000
+    case[] aCases=[select id, First_Business_Day__c from Case where status in ('Reopen', 'Open', 'Action Needed', 'In progress') AND RecordType.Name <> 'Invoicing_Collection_Cases' AND RecordType.Name <> 'SIDRA' AND OwnerId in :sAutoQueueId ORDER BY CreatedDate ASC LIMIT 1000]; // RDJ:1000
 
         boolean isFirstBusinessDayInPast;
         List<Case> cId = new List<Case> {};
@@ -91,7 +91,10 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
     // Assign a Case
     //--------------------------------
     public static string assignCase(string idCase) {
-
+						
+		System.debug('-------------------------');
+        System.debug('Considering case: '+idCase);
+        System.debug('-------------------------');
         try {
             String mailSubject = 'IATA Auto Assignment Error';
 
@@ -219,7 +222,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
             }
 
 
-            for (Case[] aCase : [select id, OwnerId, status from Case where OwnerId in :sUserId and Status in ('Open', 'In Progress', 'Reopen', 'Action Needed', 'Escalated Internally', 'Escalated Externally', 'Pending customer') and RecordType.Name <> 'Invoicing_Collection_Cases'])
+            for (Case[] aCase : [select id, OwnerId, status from Case where OwnerId in :sUserId and Status in ('Open', 'In Progress', 'Reopen', 'Action Needed', 'Escalated Internally', 'Escalated Externally', 'Pending customer') and (RecordType.Name <> 'Invoicing_Collection_Cases' OR RecordType.Name <> 'SIDRA')])
                 for (Case c : aCase) {
 
                     double currentWorkload = m_agentWorkload.get(c.OwnerId);

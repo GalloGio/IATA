@@ -1,7 +1,5 @@
 global without sharing class AMS_RecordCreatorWebservice {
 
-    private Static Map<string, Id> oscarRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c');
-
     private static String NEWBR_PV = 'NEW.BR';
     private static String NEWHO_PV = 'NEW.HO.1.0';
     private static String BANK_ACCOUNT_CHANGES_PV = 'BANK.ACCOUNT.CHANGES';
@@ -24,11 +22,13 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
     public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
     public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static String IEP_MODEL_A_ACCOUNT_SETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
+    public static String IEP_MODEL_B_ACCOUNT_SETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
     public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
     public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
 
 
-    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP, NEWVR_PV};
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP, NEWVR_PV};
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
 
@@ -234,41 +234,44 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String fetchOscarRecordType(String typeOfProcess){
 
         if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWGSA_PV) || typeOfProcess.equalsIgnoreCase(NEWAHA_PV) || typeOfProcess.equalsIgnoreCase(NEWMSO_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV))
-            return oscarRT.get('NEW');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
         if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
-            return oscarRT.get('CHANGE');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
-            return oscarRT.get('CORRECTION');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
         if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV) || typeOfProcess.equalsIgnoreCase(PCI_COMPLIANT))
-            return oscarRT.get('CERTIFICATION');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
 
         if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
-            return oscarRT.get('VOLUNTARY_RELINQUISHMENT');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
 
         if(typeOfProcess.equalsIgnoreCase(NEWCER_PV))
-            return oscarRT.get('CERTIFICATE');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
 
         if(typeOfProcess.equalsIgnoreCase(NEWNGLITE))
-            return oscarRT.get('ANG_New_HE');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
         if(typeOfProcess.equalsIgnoreCase(NEWNSTANDARD))
-            return oscarRT.get('ANG_New_HE');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
         if(typeOfProcess.equalsIgnoreCase(NEWNAE))
-            return oscarRT.get('ANG_New_AE');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
 
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
-            return oscarRT.get('ANG_Agency_Changes');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
-            return oscarRT.get('NGFormsOfPayment');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
  
          if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
-            return oscarRT.get('ANG_FS_OPTINOUT');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
 
+         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
+            
         return null;
 
     }
@@ -387,10 +390,16 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
 
         //Let's get the parent account
-        Account acct = [Select Id, ANG_Accreditation_Model__c, Remittance_frequency__c from Account where Id = :parentId];
+        Account acct = [Select Id, ANG_Accreditation_Model__c, Location_type__c, Remittance_frequency__c, Parent.Remittance_frequency__c from Account where Id = :parentId];
 
         AMS_Pax_Accreditation_Form__c accredObject = new AMS_Pax_Accreditation_Form__c(Id =accreditationId);
-        accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
+
+        if(parentId == accountId && acct.Location_Type__c == 'AE'){
+            accredObject.Remittance_frequency__c = acct.Parent.Remittance_frequency__c;
+        }
+        else
+            accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
+
         update accredObject;
 
         Account acctChild = new Account(Id = accountId);
@@ -410,8 +419,8 @@ global without sharing class AMS_RecordCreatorWebservice {
         Map<String,String> previousContactTypes = new Map<String,String>();
 
 
-        previousContactTypes.put('Previous_Company_Owner','Current Company Owner');
-        previousContactTypes.put('Previous_Owner','Current Owner');
+        previousContactTypes.put('Previous_Company_Owner','Current_Company_Owner');
+        previousContactTypes.put('Previous_Owner','Current_Owner');
 
         List<AMS_Accreditation_Contact__c> idsToClone = new List<AMS_Accreditation_Contact__c>();
 
@@ -435,15 +444,13 @@ global without sharing class AMS_RecordCreatorWebservice {
        // public sObject clone(Boolean preserveId, Boolean isDeepClone, Boolean preserveReadonlyTimestamps, Boolean preserveAutonumber)
         List<AMS_Accreditation_Contact__c> toInsert = new List<AMS_Accreditation_Contact__c>();
 
-        Map<String,Schema.RecordTypeInfo> rtMapByName = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName();
-
        for(AMS_Accreditation_Contact__c contact: contacts){
 
             AMS_Accreditation_Contact__c contactCloned = contact.clone(false,false,false,false);
 
             String newRecordTypeDevName = previousContactTypes.get(contact.RecordType.DeveloperName);
 
-            ID newRecordType = rtMapByName.get(newRecordTypeDevName).getRecordTypeId();
+            ID newRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', newRecordTypeDevName);
 
             contactCloned.recordTypeId = newRecordType;
 
@@ -480,7 +487,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             List<AMS_Process_Detail__c> detailsToInsert = new List<AMS_Process_Detail__c>();
 
-            ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+            ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
             for(Account acct: accountsToCreate){
 
@@ -729,7 +736,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         try{
 
-            String oscarRecordType = oscarRT.get('NEW');
+            Id oscarRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
             Case caseObj = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
 
@@ -762,7 +769,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             }
 
 
-            ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+            ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
             caseObj.OSCAR__c = oscarId;
             caseObj.AccountId = newSAAccount.Id;
@@ -838,7 +845,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         Account acctSA = new Account();
 
-        acctSA.RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account');
+        acctSA.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
         acctSA.Name = parentAccount.Name;
         acctSA.Short_Name__c = parentAccount.Short_Name__c;
         acctSA.Abbreviated_name__c = parentAccount.Abbreviated_name__c;

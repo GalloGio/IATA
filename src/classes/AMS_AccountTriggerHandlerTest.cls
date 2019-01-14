@@ -8,14 +8,14 @@ private class AMS_AccountTriggerHandlerTest {
 		Account acc1 = new Account();
 		acc1.Name = 'HO Account 1';
 		acc1.Type = 'IATA Cargo Agent';
-		acc1.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 
 		insert acc1;
 
 		Account acc2 = new Account();
 		acc2.Name = 'BR Account 2';
 		acc2.Type = 'IATA Cargo Agent';
-		acc2.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 		acc2.ParentId = acc1.Id;
 		acc2.Sector__c = 'Cargo Agent';
 		acc2.REASON_FOR_CREATION__C = 'Created by customer';
@@ -23,7 +23,7 @@ private class AMS_AccountTriggerHandlerTest {
 		Account acc3 = new Account();
 		acc3.Name = 'BR Account 3';
 		acc3.Type = 'IATA Cargo Agent';
-		acc3.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc3.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 		acc3.ParentId = acc1.Id;
 		acc3.Sector__c = 'Cargo Agent';
 		acc3.REASON_FOR_CREATION__C = 'Created by customer';
@@ -31,7 +31,7 @@ private class AMS_AccountTriggerHandlerTest {
 		Account acc4 = new Account();
 		acc4.Name = 'BR Account 4';
 		acc4.Type = 'IATA Cargo Agent';
-		acc4.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc4.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 		acc4.ParentId = acc1.Id;
 		acc4.Sector__c = 'Cargo Agent';
 		acc4.REASON_FOR_CREATION__C = 'Created by customer';
@@ -41,14 +41,14 @@ private class AMS_AccountTriggerHandlerTest {
 		Account acc1d = new Account();
 		acc1d.Name = 'HO Account Diff 1';
 		acc1d.Type = 'IATA Cargo Agent';
-		acc1d.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc1d.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 		
 		insert acc1d;
 		
 		Account acc2d = new Account();
 		acc2d.Name = 'BR Account Diff 2';
 		acc2d.Type = 'IATA Cargo Agent';
-		acc2d.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc2d.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 		acc2d.ParentId = acc1d.Id;
 		acc2d.Sector__c = 'Cargo Agent';
 		acc2d.REASON_FOR_CREATION__C = 'Created by customer';
@@ -56,7 +56,7 @@ private class AMS_AccountTriggerHandlerTest {
 		Account acc3d = new Account();
 		acc3d.Name = 'BR Account Diff 3';
 		acc3d.Type = 'IATA Cargo Agent';
-		acc3d.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc3d.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 		acc3d.ParentId = acc1d.Id;
 		acc3d.Sector__c = 'Cargo Agent';
 		acc3d.REASON_FOR_CREATION__C = 'Created by customer';
@@ -64,7 +64,7 @@ private class AMS_AccountTriggerHandlerTest {
 		Account acc4d = new Account();
 		acc4d.Name = 'BR Account Diff 4';
 		acc4d.Type = 'IATA Cargo Agent';
-		acc4d.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId ;
+		acc4d.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 		acc4d.ParentId = acc1d.Id;
 		acc4d.Sector__c = 'Cargo Agent';
 		acc4d.REASON_FOR_CREATION__C = 'Created by customer';
@@ -219,7 +219,7 @@ private class AMS_AccountTriggerHandlerTest {
 		acc1.Type = 'IATA Cargo Agent';
 		acc1.WebStar_ID__c = 'Some Test';
 		acc1.Is_your_firm_handling_Dangerous_Goods__c = 'No';
-		acc1.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
+		acc1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		try{
 			insert acc1;
@@ -244,15 +244,18 @@ private class AMS_AccountTriggerHandlerTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
         insert ctry;
 
-        AMS_Country_Specific_Attribute__c irrThsd = new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = ctry.Id, Location_Class__c = 'Test', Threshold__c = 1, RecordTypeId = AMS_Utils.getId('AMS_Country_Specific_Attribute__c', 'Irregularity_Threshold'));
+        AMS_Country_Specific_Attribute__c irrThsd = new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = ctry.Id, Location_Class__c = 'Test', Threshold__c = 1, 
+        												RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Irregularity_Threshold'));
         insert irrThsd;
 
-        Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'), Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
+        Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'), Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
         insert a;
 
         Test.startTest();
 
-        	Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c(Account__c = a.Id, RecordTypeId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities'), Change_Code__c = 'IRR', Operation__c = 'A', Irregularities_Points__c = 1, Irregularities_Expired__c = false);
+        	Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c(Account__c = a.Id, 
+        											RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities'), 
+        											Change_Code__c = 'IRR', Operation__c = 'A', Irregularities_Points__c = 1, Irregularities_Expired__c = false);
         	insert irr;
 
         	Account aAssert = [SELECT Id, Count_Accumulated_Irregularities__c, SUM_A_Irregularities__c, SUM_W_Irregularities__c FROM Account WHERE Id = :a.Id];
@@ -266,7 +269,8 @@ private class AMS_AccountTriggerHandlerTest {
 		/*IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
 		insert ctry;*/
 
-		Account a = new Account(RecordTypeId = AMS_Utils.getId('Account', 'Standard_Account'), Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
+		Account a = new Account(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'), 
+								Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
 		insert a;
 
 		insert new AMS_Oscar__c(Account__c = a.Id, Status__c = 'Open');
@@ -308,7 +312,7 @@ private class AMS_AccountTriggerHandlerTest {
 			IATA_ISO_Country__c = country.Id,
 			IATACode__c = '001',
 			Accreditation_date__c = System.today(),
-			RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
 			phone = '00351218145439'
 		);
 
@@ -321,7 +325,7 @@ private class AMS_AccountTriggerHandlerTest {
 			IATA_ISO_Country__c = country.Id,
 			IATACode__c = '001',
 			Accreditation_date__c = System.today(),
-			RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
 			phone = '00351218145439'
 		);
 

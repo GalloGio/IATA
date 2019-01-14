@@ -38,7 +38,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, agencylist[0].Id, fieldsOfObject);
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -60,6 +60,13 @@ private class ANG_FOPOSCARNotificationBatchTest {
 
 		SalesforceSupportEmails__c sEmail = new SalesforceSupportEmails__c(Name = 'test', Support_Email__c = 'testSupportEmail@newgen.istest');
 		insert sEmail;
+
+		//insert notification template
+		Notification_template__c nt = new Notification_template__c(Language__c = 'English', Identifier__c = ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID, 
+								Expire_in_days__c = 30, Subject__c = 'Reminder - Request for PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration',
+								Type__c = 'Information', Message__c = 'Test #CONTACTNAME# #IATACODE# #DEADLINEDATE#');
+		insert nt;
+		
 
 		Test.startTest();
 		//test without contact on case (force error)
@@ -123,7 +130,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, agencylist[0].Id, fieldsOfObject);
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Oscar__c',oscar.Id);
@@ -213,7 +220,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 		AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NEWGENFOP, agencylist[0].Id, fieldsOfObject);
 		insert oscar;
 
-		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
         fieldsOfObject.clear();
         fieldsOfObject.put('Oscar__c',oscar.Id);

@@ -218,13 +218,24 @@ global class WrapperAttach implements Comparable {
         return false;
     }
 
+    /**
+        AMSU-186 
+    **/
+    public Boolean cloneToRecicleBin() {
+        if (this.filetype == 'Amazon') {
+            String destinationFilename = this.FileAmazon.getFullName();
+            Boolean result = this.FileAmazon.copyFile(CREDENTIAL, CREDENTIAL_RECICLE_BIN, destinationFilename);
+            return result;
+        }
+        return false;
+    }
+
+
     public void updateAttach() {
         if (this.filetype == 'Amazon') {
             this.fileAmazon.amazonFile.Description__c = this.description;
             this.fileAmazon.amazonFile.Internal_Comments__c = this.internalComments;
             this.fileAmazon.amazonFile.isPublic__c = isPublic;
-            /*** AMSU-168 ***/
-            this.fileAmazon.amazonfile.Review_Status__c = this.reviewStatus;
 
             update this.fileAmazon.amazonFile;
         }

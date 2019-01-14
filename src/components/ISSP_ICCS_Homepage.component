@@ -1,0 +1,688 @@
+<apex:component controller="ISSP_ICCS_HomepageController" allowDML="true">
+    <apex:attribute name="pageCtrl" 
+                    type="ISSP_ICCS_ServiceController" 
+                    assignTo="{! pageController}" 
+                    required="true" 
+                    description="The controller for the page." />
+
+    <apex:form id="homepageForm">
+        <apex:pageBlock>
+            <div class="row margin-top-bottom">
+                <apex:outputPanel rendered="{! pageController.userMessage != null || pageController.displayCaseSavedMessage}" id="messagePanel">
+                    <br/>
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="font-weight:bold;">
+                            <div class="pddg">
+                                <apex:outputText value="{! pageController.userMessage}" escape="false" rendered="{! pageController.userMessage != null}" style="color : {! IF(pageController.isSuccessMessage, '#000000', '#FF0000')};"/>
+
+                                <apex:outputPanel rendered="{! pageController.displayCaseSavedMessage}">
+                                    <apex:outputText value="Your case "/>
+                                    <apex:commandLink action="{! pageController.navigateToCase}" value="{! pageController.savedCase.CaseNumber}" reRender="pageMainPanel" status="processActStatusId">
+                                        <apex:param name="caseId" value="{! pageController.savedCase.Id}" assignTo="{! pageController.caseIdParameter}"/>
+                                    </apex:commandLink> 
+                                    <apex:outputText value=" - '{! pageController.savedCase.Subject}' has been successfully {! IF(pageController.savedCase.Status != 'Draft', 'submitted', 'saved')}"/>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                
+                <!-- USER PORTAL ACCESS IS APPROVED -->
+                <apex:outputPanel rendered="{! pageController.isActivePortalUser}">
+					<div class="row margin-bottom">
+
+	                    <!-- USER DOESN'T HAVE A ROLE IN THE SERVICE -->
+	                    <apex:outputPanel rendered="{! !pageController.hasIccsRole}">
+	                        <!-- Welcome-->
+	                        <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+	                            <div class="section-title-gray home">
+	                                <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                                <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_Title}" escape="false"/>
+	                            </div>
+	                            <div class="bottom-box pddg" style="text-align: justify;text-justify: inter-word;">
+	                                <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_1}" escape="false"/>
+	                                <br/>
+	                                <br/>
+	                                <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_2}" escape="false"/>
+	                                <br/>
+	                                <br/>
+	                                <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_3}" escape="false"/>
+	                                <br/>
+	                                <br/>
+	                                <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_4}" escape="false"/>
+	
+	                                <div class="divider-home"/>
+	
+	                                <br/>
+	
+	                                <div class="bold-txt">
+	                                    <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+	                                </div>
+	                                <br/>
+	                                <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+	                                <div class="down-btn">
+	                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+	                                        <div class="ic-pstn">
+	                                            <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+	                                            <apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+	                                        </div>
+	                                    </a>
+	                                </div>
+	                                &nbsp;
+	                                <apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+	                                <apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+	                                    <apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
+	                                </apex:outputText>
+	                            </div>
+	                        </div>
+	                    </apex:outputPanel>
+	
+	                    <!-- USER HAS A ROLE IN THE SERVICE -->
+	                    <apex:outputPanel rendered="{! pageController.hasIccsRole}">
+	
+	                        <!-- ACCOUNT ICCS MEMBERSHIP
+	                                IS NULL OR
+	                                IS INACTIVE OR
+	                                IS PROSPECT OR
+	                                IS ACTIVE -->
+	                        <apex:outputPanel rendered="{! pageController.isMembershipNone || pageController.isMembershipInactive || pageController.isMembershipProspect || pageController.isMembershipActive}">
+	    
+	                            <!-- Welcome-->
+	                            
+	                            <div class="row margin-top-bottom no-mrgn">
+	                            <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+	                                    <div class="section-title-gray home">
+	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_Title}" escape="false"/>
+	                                    </div>
+	                                    <div class="bottom-box pddg" style="text-align: justify;text-justify: inter-word;">
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_1}" escape="false"/>
+	                                        <br/>
+	                                        <br/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_2}" escape="false"/>
+	                                        <br/>
+	                                        <br/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_3}" escape="false"/>
+	                                        <br/>
+	                                        <br/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_4}" escape="false"/>
+	
+	                                        <div class="divider-home"/>
+	
+	                                        <br/>
+	
+	                                        <div class="bold-txt">
+	                                            <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+	                                        </div>
+	                                        <br/>
+	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+	                                        <div class="down-btn">
+	                                            <div class="ic-pstn">
+	                                                <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+	                                                    <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+	                                                    <apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+	                                                </a>
+	                                            </div>
+	                                        </div>
+	                                        &nbsp;
+	                                        <apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+	                                        <apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+	                                            <apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
+	                                        </apex:outputText>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        
+	                            <div class="row margin-top-bottom">
+	                                <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+	                                    <div class="section-title-gray cycle">
+	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Request_Membership_Title}" escape="false"/>
+	                                    </div>
+	                                    <div class="bottom-box" style="text-align: left;">
+	                                        <!-- REGISTRATION CASE HAS NOT BEEN CREATED -->
+	                                        <apex:outputPanel rendered="{! pageController.isMembershipInactive || pageController.isMembershipNone}">
+	                                            <p class="pddg-4">
+	                                                <apex:outputText value="{! $Label.ICCS_Homepage_Request_Membership_Message}" escape="false"/>
+	                                            </p>
+	                                        
+	                                            <div class="btn">
+	                                                <apex:commandButton action="{! registerToICCS}" value="{! $Label.ICCS_Request_Membership_Btn}" reRender="pageMainPanel" status="processActStatusId"/>
+	                                            </div>
+	                                        </apex:outputPanel>
+	                                        
+	                                        <!-- REGISTRATION CASE HAS BEEN CREATED -->
+	                                        <apex:outputPanel rendered="{! pageController.isMembershipProspect || pageController.isMembershipActive}">
+	                    
+	                                            <!-- USER IS NOT THE REGISTRATION CASE CONTACT -->
+	                                            <apex:outputPanel rendered="{! !isRegistrationCaseContact}">
+	                                                <p class="pddg-4">
+	                                                    <b>
+	                                                        <apex:outputText value="{! $Label.ICCS_Homepage_Membership_Prospect_Granted}" escape="false"/>
+	                                                        <br/>
+	                                                        <br/>
+	                                                        <apex:outputText value="{! registrationCase.Contact.Name}" escape="false"/>
+	                                                    </b>
+	                                                </p>
+	                                            </apex:outputPanel>
+	                
+	                                            <!-- USER IS THE REGISTRATION CASE CONTACT -->
+	                                            <apex:outputPanel rendered="{! isRegistrationCaseContact}">
+	                                                <p class="pddg-4">
+	                                                    <apex:outputText value="{! $Label.ICCS_Homepage_Folllow_Membership_Request}" escape="false"/>
+	
+	                                                    <br/><br/>
+	
+	                                                    <apex:commandLink action="{! pageController.navigateToCase}" style="margin-left:12px;" value="{! registrationCase.CaseNumber}" reRender="pageMainPanel" status="processActStatusId">
+	                                                        <apex:param name="caseId" value="{! registrationCase.Id}" assignTo="{! pageController.caseIdParameter}"/>
+	                                                    </apex:commandLink>
+	
+	                                                    <br/><br/>
+	
+	                                                    <apex:outputText value="{! $Label.ICCS_Homepage_Discard_Registration_Case_Message}" escape="false"/>
+	                                                </p>
+	                                                
+	                                                <div class="btn">
+	                                                    <apex:commandButton onclick="if(!confirm('Are you sure?')){return false};" value="{! $Label.ICCS_Homepage_Discard_Registration_Case_Button}" action="{! discardRegistrationCase}" rerender="pageMainPanel" status="processActStatusId"/>
+	                                                </div>
+	                                            </apex:outputPanel>
+	                                        </apex:outputPanel>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </apex:outputPanel>
+	    
+	                        <!-- ACCOUNT ICCS MEMBERSHIP
+	                                IS MEMBER OR
+	                                IS SUSPENDED -->
+	                        <apex:outputPanel rendered="{! pageController.isMembershipMember || pageController.isMembershipSuspended}">
+	                        
+	                            <!-- USER HAS REGISTRATION ROLE -->
+	                            <apex:outputPanel rendered="{! pageController.isRegistrationUser}">
+	                                
+	                                <!-- Welcome-->
+	                                <div class="row margin-bottom">
+	                                    <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+	                                        <div class="section-title-gray home">
+	                                            <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                                            <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_Title}" escape="false"/>
+	                                        </div>
+	                                        <div class="bottom-box pddg" style="text-align: justify;text-justify: inter-word;">
+	                                            <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_1}" escape="false"/>
+	                                            <br/>
+	                                            <br/>
+	                                            <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_2}" escape="false"/>
+	                                            <br/>
+	                                            <br/>
+	                                            <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_3}" escape="false"/>
+	                                            <br/>
+	                                            <br/>
+	                                            <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_4}" escape="false"/>
+	
+	                                            <div class="divider-home"/>
+	                                                
+	                                            <br/>
+	                                            <div class="bold-txt">
+	                                                <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+	                                            </div>
+	                                            <br/>
+	                                            <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+	                                            <div class="down-btn">
+	                                                <div class="ic-pstn">
+	                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+	                                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+	                                                        <apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+	                                                    </a>
+	                                                </div>
+	                                            </div>
+	                                            &nbsp;
+	                                            <apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+	                                            <apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+	                                                <apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
+	                                            </apex:outputText>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	            
+	                                <div class="row margin-top-bottom no-mrgn">
+	                                    <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+	                                        <div class="section-title-gray cycle">
+	                                            <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                                            <apex:outputText value="{! $Label.ICCS_Homepage_Request_Membership_Title}" escape="false"/>
+	                                        </div>
+	                                        <div class="bottom-box" style="text-align: left;">
+	                                            <apex:outputPanel rendered="{! pageController.newRoleRequested == null}">
+	                                                <p class="pddg-4">
+	                                                    <apex:outputText value="{! $Label.ICCS_Homepage_Request_Role_Message1}" escape="false"/>
+	                                                    <br/>
+	                                                    <br/>
+	                                                    <apex:outputText value="{! $Label.ICCS_Homepage_Request_Role_Message2}" escape="false"/>
+	                                                </p>
+	
+	                                                <div class="pddg-2">
+	                                                    <apex:outputLabel value="{! $Label.ICCS_Homepage_Select_Role_Label}"/>
+	                                                    <apex:selectList value="{! selectedRole}" multiselect="false" size="1">
+	                                                        <apex:selectOptions value="{! selectableRoles}"/>
+	                                                    </apex:selectList>
+	                                                    <br/>
+	                                                    <br/>
+	                                                    <apex:commandButton value="{! $Label.ICCS_Homepage_Request_Role_Button}" action="{! requestRole}" rerender="pageMainPanel" status="processActStatusId"/>
+	                                                </div>
+	                                            </apex:outputPanel>
+	
+	                                            <apex:outputPanel rendered="{! pageController.newRoleRequested != null}">
+	                                                <p class="pddg-4">
+	                                                    <b>
+	                                                        <apex:outputText value="{! $Label.ICCS_Pending_Role_Request_Message}" escape="false"/>
+	                                                    </b>
+	                                                </p>
+	                                            </apex:outputPanel>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </apex:outputPanel>
+	                            
+	                            <!-- USER HAS AN OTHER ROLE -->
+	                            <apex:outputPanel rendered="{! !pageController.isRegistrationUser}">
+	                            
+	                                <!-- Active Participations - Bank Accounts - Opportunities section -->
+	                                <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+	                                    <div class="section-title-gray home">
+	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                                        <apex:outputText value="{! $Label.ICCS_Summary_Label}" escape="false"/>
+	                                    </div>
+	                                    <div class="border">
+	                                        <div class="row-1">
+	                                            <div class="col">
+	                                                <apex:outputText value="{! $Label.ICCS_Homepage_Active_Participations}&nbsp;" escape="false"/>
+	                                                <apex:image value="/img/func_icons/util/help16.png" title="{! $Label.ICCS_Active_Participation_Tooltip}" alt="Help"/>
+	                                            </div>
+	                                            <div class="col">
+	                                                <apex:outputText value="{! $Label.ICCS_Homepage_Active_Bank_Accounts}&nbsp;" escape="false"/>
+	                                                <apex:image value="/img/func_icons/util/help16.png" title="{! $Label.ICCS_Active_Bank_Accounts_Tooltip}" alt="Help"/>
+	                                            </div>
+	                                            <div class="col">
+	                                                <apex:outputText value="{! $Label.ICCS_Homepage_Opportunities}&nbsp;" escape="false"/>
+	                                                <apex:image value="/img/func_icons/util/help16.png" title="{! $Label.ICCS_Opportunities_Tooltip}" alt="Help"/>
+	                                            </div>
+	                                        </div>
+	                                        <div class="row-2">
+	                                            <div class="line">
+	                                                <apex:commandLink reRender="pageMainPanel" action="{! pageController.navigateToServiceMgmt}" status="processActStatusId">
+	                                                    <apex:outputText value="{! pageController.activeParticipations}"/>
+	                                                </apex:commandLink>
+	                                            </div>
+	                                            <div class="line">
+	                                                <apex:commandLink reRender="pageMainPanel" action="{! pageController.navigateToServiceMgmt}" status="processActStatusId">
+	                                                    <apex:outputText value="{! pageController.numberOfBankAccounts}"/>
+	                                                </apex:commandLink>
+	                                            </div>
+	                                            <div class="line">
+	                                                <apex:commandLink reRender="pageMainPanel" action="{! pageController.navigateToServiceMgmt}" status="processActStatusId">
+	                                                    <apex:outputText value="{! pageController.opportunities}"/>
+	                                                </apex:commandLink>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            
+	                                <!-- Welcome-->
+	                                <div class="col-md-6 col-sm-6 col-xs-6 text-center left-card" style="padding-right:5px;padding-left:5px;">
+	                                    <div class="section-title-gray home">
+	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_Title}" escape="false"/>
+	                                    </div>
+	                                    <div class="bottom-box pddg" style="text-align: left;">
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_1}" escape="false"/>
+	                                        <br/>
+	                                        <br/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_2}" escape="false"/>
+	                                        <br/>
+	                                        <br/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_3}" escape="false"/>
+	                                        <br/>
+	                                        <br/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Welcome_4}" escape="false"/>
+	
+	                                        <div class="divider-home"/>
+	                                            
+	                                        <br/>
+	
+	                                        <div class="bold-txt">
+	                                            <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+	                                        </div>
+	                                        <br/>
+	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+	                                        <div class="down-btn">
+	                                            <div class="ic-pstn">
+	                                                <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+	                                                    <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+	                                                    <apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+	                                                </a>
+	                                            </div>
+	                                        </div>
+	                                        &nbsp;
+	                                        <apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+	                                        <apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+	                                            <apex:param value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].LastModifiedDate}" />
+	                                        </apex:outputText>
+	                                    </div>
+	                                </div>
+	            
+	                                <!-- Last ICCS Cases section -->
+	                                <div class="col-md-6 col-sm-6 col-xs-6 text-center right-card" style="padding-right:5px;padding-left:5px;">
+	                                    <div class="section-title-gray cases">
+	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Last_Cases_Title}" escape="false"/>
+	                                    </div>
+	                                    <div class="bottom-box no-pddg" style="text-align: justify;text-justify: inter-word;">
+	
+	                                        <div class="pddg">
+	                                            <apex:inputCheckbox styleClass="mrgn-r" value="{! userCasesOnly}">
+	                                                <apex:actionSupport event="onchange" rerender="casesTable" status="processActStatusId"/>
+	                                            </apex:inputCheckbox>
+	                                            <apex:outputText styleClass="labelText" value="{! $Label.ICCS_Homepage_My_Opened_Cases_Only}"/>
+	                                        </div>
+	
+	                                        <apex:outputPanel id="casesTable">
+	                                            <apex:outputText value="{! $Label.ICCS_Homepage_No_Opened_Case}" escape="false" rendered="{! casesSize == 0}"/>
+	                                            <apex:pageBlockTable value="{! cases}" var="case" styleClass="table-cases" rendered="{! casesSize > 0 }">
+	                                                <apex:column headerValue="{! $Label.ISSP_CaseNumber}">
+	                                                    <apex:commandLink action="{! pageController.navigateToCase}" value="{! case.CaseNumber}" reRender="pageMainPanel" status="processActStatusId">
+	                                                        <apex:param name="caseId" value="{! case.Id}" assignTo="{! pageController.caseIdParameter}"/>
+	                                                    </apex:commandLink>
+	                                                </apex:column>
+	                                                <apex:column value="{! case.Contact.Name}"/>
+	                                                <apex:column value="{! case.Subject}"/>
+	                                                <apex:column value="{! case.Status}"/>
+	                                                <apex:column headerValue="Creation Date" style="white-space: nowrap;">
+	                                                    <apex:outputText value="{0,date,yyyy-MM-dd}">
+	                                                        <apex:param value="{! case.CreatedDate}" />
+	                                                    </apex:outputText>
+	                                                </apex:column>
+	                                            </apex:pageBlockTable>
+	                                        </apex:outputPanel>
+	                                    </div>
+	                                </div>
+	            
+	                                <!-- Participation - Instruction -->
+	                                <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+	                                    <div class="section-title-gray srvc">
+	                                        <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+	                                        <apex:outputText value="{! $Label.ICCS_Homepage_Instruction_Table_Title}" escape="false"/>
+	                                    </div>
+	                                    <div class="bottom-box no-pddg" style="text-align: justify;text-justify: inter-word;">
+	
+	                                        <div class="pddg">
+	                                            <apex:outputText value="{! $Label.ICCS_Homepage_ParticipationInstructionTable}" escape="false"/>
+	
+	                                            <div class="divider-srvc"/>
+	                                        </div>
+	
+	                                        <apex:outputPanel id="filter_section">
+	                                            <div class="filter-2">
+	                                                <div class="labelText">
+	                                                    <apex:outputText value="{! $Label.ICCS_Filter_By}" escape="false"/>
+	                                                </div>
+	                
+	                                                <apex:selectList value="{! participationTable.selectedCategory}" multiselect="false" size="1">
+	                                                    <apex:selectOptions value="{! participationTable.categoryFilter}"/>
+	                                                    <apex:actionSupport event="onchange" action="{! participationTable.applyFilters}" rerender="participations_section,filter_section" status="processActStatusId"/>
+	                                                </apex:selectList>
+	                
+	                                                <apex:selectList value="{! participationTable.selectedCountry}" multiselect="false" size="1">
+	                                                    <apex:selectOptions value="{! participationTable.countryFilter}"/>
+	                                                    <apex:actionSupport event="onchange" action="{! participationTable.applyFilters}" rerender="participations_section,filter_section" status="processActStatusId"/>
+	                                                </apex:selectList>
+	                
+	                                                <apex:selectList value="{! participationTable.selectedCurrency}" multiselect="false" size="1">
+	                                                    <apex:selectOptions value="{! participationTable.currencyFilter}"/>
+	                                                    <apex:actionSupport event="onchange" action="{! participationTable.applyFilters}" rerender="participations_section,filter_section" status="processActStatusId"/>
+	                                                </apex:selectList>
+	                                            </div>
+	                                        </apex:outputPanel>
+	            
+	                                        <apex:pageBlockSection id="participations_section" columns="1">
+	                                            <apex:pageblockSectionItem>
+	                                                <apex:pageBlockTable value="{! participations}" var="participation">
+	                                                    <apex:column headerValue="{! $Label.ICCS_Cashflow_Label}" style="white-space: nowrap;">
+	                                                        <apex:outputText value="{! participation.cashflow}"/>
+	                                                    </apex:column>
+	                                                    <apex:column headerValue="{! $Label.ICCS_Processing_Currency_Label}">
+	                                                        <apex:outputText value="{! participation.processingCurrency}"/>
+	                                                    </apex:column>
+	                                                    <apex:column headerValue="{! $Label.ICCS_Bank_Account_Code_Label}" style="white-space: nowrap;">
+	                                                        <apex:outputText value="{! participation.bankAccountCode}"/>
+	                                                    </apex:column>
+	                                                    <apex:column headerValue="{! $Label.ICCS_Bank_Account_Currency_Label}">
+	                                                        <apex:outputText value="{! participation.bankAccountCurrency}"/>
+	                                                    </apex:column>
+	                                                    <apex:column headerValue="{! $Label.ICCS_Instruction_Type_Label}">
+	                                                        <apex:outputText value="{! participation.instructionType}"/>
+	                                                    </apex:column>
+	                                                    <apex:column headerValue="{! $Label.ICCS_Value_Label}">
+	                                                        <apex:outputText value="{! participation.value}" rendered="{! participation.instructionType != 'Balance'}"/>
+	                                                    </apex:column>
+	                                                    <apex:column headerValue="{! $Label.ICCS_Priority_Order_Label}">
+	                                                        <apex:outputText value="{! participation.instructionOrder}"/>
+	                                                    </apex:column>
+	                                                    <apex:column headerValue="{! $Label.ICCS_Start_Date_Label}" style="white-space: nowrap;">
+	                                                        <apex:outputText value="{! participation.startDate}"/>
+	                                                    </apex:column>
+	                                                    <apex:column headerValue="{! $Label.ICCS_End_Date_Label}" style="white-space: nowrap;">
+	                                                        <apex:outputText value="{! participation.endDate}" rendered="{! participation.endDate != null}"/>
+	                                                    </apex:column>
+	                                                </apex:pageBlockTable>
+	                                            </apex:pageblockSectionItem>                                            
+	                                        </apex:pageBlockSection>
+	                                        <apex:outputPanel id="expand">
+	                                            <div class="expand">
+	                                                <apex:commandLink style="color: #0075bb;" action="{! expandCollapseParticipationTable}" value="{! IF(isParticipationTableExpanded, $Label.ICCS_See_Less, $Label.ICCS_See_More)}" rendered="{! isParticipationTableExpandable}" rerender="participations_section,expand" status="processActStatusId"/>
+	                                            </div>
+	                                        </apex:outputPanel>
+	                                    </div>
+	                                </div>
+	                            </apex:outputPanel>
+	                        </apex:outputPanel>
+	                    </apex:outputPanel>
+					</div>
+
+                    <!-- Links -->
+                    <div class="col-md-12 col-sm-12 col-xs-12 text-center no-mrgn" style="padding-right:5px;padding-left:5px;">
+                        <div class="section-title-gray home">
+                            <apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+                            <apex:outputText value="{! $Label.ICCS_Homepage_Links_Title}" escape="false"/>
+                        </div>
+                        <div class="bottom-box no-pddg" style="text-align: justify;text-justify: inter-word;">
+                            <div class="no-pddg">
+                                <table style="width:100%;">
+                                    <tr style="background-color:transparent;vertical-align:top;">
+                                        <td style="width:18%;font-size:12px;padding:12px !important">
+                                            <b><apex:outputText value="{! $Label.ICCS_Quick_Links}"/></b>
+                                            <br/>
+                                            <ul style="padding-left: 14px;">
+                                                <li>
+                                                    <a href="http://www.iata.org/services/finance/iccs/Pages/index.aspx" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_About_ICCS_Link}"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['New_ICCS'].Id}" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_More_About_Link}"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://portal.iata.org/faq/articles/en_US/FAQ/What-are-the-steps-to-joining-ICCS-1432212713560/?l=en_US&fs=RelatedArticle" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_Joining_ICCS_Link}"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="http://www.iata.org/customer-portal/Pages/index.aspx" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_Contact_Link}"/>
+                                                    </a>
+                                                </li>
+                                                <!--li>
+                                                    <a href="https://portal.iata.org/faq/articles/en_US/FAQ/What-is-ICCS-1432212713566" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_FAQs_Link}"/>
+                                                    </a>
+                                                </li-->
+                                            </ul>
+                                        </td>
+                                        
+                                        <td style="width:18%;font-size:12px;padding:12px !important">
+                                            <b><apex:outputText value="{! $Label.ICCS_Popular_Links}"/></b>
+                                            <br/>
+                                            <ul style="padding-left: 14px;">
+                                                <li>
+                                                    <a href="http://www.iata.org/about/Pages/index.aspx" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_About_IATA_Link}"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="http://www.iata.org/events/pages/index.aspx" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_FDS_Upcoming_Events_Link}"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="http://www.iata.org/publications/pages/index.aspx" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_IATA_Publications_Link}"/>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        
+                                        <td style="width:18%;font-size:12px;padding:12px !important">
+                                            <b><apex:outputText value="{! $Label.ICCS_IATA_Other_Products}"/></b>
+                                            <br/>
+                                            <ul style="padding-left: 14px;">
+                                                <li>
+                                                    <a href="https://portal.iata.org/ISSP_TDNavigation" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_Treasury_Dashboard_Link}"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="http://www.iata.org/services/finance/Pages/enhancement.aspx" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_EF_Link}"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://portal.iata.org/ISSP_Login?startURL=%2FISSP_CurrencyCenterHome" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_Currency_Center_Link}"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="http://www.iata.org/services/finance/Pages/index.aspx" target="_blank">
+                                                        <apex:outputText value="{! $Label.ICCS_FDS_Link}"/>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        
+                                        <td style="width:18%;font-size:12px;padding:12px !important">
+                                            <b><apex:outputText value="{! $Label.ICCS_Documents}"/></b>
+                                            <br/>
+                                            <ul style="padding-left: 14px;">
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap[pageController.fxPolicyFileUniqueName].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap[pageController.fxPolicyFileUniqueName].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Description'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Description'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_FAQs'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_FAQs'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Presentation_Webinar'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Presentation_Webinar'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_User_Guide'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Countries'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Countries'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap[pageController.pricingPolicyFileUniqueName].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap[pageController.pricingPolicyFileUniqueName].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        
+                                        <td style="width:28%;font-size:12px;padding:12px !important">
+                                            <b><apex:outputText value="{! $Label.ICCS_Forms}"/></b>
+                                            <br/>
+                                            <ul style="padding-left: 14px;">
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_AML_Request'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_AML_Request'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Bank_Account_Details'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['Form_A'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['Form_A'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['Form_K'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['Form_K'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_FDS_Authorized_Signatories_Package'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_FDS_Authorized_Signatories_Package'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Leave_Participation'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Leave_Participation'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Membership_Agreement'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Membership_Agreement'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Signatory_Authority_Change'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Signatory_Authority_Change'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/servlet/servlet.FileDownload?file={! pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Id}" target="_blank">
+                                                        <apex:outputText value="{! pageController.downloadableDocumentsMap['ICCS_Join_Participation'].Name}" escape="false"/>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>                 
+                </apex:outputPanel>
+            </div>
+        </apex:pageBlock>
+   </apex:form>   
+</apex:component>

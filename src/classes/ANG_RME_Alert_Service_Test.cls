@@ -207,8 +207,8 @@ public class ANG_RME_Alert_Service_Test {
 		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestBalanceUpdate([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
-
-		System.assertEquals('An unexpected error ocurred while contacting the external system. Please, try again later or contact your system admin', result.description);
+        
+		System.assertEquals('An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.', result.description);
 		System.assert(!result.isSuccess);
 	}
 	
@@ -223,6 +223,114 @@ public class ANG_RME_Alert_Service_Test {
 
 		System.assert(!result.isSuccess);
 	}
+
+	static testMethod void test_RTS_alert_success() {
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventId = 'testRTSAlert1';
+		message.eventType = 'RTSAlert';
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+
+		message.storedBaseCurrency = 'USD';
+		message.rtsSeverity = 'Orange';
+		message.agentSales = 100.00;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', 'RTSAlert');
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		List<ANG_Risk_Alert__c> alerts = [SELECT Id, ANG_Severity__c, ANG_Agent_Sales__c FROM ANG_Risk_Alert__c];
+
+		System.assertEquals(202, RestContext.response.StatusCode);
+		System.assertEquals(1, alerts.size());
+		System.assertEquals('Orange', alerts[0].ANG_Severity__c);
+		System.assertEquals(100.00, alerts[0].ANG_Agent_Sales__c);
+	}
+
+	static testMethod void test_RTS_alert_error() {
+		
+		// test Severity validation
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventId = 'testRTSAlert1';
+		message.eventType = 'RTSAlert';
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+
+		message.storedBaseCurrency = 'USD';
+		message.rtsSeverity = 'ERROR_Severity';
+		message.agentSales = 100.00;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', 'RTSAlert');
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		List<ANG_Risk_Alert__c> alerts = [SELECT Id FROM ANG_Risk_Alert__c];
+
+		System.assertEquals(0, alerts.size());
+		System.assertEquals(400, RestContext.response.StatusCode);
+		System.assert(result.description.contains('Invalid rtsSeverity'));
+
+
+		// test currency validation
+		message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventId = 'testRTSAlert2';
+		message.eventType = 'RTSAlert';
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+
+		message.storedBaseCurrency = 'error_Currency';
+		message.rtsSeverity = 'Orange';
+		message.agentSales = 100.00;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', 'RTSAlert');
+		RestContext.request = req;
+
+		result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		alerts = [SELECT Id FROM ANG_Risk_Alert__c];
+
+		System.assertEquals(0, alerts.size());
+		System.assertEquals(400, RestContext.response.StatusCode);
+		System.assert(result.description.contains('Invalid storedBaseCurrency'));
+
+
+		// test required fields validation
+		message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventId = 'testRTSAlert3';
+		message.eventType = 'RTSAlert';
+		message.rtsSeverity = 'Orange';
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', 'RTSAlert');
+		RestContext.request = req;
+
+		result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		alerts = [SELECT Id FROM ANG_Risk_Alert__c];
+
+		Test.stopTest();
+
+		System.assertEquals(0, alerts.size());
+		System.assertEquals(400, RestContext.response.StatusCode);
+		System.assert(result.description.contains('Required values missing'));
+
+	}
+
 	static testMethod void testDoPost() {
 		List <Account> accountList = new List <Account> ([SELECT Id FROM Account LIMIT 1]);
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
@@ -233,6 +341,7 @@ public class ANG_RME_Alert_Service_Test {
 		message.eventTime = System.now();
 
 		message.storedBaseCurrency = 'USD';
+
 		message.storedRHCValue = 0;
 		message.consumedRHCAmount = 200;
 		message.consumedRHCPercentage = 0.5;

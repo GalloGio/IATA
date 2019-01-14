@@ -60,6 +60,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Create_Process_Case__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Block_Cut_Cash_Form_of_Payment__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

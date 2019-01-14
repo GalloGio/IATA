@@ -29,10 +29,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Additional_Terms_Custom_Labels__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>Customer_Type_Activation__c</field>
             </layoutItems>
             <layoutItems>
@@ -48,6 +44,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_Role_Selectable__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Max_Number_Of_Primary_User__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Max_Number_Of_Secondary_User__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invitation_Primary_Max__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invitation_Secondary_Max__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -75,6 +87,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_Active__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Portal_Visible__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

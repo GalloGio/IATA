@@ -404,7 +404,8 @@
         <label>Advanced Accreditation Details</label>
         <layoutColumns>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Edit</behavior>
+                <field>CNS_Agency__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -567,6 +568,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Now_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Total_Ownership_Percentage__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
