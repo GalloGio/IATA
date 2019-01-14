@@ -1231,9 +1231,15 @@ public with sharing class AMS_XML_Generator {
                         getElementNode(agEndorsementNode, 'accreditation_endorsement_status_code',  AMS_Utils.getIATANumericStatus(ag.Status__c) );
 
                         //Set the "Date_Organisation_Status_attained" value to the created date of the active change code
-                        if(auxAgAppChangeCode != null){
-                            Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCode.Created_Date_To_Show__c.year(), auxAgAppChangeCode.Created_Date_To_Show__c.month(),auxAgAppChangeCode.Created_Date_To_Show__c.day());
-                            getElementNode(agEndorsementNode, 'date_organisation_status_attained', dtOrgStatusAttained == Null ? Null : String.valueOf(dtOrgStatusAttained.format('yyyyMMdd')));
+                        //AMSU-207 - when agency is with status terminated and an expiry date is et we will use this value intead of the one on the change code
+                        if(ag.Status__c == AMS_Utils.ACC_S0_TERMINATED && ag.Expiry_Date__c != null ){
+                            Datetime dtOrgStatusAttainedExpiry = Datetime.newInstance(ag.Expiry_Date__c.year(), ag.Expiry_Date__c.month(),ag.Expiry_Date__c.day());
+                            getElementNode(agEndorsementNode, 'date_organisation_status_attained', dtOrgStatusAttainedExpiry == Null ? Null : String.valueOf(dtOrgStatusAttainedExpiry.format('yyyyMMdd')));
+                        }else{
+	                        if(auxAgAppChangeCode != null){
+	                            Datetime dtOrgStatusAttained = Datetime.newInstance(auxAgAppChangeCode.Created_Date_To_Show__c.year(), auxAgAppChangeCode.Created_Date_To_Show__c.month(),auxAgAppChangeCode.Created_Date_To_Show__c.day());
+	                            getElementNode(agEndorsementNode, 'date_organisation_status_attained', dtOrgStatusAttained == Null ? Null : String.valueOf(dtOrgStatusAttained.format('yyyyMMdd')));
+	                        }
                         }
 
                         Datetime dtLast_Inspection_Date = ag.Last_Inspection_Date__c == Null ? Null : Datetime.newInstance(ag.Last_Inspection_Date__c.year(), ag.Last_Inspection_Date__c.month(),ag.Last_Inspection_Date__c.day());
