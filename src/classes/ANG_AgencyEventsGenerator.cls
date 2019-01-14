@@ -68,7 +68,7 @@ public class ANG_AgencyEventsGenerator{
     }
 
     private boolean VerifyFieldChanges(string fieldOldValue, string fieldNewValue, string AllowedValue){
-        if(fieldNewValue!=fieldNewValue){
+        if(fieldNewValue!=fieldOldValue){
             if(string.isBlank(AllowedValue))
                 return true;
             else{

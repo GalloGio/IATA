@@ -118,7 +118,9 @@
     </fields>
     <fields>
         <fullName>fieldValue__c</fullName>
+        <description>Create the events only if the value of the field of the object is equal to the specified value</description>
         <externalId>false</externalId>
+        <inlineHelpText>Create the events only if the value of the field of the object is equal to the specified value</inlineHelpText>
         <label>Trigger when Field Equal To</label>
         <length>255</length>
         <required>false</required>
