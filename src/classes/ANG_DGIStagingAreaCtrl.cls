@@ -142,6 +142,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 
             AMS_OSCAR__c oscar = new AMS_OSCAR__c (Id =stagingFs.OSCAR_GDI__c);
             oscar.step50__c = 'Passed';
+            oscar.status__c = 'Closed';
             update oscar;
 
             opp = new Opportunity(Id=stagingFs.OpportunityId);
@@ -159,6 +160,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
         
         AMS_OSCAR__c oscar = new AMS_OSCAR__c (Id =stagingFs.OSCAR_GDI__c);
         oscar.step50__c = 'Failed';
+        oscar.status__c = 'Closed';
         oscarObj.step50__c = 'Failed';
 
         update oscar;
