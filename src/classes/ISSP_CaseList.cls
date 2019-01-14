@@ -340,14 +340,6 @@ global with sharing class ISSP_CaseList {
             //Add mapping for Status field
             statusFieldValMapKey=ISSP_Case.STATUS_FLD_NAME+Item.Status;
             mapFieldsValue.put(statusFieldValMapKey,ISSP_Case.getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,Item.Status));
-        
-            //ACAMBAS - WMO-389 - Start
-            if(Item.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
-                Item.Subject = 'Remittance follow up ' + Item.BSP_CASS__c;
-                Item.Subject = (Item.IATA_Code__c != null) ? Item.Subject + ' - ' + Item.IATA_Code__c : Item.Subject;
-                Item.Subject = (Item.Remittance_period__c != null) ? Item.Subject + ' - Period ' +  Item.Remittance_period__c : Item.Subject;
-            }
-            //ACAMBAS - WMO-389 - End
 
         }
         system.debug('basto1p - mapFieldsValue='+mapFieldsValue);
