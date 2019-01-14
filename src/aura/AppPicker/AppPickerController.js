@@ -148,6 +148,7 @@
         // For Fred, we need to check the roles availability accordingly to the following logic
         // - if there is no Fred user in the company, the Primary User role is given
         // - otherwise, the Secondary User role is given if the limit is not reached
+        var fredServiceRequestWarining = 'Please note, you are about to request access to FRED+. This service facilitates CORSIA CO2 emissions reporting for Aircraft Operators and State Authorities and your access request will be assessed by the FRED+ team. Please confirm that you would like to proceed.';
         if(component.get("v.activeApp") == 'FRED'){
 			var action = component.get("c.getAutomaticRole");
 			action.setParams({connectedapp : component.get("v.activeApp")});
@@ -163,7 +164,9 @@
                     else{
                         component.set("v.selectedRole", results);
 						var action2 = component.get('c.submitRequest');
-                        $A.enqueueAction(action2);
+                        if(confirm(fredServiceRequestWarining)){
+                        	$A.enqueueAction(action2);
+                        }
                     }
 				} else {
 					console.log(state);

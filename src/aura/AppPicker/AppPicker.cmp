@@ -66,7 +66,12 @@
                     <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center slds-grid--vertical-align-center verticalMiddle">
                         <div class="appcard slds-size--10-of-12 slds-medium-size--10-of-12 slds-large-size--7-of-12 slds-large-size--6-of-12">
                             <img src="{!v.activeAppPic}" class="appImage"/>
-                            <ui:outputText aura:id="activeApp" class="activeApp" value="{!v.activeApp}" />
+                            <aura:if isTrue="{!v.activeApp == 'FRED'}">
+                                <ui:outputText aura:id="activeApp" class="activeApp" value="{!v.activeApp + '+'}" />
+                                <aura:set attribute="else">
+                                    <ui:outputText aura:id="activeApp" class="activeApp" value="{!v.activeApp}" />
+                                </aura:set>
+                            </aura:if>
                             <ui:outputText class="activeAppDescription" value="{!v.activeAppDescription}" />
                             <aura:if isTrue="{!v.activeApp != null}">
                             <div class="terms item">

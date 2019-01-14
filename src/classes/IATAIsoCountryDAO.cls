@@ -23,7 +23,7 @@ public class IATAIsoCountryDAO {
 														//AMS_XML_Generator Fields
 														BSP_Country_free_text__c, CASS_Country_free_text__c,SLA_Type__c, Sub_Region__c, 
 														Country_Manager__r.Name,
-
+														Informatica_Value__c,
 														IATA_COUNTRY_EN__c,
                                                         IATA_Contry_KR__c,
                                                        	IATA_Country_FR__c,
