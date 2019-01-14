@@ -37,6 +37,8 @@ global class ISSP_AmazonS3_Ctrl {
     public String currentIdentifier {
         get;
         set {
+            //Current input value is blank nothing is performed
+            if(String.isBlank(value)) return; 
             if(currentIdentifier!=null) return;
             currentIdentifier = value;
             list<AmazonFile__c> listAmazonFile = [
