@@ -391,7 +391,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 oscar.Local_Inspection_requested__c = Date.today();
-                oscar.Local_Inspection_deadline__c = Date.today() + 10;
+                oscar.Local_Inspection_deadline__c = Date.today() + 15;
                 res = True;
             }
 
