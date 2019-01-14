@@ -178,6 +178,9 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE ( Top_Parent__c = :accountId or Id = :accountId ) AND Status__c not in ( ' +  getInvalidStatus() + ' ) ORDER BY IATA_ISO_Country__r.Name')){
 					Boolean main = (a.Id == oscar.Account__c);
+					if(a.Location_Type__c == null){
+						a.Location_Type__c = AMS_Utils.AE;
+					}
 					if(hierarchy.get(a.IATA_ISO_Country__r.AMS_Settlement_System__r.Name) == null)
 						hierarchy.put(a.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, new List<HierarchyItem>{new HierarchyItem(a, main, processDetails.containsKey(a.Id), a.Location_Type__c == AMS_Utils.GE)});
 					else
@@ -272,7 +275,9 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 	// ***********************************
 
 	public void selectMain() {
-		for(HierarchyItem hi : hierarchyValues)	if(hi.main)	oscar.Account__c = hi.acc.Id;
+		for(HierarchyItem hi : hierarchyValues){
+			if(hi.main)	oscar.Account__c = hi.acc.Id;
+		}
 	}
 
     public PageReference Beginning() { //user clicked beginning
