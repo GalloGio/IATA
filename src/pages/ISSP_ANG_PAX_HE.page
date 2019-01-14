@@ -1340,7 +1340,7 @@
                         </apex:outputpanel>
                         </apex:facet>
 
-                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought_Cash_Cashless}: {!IF(newCase.Reason1__c=='New HE standard', $Label.ISSP_AMS_Step3_Cash_Location, $Label.ISSP_AMS_Step3_Cashless_Location)}"/>
+                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought_Cash_Cashless}: {!IF(newCase.Reason1__c=='New HE standard', $Label.ISSP_AMS_Step3_Cash_Location, IF(newCase.Reason1__c == 'New HE multicountry', $Label.ISSP_AMS_Step3_Multicountry_Location, $Label.ISSP_AMS_Step3_Cashless_Location))}"/>
 
                     <apex:actionFunction name="setHeaderLabels" action="{!setPageLegalStatusLabels}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" reRender="contactList, newContact">
                         <apex:param name="setlegalstatus" assignTo="{!legalstatus}" value="" />

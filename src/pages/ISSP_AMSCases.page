@@ -201,9 +201,9 @@
                 navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_AMSCases&isMultiCountryNewAE=true');
             }
 
-            function confirmMCCaseDelete(caseId) {
+            function confirmMCFormDelete(formId) {
                 bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}', function(result) {
-                    if(result) deleteMCCase(caseId);
+                    if(result) deleteMCForm(formId);
                 });
                 return false;
             }
@@ -225,8 +225,8 @@
                 <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/>
                 <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
                 <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases"/>
-                <apex:actionFunction action="{!deleteMCCase}" name="deleteMCCase" reRender="onGoingMultiCountryCases">
-                    <apex:param value="" name="mcCaseNumber" assignTo="{!mcCaseIdToDelete}"/>
+                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryCases">
+                    <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
                 </apex:actionFunction>    
             
                 <div class="container" style="width: 100%">
@@ -304,21 +304,21 @@
 
                             <div class="row" style="padding-top: 20px">
                                 <div class="col-md-12">
-                                    <apex:pageBlock>
-                                        <apex:pageBlockTable id="onGoingMultiCountryCases" value="{!multiCountryApplicationCases}" var="mcCase" styleClass="table" rendered="{!mcApplicationCasesFound}">
+                                    <apex:pageBlock >
+                                        <apex:pageBlockTable id="onGoingMultiCountryForms" value="{!multiCountryApplicationForms}" var="mcForm" styleClass="table" rendered="{!mcApplicationFormsFound}">
                                             
                                             <apex:column headerValue="">
-                                                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!mcCase.Id}&step=5{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}">Modify &nbsp;</apex:outputLink>
+                                                <!--<apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!mcForm.Id}&step=5{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcForm.Reason1__c, 'New')}">Modify &nbsp;</apex:outputLink>-->
                                                 
-                                                <apex:outputLink value="/ISSP_ANG_PAX_AE?caseId={!mcCase.Id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}">Edit &nbsp;</apex:outputLink>
+                                                <!--<apex:outputLink value="/ISSP_ANG_PAX_AE?caseId={!mcForm.Id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(mcForm.Reason1__c, 'New')}">Edit &nbsp;</apex:outputLink>
 
-                                                <apex:commandLink immediate="true" onfocus="confirmMCCaseDelete('{!mcCase.Id}'); return false;" rendered="{!BEGINS(mcCase.Reason1__c, 'New')}" reRender="">Remove</apex:commandLink>
+                                                <apex:commandLink immediate="true" onfocus="confirmMCCaseDelete('{!mcForm.Id}'); return false;" rendered="{!BEGINS(mcForm.Reason1__c, 'New')}" reRender="">Remove</apex:commandLink>-->
                                                 
                                             </apex:column>
                         
-                                            <apex:column headerValue="{!$ObjectType.Case.fields.Subject.label}" value="{!mcCase.Subject}" style="margin-left: {!IF(BEGINS(mcCase.Reason1__c, 'New AE'), '40px', 'none')};"/>
+                                            <!--<apex:column headerValue="{!$ObjectType.Case.fields.Subject.label}" value="{!mcForm.Subject}" style="margin-left: {!IF(BEGINS(mcForm.Reason1__c, 'New AE'), '40px', 'none')};"/>
                         
-                                            <apex:column value="{!mcCase.Portal_Case_Status__c}"/>
+                                            <apex:column value="{!mcForm.Portal_Case_Status__c}"/>-->
                                         </apex:pageBlockTable>
                                     </apex:pageBlock>
                                 </div>

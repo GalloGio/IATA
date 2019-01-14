@@ -16360,6 +16360,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>* Please indicate the GDS(s) with which you have signed a contract</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_Multicountry_Location</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
+        <value>&lt;strong&gt;Head Entity - GoGlobal&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_Office_FullAddress</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
