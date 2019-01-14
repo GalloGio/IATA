@@ -1260,11 +1260,12 @@ global class ANG_OscarProcessHelper {
 	/*** AMSU-37 ***/
 	public static Boolean doAgainIATACodeGeneration(AMS_Oscar__c oscar, Account agency) {
 		Set<String> accountStatus = new Set<String> {'12-APPLICATION DISAPPROVED', '11-APPLICATION WITHDRAWN'};
-		Set<String> processes = AMS_Utils.oscarNewProcesses; 
+		Set<String> processes = AMS_Utils.oscarNewProcesses;
+		Set<String> processesNG = AMS_Utils.oscarNewGenNewAppProcesses;
 		Set<String> appliedChangeCodes = new Set<String> {'DIS', 'NWD'}; 
 		List<Agency_Applied_Change_code__c> changeCodes = agency.Agencies_Applied_Change_codes__r;
 
-		if(!accountStatus.contains(agency.Reason__c) || !processes.contains(oscar.Process__c)) {
+		if(!accountStatus.contains(agency.Reason__c) || !processes.contains(oscar.Process__c) || !processesNG.contains(oscar.Process__c)) {
 			return false;
 		}
 
