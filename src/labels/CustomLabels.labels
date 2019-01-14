@@ -7491,22 +7491,6 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>Entry industry date must be superior to birth date</value>
     </labels>
     <labels>
-        <fullName>IDCard_Intro_to_BSPLink_EN</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_Intro_to_BSPLink_EN</shortDescription>
-        <value>Learn how to use BSPLink functionality to download reporting documents, interpret and reconcile transactions and report discrepancies or corrections. The course enables system users to access information and interprets data received in the agency’s monthly billing reports. Grasping BSPLink functionality will make the agency back office productive in reconciling billing reports with other reporting systems used by the business. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/introduction-bsplink-tttg44.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
-    </labels>
-    <labels>
-        <fullName>IDCard_Intro_to_the_BSP_System_Language</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_Intro_to_the_BSP_System_Language</shortDescription>
-        <value>Learn how the IATA Billing and Settlement Plan (BSP) works and how it benefits a travel agency. This course will enable travel agent users to describe the BSP system and how it works; explain the benefits of being a BSP travel agency; identify BSP participants and explain their roles; identify the steps in reporting airline ticket transactions; find information on BSP procedures; and learn common BSP terms and definitions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-system-language-tttg43.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
-    </labels>
-    <labels>
         <fullName>IDCard_IntroduccionAlBSPlink_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
