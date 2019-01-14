@@ -1333,7 +1333,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>EF_Relationship__c.Billing_Agreement_Name__c</field>
+            <field>EF_Relationship__c.BillingAgreement_Name__c</field>
             <table>Product2.EF_Material_Line_Items__r</table>
         </columns>
         <columns>

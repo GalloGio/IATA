@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -65,6 +62,27 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_GDP_Formula_Key__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Account__c + &quot;-&quot; +  AirportCode__r.Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AMS 2 GDP Formula Key</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_GDP_Key__c</fullName>
+        <externalId>true</externalId>
+        <label>AMS GDP Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>AirportCode__c</fullName>
@@ -134,6 +152,8 @@
         <columns>Related_GDP_Products_Account_View__c</columns>
         <columns>AIMS_ID__c</columns>
         <columns>WebStar_ID__c</columns>
+        <columns>AMS_GDP_Key__c</columns>
+        <columns>AMS_GDP_Formula_Key__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -156,4 +176,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

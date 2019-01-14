@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases Airlines - Korea</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAsiaPacificallusers</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

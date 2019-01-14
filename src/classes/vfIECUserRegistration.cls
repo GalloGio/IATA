@@ -146,8 +146,8 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
     //Returns the list of countries pairs: id-name
     public List<SelectOption> getISOCountry() {
         List<SelectOption> options = new List<SelectOption>();
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
-        options.add(new SelectOption(iso.Id,iso.Name));
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+            options.add(new SelectOption(iso.Id,iso.Name));
         }
         return options;
     }
@@ -158,8 +158,8 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
         List<SelectOption> options = new List<SelectOption>();
         options.add(new SelectOption('','-Select a Country-'));
         
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
-        options.add(new SelectOption(iso.Name,iso.Name));
+        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+            options.add(new SelectOption(iso.Name,iso.Name));
         }
         return options;
     }
@@ -908,12 +908,12 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
           userId= Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC');
 
           if (userId != null) {
-            RecordType rt = [Select r.Id,r.Name, r.DeveloperName From RecordType r where  DeveloperName='Standard_Contact'];
+            Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
             //conList = [select accountId,firstName,lastName,Email from Contact where Email =:con.email.trim() and RecordTypeId=:rt.Id];
                contact conIDCard = [select accountId,firstName,lastName,Email,User_Portal_Status__c,
                             (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE Is_Active_Card__c = true)
-                            from Contact where id =:con.id and RecordTypeId=:rt.Id];
+                            from Contact where id =:con.id and RecordTypeId=:rtId];
         
 
                 //TF - SP10-N2
@@ -931,7 +931,7 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
                 upsert conIDCard;        
             } catch (Exception ex) {
                     transformationHelper.sendSFDevsAlertMessage('error',
-                     '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com'});
+                     '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'sfdcadmin@iata.org'});
             }
                 
                    return true;
@@ -1154,7 +1154,7 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
         try {
 
             //Complete account information
-            IATA_ISO_Country__c iso = [select Id, Name from IATA_ISO_Country__c where Name=: acc.BillingCountry limit 1];
+            IATA_ISO_Country__c iso = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry}).get(0);
             acc.IATA_ISO_Country__c =  iso.Id; // ISOCountry.getValue();//
             acc.Reason_for_creation__c = 'Created by customer';
             
@@ -1244,8 +1244,8 @@ public without sharing class vfIECUserRegistration  extends IECPageController {
         	
         string temp = (oAccount.IATA_ISO_Country__r.Name == null) ? oAccount.BillingCountry+'' : oAccount.IATA_ISO_Country__r.Name+'';
 
-        List<IATA_ISO_Country__c> isoCountries = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = :temp];
-        List<IATA_ISO_State__c> isoStates = [SELECT Id FROM IATA_ISO_State__c WHERE Name = :oAccount.BillingState];
+        List<IATA_ISO_Country__c> isoCountries = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{temp});
+        List<IATA_ISO_State__c> isoStates = IATAIsoStateDAO.getIsoStateByStateName(new Set<String>{oAccount.BillingState});
  
         IECAddress__c oBillingAddress = new IECAddress__c(
             Contact__c = oContact.Id

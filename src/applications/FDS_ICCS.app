@@ -2,16 +2,20 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>Gathers the objects needed to perform the ICCS process, for ICCS Administrator &amp; ICCS User</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>FDS - ICCS</label>
-    <tab>standard-Account</tab>
-    <tab>standard-Contact</tab>
-    <tab>standard-Case</tab>
-    <tab>standard-Product2</tab>
-    <tab>standard-Campaign</tab>
-    <tab>IATA_ISO_Country__c</tab>
-    <tab>ICCS_Bank_Account__c</tab>
-    <tab>standard-Document</tab>
-    <tab>standard-report</tab>
-    <tab>standard-Dashboard</tab>
-    <tab>Operational_Improvements__c</tab>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Case</tabs>
+    <tabs>standard-Product2</tabs>
+    <tabs>standard-Campaign</tabs>
+    <tabs>IATA_ISO_Country__c</tabs>
+    <tabs>ICCS_Bank_Account__c</tabs>
+    <tabs>standard-Document</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>standard-Dashboard</tabs>
+    <tabs>Operational_Improvements__c</tabs>
+    <tabs>AMS_Account_Role__c</tabs>
 </CustomApplication>

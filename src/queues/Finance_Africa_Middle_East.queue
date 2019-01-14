@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>bahoud@iata.org</email>
+    <email>amear@iata.org</email>
     <name>Finance AR - Africa &amp; Middle East</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP WS SIS send error alert</name>
+    <style>none</style>
+    <subject>ISSP SIS Webservice Error [{!ISSP_Web_Service_Log__c.Name}]</subject>
+    <textOnly>SIS Integration error:  
+
+   {!ISSP_Web_Service_Log__c.Link}  
+
+Detail: 
+Web service: {!ISSP_Web_Service_Log__c.Web_Service__c}
+Method:          {!ISSP_Web_Service_Log__c.Method__c}
+Date:               {!ISSP_Web_Service_Log__c.Started__c}
+Input description:
+     {!ISSP_Web_Service_Log__c.Input_Description__c} 
+
+Error Code:          {!ISSP_Web_Service_Log__c.Error_Code__c}
+Error Message:   {!ISSP_Web_Service_Log__c.Error_Message__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

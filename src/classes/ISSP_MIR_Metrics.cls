@@ -134,7 +134,7 @@ public with sharing class ISSP_MIR_Metrics {
 				Management_Information_Report__r.Report_Date_format__c
 				FROM ISSP_Document_Tracker__c
 				WHERE Management_Information_Report__c != null
-				ORDER BY Management_Information_Report__r.Report_Date__c DESC];
+				ORDER BY Management_Information_Report__r.Report_Date__c DESC limit 5000];
 		
 		for (ISSP_Document_Tracker__c thisRecord : trackerList){
 			// getting usage percentage for each report

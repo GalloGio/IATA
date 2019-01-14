@@ -3,7 +3,7 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert)
     boolean CardToSync = false;
 
     // Get RecordTypeID
-    ID contactTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');
+    ID contactTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
     if (trigger.isInsert) {
         // force to sync ver num and ver num 2
@@ -17,6 +17,8 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert)
 
     if (trigger.isUpdate && IDCardUtil.isFirstTime) {
 
+        List<Contact> standardContacts = new List<Contact>();
+
         // force to sync ver num and ver num 2
         for (Contact c : trigger.new) {
             if ( c.Ver_Number__c !=  trigger.oldMap.get(c.Id).Ver_Number__c ) {
@@ -27,8 +29,11 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert)
             } else if (c.Ver_Number_2__c != trigger.oldMap.get(c.Id).Ver_Number_2__c && !c.Ver_Number_2__c.startswith('Z')) {
                 c.Ver_Number__c = Decimal.valueOf(c.Ver_Number_2__c);
             }
+
+            if(c.RecordTypeId == contactTypeID) standardContacts.add(c);
         }
 
+        if(standardContacts.isEmpty()) return;
 
         //RA 7/8/2013
         //Shows a warning when the contact last name is update if an active IDCard is linked to the contact
@@ -36,11 +41,11 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert)
 
         Set<ID> ids = Trigger.newMap.keySet();
 
-        ID rectypeid = Schema.SObjectType.ID_Card__c.getRecordTypeInfosByName().get('AIMS').getRecordTypeId();
-        List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Printed/Delivered' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
+        ID rectypeid = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
+        List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Valid ID Card' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
 
 
-        for (Contact CurrentContact : trigger.new) {
+        for (Contact CurrentContact : standardContacts) {
         	
         	IDCardUtil.isFirstTime = false;
         	
@@ -50,7 +55,7 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert)
                 isAdmin = true;
 
             Contact OldContact = Trigger.oldMap.get(CurrentContact.ID);
-            if (CurrentContact.RecordTypeId == contactTypeID && (!isAdmin || test.isRunningTest())) {
+            if (!isAdmin || test.isRunningTest()) {
 
                 //checks if theres any active IDCard for this contact.
 

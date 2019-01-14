@@ -3,9 +3,15 @@ private class ISSP_PersonalInformationTest {
 	public static testMethod void testISSP_HomepageTest() {
 		//ISSP_ObjectFactory.fiilIncludedFields();
 		//Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
+		Account acc1 = ISSP_ObjectFactory.createNewAccount();
+        acc1.IATACode__c = '258';
+        acc1.Status__c = 'Under review';
+        acc1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        insert acc1;
 		Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = acc1.RecordTypeId;
+        acc.Top_Parent__c = acc1.Id;
         Test.startTest();
         insert acc;
         Test.stopTest();
@@ -56,8 +62,13 @@ private class ISSP_PersonalInformationTest {
 			ctrl.saveNewCompanyName();
 			ctrl.getPicklistValues();
 			List<ISSP_AMS_Accreditation.AccountChanges> accountChnages =  ctrl.getAccountChangesList();
+			List<SelectOption> paxBranches = ctrl.getPAXBranches();
+			ctrl.getBranchOffice();
 			ctrl.saveContact(); 
 			ctrl.saveAccount(); 
+			ctrl.getIsVerifiedAccount();
+			ctrl.getIsStandardAccount();
+			ctrl.getPermissionForStandardAccount();
 		}
 	}
 	
@@ -66,15 +77,24 @@ private class ISSP_PersonalInformationTest {
 		//Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
 		Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.Sector__c = 'Cargo Agent';
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Test.startTest();
         insert acc;
         Test.stopTest();
+        Account acc1 = ISSP_ObjectFactory.createNewAccount();
+        acc1.IATACode__c = '258';
+        acc1.Top_Parent__c = acc.Id;
+        acc1.Status__c = 'Under review';
+        acc1.RecordTypeId = acc.RecordTypeId;
+        insert acc1;
+
 		//Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
 		Contact con = ISSP_ObjectFactory.createNewContact();
 		con.Senior_Contact_Email__c = 'senior@dev.com';
 		con.AccountId= acc.Id;
 		con.User_Portal_Status__c = 'Regional Administrator';
+		con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		
 		system.debug('contact >> ' + con);
 		insert con;
@@ -110,16 +130,38 @@ private class ISSP_PersonalInformationTest {
 		
     	
     	insert new list<AccountTeamMember>{ member1, member2 };
+
+    	ID_Card__c newIdCard = new ID_Card__c (FirstName__c = con.FirstName,
+    		LastName__c = con.LastName,
+    		Name_on_ID_Card__c = 'Test ID Card',
+    		Related_Contact__c = con.Id,
+    		Card_Status__c =  'Sent ID Card',
+    		Valid_From_Date__c = Date.today(),
+    		Valid_To_Date__c = Date.today().addMonths(5));
+
+    	insert newIdCard;
     	
     	system.runAs(newUser){
+			ApexPages.currentPage().getParameters().put('confirm','yes');
     		ISSP_PersonalInformation ctrl = new ISSP_PersonalInformation();
     		ISSP_PersonalInformationWithoutSharing ctrlChild = new ISSP_PersonalInformationWithoutSharing(ctrl);
 			ctrl.iataCode = '132';
 			ctrl.saveNewCompanyName();
 			ctrl.getPicklistValues();
 			List<ISSP_AMS_Accreditation.AccountChanges> accountChnages =  ctrl.getAccountChangesList();
+			List<SelectOption> paxBranches = ctrl.getPAXBranches();
+			ctrl.selectedBranchAccount = acc.Id;
+			ctrl.getBranchOffice();
+			List<AccountTeamMember> portalAdminsList = ctrl.portalAdmins;
 			ctrl.saveContact();
-			ctrl.saveAccount(); 
+			ctrl.saveAccount();
+			ctrl.saveAccountBR();
+			ctrl.AssignIFAPContact(); 
+			ctrl.getIsVerifiedAccount();
+			ctrl.getIsStandardAccount();
+			ctrl.getPermissionForStandardAccount();
+			ctrl.goToEmaDomVal();
+			ctrl.getAccountDomainValidRT();
 		}
 	}
 }

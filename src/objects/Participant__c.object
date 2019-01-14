@@ -21,17 +21,13 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
         <content>NewParticipantByEmail</content>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <skipRecordTypeSelect>true</skipRecordTypeSelect>
         <type>Visualforce</type>
     </actionOverrides>
     <actionOverrides>
@@ -52,6 +48,7 @@
     <description>Junction object. Used by IDFS ISS to manage the APJC participants per APJC (specific object)</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -62,9 +59,41 @@
     <fields>
         <fullName>Account__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( NOT(ISBLANK(Representing__c )), Representing__r.Name ,  Head_Quartier__r.Name )</formula>
+        <formula>IF( NOT(ISBLANK(Representing__c )), 
+    Representing__r.Name , 
+    IF(NOT(ISBLANK(Head_Quartier__c )),
+        Head_Quartier__r.Name ,
+        IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, 
+            Contact__r.Account.Name,
+            IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;,
+                Contact__r.Account.Parent.Name,
+                IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;,
+                    IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)),
+                        Contact__r.Account.Parent.Name,
+                        Contact__r.Account.Name),
+                    Contact__r.AccountId
+                )
+            )
+        )
+        
+    )
+
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cargo_Passenger__c</fullName>
+        <description>Cargo/Passenger field value in the related Industry Group</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Local_Governance__r.Cargo_Passenger__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Cargo / Passenger</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -129,6 +158,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Email__c</fullName>
+        <description>Email field value in the related Contact</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Group_RecordType__c</fullName>
         <externalId>false</externalId>
         <formula>Local_Governance__r.RecordType.DeveloperName</formula>
@@ -154,6 +196,27 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Hidden_Account_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, Contact__r.AccountId,
+IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;,Contact__r.Account.Parent.Id,
+IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;,
+IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)),
+
+Contact__r.Account.Parent.Id,
+Contact__r.AccountId),
+
+Contact__r.AccountId
+)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Hidden Account Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Local_Governance__c</fullName>
         <externalId>false</externalId>
         <label>Local Governance</label>
@@ -165,72 +228,97 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Local_Group_Type__c</fullName>
         <externalId>false</externalId>
         <label>Local Group Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>ALWG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>APJC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>APJC / FAG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAPJC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CEC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CGA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EACP JC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ICAP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JALWG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LCAG-C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LCAG-P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LCAG-P / Credit Card WG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ALWG</fullName>
+                    <default>false</default>
+                    <label>ALWG</label>
+                </value>
+                <value>
+                    <fullName>APJC</fullName>
+                    <default>false</default>
+                    <label>APJC</label>
+                </value>
+                <value>
+                    <fullName>APJC / FAG</fullName>
+                    <default>false</default>
+                    <label>APJC / FAG</label>
+                </value>
+                <value>
+                    <fullName>CAPJC</fullName>
+                    <default>false</default>
+                    <label>CAPJC</label>
+                </value>
+                <value>
+                    <fullName>CEC</fullName>
+                    <default>false</default>
+                    <label>CEC</label>
+                </value>
+                <value>
+                    <fullName>CGA</fullName>
+                    <default>false</default>
+                    <label>CGA</label>
+                </value>
+                <value>
+                    <fullName>EACP JC</fullName>
+                    <default>false</default>
+                    <label>EACP JC</label>
+                </value>
+                <value>
+                    <fullName>ICAP</fullName>
+                    <default>false</default>
+                    <label>ICAP</label>
+                </value>
+                <value>
+                    <fullName>JALWG</fullName>
+                    <default>false</default>
+                    <label>JALWG</label>
+                </value>
+                <value>
+                    <fullName>LCAG-C</fullName>
+                    <default>false</default>
+                    <label>LCAG-C</label>
+                </value>
+                <value>
+                    <fullName>LCAG-P</fullName>
+                    <default>false</default>
+                    <label>LCAG-P</label>
+                </value>
+                <value>
+                    <fullName>LCAG-P / Credit Card WG</fullName>
+                    <default>false</default>
+                    <label>LCAG-P / Credit Card WG</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Main_Account__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(NOT(ISBLANK(Head_Quartier__c)),  Head_Quartier__r.Name  ,   Contact__r.Account.Name   )</formula>
+        <formula>IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, Contact__r.Account.Name, 
+IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;, Contact__r.Account.Parent.Name , 
+IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;, 
+IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)), 
+Contact__r.Account.Parent.Name , 
+Contact__r.Account.Name ), 
+
+Contact__r.Account.Name 
+
+) 
+) 
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Account</label>
         <required>false</required>
@@ -243,57 +331,99 @@
         <fullName>Participant_Type__c</fullName>
         <externalId>false</externalId>
         <label>Participant Role</label>
-        <picklist>
-            <picklistValues>
-                <fullName>1 Chair</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>1 Co-Chair</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2 Vice-Chair</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3 Accredited Representative</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4 Accredited Alternate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5 Representative</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6 Alternate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7 Observer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Chair</fullName>
+                    <default>false</default>
+                    <label>Chair</label>
+                </value>
+                <value>
+                    <fullName>Co-Chair</fullName>
+                    <default>false</default>
+                    <label>Co-Chair</label>
+                </value>
+                <value>
+                    <fullName>Vice-Chair</fullName>
+                    <default>false</default>
+                    <label>Vice-Chair</label>
+                </value>
+                <value>
+                    <fullName>Accredited Representative</fullName>
+                    <default>false</default>
+                    <label>Accredited Representative</label>
+                </value>
+                <value>
+                    <fullName>Designated Alternate</fullName>
+                    <default>false</default>
+                    <label>Designated Alternate</label>
+                </value>
+                <value>
+                    <fullName>Member+</fullName>
+                    <default>false</default>
+                    <label>Member+</label>
+                </value>
+                <value>
+                    <fullName>Member</fullName>
+                    <default>false</default>
+                    <label>Member</label>
+                </value>
+                <value>
+                    <fullName>Observer</fullName>
+                    <default>false</default>
+                    <label>Observer</label>
+                </value>
+                <value>
+                    <fullName>Facilitator</fullName>
+                    <default>false</default>
+                    <label>Facilitator</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Phone__c</fullName>
+        <description>Phone field value in the related Industry Group</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.Phone</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <description>Region field value in the related Industry Group</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Local_Governance__r.Region__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Region</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Representing__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>If the participant is not representing his/her employer on this specific group, enter the name of the company represented.</inlineHelpText>
         <label>Representing</label>
         <lookupFilter>
             <active>true</active>
             <filterItems>
                 <field>Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Airline Headquarters</value>
+                <value>Airline Headquarters, IATA Country Office, Operator, Agency, General Sales Agent Headquarters, Others, Standard Account</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -319,30 +449,223 @@
         <unique>false</unique>
     </fields>
     <label>Participant</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Local_Governance__c</columns>
+        <columns>Head_Quartier__c</columns>
+        <columns>Main_Account__c</columns>
+        <columns>Hidden_Account_Id__c</columns>
+        <columns>Title__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Participant_Type__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Main_Account__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
-        <displayFormat>APJC Participant - {0000}</displayFormat>
+        <displayFormat>Group Participant - {0000}</displayFormat>
         <label>Participant Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Participants</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Local_Group_Participants</fullName>
+        <active>true</active>
+        <label>Local Group Participants</label>
+        <picklistValues>
+            <picklist>Local_Group_Type__c</picklist>
+            <values>
+                <fullName>ALWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APJC %2F FAG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAPJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CEC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EACP JC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JALWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-P %2F Credit Card WG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Participant_Type__c</picklist>
+            <values>
+                <fullName>Chair</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Observer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vice-Chair</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Reg_Div_Group_Participants</fullName>
+        <active>true</active>
+        <label>Reg/Div Group Participants</label>
+        <picklistValues>
+            <picklist>Local_Group_Type__c</picklist>
+            <values>
+                <fullName>ALWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APJC %2F FAG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAPJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CEC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EACP JC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JALWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-P %2F Credit Card WG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Participant_Type__c</picklist>
+            <values>
+                <fullName>Accredited Representative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chair</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-Chair</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Designated Alternate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facilitator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member%2B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Observer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vice-Chair</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
         <fullName>Cannot_change_if_inactive_group</fullName>
         <active>true</active>
-        <description>It&apos; s not possible to change anything if the participant is related to a local group inactive</description>
+        <description>It&apos; s not possible to change anything if the participant is related to an inactive group</description>
         <errorConditionFormula>AND(
  Local_Governance__r.Active__c = false,
- Local_Governance__r.RecordType.DeveloperName =  &apos;Local_Groups&apos;,  
+ 
  OR(
   ISNEW(),
   ISCHANGED(Contact__c),
   ISCHANGED(Local_Governance__c ),
-  ISCHANGED(Participant_Type__c )
+  ISCHANGED(Participant_Type__c ),
+  ISCHANGED(Representing__c)
  )
 )</errorConditionFormula>
-        <errorMessage>It&apos; s not possible to insert a new pariticipant or change  the existing one if the participant is related to an inactive local group.</errorMessage>
+        <errorMessage>It&apos; s not possible to insert a new participant or change  the existing one if the participant is related to an inactive group.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Cant_add_before_approval</fullName>
@@ -377,20 +700,33 @@
 First Name, Last Name, Title, Email and Account Name. Please complete these information and try again.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Create_Edit_Participants</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(AND(
+Local_Governance__r.RecordType.DeveloperName  = &apos;Reg_Div_Groups&apos;,
+NOT($Permission.Modify_Reg_Div_Group_Owners)
+),AND(
+Local_Governance__r.RecordType.DeveloperName  = &apos;Local_Groups&apos;,
+NOT($Permission.Modify_Local_Group_Owners)
+)
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to add or edit participants to this group</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Group_Type</fullName>
         <active>true</active>
         <description>Verify the account type for the participiant</description>
         <errorConditionFormula>AND(
 AND(
 AND(
+AND(
 NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Agency&quot;,
-OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
-ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+OR(ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
-ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
 )),
 NOT(OR(Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline&quot;,
@@ -398,20 +734,58 @@ Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline_BR&quot;)
 )
 ),
 NOT(AND( ISPICKVAL(Contact__r.Account.Sector__c,&quot;Association&quot;),
-Contact__r.Account.RecordType.DeveloperName = &quot;Standard_Account&quot;,
-OR(ISPICKVAL(Local_Group_Type__c, &quot;ALWG&quot;),
-ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+OR(Contact__r.Account.RecordType.DeveloperName = &quot;Standard_Account&quot;, Contact__r.Account.RecordType.DeveloperName = &quot;Others&quot;),
+OR(ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
-ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )
+)),
+NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_GSA&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;)))),
+NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;General_Sales_Agent_Headquarters&quot;,AND(
+ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
 ))
 ),
 Group_RecordType__c = &quot;Local_Groups&quot;
-)</errorConditionFormula>
+),
+AND(
+AND(
+AND(
+NOT(AND( Representing__r.RecordType.DeveloperName = &quot;IATA_Agency&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;))
+)),
+NOT(OR(Representing__r.RecordType.DeveloperName = &quot;IATA_Airline&quot;,
+Representing__r.RecordType.DeveloperName = &quot;IATA_Airline_BR&quot;)
+)
+),
+NOT(AND( ISPICKVAL(Representing__r.Sector__c,&quot;Association&quot;),
+OR(Representing__r.RecordType.DeveloperName = &quot;Standard_Account&quot;, Representing__r.RecordType.DeveloperName = &quot;Others&quot;),
+OR(ISPICKVAL(Local_Group_Type__c, &quot;APJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;APJC / FAG&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CEC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;CCC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
+)
+)),NOT(AND( Representing__r.RecordType.DeveloperName = &quot;IATA_GSA&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;)))),
+NOT(AND( Representing__r.RecordType.DeveloperName = &quot;General_Sales_Agent_Headquarters&quot;,AND(
+ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
+))
+),
+Group_RecordType__c = &quot;Local_Groups&quot;
+))</errorConditionFormula>
         <errorMessage>The new participant is not related to an Airline or an Agency or this group does not allow participants from Agencies</errorMessage>
     </validationRules>
     <validationRules>
@@ -433,4 +807,5 @@ NOT(OR( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_Airline&quot; |
 )</errorConditionFormula>
         <errorMessage>The Participant must come from a verified Account</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

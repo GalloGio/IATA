@@ -7,13 +7,17 @@ public class ISSP_AssignFinancialAssessmentContact {
     public Contact currentFinContact{get; set;}
     
     private String newIFAPContact;
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     
     // The extension constructor initializes the private member
     // variable acct by using the getRecord method from the standard
     // controller.
     public ISSP_AssignFinancialAssessmentContact(ApexPages.StandardController stdController) {
-    	if(!Test.isRunningTest())
-        	stdController.addFields(new List<String>{'Type', 'Name', 'Parent'});
+        if(!Test.isRunningTest())
+            stdController.addFields(new List<String>{'Type', 'Name', 'Parent'});
         this.acct = (Account)stdController.getRecord();
         
         //Only these 2 types of Agency Accounts can have Financial Contacts
@@ -37,7 +41,7 @@ public class ISSP_AssignFinancialAssessmentContact {
     }
     
     public PageReference getReturnPage(){
-            return new PageReference('/ISSP_ContactList?mid=M4S1');
+            return new PageReference('/ISSP_ContactList?mid=M4S1' + commParam);
     }
     
     public Contact currentFinContact() {

@@ -1,41 +1,45 @@
 public class AMS_ChangeCodesConfigHelper {
 
-
-	public static AMS_ChangeCodes__c getChangeCodeConfig(String changeCodeIdentifier) {
-		
-		return AMS_ChangeCodes__c.getValues(changeCodeIdentifier);
-
-	}
-
     public static AMS_OSCAR_JSON.ChangeCode createChangeCodeFromConfigSetting(String changeCodeIdentifier, String oscarTypeOfChange, String accountCurrentStatus, Agency_Applied_Change_code__c prevActiveChangeCode, String action) {
 
-        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+        //check which sould be the changes to do in the account
+        Boolean generateChangeCode = true;
+        Boolean changeAccountStatus = true;
 
-        AMS_ChangeCodes__c changeCodeConfig = getChangeCodeConfig(changeCodeIdentifier);
+        if(oscarTypeOfChange.containsIgnoreCase(AMS_Utils.MAJ_SHAREHOLDING) || oscarTypeOfChange.containsIgnoreCase(AMS_Utils.MIN_SHAREHOLDING) || oscarTypeOfChange.containsIgnoreCase(AMS_Utils.VFMR)) {
+
+        	if(accountCurrentStatus == null){
+        		generateChangeCode = false;
+        		changeAccountStatus = false;
+        	}else{
+        		generateChangeCode = Integer.valueOf(AMS_Utils.getIATANumericStatus(accountCurrentStatus)) > 4;
+        		changeAccountStatus = Integer.valueOf(AMS_Utils.getIATANumericStatus(accountCurrentStatus)) > 7;
+        	}
+        }
+
+        if(!generateChangeCode) return null;
+
+    	AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+        AMS_ChangeCodes__c changeCodeConfig = AMS_ChangeCodes__c.getInstance(changeCodeIdentifier);
 
         if(changeCodeConfig != null){
 
         	Boolean updateAccStatus = false;
-        	String accountStatus = accountCurrentStatus;
 
         	//check if account status needs to be updated
-        	if(changeCodeConfig.Account_status_change__c != null){
+        	if(changeCodeConfig.Account_status_change__c != null && changeAccountStatus){
         		
         		List<String> statusInfo = changeCodeConfig.Account_status_change__c.split(';');
 
-        		if(statusInfo.size()==1){
+        		if(statusInfo.size() > 2 ) throw new AMS_ApplicationException('Invalid Account Status Change value on the Change Code configuration, contact your administrator');
+
+        		if((statusInfo.size()==1) || (statusInfo.size()==2 && AMS_Utils.getIATAReadableStatus(statusInfo[1])==accountCurrentStatus) ){
+        			//If only one value status change regardless
+        			//if 2, status only changes if the current status matches the second value
         			updateAccStatus = true;
-	        		accountStatus = AMS_Utils.getIATAReadableStatus(statusInfo[0]);
 	        		changeCode.status = statusInfo[0];
 	        	}
-	        	//means the status will only change if the 2nd value in the list matches with the current account status
-	        	else if(statusInfo.size()==2)
-		        	if(AMS_Utils.getIATAReadableStatus(statusInfo[1])==accountCurrentStatus){
-		        		updateAccStatus = true;
-		        		system.debug('Account status precedence matches.');
-		        		accountStatus = AMS_Utils.getIATAReadableStatus(statusInfo[0]);
-		        		changeCode.status = statusInfo[0];
-	 	        	}
 
         	}
 
@@ -52,22 +56,24 @@ public class AMS_ChangeCodesConfigHelper {
 			}
 
 	        changeCode.name = changeCodeConfig.Change_Code__c;
-			changeCode.memoText = 'Change of ';
-			List<String> tocs = oscarTypeOfChange.split(';');
-			changeCode.memoText += createMemoText(tocs);
+	        changeCode.publishedOnEBulletin = changeCodeConfig.Published_in_bulletin__c;
+			
 
-			if(action == AMS_Utils.SANITYCHECK)
-				changeCode.memoText += ' in process';
-			else if(action == AMS_Utils.APPROVAL)
-				changeCode.memoText += ' finalized';
-			else if(action == AMS_Utils.WITHDRAWAL)
-				changeCode.memoText += ' withdrawn';
+			if(changeCodeConfig.Bulletin_Memo_Text__c != null && changeCodeConfig.Bulletin_Memo_Text__c!= ''){
+				changeCode.memoText = changeCodeConfig.Bulletin_Memo_Text__c;
+			}else{
+				changeCode.memoText = 'Change of ';
+				List<String> tocs = oscarTypeOfChange.split(';');
+				changeCode.memoText += createMemoText(tocs);
 
+				if(action == AMS_Utils.SANITYCHECK) changeCode.memoText += ' '+AMS_Utils.AACC_INPROGRESS;
+				else if(action == AMS_Utils.APPROVAL) changeCode.memoText += ' '+AMS_Utils.AACC_FINALIZED;
+				else if(action == AMS_Utils.WITHDRAWAL) changeCode.memoText += ' '+AMS_Utils.AACC_WITHDRAWAL;
+			}
 		}
 
 		System.debug('Change Code generated: ' + changeCode);
         return changeCode;
-
     }
 
     public static String createMemoText(List<String> s){

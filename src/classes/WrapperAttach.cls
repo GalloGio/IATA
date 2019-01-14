@@ -43,6 +43,10 @@ global class WrapperAttach implements Comparable {
     public Archived_Attachment__c fileArchived {get;set;}
     public AmazonFile fileAmazon {get;set;}
 
+    /*** AMSU-139 ***/
+    public String updatedBy {get;set;}
+    public DateTime updatedDate {get;set;}
+
     public WrapperAttach(Attachment file, ISSPAttachmentPermission__c permission) {
         this.isSelected = false;
         this.fileAttachment = file;
@@ -112,6 +116,8 @@ global class WrapperAttach implements Comparable {
         this.efExpired = file.getEFExpired();
         this.efPrivate = file.getEFPrivate();
         this.efSkipValidation = file.getEFSkipValidation();
+        this.updatedBy = file.getUpdatedBy();
+        this.updatedDate = file.getUpdatedDate();
     }
 
     private void setPermission() {
@@ -186,10 +192,12 @@ global class WrapperAttach implements Comparable {
                 return null;
             }
 
+            AmazonFile__c aFile = this.fileAmazon.amazonfile.clone(false, true);
+            aFile.Full_Name_Unique__c = destFileName;
+            aFile.Case__c = sobjectId;
+
             AmazonFile cloned = this.fileAmazon.clone();
-            cloned.amazonFile.Id = null;
-            cloned.amazonFile.Full_Name_Unique__c = destFileName;
-            cloned.amazonFile.Case__c = sobjectId;
+            cloned.amazonFile = aFile;
             return cloned;
         }
         return null;
@@ -209,6 +217,19 @@ global class WrapperAttach implements Comparable {
         }
         return false;
     }
+
+    /**
+        AMSU-186 
+    **/
+    public Boolean cloneToRecicleBin() {
+        if (this.filetype == 'Amazon') {
+            String destinationFilename = this.FileAmazon.getFullName();
+            Boolean result = this.FileAmazon.copyFile(CREDENTIAL, CREDENTIAL_RECICLE_BIN, destinationFilename);
+            return result;
+        }
+        return false;
+    }
+
 
     public void updateAttach() {
         if (this.filetype == 'Amazon') {
@@ -367,7 +388,9 @@ global class WrapperAttach implements Comparable {
             list<AmazonFile> listAmazonfiles = AmazonFile.getFiles( sobjectId, listS3Files);
 
             for(AmazonFile file: listAmazonfiles){
-                listAttach.add(new WrapperAttach(file));
+                if(file.getFullName() != '500/' + sobjectId + '/Notice_of_Change_form.pdf') {
+                    listAttach.add(new WrapperAttach(file));
+                }
             }
         } catch (Exception e) {
             System.debug(e.getMessage());

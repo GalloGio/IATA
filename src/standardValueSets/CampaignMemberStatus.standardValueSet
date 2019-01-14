@@ -1,0 +1,1779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>true</sorted>
+    <standardValue>
+        <fullName>10hr+ time diff. (not reached by ph)</fullName>
+        <default>false</default>
+        <label>10hr+ time diff. (not reached by ph)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>2005 Participant Only</fullName>
+        <default>false</default>
+        <label>2005 Participant Only</label>
+    </standardValue>
+    <standardValue>
+        <fullName>A. - C. Not Reached</fullName>
+        <default>false</default>
+        <label>A. - C. Not Reached</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Accepted</fullName>
+        <default>false</default>
+        <label>Accepted</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Accepted / Decision maker</fullName>
+        <default>false</default>
+        <label>Accepted / Decision maker</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Accepted / Influencer</fullName>
+        <default>false</default>
+        <label>Accepted / Influencer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Actioned</fullName>
+        <default>false</default>
+        <label>Actioned</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Actioned / No Response</fullName>
+        <default>false</default>
+        <label>Actioned / No Response</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Actioned but no answer or response</fullName>
+        <default>false</default>
+        <label>Actioned but no answer or response</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Actioned by Phone - no answer</fullName>
+        <default>false</default>
+        <label>Actioned by Phone - no answer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Actioned by phone - not reached</fullName>
+        <default>false</default>
+        <label>Actioned by phone - not reached</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Actioned - Called/LM or email sent</fullName>
+        <default>false</default>
+        <label>Actioned - Called/LM or email sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Actioned - D-Maker/Champ Not Found Yet</fullName>
+        <default>false</default>
+        <label>Actioned - D-Maker/Champ Not Found Yet</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Actioned -No Response – Will Call Again</fullName>
+        <default>false</default>
+        <label>Actioned -No Response – Will Call Again</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Actual Sale</fullName>
+        <default>false</default>
+        <label>Actual Sale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airline</fullName>
+        <default>false</default>
+        <label>Airline</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Already In Touch With</fullName>
+        <default>false</default>
+        <label>Already In Touch With</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Already in touch with other contact</fullName>
+        <default>false</default>
+        <label>Already in touch with other contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Art Work - Contact</fullName>
+        <default>false</default>
+        <label>Art Work - Contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assign</fullName>
+        <default>false</default>
+        <label>Assign</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigned</fullName>
+        <default>false</default>
+        <label>Assigned</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigned Mike</fullName>
+        <default>false</default>
+        <label>Assigned Mike</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigned Phil</fullName>
+        <default>false</default>
+        <label>Assigned Phil</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigned Philippe</fullName>
+        <default>false</default>
+        <label>Assigned Philippe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigned Philippe G</fullName>
+        <default>false</default>
+        <label>Assigned Philippe G</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigned Sonal</fullName>
+        <default>false</default>
+        <label>Assigned Sonal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigne Mike</fullName>
+        <default>false</default>
+        <label>Assigne Mike</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigne Philippe</fullName>
+        <default>false</default>
+        <label>Assigne Philippe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Assigne Sonal</fullName>
+        <default>false</default>
+        <label>Assigne Sonal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ATC/ARTC</fullName>
+        <default>false</default>
+        <label>ATC/ARTC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ATC (High)</fullName>
+        <default>false</default>
+        <label>ATC (High)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ATC (Low)</fullName>
+        <default>false</default>
+        <label>ATC (Low)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ATC (Medium)</fullName>
+        <default>false</default>
+        <label>ATC (Medium)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Attended</fullName>
+        <default>false</default>
+        <label>Attended</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Attended COSTHA</fullName>
+        <default>false</default>
+        <label>Attended COSTHA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Attended Demo at COSTHA</fullName>
+        <default>false</default>
+        <label>Attended Demo at COSTHA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Awaiting for response</fullName>
+        <default>false</default>
+        <label>Awaiting for response</label>
+    </standardValue>
+    <standardValue>
+        <fullName>BIS</fullName>
+        <default>false</default>
+        <label>BIS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>booth selected</fullName>
+        <default>false</default>
+        <label>booth selected</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Business Objectives changed</fullName>
+        <default>false</default>
+        <label>Business Objectives changed</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Called</fullName>
+        <default>false</default>
+        <label>Called</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Called - Wrong details</fullName>
+        <default>false</default>
+        <label>Called - Wrong details</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Call - Substantive</fullName>
+        <default>false</default>
+        <label>Call - Substantive</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Clicked on html</fullName>
+        <default>false</default>
+        <label>Clicked on html</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Clicked through - ITDI 2010 calendar e-m</fullName>
+        <default>false</default>
+        <label>Clicked through - ITDI 2010 calendar e-m</label>
+    </standardValue>
+    <standardValue>
+        <fullName>CNS/WCS 09</fullName>
+        <default>false</default>
+        <label>CNS/WCS 09</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Committed to purchase but has not done</fullName>
+        <default>false</default>
+        <label>Committed to purchase but has not done</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Confirmed/Sold</fullName>
+        <default>false</default>
+        <label>Confirmed/Sold</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Confirmed / Sold</fullName>
+        <default>false</default>
+        <label>Confirmed / Sold</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Confirmed Attendance</fullName>
+        <default>false</default>
+        <label>Confirmed Attendance</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Consulting (High)</fullName>
+        <default>false</default>
+        <label>Consulting (High)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Consulting (low)</fullName>
+        <default>false</default>
+        <label>Consulting (low)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Consulting (medium)</fullName>
+        <default>false</default>
+        <label>Consulting (medium)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contact made - need to follow-up</fullName>
+        <default>false</default>
+        <label>Contact made - need to follow-up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contact Wrong Info</fullName>
+        <default>false</default>
+        <label>Contact Wrong Info</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Declined</fullName>
+        <default>false</default>
+        <label>Declined</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Declined / Decision Maker</fullName>
+        <default>false</default>
+        <label>Declined / Decision Maker</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Declined / Influencer</fullName>
+        <default>false</default>
+        <label>Declined / Influencer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Delete</fullName>
+        <default>false</default>
+        <label>Delete</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Did not attend</fullName>
+        <default>false</default>
+        <label>Did not attend</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Do not call (Duplicate)</fullName>
+        <default>false</default>
+        <label>Do not call (Duplicate)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Do Not Contact</fullName>
+        <default>false</default>
+        <label>Do Not Contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Duplicated contact, already reached</fullName>
+        <default>false</default>
+        <label>Duplicated contact, already reached</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+        <label>Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email Bounced</fullName>
+        <default>false</default>
+        <label>Email Bounced</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-Mail Info Was Requested</fullName>
+        <default>false</default>
+        <label>E-Mail Info Was Requested</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email Sent</fullName>
+        <default>false</default>
+        <label>Email Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Existing SP</fullName>
+        <default>false</default>
+        <label>Existing SP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FDA</fullName>
+        <default>false</default>
+        <label>FDA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Filled out Card</fullName>
+        <default>false</default>
+        <label>Filled out Card</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed up</fullName>
+        <default>false</default>
+        <label>Followed up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-up</fullName>
+        <default>false</default>
+        <label>Followed-up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-up: Call again</fullName>
+        <default>false</default>
+        <label>Followed-up: Call again</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-up: NI</fullName>
+        <default>false</default>
+        <label>Followed-up: NI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-up: Wrong details</fullName>
+        <default>false</default>
+        <label>Followed-up: Wrong details</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed Up / Not Reached</fullName>
+        <default>false</default>
+        <label>Followed Up / Not Reached</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-up by phone</fullName>
+        <default>false</default>
+        <label>Followed-up by phone</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-up by Sales</fullName>
+        <default>false</default>
+        <label>Followed-up by Sales</label>
+    </standardValue>
+    <standardValue>
+        <fullName>followed up by sales team</fullName>
+        <default>false</default>
+        <label>followed up by sales team</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed up - converted</fullName>
+        <default>false</default>
+        <label>Followed up - converted</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed up - interested</fullName>
+        <default>false</default>
+        <label>Followed up - interested</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed up - irrelevant</fullName>
+        <default>false</default>
+        <label>Followed up - irrelevant</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed up - not interested</fullName>
+        <default>false</default>
+        <label>Followed up - not interested</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed up - not interested –not useful</fullName>
+        <default>false</default>
+        <label>Followed up - not interested –not useful</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed up - not interested – price</fullName>
+        <default>false</default>
+        <label>Followed up - not interested – price</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed up - not int – purchased book</fullName>
+        <default>false</default>
+        <label>Followed up - not int – purchased book</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-up on Price - Ship Too Few DG</fullName>
+        <default>false</default>
+        <label>Followed-up on Price - Ship Too Few DG</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-up on Price - Still too Exp</fullName>
+        <default>false</default>
+        <label>Followed-up on Price - Still too Exp</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-Up on Price - Using Free</fullName>
+        <default>false</default>
+        <label>Followed-Up on Price - Using Free</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed-up on Price - Using Single Use</fullName>
+        <default>false</default>
+        <label>Followed-up on Price - Using Single Use</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Followed up - unresponsive</fullName>
+        <default>false</default>
+        <label>Followed up - unresponsive</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Follow Up</fullName>
+        <default>false</default>
+        <label>Follow Up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Follow-up</fullName>
+        <default>false</default>
+        <label>Follow-up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Follow-up by Sales</fullName>
+        <default>false</default>
+        <label>Follow-up by Sales</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Follow-up call</fullName>
+        <default>false</default>
+        <label>Follow-up call</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Follow up necessary</fullName>
+        <default>false</default>
+        <label>Follow up necessary</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form received</fullName>
+        <default>false</default>
+        <label>Form received</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form Submitted</fullName>
+        <default>false</default>
+        <label>Form Submitted</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Form Submitted - No Demo</fullName>
+        <default>false</default>
+        <label>Form Submitted - No Demo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FS or DS followed up</fullName>
+        <default>false</default>
+        <label>FS or DS followed up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Gave Feedback</fullName>
+        <default>false</default>
+        <label>Gave Feedback</label>
+    </standardValue>
+    <standardValue>
+        <fullName>General Info. Sent</fullName>
+        <default>false</default>
+        <label>General Info. Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>General Info Sent</fullName>
+        <default>false</default>
+        <label>General Info Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IGHC 09</fullName>
+        <default>false</default>
+        <label>IGHC 09</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Info not provided</fullName>
+        <default>false</default>
+        <label>Info not provided</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Intalian leads (not reach)</fullName>
+        <default>false</default>
+        <label>Intalian leads (not reach)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested</fullName>
+        <default>false</default>
+        <label>Interested</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested / Follow-up</fullName>
+        <default>false</default>
+        <label>Interested / Follow-up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested/Send Media</fullName>
+        <default>false</default>
+        <label>Interested/Send Media</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested / Send Media</fullName>
+        <default>false</default>
+        <label>Interested / Send Media</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested as Event Tech Support/devlper</fullName>
+        <default>false</default>
+        <label>Interested as Event Tech Support/devlper</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested but did not see demo</fullName>
+        <default>false</default>
+        <label>Interested but did not see demo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested but No Budget-Try next year</fullName>
+        <default>false</default>
+        <label>Interested but No Budget-Try next year</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested but with limited budget</fullName>
+        <default>false</default>
+        <label>Interested but with limited budget</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - converted to opportunity</fullName>
+        <default>false</default>
+        <label>Interested - converted to opportunity</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - convert to opportunity</fullName>
+        <default>false</default>
+        <label>Interested - convert to opportunity</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - DS Needs to Follow Up</fullName>
+        <default>false</default>
+        <label>Interested - DS Needs to Follow Up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - DS Need to Follow Up</fullName>
+        <default>false</default>
+        <label>Interested - DS Need to Follow Up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - Follow-up</fullName>
+        <default>false</default>
+        <label>Interested - Follow-up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - Follow-up required</fullName>
+        <default>false</default>
+        <label>Interested - Follow-up required</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested Mike</fullName>
+        <default>false</default>
+        <label>Interested Mike</label>
+    </standardValue>
+    <standardValue>
+        <fullName>interested need follow up</fullName>
+        <default>false</default>
+        <label>interested need follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - Needs Spanish Training</fullName>
+        <default>false</default>
+        <label>Interested - Needs Spanish Training</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - Need to Follow-up</fullName>
+        <default>false</default>
+        <label>Interested - Need to Follow-up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested next year</fullName>
+        <default>false</default>
+        <label>Interested next year</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - No Budget - Revisit</fullName>
+        <default>false</default>
+        <label>Interested - No Budget - Revisit</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - Opp Level 3</fullName>
+        <default>false</default>
+        <label>Interested - Opp Level 3</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - Opp Level 3 but unlear ROI</fullName>
+        <default>false</default>
+        <label>Interested - Opp Level 3 but unlear ROI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - Opp Level 4+</fullName>
+        <default>false</default>
+        <label>Interested - Opp Level 4+</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested - Opportunity Created</fullName>
+        <default>false</default>
+        <label>Interested - Opportunity Created</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested Philippe</fullName>
+        <default>false</default>
+        <label>Interested Philippe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interested Sonal</fullName>
+        <default>false</default>
+        <label>Interested Sonal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interest to be confirmed</fullName>
+        <default>false</default>
+        <label>Interest to be confirmed</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Invalid Contact</fullName>
+        <default>false</default>
+        <label>Invalid Contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Invited</fullName>
+        <default>false</default>
+        <label>Invited</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Irrelevant Contact</fullName>
+        <default>false</default>
+        <label>Irrelevant Contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Irrelevant Contact / Unrelated LOB</fullName>
+        <default>false</default>
+        <label>Irrelevant Contact / Unrelated LOB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Jordi</fullName>
+        <default>false</default>
+        <label>Jordi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Left a message</fullName>
+        <default>false</default>
+        <label>Left a message</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Left Company</fullName>
+        <default>false</default>
+        <label>Left Company</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Left Company / Relocated</fullName>
+        <default>false</default>
+        <label>Left Company / Relocated</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Left contact details</fullName>
+        <default>false</default>
+        <label>Left contact details</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Left Message</fullName>
+        <default>false</default>
+        <label>Left Message</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Left Voicemail</fullName>
+        <default>false</default>
+        <label>Left Voicemail</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Left Voice Mail</fullName>
+        <default>false</default>
+        <label>Left Voice Mail</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Left Voice Mail / Sent Email</fullName>
+        <default>false</default>
+        <label>Left Voice Mail / Sent Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Left Voice Message</fullName>
+        <default>false</default>
+        <label>Left Voice Message</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Mail returned</fullName>
+        <default>false</default>
+        <label>Mail returned</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Meeting at GBTA</fullName>
+        <default>false</default>
+        <label>Meeting at GBTA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>meeting at Routes</fullName>
+        <default>false</default>
+        <label>meeting at Routes</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Minimum Too High</fullName>
+        <default>false</default>
+        <label>Minimum Too High</label>
+    </standardValue>
+    <standardValue>
+        <fullName>N/A : Book Reseller</fullName>
+        <default>false</default>
+        <label>N/A : Book Reseller</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Need follow up</fullName>
+        <default>false</default>
+        <label>Need follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Need Spanish Courses</fullName>
+        <default>false</default>
+        <label>Need Spanish Courses</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Need to Call</fullName>
+        <default>false</default>
+        <label>Need to Call</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Need to Follow Up</fullName>
+        <default>false</default>
+        <label>Need to Follow Up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Need to Follow-Up</fullName>
+        <default>false</default>
+        <label>Need to Follow-Up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI/ No budget</fullName>
+        <default>false</default>
+        <label>NI/ No budget</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI/ Unrelevent LOB</fullName>
+        <default>false</default>
+        <label>NI/ Unrelevent LOB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Actioned / No Response</fullName>
+        <default>false</default>
+        <label>NI - Actioned / No Response</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI – Actioned / No Response</fullName>
+        <default>false</default>
+        <label>NI – Actioned / No Response</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Actioned &amp; No Response</fullName>
+        <default>false</default>
+        <label>NI - Actioned &amp; No Response</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Budget - Rqsted revisit next yr</fullName>
+        <default>false</default>
+        <label>NI - Budget - Rqsted revisit next yr</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Busy Agenda/ Schedule / Other prior</fullName>
+        <default>false</default>
+        <label>NI - Busy Agenda/ Schedule / Other prior</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI – Buy from Sales Agent</fullName>
+        <default>false</default>
+        <label>NI – Buy from Sales Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Competition</fullName>
+        <default>false</default>
+        <label>NI - Competition</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Content</fullName>
+        <default>false</default>
+        <label>NI - Content</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Content / Unrelated LOB</fullName>
+        <default>false</default>
+        <label>NI - Content / Unrelated LOB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Content / un related LOB</fullName>
+        <default>false</default>
+        <label>NI - Content / un related LOB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Cost</fullName>
+        <default>false</default>
+        <label>NI - Cost</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Cost/Budget</fullName>
+        <default>false</default>
+        <label>NI - Cost/Budget</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Cost of Membership</fullName>
+        <default>false</default>
+        <label>NI - Cost of Membership</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Cost of Registration</fullName>
+        <default>false</default>
+        <label>NI - Cost of Registration</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Cost of the registration</fullName>
+        <default>false</default>
+        <label>NI - Cost of the registration</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Cost Overall Budget</fullName>
+        <default>false</default>
+        <label>NI - Cost Overall Budget</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Cost Overhall budget</fullName>
+        <default>false</default>
+        <label>NI - Cost Overhall budget</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI- Does not meet marketing needs</fullName>
+        <default>false</default>
+        <label>NI- Does not meet marketing needs</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Location</fullName>
+        <default>false</default>
+        <label>NI - Location</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI- No Budget</fullName>
+        <default>false</default>
+        <label>NI- No Budget</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI-No Budget but interest future event</fullName>
+        <default>false</default>
+        <label>NI-No Budget but interest future event</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI-Not alligned with their LOB goals</fullName>
+        <default>false</default>
+        <label>NI-Not alligned with their LOB goals</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Other</fullName>
+        <default>false</default>
+        <label>NI - Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Prefers info on online or webinar</fullName>
+        <default>false</default>
+        <label>NI - Prefers info on online or webinar</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Prefers info on other Ad Product</fullName>
+        <default>false</default>
+        <label>NI - Prefers info on other Ad Product</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Requested revisit next year</fullName>
+        <default>false</default>
+        <label>NI - Requested revisit next year</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - ROI to long term to justify cost</fullName>
+        <default>false</default>
+        <label>NI - ROI to long term to justify cost</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Schedule</fullName>
+        <default>false</default>
+        <label>NI - Schedule</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - SP Member / Affiliated</fullName>
+        <default>false</default>
+        <label>NI - SP Member / Affiliated</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Their Target Audience not included</fullName>
+        <default>false</default>
+        <label>NI - Their Target Audience not included</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Too Expensive</fullName>
+        <default>false</default>
+        <label>NI - Too Expensive</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI-Too expensive</fullName>
+        <default>false</default>
+        <label>NI-Too expensive</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI- Too Expensive</fullName>
+        <default>false</default>
+        <label>NI- Too Expensive</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Travel restriction</fullName>
+        <default>false</default>
+        <label>NI - Travel restriction</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Unrelated LOB</fullName>
+        <default>false</default>
+        <label>NI - Unrelated LOB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Wrong Contact</fullName>
+        <default>false</default>
+        <label>NI - Wrong Contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>NI - Wrong Contact (LOB)</fullName>
+        <default>false</default>
+        <label>NI - Wrong Contact (LOB)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>no answer</fullName>
+        <default>false</default>
+        <label>no answer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No Answer, will follow up</fullName>
+        <default>false</default>
+        <label>No Answer, will follow up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No contact</fullName>
+        <default>false</default>
+        <label>No contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No Contact details</fullName>
+        <default>false</default>
+        <label>No Contact details</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No contat details</fullName>
+        <default>false</default>
+        <label>No contat details</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No interest, tried for free</fullName>
+        <default>false</default>
+        <label>No interest, tried for free</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No Phone Number Assigned</fullName>
+        <default>false</default>
+        <label>No Phone Number Assigned</label>
+    </standardValue>
+    <standardValue>
+        <fullName>No Response</fullName>
+        <default>false</default>
+        <label>No Response</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Actioned</fullName>
+        <default>false</default>
+        <label>Not Actioned</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not interested</fullName>
+        <default>false</default>
+        <label>Not interested</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - ACI Customer</fullName>
+        <default>false</default>
+        <label>Not Interested - ACI Customer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not interested - alternate approach</fullName>
+        <default>false</default>
+        <label>Not interested - alternate approach</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Bought from Competitor</fullName>
+        <default>false</default>
+        <label>Not Interested - Bought from Competitor</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Budget</fullName>
+        <default>false</default>
+        <label>Not Interested - Budget</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not interested - Different Approach</fullName>
+        <default>false</default>
+        <label>Not interested - Different Approach</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Different Focus</fullName>
+        <default>false</default>
+        <label>Not Interested - Different Focus</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - has in-house sol&apos;n</fullName>
+        <default>false</default>
+        <label>Not Interested - has in-house sol&apos;n</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Home Survey</fullName>
+        <default>false</default>
+        <label>Not Interested - Home Survey</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not interested in changing operations</fullName>
+        <default>false</default>
+        <label>Not interested in changing operations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Internal Training</fullName>
+        <default>false</default>
+        <label>Not Interested - Internal Training</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - is using Aerobytes</fullName>
+        <default>false</default>
+        <label>Not Interested - is using Aerobytes</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - is using Austin Digital</fullName>
+        <default>false</default>
+        <label>Not Interested - is using Austin Digital</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - is using other</fullName>
+        <default>false</default>
+        <label>Not Interested - is using other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - is using SAGEM</fullName>
+        <default>false</default>
+        <label>Not Interested - is using SAGEM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - is using Teledyne</fullName>
+        <default>false</default>
+        <label>Not Interested - is using Teledyne</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Location</fullName>
+        <default>false</default>
+        <label>Not Interested - Location</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not interested - no roi</fullName>
+        <default>false</default>
+        <label>Not interested - no roi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Not Required Now</fullName>
+        <default>false</default>
+        <label>Not Interested - Not Required Now</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Not thei LOB</fullName>
+        <default>false</default>
+        <label>Not Interested - Not thei LOB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Other Reason</fullName>
+        <default>false</default>
+        <label>Not Interested - Other Reason</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Schedule</fullName>
+        <default>false</default>
+        <label>Not Interested - Schedule</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Schedule/Ltd Man Power</fullName>
+        <default>false</default>
+        <label>Not Interested - Schedule/Ltd Man Power</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - Solution</fullName>
+        <default>false</default>
+        <label>Not Interested - Solution</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Interested - too expensive</fullName>
+        <default>false</default>
+        <label>Not Interested - too expensive</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not interested ULB</fullName>
+        <default>false</default>
+        <label>Not interested ULB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not intersted</fullName>
+        <default>false</default>
+        <label>Not intersted</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Reach</fullName>
+        <default>false</default>
+        <label>Not Reach</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Reached</fullName>
+        <default>false</default>
+        <label>Not Reached</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Relevant for SP</fullName>
+        <default>false</default>
+        <label>Not Relevant for SP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Required at the moment</fullName>
+        <default>false</default>
+        <label>Not Required at the moment</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Required at the moment.</fullName>
+        <default>false</default>
+        <label>Not Required at the moment.</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not Satisfied</fullName>
+        <default>false</default>
+        <label>Not Satisfied</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not their LOB</fullName>
+        <default>false</default>
+        <label>Not their LOB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Not yet actioned</fullName>
+        <default>false</default>
+        <label>Not yet actioned</label>
+    </standardValue>
+    <standardValue>
+        <fullName>offer created</fullName>
+        <default>false</default>
+        <label>offer created</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Opened</fullName>
+        <default>false</default>
+        <label>Opened</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Opportunity created</fullName>
+        <default>false</default>
+        <label>Opportunity created</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Opportunity created/ no need to action</fullName>
+        <default>false</default>
+        <label>Opportunity created/ no need to action</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Participated</fullName>
+        <default>false</default>
+        <label>Participated</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Fixes</fullName>
+        <default>false</default>
+        <label>Pending Fixes</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Personal Interest</fullName>
+        <default>false</default>
+        <label>Personal Interest</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Phone LM</fullName>
+        <default>false</default>
+        <label>Phone LM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Posponed</fullName>
+        <default>false</default>
+        <label>Posponed</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pre-Registered</fullName>
+        <default>false</default>
+        <label>Pre-Registered</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Professional Interest</fullName>
+        <default>false</default>
+        <label>Professional Interest</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Proposal Sent - Follow-up</fullName>
+        <default>false</default>
+        <label>Proposal Sent - Follow-up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Publications</fullName>
+        <default>false</default>
+        <label>Publications</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Purchased 1 license</fullName>
+        <default>false</default>
+        <label>Purchased 1 license</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Purchased multiple licenses</fullName>
+        <default>false</default>
+        <label>Purchased multiple licenses</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Quotation</fullName>
+        <default>false</default>
+        <label>Quotation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Quotation DGR</fullName>
+        <default>false</default>
+        <label>Quotation DGR</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Quotation LAR/PCR</fullName>
+        <default>false</default>
+        <label>Quotation LAR/PCR</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Reached</fullName>
+        <default>false</default>
+        <label>Reached</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Received</fullName>
+        <default>false</default>
+        <label>Received</label>
+    </standardValue>
+    <standardValue>
+        <fullName>received full presentation from FS</fullName>
+        <default>false</default>
+        <label>received full presentation from FS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>received html</fullName>
+        <default>false</default>
+        <label>received html</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Redistributor of Training Kits</fullName>
+        <default>false</default>
+        <label>Redistributor of Training Kits</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred</fullName>
+        <default>false</default>
+        <label>Referred</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred by Jordi</fullName>
+        <default>false</default>
+        <label>Referred by Jordi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Referred to other contact</fullName>
+        <default>false</default>
+        <label>Referred to other contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Refferal</fullName>
+        <default>false</default>
+        <label>Refferal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Reffered to existing SF contact</fullName>
+        <default>false</default>
+        <label>Reffered to existing SF contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Registered</fullName>
+        <default>false</default>
+        <label>Registered</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Registered - Not paid</fullName>
+        <default>false</default>
+        <label>Registered - Not paid</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Registered - Paid</fullName>
+        <default>false</default>
+        <label>Registered - Paid</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Reminder Sent</fullName>
+        <default>false</default>
+        <label>Reminder Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Remove</fullName>
+        <default>false</default>
+        <label>Remove</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Renewal Sent</fullName>
+        <default>false</default>
+        <label>Renewal Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responded</fullName>
+        <default>false</default>
+        <label>Responded</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responded / In-touch</fullName>
+        <default>false</default>
+        <label>Responded / In-touch</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responded - Interested</fullName>
+        <default>false</default>
+        <label>Responded - Interested</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responded-Interested</fullName>
+        <default>false</default>
+        <label>Responded-Interested</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responded - Not Interested - Cost</fullName>
+        <default>false</default>
+        <label>Responded - Not Interested - Cost</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responded - Not Interested - too soon</fullName>
+        <default>false</default>
+        <label>Responded - Not Interested - too soon</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responded themselves - interested</fullName>
+        <default>false</default>
+        <label>Responded themselves - interested</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responded YES</fullName>
+        <default>false</default>
+        <label>Responded YES</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Responsible</fullName>
+        <default>false</default>
+        <label>Responsible</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Actual New Sale</fullName>
+        <default>false</default>
+        <label>S - Actual New Sale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Actual Sale</fullName>
+        <default>false</default>
+        <label>S - Actual Sale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S Actual sale / Renewal</fullName>
+        <default>false</default>
+        <label>S Actual sale / Renewal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Actual Sale / Renewal</fullName>
+        <default>false</default>
+        <label>S - Actual Sale / Renewal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Actual Sale DGR</fullName>
+        <default>false</default>
+        <label>S - Actual Sale DGR</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Actual Sale DGR Lower Quantity</fullName>
+        <default>false</default>
+        <label>S - Actual Sale DGR Lower Quantity</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Actual Sale DGR Same/Higher Quantity</fullName>
+        <default>false</default>
+        <label>S - Actual Sale DGR Same/Higher Quantity</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Actual Sale LAR/PCR Lower Quantity</fullName>
+        <default>false</default>
+        <label>S - Actual Sale LAR/PCR Lower Quantity</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Actual Sale LAR/PCR Same/Higher Qnt</fullName>
+        <default>false</default>
+        <label>S - Actual Sale LAR/PCR Same/Higher Qnt</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sale</fullName>
+        <default>false</default>
+        <label>Sale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sales Agent</fullName>
+        <default>false</default>
+        <label>Sales Agent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>sales manager followed up</fullName>
+        <default>false</default>
+        <label>sales manager followed up</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Confirmed Renewal Intent</fullName>
+        <default>false</default>
+        <label>S - Confirmed Renewal Intent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent</fullName>
+        <default>false</default>
+        <label>Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent / No Contact to date</fullName>
+        <default>false</default>
+        <label>Sent / No Contact to date</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent / unopened</fullName>
+        <default>false</default>
+        <label>Sent / unopened</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent an email</fullName>
+        <default>false</default>
+        <label>Sent an email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent email</fullName>
+        <default>false</default>
+        <label>Sent email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent initial communication w/info</fullName>
+        <default>false</default>
+        <label>Sent initial communication w/info</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent initial message</fullName>
+        <default>false</default>
+        <label>Sent initial message</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sent to Direct Sales</fullName>
+        <default>false</default>
+        <label>Sent to Direct Sales</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Had Already Purchased</fullName>
+        <default>false</default>
+        <label>S - Had Already Purchased</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Shane</fullName>
+        <default>false</default>
+        <label>Shane</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S – Has Already Purchased</fullName>
+        <default>false</default>
+        <label>S – Has Already Purchased</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Showed Interest</fullName>
+        <default>false</default>
+        <label>Showed Interest</label>
+    </standardValue>
+    <standardValue>
+        <fullName>showed interest after receiving ppt</fullName>
+        <default>false</default>
+        <label>showed interest after receiving ppt</label>
+    </standardValue>
+    <standardValue>
+        <fullName>signed up for free trial</fullName>
+        <default>false</default>
+        <label>signed up for free trial</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sold</fullName>
+        <default>false</default>
+        <label>Sold</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SOLD/CLOSED</fullName>
+        <default>false</default>
+        <label>SOLD/CLOSED</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SOLD - Actual Sale</fullName>
+        <default>false</default>
+        <label>SOLD - Actual Sale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sold – Ad Materials NOT Received</fullName>
+        <default>false</default>
+        <label>Sold – Ad Materials NOT Received</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sold – Ad Materials Received</fullName>
+        <default>false</default>
+        <label>Sold – Ad Materials Received</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Speaker/Exhibitor</fullName>
+        <default>false</default>
+        <label>Speaker/Exhibitor</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Speaker / Exhibitor</fullName>
+        <default>false</default>
+        <label>Speaker / Exhibitor</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Speaker / Exhibitor / Free Pass</fullName>
+        <default>false</default>
+        <label>Speaker / Exhibitor / Free Pass</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SP leads</fullName>
+        <default>false</default>
+        <label>SP leads</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Spoke with Sales</fullName>
+        <default>false</default>
+        <label>Spoke with Sales</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SPP</fullName>
+        <default>false</default>
+        <label>SPP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SP Prospect</fullName>
+        <default>false</default>
+        <label>SP Prospect</label>
+    </standardValue>
+    <standardValue>
+        <fullName>S - Standing orders</fullName>
+        <default>false</default>
+        <label>S - Standing orders</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Targeted</fullName>
+        <default>false</default>
+        <label>Targeted</label>
+    </standardValue>
+    <standardValue>
+        <fullName>To Be Validated by SP</fullName>
+        <default>false</default>
+        <label>To Be Validated by SP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training (&lt;10 people)</fullName>
+        <default>false</default>
+        <label>Training (&lt;10 people)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training (&gt;10 people)</fullName>
+        <default>false</default>
+        <label>Training (&gt;10 people)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Training Co: purchase on ad-hoc basis</fullName>
+        <default>false</default>
+        <label>Training Co: purchase on ad-hoc basis</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Trial account received</fullName>
+        <default>false</default>
+        <label>Trial account received</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ultra Satisfied</fullName>
+        <default>false</default>
+        <label>Ultra Satisfied</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Unable to reach by phone</fullName>
+        <default>false</default>
+        <label>Unable to reach by phone</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Unrelated LOB</fullName>
+        <default>false</default>
+        <label>Unrelated LOB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Usage does not justify cost</fullName>
+        <default>false</default>
+        <label>Usage does not justify cost</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Using DGM - DGOffice</fullName>
+        <default>false</default>
+        <label>Using DGM - DGOffice</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Using FedEx</fullName>
+        <default>false</default>
+        <label>Using FedEx</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Using Free Trial</fullName>
+        <default>false</default>
+        <label>Using Free Trial</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Using LabelMaster</fullName>
+        <default>false</default>
+        <label>Using LabelMaster</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Using Other Competitor</fullName>
+        <default>false</default>
+        <label>Using Other Competitor</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Using UPS</fullName>
+        <default>false</default>
+        <label>Using UPS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Validated by SP</fullName>
+        <default>false</default>
+        <label>Validated by SP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Very Satisfied</fullName>
+        <default>false</default>
+        <label>Very Satisfied</label>
+    </standardValue>
+    <standardValue>
+        <fullName>WCS 09</fullName>
+        <default>false</default>
+        <label>WCS 09</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Webinar</fullName>
+        <default>false</default>
+        <label>Webinar</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Webinar on PAxFal</fullName>
+        <default>false</default>
+        <label>Webinar on PAxFal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Will not purchase -  Due to other reason</fullName>
+        <default>false</default>
+        <label>Will not purchase -  Due to other reason</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Will not purchase -  Due to price</fullName>
+        <default>false</default>
+        <label>Will not purchase -  Due to price</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong / Missing Contact Details</fullName>
+        <default>false</default>
+        <label>Wrong / Missing Contact Details</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong contact</fullName>
+        <default>false</default>
+        <label>Wrong contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong contact details</fullName>
+        <default>false</default>
+        <label>Wrong contact details</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong contact details (not reached)</fullName>
+        <default>false</default>
+        <label>Wrong contact details (not reached)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong contact info</fullName>
+        <default>false</default>
+        <label>Wrong contact info</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong LOB</fullName>
+        <default>false</default>
+        <label>Wrong LOB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong Number / No Phone # - Sent Email</fullName>
+        <default>false</default>
+        <label>Wrong Number / No Phone # - Sent Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong Number - email sent</fullName>
+        <default>false</default>
+        <label>Wrong Number - email sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Wrong Number - Sent Email</fullName>
+        <default>false</default>
+        <label>Wrong Number - Sent Email</label>
+    </standardValue>
+</StandardValueSet>

@@ -23,10 +23,6 @@
         <type>Visualforce</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -54,6 +50,7 @@
     <description>Used to manage the APJC forums, the participants, and the meetings. All by IDFS ISS.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -120,21 +117,25 @@
         <fullName>Cargo_Passenger__c</fullName>
         <externalId>false</externalId>
         <label>Cargo / Passenger</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Passenger</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Passenger</fullName>
+                    <default>false</default>
+                    <label>Passenger</label>
+                </value>
+                <value>
+                    <fullName>Cargo</fullName>
+                    <default>false</default>
+                    <label>Cargo</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Cluster__c</fullName>
@@ -165,41 +166,55 @@
         <fullName>Division__c</fullName>
         <externalId>false</externalId>
         <label>Division</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>APCS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FDS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SFO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>APCS</fullName>
+                    <default>false</default>
+                    <label>APCS</label>
+                </value>
+                <value>
+                    <fullName>CS</fullName>
+                    <default>false</default>
+                    <label>CS</label>
+                </value>
+                <value>
+                    <fullName>DG</fullName>
+                    <default>false</default>
+                    <label>DG</label>
+                </value>
+                <value>
+                    <fullName>FDS</fullName>
+                    <default>false</default>
+                    <label>FDS</label>
+                </value>
+                <value>
+                    <fullName>MACS</fullName>
+                    <default>false</default>
+                    <label>MACS</label>
+                </value>
+                <value>
+                    <fullName>MER</fullName>
+                    <default>false</default>
+                    <label>MER</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>SFO</fullName>
+                    <default>false</default>
+                    <label>SFO</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Email_Address__c</fullName>
@@ -219,66 +234,81 @@
         <externalId>false</externalId>
         <inlineHelpText>Number of Meetings per year</inlineHelpText>
         <label>Frequency of Face to Face Meetings</label>
-        <picklist>
-            <picklistValues>
-                <fullName>None</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>At least 1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>At least 2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>At least 3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>At least 4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>At least 5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>At least 6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>None</fullName>
+                    <default>true</default>
+                    <label>None</label>
+                </value>
+                <value>
+                    <fullName>At least 1</fullName>
+                    <default>false</default>
+                    <label>At least 1</label>
+                </value>
+                <value>
+                    <fullName>At least 2</fullName>
+                    <default>false</default>
+                    <label>At least 2</label>
+                </value>
+                <value>
+                    <fullName>At least 3</fullName>
+                    <default>false</default>
+                    <label>At least 3</label>
+                </value>
+                <value>
+                    <fullName>At least 4</fullName>
+                    <default>false</default>
+                    <label>At least 4</label>
+                </value>
+                <value>
+                    <fullName>At least 5</fullName>
+                    <default>false</default>
+                    <label>At least 5</label>
+                </value>
+                <value>
+                    <fullName>At least 6</fullName>
+                    <default>false</default>
+                    <label>At least 6</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Frequency_of_Meetings__c</fullName>
@@ -289,6 +319,20 @@
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Group_Administrator__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Person designated by the Group Owner to maintain the group information (TORs and participants). FOR MORE DETAILS, CONTACT AMT</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Person designated by the Group Owner to maintain the group information (TORs and participants).</inlineHelpText>
+        <label>Group Administrator</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Industry_Groups</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Group_Owner_Text__c</fullName>
@@ -404,78 +448,151 @@
         <fullName>Local_Governance_type__c</fullName>
         <externalId>false</externalId>
         <label>Local Group type</label>
-        <picklist>
-            <controllingField>Cargo_Passenger__c</controllingField>
-            <picklistValues>
-                <fullName>ALWG</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>APJC</fullName>
-                <default>false</default>
-                <controllingFieldValues>Passenger</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>APJC / FAG</fullName>
-                <default>false</default>
-                <controllingFieldValues>Passenger</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAPJC</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CGA</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CEC</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EACP JC</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ICAP</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>JALWG</fullName>
-                <default>false</default>
-                <controllingFieldValues>Passenger</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LCAG-C</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LCAG-P</fullName>
-                <default>false</default>
-                <controllingFieldValues>Passenger</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>LCAG-P / Credit Card WG</fullName>
-                <default>false</default>
-                <controllingFieldValues>Passenger</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>Cargo_Passenger__c</controllingField>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>ALWG</fullName>
+                    <default>false</default>
+                    <label>ALWG</label>
+                </value>
+                <value>
+                    <fullName>APJC</fullName>
+                    <default>false</default>
+                    <label>APJC</label>
+                </value>
+                <value>
+                    <fullName>APJC / FAG</fullName>
+                    <default>false</default>
+                    <label>APJC / FAG</label>
+                </value>
+                <value>
+                    <fullName>CAPJC</fullName>
+                    <default>false</default>
+                    <label>CAPJC</label>
+                </value>
+                <value>
+                    <fullName>CCC</fullName>
+                    <default>false</default>
+                    <label>CCC</label>
+                </value>
+                <value>
+                    <fullName>CEC</fullName>
+                    <default>false</default>
+                    <label>CEC</label>
+                </value>
+                <value>
+                    <fullName>CGA</fullName>
+                    <default>false</default>
+                    <label>CGA</label>
+                </value>
+                <value>
+                    <fullName>ICAP</fullName>
+                    <default>false</default>
+                    <label>ICAP</label>
+                </value>
+                <value>
+                    <fullName>JALWG</fullName>
+                    <default>false</default>
+                    <label>JALWG</label>
+                </value>
+                <value>
+                    <fullName>LCAG-C</fullName>
+                    <default>false</default>
+                    <label>LCAG-C</label>
+                </value>
+                <value>
+                    <fullName>LCAG-P</fullName>
+                    <default>false</default>
+                    <label>LCAG-P</label>
+                </value>
+                <value>
+                    <fullName>LCAG-P / Credit Card WG</fullName>
+                    <default>false</default>
+                    <label>LCAG-P / Credit Card WG</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Passenger</controllingFieldValue>
+                <valueName>APJC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Passenger</controllingFieldValue>
+                <valueName>APJC / FAG</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Passenger</controllingFieldValue>
+                <valueName>JALWG</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Passenger</controllingFieldValue>
+                <valueName>LCAG-P</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Passenger</controllingFieldValue>
+                <valueName>LCAG-P / Credit Card WG</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo</controllingFieldValue>
+                <valueName>CAPJC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo</controllingFieldValue>
+                <valueName>CCC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo</controllingFieldValue>
+                <valueName>CEC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo</controllingFieldValue>
+                <valueName>CGA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo</controllingFieldValue>
+                <valueName>ICAP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cargo</controllingFieldValue>
+                <valueName>LCAG-C</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Managed_in_SSW__c</fullName>
+        <description>Indicates if the group is managed in the Standard Setting Workspace (SSW) or not. FOR MORE DETAILS, CONTACT AMT.</description>
+        <externalId>false</externalId>
+        <label>Managed in SSW</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Maximum_Number_of_Participiants__c</fullName>
         <externalId>false</externalId>
+        <inlineHelpText>Excluding Observers</inlineHelpText>
         <label>Maximum Number of Participants</label>
         <precision>18</precision>
         <required>false</required>
@@ -496,120 +613,191 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Number_of_local_group_meetings__c</fullName>
+        <description>Total number of local group meetings</description>
+        <externalId>false</externalId>
+        <label>Number of local group meetings</label>
+        <summaryForeignKey>LocalGovernance_Meeting__c.Local_Governance__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_participants__c</fullName>
+        <description>The total number of participants</description>
+        <externalId>false</externalId>
+        <label>Number of participants</label>
+        <summaryForeignKey>Participant__c.Local_Governance__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Open_to__c</fullName>
         <externalId>false</externalId>
         <label>Open to</label>
-        <picklist>
-            <picklistValues>
-                <fullName>IATA Member Airlines</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non-IATA Airlines</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Strategic Partners</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Industry Stakeholders</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IATA Member Airlines</fullName>
+                    <default>false</default>
+                    <label>IATA Member Airlines</label>
+                </value>
+                <value>
+                    <fullName>Non-IATA Airlines</fullName>
+                    <default>false</default>
+                    <label>Non-IATA Airlines</label>
+                </value>
+                <value>
+                    <fullName>Strategic Partners</fullName>
+                    <default>false</default>
+                    <label>Strategic Partners</label>
+                </value>
+                <value>
+                    <fullName>Industry Stakeholders</fullName>
+                    <default>false</default>
+                    <label>Industry Stakeholders</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agents</fullName>
+                    <default>false</default>
+                    <label>Cargo Agents</label>
+                </value>
+                <value>
+                    <fullName>Travel Agents</fullName>
+                    <default>false</default>
+                    <label>Travel Agents</label>
+                </value>
+                <value>
+                    <fullName>General Sales Agents</fullName>
+                    <default>false</default>
+                    <label>General Sales Agents</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agency Associations</fullName>
+                    <default>false</default>
+                    <label>Cargo Agency Associations</label>
+                </value>
+                <value>
+                    <fullName>Travel Agency Associations</fullName>
+                    <default>false</default>
+                    <label>Travel Agency Associations</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Open_to_non_IATA_Airlines_and_Others__c</fullName>
         <externalId>false</externalId>
         <label>Open to non-IATA Airlines and Others</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>true</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Permanent_or_Temporary_Group__c</fullName>
         <externalId>false</externalId>
         <label>Permanent or Temporary Group</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Permanent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Temporary</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>T</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Permanent</fullName>
+                    <default>false</default>
+                    <label>Permanent</label>
+                </value>
+                <value>
+                    <fullName>Temporary</fullName>
+                    <default>false</default>
+                    <label>Temporary</label>
+                </value>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <label>Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia &amp; Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Reporting_to__c</fullName>
@@ -628,129 +816,159 @@
         <fullName>Resolution__c</fullName>
         <externalId>false</externalId>
         <label>Resolution</label>
-        <picklist>
-            <picklistValues>
-                <fullName>800</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>801</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>801r</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>801re</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>801rr</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>801z</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>803</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>804</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>805</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>805zz</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>807</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>809</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>809zz</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>810</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>810i</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>810j</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>811</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>813</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>814</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>815</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>817</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>818g</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>851</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>853</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>800</fullName>
+                    <default>false</default>
+                    <label>800</label>
+                </value>
+                <value>
+                    <fullName>801</fullName>
+                    <default>false</default>
+                    <label>801</label>
+                </value>
+                <value>
+                    <fullName>801r</fullName>
+                    <default>false</default>
+                    <label>801r</label>
+                </value>
+                <value>
+                    <fullName>801re</fullName>
+                    <default>false</default>
+                    <label>801re</label>
+                </value>
+                <value>
+                    <fullName>801rr</fullName>
+                    <default>false</default>
+                    <label>801rr</label>
+                </value>
+                <value>
+                    <fullName>801z</fullName>
+                    <default>false</default>
+                    <label>801z</label>
+                </value>
+                <value>
+                    <fullName>803</fullName>
+                    <default>false</default>
+                    <label>803</label>
+                </value>
+                <value>
+                    <fullName>804</fullName>
+                    <default>false</default>
+                    <label>804</label>
+                </value>
+                <value>
+                    <fullName>805</fullName>
+                    <default>false</default>
+                    <label>805</label>
+                </value>
+                <value>
+                    <fullName>805zz</fullName>
+                    <default>false</default>
+                    <label>805zz</label>
+                </value>
+                <value>
+                    <fullName>807</fullName>
+                    <default>false</default>
+                    <label>807</label>
+                </value>
+                <value>
+                    <fullName>809</fullName>
+                    <default>false</default>
+                    <label>809</label>
+                </value>
+                <value>
+                    <fullName>809zz</fullName>
+                    <default>false</default>
+                    <label>809zz</label>
+                </value>
+                <value>
+                    <fullName>810</fullName>
+                    <default>false</default>
+                    <label>810</label>
+                </value>
+                <value>
+                    <fullName>810i</fullName>
+                    <default>false</default>
+                    <label>810i</label>
+                </value>
+                <value>
+                    <fullName>810j</fullName>
+                    <default>false</default>
+                    <label>810j</label>
+                </value>
+                <value>
+                    <fullName>811</fullName>
+                    <default>false</default>
+                    <label>811</label>
+                </value>
+                <value>
+                    <fullName>813</fullName>
+                    <default>false</default>
+                    <label>813</label>
+                </value>
+                <value>
+                    <fullName>814</fullName>
+                    <default>false</default>
+                    <label>814</label>
+                </value>
+                <value>
+                    <fullName>815</fullName>
+                    <default>false</default>
+                    <label>815</label>
+                </value>
+                <value>
+                    <fullName>817</fullName>
+                    <default>false</default>
+                    <label>817</label>
+                </value>
+                <value>
+                    <fullName>818g</fullName>
+                    <default>false</default>
+                    <label>818g</label>
+                </value>
+                <value>
+                    <fullName>851</fullName>
+                    <default>false</default>
+                    <label>851</label>
+                </value>
+                <value>
+                    <fullName>853</fullName>
+                    <default>false</default>
+                    <label>853</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Restricted_of_Participants__c</fullName>
         <externalId>false</externalId>
         <label>Restricted Number of Participants</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>true</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Unique_Name__c</fullName>
@@ -845,7 +1063,7 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>All Local Groups</label>
+        <label>All Active Local Groups</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -870,22 +1088,7 @@ Record Type + Group Type + ISO_Country_Name</description>
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>All Reg / Div Groups</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Reg_Div_Groups_Pending_Approval</fullName>
-        <columns>NAME</columns>
-        <columns>Group_Owner__c</columns>
-        <columns>Reporting_to__c</columns>
-        <columns>AM_Under__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>LocalGovernance__c.Draft_Reg_Div_Group</value>
-        </filters>
-        <label>Reg / Div Groups Pending Approval</label>
+        <label>All Active Reg/Div Groups</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -895,306 +1098,6 @@ Record Type + Group Type + ISO_Country_Name</description>
     </nameField>
     <pluralLabel>Industry Groups</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <recordTypes>
-        <fullName>Draft_Reg_Div_Group</fullName>
-        <active>true</active>
-        <description>Represents a new Reg/Div group before it has been approved</description>
-        <label>Draft Reg/Div Group</label>
-        <picklistValues>
-            <picklist>Cargo_Passenger__c</picklist>
-            <values>
-                <fullName>Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Division__c</picklist>
-            <values>
-                <fullName>APCS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MER</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>SFO</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Frequency_of_Face_to_Face_Meetings__c</picklist>
-            <values>
-                <fullName>At least 1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 3</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 4</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 5</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At least 6</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Local_Governance_type__c</picklist>
-            <values>
-                <fullName>ALWG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>APJC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>APJC %2F FAG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAPJC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CEC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EACP JC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ICAP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JALWG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>LCAG-C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>LCAG-P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>LCAG-P %2F Credit Card WG</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Open_to__c</picklist>
-            <values>
-                <fullName>IATA member airlines</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industry Stakeholders</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA airlines</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Strategic Partners</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Open_to_non_IATA_Airlines_and_Others__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Permanent_or_Temporary_Group__c</picklist>
-            <values>
-                <fullName>Permanent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Temporary</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Region__c</picklist>
-            <values>
-                <fullName>Africa %26 Middle East</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Asia %26 Pacific</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>China %26 North Asia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Resolution__c</picklist>
-            <values>
-                <fullName>800</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801r</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801re</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801rr</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>801z</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>803</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>804</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>805</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>805zz</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>807</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>809</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>809zz</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>810</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>810i</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>810j</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>811</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>813</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>814</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>815</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>817</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>818g</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>851</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>853</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Restricted_of_Participants__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
     <recordTypes>
         <fullName>Local_Groups</fullName>
         <active>true</active>
@@ -1263,6 +1166,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <fullName>At least 6</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Local_Governance_type__c</picklist>
@@ -1283,15 +1190,15 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CCC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CEC</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EACP JC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1316,21 +1223,44 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Managed_in_SSW__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
-                <fullName>IATA member airlines</fullName>
+                <fullName>Cargo Agency Associations</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Industry Stakeholders</fullName>
+                <fullName>Cargo Agents</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>General Sales Agents</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Strategic Partners</fullName>
+                <fullName>IATA Member Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency Associations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agents</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1525,6 +1455,10 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>MACS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>MER</fullName>
                 <default>false</default>
             </values>
@@ -1583,15 +1517,15 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CCC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CEC</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EACP JC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1616,9 +1550,20 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Managed_in_SSW__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Open_to__c</picklist>
             <values>
-                <fullName>IATA member airlines</fullName>
+                <fullName>IATA Member Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1626,7 +1571,7 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non-IATA airlines</fullName>
+                <fullName>Non-IATA Airlines</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1792,10 +1737,10 @@ Record Type + Group Type + ISO_Country_Name</description>
     </recordTypes>
     <searchLayouts>
         <excludedStandardButtons>Accept</excludedStandardButtons>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Forward</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
     </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <validationRules>
         <fullName>Cannot_change_if_inactive_group</fullName>
         <active>true</active>
@@ -1828,6 +1773,29 @@ Record Type + Group Type + ISO_Country_Name</description>
         <errorMessage>It&apos;s not possible to change this record because it is inactive</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Delete_group_meetings</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Local_Groups&apos;, 
+PRIORVALUE(Number_of_local_group_meetings__c) &gt; Number_of_local_group_meetings__c, 
+NOT($Permission.Modify_Local_Group_Owners) 
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to delete meetings from this group</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Delete_participants</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(AND(RecordType.DeveloperName = &apos;Reg_Div_Groups&apos;,
+PRIORVALUE(Number_of_participants__c) &gt; Number_of_participants__c,
+NOT($Permission.Modify_Reg_Div_Group_Owners)
+),
+AND(RecordType.DeveloperName = &apos;Local_Groups&apos;,
+PRIORVALUE(Number_of_participants__c) &gt; Number_of_participants__c,
+NOT($Permission.Modify_Local_Group_Owners)
+)
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to delete participants from this group</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Either_a_Division_or_a_Region</fullName>
         <active>false</active>
         <errorConditionFormula>AND(
@@ -1845,7 +1813,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <active>true</active>
         <description>Name of the group cannot be modified after being approved</description>
         <errorConditionFormula>AND(
-  NOT( $User.Profile_Name__c =&quot;System Administrator&quot;), 
+  NOT(OR($User.Profile_Name__c =&quot;System Administrator&quot;, $User.Profile_Name__c =&quot;Account management team&quot;)), 
   AND(
   RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;,
   ISCHANGED(Name)
@@ -1853,6 +1821,17 @@ Record Type + Group Type + ISO_Country_Name</description>
 )</errorConditionFormula>
         <errorMessage>Name of the group cannot be modified after being approved</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Restrict_edit</fullName>
+        <active>true</active>
+        <description>Only edit fields if user profile is &apos;Account management team&apos;</description>
+        <errorConditionFormula>and(or(ISCHANGED(Cargo_Passenger__c),ISCHANGED(Country__c), 
+ISCHANGED(Cluster__c),ISCHANGED(Reporting_to__c), 
+ISCHANGED(Local_Governance_type__c),ISCHANGED(Group_Owner__c)), 
+!($User.Profile_Name__c=&apos;Account management team&apos;),RecordType.DeveloperName=&apos;Local_Groups&apos;)</errorConditionFormula>
+        <errorMessage>Only the Account management team can perform the editing</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Deacitvate</fullName>
         <availability>online</availability>

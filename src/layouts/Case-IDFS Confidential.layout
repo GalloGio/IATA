@@ -62,10 +62,6 @@
                 <field>Reason1__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>test_owner__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Priority</field>
             </layoutItems>
@@ -194,7 +190,7 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

@@ -2,7 +2,6 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ALWG_LCAG_C_send_notification_to_meeting_owner_that_Legal_has_signed_off_agenda</fullName>
-        <ccEmails>belislep@iata.org</ccEmails>
         <description>ALWG/LCAG-C - send notification to meeting owner that Legal has signed off agenda</description>
         <protected>false</protected>
         <recipients>
@@ -134,7 +133,11 @@
         <description>APJC - send notification to meeting owner that Legal has rejected the agenda</description>
         <protected>false</protected>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -149,7 +152,11 @@
         <description>APJC - send notification to meeting owner that Legal has rejected the minutes</description>
         <protected>false</protected>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -190,11 +197,15 @@
             <type>group</type>
         </recipients>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>quesadara@iata.org</recipient>
+            <recipient>tan-torrj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -213,11 +224,15 @@
             <type>group</type>
         </recipients>
         <recipients>
-            <recipient>petterssonl@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>quesadara@iata.org</recipient>
+            <recipient>tan-torrj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -271,10 +286,15 @@
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has rejected the Agenda. Used for IDFS ISS.
-ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -291,10 +311,15 @@ ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has rejected the minutes. Used for IDFS ISS.
-ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -311,10 +336,15 @@ ALWG, CAPJC, CGA, CEC, EACP JC, ICAP, LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has signed off the Agenda. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -331,10 +361,15 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has signed off the Minutes. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -355,15 +390,20 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
         </criteriaItems>
         <criteriaItems>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_off_Agenda__c</field>
             <operation>equals</operation>
         </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
+        </criteriaItems>
         <description>Request for legal to sign off agenda. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
-        <triggerType>onAllChanges</triggerType>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ALWG%2FLCAG-C%2FCEC%2FICAP - Request for Legal to sign off Minutes</fullName>
@@ -383,15 +423,20 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
         <criteriaItems>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
-            <value>ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</value>
+            <value>CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</value>
         </criteriaItems>
         <criteriaItems>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_Off_the_Minutes__c</field>
             <operation>equals</operation>
         </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
+        </criteriaItems>
         <description>Request for legal to sign off minutes. Used for IDFS ISS.
-ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
-        <triggerType>onAllChanges</triggerType>
+CAPJC,CGA,CEC,ICAP,LCAG-C,CCC</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>APJC - Notification that Agenda have been rejected</fullName>
@@ -408,6 +453,11 @@ ALWG,CAPJC,CGA,CEC,EACP JC,ICAP,LCAG-C</description>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
             <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has rejected the Agenda. Used for IDFS ISS.
 APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
@@ -429,6 +479,11 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
             <operation>equals</operation>
             <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
+        </criteriaItems>
         <description>Notification that Legal has rejected the minutes. Used for IDFS ISS.
 APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -449,6 +504,11 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
             <operation>equals</operation>
             <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
+        </criteriaItems>
         <description>Notification that Legal has signed off the agenda. Used for IDFS ISS.
 APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -468,6 +528,11 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
             <field>LocalGovernance__c.Local_Governance_type__c</field>
             <operation>equals</operation>
             <value>APJC,APJC / FAG,JALWG,LCAG-P,LCAG-P / Credit Card WG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
         </criteriaItems>
         <description>Notification that Legal has signed off the Minutes. Used for IDFS ISS.
 APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
@@ -497,9 +562,14 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_off_Agenda__c</field>
             <operation>equals</operation>
         </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
+        </criteriaItems>
         <description>Request for legal to sign off APJC agenda. Used for IDFS ISS.
 APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
-        <triggerType>onAllChanges</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>APJC%2FJALWG%2FLCAG-P - Request for Legal to sign off Minutes</fullName>
@@ -525,7 +595,12 @@ APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG</description>
             <field>LocalGovernance_Meeting__c.Date_Legal_Signed_Off_the_Minutes__c</field>
             <operation>equals</operation>
         </criteriaItems>
+        <criteriaItems>
+            <field>User.Profile_Name__c</field>
+            <operation>notEqual</operation>
+            <value>System Administrator</value>
+        </criteriaItems>
         <description>Request for legal to sign off APJC, APJC / FAG, JALWG, LCAG-P, LCAG-P / Credit Card WG minutes. Used for IDFS ISS.</description>
-        <triggerType>onAllChanges</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

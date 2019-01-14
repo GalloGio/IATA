@@ -10,7 +10,11 @@ trigger EF_LocationCodeTrigger on EF_Location_Code__c (
 	
 	if(Trigger.isBefore)
 	{
-		EF_LocationCodeHandler.verifyBaLocationCodeExistsOnContract(Trigger.new, Trigger.oldMap);
+        if(Trigger.isDelete){
+            EF_LocationCodeHandler.verifyBaLocationCodeExistsOnContract(Trigger.old, Trigger.oldMap);
+        }else{
+            EF_LocationCodeHandler.verifyBaLocationCodeExistsOnContract(Trigger.new, Trigger.oldMap);
+        }		
 	}
 
 }

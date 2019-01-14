@@ -1,37 +1,69 @@
 ({
     doInit : function(component, event, helper) {
         var activity = component.get("v.activity");
+        var divisionValues = component.get("v.divisionValues");
         
         if(activity.Id === undefined) {
             component.set("v.isEditMode", true);
+            helper.fillDivisionOptions(component, divisionValues, activity.Division__c);
+
         } else {
             component.set("v.isEditMode", false);
         }
+        var statusValues = [];
+		statusValues.push('On Track');
+        statusValues.push('On Hold');
+        statusValues.push('Delayed');
+        statusValues.push('Delivered');
+        statusValues.push('Cancelled');
+        statusValues.push('Not Delivered');
+
+		component.set("v.statusValues", statusValues);
     },
+
     switchToEditMode : function(component, event, helper) {
         component.set("v.isEditMode", true);
         console.log('going into edit mode...');
+
+        var activity = component.get("v.activity");
+        var status = activity.Status__c;
+
+        console.log(JSON.stringify(activity));
+
+        var statusValues = component.get("v.statusValues");
+        if(status === undefined) status = statusValues[0];
+
+        component.set("v.status", status);
+        console.log(status);
+
+        var divisionValues = component.get("v.divisionValues");
+        var division = activity.Division__c;
+        helper.fillDivisionOptions(component, divisionValues, division);
+
     },
     cancelEditMode : function(component, event, helper) {
         var activity = component.get("v.activity");
-        var index = component.get("v.index");
-        
+        //var index = component.get("v.index");
         if(activity.Id === undefined) {
-            console.log('something');
-            var deleteEvent = component.getEvent("deleteActivity");
-            deleteEvent.setParams({ "issue": activity, "index":index }).fire();
+            console.log('cancel add new activity -> delete');
+            var deleteEvent = component.getEvent("cancelAddActivity");
+            deleteEvent.setParams({'issue': activity})
+            deleteEvent.fire();
             
-        } else {
-            
-            component.set("v.isEditMode", false);
-            console.log('canceling edit mode...');
-        }
+        } 
+         component.set("v.isEditMode", false);
     },
     clickSaveActivity : function(component, event, helper) {
         
         var activity = component.get("v.activity");
-        var status = component.find("status").get("v.value");
+        var status = component.find("statusList").get("v.value");
+        var statusValues = component.get("v.statusValues");
+        if(status === undefined) status = statusValues[0];
         activity.Status__c = status;
+
+        //division
+        var division = component.find("divisionList").get("v.value");
+        activity.Division__c = division;
         
         var deadlineField = component.find("deadline");
         var benefitsField = component.find("benefits");
@@ -42,13 +74,13 @@
             component.set("v.errorMessage", 'Error : Activity, Description, Overall Status and Deadline are mandatory fields.<br /> One of these two options is mandatory: “Account Issue or Priority” or “Benefits to the Account”. ');
         } else if(deadlineField.get("v.value") === '') {
             deadlineField.set("v.errors", [{message:"Please enter a date" }]);
-            
-        } else {
+        
+        }else {
             console.log(JSON.stringify(activity));
             var index = component.get("v.index");
             
             var updateEvent = component.getEvent("updateActivity");
-            updateEvent.setParams({ "issue": activity, "index":index }).fire();
+            updateEvent.setParams({ "issue": activity, "index":index}).fire();
             
             component.set("v.isEditMode", false);
         }
@@ -72,11 +104,11 @@
         
         console.log('delete clicked...');
         var activity = component.get("v.activity");
-        console.log(JSON.stringify(activity));
-        var index = component.get("v.index");
-        
+        //pass the activity attribute passed from the event to a component attribute (AMP_UpdateIssueOrPriority, 
+        //in this event there are two params registered, issue and index) 
         var deleteEvent = component.getEvent("deleteActivity");
-        deleteEvent.setParams({ "issue": activity, "index":index }).fire();
+        deleteEvent.setParams({ "issue": activity}).fire();
+        //deleteEvent.setParams({ "activityToDelete": activity, "index":index }).fire();
         
         component.set("v.isEditMode", false);
     },

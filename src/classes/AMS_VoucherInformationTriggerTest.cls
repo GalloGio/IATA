@@ -3,16 +3,16 @@ private class AMS_VoucherInformationTriggerTest {
 	
 	@testSetup static void setup(){
     
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
 
-        Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATA_ISO_Country__c = italy.id, Location_type__c = 'HO');
+        Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATA_ISO_Country__c = italy.id, Location_type__c = 'HO', Location_Class__c = 'C');
        
         insert HO1;
 
-		Account HO2 = new Account(RecordTypeId = rtAgency, Name = 'My Travels2', IATA_ISO_Country__c = italy.id, Location_type__c = 'HO');
+		Account HO2 = new Account(RecordTypeId = rtAgency, Name = 'My Travels2', IATA_ISO_Country__c = italy.id, Location_type__c = 'HO' , Location_Class__c = 'C');
        
         insert HO2;
 
@@ -22,7 +22,7 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c, Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 		Account acct2 = accounts.get(1);
@@ -44,7 +44,7 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c,Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 
@@ -70,7 +70,7 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c,Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 
@@ -90,7 +90,7 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c,Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 
@@ -122,7 +122,7 @@ private class AMS_VoucherInformationTriggerTest {
 
 		Test.startTest();
 
-		List<Account> accounts = [SELECT id, Location_type__c from Account];
+		List<Account> accounts = [SELECT id, Location_type__c,Location_Class__c from Account];
 
 		Account acct1 = accounts.get(0);
 

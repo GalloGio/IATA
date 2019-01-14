@@ -32,7 +32,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
     
     private final static Integer COUNTRY_NAME =5;
     
-    public  Map<String,String> dpcPerBSP {get;set;}
+    //public  Map<String,String> dpcPerBSP {get;set;}
     
     
     //NOTE: here one Map should be enought for both bsp and cass... lazy man to rewrite
@@ -44,7 +44,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
     public  Map<String,AMS_Settlement_System__c > unassignedISS{get;set;}
     
     
-        //used to save ISS BSP related to a specific country
+    //used to save ISS BSP related to a specific country
     public  Map<String,IATA_ISO_Country__c >countriesPerBSPName {get;set;}
     //used to store ISS CASS relat
     public  Map<String,IATA_ISO_Country__c >countriesPerCassName {get;set;}
@@ -54,8 +54,6 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
     public  Map<String,AMS_Operation__c> operations {get;set;}
 
     public Map<String, IATA_ISO_Country__c> countryMap = new Map<String, IATA_ISO_Country__c>();
-    
-    private Map<string, Id> settlementRT = null;
     
     private AMS_Settlement_System__c cassSettlement = null;
 
@@ -68,10 +66,9 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
         csvAsString = null;
         
         //set the list of Country
-        for(IATA_ISO_Country__c c:[select Name,AMS_Settlement_System__c, Id,ISO_Code__c from IATA_ISO_Country__c ])
+        for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries())
             countryMap.put(c.ISO_Code__c.trim() ,c);
         //load record types for Settlements
-        settlementRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Settlement_System__c'}).get('AMS_Settlement_System__c');
         
         bspsPerName= new Map<String,AMS_Settlement_System__c>();
         cassPerName= new Map<String,AMS_Settlement_System__c >();
@@ -106,7 +103,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
             
             //set the list of Country
             countryMap.clear();
-            for(IATA_ISO_Country__c c:[select Name,  AMS_Settlement_System__c, AMS_Settlement_System_CASS__c, Id,  ISO_Code__c from IATA_ISO_Country__c ])
+            for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries())
                 countryMap.put(c.ISO_Code__c.trim() ,c);
            
            if(!selected){
@@ -117,12 +114,8 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
                try{
                     StaticResource sr = [SELECT Id,NamespacePrefix,SystemModstamp FROM StaticResource WHERE Name = 'Ams_integration' LIMIT 1];
                     String prefix = sr.NamespacePrefix;
-                    if( String.isEmpty(prefix) ) {
-                        prefix = '';
-                    } else {
-                        //If has NamespacePrefix
-                        prefix += '__';
-                    }
+                    if( String.isNotEmpty(prefix) ) prefix += '__';
+                    else prefix = '';
                     //Get the path of MyJsonFile.json file in Zip static resource
                     String srPath = '/resource/' + sr.SystemModstamp.getTime() + '/' + prefix + 'Ams_integration/bsp3.csv'; 
                     PageReference pg = new PageReference( srPath );
@@ -167,11 +160,11 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
                if(csvRecordData[colIndex [INDEX_DPC_PROVIDER]]!=null && csvRecordData[colIndex [INDEX_DPC_PROVIDER]].equals('HP')){
                    system.debug('[ISS LOADING] Process as a CASS ');
                    aISS.Name='CASS-'+csvRecordData[colIndex[INDEX_ISO_COUNTRY_CODE ]];
-                   aISS.RecordTypeId = settlementRT.get('CASS');
+                   aISS.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'CASS');
                }else {
                    
                    aISS.Name ='BSP-'+csvRecordData[colIndex [INDEX_ISO_COUNTRY_CODE ]];
-                   aISS.RecordTypeId = settlementRT.get('BSP');
+                   aISS.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
                    aISS.BSP_Billing__c =csvRecordData[colIndex [INDEX_ISO_COUNTRY_CODE ]];
                }
                //set the DPC
@@ -232,8 +225,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
         //update countries withing these lookup
         for(AMS_Settlement_System__c s:[select Id, NAme from AMS_Settlement_System__c  where Name in :countriesPerBSPName.keySet() ]){
           IATA_ISO_Country__c c = countriesPerBSPName.get(s.Name);
-          if(countries2Update.get(c.Id)!=null)
-              c = countries2Update.get(c.Id);
+          if(countries2Update.get(c.Id)!=null) c = countries2Update.get(c.Id);
           c.AMS_Settlement_System__c  = s.Id;
           countries2Update.put(c.Id, c);
         }
@@ -260,7 +252,7 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
     private PageReference  importOperationsCSV(){
         //set the list of Country
         countryMap.clear();
-        for(IATA_ISO_Country__c c:[select Name,  AMS_Settlement_System__c, AMS_Settlement_System_CASS__c, Id,  ISO_Code__c from IATA_ISO_Country__c ])
+        for(IATA_ISO_Country__c c: IATAIsoCountryDAO.getIsoCountries())
             countryMap.put(c.ISO_Code__c.trim() ,c);
          operations = new Map<String,AMS_Operation__c> ();
          try{
@@ -273,12 +265,9 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
                try{
                     StaticResource sr = [SELECT Id,NamespacePrefix,SystemModstamp FROM StaticResource WHERE Name = 'Ams_integration' LIMIT 1];
                     String prefix = sr.NamespacePrefix;
-                    if( String.isEmpty(prefix) ) {
-                        prefix = '';
-                    } else {
-                        //If has NamespacePrefix
-                        prefix += '__';
-                    }
+                    if( String.isNotEmpty(prefix) ) prefix += '__';
+                    else prefix = '';
+
                     //Get the path of MyJsonFile.json file in Zip static resource
                     String srPath = '/resource/' + sr.SystemModstamp.getTime() + '/' + prefix + 'Ams_integration/operations.csv'; 
                     PageReference pg = new PageReference( srPath );
@@ -326,24 +315,17 @@ public class AMS_SettlementsAndOperationLoaderCtrl{
                    operation.Country__c = countryMap.get(iso).Id;
                    
                    operation.currencyIsoCode = curr;
-                   if(lastLetter=='D')
-                       operation.Market__c ='Domestic';
-                   else 
-                       operation.Market__c ='International';
-                   if(type=='BSP'){
-                       operation.Settlement__c= countryMap.get(iso).AMS_Settlement_System__c;
-                   }
+                   if(lastLetter=='D') operation.Market__c ='Domestic';
+                   else operation.Market__c ='International';
+
+                   if(type=='BSP') operation.Settlement__c= countryMap.get(iso).AMS_Settlement_System__c;
                    else{
                        operation.Settlement__c= countryMap.get(iso).AMS_Settlement_System_CASS__c;
                        //: EXP (E) , IMP (I) , Courier (C) , Local (L)
-                       if(initLetter=='E')
-                           operation.CASS_Operations__c = 'EXP';
-                       if(initLetter=='I')
-                           operation.CASS_Operations__c = 'IMP' ;
-                       if(initLetter=='C')
-                           operation.CASS_Operations__c = 'Courier';
-                       if(initLetter=='L')
-                           operation.CASS_Operations__c = 'Local';
+                       if(initLetter=='E') operation.CASS_Operations__c = 'EXP';
+                       if(initLetter=='I') operation.CASS_Operations__c = 'IMP' ;
+                       if(initLetter=='C') operation.CASS_Operations__c = 'Courier';
+                       if(initLetter=='L') operation.CASS_Operations__c = 'Local';
                    }
                    operations.put(opName ,operation);
                 }

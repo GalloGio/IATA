@@ -73,6 +73,42 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EBC_ExactTarget_Password__c</fullName>
+        <defaultValue>&quot;Alban2016%&quot;</defaultValue>
+        <description>EBC ExactTarget Password</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC ExactTarget Password</inlineHelpText>
+        <label>EBC ExactTarget Password</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EBC_ExactTarget_Username__c</fullName>
+        <defaultValue>&quot;kejia.hu@cgi.com&quot;</defaultValue>
+        <description>EBC ExactTarget Username</description>
+        <externalId>false</externalId>
+        <inlineHelpText>EBC ExactTarget Username</inlineHelpText>
+        <label>EBC ExactTarget Username</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EBC_Send_From_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>EBC Send From Email</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Encryption_Algorythm__c</fullName>
         <defaultValue>&quot;AES128&quot;</defaultValue>
         <description>AES128, AES192, or AES256</description>
@@ -407,6 +443,39 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>eBroadcast_Counter_AWS_API_KEY__c</fullName>
+        <defaultValue>&quot;Sr96oKUqaap4CXicrEMl5NXp6SerQNsAg701Gnf0&quot;</defaultValue>
+        <description>eBroadcast Counter AWS API KEY to get access to the web service otherwise getting forbidden access response</description>
+        <externalId>false</externalId>
+        <label>eBroadcast Counter AWS API KEY</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>eBroadcast_Counter_AWS_URL__c</fullName>
+        <defaultValue>&quot;https://rb5luiyoea.execute-api.eu-west-1.amazonaws.com/prod/TestElasticSearchQuery&quot;</defaultValue>
+        <description>eBroadcast Counter AMAZON Web Service URL to retrieve the new counter from elasticsearch database</description>
+        <externalId>false</externalId>
+        <label>eBroadcast Counter AWS URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>eBroadcast_Counter_Switch__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If true the new counter function is used, and the new function is counting from the elasticsearch database instead of the salesforce database</description>
+        <externalId>false</externalId>
+        <label>eBroadcast Counter Switch</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <label>IEC Settings</label>
     <visibility>Public</visibility>

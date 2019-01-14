@@ -3,6 +3,14 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>amandussoc@iata.org</email>
     <name>ACCA Bug Fixes</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSACCAADMTeam</publicGroup>
+            <publicGroup>IDFSACCACSTeam</publicGroup>
+            <publicGroup>IDFSACCAProjectMgmt</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

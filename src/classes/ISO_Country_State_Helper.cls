@@ -11,27 +11,27 @@ public class ISO_Country_State_Helper {
 		List<ISO_Country_State_DTO> listCountry = new List<ISO_Country_State_DTO>();
 		ISO_Country_State_DTO oneCountry;
 		
-		for (IATA_ISO_Country__c country : [select Id, ISO_Code__c, Name
-			                                     , (select Id, ISO_Code__c, Name from IATA_ISO_States__r where ISO_Code__c != null and IEC_Valid_SAP__c = true order by Name)
-			                                from IATA_ISO_Country__c
-			                                where ISO_Code__c != null
-			                                  and Name != 'All Countries'
-			                                order by Name]) {
-			oneCountry = new ISO_Country_State_DTO(country.Id, country.ISO_Code__c, country.Name);
-			//*** add only states having name to country structure
-			for (IATA_ISO_State__c state : country.IATA_ISO_States__r)
-                /*if (state.ISO_Code__c.startsWith(country.ISO_Code__c + '-')) */
-                //if (state.Name != state.ISO_Code__c)
-				{
-					oneCountry.StateId.add(state.Id);
-					oneCountry.StateCode.add(state.ISO_Code__c);
-					oneCountry.StateName.add(state.Name);
+		for (IATA_ISO_Country__c country : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+
+			if(country.ISO_Code__c != null && country.Name != 'All Countries'){
+				oneCountry = new ISO_Country_State_DTO(country.Id, country.ISO_Code__c, country.Name);
+
+				//*** add only states having name to country structure
+				for (IATA_ISO_State__c state : country.IATA_ISO_States__r) {
+
+					if(state.ISO_Code__c != null && state.IEC_Valid_SAP__c == true){
+						oneCountry.StateId.add(state.Id);
+						oneCountry.StateCode.add(state.ISO_Code__c);
+						oneCountry.StateName.add(state.Name);
+					}
 				}
-			listCountry.add(oneCountry);
+				listCountry.add(oneCountry);
+			}
 		}
 		
 		return listCountry;
-	} //*** end of "getCountry_State"
+	} 
+	//*** end of "getCountry_State"
 	
 	/****************************************************************************************************
 	    Created by CGI, Thai 2015-10-30
@@ -45,7 +45,9 @@ public class ISO_Country_State_Helper {
 			mapName_Code.put(s, null);
 	
 		//*** get country codes
-		for (IATA_ISO_Country__c country : [select ISO_Code__c, Name from IATA_ISO_Country__c where Name in :listCountryName and ISO_Code__c != null])
+		Set<String> countryList = new Set<String>();
+		countryList.addAll(listCountryName);
+		for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountryByCountriesName(countryList))
 			mapName_Code.put(country.Name, country.ISO_Code__c);
 		
 		return mapName_Code;
@@ -63,9 +65,12 @@ public class ISO_Country_State_Helper {
 			mapName_Code.put(s, null);
 	
 		//*** get state codes
-		for (IATA_ISO_State__c state : [select ISO_Code__c, Name from IATA_ISO_State__c where Name in :mapStateName_CountryCode.keySet() and ISO_Code__c != null and IEC_Valid_SAP__c = true])
-			if (state.ISO_Code__c.startsWith('' + mapStateName_CountryCode.get(state.Name) + '-'))
-				mapName_Code.put(state.Name, state.ISO_Code__c);
+		for (IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByStateName(mapStateName_CountryCode.keySet())){
+			if (state.ISO_Code__c != null && state.IEC_Valid_SAP__c == true && 
+				state.ISO_Code__c.startsWith('' + mapStateName_CountryCode.get(state.Name) + '-')){
+					mapName_Code.put(state.Name, state.ISO_Code__c);
+			}
+		}
 		
 		return mapName_Code;
 	} //*** end of "getCountryCodeFromName"
@@ -112,31 +117,50 @@ public class ISO_Country_State_Helper {
 
     //Get the list of iso country by iso code
 	public static List<IATA_ISO_Country__c> getIsoCountryByIsoCode(String isoCode){
-		return [select id,Name,IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c where ISO_Code__c = :isoCode];
+		return IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{isoCode});
 	}
 	//Get the list of iso country by Id
 	public static List<IATA_ISO_Country__c> getIsoCountryById(Id isoCountryId){
-		return [select id,Name,IEC_Zip_Postal_Code_required__c,ISO_Code__c from IATA_ISO_Country__c where Id = :isoCountryId];
+		return IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{isoCountryId});
 	}
 
 	//Get the list of iso State by iso code
 	public static List<IATA_ISO_State__c> getIsoStateByIsoCode(String isoCode){
-		return [select id,ISO_Code__c,Name from IATA_ISO_State__c where ISO_Code__c = :isoCode and IEC_Valid_SAP__c = true];
+		List<IATA_ISO_State__c> isoStateList =	IATAIsoStateDAO.getIsoStateByIsoCodes(new Set<String>{isoCode});
+		for(IATA_ISO_State__c state : isoStateList){
+			if(state.IEC_Valid_SAP__c == true){
+				return isoStateList;
+			}
+		}
+		return new List<IATA_ISO_State__c>();
 	} 
 
 	public static List<IATA_ISO_State__c> getIsoStateByIsoCode(String countryCode, String isoCode){
-		return [select id,ISO_Code__c,Name from IATA_ISO_State__c where ISO_Code__c = :isoCode and IEC_Valid_SAP__c = true AND IATA_ISO_Country__r.ISO_Code__c = :countryCode];
+		List<IATA_ISO_State__c> isoStateList =	IATAIsoStateDAO.getIsoStateByIsoCodes(new Set<String>{isoCode});
+		for(IATA_ISO_State__c state : isoStateList){
+			if(state.IEC_Valid_SAP__c == true && state.IATA_ISO_Country__r.ISO_Code__c == countryCode){
+				return isoStateList;
+			}
+		}
+		return new List<IATA_ISO_State__c>();
 	} 
 
 	//Get the list of iso State by Id
 	public static List<IATA_ISO_State__c> getIsoStateById(Id isoStateId){
-		return [select id,ISO_Code__c,Name from IATA_ISO_State__c where Id = :isoStateId and IEC_Valid_SAP__c = true];
-	} 
-	
+		
+		List<IATA_ISO_State__c> isoStatesLst = IATAIsoStateDAO.getIsoStatesByIds(new Set<Id>{isoStateId});
+		
+		if(isoStatesLst != null && isoStatesLst.size() > 0 && isoStatesLst.get(0).IEC_Valid_SAP__c){
+			return isoStatesLst;
+		}
+			
+		return new List<IATA_ISO_State__c>();
+		
+	}
 
 	//get the zipCode required countries
 	public static map<Id,IATA_ISO_Country__c> requiredCountriesZipCode(){
-		return new map<Id,IATA_ISO_Country__c>([SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c WHERE IEC_Zip_Postal_Code_required__c = true]);
+		return new map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByZipCoderequired(true));
 	}
 
     /****************************************************************************************************
@@ -144,16 +168,13 @@ public class ISO_Country_State_Helper {
             Get list of countries having VAT number
     ****************************************************************************************************/
     public static map<Id,IATA_ISO_Country__c> requiredCountriesVAT(){
-        return new map<Id,IATA_ISO_Country__c>([SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c WHERE VAT_Validation_Required__c = true]);
+        return new map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByVatValidationRequired(true));
     }
 
 	public static Boolean requiredVATNumber(String CountryCode) {
 		Boolean required = false;
-		List<IATA_ISO_Country__c> lstCountry =
-			[SELECT Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, ISO_Code__c, Name
-			FROM IATA_ISO_Country__c
-			WHERE ISO_Code__c = : CountryCode];
-		
+		List<IATA_ISO_Country__c> lstCountry = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{CountryCode});
+			
 		if(lstCountry != null && lstCountry.size() > 0){
 			required = lstCountry[0].VAT_Validation_Required__c;
 		}
@@ -166,52 +187,61 @@ public class ISO_Country_State_Helper {
             Determine if zip code or postal code is required
     ****************************************************************************************************/
     public static Boolean requiredZipCode(String CountryCode) {
-        return 0 < [select count() from IATA_ISO_Country__c where ISO_Code__c = :CountryCode and IEC_Zip_Postal_Code_required__c = true limit 1];
+        IATA_ISO_Country__c country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{CountryCode}).get(0);
+        return country.IEC_Zip_Postal_Code_required__c;
     }
 
 
-	public static List<SelectOption> getCountriesSelectOption()
-	{
-		List<SelectOption> options = new List<SelectOption>();
-        	options.add(new SelectOption('',Label.Select_a_Country));
+	public static List<SelectOption> getCountriesSelectOption(){
 
-    	for(IATA_ISO_Country__c c : [SELECT Name, ISO_Code__c FROM IATA_ISO_Country__c WHERE ISO_Code__c != null and Name != 'All Countries' ORDER BY Name])
-    	{
-    		options.add(new SelectOption(c.ISO_Code__c, c.Name));
+		List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('',Label.Select_a_Country));
+
+    	for(IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+    		if(c.Name != 'All Countries')
+    			options.add(new SelectOption(c.ISO_Code__c, c.Name));
     	}
 
     	return options;
 	}
-
+	
 	public static List<SelectOption> getStatesSelectOption(String countryCode)
 	{
 		List<SelectOption> options = new List<SelectOption>();
 		List<SelectOption> ret = new List<SelectOption>();
         
-        List<IATA_ISO_State__c> states = [
-        	SELECT Name, ISO_Code__c 
-        	FROM IATA_ISO_State__c 
-        	WHERE ISO_Code__c != null
-        		and IEC_Valid_SAP__c = true 
-        		AND IATA_ISO_Country__r.ISO_Code__c = :countryCode 
-        	ORDER BY Name
-    	];
+        List<IATA_ISO_State__c> states = IATAIsoStateDAO.sortIATAIsoStateList(IATAIsoStateDAO.getIsoStates(), 'Name');
 
-    	if(states != null && states.size() > 0)
-    	{
-    		
+    	if(states != null && states.size() > 0){
     		for(IATA_ISO_State__c s : states)
-    			//if(s.Name != s.ISO_Code__c)
+    			if(s.ISO_Code__c != null && s.IEC_Valid_SAP__c == true && s.IATA_ISO_Country__r.ISO_Code__c == countryCode)
     				options.add(new SelectOption(s.ISO_Code__c, s.Name));
     	}
 
-		if(options.size() > 0)
-		{
+		if(options.size() > 0){
 			ret.add(new SelectOption('',Label.Select_a_State_Province));
 			ret.addAll(options);
 		}
 
     	return ret;
 	}
+	
+	/**
+	*	Enhancements 2017-05-10
+	**/
+	public static Map<String, Object> getCountriesOptionsMap() {
+		List<SelectOption> options = new List<SelectOption>();
+		options.add(new SelectOption('',Label.Select_a_Country));
+		Map<String, Boolean> mapZipCodeApplicable = new Map<String, Boolean>();
+		
+		for(IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+    		if(c.ISO_Code__c != null && c.Name != 'All Countries'){
+				options.add(new SelectOption(c.ISO_Code__c, c.Name));
+				mapZipCodeApplicable.put(c.ISO_Code__c, c.IEC_Zip_Postal_Code_required__c);
+			}
+		}
+		
+		return new Map<String, Object> {'options' => options, 'zipCodeApplicable' => mapZipCodeApplicable };
+	}	
 	
 } //*** end of class

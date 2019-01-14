@@ -93,5 +93,22 @@
         <unique>false</unique>
     </fields>
     <label>ISSP Contact List View</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Button_Activate__c</columns>
+        <columns>Button_Admin__c</columns>
+        <columns>Button_Change__c</columns>
+        <columns>Button_Deactivate__c</columns>
+        <columns>Button_Reject__c</columns>
+        <columns>Field_Set_API_Name__c</columns>
+        <columns>Label_API_name__c</columns>
+        <columns>Permission_set__c</columns>
+        <columns>Profiles_Id__c</columns>
+        <columns>SOQL_Filter__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

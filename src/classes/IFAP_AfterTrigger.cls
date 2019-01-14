@@ -1,7 +1,7 @@
 public  class IFAP_AfterTrigger {
 
 
- public static map<Id,Account> updateTheAcctsTrigger(list<Case> triggerNew){
+ 	/*public static map<Id,Account> updateTheAcctsTrigger(list<Case> triggerNew){
 			map<Id,list<Case>> casesPerAcct = new map<Id,list<Case>>();
 			for(Case c: triggerNew){
 				if(casesPerAcct.get(c.accountId) == null)
@@ -10,11 +10,11 @@ public  class IFAP_AfterTrigger {
 			}	
 			
 		 return latestDate(casesPerAcct); 
-	}
+	}*/
 
 	
 
-	private static map<Id,Account> latestDate(map<Id,list<Case>> casesPerAcct){	
+	public static map<Id,Account> latestDate(map<Id,list<Case>> casesPerAcct){	
 	
 		map<Id,Account> newAcctPerAcctId = new map<Id,Account>();
 		

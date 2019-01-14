@@ -1,0 +1,25 @@
+<aura:component controller="OneIdTermsAndConditions" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">
+	
+	<aura:attribute name="appname" type="String"/>
+	<aura:attribute name="appinfo" type="List"/>
+	<aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+
+	<div class="">
+		<div class="termscontainer align_verticalaxis">
+			<h1 class="service_title">{!v.appinfo[0]}</h1>
+			<br/>
+			<br/>
+			<h2 class="terms_title">{!$Label.c.OneId_TermsAndConditions}</h2>
+			<br/>
+            <aura:iteration items="{!v.appinfo}" var="item" indexVar="index">
+                <aura:if isTrue="{! index != 0}">
+                    <div class="terms">{!item}</div>
+                    <br/>
+                </aura:if>                
+            </aura:iteration>
+			<br/>
+			<br/>
+		</div>
+	</div>
+
+</aura:component>

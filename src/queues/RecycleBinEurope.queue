@@ -3,6 +3,17 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>iata.recyclebin.europe@gmail.com</email>
     <name>Recycle Bin Europe</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSEuropeallusers</publicGroup>
+            <publicGroup>IDFSEuropeRegionalOffice</publicGroup>
+        </publicGroups>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

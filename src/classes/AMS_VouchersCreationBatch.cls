@@ -28,7 +28,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 	public Integer totalVouchersCreated;
 
-	global AMS_VouchersCreationBatch(Map<IATA_ISO_Country__c,Decimal> averageMetrics, AMS_Voucher_Process_Run__c process) {
+	global AMS_VouchersCreationBatch(Map<IATA_ISO_Country__c,Decimal> averageMetrics, AMS_Voucher_Process_Run__c process, String yearToProcess) {
 
 		totalVouchersCreated = 0;
 
@@ -46,7 +46,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 		allVouchersInfo = new List<AMS_Voucher_Information__c>();
 
-		String yearToProcess = String.valueOf(System.today().year());
+		//String yearToProcess = String.valueOf(System.today().year());
 
 		this.query = 'SELECT Id, Account__c, Exchange_Rate__c, Amount_Currency__c, Number_Of_Vouchers__c , Account__r.IATA_ISO_Country__r.Region__c , AmountLastYearSales__c , Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Location_Class__c,Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c FROM AMS_Voucher_Information__c WHERE IsAgencyEligible__c = true and Year__c = \'' + yearToProcess + '\' and Account__r.IATA_ISO_Country__c in :countries';
 	
@@ -82,7 +82,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 				continue;
 			}
 
-			Decimal totalAgencySales = vInfo.AmountLastYearSales__c * vInfo.Exchange_Rate__c;
+			Decimal totalAgencySales = vInfo.AmountLastYearSales__c / vInfo.Exchange_Rate__c;
 			Decimal countryAverage = averageMetrics.get(vInfo.Account__r.IATA_ISO_Country__r);
 			Integer maxAmountVouchersCountry = Integer.ValueOf(vInfo.Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c);
 			Decimal countryBenchmark = Integer.ValueOf(vInfo.Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c);
@@ -120,7 +120,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 		AMS_VoucherPDFCreationBatch pdfCreationBatch = new AMS_VoucherPDFCreationBatch(vouchersToPrint,region,process);
 
-		Id pdfCreationBatchId = Database.executeBatch(pdfCreationBatch,1500);
+		Id pdfCreationBatchId = Database.executeBatch(pdfCreationBatch,VOUCHERSPERPDF);
 
 		process.Vouchers_PDF_Creation_Batch__c = pdfCreationBatchId;
 

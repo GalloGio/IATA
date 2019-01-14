@@ -1,0 +1,37 @@
+<messaging:emailTemplate subject="- {!$Label.ISSP_Email_AccessTo} {!relatedTo.Portal_Application__r.Name} {!$Label.ISSP_Email_ServiceRequested}" language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Portal_Application_Right__c" >
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF"/>
+ <BR/>
+
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+
+{!$Label.ISSP_Email_DearAdmin}<BR/>
+<BR/>
+{!$Label.ISSP_Email_AppReq_BeInformed} {!relatedTo.Portal_Application__r.Name} {!$Label.ISSP_Email_AppReq_From} {!relatedTo.Contact__r.Salutation} {!relatedTo.Contact__r.FirstName} {!relatedTo.Contact__r.LastName}.<BR/>
+
+<BR/>
+
+{!IF(relatedTo.Portal_Application__r.Name = "Join BSP / CASS"
+, $Label.ISSP_APrequest_AdminEmail1 &" "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName &", "& $Label.ISSP_APrequest_AdminEmail2
+, $Label.ISSP_Email_PleaseProcess )}
+
+<BR/>
+<BR/>
+
+{!IF(relatedTo.Portal_Application__r.Name = "Join BSP / CASS", $Label.ISSP_Email_AppReq_AccessRequest2, $Label.ISSP_Email_AppReq_AccessRequest )}
+<a href="{!$Label.ISSP_Email_PortalUrl}ISSP_EditPortalServiceAccess?CommunityName=CNS&mid=M4S2&Id={!relatedTo.id}">{!$Label.ISSP_Email_Here}</a>.<BR/>
+<BR/>
+{!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
+<BR/>
+{!$Label.ISSP_Email_CNS_Service}<BR/>
+
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF"/>
+
+<BR/>
+
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>garciam@iata.org</email>
     <name>FSM - China &amp; North Asia</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSChinaNAsiaHUB</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

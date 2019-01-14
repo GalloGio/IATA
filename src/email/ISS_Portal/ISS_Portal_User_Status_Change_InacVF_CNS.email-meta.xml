@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>36.0</apiVersion>
+    <available>true</available>
+    <description>Notify user when portal user status changes to Inactive CNS branding</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISS - Portal User Status Change Inac VF_CNS</name>
+    <style>none</style>
+    <subject>Notification of change of IATA User Portal Status</subject>
+    <type>visualforce</type>
+</EmailTemplate>

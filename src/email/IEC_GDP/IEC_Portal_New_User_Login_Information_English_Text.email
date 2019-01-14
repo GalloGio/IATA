@@ -1,0 +1,11 @@
+Dear {!Contact.FirstName},
+
+Please find below your username and password to the IATA eCommerce site
+
+You can access the site using the following link: https://store.iata.org/IEC_Login
+
+Kind regards,
+IATA Customer Service
+
+Username: {!Contact.Email}
+Password: {!Contact.Password}

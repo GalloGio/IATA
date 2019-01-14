@@ -63,6 +63,10 @@
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accepted_Payment_Methods__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

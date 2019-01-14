@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -56,109 +53,147 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_RHC_Amount_Equals_FS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked all agencies belonging to this Operation (BSP) will have the RHC Amount equal to the sum of the financial securities provided</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked all agencies belonging to this Operation (BSP) will have the RHC Amount equal to the sum of the financial securities provided</inlineHelpText>
+        <label>RHC Amount Equals FS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>BSP_Billing__c</fullName>
         <externalId>false</externalId>
         <label>BSP Billing</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>The Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Asia Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia Pacific</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>North Asia</fullName>
+                    <default>false</default>
+                    <label>North Asia</label>
+                </value>
+                <value>
+                    <fullName>The Americas</fullName>
+                    <default>false</default>
+                    <label>The Americas</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>CASS_facilities__c</fullName>
         <externalId>false</externalId>
         <label>CASS facilities</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Export</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Import</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Domestic</fullName>
+                    <default>false</default>
+                    <label>Domestic</label>
+                </value>
+                <value>
+                    <fullName>Export</fullName>
+                    <default>false</default>
+                    <label>Export</label>
+                </value>
+                <value>
+                    <fullName>Import</fullName>
+                    <default>false</default>
+                    <label>Import</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>DPC_System__c</fullName>
         <externalId>false</externalId>
         <label>DPC System</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CASSLINK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISIS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISIS 2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Maestro</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>CASSLINK</fullName>
+                    <default>false</default>
+                    <label>CASSLINK</label>
+                </value>
+                <value>
+                    <fullName>IBSPS</fullName>
+                    <default>false</default>
+                    <label>IBSPS</label>
+                </value>
+                <value>
+                    <fullName>ISIS</fullName>
+                    <default>false</default>
+                    <label>ISIS</label>
+                </value>
+                <value>
+                    <fullName>ISIS 2</fullName>
+                    <default>false</default>
+                    <label>ISIS 2</label>
+                </value>
+                <value>
+                    <fullName>Maestro</fullName>
+                    <default>false</default>
+                    <label>Maestro</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>DPC__c</fullName>
         <externalId>false</externalId>
         <label>DPC Provider</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AMADEUS</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASSLINK</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AMADEUS</fullName>
+                    <default>true</default>
+                    <label>AMADEUS</label>
+                </value>
+                <value>
+                    <fullName>CASSLINK</fullName>
+                    <default>false</default>
+                    <label>CASSLINK</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Domestic_Only__c</fullName>
@@ -168,6 +203,18 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ISS_Joining_fee_cluster__c</fullName>
+        <description>Holds the countries with which a certain operation shares Joining fees</description>
+        <externalId>false</externalId>
+        <label>ISS Joining fee cluster</label>
+        <length>60</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ISS_Region__c</fullName>
@@ -204,39 +251,76 @@
         <fullName>Legacy_System__c</fullName>
         <externalId>false</externalId>
         <label>Legacy System</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AIMS1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AIMS2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AIMS3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>WEBSTAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AIMS1</fullName>
+                    <default>false</default>
+                    <label>AIMS1</label>
+                </value>
+                <value>
+                    <fullName>AIMS2</fullName>
+                    <default>false</default>
+                    <label>AIMS2</label>
+                </value>
+                <value>
+                    <fullName>AIMS3</fullName>
+                    <default>false</default>
+                    <label>AIMS3</label>
+                </value>
+                <value>
+                    <fullName>WEBSTAR</fullName>
+                    <default>false</default>
+                    <label>WEBSTAR</label>
+                </value>
+                <value>
+                    <fullName>CAIMS</fullName>
+                    <default>false</default>
+                    <label>CAIMS</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>ISS Operation</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CURRENCY_ISO_CODE</columns>
+        <columns>BSP_Billing__c</columns>
+        <columns>ISS_Region__c</columns>
+        <columns>ISS_Joining_fee_cluster__c</columns>
+        <columns>CASS_facilities__c</columns>
+        <columns>Domestic_Only__c</columns>
+        <columns>DPC__c</columns>
+        <columns>DPC_System__c</columns>
+        <columns>ANG_RHC_Amount_Equals_FS__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ISS_Joining_fee_clusters</fullName>
+        <columns>NAME</columns>
+        <columns>BSP_Billing__c</columns>
+        <columns>ISS_Joining_fee_cluster__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ISS_Joining_fee_cluster__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>ISS Joining fee clusters</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Name</label>
         <trackHistory>false</trackHistory>
@@ -442,4 +526,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

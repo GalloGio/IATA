@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>IDFS Complaint process</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -74,122 +71,150 @@
         <description>IDFS Complaint process</description>
         <externalId>false</externalId>
         <label>Action Owner</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Remittance &amp; Settlement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accreditation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agency Risk Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoicing &amp; Collection</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reporting &amp; Billing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Local Office</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DPC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>System Support</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other IATA Division</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Service</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Finance</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Management</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Remittance &amp; Settlement</fullName>
+                    <default>false</default>
+                    <label>Remittance &amp; Settlement</label>
+                </value>
+                <value>
+                    <fullName>Accreditation</fullName>
+                    <default>false</default>
+                    <label>Accreditation</label>
+                </value>
+                <value>
+                    <fullName>Agency Risk Management</fullName>
+                    <default>false</default>
+                    <label>Agency Risk Management</label>
+                </value>
+                <value>
+                    <fullName>Invoicing &amp; Collection</fullName>
+                    <default>false</default>
+                    <label>Invoicing &amp; Collection</label>
+                </value>
+                <value>
+                    <fullName>Reporting &amp; Billing</fullName>
+                    <default>false</default>
+                    <label>Reporting &amp; Billing</label>
+                </value>
+                <value>
+                    <fullName>Local Office</fullName>
+                    <default>false</default>
+                    <label>Local Office</label>
+                </value>
+                <value>
+                    <fullName>DPC</fullName>
+                    <default>false</default>
+                    <label>DPC</label>
+                </value>
+                <value>
+                    <fullName>System Support</fullName>
+                    <default>false</default>
+                    <label>System Support</label>
+                </value>
+                <value>
+                    <fullName>Other IATA Division</fullName>
+                    <default>false</default>
+                    <label>Other IATA Division</label>
+                </value>
+                <value>
+                    <fullName>Customer Service</fullName>
+                    <default>false</default>
+                    <label>Customer Service</label>
+                </value>
+                <value>
+                    <fullName>Finance</fullName>
+                    <default>false</default>
+                    <label>Finance</label>
+                </value>
+                <value>
+                    <fullName>Airline Management</fullName>
+                    <default>false</default>
+                    <label>Airline Management</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Action_Type__c</fullName>
         <description>IDFS complaint process</description>
         <externalId>false</externalId>
         <label>Action Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Info Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Investigation Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Service Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Correct / Update Data</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rerun / Re-Send Data</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other Task Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Issue Credit / Debit Note</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Review Invoicing File</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Phone</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Feedback Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Translation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Info Request</fullName>
+                    <default>false</default>
+                    <label>Info Request</label>
+                </value>
+                <value>
+                    <fullName>Investigation Request</fullName>
+                    <default>false</default>
+                    <label>Investigation Request</label>
+                </value>
+                <value>
+                    <fullName>Service Request</fullName>
+                    <default>false</default>
+                    <label>Service Request</label>
+                </value>
+                <value>
+                    <fullName>Correct / Update Data</fullName>
+                    <default>false</default>
+                    <label>Correct / Update Data</label>
+                </value>
+                <value>
+                    <fullName>Rerun / Re-Send Data</fullName>
+                    <default>false</default>
+                    <label>Rerun / Re-Send Data</label>
+                </value>
+                <value>
+                    <fullName>Other Task Request</fullName>
+                    <default>false</default>
+                    <label>Other Task Request</label>
+                </value>
+                <value>
+                    <fullName>Issue Credit / Debit Note</fullName>
+                    <default>false</default>
+                    <label>Issue Credit / Debit Note</label>
+                </value>
+                <value>
+                    <fullName>Review Invoicing File</fullName>
+                    <default>false</default>
+                    <label>Review Invoicing File</label>
+                </value>
+                <value>
+                    <fullName>Email</fullName>
+                    <default>false</default>
+                    <label>Email</label>
+                </value>
+                <value>
+                    <fullName>Phone</fullName>
+                    <default>false</default>
+                    <label>Phone</label>
+                </value>
+                <value>
+                    <fullName>Feedback Request</fullName>
+                    <default>false</default>
+                    <label>Feedback Request</label>
+                </value>
+                <value>
+                    <fullName>Translation</fullName>
+                    <default>false</default>
+                    <label>Translation</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Closed_Date__c</fullName>
@@ -262,4 +287,5 @@
         <searchResultsAdditionalFields>Comments__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

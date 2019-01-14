@@ -6,9 +6,31 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customConsoleComponents>
+        <subtabComponents>
+            <containers>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
+                <region>Left</region>
+                <sidebarComponents>
+                    <componentType>Lookup</componentType>
+                    <height>50</height>
+                    <lookup>Contact</lookup>
+                    <unit>Percentage</unit>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>Lookup</componentType>
+                    <height>50</height>
+                    <lookup>Account</lookup>
+                    <unit>Percentage</unit>
+                </sidebarComponents>
+                <style>Stack</style>
+                <unit>Percentage</unit>
+                <width>35</width>
+            </containers>
+        </subtabComponents>
+    </customConsoleComponents>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
-    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -89,6 +111,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ContactPhone</field>
             </layoutItems>
             <layoutItems>
@@ -152,6 +178,10 @@
                 <behavior>Edit</behavior>
                 <field>Subtopic__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Case_Language__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -175,8 +205,16 @@
                 <field>Case_Type__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Visible_on_ISS_Portal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNSCase__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -377,12 +415,55 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <platformActionList>
+        <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Close_Case_lightning</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Accept_Case</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>E2CP__New_Comment_Lightning</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Log_Phone_Case</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+    </platformActionList>
     <quickActionList/>
     <relatedContent>
         <relatedContentItems>
@@ -443,6 +524,13 @@
         <relatedList>RelatedArticleList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Name</fields>
+        <fields>StartTime</fields>
+        <fields>EndTime</fields>
+        <fields>Status</fields>
+        <relatedList>RelatedLiveChatTranscriptList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>X2015_Overall_Satisfaction__c</fields>
         <fields>X2015_CES__c</fields>
@@ -452,6 +540,9 @@
         <fields>CX_NPS_rating__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Instant_Surveys__c.Relationship_to_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedTeamMemberList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

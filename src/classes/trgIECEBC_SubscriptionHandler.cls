@@ -214,7 +214,7 @@ public with sharing class trgIECEBC_SubscriptionHandler {
 			if (ebcPrefList.size() == 0) 
 			{ // only insert and initialize for non existing ebc preference
 				EBC_Preference__c ebcPref = new EBC_Preference__c( Billing_Account__c = billingAcct.Id
-					, Default_From_Name__c =  billingAcct.Contact__r.Name
+					, Default_From_Name__c = 'International Air Transport Association'// billingAcct.Contact__r.Name
 					, Name = billingAcct.Contact__r.Name
 					, PrimaryContact_Address__c = billingAcct.Zuora__BillToAddress1__c
 					, PrimaryContact_Company__c = billingAcct.Zuora__Account__r.Name

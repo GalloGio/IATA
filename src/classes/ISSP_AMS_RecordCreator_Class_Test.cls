@@ -37,4 +37,69 @@ try {
 		LogInfo.category = 'test';
 		Address.city = 'test';
 	}
+
+	public static testMethod void testMyController_async(){
+		AsyncISSP_AMS_RecordCreator_Class.AsyncAMS_RecordCreatorWebservice ca = new AsyncISSP_AMS_RecordCreator_Class.AsyncAMS_RecordCreatorWebservice();
+
+		System.Continuation conti = new System.Continuation(60);
+		conti.continuationMethod = 'processResponse';
+
+		//AsyncISSP_AMS_RecordCreator_Class.DebuggingInfo_element DebuggingInfo = new AsyncISSP_AMS_RecordCreator_Class.DebuggingInfo_element();
+		//AsyncISSP_AMS_RecordCreator_Class.LogInfo LogInfo = new AsyncISSP_AMS_RecordCreator_Class.LogInfo();
+		//AsyncISSP_AMS_RecordCreator_Class.Address Address = new AsyncISSP_AMS_RecordCreator_Class.Address();
+		//AsyncISSP_AMS_RecordCreator_Class.CallOptions_element CallOptions_element = new AsyncISSP_AMS_RecordCreator_Class.CallOptions_element();
+		//AsyncISSP_AMS_RecordCreator_Class.DebuggingHeader_element DebuggingHeader_element = new AsyncISSP_AMS_RecordCreator_Class.DebuggingHeader_element();
+		//AsyncISSP_AMS_RecordCreator_Class.AccountChanges AccountChanges = new AsyncISSP_AMS_RecordCreator_Class.AccountChanges();
+		//AsyncISSP_AMS_RecordCreator_Class.createAccreditationResponse_element createAccreditationResponse_element = new AsyncISSP_AMS_RecordCreator_Class.createAccreditationResponse_element();
+		//AsyncISSP_AMS_RecordCreator_Class.SessionHeader_element SessionHeader_element = new AsyncISSP_AMS_RecordCreator_Class.SessionHeader_element();
+		//AsyncISSP_AMS_RecordCreator_Class.createMinorChangesChangeCode_element createMinorChangesChangeCode_element = new AsyncISSP_AMS_RecordCreator_Class.createMinorChangesChangeCode_element();
+		//AsyncISSP_AMS_RecordCreator_Class.createMinorChangesChangeCodeResponse_element createMinorChangesChangeCodeResponse_element = new AsyncISSP_AMS_RecordCreator_Class.createMinorChangesChangeCodeResponse_element();
+		//AsyncISSP_AMS_RecordCreator_Class.location location = new AsyncISSP_AMS_RecordCreator_Class.location();
+		//AsyncISSP_AMS_RecordCreator_Class.AllowFieldTruncationHeader_element AllowFieldTruncationHeader_element = new AsyncISSP_AMS_RecordCreator_Class.AllowFieldTruncationHeader_element();
+		//AsyncISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice AMS_RecordCreatorWebservice = new AsyncISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice();
+
+		
+		try {
+			AsyncISSP_AMS_RecordCreator_Class.createAccreditationResponse_elementFuture var1 = 
+		   			ca.beginCreateAccreditation(conti,
+		   										'accountId',
+		   										'accreditationId',
+		   										'NEW.HO',
+		   										'caseId');
+		}
+
+		catch (Exception e) {
+
+		}
+
+		try {
+			ISSP_AMS_RecordCreator_Class.AccountChanges[] accountChanges = null;
+			AsyncISSP_AMS_RecordCreator_Class.createMinorChangesChangeCodeResponse_elementFuture var2 = 
+		   			ca.beginCreateMinorChangesChangeCode(conti,'accountId',accountChanges);
+            
+		}
+
+		catch (Exception e) {
+			
+		}
+
+		try {
+		AsyncISSP_AMS_RecordCreator_Class.createAccreditationResponse_elementFuture ca2 = new AsyncISSP_AMS_RecordCreator_Class.createAccreditationResponse_elementFuture();
+		string s1 = ca2.getValue();
+		}
+
+		catch (Exception e) {
+			
+		}
+
+		try {
+		AsyncISSP_AMS_RecordCreator_Class.createMinorChangesChangeCodeResponse_elementFuture ca3 = new AsyncISSP_AMS_RecordCreator_Class.createMinorChangesChangeCodeResponse_elementFuture();
+		ca3.getValue();
+		}
+
+		catch (Exception e) {
+			
+		}
+    }
+    
 }

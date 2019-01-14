@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object that store all the clicks that have been tracked by Exact Target</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -156,6 +153,35 @@
         <visibleLines>2</visibleLines>
     </fields>
     <label>EBC Click Event</label>
+    <listViews>
+        <fullName>All_EBC_Click_Events</fullName>
+        <columns>NAME</columns>
+        <columns>EBC_Campaign__c</columns>
+        <columns>Subscriber_Key__c</columns>
+        <columns>URL__c</columns>
+        <columns>External_Id__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>00 - All EBC Click Events</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>EBC_Click_Events_Wave_2_NewGen_Campaign</fullName>
+        <columns>NAME</columns>
+        <columns>EBC_Campaign__c</columns>
+        <columns>Subscriber_Key__c</columns>
+        <columns>URL__c</columns>
+        <columns>External_Id__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EBC_Campaign__c</field>
+            <operation>equals</operation>
+            <value>Wave 2 NewGen Webinar - EG - October 2018</value>
+        </filters>
+        <label>ZZ - EBC Click Events Per Campaign</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>EBC Click Event Name</label>
         <type>Text</type>
@@ -163,4 +189,5 @@
     <pluralLabel>EBC Click Events</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

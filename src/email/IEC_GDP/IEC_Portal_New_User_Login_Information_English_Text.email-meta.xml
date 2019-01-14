@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email sent out for new IEC new user registration</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IEC Portal: New User Login Information (English) Text</name>
+    <style>none</style>
+    <subject>IATA eCommerce - Username and Password</subject>
+    <type>text</type>
+</EmailTemplate>

@@ -53,7 +53,7 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
 
             selected = tempContact[0];
             Integer days = 90;
-            ID_Card__c[] last_IdCard = [Select Id, Valid_To_Date__c, createdDate, Card_Status__c , Agency_IATA_Code__c From ID_Card__c c WHERE c.Related_Contact__r.Id = :selected.Id AND (c.Card_Status__c = : IDCardUtil.CARDSTATUS_PRINTED_DELIVERED or c.Card_Status__c = : IDCardUtil.CARDSTATUS_CANCELED)
+            ID_Card__c[] last_IdCard = [Select Id, Valid_To_Date__c, createdDate, Card_Status__c , Agency_IATA_Code__c From ID_Card__c c WHERE c.Related_Contact__r.Id = :selected.Id AND (c.Card_Status__c = : IDCardUtil.CARDSTATUS_VALID or c.Card_Status__c = : IDCardUtil.CARDSTATUS_CANCELED or c.Card_Status__c = : IDCardUtil.CARDSTATUS_Expired or c.Card_Status__c = : IDCardUtil.CARDSTATUS_APPROVED)
                                         order by c.Valid_To_Date__c desc ];
 
             system.debug('**** PORTAL CONTROLLER 5.2***** ' + last_IdCard.size());
@@ -134,8 +134,8 @@ public with sharing class IDCardPortalController extends IDCardAbstractControlle
             // pass ID Card Application Id
             ID_Card_Application__c idCardApp = new ID_Card_Application__c();
             
-            String singleKAIDCAppId =  IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
-            String defaultIDCApp =  IDCardWebService.getIdCardAppRT('Standard');
+            String singleKAIDCAppId =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
+            String defaultIDCApp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
 
             Account[] accounts = [Select a.Short_Name__c, a.ID_Card_KeyAccount_features__c,  a.Name, a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity, a.ShippingStreet, a.ShippingState, a.ShippingPostalCode, a.ShippingCountry, a.ShippingCity, a.IDCard_Key_Account__c
                                   FROM Account a WHERE (a.RecordType.Name = 'Agency' OR a.RecordType.Name = 'Domestic Agency') AND IATACode__c = : IATACodeLocation AND (a.Status__c = : IDCardUtil.ALLOWED_ACCOUNT_STATUS OR a.Status__c = 'Terminated')];

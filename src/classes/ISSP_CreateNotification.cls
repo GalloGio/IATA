@@ -1,6 +1,10 @@
+/*
+    Class that create a notification to Portal Users
+    Used in Portal and NewGen APP (mobile)
+*/
 public with sharing class ISSP_CreateNotification {
 
-	public static Boolean privetTrigger = false;
+    public static Boolean privetTrigger = false;
 
     public static map<Schema.sObjectType,string> objTypecontactIdMap = new map<Schema.sObjectType,string>{Case.getSObjectType()=>'ContactId',Contact.getSObjectType()=>'Id',Portal_Application_Right__c.getSObjectType()=>'Contact__c'};
     
@@ -11,26 +15,29 @@ public with sharing class ISSP_CreateNotification {
         set<string> templatesNameSet = new set<string>();
         for(sObject obj : sObjList){
             contactsIdSet.add(string.valueOf(obj.get(contactField)));
-             if(obj.get('Notification_template__c') != null && obj.get('Notification_template__c') != '')
+             if(String.isNotEmpty((String)obj.get('Notification_template__c')))
                 for(string str:string.valueOf(obj.get('Notification_template__c')).split(';')){
                     if(str != ''){
                         templatesNameSet.add(str);
                     }
                 }
         }
-        if(templatesNameSet.size()==0)
-            return;
+        if(templatesNameSet.size()==0) return;
+
         map<string,set<string>> ContactsAdminsSetMap = getAllContactsAdmins(contactsIdSet);
         map<string,boolean> isAdminsNotificationMap = new map<string,boolean>();
-        
-        for(Notification_template__c nt : [select Id,Admins_Users__c,Name from Notification_template__c where Name in:templatesNameSet]){
+
+        for(Notification_template__c nt : [select Id,Admins_Users__c,Name from Notification_template__c where Name in:templatesNameSet]){+
+            System.debug(loggingLevel.FINE, '____ [cls ISSP_CreateNotification - CreateNotificationForSobjectList] nt - ' + nt);
             isAdminsNotificationMap.put(nt.Name,false);
-            if(nt.Admins_Users__c == 'Administrators')
+            if(nt.Admins_Users__c == 'Administrators'){
                 isAdminsNotificationMap.put(nt.Name,true);
-                
+            }
         }
         
-        
+        System.debug(loggingLevel.FINE, '____ [cls ISSP_CreateNotification - CreateNotificationForSobjectList] isAdminsNotificationMap - ' + isAdminsNotificationMap);
+        System.debug(loggingLevel.FINE, '____ [cls ISSP_CreateNotification - CreateNotificationForSobjectList] ContactsAdminsSetMap - ' + ContactsAdminsSetMap);
+
         for(sObject obj :sObjList){
             if(obj.get('Notification_template__c') != null && obj.get('Notification_template__c') != '')
                 for(string str:string.valueOf(obj.get('Notification_template__c')).split(';')){
@@ -49,7 +56,11 @@ public with sharing class ISSP_CreateNotification {
             createNotification(tList);  
     }
     
-    public static void createNotification(list<string> tList){
+    public static void createNotification(List<String> tList) {
+        createNotification(tList, true);
+    }
+
+    public static List<Notification__c> createNotification(list<string> tList, Boolean insertNotifications){
         try{
             map<string,set<string>> tMap = createSetMapFromList(tList,0,1);
             set<string> notificationNameSet = getNotificationNameSet(tMap);
@@ -67,9 +78,9 @@ public with sharing class ISSP_CreateNotification {
             
             list <Notification_template__c> NotificationTemplateList = 
                 [Select n.Subject__c, n.Name, n.Message__c, n.Language__c,Type__c,Notification_color__c,Alert_Contact_By_Email__c,
-                	Expire_in_days__c, CriticalNotification__c,
+                    Expire_in_days__c, CriticalNotification__c,Alert_Contact_By_Push_Notification__c, 
                     (Select Subject__c, Name, Message__c, Language__c,Type__c,Notification_color__c,Alert_Contact_By_Email__c,
-                	Expire_in_days__c, CriticalNotification__c From Notification_templates__r)
+                    Expire_in_days__c, CriticalNotification__c, Alert_Contact_By_Push_Notification__c From Notification_templates__r)
                      From Notification_template__c n  where  Name in:notificationNameSet ];
             for(Notification_template__c nt: NotificationTemplateList){
                 notificationTemplateMap.put(nt.Name,nt);
@@ -82,43 +93,31 @@ public with sharing class ISSP_CreateNotification {
             for(string parentId : tMap.keySet()){
                 for(string rempId : tMap.get(parentId)){
                     Notification_template__c nt = notificationTemplateMap.get(rempId);
-                    if(notificationTemplateTranslateMap.get(rempId).get(contactLanguageMap.get(parentId)) != null)
-                    nt = notificationTemplateTranslateMap.get(rempId).get(contactLanguageMap.get(parentId));
-                    if (nt.Expire_in_days__c != null){
-                    	newNotificationList.add(
-                            new Notification__c(
-                                contact__c=parentId,
-                                Message__c = nt.Message__c,
-                                Alert_Contact_By_Email__c = nt.Alert_Contact_By_Email__c,
-                                Subject__c = nt.Subject__c
-                                ,Type__c = nt.Type__c
-                                ,Notificatin_color__c = nt.Notification_color__c 
-                                ,Notification_Campagne_Name__c = ISSP_CampaignNotificationBatch.notificationCampagneName
-                                ,Critical_notification__c = nt.CriticalNotification__c,
-                                Expiry_date__c = system.Now() + nt.Expire_in_days__c
-                            ));
-                    }
-                    else
-                    {
-                    	newNotificationList.add(
-                            new Notification__c(
-                                contact__c=parentId,
-                                Message__c = nt.Message__c,
-                                Alert_Contact_By_Email__c = nt.Alert_Contact_By_Email__c,
-                                Subject__c = nt.Subject__c
-                                ,Type__c = nt.Type__c
-                                ,Notificatin_color__c = nt.Notification_color__c 
-                                ,Notification_Campagne_Name__c = ISSP_CampaignNotificationBatch.notificationCampagneName
-                                ,Critical_notification__c = nt.CriticalNotification__c
-                            ));
-                    }
+                    if(notificationTemplateTranslateMap.get(rempId).get(contactLanguageMap.get(parentId)) != null) nt = notificationTemplateTranslateMap.get(rempId).get(contactLanguageMap.get(parentId));
+
+                    Notification__c notification = new Notification__c(
+                        Contact__c = parentId,
+                        Message__c = nt.Message__c,
+                        Alert_Contact_By_Email__c = nt.Alert_Contact_By_Email__c,
+                        Alert_Contact_By_Push_Notification__c = nt.Alert_Contact_By_Push_Notification__c,
+                        Subject__c = nt.Subject__c
+                        ,Type__c = nt.Type__c
+                        ,Notificatin_color__c = nt.Notification_color__c 
+                        ,Notification_Campagne_Name__c = ISSP_CampaignNotificationBatch.notificationCampagneName
+                        ,Critical_notification__c = nt.CriticalNotification__c
+                        ,Expiry_date__c = (nt.Expire_in_days__c != null ? system.Now() + nt.Expire_in_days__c : null)
+                    );
+                    newNotificationList.add(notification);
                 }
             }
             
-            insert newNotificationList;
+            if(insertNotifications) insert newNotificationList;
+
+            return newNotificationList;
            
         }catch(Exception e){
             system.debug('\n\n\n\n Exception : '+e.getMessage()+'\n\n\n\n');
+            return new List<Notification__c>();
         }
         
    }
@@ -147,21 +146,19 @@ public with sharing class ISSP_CreateNotification {
        
        for(Contact con: [select Id,AccountId,Account.Top_Parent__c from Contact where Id in :contactsSet]){
             if(con.Account.Top_Parent__c!=null && con.AccountId!=null){
-                if(con.Account.Top_Parent__c==null)
-                    topAccountContact.put(con.AccountId,con.Id);
-                else 
-                    topAccountContact.put(con.Account.Top_Parent__c,con.Id);
+                //commenting lines below cause they will never occur
+                //if(con.Account.Top_Parent__c==null) topAccountContact.put(con.AccountId,con.Id);
+                //else 
+                topAccountContact.put(con.Account.Top_Parent__c,con.Id);
              }
             contactAdminMap.put(con.Id,new set<string>());
        }
        for(Contact con: [select Id,AccountId,Account.Top_Parent__c from Contact where Account.Top_Parent__c in :topAccountContact.keySet() 
                                                                                    and User_Portal_Status__c='Approved Admin']){
             string topAccId = con.Account.Top_Parent__c;
-            if(topAccId == null)
-                topAccId = con.AccountId;
-            contactAdminMap.get(
-                topAccountContact.get(topAccId)
-            ).add(con.Id);
+            if(topAccId == null) topAccId = con.AccountId;
+            
+            contactAdminMap.get(topAccountContact.get(topAccId)).add(con.Id);
        }
        return contactAdminMap;
    }
@@ -181,6 +178,7 @@ public with sharing class ISSP_CreateNotification {
        return languageMap;
     }
    
+    /*not used anywhere
     public static void debug(string str,string mes){
         system.debug('n\n\n\n'+str+' : '+ mes +'\n\n\n\n');
     }
@@ -192,7 +190,7 @@ public with sharing class ISSP_CreateNotification {
     }
     public static void debug(string str,map<Id,Id> mes){
         system.debug('n\n\n\n'+str+' : '+ mes +'\n\n\n\n');
-    }
+    }*/
 
 
 
@@ -205,7 +203,6 @@ public with sharing class ISSP_CreateNotification {
         System.debug('templateId==>'+templateId);
         if(String.isBlank(templateId)) {
             system.debug(LoggingLevel.ERROR, 'Email template ' + ENV.EmailTemplateData.NotifyAdminNewContact + ' not found');   
-            return;
         }
         Set<ID> accountIDs = new Set<ID>();
         for(Contact con : newPortalContactList) {
@@ -232,6 +229,8 @@ public with sharing class ISSP_CreateNotification {
                      
             Set<ID> portalAdminUserIDs = accIdToUserIdMap.get(con.AccountId);
             if(null == portalAdminUserIDs) continue;
+            
+            if(String.isNotBlank(templateId)) {
                 for(ID userId : portalAdminUserIDs) {
                     Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
                     emailMsg.setTemplateId(templateId);
@@ -247,7 +246,13 @@ public with sharing class ISSP_CreateNotification {
                     emailMsg.setWhatId(con.id); 
                     msgList.add(emailMsg);
                 }
-        
+            }
+
+            // NewGen Mobile APP Start
+            Set <String> portalAdminUserIDsAsString = (Set<String>)JSON.deserialize(JSON.serialize(portalAdminUserIDs), Set<String>.class);
+            NewGen_Account_Statement_Helper.sendPushNotification(portalAdminUserIDsAsString, Label.NewGenApp_PortalUserRequested, 
+                null, NewGen_Account_Statement_Helper.NAVIGATE_TO_USER_REQUEST_ADMIN);
+            // NewGen Mobile APP End
         }
         System.debug('zZzZ msgList==>'+msgList);
         if(!msgList.isEmpty()){

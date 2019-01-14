@@ -4,38 +4,208 @@
            showHeader="false"
            standardStylesheets="false"
            applyBodyTag="false"
-           applyHtmlTag="false"
-           >
+           applyHtmlTag="false">
 <html>
-    	<c:ISSP_Header ></c:ISSP_Header>    
- 		<body>
-    
-	<div class="container">   
-        <c:ISSP_CustomNavigation />
+  <c:ISSP_Header />
+ 	<body>
+
+ 	<link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.css')}" type="text/css" />
+ 	<script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.js')}"></script>
+
+  <style>
+    .iatainputbox {
+      width: 90%;
+      height: 34px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #555;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    div.customTable {
+      width: 80%;
+    }
+
+    div.customTable>div:nth-child(2n-1) {
+      padding-top: 5px;
+      width: 40%;
+      float: left;
+    }
+
+    div.customTable>div:nth-child(2n) {
+      padding-top: 5px;
+      width: 60%;
+      float: left;
+    }
+
+    .column {
+      margin: 0 auto;
+      width: 35%;
+    }
+
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+        
+    .loader {
+      background: url('/img/loading32.gif') scroll no-repeat 0 0;
+      width: 32px;
+      height: 32px;
+      position: relative;
+      left: 50%;
+    }
+  </style>
+
+  <script>
+    var optInOut;
+
+    function optInOut() {
+      	$('#optInOut').modal('toggle');
+    }
+
+    function toggleCountryLists() {
+    	optinOut = $("[Id$='optInOutSelected']").val();
+    	$('.selectpicker').selectpicker('render');
+      var daysIn = "{!airlineOptInDays}";
+      var daysOut = "{!airlineOptOutDays}";
+    	    	
+    	if (optinOut == 'IN') {
+    			var countriesIn = "{!hasCountriesIn}";
+    			document.querySelector("[Id$='noCountriesOutMsg']").style.display = 'none';
+    					if (countriesIn === 'true') {
+    							document.querySelector("[Id$='countryDatePanel']").style.display = '';
+          				document.querySelector("[Id$='coutriesIn']").style.display = '';
+          				document.querySelector("[Id$='coutriesInLabel']").style.display = '';
+          				document.querySelector("[Id$='coutriesOut']").style.display = 'none';
+          				document.querySelector("[Id$='coutriesOutLabel']").style.display = 'none';
+                  document.querySelector("[Id$='dateInfo']").style.display = 'none';
+          				$("#datepicker").datepicker("destroy");
+          				$("#datepicker").datepicker({minDate: daysIn});
+          				document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
+    					} else {
+    							document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
+    							document.querySelector("[Id$='noCountriesInMsg']").style.display = '';
+    							document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
+    					}  
+      } else if (optinOut == 'OUT') {
+      		var countriesOut = "{!hasCountriesOut}";
+      		document.querySelector("[Id$='noCountriesInMsg']").style.display = 'none';
+      				if (countriesOut === 'true') {
+          				document.querySelector("[Id$='countryDatePanel']").style.display = '';
+          				document.querySelector("[Id$='coutriesIn']").style.display = 'none';
+          				document.querySelector("[Id$='coutriesInLabel']").style.display = 'none';
+          				document.querySelector("[Id$='coutriesOut']").style.display = '';
+          				document.querySelector("[Id$='coutriesOutLabel']").style.display = '';
+                  document.querySelector("[Id$='dateInfo']").style.display = '';
+          				$("#datepicker").datepicker("destroy");
+          				$("#datepicker").datepicker({minDate: daysOut});
+          				document.querySelector("[Id$='submitOptInOutBtn']").style.display = '';
+          		} else {
+          				document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
+    							document.querySelector("[Id$='noCountriesOutMsg']").style.display = '';
+    							document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
+          		}
+      		} else {
+      				document.querySelector("[Id$='noCountriesInMsg']").style.display = 'none';
+      				document.querySelector("[Id$='noCountriesOutMsg']").style.display = 'none';
+          		document.querySelector("[Id$='countryDatePanel']").style.display = 'none';
+          		document.querySelector("[Id$='submitOptInOutBtn']").style.display = 'none';
+      }
+
+      $("#datepicker").datepicker("option", $.datepicker.regional[ 'en' ]);
+      $("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd" );
+    }
+
+    function submitOptInOut() {
+      	var countries;
+
+        var effectiveDate = $('#datepicker').val();
+        
+      	if (optinOut == 'IN') {
+      			countries = $("[id$='countriesInList']").val();
+      	} else {
+      			countries = $("[id$='countriesOutList']").val();
+      	}
+
+      	var ok = 1;
+
+      	if(effectiveDate == undefined || effectiveDate == null || effectiveDate == "") {
+        		document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = '';
+        		ok = 0;
+        } else if (!effectiveDate.match(/(\d{4})-(\d{2})-(\d{2})/)) {
+            document.querySelector("[Id$='dateFormatErrorMsg']").style.display = '';
+            ok = 0;
+      	} else {
+        		document.querySelector("[Id$='effectiveDateErrorMsg']").style.display = 'none';
+            document.querySelector("[Id$='dateFormatErrorMsg']").style.display = 'none';
+            document.querySelector("[Id$='incorrectDateErrorMsg']").style.display = 'none';
+      	}
+
+      	if(countries == undefined || countries == null || countries == "") {
+        		document.querySelector("[Id$='countriesErrorMsg']").style.display = '';
+        		ok = 0;
+      	} else {
+        		document.querySelector("[Id$='countriesErrorMsg']").style.display = 'none';
+      	}
+
+      	if(ok == 1) {
+        		submitOptInOutServerName(optinOut, JSON.stringify(countries), effectiveDate);
+            document.querySelector("[Id$='submitOptInOutBtn']").disabled = true;
+            document.querySelector("[Id$='cancelBtn']").disabled = true;
+            document.querySelector("[Id$='modalClose']").style.display = 'none';
+            document.querySelector("[Id$='load_scrl']").style.display = '';
+            setTimeout(loadingCaseCreation, 15000);
+      	}
+    }
+
+    function loadingCaseCreation() {
+        document.querySelector("[Id$='requestSentMsg']").style.display = '';
+        document.querySelector("[Id$='load_scrl']").style.display = 'none';
+        setTimeout(closeAll, 5000);
+    }
+
+    function closeAll() {
+        document.querySelector("[Id$='requestSentMsg']").style.display = 'none';
+        document.querySelector("[Id$='submitOptInOutBtn']").disabled = false;
+        document.querySelector("[Id$='cancelBtn']").disabled = false;
+        document.querySelector("[Id$='modalClose']").style.display = '';
+        optInOut();
+        location.reload();
+    }
+
+  </script>
+
+	<div class="container">
+    <c:ISSP_CustomNavigation />
     <h3>Airline Participation</h3>
     <p/>
-      <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} has already been submitted for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"></apex:outputText>
+      <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} has already been submitted for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
     <p/>
     <apex:image value="/img/msg_icons/info24.png" style="vertical-align:middle;margin-right:5px;float:left" />
     <div style="margin-bottom:6px;padding-left:24px">
-      This area is used to access Airline Participation Joining Applications and Change Requests that you are currently working on (Draft or Pending Customer status).<br/>
-      This gives you the possibility to resume your Joining Applications and Change Requests at any time in order to submit them to IATA for processing.<br/><br/>
-      Please go to <a href="/ISSP_CaseList">My Cases</a> in order to check the status of all cases you have with IATA, including Airline Participation cases already submitted for Approval.
-    </div>
+      This area is used to access Airline Participation Joining Applications and Change Requests that you are currently working on (Draft or Pending Customer status).<br />
+      This gives you the possibility to resume your Joining Applications and Change Requests at any time in order to submit them to IATA for processing.<br /><br />
+      Please go to <a href="/ISSP_CaseList">My Cases</a> in order to check the status of all cases you have with IATA, including Airline Participation cases already submitted for Approval.</div>
     <apex:pageBlock rendered="{!IsNotEmpty}">
-         <apex:pageBlockButtons location="top" style="Width:100%;margin-top:20px;">
-             <apex:form >
-                 <center>
-                     <apex:commandButton rendered="{!strAreaType='Airline Joining'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Joining Application"/>
-                     <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change Request"/>
-                     <apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change of bank details"/>
-                 </center>
-            </apex:form>
-        </apex:pageBlockButtons>
-        <br />
-        <div class="panel panel-default">
-  			<div class="panel-body">
-    		<apex:pageBlockTable value="{!APDraftCases}" var="MyIFAPCases" styleClass="table">
+      <apex:pageBlockButtons location="top" style="Width:100%;margin-top:20px;">
+        <apex:form >
+          <center>
+            <apex:commandButton rendered="{!strAreaType='Airline Joining'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Joining Application" style="margin-right: 30px;"/>
+            <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change Request" style="margin-right: 30px;"/>
+            <apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change of bank details"/>
+            <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="optInOut();return false;" value="IATA EasyPay Opt-In / Opt-Out"/>
+          </center>
+        </apex:form>
+      </apex:pageBlockButtons><br />
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <apex:pageBlockTable value="{!APDraftCases}" var="MyIFAPCases" styleClass="table">
             <apex:column headerValue="{!$Label.ISSP_CaseNumber}">
               <apex:outputLink value="/ISSP_APProcess?caseId={!MyIFAPCases.Id}&step=2">{!MyIFAPCases.CaseNumber}</apex:outputLink>
             </apex:column>
@@ -43,23 +213,143 @@
             <apex:column value="{!MyIFAPCases.Subject}"/>
             <apex:column value="{!MyIFAPCases.Status}"/>
             <apex:column value="{!MyIFAPCases.CreatedDate}"/>
-            <!-- <apex:column value="{!MyIFAPCases.Reason1__c}"/> -->
-        	</apex:pageBlockTable>
-  			</div>
-		</div>
-        
+          </apex:pageBlockTable>
+        </div>
+      </div>
     </apex:pageBlock>
+
     <apex:pageBlock rendered="{!IsEmpty}" mode="maindetail">
-    <div align="center" style="color:#00AEEF; padding-bottom:5cm;padding-top:1cm;">
-    <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000zGve&oid=00D2000000008TF&lastMod=1401896785000"/><br/>
-    <h3>You don't have any pending Airline Participation {!IF(APprocess=='chg', 'Change Requests', IF(APprocess=='bnk', 'change of bank account details', 'Joining Processes'))}</h3><br/>
-    <h3 style="color:#FFAE00"><a href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">Create a new one</a></h3>
-    </div>
+      <div align="center" style="display: {!IF(APprocess=='chg','','none')}; color:#00AEEF; padding-bottom:10px;padding-top:10px;">
+      </div>
+      <div align="center" style="color:#00AEEF; padding-bottom:5cm;padding-top:1cm;">
+        <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000zGve&oid=00D2000000008TF&lastMod=1401896785000"/><br/>
+        <h3>You don't have any pending Airline Participation {!IF(APprocess=='chg', 'Change Requests', IF(APprocess=='bnk', 'change of bank account details', 'Joining Processes'))}</h3><br/>
+        <div class="row">
+          <a class="btn btn-primary" href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">New {!IF(APprocess=='chg', 'Changing', 'Joining')} Request</a>&nbsp;
+          <button style="display: {!IF(APprocess=='chg','','none')};" type="button" id="modalButton" onclick="optInOut();" class="btn btn-primary">IATA EasyPay Opt-In / Opt-Out</button>
+        </div>
+      </div>
     </apex:pageBlock>
-    
+
     <c:ISSP_CustomFooter />
-</div><!-- end container-->
+  </div><!-- end container-->
+
+  <!-- Modal -->
+  <div id="optInOut" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button id='modalClose' type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">IATA EasyPay Opt-In / Out</h4>
+        </div>
+        <div class="modal-body">
+          <p/>
+          <div class="alert alert-danger" id="effectiveDateErrorMsg" style ="display: none">
+            <strong>An effective date must be defined.</strong>
+          </div>
+          <div class="alert alert-danger" id="dateFormatErrorMsg" style ="display: none">
+            <strong>The effective date format should be like 'yyyy-mm-dd'.</strong>
+          </div>
+          <div class="alert alert-danger" id="incorrectDateErrorMsg" style ="display: none">
+            <strong>The effective date is incorrect.</strong>
+          </div>
+          <div class="alert alert-danger" id="countriesErrorMsg" style ="display: none">
+            <strong>One or more countries must be selected.</strong>
+          </div>
+          <div class="alert alert-warning" id="noCountriesInMsg" style="display: none">
+            <strong>You have currently Opted-In to IATA EasyPay in all your BSP Operations.</strong>
+          </div>
+          <div class="alert alert-warning" id="noCountriesOutMsg" style="display: none">
+            <strong>You have currently Opted-Out from IATA EasyPay in all your BSP Operations.</strong>
+          </div>
+          <div class="alert alert-success" id="requestSentMsg" style="display: none">
+            <strong>Your request has been sent.</strong>
+          </div>
+
+          <apex:form >
+            <apex:inputHidden value="{!pEffectiveDateStr}" id="effectiveDateOfChange"/>
+            
+            <apex:actionFunction name="submitOptInOutServerName" action="{!submitOptInOutServer}" immediate="true" reRender="">
+              <apex:param id="optInOutParamId" name="optInOutParam" value="" />
+              <apex:param id="countriesId" name="countriesParam" value="" />
+              <apex:param id="effectiveDateId" name="effectiveDateParam" value="" />
+            </apex:actionFunction>
+
+            <div class="row">
+              <div class="customTable" style="margin-left: 15px;">
+                <div>
+                  <apex:outputLabel value="My Airline wishes to:"/>
+                </div>
+                <div>
+                	<apex:selectList styleClass="iatainputbox, selectpicker" id="optInOutSelected" onchange="toggleCountryLists(); return false;">
+                	 	<apex:selectOptions id="optInOutOptions" value="{!optInOutOptions}"/>
+            			</apex:selectList>
+                </div>
+              </div>
+            </div>
+
+            <apex:pageBlock id="servicesRenderedPanel">
+              <apex:outputPanel id="countryDatePanel" style="display: none">
+                <hr/>
+                <div id="load_scrl" class="loadingBox loader" style="display:none;"/> 
+                <div class="row">
+                  <div class="customTable" style="margin-left: 15px;">
+                  	<div>
+                    	<apex:outputPanel id="coutriesInLabel" style="display: none">
+                      	<apex:outputLabel value="Countries to Opt-In: "/>
+                    	</apex:outputPanel>
+                    	<apex:outputPanel id="coutriesOutLabel" style="display: none">
+                      	<apex:outputLabel value="Countries to Opt-Out: "/>
+                    	</apex:outputPanel>
+                  	</div>
+                    <div>
+                    	<apex:outputPanel id="coutriesIn" style="display: none">
+                      	<apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesInList"
+                        value="{!selectedCountries}" required="true" multiselect="true" size="5"
+                        title="Countries to Opt-In: ">
+                        	<apex:selectOptions value="{!countriesIn}" />
+                      	</apex:selectList>
+                    	</apex:outputPanel>
+											
+											<apex:outputPanel id="coutriesOut" style="display: none">
+                      	<apex:selectList styleClass="iatainputbox, selectpicker" html-data-live-search="true" id="countriesOutList"
+                        value="{!selectedCountries}" required="true" multiselect="true" size="5"
+                        title="Countries to Opt-Out: ">
+													<apex:selectOptions value="{!countriesOut}" />
+                      	</apex:selectList>
+                    	</apex:outputPanel>
+                    </div>
+                  </div>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="customTable" style="margin-left: 15px;">
+                    <div>
+                      <apex:outputLabel value="Effective Date: "/>
+                      <apex:image id="dateInfo" value="/img/msg_icons/info16.png" style="padding: 4px; display: none" styleClass="selector" title="{!$Label.ISSP_ANG_OptIn_OptOut_DateInfo}" html-data-placement="top" html-data-toggle="tooltip"/>
+                    </div>
+                    <div id="datepicker"></div>
+                  </div>
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlock>
+          </apex:form>
+        </div>
         
-  </body>  
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-6">
+              <button type="button" id="cancelBtn" class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
+            </div>
+            <div class="col-md-6">
+              <button type="button" id="submitOptInOutBtn" onclick="submitOptInOut(); return false;" class="btn btn-success btn-block" style="display: none">Submit Request to IATA</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </body>
 </html>
 </apex:page>

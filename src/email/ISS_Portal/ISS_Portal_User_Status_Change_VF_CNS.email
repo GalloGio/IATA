@@ -1,0 +1,26 @@
+<messaging:emailTemplate subject="{!$Label.ISSP_Email_PortalStatusChange_Subject_CNS}"  relatedToType="Contact" language="{!CASE(relatedTo.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}">
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+<span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF"/>
+<BR/>
+
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.FirstName} {!relatedTo.LastName} {!$Label.ISSP_Email_Dear_Post}<BR/>
+<BR/>
+{!$Label.ISSP_Email_Inform} {!IF(CONTAINS($Profile.Name, 'ISS'), $Label.ISSP_Email_YourCompanyAdmin + ", "  + $User.FirstName + ' ' + $User.LastName + ", ", $Label.ISSP_Email_CNS_Service)} {!$Label.ISSP_Email_PortalUser_StatusChange_CNS}   <apex:outputField value="{!relatedto.User_Portal_Status__c}" />.
+<BR/><BR/>
+{!$Label.ISSP_Email_PleaseLogin} {!$Label.ISSP_Email_CNS_Portal} <a href="{!$Label.ISSP_Email_PortalUrl_CNS}{!relatedTo.id}?CommunityName=CNS">{!$Label.ISSP_Email_Here}</a>.<BR/>
+<BR/>
+{!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
+<BR/>
+{!$Label.ISSP_Email_CNS_Service}<BR/>
+
+
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF"/>
+<BR/>
+</span>
+</div>
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -4,6 +4,16 @@
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Base_Url__c</fullName>
+        <externalId>false</externalId>
+        <label>Base Url</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>HPM_App_Url__c</fullName>
         <defaultValue>&quot;https://zforsf.zuora.com/apps&quot;</defaultValue>
         <externalId>false</externalId>
@@ -51,5 +61,16 @@
         <unique>false</unique>
     </fields>
     <label>HPM Setting</label>
+    <listViews>
+        <fullName>All2</fullName>
+        <columns>NAME</columns>
+        <columns>HPM_App_Url__c</columns>
+        <columns>Base_Url__c</columns>
+        <columns>HPM_Page_Id__c</columns>
+        <columns>HPM_Tenant_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All2</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

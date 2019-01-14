@@ -81,6 +81,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ContactPhone</field>
             </layoutItems>
             <layoutItems>
@@ -161,6 +165,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Type</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -414,12 +422,40 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <platformActionList>
+        <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Close_Case_lightning</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Accept_Case</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
+    </platformActionList>
     <quickActionList/>
     <relatedContent>
         <relatedContentItems>
@@ -485,6 +521,14 @@
         <fields>LAST_UPDATE</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>RelatedArticleList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>Owner</fields>
+        <fields>StartTime</fields>
+        <fields>EndTime</fields>
+        <fields>Status</fields>
+        <relatedList>RelatedLiveChatTranscriptList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

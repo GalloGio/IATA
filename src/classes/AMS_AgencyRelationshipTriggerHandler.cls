@@ -1,6 +1,9 @@
 public class AMS_AgencyRelationshipTriggerHandler {
 
+    public static boolean isToRunTrigger = true;
     public static boolean AMS_HierarchyProcess = false;
+    public static Set<Account> accsToUpdateSet = new Set<Account>();
+
 
     public static void handleAfterInsert(List<AMS_Agencies_relationhip__c> rels) {
 
@@ -33,21 +36,9 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
     }
 
-    public static void handleAfterDelete(List<AMS_Agencies_relationhip__c> rels) {
-
-        Set<Id> accountsInTheOldHierarchy = new Set<Id>();
-        for (AMS_Agencies_relationhip__c rel : rels) {
-            accountsInTheOldHierarchy.add(rel.Parent_Account__c);
-            accountsInTheOldHierarchy.add(rel.Child_Account__c);
-        }
-
-        //setAccountsWithoutHierarchyToHO(accountsInTheOldHierarchy);
-
-    }
-
     public static Map<Id, AMS_Agencies_Hierarchy__c> getRelationshipHierarchies(List<AMS_Agencies_relationhip__c> rels) {
         List<String> hierarchiesIds = new List<String>();
-        Id rtMain = Schema.SObjectType.AMS_Agencies_Hierarchy__c.getRecordTypeInfosByName().get('MAIN').getRecordTypeId();
+        Id rtMain = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
         for (AMS_Agencies_relationhip__c r : rels) {
             hierarchiesIds.add(r.Hierarchy__c);
 
@@ -215,6 +206,9 @@ public class AMS_AgencyRelationshipTriggerHandler {
                 system.debug(LoggingLevel.ERROR, 'CHECK setStandardHierarchyRelationship() --> account ' + acc.Name + ' with id ' + acc.id + ', parent id = ' + acc.ParentId + ' and Top parent = ' + acc.Top_Parent__c);
             }
         }
+        
+        accsToUpdateSet.addAll(accsToUpdate);
+
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> FIRST UPDATE');
         update accsToUpdate;
         /*accsToUpdate = new List<Account>();
@@ -250,30 +244,36 @@ public class AMS_AgencyRelationshipTriggerHandler {
                 hierarchyIds.add(r.Hierarchy__c);
 
         //Get all the relations in the hierarchies
-        List<AMS_Agencies_relationhip__c> relationsInHierarchy = [select Id, Child_Account__c, Hierarchy__c from AMS_Agencies_relationhip__c where Hierarchy__c in :hierarchyIds];
+        List<AMS_Agencies_relationhip__c> relationsInHierarchy = [select Id, Child_Account__c, Parent_Account__c, Hierarchy__c from AMS_Agencies_relationhip__c where Hierarchy__c in :hierarchyIds];
 
         //list to save all child accounts from all the hierarchies in the context
-        List<Id> allChildAccountsInHierarchies = new List<Id>();
+        Set<Id> allAccountsInHierarchies = new Set<Id>();
 
-        for (AMS_Agencies_relationhip__c r : relationsInHierarchy)
-            allChildAccountsInHierarchies.add(r.Child_Account__c);
+        for (AMS_Agencies_relationhip__c r : relationsInHierarchy){
+            allAccountsInHierarchies.add(r.Child_Account__c);
+            allAccountsInHierarchies.add(r.Parent_Account__c);
+        }
 
-        Map<Id, Account> accounts = new Map<Id, Account>([select Id, CASS_Number__c, Sector__c from Account where Id in :allChildAccountsInHierarchies]);
+        Map<Id, Account> accounts = new Map<Id, Account>([select Id, CASS_Number__c, Sector__c, CNS_Agency__c from Account where Id in :allAccountsInHierarchies]);
 
         //Build mapping between hierarchy and the available CASS Numbers for it
         for (Id hId : hierarchyIds) {
 
-            List<Account> childAccountsInHierarchy = new List<Account>();
+            Set<Account> accountsInHierarchy = new Set<Account>();
 
             if (hierarchyAvailableCass.get(hId) == null) {
-                //get all the child accounts for this hierarchy
+                //get all the accounts for this hierarchy
+                boolean isCNS = false;
                 for (AMS_Agencies_relationhip__c r : relationsInHierarchy)
                     if (r.Hierarchy__c == hId) {
                         Account acc = accounts.get(r.Child_Account__c);
-                        childAccountsInHierarchy.add(acc);
+                        accountsInHierarchy.add(acc);
+                        Account accParent = accounts.get(r.Parent_Account__c);
+                        accountsInHierarchy.add(accParent);
+                        isCNS = acc.CNS_Agency__c;
                     }
 
-                Set<Integer> availableCassNumbers = getAvailableCassNumbers(childAccountsInHierarchy);
+                Set<Integer> availableCassNumbers = getAvailableCassNumbers(accountsInHierarchy,isCNS);
                 List<Integer> availableCassOrdered = new List<Integer>(availableCassNumbers);
                 availableCassOrdered.sort();
 
@@ -287,7 +287,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
         for (AMS_Agencies_relationhip__c r : rels) {
 
             Account acc = accounts.get(r.Child_Account__c);
-            if (acc.Sector__c == 'Cargo Agent' && acc.CASS_Number__c == null) {
+            if (acc.Sector__c == AMS_Utils.SECTOR_CARGO && acc.CASS_Number__c == null) {
                 List<Integer> cassNumbersAvailable = hierarchyAvailableCass.get(r.Hierarchy__c);
 
                 //if no CASS Numbers are available the CASS will be left empty!!
@@ -318,10 +318,10 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
     }
 
-    public static Set<Integer> getAvailableCassNumbers(List<Account> accounts) {
+    public static Set<Integer> getAvailableCassNumbers(Set<Account> accounts, boolean isCNS) {
         Set<Integer> availableCASS = new Set<Integer>();
 
-        for (Integer i = 1; i < 1000; i++)
+        for (Integer i = (isCNS == true ? 1 : 0); i < 1000; i++)
             availableCASS.add(i);
 
         for (Account acc : accounts)
@@ -331,7 +331,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
         return availableCASS;
     }
 
-
+/*
     public static void setAccountsWithoutHierarchyToHO(Set<Id> accountIds) {
         system.debug('setAccountsWithoutHierarchyToHO() --> accountIds = ' + accountIds);
         Map<Id, List<AMS_Agencies_relationhip__c>>  hierarchies = AMS_HierarchyHelper.getAccountsHierarchies(accountIds);
@@ -354,5 +354,19 @@ public class AMS_AgencyRelationshipTriggerHandler {
             if (newHOs.size() > 0)
                 update newHOs;
         }
+    }
+*/
+
+    public static List<AMS_Agencies_relationhip__c> filterRelationsByAMS(List<AMS_Agencies_relationhip__c> rels){
+
+        List<AMS_Agencies_relationhip__c> relsToReturn = new List<AMS_Agencies_relationhip__c>();
+
+        for(AMS_Agencies_relationhip__c rel: rels){
+            if(!rel.Is_Newgen_Relation__c)
+                relsToReturn.add(rel);
+        }
+
+        return relsToReturn;
+
     }
 }

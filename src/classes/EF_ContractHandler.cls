@@ -7,6 +7,9 @@ public class EF_ContractHandler
     public static void validateContractCurrencyRemoval(List<Contract> newLines, Map<Id, Contract> contractOldMap)
     {
         // Ignore new inserts and only activate code on Update or Deletion
+        
+        
+        
         if(contractOldMap != null)
         {
             List<EF_Billing_Agreement__c> baList = [select id, name, Billing_Currency__c, Data_Currency__c, Payment_Currency__c, Contract__c from EF_Billing_Agreement__c where EF_Status__c = 'Active' and Contract__c in :contractOldMap.keySet()];
@@ -280,7 +283,7 @@ public class EF_ContractHandler
             //loop over accounts to check if any of them need to trigger a notification.
             for(Contract c: contracts){
                 //check fields for Clients
-                if(c.RecordTypeId==AMS_Utils.getId('Contract', 'EF_Client_Agreement')){
+                if(c.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Contract', 'EF_Client_Agreement')){
                     
                     for(String s: criticalContractFieldList){
                         SObjectField f = fields.get(s);                 

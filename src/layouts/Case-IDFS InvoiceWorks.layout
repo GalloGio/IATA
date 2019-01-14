@@ -50,14 +50,6 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>First_Call_Resolution__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Ticket_Re_Opened__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Priority</field>
             </layoutItems>
@@ -83,10 +75,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Release_Dependent__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Air_France_Project__c</field>
             </layoutItems>
             <layoutItems>
@@ -99,10 +87,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Power_User_Account__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Restore_Case__c</field>
@@ -265,7 +249,7 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

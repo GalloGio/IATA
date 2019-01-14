@@ -3,6 +3,19 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>ISSP - Assignation queue</name>
+    <queueMembers>
+        <users>
+            <user>markovae@iata.org</user>
+            <user>lopezjl@iata.org</user>
+            <user>rissanenk@iata.org</user>
+            <user>triaskam@iata.org</user>
+            <user>lopezbaism@iata.org</user>
+            <user>badanovam@iata.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

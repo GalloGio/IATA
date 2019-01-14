@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ANG_AccountId__c</fullName>
+        <description>Holds the id of the account to wich the RHC record is related.</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>RHC Information</relationshipLabel>
+        <relationshipName>RHC_Informations</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>ANG_CashCondition__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Reports the cash conditions of the account. This information is filled by the account trigger and should no be updated manually. It&apos;s used on the calculation of RHC Amount and Forecasted RHC Amount</description>
+        <externalId>false</externalId>
+        <label>Cash Conditions Equal to FS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_ConsumedRHC_Last_Update__c</fullName>
+        <description>The date of the current consumed RHC last update. This information comes from an external system and should not be updated manually.</description>
+        <externalId>false</externalId>
+        <label>Consumed RHC Last Update</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_ConsumedRHC_Percent__c</fullName>
+        <description>The current consumed RHC Percentage. This information comes from an external system and should not be updated manually.</description>
+        <externalId>false</externalId>
+        <label>Consumed RHC %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ANG_ConsumedRHC__c</fullName>
+        <description>The current consumed RHC Value. This information comes from an external system and should not be updated manually.</description>
+        <externalId>false</externalId>
+        <label>Consumed RHC</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Consumed_RHC_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Consumed RHC Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Enable_Calculation__c</fullName>
+        <description>Reports the account status. Used to prevent queries on the RHC trigger.</description>
+        <externalId>false</externalId>
+        <formula>NOT(ISPICKVAL(ANG_AccountId__r.Status__c, &apos;Terminated&apos;))</formula>
+        <label>Enable Amount Recalculation</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Exceeding_Financial_Security__c</fullName>
+        <description>Helper field: reports the amount of FS provided over the minimum</description>
+        <externalId>false</externalId>
+        <formula>IF(ANG_Minimum_Financial_Security__c  &gt;= 0 , ANG_Financial_Security__c - ANG_Minimum_Financial_Security__c, null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Exceeding FS Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Financial_Security__c</fullName>
+        <description>The total FS provided by the agent. This field is calculated in a trigger, based on the converted amount of the Financial Security Records on the Account.</description>
+        <externalId>false</externalId>
+        <label>Total FS Provided</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>ANG_AccountId__r.IATACode__c</formula>
+        <label>ANG IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Minimum_Financial_Security__c</fullName>
+        <description>Holds the information in what is the minimum FS required for the agent. This information comes from a Case (IFAP or SAAM) and should not be updated manually</description>
+        <externalId>false</externalId>
+        <label>Minimum FS required</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Provisional_RHC_Last_Update__c</fullName>
+        <description>The date of the Provisional RHC Amount last update. This information comes from an external system and should not be updated manually.</description>
+        <externalId>false</externalId>
+        <label>Provisional RHC Amount Last Update</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RHC_Amount_Equals_FS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked the RHC amount will be equal to the total Financial Securities</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked the RHC amount will be equal to the total Financial Securities</inlineHelpText>
+        <label>RHC Amount Equals FS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RHC_Amount_Forecasted__c</fullName>
+        <description>Holds the information regarding what is the expected RHC Amount if the user clicks on the button &quot;Confirm Forecasted RHC&quot;</description>
+        <externalId>false</externalId>
+        <label>Forecasted RHC Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RHC_Amount_Provisional__c</fullName>
+        <description>Expected RHC Amount calculated by RME. The agent can request a new calculation via a button on the layout. The information comes from an external system and should not be updated manually.</description>
+        <externalId>false</externalId>
+        <label>Provisional RHC Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RHC_Amount_Simulation__c</fullName>
+        <description>Temporary field to be used during simulation of RHC</description>
+        <externalId>false</externalId>
+        <label>RHC Amount (Simulation)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RHC_Amount__c</fullName>
+        <description>The current RHC Amount for the agent</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Help text for the RHC Amount</inlineHelpText>
+        <label>RHC Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RHC_Effective_Date__c</fullName>
+        <description>The date of the RHC Amount last update. This field is populated by an workflow.</description>
+        <externalId>false</externalId>
+        <label>RHC Amount Effective Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RME_Amount_Last_Update__c</fullName>
+        <externalId>false</externalId>
+        <label>RME Amount Last Update</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RME_Amount_Provisional__c</fullName>
+        <externalId>false</externalId>
+        <label>Provisional RME Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RME_Amount__c</fullName>
+        <description>The last approved value calculated from RME.</description>
+        <externalId>false</externalId>
+        <label>Confirmed RME Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_UniqueKey__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <description>Holds the unique key combination of &quot;Account Id&quot; + &quot;Record Type Developer Name&quot;. Used by external systems to match the record.</description>
+        <externalId>true</externalId>
+        <label>Unique Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>RHC Information</label>
+    <nameField>
+        <displayFormat>RHCI-{000000000}</displayFormat>
+        <label>RHC Information Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>RHC Information Records</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>RHC_Information</fullName>
+        <active>true</active>
+        <label>RHC Information</label>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Prevent_Forecast_Changes</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ANG_Enable_Calculation__c) &amp;&amp; ISCHANGED(ANG_RME_Amount__c)</errorConditionFormula>
+        <errorMessage>You are not allowed to confirm a new RHC amount for a terminated agent</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Confirm_RHC</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Confirm Forecasted RHC</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+
+if(&apos;{!AND(NOT(CONTAINS(LOWER($Profile.Name), &apos;system administrator&apos;)), ANG_RHC_Information__c.ANG_CashCondition__c, OR(ANG_RHC_Information__c.ANG_Financial_Security__c = 0, ISNULL(ANG_RHC_Information__c.ANG_Financial_Security__c)))}&apos;.toLowerCase() == &apos;true&apos;){ 
+alert(&apos;Provisional RHC cannot be enforced as RHC amount because the agent has cash condition equal to FS. If the agent has no valid FS, please contact your administrator&apos;); 
+}else{ 
+
+var rhcInfo = new sforce.SObject(&quot;ANG_RHC_Information__c&quot;); 
+rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;; 
+
+rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;)); 
+
+var result = sforce.connection.update([rhcInfo]); 
+
+console.info(&quot;result&quot;);
+console.info(result[0]); 
+
+if (result[0].success == &quot;true&quot;) { 
+window.location.reload(); 
+} else { 
+alert(result[0].errors.message); 
+} 
+
+}//end if-else profile check</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Request_Balance_Update</fullName>
+        <availability>online</availability>
+        <description>NOT Exposed, nor  internally, neither externally. However, button on portal page ISSP_ANG_RHC has the same label as this button</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Request Balance Update</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)} 
+
+var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
+
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestBalanceUpdate&quot;,{accountId: accountId}); 
+
+console.info(result[0]);
+
+if(result[0].isSuccess == &quot;true&quot;){
+window.location.reload();
+}else{
+alert(result[0].description);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Request_Consumed_RHC</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Request Consumed RHC</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)} 
+
+var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
+
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestBalanceUpdate&quot;,{accountId: accountId}); 
+
+console.info(result[0]);
+
+if(result[0].isSuccess == &quot;true&quot;){
+window.location.reload();
+}else{
+alert(result[0].description);
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Request_RHC_Calculation</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Request RHC Calculation</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)} 
+
+var accountId = &apos;{!ANG_RHC_Information__c.ANG_AccountIdId__c}&apos;;
+
+var result = sforce.apex.execute(&quot;ANG_RME_Alert_Service&quot;,&quot;requestProvisionalRHC&quot;,{accountId: accountId, flagUpdateProvisioning: false}); 
+
+console.info(result[0]);
+
+if(result[0].isSuccess == &quot;true&quot;){
+window.location.reload();
+}else{
+alert(result[0].description);
+}</url>
+    </webLinks>
+</CustomObject>

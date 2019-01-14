@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <style>
+      body{
+	font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color:#004577;
+      }
+     
+      
+div.main{
+margin:auto;
+width:90%;
+}
+      hr{
+	color:#0A4279;
+      }
+    </style>
+    
+  </head>
+
+  <body>
+<div class="main">
+<table width="640px">
+<tr>
+<td colspan="3">
+<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF&lastMod=1392385307000" />
+  </td>
+  </tr>
+<tr>
+
+<tr>
+<td colspan="3">
+{!$Label.ISSP_Email_do_not_reply}
+</td>
+</tr>
+<tr>
+
+<td colspan="3" style="font-size:26px;color:#0A4279;text-align:center;">     
+  <b>{!Community_Name}</b>
+</td>
+</tr>
+<tr>
+<td colspan="3">
+  <br />
+   <hr style="width:80%"/>
+   <p> 
+   Dear {!Contact.Salutation} {!Contact.FirstName} {!Contact.LastName},
+    </p>
+    <p>
+A new notification has been posted on your CNS portal account.  You can find it in 'My Notifications' on the portal Home Page.
+<br/><br/>
+Subject:<br/>
+"{!Notification__c.Subject__c} "
+
+  </td>
+  </tr>
+  <tr>
+  <td width="30%">
+  
+    </td>
+    <td >
+     You can access it on your <a href="portal.cnsc.net/cns">CNS Customer Portal</a>
+  </td>
+  <td width="30%">
+  </td>
+  </tr>
+<tr><td colspan="3">
+
+</td></tr>
+  <tr>
+  <td colspan="3">
+    <p>
+Thank you in advance,
+<br/><br/>
+CNS Customer Service
+    </p>
+  </td>
+    </tr>
+    
+       
+
+
+
+    <tr>
+    <td colspan="3">
+    <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF&lastMod=1392385307000" />
+      </td>
+    </tr>
+
+    
+   
+</table>
+</div>
+  </body>
+</html>

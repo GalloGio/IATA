@@ -1,0 +1,180 @@
+<apex:component controller="SelectTrackedEmailAttachmentsController" allowDML="true">
+    <apex:attribute name="ctrl" description="parentController" type="sendSingleTrackedEmailController" required="false" assignTo="{!parent}" />
+
+    <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+
+    <script>
+        var uploadingFile = 'false';
+    
+        function startAttachmentSpinner(){
+            var lock = document.getElementById('attachmentSpinner'); 
+            if (lock){
+                lock.className = 'LockOn';
+            }
+        }
+
+        function stopAttachmentSpinner(){
+            var lock = document.getElementById('attachmentSpinner');
+            if (lock){
+                lock.className = 'LockOff'; 
+            }
+        }
+
+        function showAttachmentsPanel(show) {
+            var value = show?"block":"none";
+            if(value=='block'){
+                displayPanelActionFunction();
+            }
+            $( document ).ready(function() {
+                document.getElementById('attachmentsPanel').style.display=value;
+                document.getElementById('attachmentsBackground').style.display=value;
+            });
+        }        
+        
+        function uploadDocument(){
+            uploadingFile = 'true';
+            addPersonalDocumentAF();
+        }
+                
+    </script>
+    
+    <div id="attachmentsPanel" class="white_content">
+        <div id="attachmentSpinner" class="LockOff"/>
+        <apex:actionStatus id="attachmentActStatusId" onstart="startAttachmentSpinner();" onstop="stopAttachmentSpinner();" />
+        <apex:outputPanel id="panelToRerender">
+            <apex:form >
+            
+                <apex:pageBlock title="Select Folder">
+                    <apex:pageBlockSection columns="1">
+                    
+                        <apex:selectList label="Select Folder" id="folderList" value="{!selectedFolder}" size="1">
+                            <apex:selectOptions value="{!availableFolders}"/>
+                            <apex:actionSupport event="onchange" action="{!updateDocumentList}" rerender="panelToRerender" status="attachmentActStatusId"/>
+                        </apex:selectList>
+                    
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+                
+                <apex:actionFunction name="displayPanelActionFunction" action="{!displayPanel}" rerender="panelToRerender" status="attachmentActStatusId"/>
+            </apex:form>
+    
+            <apex:form rendered="{!myComputerSelected}">
+                <apex:pageBlock title="Select Document">
+                
+                    <apex:pageBlockSection columns="1">
+						<apex:outputtext>
+							When uploading a document from your computer, you need to wait until the attachment has been uploaded before clicking the OK button.
+						</apex:outputtext>
+                        <apex:outputPanel style="color:#FF0000">
+                            <apex:outputtext rendered="{!attachmentsNumberError}">
+                                Adding the selected document would make the total number of attachments ({!expectedAttachmentsNumber}) exceed the limit ({!attachmentsNumberLimit})
+                            </apex:outputtext>
+                            <apex:outputtext rendered="{!attachmentsNumberError && attachmentsSizeError}">
+                                <br/>
+                            </apex:outputtext>
+                            <apex:outputtext rendered="{!attachmentsSizeError}">
+                                Adding the selected document would make the total size of attachments ({!expectedAttachmentsSize}) exceed the limit ({!attachmentsSizeLimit})
+                            </apex:outputText>
+                            <apex:outputtext rendered="{!generalError && (attachmentsNumberError || attachmentsSizeError)}">
+                                <br/>
+                            </apex:outputtext>
+                            <apex:outputtext rendered="{!generalError}">
+                                {!generalErrorMessage}
+                            </apex:outputText>
+                        </apex:outputPanel>
+                    </apex:pageBlockSection>
+                
+                    <apex:pageBlockSection columns="2">
+                    
+                        <apex:outputPanel >
+                            <apex:inputFile onchange="uploadDocument();" value="{!uploadedDocument.Body}"  filename="{!uploadedDocument.Name}"/>
+                            <apex:actionFunction name="addPersonalDocumentAF" action="{!addPersonalDocument}"/>
+
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel id="regionToRerender">
+                            <apex:actionRegion >
+                                <apex:pageBlockSection columns="2">
+                                    <apex:commandButton value="<<" action="{!removeDocuments}" rerender="regionToRerender" status="attachmentActStatusId"/>
+                                    <apex:selectList id="addedDocuments" label="Selected Documents" value="{!addedDocumentsSelected}" size="10" multiselect="true" style="min-width: 100px;max-width:350px; overflow-x: auto;">
+                                        <apex:selectOptions value="{!addedDocuments}"/>
+                                    </apex:selectList>
+                                
+                                </apex:pageBlockSection>
+                            </apex:actionRegion>
+                        </apex:outputPanel>
+                    
+                    </apex:pageBlockSection>
+                    <apex:pageBlockButtons location="bottom">
+                        <apex:commandButton value="Cancel" action="{!cancel}"/>
+                        <apex:commandButton value="OK" onclick="if(uploadingFile == 'true'){alert('Please wait for the attachment to be uploaded before clicking the OK button.');return false;}" action="{!save}"/>
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+            </apex:form>
+    
+            <apex:form rendered="{!!myComputerSelected}">
+                <apex:outputPanel id="internalFoldersForm">
+                    <apex:pageBlock title="Select Document(s)">
+                    
+                        <apex:outputPanel style="color:#FF0000;" id="limitMessage" >
+                            <apex:outputtext rendered="{!nbOfDocuments > 1000}">The number of documents in the selected folder ({!nbOfDocuments}) exceeds the limit (1000). Please filter on the file name.</apex:outputtext>
+                            <apex:outputtext rendered="{!nbOfDocuments == 0}">The selected folder is empty or your search criteria didn't match any document.</apex:outputtext>
+                        </apex:outputPanel>
+                        
+                        <apex:pageBlockSection columns="1">                            
+                            <apex:outputPanel style="color:#FF0000">
+                                <apex:outputtext rendered="{!attachmentsNumberError}">
+                                    Adding the selected document(s) would make the total number of attachments ({!expectedAttachmentsNumber}) exceed the limit ({!attachmentsNumberLimit})
+                                </apex:outputtext>
+                                <apex:outputtext rendered="{!attachmentsNumberError && attachmentsSizeError}">
+                                    <br/>
+                                </apex:outputtext>
+                                <apex:outputtext rendered="{!attachmentsSizeError}">
+                                    Adding the selected document(s) would make the total size of attachments ({!expectedAttachmentsSize}) exceed the limit ({!attachmentsSizeLimit})
+                                </apex:outputText>
+	                            <apex:outputtext rendered="{!generalError && (attachmentsNumberError || attachmentsSizeError)}">
+	                                <br/>
+	                            </apex:outputtext>
+	                            <apex:outputtext rendered="{!generalError}">
+	                                {!generalErrorMessage}
+	                            </apex:outputText>
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection columns="3">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputText value="File Name"/>
+                                <apex:outputpanel >
+                                    <apex:inputText value="{!documentFilter}" style="width:100px;"/>
+                                    <apex:commandButton value="Filter" action="{!applyFilter}" rerender="limitMessage,documentList" status="attachmentActStatusId"/>
+                                </apex:outputpanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:outputPanel ></apex:outputPanel>
+                            <apex:outputPanel ></apex:outputPanel>
+                            
+                            <apex:selectList id="documentList" label="Select File(s)" value="{!availableDocumentsSelected}" size="15" multiselect="true" style="min-width: 100px;max-width:350px; overflow-x: auto;">
+                                <apex:selectOptions value="{!availableDocuments}"/>
+                            </apex:selectList>
+                            <apex:outputPanel >
+                                <apex:commandButton value="<<" action="{!removeDocuments}" rerender="internalFoldersForm" status="attachmentActStatusId"/>
+                                <apex:commandButton value=">>" action="{!addSalesforceDocuments}" rerender="internalFoldersForm" status="attachmentActStatusId"/>
+                            </apex:outputPanel>
+                             <apex:selectList id="addedDocuments" label="Selected Documents" value="{!addedDocumentsSelected}" size="10" multiselect="true" style="min-width: 100px;max-width:350px; overflow-x: auto;">
+                                <apex:selectOptions value="{!addedDocuments}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockButtons location="bottom">
+                            <apex:commandButton value="Cancel" action="{!cancel}" status="attachmentActStatusId"/>
+                            <apex:commandButton value="OK" action="{!save}" status="attachmentActStatusId"/>
+                        </apex:pageBlockButtons>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            </apex:form>            
+        </apex:outputPanel>
+    </div>
+    
+    <div id="attachmentsBackground" class="black_overlay"></div>
+
+</apex:component>

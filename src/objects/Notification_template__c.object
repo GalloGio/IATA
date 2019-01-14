@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -59,26 +56,39 @@
         <fullName>Admins_Users__c</fullName>
         <externalId>false</externalId>
         <label>Administrators/User</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Administrators</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>User</fullName>
-                <default>true</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Administrators</fullName>
+                    <default>false</default>
+                    <label>Administrators</label>
+                </value>
+                <value>
+                    <fullName>User</fullName>
+                    <default>true</default>
+                    <label>User</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Alert_Contact_By_Email__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Alert Contact By Email</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Alert_Contact_By_Push_Notification__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Alert contacts with a push notification on NewGen mobile app</description>
+        <externalId>false</externalId>
+        <label>Alert Contact By Push Notification</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -120,71 +130,126 @@ notifications with this box checked will be first in the list of notification on
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Identifier__c</fullName>
+        <description>Unique identifier used internally so the template can be found on code in all environments</description>
+        <externalId>true</externalId>
+        <label>Identifier</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LanguageLocaleKey__c</fullName>
+        <description>Used when trying to match a user&apos;s local with a template, as the user LanguageLocaleKey value might be translated in apex depending on the user&apos;s settings</description>
+        <externalId>false</externalId>
+        <formula>CASE(
+Language__c , 
+&apos;English&apos;, &apos;en&apos;, 
+&apos;Chinese (Simplified)&apos;, &apos;zh&apos;,
+&apos;French&apos;,&apos;fr&apos;,
+&apos;Italian&apos;,&apos;it&apos;,
+&apos;Japanese&apos;,&apos;ja&apos;,
+&apos;Korean&apos;,&apos;ko&apos;,
+&apos;Portuguese (Brazilian)&apos;,&apos;pt&apos;,
+&apos;Russian&apos;,&apos;ru&apos;,
+&apos;Spanish&apos;,&apos;es&apos;,
+&apos;German&apos;,&apos;de&apos;,
+&apos;Thai&apos;,&apos;th&apos;,
+&apos;Indonesian&apos;,&apos;in&apos;,
+&apos;Vietnamese&apos;,&apos;vi&apos;,
+&apos;Arabic&apos;,&apos;ar&apos;,
+&apos;en&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LanguageLocaleKey</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Language__c</fullName>
         <externalId>false</externalId>
         <label>Language</label>
-        <picklist>
-            <picklistValues>
-                <fullName>English</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chinese (Simplified)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>French</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Italian</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Japanese</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Korean</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Portuguese (Brazilian)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Russian</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Spanish</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>German</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Thai</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Indonesian</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Vietnamese</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Arabic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>English</fullName>
+                    <default>true</default>
+                    <label>English</label>
+                </value>
+                <value>
+                    <fullName>Chinese (Simplified)</fullName>
+                    <default>false</default>
+                    <label>Chinese (Simplified)</label>
+                </value>
+                <value>
+                    <fullName>French</fullName>
+                    <default>false</default>
+                    <label>French</label>
+                </value>
+                <value>
+                    <fullName>Italian</fullName>
+                    <default>false</default>
+                    <label>Italian</label>
+                </value>
+                <value>
+                    <fullName>Japanese</fullName>
+                    <default>false</default>
+                    <label>Japanese</label>
+                </value>
+                <value>
+                    <fullName>Korean</fullName>
+                    <default>false</default>
+                    <label>Korean</label>
+                </value>
+                <value>
+                    <fullName>Portuguese (Brazilian)</fullName>
+                    <default>false</default>
+                    <label>Portuguese (Brazilian)</label>
+                </value>
+                <value>
+                    <fullName>Russian</fullName>
+                    <default>false</default>
+                    <label>Russian</label>
+                </value>
+                <value>
+                    <fullName>Spanish</fullName>
+                    <default>false</default>
+                    <label>Spanish</label>
+                </value>
+                <value>
+                    <fullName>German</fullName>
+                    <default>false</default>
+                    <label>German</label>
+                </value>
+                <value>
+                    <fullName>Thai</fullName>
+                    <default>false</default>
+                    <label>Thai</label>
+                </value>
+                <value>
+                    <fullName>Indonesian</fullName>
+                    <default>false</default>
+                    <label>Indonesian</label>
+                </value>
+                <value>
+                    <fullName>Vietnamese</fullName>
+                    <default>false</default>
+                    <label>Vietnamese</label>
+                </value>
+                <value>
+                    <fullName>Arabic</fullName>
+                    <default>false</default>
+                    <label>Arabic</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Master_Notification_template__c</fullName>
@@ -211,23 +276,33 @@ notifications with this box checked will be first in the list of notification on
         <fullName>Notification_color__c</fullName>
         <externalId>false</externalId>
         <label>Notification color</label>
-        <picklist>
-            <controllingField>Type__c</controllingField>
-            <picklistValues>
-                <fullName>#007FFF</fullName>
-                <default>false</default>
-                <controllingFieldValues>Information</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>#FF5E4D</fullName>
-                <default>false</default>
-                <controllingFieldValues>Action</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>Type__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>#007FFF</fullName>
+                    <default>false</default>
+                    <label>#007FFF</label>
+                </value>
+                <value>
+                    <fullName>#FF5E4D</fullName>
+                    <default>false</default>
+                    <label>#FF5E4D</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Action</controllingFieldValue>
+                <valueName>#FF5E4D</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Information</controllingFieldValue>
+                <valueName>#007FFF</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Subject__c</fullName>
@@ -243,20 +318,24 @@ notifications with this box checked will be first in the list of notification on
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Action</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Information</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Action</fullName>
+                    <default>false</default>
+                    <label>Action</label>
+                </value>
+                <value>
+                    <fullName>Information</fullName>
+                    <default>false</default>
+                    <label>Information</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Notification template</label>
     <listViews>
@@ -293,6 +372,23 @@ notifications with this box checked will be first in the list of notification on
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>EUconsent</fullName>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Language__c</columns>
+        <columns>Type__c</columns>
+        <columns>Expire_in_days__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DDS_Update_Request__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Eu agent consent templates</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Master_templates</fullName>
         <columns>NAME</columns>
         <columns>Subject__c</columns>
@@ -314,4 +410,5 @@ notifications with this box checked will be first in the list of notification on
     <pluralLabel>Notification templates</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

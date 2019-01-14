@@ -7,18 +7,31 @@
 global class IECConstants {
 
   //Order Status : add by CGI - David D 2015-10-16
-  public static final String ORDER_STATUS_PAID       =  'Paid';
+  public static final String ORDER_STATUS_NEW       =  'New';
+  public static final String ORDER_STATUS_CANCELLED       =  'Cancelled';
+  public static final String ORDER_STATUS_PAID       =  'Paid';//Used for credit card only
   public static final String ORDER_STATUS_READY_FOR_SAP   =   'Ready for SAP';
   public static final String ORDER_STATUS_CREDIT_CARD_DEFERRED = 'Credit Card Deferred';
   public static final String ORDER_STATUS_CHECK = 'Check';
-
+  public static final String ORDER_STATUS_PENDING_PAYMENT = 'Pending Payment';
+  public static final String ORDER_STATUS_PAYMENT_FAILURE = 'Payment Failure';
+  public static final String ORDER_STATUS_INVOICED = 'Invoiced';
+  //Orders Types
   public static final String ORDER_TYPE_QUOTE = 'Quote';
   public static final String ORDER_TYPE_RENEWAL_NOTIFICATION = 'Renewal Notification';
   public static final String ORDER_TYPE_AUTORENEWAL = 'Subscription'; //Event Auto-Renew
+  public static final String ORDER_TYPE_HISTORY = 'History';
+  public static final String ORDER_TYPE_CART = 'Cart';
+  //Used to fetch orders that are not expired
+  public static final List<String> expiredStatus = new List<String>{ORDER_STATUS_CANCELLED};
+  public static final List<String> expiredStatusForOrderHistory = new List<String>{ORDER_STATUS_CANCELLED, ORDER_STATUS_NEW, ORDER_STATUS_PENDING_PAYMENT,ORDER_STATUS_PAYMENT_FAILURE,ORDER_STATUS_READY_FOR_SAP};
+  public static final List<String> expiredTypes = new List<String>{ORDER_TYPE_RENEWAL_NOTIFICATION, ORDER_TYPE_QUOTE, ORDER_TYPE_CART, ORDER_TYPE_HISTORY};
 
 
-  public static final String ORDER_PAYMENT_CONFIRMED = 'Payment Confirmed';
+  public static final String ORDER_PAYMENT_CONFIRMED = 'Payment Confirmed';//Used for bank transfer
 
+  // Zuora Payment Method
+  public static final String ZUORA_PAYMENT_METHOD_PREFIX_CREDIT_CARD = 'Credit Card';
 
   // GET parameters constants
   public static final string PARAM_PRODUCT_CODE =     'ProductCode';
@@ -35,6 +48,7 @@ global class IECConstants {
   public static final string PARAM_RESETPASSWORD =    'respw';
   public static final string PARAM_APPFILTER_ID =      'appfid';
   public static final string PARAM_LIMITTOIDS =      'limittoids'; // Added by Mathieu Beausoleil
+  public static final string PARAM_UTM =              'utm_';
   
   //Get customer types constants
   public static final string PARAM_CUSTOMERTYPE_AIRLINE =     'Airline';
@@ -386,7 +400,7 @@ global class IECConstants {
   public static String parsePaymentMethodTypeToTypeWithSpaces(String sPaymentType) {
     if (sPaymentType == 'CreditCard') return PaymentThresholdType_CreditCard;
     else if (sPaymentType == 'BankTransfer') return PaymentThresholdType_BankTransfer;
-    else if (sPaymentType == 'ACH') return PaymentThresholdType_ICH;
+    else if (sPaymentType == 'ACH' || sPaymentType == 'Other') return PaymentThresholdType_ICH;
     else return null;
   }
   
@@ -609,7 +623,7 @@ global class IECConstants {
     
     public static String GDPReplication_ProfileIDswithAccess {
         get {
-            return Test.isRunningTest() ? '00ew0000001R6uT,00e20000000kvcd,00e20000001QMpc,00e20000000h0gF,00520000002P7Kb,00ew0000001QUyp,00e20000000kvcdAAA,'+ + Userinfo.getProfileId()  : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
+            return Test.isRunningTest() ? '00ew0000001R6uT,00e20000000kvcd,00e20000001QMpc,00e20000000h0gF,00520000002P7Kb,00ew0000001QUyp,00e20000000kvcdAAA,00e20000000h0gC,00ew0000001QoD2' : IEC_GDP_Replication__c.getOrgDefaults().Profile_IDs_with_Access__c;
         }
     }
 }

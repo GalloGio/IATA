@@ -152,10 +152,6 @@
                 <field>IsVisibleInSelfService</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>First_Call_Resolution__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Age_Days__c</field>
             </layoutItems>
@@ -274,17 +270,21 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CreatedById</field>
+                <field>Case_Thread_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CreatedDate</field>
+                <field>CreatedById</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatedDate</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -332,7 +332,7 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

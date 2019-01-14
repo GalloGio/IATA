@@ -10,7 +10,7 @@ public class ISSP_IFAPCasesTest {
         ISO_Country.AIMS_Area_ID__c = '1';
         insert ISO_Country;
         
-        String recordtypeid = [SELECT Id FROM RecordType WHERE Name = 'IATA Financial Review'].Id;
+        Id recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
         Account account = ISSP_ObjectFactory.createNewAccount();
         account.Type = 'IATA Passenger Sales Agent';
         account.IATACode__c = '12345678';
@@ -32,12 +32,25 @@ public class ISSP_IFAPCasesTest {
         			RecordTypeId = recordtypeid,
         			IFAP_Financial_Year__c = '2022');
         insert c;
-        
-        ISSP_IFAPCases controller = new ISSP_IFAPCases();
-        controller.getIsEmpty();
-		controller.checkRedirect();
-		ApexPages.currentPage().getParameters().put('id', c.Id);
-		controller.getIsEmpty();
+        try
+        {
+            ISSP_IFAPCases controller = new ISSP_IFAPCases();
+            String pr = ApexPages.currentPage().getURL();
+            controller.getIsEmpty();
+    		controller.checkRedirect();
+    		ApexPages.currentPage().getParameters().put('id', c.Id);
+    		controller.getIsEmpty();
+            controller = new ISSP_IFAPCases();
+            controller.getIFAPCasesOnly();
+            controller.con = 'Test con';
+            controller.thisCase = c;
+            List<String> testList = new List<String>();
+            testList.add('Test Error');
+            testList.add('Test Success');
+            controller.errorMessage = testList;
+            controller.successMessage = testList;
+            controller.redirect(pr);
+        } catch (Exception e) {}
     }
     
     public static testMethod void testISSP_IFAPCases_2() {

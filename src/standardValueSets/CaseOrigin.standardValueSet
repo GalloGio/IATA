@@ -1,0 +1,1254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>true</sorted>
+    <standardValue>
+        <fullName>Agent Financial Review Notification</fullName>
+        <default>false</default>
+        <label>Agent Financial Review Notification</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airline Participation</fullName>
+        <default>false</default>
+        <label>Airline Participation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airline Suspension</fullName>
+        <default>false</default>
+        <label>Airline Suspension</label>
+    </standardValue>
+    <standardValue>
+        <fullName>AIRS</fullName>
+        <default>false</default>
+        <label>AIRS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>AR - Checks</fullName>
+        <default>false</default>
+        <label>AR - Checks</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Chat</fullName>
+        <default>false</default>
+        <label>Chat</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Chatter Answers</fullName>
+        <default>false</default>
+        <label>Chatter Answers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Code Transfers and Mergers</fullName>
+        <default>false</default>
+        <label>Code Transfers and Mergers</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E&amp;F Client – Email to Case</fullName>
+        <default>false</default>
+        <label>E&amp;F Client – Email to Case</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+        <label>Email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;ME Agency Mgmt</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;ME Agency Mgmt</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;ME Business Delivery</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;ME Business Delivery</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;ME Customer Service</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;ME Customer Service</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;ME I&amp;C</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;ME I&amp;C</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;ME Operations</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;ME Operations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;ME R&amp;S</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;ME R&amp;S</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;P Banking Management</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;P Banking Management</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;P Customer Service</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;P Customer Service</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;P Invoicing</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;P Invoicing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A&amp;P Operations</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A&amp;P Operations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - A1 Injunctions</fullName>
+        <default>false</default>
+        <label>E-mail to Case - A1 Injunctions</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ACCA</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ACCA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ACCA Bug Fix</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ACCA Bug Fix</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ACCA CSR Internal</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ACCA CSR Internal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Accreditation A&amp;P</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Accreditation A&amp;P</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Accreditation Europe</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Accreditation Europe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Agency Management</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Agency Management</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Agency Risk Management</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Agency Risk Management</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Agency Services</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Agency Services</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Airline Coding</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Airline Coding</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - AM BY TM</fullName>
+        <default>false</default>
+        <label>E-mail to Case - AM BY TM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas Agency Mmgt</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas Agency Mmgt</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas Agy Risk Mgmt</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas Agy Risk Mgmt</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas Business Deliv</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas Business Deliv</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email to case - Americas Courier</fullName>
+        <default>false</default>
+        <label>Email to case - Americas Courier</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas CS</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas CS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas FAX</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas FAX</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas HAR</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas HAR</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas ID Card</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas ID Card</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas Operations</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas Operations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas R&amp;S</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas R&amp;S</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Americas R&amp;S Bulletins</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Americas R&amp;S Bulletins</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - AP central team email</fullName>
+        <default>false</default>
+        <label>E-mail to Case - AP central team email</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Argentina</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Argentina</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ASD Support</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ASD Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail To Case - ASP</fullName>
+        <default>false</default>
+        <label>E-mail To Case - ASP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Australia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Australia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Austria</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Austria</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Azerbaijan</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Azerbaijan</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Bangladesh</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Bangladesh</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Belux</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Belux</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - BG noreply</fullName>
+        <default>false</default>
+        <label>E-mail to Case - BG noreply</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Brazil</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Brazil</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - BSPlink</fullName>
+        <default>false</default>
+        <label>E-mail to Case - BSPlink</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - BSP Support</fullName>
+        <default>false</default>
+        <label>E-mail to Case - BSP Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Bulgaria</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Bulgaria</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - C&amp;NA Agency Mgmt</fullName>
+        <default>false</default>
+        <label>E-mail to Case - C&amp;NA Agency Mgmt</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - C&amp;NA Business Delivery</fullName>
+        <default>false</default>
+        <label>E-mail to Case - C&amp;NA Business Delivery</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - C&amp;NA Customer Service</fullName>
+        <default>false</default>
+        <label>E-mail to Case - C&amp;NA Customer Service</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - C&amp;NA Operational Mgmt</fullName>
+        <default>false</default>
+        <label>E-mail to Case - C&amp;NA Operational Mgmt</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - C&amp;NA R&amp;S</fullName>
+        <default>false</default>
+        <label>E-mail to Case - C&amp;NA R&amp;S</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Canada</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Canada</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Cargolink</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Cargolink</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - CASS Invoicing</fullName>
+        <default>false</default>
+        <label>E-mail to Case - CASS Invoicing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - CASSlink GVA</fullName>
+        <default>false</default>
+        <label>E-mail to Case - CASSlink GVA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Central America</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Central America</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Central West Africa</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Central West Africa</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - China</fullName>
+        <default>false</default>
+        <label>E-mail to Case - China</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - CNS Endorsement</fullName>
+        <default>false</default>
+        <label>E-mail to Case - CNS Endorsement</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Commissioner</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Commissioner</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Costa Rica</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Costa Rica</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Croatia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Croatia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Cubana Bulletin</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Cubana Bulletin</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Cyprus</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Cyprus</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - CZ &amp; Slovakia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - CZ &amp; Slovakia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - DKR</fullName>
+        <default>false</default>
+        <label>E-mail to Case - DKR</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - E&amp;F Services</fullName>
+        <default>false</default>
+        <label>E-mail to Case - E&amp;F Services</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Eastern Africa</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Eastern Africa</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email to case - EasyPay</fullName>
+        <default>false</default>
+        <label>Email to case - EasyPay</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Ecuador</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Ecuador</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Egypt</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Egypt</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - EMD Testing</fullName>
+        <default>false</default>
+        <label>E-mail to Case - EMD Testing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - EUR ACC Products</fullName>
+        <default>false</default>
+        <label>E-mail to Case - EUR ACC Products</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - EUR ARM SWIFT</fullName>
+        <default>false</default>
+        <label>E-mail to Case - EUR ARM SWIFT</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - FDS Invoicing</fullName>
+        <default>false</default>
+        <label>E-mail to Case - FDS Invoicing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Finland</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Finland</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - FoP notification</fullName>
+        <default>false</default>
+        <label>E-mail to Case - FoP notification</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - France</fullName>
+        <default>false</default>
+        <label>E-mail to Case - France</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email to case – GDI accreditation</fullName>
+        <default>false</default>
+        <label>Email to case – GDI accreditation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email to case – GDI risk</fullName>
+        <default>false</default>
+        <label>Email to case – GDI risk</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - GDS FOP Support</fullName>
+        <default>false</default>
+        <label>E-mail to Case - GDS FOP Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Georgia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Georgia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Germany</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Germany</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Global Data Update</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Global Data Update</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Greece</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Greece</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Gulf Area</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Gulf Area</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Hong-Kong</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Hong-Kong</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Hungary</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Hungary</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IATAN ARC bulletins</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IATAN ARC bulletins</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IATAN Customer Service</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IATAN Customer Service</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IATAN Mega Support</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IATAN Mega Support</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IATAN Online Changes</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IATAN Online Changes</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IATAN Online Payments</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IATAN Online Payments</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IBSP Migration - AME</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IBSP Migration - AME</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IBSP Migration - Europe</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IBSP Migration - Europe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IBSP Migration - MIA</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IBSP Migration - MIA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ICCS Head Office</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ICCS Head Office</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ID Card Global</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ID Card Global</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IDPC</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IDPC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - India</fullName>
+        <default>false</default>
+        <label>E-mail to Case - India</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - India BG</fullName>
+        <default>false</default>
+        <label>E-mail to Case - India BG</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Indonesia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Indonesia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Email to case – Information security</fullName>
+        <default>false</default>
+        <label>Email to case – Information security</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case -  Invoicing Americas</fullName>
+        <default>false</default>
+        <label>E-mail to Case -  Invoicing Americas</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Ireland</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Ireland</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IRIS CNS - Americas</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IRIS CNS - Americas</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ISDM</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ISDM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - IS Help Desk</fullName>
+        <default>false</default>
+        <label>E-mail to Case - IS Help Desk</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ISIS2 - A&amp;P</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ISIS2 - A&amp;P</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ISIS2 Migration</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ISIS2 Migration</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Israel</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Israel</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ISS</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ISS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ISS Reports</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ISS Reports</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - ISS Revenue Systems</fullName>
+        <default>false</default>
+        <label>E-mail to Case - ISS Revenue Systems</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Italy</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Italy</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Japan</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Japan</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - JNB</fullName>
+        <default>false</default>
+        <label>E-mail to Case - JNB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Jordan, Syria &amp; Lebanon</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Jordan, Syria &amp; Lebanon</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Kazakhstan-Kyrgyzstan</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Kazakhstan-Kyrgyzstan</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Korea</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Korea</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Malaysia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Malaysia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Malta</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Malta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - MDM confirmations</fullName>
+        <default>false</default>
+        <label>E-mail to Case - MDM confirmations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - MENA FOM</fullName>
+        <default>false</default>
+        <label>E-mail to Case - MENA FOM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - MENA R&amp;S</fullName>
+        <default>false</default>
+        <label>E-mail to Case - MENA R&amp;S</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Mexico</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Mexico</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - MITA</fullName>
+        <default>false</default>
+        <label>E-mail to Case - MITA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Mongolia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Mongolia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - N&amp;B</fullName>
+        <default>false</default>
+        <label>E-mail to Case - N&amp;B</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Nepal</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Nepal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - New Zealand</fullName>
+        <default>false</default>
+        <label>E-mail to Case - New Zealand</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - North Africa</fullName>
+        <default>false</default>
+        <label>E-mail to Case - North Africa</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - North Korea</fullName>
+        <default>false</default>
+        <label>E-mail to Case - North Korea</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Pakistan</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Pakistan</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Philippines</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Philippines</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Poland</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Poland</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Portugal</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Portugal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Bahrain</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Bahrain</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Benin</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Benin</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Botswana</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Botswana</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Burkina Faso</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Burkina Faso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Cameroon</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Cameroon</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Congo</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Congo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Cote De Ivoire</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Cote De Ivoire</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Egypt</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Egypt</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Ethiopia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Ethiopia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Gabon</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Gabon</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Ghana</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Ghana</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Jordan</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Jordan</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Kenya</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Kenya</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Kuwait</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Kuwait</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Lebanon</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Lebanon</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Malawi</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Malawi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Mali</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Mali</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Mauritania</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Mauritania</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Mauritius</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Mauritius</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Morocco</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Morocco</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Mozambique</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Mozambique</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Niger</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Niger</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Nigeria</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Nigeria</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Oman</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Oman</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Qatar</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Qatar</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Rwanda</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Rwanda</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Saudi</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Saudi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Senegal</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Senegal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - South Africa</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - South Africa</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Sudan</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Sudan</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Syria</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Syria</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Tanzania</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Tanzania</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Tchad</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Tchad</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Togo</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Togo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Tunisia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Tunisia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - UAE</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - UAE</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Uganda</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Uganda</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Yemen</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Yemen</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Zambia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Zambia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - QMS - Zimbabwe</fullName>
+        <default>false</default>
+        <label>E-mail to Case - QMS - Zimbabwe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Reporting and Billing</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Reporting and Billing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Romania &amp; Moldova</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Romania &amp; Moldova</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Russia &amp; CIS</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Russia &amp; CIS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - SA &amp; Yemen</fullName>
+        <default>false</default>
+        <label>E-mail to Case - SA &amp; Yemen</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - SCE CIS invoicing</fullName>
+        <default>false</default>
+        <label>E-mail to Case - SCE CIS invoicing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Serbia &amp; Montenegro</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Serbia &amp; Montenegro</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Service Centre Europe</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Service Centre Europe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Singapore</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Singapore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - SIS Help Desk</fullName>
+        <default>false</default>
+        <label>E-mail to Case - SIS Help Desk</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Slovenia</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Slovenia</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - SNAP</fullName>
+        <default>false</default>
+        <label>E-mail to Case - SNAP</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - South West Africa</fullName>
+        <default>false</default>
+        <label>E-mail to Case - South West Africa</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Spain</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Spain</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Sri Lanka</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Sri Lanka</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Switzerland</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Switzerland</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Taïwan</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Taïwan</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Thailand</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Thailand</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - The Netherlands</fullName>
+        <default>false</default>
+        <label>E-mail to Case - The Netherlands</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Training Europe</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Training Europe</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - TSP Certification</fullName>
+        <default>false</default>
+        <label>E-mail to Case - TSP Certification</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Turkey</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Turkey</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - UK</fullName>
+        <default>false</default>
+        <label>E-mail to Case - UK</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Ukraine</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Ukraine</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - USA</fullName>
+        <default>false</default>
+        <label>E-mail to Case - USA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Uzbekistan</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Uzbekistan</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Venezuela</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Venezuela</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Vietnam</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Vietnam</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - WB-FYROM</fullName>
+        <default>false</default>
+        <label>E-mail to Case - WB-FYROM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ -  ATC</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ -  ATC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ -  ATS</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ -  ATS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ - Customer Service</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ - Customer Service</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ - Direct Sales</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ - Direct Sales</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ - Distribution KIT</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ - Distribution KIT</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ - Distribution PUB</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ - Distribution PUB</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ - DL Enrolment</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ - DL Enrolment</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ - DL Exams</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ - DL Exams</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ - Finance</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ - Finance</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - YMQ - ITDI</fullName>
+        <default>false</default>
+        <label>E-mail to Case - YMQ - ITDI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Exact Target commercial TEST</fullName>
+        <default>false</default>
+        <label>Exact Target commercial TEST</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Fax</fullName>
+        <default>false</default>
+        <label>Fax</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Finance - Americas (Internal)</fullName>
+        <default>false</default>
+        <label>Finance - Americas (Internal)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Finance - GVA (Internal)</fullName>
+        <default>false</default>
+        <label>Finance - GVA (Internal)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Financial Security Monitoring</fullName>
+        <default>false</default>
+        <label>Financial Security Monitoring</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FoP automatic renewal</fullName>
+        <default>false</default>
+        <label>FoP automatic renewal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Funds Management</fullName>
+        <default>false</default>
+        <label>Funds Management</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATA Americas - ID Card (CA)</fullName>
+        <default>false</default>
+        <label>IATA Americas - ID Card (CA)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IATA Internal User</fullName>
+        <default>false</default>
+        <label>IATA Internal User</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Internal Case</fullName>
+        <default>false</default>
+        <label>Internal Case</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Letter</fullName>
+        <default>false</default>
+        <label>Letter</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Massive FOP Creation</fullName>
+        <default>false</default>
+        <label>Massive FOP Creation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Monthly Report</fullName>
+        <default>false</default>
+        <label>Monthly Report</label>
+    </standardValue>
+    <standardValue>
+        <fullName>myIATA</fullName>
+        <default>false</default>
+        <label>myIATA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>New ISS Deployment</fullName>
+        <default>false</default>
+        <label>New ISS Deployment</label>
+    </standardValue>
+    <standardValue>
+        <fullName>OLS</fullName>
+        <default>false</default>
+        <label>OLS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Phone</fullName>
+        <default>true</default>
+        <label>Phone</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Portal</fullName>
+        <default>false</default>
+        <label>Portal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risk Monitoring Engine</fullName>
+        <default>false</default>
+        <label>Risk Monitoring Engine</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Voicemail</fullName>
+        <default>false</default>
+        <label>Voicemail</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Walk-in</fullName>
+        <default>false</default>
+        <label>Walk-in</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Web</fullName>
+        <default>false</default>
+        <label>Web</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Web SAF</fullName>
+        <default>false</default>
+        <label>Web SAF</label>
+    </standardValue>
+</StandardValueSet>

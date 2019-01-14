@@ -1,8 +1,8 @@
 @isTest
 private class trg_Case_FSM_Handle_NonCompliance_Test {
 
-    private static final string CASE_RECORDTYPE_FSM = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
-    private static final string NCRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
+    private static final string CASE_RECORDTYPE_FSM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
+    private static final string NCRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     public static final String PAX = 'Travel Agent';
 	public static final String CARGO = 'Cargo Agent';
 	
@@ -37,7 +37,7 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	private static list<Contact> CreateContacts(list<Account> lsAccnt) {
 		list<Contact> listcontact = new list<Contact>();
 		for(integer i=0; i<lsAccnt.size(); i++)
-			listcontact.add( new Contact( LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true) );
+			listcontact.add( new Contact( FirstName = 'Name', LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true) );
 		return listcontact;
 	}
 
@@ -83,10 +83,10 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	}
 	
 	private static map<string, EmailTemplate__c> CreateTemplates(list<IATA_ISO_Country__c> lsISO){
-		Recordtype recordtypeFSM = [Select Id, DeveloperName From RecordType where developerName like 'FSM' and sObjectType = 'EmailTemplate__c'];
+		Id recordtypeFSMId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'FSM');
 		list<EmailTemplate__c> lsET = new list<EmailTemplate__c>();
 		for(IATA_ISO_Country__c iso:lsISO){
-			lsET.add(new EmailTemplate__c(RecordtypeId = recordtypeFSM.Id, Template_Language__c = 'English', IATA_ISO_Country__c = iso.Id, Agent_Type__c='All'));//, UniqueId__c = ('FSM_' + iso.ISO_CODE__c + '_English')));
+			lsET.add(new EmailTemplate__c(RecordtypeId = recordtypeFSMId, Template_Language__c = 'English', IATA_ISO_Country__c = iso.Id, Agent_Type__c='All'));//, UniqueId__c = ('FSM_' + iso.ISO_CODE__c + '_English')));
 		}
 		
 		insert lsET;
@@ -157,7 +157,8 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	private static list<Case> getInsertedNCCase(){return [select Id from Case where RecordTypeId=:NCRecordTypeID];}
 	
 	//First Non-compliance
-	static testMethod void FirstNonComplianceTest(){
+	@isTest
+	static void FirstNonComplianceTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
 		
@@ -222,7 +223,8 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	
 	
 	//Simulate 2nd non-compliance
-	static testMethod void SecondNonComplianceTest(){
+	@isTest
+	static void SecondNonComplianceTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
 		
@@ -285,7 +287,8 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	
 	
 	//Simulate 3rd non-compliance
-	static testMethod void ThirdNonComplianceTest(){
+	@isTest
+	static void ThirdNonComplianceTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
 		test.StartTest();
@@ -356,7 +359,8 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	
 	
 	//Simulate 4th non-compliance (error)
-	static testMethod void fourthNonComplianceTest(){
+	@isTest
+	static void fourthNonComplianceTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
 		
@@ -390,7 +394,8 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	
 	
 	//Simulate 4th non-compliance (error)
-	static testMethod void CaseClosedTest(){
+	@isTest
+	static void CaseClosedTest(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
 		
@@ -422,7 +427,8 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	
 	
 	//First Non-compliance: Cargo with wrong New Ifap Deadline Date
-	static testMethod void FirstNonComplianceTestOnlyCargo(){
+	@isTest
+	static void FirstNonComplianceTestOnlyCargo(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		
 		lsCaseFSM = getFSMCases();
@@ -530,7 +536,8 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 	}
 	
 	
-	static testMethod void TestUpdate(){
+	@isTest
+	static void TestUpdate(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
 		
@@ -584,7 +591,8 @@ private class trg_Case_FSM_Handle_NonCompliance_Test {
 		test.StopTest();
 	}
 	
-	static testMethod void TestMultiFSM(){
+	@isTest
+	static void TestMultiFSM(){
 		list<Case> lsCaseFSM = CreateFSMCases();
 		system.assert(lsCaseFSM.size()>0);
 		

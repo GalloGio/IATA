@@ -7,10 +7,6 @@
         <recipients>
             <type>owner</type>
         </recipients>
-        <recipients>
-            <recipient>marquesc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>AP_notification/IAPP_Notification_for_LBM_approved</template>
     </alerts>
@@ -19,12 +15,7 @@
         <description>IAPP - Notify team leader for LBM approval</description>
         <protected>false</protected>
         <recipients>
-            <recipient>marquesc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>martinsp@iata.org</recipient>
-            <type>user</type>
+            <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>AP_notification/IAPP_Notification_for_LBM_pending_approval</template>

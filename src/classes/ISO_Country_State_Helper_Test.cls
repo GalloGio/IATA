@@ -31,6 +31,32 @@ private class ISO_Country_State_Helper_Test {
 	    
 	    List<SelectOption> lstStateOption = ISO_Country_State_Helper.getPicklistISOState(listCountry, listCountry[0].CountryId);
 	    system.assert(lstStateOption.size() == 5, 'Size of lstStateOption: ' + lstStateOption.size());
+
+	    List<IATA_ISO_Country__c> listISOCountry = ISO_Country_State_Helper.getIsoCountryByIsoCode('CA');
+	    system.assert(listISOCountry.size() == 1, 'Size of listISOCountry: ' + listISOCountry.size());
+	    listISOCountry = ISO_Country_State_Helper.getIsoCountryById(listISOCountry[0].Id);
+	    system.assert(listISOCountry.size() == 1, 'Size of listISOCountry: ' + listISOCountry.size());
+
+	    update new IATA_ISO_Country__c(Id=listISOCountry[0].Id, IEC_Zip_Postal_Code_required__c=true, VAT_Validation_Required__c=true);
+	    IATAIsoCountryDAO.resetMapIataIsoCountry();
+	    Map<Id, IATA_ISO_Country__c> mapId_Country = ISO_Country_State_Helper.requiredCountriesZipCode();
+	    system.assert(mapId_Country.size() == 1, 'Size of mapId_Country: ' + mapId_Country.size());
+	    system.assert(ISO_Country_State_Helper.requiredZipCode('CA') == true, 'Postal Code should be required for CA');
+	    mapId_Country = ISO_Country_State_Helper.requiredCountriesVAT();
+	    system.assert(mapId_Country.size() == 1, 'Size of mapId_Country: ' + mapId_Country.size());
+	    system.assert(ISO_Country_State_Helper.requiredVATNumber('CA') == true, 'VAT Number should be required for CA');
+
+	    List<IATA_ISO_State__c> listISOState = ISO_Country_State_Helper.getIsoStateByIsoCode('CA-QC');
+	    system.assert(listISOState.size() == 1, 'Size of listISOState: ' + listISOState.size());
+	    listISOState = ISO_Country_State_Helper.getIsoStateByIsoCode('CA', 'QC');
+	    system.assert(listISOState.size() == 1, 'Size of listISOState: ' + listISOState.size());
+	    listISOState = ISO_Country_State_Helper.getIsoStateById(listISOState[0].Id);
+	    system.assert(listISOState.size() == 1, 'Size of listISOState: ' + listISOState.size());
+
+	    List<SelectOption> listOption = ISO_Country_State_Helper.getCountriesSelectOption();
+	    system.assert(listOption.size() == 5, 'Size of listOption: ' + listOption.size());
+	    listOption = ISO_Country_State_Helper.getStatesSelectOption('CA');
+	    system.assert(listOption.size() == 5, 'Size of listOption: ' + listOption.size());
 	}
 
 } //*** end of class

@@ -1,0 +1,183 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningConnectedAppHelper">
+<aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+<aura:attribute name="showPopup" type="Boolean" default="false"/>
+<aura:attribute name="showRoles" type="Boolean" default="false"/>
+<aura:attribute name="pages" type="Integer[]" />
+<aura:attribute name="appNames" type="String[]" />
+<aura:attribute name="roles" type="Object" />
+<aura:attribute name="activeApp" type="String" /> 
+<aura:attribute name="activeAppPic" type="String" />
+<aura:attribute name="activeAppDescription" type="String" />
+<aura:attribute name="activeAppTerms" type="String" />
+<aura:attribute name="activeAppRoleSelectibility" type="Boolean" />
+<aura:attribute name="activePage" type="Integer" default="0"/>
+<aura:attribute name="selectedRole" type="String" />
+<aura:attribute name="submitDisabled" type="Boolean" default="true"/>
+<aura:attribute name="requestAppDisabled" type="Boolean" default="true"/>
+<aura:attribute name="showTermsConditions" type="Boolean" default="false"/>
+<aura:attribute name="termsLocked" type="Boolean" default="false"/>
+<aura:attribute name="Terms" type="Boolean" default="false"/>
+<aura:attribute name="toolTipBtn" type="String" default="You accept the Terms and Conditions"/>
+<aura:attribute name="requestSent" type="Boolean" default="false" />
+ 
+
+<div class="slds slds-grid">
+    
+    
+        <!-- <div class="launcherTitle"><h1>{!$Label.c.OneId_My_available_applications}</h1></div> -->
+        <div class="slds-size_1-of-1 slds-m-bottom_medium">
+            <button class="sfdc_button uiButton slds-truncate" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.handleClick}" style="float: none;">
+                <span class="" dir="ltr" alternativeText="Launch picker">{!$Label.c.Oneid_request_acess_to_a_new_service}</span>
+            </button>
+            <!--lightning:buttonIcon iconName="utility:apps" variant="bare" onclick="{! c.handleClick }" alternativeText="Launch picker" size="large"/-->
+        </div>
+    
+    <div class="slds-col--padded slds-size--12-of-12 slds-medium-size--3-of-12 slds-medium-order--3 slds-large-size--3-of-12 slds-large-order--3">&nbsp;</div>
+    
+	<div class="modal-glass fadein slds-backdrop--open" aura:id="backdrop"></div>
+</div>
+<div class="slds slds-grid--align-center">
+   <aura:if isTrue="{!v.showPopup}">
+        
+        <!-- <div id="popup" class=""> -->
+        <div class="slds-size--1-of-1 slds-medium-size--10-of-12 slds-large-size--1-of-2 popup">
+            
+            <lightning:buttonIcon iconName="utility:close" variant="bare" onclick="{! c.handleClose }" alternativeText="Close picker" size="large" class="closebutton"/>
+            
+			<aura:if isTrue="{! !v.requestSent}">
+            <aura:if isTrue="{!!v.showRoles}">
+
+                <!--lightning:buttonIcon iconName="utility:left" variant="bare" onclick="{! c.pagePrevious }" alternativeText="Close picker" size="large" class="leftarrow"/>
+                
+                <lightning:buttonIcon iconName="utility:right" variant="bare" onclick="{! c.pageNext }" alternativeText="Close picker" size="large" class="rightarrow"/-->
+
+                <button class="slds-button leftarrow slds-button--icon-bare " type="button" onclick="{! c.pagePrevious }">
+                    <span class="icon icon-navArrowLeft">
+                    </span>
+                </button>
+
+                <button class="slds-button rightarrow slds-button--icon-bare " type="button" onclick="{! c.pageNext }">
+                    <span class="icon icon-navArrowRight">
+                    </span>
+                </button>
+                
+                <div class="slds-text-heading--large">{!$Label.c.issp_apppicker_request_new_application}</div>
+                <div class="slds-p-horizontal--small slds-size--1-of-1">
+                    <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center slds-grid--vertical-align-center verticalMiddle">
+                        <div class="appcard slds-size--10-of-12 slds-medium-size--10-of-12 slds-large-size--7-of-12 slds-large-size--6-of-12">
+                            <img src="{!v.activeAppPic}" class="appImage"/>
+                            <aura:if isTrue="{!v.activeApp == 'FRED'}">
+                                <ui:outputText aura:id="activeApp" class="activeApp" value="{!v.activeApp + '+'}" />
+                                <aura:set attribute="else">
+                                    <ui:outputText aura:id="activeApp" class="activeApp" value="{!v.activeApp}" />
+                                </aura:set>
+                            </aura:if>
+                            <ui:outputText class="activeAppDescription" value="{!v.activeAppDescription}" />
+                            <aura:if isTrue="{!v.activeApp != null}">
+                            <div class="terms item">
+                                <ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox inlinewithlabel" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" disabled="{!v.termsLocked}"/>
+                                <a class="termsaccepted inlinewithlabel" href="{!v.activeAppTerms}" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
+                            </div>
+                            </aura:if>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="bottomnavigation">
+                    <aura:iteration items="{!v.appNames}" var="page" indexVar="index" aura:id="pagedots">
+                        <div class="dotWrapper">
+                            <ui:outputText class="{! v.activePage==index ? 'pageDot active' : 'pageDot inactive'}" click="{!c.changePage}" value="{!index}">&#9679;</ui:outputText>
+                        </div>
+                    </aura:iteration>
+                </div>
+
+                    <aura:if isTrue="{! v.activeAppRoleSelectibility}">
+                <button data-tooltip="{!v.toolTipBtn}" class="sfdc_button uiButton requestApp" aura:id="btnReqApp" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.showRoles}" disabled="{!v.requestAppDisabled}">
+                    <span class="label bBody truncate" dir="ltr">{!$Label.c.OneId_Request_this_App}</span>
+                </button>
+                        <aura:set attribute="else">
+                            <button class="sfdc_button uiButton" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.checkMandatoryFields}" disabled="{!v.requestAppDisabled}">
+                                <span class="label bBody truncate" dir="ltr" alternativeText="{!$Label.c.ISSP_Submit}">{!$Label.c.ISSP_Submit}</span>
+                            </button>
+                        </aura:set>
+                    </aura:if>
+
+
+
+                <aura:set attribute="else">
+                    <div aura:id="roleSelection" class="roleSelection">
+                        <div class="slds-grid">
+                            <div class="slds-text-heading--large">{!$Label.c.issp_apppicker_request_new_application}</div>
+                        </div>
+                        <div aura:id="requestFill" class="requestFill slds">
+                            <h2>{!$Label.c.issp_apppicker_select_role}</h2>
+                            <!-- <div class="appRoles "> -->
+                            <div class="rolenavigation">
+                                <div class="slds-grid slds-wrap ">
+                                    <aura:iteration items="{!v.roles}" var="role" indexVar="index">
+                                        <!--<div class="{!index%2==1 ? 'odd' : 'even'}">-->
+                                        <div class="role slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                            <div class="role-check">
+                                                <ui:inputRadio name="role" aura:id="roleOptions" label="{!role.Role__c}" click="{!c.clickRadio}" />
+                                            </div>
+                                            <div class="role-labels">
+                                                <div class="role-title">
+                                                    <label class="uiLabel-left form-element__label uiLabel">
+                                                        <span>{!role.Role__c}</span>
+                                                    </label>
+                                                    <!-- <label>{!role.Role__c}</label> -->
+                                                </div>
+                                                <div class="role-description">
+                                                    {!role.Description__c}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </aura:iteration>
+                                </div>
+                            </div>
+
+                            <div>
+                                <!-- <ui:button label="{!$Label.c.ISSP_Back}" press="{!c.hideRoles}"/> -->
+                                <button class="sfdc_button uiButton" disabled="{!v.submitDisabled}" aria-live="off" type="button" data-aura-class="uiButton--default uiButton"
+                                            onclick="{!c.checkMandatoryFields}"><span class="label bBody truncate" dir="ltr"
+                                                                           alternativeText="{!$Label.c.ISSP_Submit}">{!$Label.c.ISSP_Submit}</span></button>
+
+                                <!--i:button label="{!$Label.c.ISSP_Submit}" press="{!c.submitRequest}" disabled="{!v.submitDisabled}"/-->
+                            </div>
+                        </div>
+                        </div>
+                    </aura:set>
+                </aura:if>
+                
+                <aura:set attribute="else">
+                	<div class="slds-grid">
+                        <div class="slds-text-heading--large">{!$Label.c.issp_apppicker_request_new_application}</div>
+                    </div>
+                    <div aura:id="requestSent" class="requestSent">
+                            <h2>{!$Label.c.OneId_Your_request_has_been_successfully_sent}</h2>
+							<aura:if isTrue="{! v.activeApp == 'FRED'}">
+	                            <p>{!$Label.c.OneId_Thank_you_Fred_Access_Request}</p>
+							
+								<aura:set attribute="else">
+		                            <p>{!$Label.c.OneId_Thank_you_for_requesting_access_to_our_service}</p>
+								</aura:set>
+							</aura:if>
+
+                            <div class="barButton">
+                                <button class="sfdc_button uiButton" aria-live="off" type="button" data-aura-class="uiButton--default uiButton" onclick="{!c.closeRequest}"><span class="label bBody truncate" dir="ltr" alternativeText="{!$Label.c.ISSP_Submit}">Close</span></button>
+                            </div>
+                        </div>
+                </aura:set>
+            </aura:if>
+       </div>
+   </aura:if>
+</div>
+<div aura:id="spinner" class="slds-spinner_container slds-hide">
+    <div class="slds-spinner--brand slds-spinner slds-spinner--large" aria-hidden="false" role="alert">
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+    </div>
+</div>
+</aura:component>

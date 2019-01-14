@@ -10,9 +10,8 @@ public with sharing class AMP_AccountManagementController {
               RecordType.Name, Region_formula__c, MITA_Member__c, Membership_SITA__c,
               AM_Account_Manager__c, AM_Account_Manager__r.Name, AM_Account_Manager__r.Email,
               AM_Account_Manager__r.Phone, AM_Account_Manager__r.PPD_Tittle__c, AM_Account_Manager__r.PPD_Office__c,
-              AM_Account_Manager__r.MobilePhone, SAP_BW_report_with_sales_figures__c, SAP_BW_report_without_sales_figures__c
-              //,
-            //   Airline_Model_Type__c, Airline_Business_Model_Detail__c 
+              AM_Account_Manager__r.MobilePhone, SAP_BW_report_with_sales_figures__c, SAP_BW_report_without_sales_figures__c, SanctionNotice__c, Due_Diligence_Status__c,
+              Airline_Model_Type__c
             FROM Account
             WHERE Id = :accountId
                LIMIT 1];

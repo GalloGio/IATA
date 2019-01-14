@@ -3,12 +3,23 @@
     <customSettingsType>List</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Process__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>identify if the configuration is visible for AMS, CNS R or CNS C</inlineHelpText>
+        <label>Process</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>TCA_Application_withdrawal__c</fullName>
         <description>Change Code to be applied after application withdrawal</description>
         <externalId>false</externalId>
         <inlineHelpText>Change Code to be applied after application withdrawal</inlineHelpText>
         <label>Application withdrawal</label>
-        <length>5</length>
+        <length>15</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -30,7 +41,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Change Code to be applied after manager approval</inlineHelpText>
         <label>Manager approval</label>
-        <length>5</length>
+        <length>15</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -50,7 +61,7 @@
         <fullName>TCA_Sanity_check__c</fullName>
         <externalId>false</externalId>
         <label>Sanity check</label>
-        <length>5</length>
+        <length>15</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -129,6 +140,14 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>TC_Removal_of_trade_name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>CNS - Removal of trade name</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>TC_VMFR__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -137,5 +156,26 @@
         <type>Checkbox</type>
     </fields>
     <label>AMS Agency Changes Configuration</label>
+    <listViews>
+        <fullName>Multiple_changes_combination</fullName>
+        <columns>NAME</columns>
+        <columns>TC_Legal_status__c</columns>
+        <columns>TC_Name__c</columns>
+        <columns>TC_Location__c</columns>
+        <columns>TC_Location_type__c</columns>
+        <columns>TC_Location_with_inspection__c</columns>
+        <columns>TC_Major_Shareholding__c</columns>
+        <columns>TC_Minor_Shareholding__c</columns>
+        <columns>TC_Ownership_to_IATA_Agent__c</columns>
+        <columns>TC_Ownership_to_non_IATA_Agent__c</columns>
+        <columns>TC_Removal_of_trade_name__c</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>TCA_Not_Applicable_Steps__c</columns>
+        <columns>TCA_Sanity_check__c</columns>
+        <columns>TCA_Manager_approval__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Multiple changes combination</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

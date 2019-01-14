@@ -47,8 +47,8 @@
                     viewportHeight = jQuery( window ).height();
                     footerHeight = jQuery('.footer-actions').outerHeight();
                     headerHeight = jQuery('.page-header').outerHeight();
-                    iframeDiff = jQuery('#IECEBC_MosaicoEditor').outerHeight() - jQuery('#IECEBC_MosaicoEditor').innerHeight();
-                	jQuery('#IECEBC_MosaicoEditor').height(viewportHeight - (footerHeight + headerHeight + iframeDiff));
+                    iframeDiff = jQuery('#IECEBC_MosaicoEditor,#IECEBC_CampaignPreview').outerHeight() - jQuery('#IECEBC_MosaicoEditor,#IECEBC_CampaignPreview').innerHeight();
+                	jQuery('#IECEBC_MosaicoEditor,#IECEBC_CampaignPreview').height(viewportHeight - (footerHeight + headerHeight + iframeDiff));
                     
                     noticeDiff = jQuery('#notice').outerHeight() - jQuery('#notice').innerHeight();
                 	jQuery('#notice').height(viewportHeight - (footerHeight + headerHeight + noticeDiff));

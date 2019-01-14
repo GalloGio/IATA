@@ -1,5 +1,4 @@
 public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
-    public static Integer ITEMS_PER_PAGE = 200;
     public Decimal STORAGE_CAPACITY=1; //in mg
     public Decimal FILE_SIZE_MAX=1; //in meg
     private boolean firsttimepageload=true;
@@ -64,10 +63,8 @@ public class vfIECEBC_ResourceList extends vfIECEBC_Abstract_List {
         options.add(new SelectOption('Image_Type__c DESC','Image Type'));
         options.add(new SelectOption('Image_size__c DESC','Image Size'));    
         
-        options.add(new SelectOption('CreatedDate DESC','Upload Date - Descending')); 
         options.add(new SelectOption('CreatedDate ASC','Upload Date - Ascending'));
-
-
+        options.add(new SelectOption('CreatedDate DESC','Upload Date - Descending')); 
         return options;
        
     }

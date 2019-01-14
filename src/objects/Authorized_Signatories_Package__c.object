@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>This object will use attachments to store sensitive documents related to the authorized signatories of an account. IMPORTANT! Access to this object should only be ranted through the permission set, due to the sensitive nature of the data it contains.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -111,4 +108,5 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

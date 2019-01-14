@@ -47,10 +47,6 @@
                 <field>Origin</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>myIATA_origin__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NOW_ACCA_Date_Time_New_c__c</field>
             </layoutItems>
@@ -239,7 +235,7 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

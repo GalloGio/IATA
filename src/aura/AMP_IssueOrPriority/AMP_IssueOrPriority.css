@@ -11,13 +11,6 @@
     width: auto !important;
 }
 
-.THIS div.ipad {
-    display: none;
-}
-.THIS div.normal {
-    display: inline-block;
-}
-
 @media (max-width: 1200px) {
     
 

@@ -6,7 +6,7 @@ private class AMS_RecordCreatorWebserviceTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert ctry;
 
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account acct = new Account();
 
@@ -57,24 +57,18 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		insert acct2;
 
-
-		//List<Account> accts = new List<Account>{acct,acct2};
-		//insert accts;
-
 		System.debug('Accounts created');
 
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
-		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste11', Lastname='test11', Phone = '9111111111', MobilePhone = '9111111111', Email = 'test11@test.com', Financial_Assessment_Contact__c = false);
 		
-		Contact co2 = new Contact(AccountId = acct2.Id, Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
+		Contact co2 = new Contact(AccountId = acct2.Id, Firstname = 'teste22', Lastname='test22', Phone = '9111111122', MobilePhone = '9111111122', Email = 'test22@test.com', Financial_Assessment_Contact__c = false);
 		
 		List<Contact> contacts = new List<Contact>{co1,co2};
 		insert contacts;
 
 		System.debug('Contacts created');
 
-		ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+		ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(RecordTypeId = rtCommCase, AccountId = acct.Id, Account_Concerned__c = acct.Id, ContactId = co1.Id);
 
@@ -104,6 +98,9 @@ private class AMS_RecordCreatorWebserviceTest {
 		
 		Account acct = [SELECT Id from Account LIMIT 1];
 
+		insert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
+		insert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CTA', Change_Code__c = 'CTA');
+
 		AMS_RecordCreatorWebservice.AccountChanges acctChange1 = new AMS_RecordCreatorWebservice.AccountChanges('TradeName__c','Old TradeName Value','New TradeName Value');
 		AMS_RecordCreatorWebservice.AccountChanges acctChange2 = new AMS_RecordCreatorWebservice.AccountChanges('Email__c','Old Email Value','New Email Value');
 		AMS_RecordCreatorWebservice.AccountChanges acctChange3 = new AMS_RecordCreatorWebservice.AccountChanges('In_a_Airport__c', 'true','false');
@@ -129,6 +126,8 @@ private class AMS_RecordCreatorWebserviceTest {
 		Test.startTest();
 		
 		Account acct = [SELECT Id from Account LIMIT 1];
+
+		insert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
 
 		AMS_RecordCreatorWebservice.AccountChanges acctChange1 = new AMS_RecordCreatorWebservice.AccountChanges('Name','Old Name Value','New Name Value');
 		AMS_RecordCreatorWebservice.AccountChanges acctChange2 = new AMS_RecordCreatorWebservice.AccountChanges('Email__c','Old Email Value','New Email Value');
@@ -250,7 +249,7 @@ private class AMS_RecordCreatorWebserviceTest {
 		insert h;
 
 
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
 		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
 
@@ -351,9 +350,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		insert h;
 
-		//insert rel;
-
-		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		
 		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
 
@@ -438,8 +435,8 @@ private class AMS_RecordCreatorWebserviceTest {
 		AMS_OSCAR__c oscar = oscarLst.get(0);
 
 		System.assertEquals(oscar.Type_of_change__c,'Ownership to non-IATA Agent');
-
-		List<AMS_Process_Detail__c> details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId];
+//DTULLO: Added Record Type
+		List<AMS_Process_Detail__c> details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId and RecordType.Developername = 'Agency_Involved'];
 
 		System.assertEquals(details.size(),2);
 
@@ -488,21 +485,129 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		update accr;
 
-		Id previousOwner = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
-		Id previousCompanyOwner = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
+		Id previousOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
+		Id previousCompanyOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Previous_Company_Owner');
 
-		AMS_Accreditation_Contact__c acontact1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accr.Id, Company__c = acct.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC', Mobile__c='+1112345678', Phone__c='3424322343', Email__c='uni123que@email2.com', RecordTypeId=previousOwner);
+		AMS_Accreditation_Contact__c acontact1 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accr.Id, Company__c = acct.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC', Mobile__c='+1112345678', Phone__c='3424322341', Email__c='uni123que@email2.com', RecordTypeId=previousOwner);
 
-		AMS_Accreditation_Contact__c acontact2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accr.Id, Company__c = acct.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='unique2@email2.com', RecordTypeId=previousCompanyOwner);
+		AMS_Accreditation_Contact__c acontact2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accr.Id, Company__c = acct.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322342', Email__c='unique2@email2.com', RecordTypeId=previousCompanyOwner);
 
 		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2};
 
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'MAJOR.CHANGES',caseCom.Id);
 
-		List<AMS_Accreditation_Contact__c> contactsCreated = [SELECT Id from AMS_Accreditation_Contact__c where RecordType.DeveloperName IN ('Company','Current_Company_Owner','Current_Owner','Person','Trained_Staff') and AMS_Pax_Accreditation_Form__c = :accr.Id];
+		List<AMS_Accreditation_Contact__c> contactsCreated = [SELECT Id from AMS_Accreditation_Contact__c where RecordType.DeveloperName IN ('Company','Current_Company_Owner', 'Current_Owner','Person','Trained_Staff') and AMS_Pax_Accreditation_Form__c = :accr.Id];
 
 		System.assertEquals(contactsCreated.size(),2);
 
+		Test.stopTest();
+	}
+
+	@isTest static void createAccreditationForSA() {
+
+		IATA_ISO_Country__c ctry = [SELECT id from IATA_ISO_Country__c limit 1];
+            
+        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account acct = new Account();
+
+		acct.NAME = 'Lions Travel 8 HO';
+		acct.TYPE = 'Non-IATA Passenger Agent';
+		acct.RECORDTYPEID = accountRT;
+		acct.BILLINGCOUNTRY = 'Italy';
+		acct.INDUSTRY = 'Travel Agent';
+		acct.CURRENCYISOCODE = 'USD';
+		acct.TRADENAME__C = 'Lions Travel 8 HO';
+		acct.IATA_MEMBER__C = false;
+		acct.LOCATION_TYPE__C = 'HO';
+		acct.LEGAL_NAME__C = 'Lions Travel 8 HO legal name';
+		acct.SHORT_NAME__C = 'Lions Travel 8 HO short name';
+		acct.IATA_ISO_COUNTRY__C = ctry.Id;
+		acct.CATEGORY__C = 'IATA Passenger Sales Agent';
+		acct.SECTOR__C = 'Travel Agent';
+		acct.LOCATION_CLASS__C = 'P';
+		acct.COMPANY_TYPE__C = 'A';
+		acct.IN_A_AIRPORT__C = false;
+		acct.REASON_FOR_CREATION__C = 'Created by customer';
+
+		
+		insert acct;
+
+		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'testd1@test.com', Financial_Assessment_Contact__c = false);
+		
+		Contact co2 = new Contact(AccountId = acct.Id, Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'test2d1@test.com', Financial_Assessment_Contact__c = false);
+		
+		List<Contact> contacts = new List<Contact>{co1,co2};
+
+		insert contacts;
+
+		AMS_Account_Role__c role = new AMS_Account_Role__c();
+		role.Owner_Name__c = 'Contact 1';
+		role.Contact__c = co1.Id;
+		role.Account__c = acct.Id;
+		role.Percentage__c = 50;
+
+		AMS_Account_Role__c role2 = new AMS_Account_Role__c();
+		role2.Owner_Name__c = 'Contact 2';
+		role2.Contact__c = co2.Id;
+		role2.Account__c = acct.Id;
+		role2.Percentage__c = 50;
+
+		List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>{role,role2};
+
+		insert roles;
+
+		System.debug('Contacts created');
+
+		ID rtSAAMCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
+
+		Case saamCase = new Case(RecordTypeId = rtSAAMCase, AccountId = acct.Id, Account_Concerned__c = acct.Id, ContactId = co1.Id);
+
+		insert saamCase;
+
+		Test.startTest();
+
+		AMS_RecordCreatorWebservice.createAccreditationForSA(saamCase.Id);
+
+		List<Account> accounts = [SELECT Id from Account where ParentId = :acct.Id];
+
+		System.assertEquals(1,accounts.size());
+
+		List<AMS_Pax_Accreditation_Form__c> accreditationForms = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :saamCase.Id];
+
+		System.assertEquals(1,accreditationForms.size());
+
+		List<AMS_Accreditation_Contact__c> accreditationContacts = [SELECT Id from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationForms.get(0).Id];
+
+		System.assertEquals(2,accreditationContacts.size());
+
+		List<AMS_Agencies_relationhip__c> relationShips = [SELECT Id from AMS_Agencies_relationhip__c where Parent_Account__c = :acct.Id and Child_Account__c = :accounts.get(0).Id];
+
+		System.assertEquals(1,relationShips.size());
+
+		Test.stopTest();
+	}
+
+	@isTest static void createOptinOptOut() {
+
+		List<Account> acctLst = [SELECT Id, Name, ParentId from Account];
+
+		Account acct = acctLst.get(0);
+
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+		acct.RecordTypeId = accountAgencyRT;
+		acct.IATACODE__c = '1234567';
+		update acct;
+
+		Test.startTest();
+
+		Case caseCom = [SELECT Id from Case where AccountId = : acct.Id];
+
+		AMS_Pax_Accreditation_Form__c accr = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom.Id];
+
+		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'ANG.FS.OPTINOUT',caseCom.Id);
+		
 		Test.stopTest();
 	}
 }

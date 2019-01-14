@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Used to dynamically assign Live Agent chat buttons</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ButtonId__c</fullName>
+        <externalId>false</externalId>
+        <label>ButtonId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Button_Per_Topic__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If is checked, then bypass code and show this button for selected topic in Portal.</description>
+        <externalId>false</externalId>
+        <label>Button Per Topic</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>DeploymentId__c</fullName>
+        <externalId>false</externalId>
+        <label>DeploymentId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Language__c</fullName>
+        <externalId>false</externalId>
+        <label>Language</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Region__c</fullName>
+        <description>Contains the region the chat button refers to (Europe, Africa &amp; Middle East, Americas, China &amp; North Asia, Asia &amp; Pacific)</description>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <length>150</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sectors__c</fullName>
+        <description>CSV with the Account Sectors allowed to show the chat button</description>
+        <externalId>false</externalId>
+        <label>Sectors</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Topic__c</fullName>
+        <description>Topic API Name taken from Data Categories, to specify button per Topic</description>
+        <externalId>false</externalId>
+        <label>Topic</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>LiveAgentButtonSettings</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Sectors__c</columns>
+        <columns>Language__c</columns>
+        <columns>ButtonId__c</columns>
+        <columns>DeploymentId__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <visibility>Public</visibility>
+</CustomObject>

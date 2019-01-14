@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>29.0</apiVersion>
+    <available>true</available>
+    <description>Notification that a Portal user email has been changed</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP Change Email Address - CNS</name>
+    <style>none</style>
+    <subject>Welcome to IATA Customer Service Portal</subject>
+    <type>visualforce</type>
+</EmailTemplate>

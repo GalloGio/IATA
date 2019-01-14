@@ -1,0 +1,15 @@
+<apex:page controller="ISSP_ANG_ProductComparison" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+	<html>		
+		<c:ISSP_Header ></c:ISSP_Header>   
+	 	<body>
+            
+	 		<div class="container">
+		 		<c:ISSP_CustomNavigation communityName="{!communityName}"/>
+				<apex:form >
+					<c:ANG_ProductComparison helperParam="{! helper}"/>
+				</apex:form>
+				<c:ISSP_CustomFooter communityName="{!communityName}"/>
+			</div>
+		</body>	   	
+    </html>
+</apex:page>

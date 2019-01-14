@@ -12,7 +12,10 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 	public User currentUser {get;set;}
 
 	public string preview {get;set;}
-
+	
+	//time range in minutes to include Feed Item createDate to compensate broadcast time skips
+	private static Integer rangeInMinutes = Integer.ValueOf(Account_Management_Settings__c.getInstance().Topic_Digest_Time_Range_Aggregator__c);
+	
 	public AMP_ChatterTopicSubscribeController() {
 		showPreview = false;
 		if(ApexPages.currentPage().getParameters().get('showPreview') == '1') showPreview = true;
@@ -25,7 +28,28 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		lsTopicWrappers = getTopicWrappers();
 		dailyOrWeekly = 'Daily';
 		if(currentUser.AMP_Digest_Daily_or_Weekly__c != null && currentUser.AMP_Digest_Daily_or_Weekly__c == 'Weekly') {dailyOrWeekly = 'Weekly';}
-		preview = getEmailBody(currentUser, lsAllFeedItems);
+
+		Map<Id, Account> mpAccountId2Account = getAccountId2Account(lsHQAccounts);
+		lsTopicAssignments = getTopicAssignments(lsAllFeedItems);
+		preview = getEmailBody(currentUser, lsAllFeedItems, lsTopicAssignments, mpAccountId2Account);
+	}
+
+	public static List<TopicAssignment> getTopicAssignments(List<FeedItem> lsAllFeedItems) {
+		List<Topic> lsBroadcastTopics = getBroadCastTopics();
+		return
+			[SELECT Id, TopicId, EntityId, Topic.Name
+			FROM TopicAssignment
+			WHERE EntityId IN :lsAllFeedItems AND TopicId IN :lsBroadcastTopics
+			LIMIT 10000];
+
+	}
+
+	public Map<Id, Account> getAccountId2Account(List<Account> lsHQAccounts) {
+		Map<Id, Account> mpAccountId2Account = new Map<Id,Account>();
+		for(Account a: lsHQAccounts) {
+			mpAccountId2Account.put(a.Id,a);
+		}
+		return mpAccountId2Account;
 	}
 
 	public PageReference savePreferences() {
@@ -86,7 +110,8 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			dayOrWeek = 'week';
 			// lsAllFeedItems = getAllFeedItems(lsHQAccounts);
 		}
-		preview = getEmailBody(currentUser, lsAllFeedItems, favouriteTopics, dayOrWeek);
+		Map<Id, Account> mpAccountId2Account = getAccountId2Account(lsHQAccounts);
+		preview = getEmailBody(currentUser, lsAllFeedItems, lsTopicAssignments, mpAccountId2Account, favouriteTopics, dayOrWeek);
 
 		return null;
 	}
@@ -132,9 +157,9 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			[SELECT Id, Body, ParentId, Type, CreatedDate, CreatedById,
 				CreatedBy.FirstName, CreatedBy.LastName
 			FROM FeedItem
-			WHERE Type='TextPost' AND ParentId IN :lsAccounts AND CreatedDate > LAST_WEEK
+			WHERE Type='TextPost' AND ParentId IN :lsAccounts AND CreatedDate = LAST_N_DAYS:7
 			ORDER By CreatedDate Desc, Body
-			LIMIT 100];
+			LIMIT 10000];
 
 		return lsFeedItem;
 	}
@@ -145,26 +170,32 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 			[SELECT Id, Body, ParentId, Type, CreatedDate, CreatedById,
 				CreatedBy.FirstName, CreatedBy.LastName
 			FROM FeedItem
-			WHERE Type='TextPost' AND ParentId IN :lsAccounts AND CreatedDate > YESTERDAY
+			WHERE Type='TextPost' AND ParentId IN :lsAccounts AND CreatedDate = YESTERDAY
 			ORDER By CreatedDate Desc, Body
-			LIMIT 100];
+			LIMIT 10000];
 
 		return lsFeedItem;
 	}
 
 	public static List<Topic> getBroadCastTopics() {
 		List<String> lsBroadcastTopicNames =
-			new List<String>{	'broadcastAll Regions',
-								'broadcastAfrica & Middle East',
-								'broadcastAmericas',
-								'broadcastAsia & Pacific',
-								'broadcastChina & North Asia',
-								'broadcastEurope'};
+			new List<String>{	'Broadcast All Regions',
+								'Broadcast Africa & Middle East',
+								'Broadcast Americas',
+								'Broadcast Asia & Pacific',
+								'Broadcast China & North Asia',
+								'Broadcast Europe'};
 		return [SELECT Id,Name FROM Topic WHERE Name IN :lsBroadcastTopicNames];
 	}
 
-
-	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems) {
+	/**
+	Parameters:
+	currentUser: the user who's viewing the VF page or being looped in the batch
+	lsAllFeedItems: all feeditems that matched the query, not yet filtered for this user
+	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
+	mpAccountId2Account: a map to get the Account with the Id
+	**/
+	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, List<TopicAssignment> lsTopicAssignments, Map<Id, Account> mpAccountId2Account) {
 
 		String emailBody = '';
 		// set the greeting to be either day or week
@@ -175,20 +206,29 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		if(currentUser.AMP_Digest_Topics__c != null) {
 			lsFavouriteTopics = currentUser.AMP_Digest_Topics__c.split(',');
 		}
-		emailBody += getEmailBody( currentUser,  lsAllFeedItems, lsFavouriteTopics,  dayOrWeek);
+		emailBody += getEmailBody( currentUser,  lsAllFeedItems, lsTopicAssignments, mpAccountId2Account, lsFavouriteTopics,  dayOrWeek);
 		return emailBody;
 	}
 
-	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, List<String> lsFavouriteTopics, String dayOrWeek) {
+	/**
+	Parameters:
+	currentUser: the user who's viewing the VF page or being looped in the batch
+	lsAllFeedItems: all feeditems that matched the query, not yet filtered for this user
+	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
+	mpAccountId2Account: a map to get the Account with the Id
+	lsFavouriteTopics: the selected topics for this user
+	dayOrWeek: literally 'day' or 'week'
+	**/
+	public static String getEmailBody(User currentUser, List<FeedItem> lsAllFeedItems, List<TopicAssignment> lsTopicAssignments, Map<Id,Account> mpAccountId2Account, List<String> lsFavouriteTopics, String dayOrWeek) {
 
 		String emailBody = '';
 		emailBody += getEmailHeader(currentUser, dayOrWeek);
 
-		List<Topic> lsBroadcastTopics = getBroadCastTopics();
-		List<TopicAssignment> lsTopicAssignments = [SELECT Id, TopicId, EntityId FROM TopicAssignment WHERE EntityId IN :lsAllFeedItems AND TopicId IN :lsBroadcastTopics];
+		// List<Topic> lsBroadcastTopics = getBroadCastTopics();
+		// List<TopicAssignment> lsTopicAssignments = [SELECT Id, TopicId, EntityId, Topic.Name FROM TopicAssignment WHERE EntityId IN :lsAllFeedItems AND TopicId IN :lsBroadcastTopics];
 		String topicBody = '';
-		for(String t : lsFavouriteTopics) {
-			topicBody += getTopicBody(currentUser, t, lsAllFeedItems,lsTopicAssignments, dayOrWeek);
+		for(String topicName : lsFavouriteTopics) {
+			topicBody += getTopicBody(currentUser, topicName, lsAllFeedItems, mpAccountId2Account, lsTopicAssignments, dayOrWeek);
 		}
 		emailBody += topicBody;
 		emailBody += getEmailFooter();
@@ -255,8 +295,6 @@ public without sharing class AMP_ChatterTopicSubscribeController {
         '}'+
     '</style>';
 		emailBody +=	'</head>';
-
-
 
 		emailBody +=	'<body style="-moz-box-sizing:border-box;-ms-text-size-adjust:100%;'+
 							'-webkit-box-sizing:border-box;-webkit-text-size-adjust:100%;Margin:0;'+
@@ -327,9 +365,20 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 
 	public static String getEmailFooter() {
 		String emailBody = '';
+		emailBody += getSpacer(10);
 		// emailBody +='<TR> <TD style="FONT-SIZE: 28px; LINE-HEIGHT: 28px" bgColor=#ffffff height=28>&nbsp;</TD></TR>';
 		// emailBody +='</TBODY></table></TBODY></table>\n</body></html>';
+		emailBody += '<table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">'+
+                        '<tbody>'+
+                            '<tr style="padding:0;text-align:left;vertical-align:top">'+
+                                '<td style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left">'+
+									'To change your email settings, click <a href="'+URL.getSalesforceBaseUrl().toExternalForm() + '/apex/AMP_ChatterTopicSubscribe">here</a>'+ // '+URL.getSalesforceBaseUrl().toExternalForm() + '
+								'</td>'+
+                            '</tr>'+
+                        '</tbody>'+
+                    '</table>';
 
+		emailBody += getSpacer(10);
 		emailBody +='</td>\n </tr></TBODY></table></table>';
 		emailBody +='</center>';
 		emailBody +='</td>\n </tr> </table>';
@@ -356,16 +405,22 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		return emailBody;
 	}
 
-	public static String getTopicBody(User currentUser, String topicName,  List<FeedItem> lsAllFeedItems, List<TopicAssignment> lsTopicAssignments, String dayOrWeek) {
+	/**
+	Parameters:
+	currentUser: the user who's viewing the VF page or being looped in the batch
+	topicName: the name for the Topic we're building a table for
+	lsAllFeedItems: all feeditems that matched the query, not yet filtered for this user
+	mpAccountId2Account: a map to get the Account with the Id
+	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
+	dayOrWeek: literally 'day' or 'week'
+	**/
+	public static String getTopicBody(User currentUser, String topicName, List<FeedItem> lsAllFeedItems, Map<Id,Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments, String dayOrWeek) {
 
 		List<Id> lsAccountIds = new List<Id>();
-		// List<TopicFeedItems> lsTopicAssignments = getTopicFeedItems();
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
 		Integer amountOfFeedItems = 0;
-		// lsBroadcastTopics = getBroadCastTopics();
-		List<Topic> lsBroadcastTopics = getBroadCastTopics();
-
+		
 		// get a count of how many chatter posts mention this topic
 		for(FeedItem fi : lsAllFeedItems) {
 			if(dayOrWeek == 'day' && fi.CreatedDate < System.now().addDays(-1) ) {
@@ -398,49 +453,58 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 
 
 			Integer feedItemCounter = 0;
+			Datetime timeRange = null;
+			
 			for(FeedItem fi : lsAllFeedItems) {
 				// for daily digest ignore older posts
 				if(dayOrWeek == 'day' && fi.CreatedDate < System.now().addDays(-1) ) {
 					continue;
 				}
 				if(fi.Body.toLowerCase().contains('#'+topicName.toLowerCase())) {
+					
 					topicFeedItemCounter++;
 					lsAccountIds.add(fi.ParentId);
-
-					if(feedItemCounter<lsAllFeedItems.size()-1) System.debug('next: '+ lsAllFeedItems[feedItemCounter+1].Body + ' ' + lsAllFeedItems[feedItemCounter+1].CreatedDate + ' ' + feedItemCounter);
-						// see if the next post is the same for different parent
-						if(	feedItemCounter < lsAllFeedItems.size()-1 &&
-							fi.CreatedDate == lsAllFeedItems[feedItemCounter+1].CreatedDate &&
-							fi.Body ==  lsAllFeedItems[feedItemCounter+1].Body) {
-						}
-						// only add post if the next one is not the same
-						else {
-							List<Topic> lsFITopics = new List<Topic>();
-							for(Topic to : lsBroadcastTopics) {
-								for(TopicAssignment ta : lsTopicAssignments) {
-									if(to.Id == ta.TopicId && ta.EntityId == fi.Id) {
-										lsFITopics.add(to);
-									}
-								}
-							}
-
-							emailBody += getFeedItemBody(fi,  lsAccountIds,  lsFITopics, lsTopicAssignments);
-
-							if(topicFeedItemCounter < amountOfFeedItems) {
-								emailBody += feeditemSeparator();
-							}
-
-
-							lsAccountIds.clear();
-						}
+					
+					//aggregates each feed item created in this time range interval
+					if(timeRange == null){
+						timeRange = fi.CreatedDate;
+						timeRange.addMinutes(rangeInMinutes);
 					}
-					feedItemCounter++;
+					
+					// see if the next post is the same for different parent
+					if(	feedItemCounter < lsAllFeedItems.size()-1 &&
+						fi.CreatedDate <= timeRange &&
+						fi.CreatedById == lsAllFeedItems[feedItemCounter+1].CreatedById &&
+						fi.Body ==  lsAllFeedItems[feedItemCounter+1].Body) {
+					}
+					// only add post if the next one is not the same
+					else {
+
+						emailBody += getFeedItemBody(fi,  lsAccountIds, mpAccountId2Account, lsTopicAssignments);
+
+						if(topicFeedItemCounter < amountOfFeedItems) {
+							emailBody += feeditemSeparator();
+						}
+
+						lsAccountIds.clear();
+						timeRange = null;
+						
+					}
 				}
+				feedItemCounter++;
+			}
 		}
 		return emailBody;
 	}
 
-	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, List<Topic> lsTopics, List<TopicAssignment> lsTopicAssignments) {
+	/**
+	Parameters:
+	fi: the FeedItem we're building the line for
+	lsAccountIds: the list of Accounts' Ids who received the same FeedItem
+	mpAccountId2Account: a map to get the Account with the Id
+	lsTopicAssignments: all the TopicAssignments for the lsAllFeedItems and Broadcast topics
+	**/
+	public static String getFeedItemBody(FeedItem fi, List<Id> lsAccountIds, Map<Id, Account> mpAccountId2Account, List<TopicAssignment> lsTopicAssignments) {
 		String fonts = '\'Salesforce Sans\', \'Helvetica Neue\', Helvetica, Arial, \'Sans Serif\'';
 		String emailBody = '';
 		emailBody += '<table class="row collapse collection" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%">'+
@@ -460,9 +524,11 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 								'<table id="informacao" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:430px">'+
 									'<tr style="padding:0;text-align:left;vertical-align:top">'+
 										'<th style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
-											'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 20px;text-align:left;width:430px;"><a href="https://iata--amp2.cs84.my.salesforce.com/005w0000003Pu27?fromEmail=1&s1oid=00D5E0000008pnX&s1nid=000000000000000&s1uid=005w0000003Pu27&s1ext=0&emkind=chatterUnifiedUserDigest&emtm=1505774399894"'+
-													'style="color:#2f78b5;text-decoration:none;">'+fi.CreatedBy.FirstName + ' ' + fi.CreatedBy.LastName+'</a></p>'+
-											'<p style="Margin:0;margin-bottom:0px;color:#94a4bd;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 20px;text-align:left;width:430px;">Monday, September 18, 2017 12:37 PM</p>'+
+											'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 20px;text-align:left;width:430px;">'+
+													+fi.CreatedBy.FirstName + ' ' + fi.CreatedBy.LastName+'</p>'+
+											'<p style="Margin:0;margin-bottom:0px;color:#94a4bd;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 20px;text-align:left;width:430px;">'+
+												fi.CreatedDate +
+											'</p>'+
 										'</th>'+
 										'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
 									'</tr>'+
@@ -470,32 +536,26 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 							'</th>'+
 						'</tr>'+
 						'<tr style="padding:0;text-align:left;vertical-align:top">'+
-							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
-								'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">'+
-								fi.Body +'</p>'+
-							'</th>'+
-							'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+
+						// font-size:14px;font-weight:900;line-height:1.3;
+							'<td colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;margin:0;padding:0;text-align:left;white-space:normal;">'+
+							fi.Body +
+								// '<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">'+
+								// '</p>'+
+							'</td>'+
+							'<td class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></td>'+
 					'</tr>';
 
-		List<Topic> lsFITopics = new List<Topic>();
-		List<Topic> lsBroadcastTopics = getBroadCastTopics();
-		for(Topic to : lsBroadcastTopics) {
-			for(TopicAssignment ta : lsTopicAssignments) {
-				if(to.Id == ta.TopicId && ta.EntityId == fi.Id) {
-					lsFITopics.add(to);
-				}
+		List<String> lsFITopics = new List<String>();
+		for(TopicAssignment ta : lsTopicAssignments) {
+			if(ta.EntityId == fi.Id) {
+				lsFITopics.add(ta.Topic.Name);
 			}
-		}
-		List<Account> lsHQAccounts = getHQAccounts();
-		Map<Id, Account> mpAccountId2Account = new Map<Id,Account>();
-		for(Account a: lsHQAccounts) {
-			mpAccountId2Account.put(a.Id,a);
 		}
 		if(lsAccountIds.size()>0 && lsFITopics.isEmpty()) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
 							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left;white-space:normal;">'+
 							'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;'+
-							'margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">Accounts: ';
+							'margin:0;margin-bottom:0px;padding:0 0 0 0px;text-align:left;width:430px;">Account(s): ';
 
 			for(Id i : lsAccountIds) {
 				emailBody += mpAccountId2Account.get(i).Name + ' ';
@@ -507,10 +567,10 @@ public without sharing class AMP_ChatterTopicSubscribeController {
 		if(lsFITopics.size()>0) {
 			emailBody += '<tr style="padding:0;text-align:left;vertical-align:top">'+
 							'<th colspan="2" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:900;line-height:1.3;margin:0;padding:0;text-align:left">'+
-					'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 10px;text-align:left;width:430px;">Broadcast:';
+					'<p style="Margin:0;margin-bottom:0px;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.3;margin:0;margin-bottom:0px;padding:0 0 0 0px;text-align:left;width:430px;">Broadcast: ';
 
-			for(Topic to : lsFITopics) {
-				emailBody += to.Name + ' ';
+			for(String to : lsFITopics) {
+				emailBody += to + ' ';
 			}
 			emailBody += '</p></th>'+
 			'<th class="expander" style="Margin:0;color:#000000;font-family:Helvetica,Arial,sans-serif;font-size:10px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>'+

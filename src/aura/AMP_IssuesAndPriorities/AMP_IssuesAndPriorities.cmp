@@ -1,14 +1,20 @@
 <aura:component controller="AMP_IssuesAndPrioritiesExtension">
     <aura:attribute name="accountId" type="String" />
+    <aura:attribute name="reportId" type="String" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
+    <aura:attribute name="divisionValues" type="String[]"/>
+    <aura:attribute name="showPopup" type="Boolean" default="false" />
+    <aura:attribute name="showDeletionCheck" type="Boolean" default="false" />
     <!-- 'sobjectType': 'Objective__c',-->
     <aura:attribute name="sortOrder" type="String" />
     <aura:attribute name="issues" type="Objective__c[]" />
+    <aura:attribute name="issueToDelete" type="Objective__c" />
     <aura:attribute name="issuesBackup" type="Objective__c[]" /><!-- access="private"-->
     <aura:attribute name="newIssue" type="Objective__c"
                     default="{     'sobjectType' : 'Objective__c',
                              'Account__c' : 'accountId',
                              'Name': '',
+                             'Division__c': '',
                              'AM_Source_Text__c': '',
                              'Details__c': '',
                              'AM_Level_of_importance__c': 'medium',
@@ -20,7 +26,10 @@
                              'AM_Issue_with_IATA__c': false,
                              'AM_Public__c': false}"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-    <aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />
+    <!--<aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />-->
+    <aura:handler name="deleteIssue" event="c:AMP_DeleteIssueOrPriority" action="c.showDeletePopup" />
+    <aura:handler name="cancelAddIssue" event="c:AMP_DeleteIssueOrPriority" action="c.handleDeleteIssue" />
+    
     <aura:handler name="updateIssue" event="c:AMP_UpdateIssueOrPriority" action="c.handleUpdateIssue" />
 
     <aura:registerEvent name="AMP_IssueOrPriorityError" type="c:AMP_IssueOrPriorityError"/>
@@ -40,14 +49,12 @@
                 </div>
             </div>
             &nbsp;&nbsp;
-            <button class="slds-button slds-button--neutral slds-col--bump-left" >
-                <a href="{!'/'+ v.reportId +'?pv0=' + v.accountId + '&amp;pv1=' + v.accountId +'&amp;excel=1&amp;enc=UTF-8&amp;xf=xls'}" target="_blank">
+            <lightning:button class="slds-button slds-button--neutral" title="Print" onclick="{!c.showPopup}">
                     Print
-                </a>
-            </button>
+            </lightning:button>
             &nbsp;&nbsp;
             <button class="slds-button slds-button--neutral slds-col--bump-left" >
-                <a href="{!'/'+ v.reportId +'?pv0=' + v.accountId + '&amp;pv1=' + v.accountId +'&amp;export=1&amp;enc=UTF-8&amp;xf=xls'}" target="_blank">
+                <a href="{!'/'+ v.reportId +'?pv0=' + v.accountId + '&amp;export=1&amp;enc=UTF-8&amp;xf=xls'}" target="_blank">
                     Export Details
                 </a>
             </button>
@@ -78,6 +85,20 @@
                                         <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
                                     </aura:renderIf>
                                     <aura:renderIf isTrue="{!v.sortOrder=='Namedesc'}">
+                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+                                    </aura:renderIf>
+                                </div>
+                        </th>
+                        <th scope="col">
+                            <!-- <span class="slds-truncate">Name</span> -->
+
+                                <ui:outputText value="Division" title="Division__c" click="{!c.sortList}" class="slds-th__action slds-text-link--reset noUpperCase slds-truncate" />
+                                <span class="slds-assistive-text">Sort Column</span>
+                                <div class="slds-icon_container" title="Sort Column">
+                                    <aura:renderIf isTrue="{!v.sortOrder=='Division__c'}">
+                                        <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
+                                    </aura:renderIf>
+                                    <aura:renderIf isTrue="{!v.sortOrder=='NDivision__cdesc'}">
                                         <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#arrowup" class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon"/>
                                     </aura:renderIf>
                                 </div>
@@ -206,19 +227,84 @@
                 <tbody>
                     <aura:iteration items="{!v.issues}" var="issue" indexVar="index">
                         <tr>
-                            <c:AMP_IssueOrPriority issue="{!issue}" index="{!index}" canEdit="{!v.canEdit}"/>
+                            <c:AMP_IssueOrPriority issue="{!issue}" index="{!index}" canEdit="{!v.canEdit}" divisionValues="{!v.divisionValues}"/>
                         </tr>
                     </aura:iteration>
                 </tbody>
             </table>
-
-        </div>
 
 
         <div class="slds-card__footer">
             <ui:inputCheckbox label="Show Closed Issues" aura:id="showAllCheckBox" change="{!c.refreshIssues}"/>
         </div>
 
+        </div>
     </div>
+
+    <aura:if isTrue="{!v.showPopup}">
+        <div class="slds-modal slds-fade-in-open " style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+
+                        <lightning:button class="slds-button slds-modal__close slds-button--icon-inverse close-button"  onclick="{!c.hidePopup}">
+                            <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#close" class="slds-icon "/>
+                            <span class="slds-assistive-text">Close</span>
+                        </lightning:button>
+                        <h2 id="header99" class="slds-text-heading--medium">Confirmation</h2>
+                    </div>
+
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>Do you also want to print closed issues &amp; priorities?</p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="slds-button slds-button--neutral" title="No" >
+                            <a href="{!'/apex/AMP_IssuesAndPriorities_Printable?accountId='+  v.accountId}" target="_blank"> No </a>
+                        </lightning:button>
+                        &nbsp;&nbsp;
+                        <lightning:button class="slds-button slds-button--neutral" title="Yes" >
+                            <a href="{!'/apex/AMP_IssuesAndPriorities_Printable?accountId='+  v.accountId + '&amp;showClosed=1'}" target="_blank"> Yes </a>
+                        </lightning:button>
+
+                    </footer>
+                </div>
+            </section>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
+
+    <aura:if isTrue="{!v.showDeletionCheck}">
+        <div class="slds-modal slds-fade-in-open " style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+
+                        <lightning:button class="slds-button slds-modal__close slds-button--icon-inverse close-button"  onclick="{!c.hideDeletePopup}">
+                            <c:svg xlinkHref="/resource/SLDS102/assets/icons/utility-sprite/svg/symbols.svg#close" class="slds-icon "/>
+                            <span class="slds-assistive-text">Close</span>
+                        </lightning:button>
+                        <h2 id="header99" class="slds-text-heading--medium">Confirmation</h2>
+                    </div>
+
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>Are you sure you want to delete this line?</p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="slds-button slds-button--neutral" title="No" onclick="{!c.hideDeletePopup}">
+                            No
+                        </lightning:button>
+                        &nbsp;&nbsp;
+                        <lightning:button class="slds-button slds-button--neutral" title="Yes" onclick="{!c.handleDeleteIssue}">
+                            Yes
+                        </lightning:button>
+
+                    </footer>
+                </div>
+            </section>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
+
+
 
 </aura:component>

@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>iatasalesforce@divintech.com</email>
     <name>DIT (IATA IW Work Orders)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIWProjectTeam</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>DITA</role>
+            <role>IATAInvoiceWorksA</role>
+            <role>IATAIWCallCentreA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Work_Order__c</sobjectType>
     </queueSobject>

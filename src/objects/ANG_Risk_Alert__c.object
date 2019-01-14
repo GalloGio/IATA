@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ANG_Account__c</fullName>
+        <description>The master account this alert is related to</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Risk Alerts</relationshipLabel>
+        <relationshipName>Risk_Alerts</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>ANG_Agent_Sales__c</fullName>
+        <externalId>false</externalId>
+        <label>RTS Sales Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Direction__c</fullName>
+        <description>Information if the agency was below the threshold and it&apos;s now over it, if it&apos;s in the same leve or if is downgrading.</description>
+        <externalId>false</externalId>
+        <label>Direction</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>UP</fullName>
+                    <default>false</default>
+                    <label>UP</label>
+                </value>
+                <value>
+                    <fullName>DOWN</fullName>
+                    <default>false</default>
+                    <label>DOWN</label>
+                </value>
+                <value>
+                    <fullName>SAME</fullName>
+                    <default>false</default>
+                    <label>SAME</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_EventId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Hold the event Id on the external system</description>
+        <externalId>true</externalId>
+        <label>EventId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Is_Case_Created__c</fullName>
+        <description>determinates if Risk Alert has generated a Sidra Case</description>
+        <externalId>false</externalId>
+        <formula>ANG_Sidra_Lite__c != null</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Created</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RHC_Information__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The RHC infomation record this alert is related to.</description>
+        <externalId>false</externalId>
+        <label>RHC Information</label>
+        <referenceTo>ANG_RHC_Information__c</referenceTo>
+        <relationshipLabel>Risk Alerts</relationshipLabel>
+        <relationshipName>Risk_Alerts</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RME_Last_Update__c</fullName>
+        <description>The last date time when the latest information came from the external system</description>
+        <externalId>false</externalId>
+        <label>RME Last Update</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Severity__c</fullName>
+        <externalId>false</externalId>
+        <label>RTS Severity</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Red</fullName>
+                    <color>#FF0000</color>
+                    <default>false</default>
+                    <label>Red</label>
+                </value>
+                <value>
+                    <fullName>Orange</fullName>
+                    <color>#FF9900</color>
+                    <default>false</default>
+                    <label>Orange</label>
+                </value>
+                <value>
+                    <fullName>Yellow</fullName>
+                    <color>#F3D904</color>
+                    <default>false</default>
+                    <label>Yellow</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Sidra_Lite__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Used to store the ID of the SIDRA case generated</description>
+        <externalId>false</externalId>
+        <label>SIDRA Lite</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Risk Alerts</relationshipLabel>
+        <relationshipName>Risk_Alerts</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Threshold_Level__c</fullName>
+        <description>Holds the Threshold that was met with this alert</description>
+        <externalId>false</externalId>
+        <label>Threshold Level</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Ticketing_Authority_Removed__c</fullName>
+        <description>Date of Ticketing Authority Removal triggered by RTS Red Alert</description>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(ANG_Severity__c, &quot;Red&quot;),  ANG_Sidra_Lite__r.Shut_Down_TKT_System_GDS_and_BSPlink__c , null)</formula>
+        <label>Ticketing Authority Removed</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ANG_email_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Email Sent</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Risk Alert</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Account__c</columns>
+        <columns>ANG_Direction__c</columns>
+        <columns>ANG_Threshold_Level__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>RA-{00000000}</displayFormat>
+        <label>Risk Alert</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Risk Alerts</pluralLabel>
+    <recordTypes>
+        <fullName>Risk_Alert</fullName>
+        <active>true</active>
+        <description>Used to receive RHC information alerts from the external system</description>
+        <label>Risk Alert RHC</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Risk_Alert_RTS</fullName>
+        <active>true</active>
+        <label>Risk Alert RTS</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -154,7 +151,7 @@
         <label>Click Rate 24 Hours</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
@@ -169,7 +166,7 @@
         <label>Click Rate 48 Hours</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
@@ -184,7 +181,7 @@
         <label>Click Rate 7 Days</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
@@ -235,7 +232,7 @@
         <label>Delivered 24 Hours</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>2</scale>
+        <scale>0</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -251,7 +248,7 @@
         <label>Delivered 48 Hours</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>2</scale>
+        <scale>0</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -267,7 +264,7 @@
         <label>Delivered7Days</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>2</scale>
+        <scale>0</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -364,6 +361,15 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <externalId>false</externalId>
         <inlineHelpText>Should the Google Analytics Tracking Code be output on the HTML template</inlineHelpText>
         <label>Is Google Analytics Tracker Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Payment_Step__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Payment Step</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -492,10 +498,20 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <fullName>Is_Step6_Valid__c</fullName>
         <description>Verify if the Step 6 is valid and meet the validation.</description>
         <externalId>false</externalId>
-        <formula>false &amp;&amp; Is_Step5_Valid__c</formula>
+        <formula>Is_Step5_Valid__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Verify if the Step 6 is valid and meet the validation.</inlineHelpText>
         <label>Is Step6 Valid</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Step7_Valid__c</fullName>
+        <externalId>false</externalId>
+        <formula>Is_Step6_Valid__c &amp;&amp; Is_Payment_Step__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Step7 Valid</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -638,7 +654,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <label>Open Rate 24 Hours</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
@@ -653,7 +669,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <label>Open Rate 48 Hours</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
@@ -668,7 +684,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <label>Open Rate 7 Days</label>
         <precision>18</precision>
         <required>false</required>
-        <scale>0</scale>
+        <scale>2</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
@@ -784,42 +800,56 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <externalId>false</externalId>
         <inlineHelpText>The current status of the campaign</inlineHelpText>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>DRAFT</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PENDING_APPROVAL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>APPROVED</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>REJECTED</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>STARTED</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SENT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DELETED</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>DRAFT</fullName>
+                    <default>true</default>
+                    <label>DRAFT</label>
+                </value>
+                <value>
+                    <fullName>PENDING_APPROVAL</fullName>
+                    <default>false</default>
+                    <label>PENDING_APPROVAL</label>
+                </value>
+                <value>
+                    <fullName>APPROVED</fullName>
+                    <default>false</default>
+                    <label>APPROVED</label>
+                </value>
+                <value>
+                    <fullName>REJECTED</fullName>
+                    <default>false</default>
+                    <label>REJECTED</label>
+                </value>
+                <value>
+                    <fullName>STARTED</fullName>
+                    <default>false</default>
+                    <label>STARTED</label>
+                </value>
+                <value>
+                    <fullName>SENT</fullName>
+                    <default>false</default>
+                    <label>SENT</label>
+                </value>
+                <value>
+                    <fullName>DELETED</fullName>
+                    <default>false</default>
+                    <label>DELETED</label>
+                </value>
+                <value>
+                    <fullName>EMAIL RECOVER</fullName>
+                    <default>false</default>
+                    <label>EMAIL RECOVER</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Subject__c</fullName>
@@ -955,17 +985,179 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <columns>Scheduled_Date__c</columns>
         <columns>Exact_Target_Campaign_Id__c</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <label>00 - All</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>EBC_Approvers_EBC_Campaign</fullName>
-        <filterScope>Queue</filterScope>
-        <label>eBroadcast Approvers</label>
-        <queue>EBC_Approvers</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
+        <fullName>Drafts</fullName>
+        <columns>NAME</columns>
+        <columns>Maximum_Allowed_Step__c</columns>
+        <columns>Billing_Account__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>DRAFT</value>
+        </filters>
+        <label>01 - Draft</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>In_Progress</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>STARTED</value>
+        </filters>
+        <label>04 - In Progress</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Pending_Review</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>PENDING_APPROVAL</value>
+        </filters>
+        <label>02 - Pending Review</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Scheduled_Campaigns1</fullName>
+        <columns>NAME</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <columns>Exact_Target_Campaign_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>APPROVED</value>
+        </filters>
+        <label>03 - Scheduled</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Sent</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Delivered7Days__c</columns>
+        <columns>Number_of_Unique_Opens__c</columns>
+        <columns>OpenRate7Days__c</columns>
+        <columns>Number_of_Unique_Clicks__c</columns>
+        <columns>ClickRate7Days__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>SENT</value>
+        </filters>
+        <label>05 - Sent</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X06_Rejected</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>REJECTED</value>
+        </filters>
+        <label>06 - Rejected</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X07_Deleted</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>DELETED</value>
+        </filters>
+        <label>07 - Deleted</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X10_Email_Recover</fullName>
+        <columns>NAME</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>NumberSent__c</columns>
+        <columns>Send_Datetime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>EMAIL RECOVER</value>
+        </filters>
+        <label>10 - Email Recover</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_MISC_Search</fullName>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Number_of_Recipients__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <columns>Google_Analytics_Tracking_Code__c</columns>
+        <columns>Is_Google_Analytics_Tracker_Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Billing_Account__c</field>
+            <operation>equals</operation>
+            <value>HotelsPro DMCC</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>PENDING_APPROVAL</value>
+        </filters>
+        <label>ZZ - MISC Search</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>eBroadcast Campaign Name</label>
@@ -1119,6 +1311,7 @@ TEXT(Status__c) != &apos;DRAFT&apos;</errorConditionFormula>
         <errorDisplayField>Subject__c</errorDisplayField>
         <errorMessage>The Subject can only be changed when the campaign status is Draft</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Campaign_Tracking</fullName>
         <availability>online</availability>

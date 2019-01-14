@@ -1,0 +1,164 @@
+<messaging:emailTemplate subject="eBroadcast Unsubscribe Confirmation" recipientType="User" relatedToType="EBC_Email_Exclusion__c">
+<messaging:plainTextEmailBody >
+Your request to unsubscribe has been received.
+Unsubscribed Email: {!relatedTo.Email__c} 
+Unsubscribe From: {!IF(ISBLANK(relatedTo.Unsubscribe_From__c), 'All Senders',relatedTo.BillingAccName__c)}
+
+At all times, you can resume receiving important information from IATA ebroadcast (on your current email address or on a new one).
+</messaging:plainTextEmailBody>
+<messaging:htmlEmailBody >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>IATA eBroadcast Account</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if !mso]><!-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!--<![endif]-->
+
+<!--[if (gte mso 9)|(IE)]>
+<style type="text/css">
+table {border-collapse: collapse;}
+</style>
+<![endif]-->
+</head>
+<body style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important;" bgcolor="#f2f2f2">
+<style>
+@media (max-width: 580px) {
+div.column-left {
+max-width: 90% !important;
+}
+div.column-right {
+max-width: 90% !important;
+}
+}
+@media (min-width: 580px) {
+div.column-left {
+max-width: 180px !important;
+}
+div.column-right {
+max-width: 380px !important;
+}
+table.text-align-right {
+text-align: right;
+}
+}
+</style>
+<div class="wrapper" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #f2f2f2; table-layout: fixed;">
+<div class="container01" style="margin: 0 auto; max-width: 600px;">
+<!--[if (gte mso 9)|(IE)]><table width="600" align="center"><tr><td><![endif]-->
+<table class="container02" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #ffffff; border-collapse: collapse !important; border-spacing: 0; margin: 20px auto; max-width: 600px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" border="0" cellpadding="0" cellspacing="0" align="center">
+
+<tbody>
+<tr>
+    <td class="header" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 20px 20px 0 20px;">
+    <!--[if (gte mso 9)|(IE)]><table width="560" align="center"><tr><td><![endif]-->
+    <table style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                <!--[if (gte mso 9)|(IE)]><table width="100%"><tr><td width="120" valign="top"><![endif]-->
+                <div class="header-column-left" style="display: inline-block; max-width: 120px; vertical-align: top;">
+                    <table style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                                <table style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td class="logo" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0 10px 15px 0;"><img src="http://www.iata.org/Style%20Library/IATA.org-v1/Core/Images/Logos/logo-iata-2012.png" alt="International Air Transport Association" width="80" height="80" style="-ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none;" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--[if (gte mso 9)|(IE)]></td><td width="440" valign="top"><![endif]-->
+                <div class="header-column-right" style="display: inline-block; max-width: 440px; vertical-align: top;">
+                    <table style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                                <table class="text-align-right" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td class="main-title" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #666666; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold; line-height: 26px; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">eBroadcast Unsubscribe Confirmation</td>
+                                        </tr>
+                                    </tbody>
+                                </table></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+    </td>
+</tr>
+
+<tr>
+    <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" align="center">
+    <table style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <td class="section-title" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #666666; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; line-height: 22px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 20px 20px 10px 20px;" align="left">Your request to unsubscribe has been received.</td>
+            </tr>
+        </tbody>
+    </table></td>
+</tr>
+
+<tr>
+    <td class="two-columns" style="text-align: left; padding: 0 20px;">
+    Unsubscribed Email: {!relatedTo.Email__c}<br/>
+    Unsubscribe From: {!IF(ISBLANK(relatedTo.Unsubscribe_From__c), 'All Senders',relatedTo.BillingAccName__c)}
+    </td>
+</tr>
+<tr>
+   <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #666666; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; line-height: 22px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 20px 20px 10px 20px;" >
+    At all times, you can resume receiving important information from IATA ebroadcast (on your current email address or on a new one).
+    </td>
+</tr>
+
+<tr>
+    <td class="button-container" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 10px 20px; width: 100%;" align="center">
+    <table style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" align="center">
+                <table class="button" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; height: 50px; margin: 20px 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 200px;" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #747474; border-radius: 4px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; text-align: center;"><a href="https://store.iata.org/apex/IECEBC_Resubscribe?email={!relatedTo.Email__c}" target="_blank" class="button-link-font" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 18px; text-decoration: none;">Re-Subscribe Now</a></td>
+                        </tr>
+                    </tbody>
+                </table></td>
+            </tr>
+        </tbody>
+    </table></td>
+</tr>
+
+<tr>
+    <td style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" align="center">
+    <table style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <td class="footer" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #f2f2f2; color: #999999; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 18px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 30px 10px 10px 10px;" align="center">© International Air Transport Association, <span class="no-wrap" style="white-space: nowrap;">All Rights Reserved.</span><br />800 Place Victoria • Montreal, Quebec • <span class="no-wrap" style="white-space: nowrap;">H4Z 1M1</span> Canada</td>
+            </tr>
+        </tbody>
+    </table></td>
+</tr>
+
+</tbody>
+</table>
+<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+</div>
+</div>
+
+</body>
+</html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -80,9 +80,6 @@
                     <li class="slds-tabs--default__item slds-text-heading--label" title="Account Plan" role="presentation" aura:id="Account Plan">
                         <ui:outputText value="Account Plan"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
-                    <li class="slds-tabs--default__item slds-text-heading--label" title="Chatter" role="presentation" aura:id="Chatter">
-                        <ui:outputText value="Chatter"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
-                    </li>
                     <li class="slds-tabs--default__item slds-text-heading--label" title="News" role="presentation" aura:id="News">
                         <ui:outputText value="News"  click="{!c.changeTab}" class="slds-tabs--default__link"/>
                     </li>
@@ -108,7 +105,7 @@
                             <c:AMP_AccountOwnership accountId="{!v.accountId}" displayType="Owners" />
                         </div>
                         <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-2">
-                            <c:AMP_AccountOwnership accountId="{!v.accountId}" displayType="Subsidiaries" />
+                            <c:AMP_AccountOwnership accountId="{!v.accountId}" displayType="Airline Subsidiaries" />
                         </div>
                     </div>
 
@@ -174,14 +171,6 @@
                     <div class="slds-grid slds-wrap slds-p-around--medium">
                         <div class="slds-size--1-of-1">
                             <c:AMP_KeyAccountPlan accountId="{!v.accountId}" />
-                        </div>
-                    </div>
-                </aura:if>
-
-                <aura:if isTrue="{!v.activeTab=='Chatter'}">
-                    <div class="slds-grid slds-wrap slds-p-around--medium">
-                        <div class="slds-size--1-of-1">
-                            <c:AMP_Chatter accountId="{!v.accountId}" />
                         </div>
                     </div>
                 </aura:if>

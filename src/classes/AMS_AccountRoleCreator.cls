@@ -23,6 +23,10 @@ public with sharing class AMS_AccountRoleCreator
     
     public static final Map<String,String> personDeveloperName = new Map<String,String>{'Person' => 'Person','Current_Owner' => 'Current_Owner'};
     public static final Map<String,String> companyDeveloperName = new Map<String,String>{'Company' => 'Company','Current_Company_Owner' => 'Current_Company_Owner'};
+
+    public static final Set<String> processesBlockedToMigrateOwners = new Set<String>{'NEW.BR' ,'NEW.BR.ABROAD','NEW.TIDS.1.0','NEW.MSO.1.0','NEW.GSA.1.0','NEW.GSSA.1.0','NEW.AHA.1.0','NEW.SA.1.0','NEW.AHA.1.0.BSP','NEW.GSA.1.0.BSP'};
+
+    public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{'HO','AO'};
     
     // This funny looking method is a workaround to be able to use a variable (Set<Id>) in a dynamic query
     public static List<AMS_Accreditation_Contact__c> retrieveACsDynamically(String soqlString, String setName)
@@ -35,7 +39,7 @@ public with sharing class AMS_AccountRoleCreator
         String toReturn = '';
 
         for(String tp: types)
-            toReturn += '\'' + AMS_Utils.getId('AMS_Accreditation_Contact__c', tp) + '\'' + ',';
+            toReturn += '\'' + RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', tp) + '\'' + ',';
     
         return toReturn.removeEnd(',');
     }
@@ -228,7 +232,7 @@ public with sharing class AMS_AccountRoleCreator
             newCon.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
             newCon.list_Dangerous_Goods_Awareness__c = ac.list_Dangerous_Goods_Awareness__c;
             
-            newCon.RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact');
+            newCon.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
             newContacts.add(newCon);
         }
         return newContacts;
@@ -291,11 +295,15 @@ public with sharing class AMS_AccountRoleCreator
         return arUpdateList;
     }
 
-    public static void runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap){
-        runRoleCreatorForOnlineAccreditations(aoMap, false);
+    public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap){
+        return runRoleCreatorForOnlineAccreditations(aoMap, false);
     }
 
+    public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
 
+        return runRoleCreatorForOnlineAccreditations(aoMap,isCorrectionProcess, null);
+
+    }
 
     /**
     This method processes the staging area owners and contacts into the AMS Account roles in the affected agencies.
@@ -304,28 +312,47 @@ public with sharing class AMS_AccountRoleCreator
 
     The aoMap parameter has a map between the Accreditation Area and the Agencies (accounts) involved in the process.
     */
-    public static void runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess){
+    public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, boolean isCorrectionProcess, List<AMS_OSCAR__c> oscars){
 
-        System.debug('Starting to ajust the Owners in the selected hierarchies.');
-        
+        System.debug('Starting to ajust the Owners in the selected hierarchies. isCorrectionProcess variable value is '+ isCorrectionProcess);
+
         // First, lets get all the data we need from Accreditation Contacts and AMS Account Roles
+
+        Set<Account> accountsToFillOwners = new Set<Account>();
 
         Set<Id> accreditationAreaIds = aoMap.keyset();
         List<Id> accreditationAreaIdsLst= new List<Id>(accreditationAreaIds);
 
-        List<AMS_Oscar__c> oscars = [SELECT Id, RecordType.DeveloperName,Account__c, AMS_Online_Accreditation__c, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
-
+        if(oscars == null)
+            oscars = [SELECT Id, STEP10__c, STEP6__c, RecordType.DeveloperName,Account__c,Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
+        
+        system.debug('### su' + oscars.size());
         Map<Id,String> accreditationAndOscars = new Map<Id,String>();
 
         String oscarProcess;
         Id accountId;   // this is a hack to get the Account from the Oscar. As we are supposed to only work one
                         // OSCAR at a time, let's "assume" that there is only one Account involved.
         for(AMS_Oscar__c oscar: oscars){
-            accreditationAndOscars.put(oscar.AMS_Online_Accreditation__c, oscar.RecordType.DeveloperName);
-            accountId = oscar.Account__c;
-            oscarProcess = oscar.Process__c;
+
+            if(processesBlockedToMigrateOwners.contains(oscar.Process__c) && !allowedLocationTypesForNewProcesses.contains(oscar.Account__r.Location_Type__c)){
+
+
+                accreditationAreaIdsLst = removeFromList(accreditationAreaIdsLst,oscar.AMS_Online_Accreditation__r.Id);
+
+                if(isCorrectionProcess && oscar.STEP10__c == 'Passed' && oscar.STEP6__c == 'Passed'){ // it's the last process to move the owners, so let's select the oscar's account to process.
+                    System.debug('Adding the oscar ' + oscar + ' to the list to do migration.');
+                    accountsToFillOwners.add(oscar.Account__r);
+                }
+
+            }else{
+                accreditationAndOscars.put(oscar.AMS_Online_Accreditation__c, oscar.RecordType.DeveloperName);
+                accountId = oscar.Account__c;
+                oscarProcess = oscar.Process__c;
+            }
         }
 
+        //Map by accreditation Id
+        Map<Id,OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,OldAndNewOwners>();
 
         for(Id accreditationId : accreditationAreaIdsLst){
 
@@ -333,7 +360,7 @@ public with sharing class AMS_AccountRoleCreator
 
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
 
-            String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c';
+            String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c,Company__r.name, AMS_Pax_Accreditation_Form__r.ANG_IsNewGenAgency__c ';
             query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :accreditationId AND (RecordTypeId in ';
             query = query + '(' + recordTypesPerson +' ) ';
             query = query + ' OR RecordTypeId in ';
@@ -350,7 +377,7 @@ public with sharing class AMS_AccountRoleCreator
             for(AMS_Accreditation_Contact__c ac : accreditationContactsToProcess)
                 acContactIdSet.add(ac.Contact__c);
 
-            List<Contact> allContactsFromAccreditation = [SELECT FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c FROM Contact WHERE Id IN :acContactIdSet];
+            List<Contact> allContactsFromAccreditation = [SELECT FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c, Authorized_Signatory__c FROM Contact WHERE Id IN :acContactIdSet];
 
             for(Contact c :allContactsFromAccreditation)
                 emailContactMap.put(c.id, c);
@@ -358,7 +385,11 @@ public with sharing class AMS_AccountRoleCreator
 
             //get all the roles
             List<AMS_Account_Role__c> allAccountRoles = new List<AMS_Account_Role__c>();
-            allAccountRoles = [SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c from AMS_Account_role__c where Account__c in: accounts and Active__c = true];
+            allAccountRoles = [SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c,Owner_Account__r.Name from AMS_Account_role__c where Account__c in: accounts and Active__c = true];
+
+            //Register New and Old Owners for EBulletion Report purposes
+
+            oldAndNewOwnersMap.put(accreditationId,getNewAndOldOwnersForChangeCodeCreation(allAccountRoles,accreditationContactsToProcess,accounts));
 
             // just to further ahead in the process have a way to link Accreditation Contacts and AMS Account Roles
             Map<Id,AMS_Account_Role__c> rolesMap = new Map<Id,AMS_Account_Role__c>();
@@ -377,8 +408,9 @@ public with sharing class AMS_AccountRoleCreator
             List<AMS_Accreditation_Contact__c> accreditationContactsToInsertOnlyContacts = new List<AMS_Accreditation_Contact__c>();
 
             // let's find out which AMS_Account_roles are to deactivate.
-
+            system.debug('### su' + accreditationContactsToProcess.size());
             for(AMS_Accreditation_Contact__c aContact :accreditationContactsToProcess){
+                
 
                 //does is have a link to an AMS_Account_role ? If so, let's deactivate the Role and add it to the list of new Accreditation to Create.
                 if(aContact.AMS_Ownership_Role__c != null && !isCorrectionProcess){
@@ -388,7 +420,9 @@ public with sharing class AMS_AccountRoleCreator
                 
                 //does is have a link to an AMS_Account_role and is a correction or is
                 // second time this process runs for an Accreditation Contact ? let's mark for update.
-                if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess){
+                //INC304974: verifies if the record type of AMS Accreditation Contact is not a Company (another account)
+                if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess && !recordTypesCompany.contains(aContact.RecordTypeId)){  
+                    system.debug('## SU runRoleCreatorForOnlineAccreditations : ' + aContact.AMS_Ownership_Role__c + ' ; '  +isCorrectionProcess+ ' ; ' + aContact.RecordTypeId);   
                     accreditationContactsToUpdate.add(aContact);
                     continue;
                 }
@@ -397,7 +431,7 @@ public with sharing class AMS_AccountRoleCreator
                 if(aContact.AMS_Ownership_Role__c == null && aContact.Agency_owner__c){
                     accreditationContactsToInsert.add(aContact);
                     continue;
-                }else{
+                }else if(!recordTypesCompany.contains(aContact.RecordTypeId)){
                     accreditationContactsToInsertOnlyContacts.add(aContact);
                     continue;
                 }
@@ -460,7 +494,7 @@ public with sharing class AMS_AccountRoleCreator
 
             // now for the new Acreditation Contact, we have to create new AMS Account roles based on the accreditationContactsToInsert list !
             System.debug('Accreditation contacts to insert:'+accreditationContactsToInsert);
-            AMS_AccountRoleCreator.RoleCreatorEntitiesBucket bucket1 = insertAMSAccountRoles(accreditationContactsToInsert,emailContactMap, accounts, accreditationAndOscars.get(accreditationId) == 'NEW',accountId);
+            AMS_AccountRoleCreator.RoleCreatorEntitiesBucket bucket1 = insertAMSAccountRoles(accreditationContactsToInsert,emailContactMap, accounts, accreditationAndOscars.get(accreditationId) == 'NEW' || accreditationAndOscars.get(accreditationId) == 'ANG_Agency_Changes',accountId);
             
             // for accreditation contacts that only have contact connectd (not owners), let's update the data
             System.debug('Single contacts to insert:'+accreditationContactsToInsertOnlyContacts);
@@ -485,7 +519,10 @@ public with sharing class AMS_AccountRoleCreator
             contactsToUpdate.addAll(bucket2.contactsToUpdate.values());
             contactsToUpdate.addAll(bucket3.contactsToUpdate.values());
 
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
             update contactsToUpdate;
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
+
 
             List<AMS_Accreditation_Contact__c> aContactsToUpdate = new List<AMS_Accreditation_Contact__c>();
             aContactsToUpdate.addAll(bucket1.accreditationsToUpdate.keySet());
@@ -505,8 +542,98 @@ public with sharing class AMS_AccountRoleCreator
 
         }
 
+        if(!accountsToFillOwners.isEmpty()){
+            System.debug('Cloning Roles from parent using this accounts:' + accountsToFillOwners);
+            cloneOwnersFromHo(accountsToFillOwners);
+
+        }
+
+        return oldAndNewOwnersMap;
+
     }
 
+    public static void cloneOwnersFromHo(Set<Account> accounts){
+
+        Map<Id,List<AMS_Account_role__c>> rolesInAccounts = new Map<Id,List<AMS_Account_role__c>>();
+
+        Set<Id> topParents = new Set<Id>();
+
+        for(Account acct : accounts){
+
+            if(acct.Top_Parent__c != null)
+                topParents.add(acct.Top_Parent__r.Id);
+
+        }
+
+         List<AMS_Account_role__c> allRoles =  Database.query(AMS_QueryUtils.getAllFieldQuery('AMS_Account_role__c',null, + 'Account__c in:topParents', false) );
+
+         for(AMS_Account_Role__c role: allRoles){
+
+            if(!role.Active__c)
+                continue;
+                
+            if(rolesInAccounts.containsKey(role.Account__c)){
+
+                rolesInAccounts.get(role.Account__c).add(role);
+
+            }
+            else{
+
+                rolesInAccounts.put(role.Account__c, new List<AMS_Account_Role__c>{role});
+            }
+
+         }
+
+        List<AMS_Account_Role__c> rolesToInsert = new List<AMS_Account_role__c>();
+
+        List<AMS_Account_role__c> rolesToDeactivate = new List<AMS_Account_role__c>();
+
+        List<AMS_Account_role__c> oldRoles =  Database.query(AMS_QueryUtils.getAllFieldQuery('AMS_Account_role__c',null, + 'Account__c in:accounts', false) );
+
+        for(AMS_Account_Role__c role: oldRoles){
+            if(role.Active__c){
+                role.Termination_Date__c = Date.Today();
+                rolesToDeactivate.add(role);
+            }
+        }
+
+        for(Account acct : accounts){
+
+            if(rolesInAccounts.get(acct.Top_Parent__c) != null)
+                rolesToInsert.addAll(assignOwners(acct.Id,rolesInAccounts.get(acct.Top_Parent__c)));
+
+        }
+
+        if(!rolesToDeactivate.isEmpty()){
+            System.debug('Roles to deactivate:'+rolesToDeactivate);
+            update rolestoDeactivate;
+        }
+
+        if(!rolesToInsert.isEmpty()){
+            System.debug('Roles to insert:'+rolesToInsert);
+            insert rolesToInsert;
+        }
+
+        
+    }
+
+
+    public static List<AMS_Account_Role__c> assignOwners(Id accountId, List<AMS_Account_role__c> rolesToClone){
+
+        System.debug('Assigning roles '+ rolesToClone+' to new account ' + accountId);
+
+        List<AMS_Account_role__c> toReturn = new List<AMS_Account_role__c>();
+
+        for(AMS_Account_Role__c role: rolesToClone){
+
+            AMS_Account_Role__c newRole = role.clone(false,true,false,false);
+            newRole.Account__c = accountId;
+            toReturn.add(newRole);
+        }
+
+        return toReturn;
+
+    }
 
     //when we have an accreditation contact without any link to a contact but with a link to a person
     //then we create the contact and delete the person but before deleting the person we should check:
@@ -546,7 +673,10 @@ public with sharing class AMS_AccountRoleCreator
 
             if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c == null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
 
+                accreditationsAndContacts.put(ac,ac.Contact__c);
+
                 personsToDelete.add(ac.Person_AMS__c);
+
                 personsAndContacts.put(ac.Person_AMS__r.Id,ac.Contact__c);
 
                 continue;
@@ -566,6 +696,8 @@ public with sharing class AMS_AccountRoleCreator
 
             if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c != null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
 
+                accreditationsAndContacts.put(ac,ac.Contact__c);
+
                 personsToDelete.add(ac.Person_AMS__c);
 
                 personsAndContacts.put(ac.Person_AMS__r.Id,ac.Person_AMS__r.Contact__c);
@@ -577,9 +709,10 @@ public with sharing class AMS_AccountRoleCreator
 
 
         if(!newContactsToInsert.isEmpty()){
-        
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
+            system.debug('ANG INSERT 1');
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
-        
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }
 
 
@@ -606,10 +739,13 @@ public with sharing class AMS_AccountRoleCreator
 
         updateAMSRolesBeforePersonDeletion(personsToDelete,personsAndContacts,personsAndContactsObj);
 
-        List<AMS_Person__c> personDeletionList = [select id, Name from AMS_Person__c where id in :personsToDelete];
+        if(!personsToDelete.isEmpty()){
+        
+            List<AMS_Person__c> personDeletionList = [select id, Name from AMS_Person__c where id in :personsToDelete];
 
-        if(personDeletionList.size() > 0){
-            delete personDeletionList;
+            if(personDeletionList.size() > 0){
+                delete personDeletionList;
+            }
         }
 
         if(!aContactsToUpdate.isEmpty())
@@ -623,6 +759,9 @@ public with sharing class AMS_AccountRoleCreator
     public static void updateAMSRolesBeforePersonDeletion(Set<Id> personsToDelete, Map<Id, Id> personsAndContacts , Map<Id, Contact> personsAndContactsObj){
 
         // first lets find the AMS Account Roles to Update
+
+        if(personsToDelete.isEmpty() || ( personsAndContacts.values().isEmpty() && personsAndContactsObj.values().isEmpty() ) ) // nothing to do here ...
+            return;
 
         List<AMS_Account_Role__c> rolesToUpdate = new List<AMS_Account_Role__c>();
 
@@ -769,7 +908,10 @@ public with sharing class AMS_AccountRoleCreator
         }
 
         if(!newContactsToInsert.isEmpty()){
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
+            system.debug('ANG INSERT 2');
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }
 
         for(AMS_Accreditation_Contact__c ac: contacts){
@@ -838,7 +980,7 @@ public with sharing class AMS_AccountRoleCreator
 
         if(ac.Agency_owner__c)
         {
-            role.RecordTypeId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+            role.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
             role.Owner_Name__c      = (ac.First_Name__c == null ? '' : ac.First_Name__c  ) + (ac.Last_Name__c == null ? '' : ( ' ' + ac.Last_Name__c));
         }else
         {
@@ -881,7 +1023,9 @@ public with sharing class AMS_AccountRoleCreator
 
 
         if(!newContactsToInsert.isEmpty()){
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }
 
         for(AMS_Accreditation_Contact__c ac: contacts){
@@ -940,7 +1084,7 @@ public with sharing class AMS_AccountRoleCreator
 
                 AMS_Account_Role__c role = new AMS_Account_Role__c();
 
-                role.RecordTypeId       = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+                role.RecordTypeId       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
                 role.Account__c         = accountId;
                 role.Duty__c            = ac.Job_Title__c;
@@ -1000,7 +1144,10 @@ public with sharing class AMS_AccountRoleCreator
         }
 
         if(!newContactsToInsert.isEmpty()){
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
+            system.debug('ANG INSERT 4');
             insert verifyNoDuplicateIFAPcontactExists(newContactsToInsert.values());
+            AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
         }
 
         if(!newAccountsToInsert.isEmpty()) insert newAccountsToInsert.values();
@@ -1016,7 +1163,7 @@ public with sharing class AMS_AccountRoleCreator
 
                 AMS_Account_Role__c role = new AMS_Account_Role__c();
 
-                role.RecordTypeId       = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+                role.RecordTypeId       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
                 role.Account__c         = accountId;
                 role.Duty__c            = ac.Job_Title__c;
                 role.Employee_Name__c   = ac.First_Name__c + ' ' + ac.Last_Name__c;
@@ -1068,5 +1215,215 @@ public with sharing class AMS_AccountRoleCreator
         }
 
     }
+
+/**
+ Used for AMS EBulletin:
+
+ Gets the new and old Owners values and saves it in a structure.
+
+*/
+    public static OldAndNewOwners getNewAndOldOwnersForChangeCodeCreation( List<AMS_Account_Role__c> allAccountRoles , List<AMS_Accreditation_Contact__c> accreditationContactsToProcess , Set<Id> accounts){
+
+        List<OwnersByAccountWrapper> oldOwnersWrapperList = new List<OwnersByAccountWrapper>();
+
+        List<OwnersByAccountWrapper> newOwnersWrapperList = new List<OwnersByAccountWrapper>();
+
+        for(Id acctId : accounts)
+        {
+
+            //****process allAccountRoles (Old Owners recovered from Account)
+       
+            List<OwnerFieldsEntity> oldOwnersList = new List <OwnerFieldsEntity>();
+
+            for (AMS_Account_Role__c acctRole : allAccountRoles)
+            {
+                if(acctId == acctRole.Account__c)
+                    oldOwnersList.add(new OwnerFieldsEntity ((acctRole.Owner_Account__r.Name != null ? acctRole.Owner_Account__r.Name:acctRole.Owner_Name__c) , String.valueOf(acctRole.Percentage__c)));            
+            }
+            
+            OwnersByAccountWrapper oldOwnersWrapper = new OwnersByAccountWrapper(acctId , oldOwnersList);
+
+            system.debug('oldOwnersWrapper: ' + oldOwnersWrapper);
+
+            oldOwnersWrapperList.add(oldOwnersWrapper);
+
+            
+
+            //****process accreditationContactsToProcess (new Owners Recovered from Staging Area)
+            
+
+            List<OwnerFieldsEntity> newOwnersList = new List <OwnerFieldsEntity>();
+
+            for (AMS_Accreditation_Contact__c accrtContact : accreditationContactsToProcess)
+            {
+                if (accrtContact.Agency_owner__c) {
+                    if (!accrtContact.AMS_Pax_Accreditation_Form__r.ANG_IsNewGenAgency__c) {
+
+                        String name = (accrtContact.Company__r.name == null ?
+                                ((accrtContact.First_Name__c == null ? '' : accrtContact.First_Name__c + ' ') + (accrtContact.Last_Name__c == null ? '' : (accrtContact.Last_Name__c)))
+                                : accrtContact.Company__r.name);
+
+                        newOwnersList.add(new OwnerFieldsEntity(name, String.valueOf(accrtContact.Financial_interest__c)));
+
+                    } else {
+
+                        String name = (accrtContact.First_Name__c == null && accrtContact.Last_Name__c == null)
+                                ? accrtContact.Company__r.name
+                                : (accrtContact.First_Name__c == null ? '' : accrtContact.First_Name__c + ' ') + (accrtContact.Last_Name__c == null ? '' : accrtContact.Last_Name__c);
+
+                        newOwnersList.add(new OwnerFieldsEntity(name, String.valueOf(accrtContact.Financial_interest__c)));
+
+                    }
+                }
+            }
+            
+            OwnersByAccountWrapper newOwnersWrapper = new OwnersByAccountWrapper(acctId , newOwnersList);
+
+            system.debug('newOwnersWrapper: ' + newOwnersWrapper.allOwnersCSV);
+
+            newOwnersWrapperList.add(newOwnersWrapper);
+            
+        }
+
+
+        return new OldAndNewOwners(oldOwnersWrapperList,newOwnersWrapperList);
+                
+
+    }
+
+    public static List<Id> removeFromList(List<Id> listToRemove, Id form ){
+
+        Integer index = -1;
+
+        for(Integer i = 0; i < listToRemove.size() ; i++ ){
+
+            if(listToRemove.get(i) == form)
+                index = i;
+        }
+
+        if(index != -1 )
+            listToRemove.remove(index);
+
+            return listToRemove;
+    }
+
+/**
+
+Object used to store the shareholding Information regarding the Ownership
+
+The info of the New and Old Owners is then used in the Change Codes History objects
+
+ */
+    public class OldAndNewOwners {
+        
+        public List<OwnersByAccountWrapper> oldOwnersWrapperList;
+        public List<OwnersByAccountWrapper> newOwnersWrapperList;
+
+        public OldAndNewOwners(List<OwnersByAccountWrapper> oldOwnersWrapperList, List<OwnersByAccountWrapper> newOwnersWrapperList){
+            this.oldOwnersWrapperList = oldOwnersWrapperList;
+            this.newOwnersWrapperList = newOwnersWrapperList;
+        }
+
+        public OwnersByAccountWrapper getNewOwnersByAccountId(Id acctId)
+        {
+            return getOwnersByAccountId( acctId, this.newOwnersWrapperList);
+        }
+
+        public OwnersByAccountWrapper getOldOwnersByAccountId(Id acctId)
+        {
+            return getOwnersByAccountId( acctId, this.oldOwnersWrapperList);
+        }
+
+        private OwnersByAccountWrapper getOwnersByAccountId(Id acctId, List<OwnersByAccountWrapper> ownersWrapperList)
+        {
+             if(ownersWrapperList != null && !ownersWrapperList.isEmpty())
+            {
+                for(OwnersByAccountWrapper newOwners: ownersWrapperList)
+                {
+                    if(newOwners.acctId == acctId)
+                        return newOwners;
+
+                }
+            }
+            return null;
+        }
+        
+    }
+
+/**
+Groups the Owners by account (in the accont the owners are in the object AMS_Account_Role__c)
+ */
+
+    public class OwnersByAccountWrapper {
+        
+        public Id acctId;
+        public List<OwnerFieldsEntity> owners;
+        public String allOwnersCSV; 
+
+        public OwnersByAccountWrapper(Id acctId, List<OwnerFieldsEntity> owners){
+            this.acctId = acctId;
+            this.owners = owners;
+            this.allOwnersCSV = processCSVfromOwners();
+        }
+        public String processCSVfromOwners ()
+        {
+            String toCSV = 'Name,Percentage\n';
+
+
+            for(OwnerFieldsEntity owner : this.owners)
+                toCSV = toCSV + owner.convertToCSV(',') + '\n';
+
+            return toCSV;
+
+
+        }
+        
+    }
+
+/**
+ Object to store the Shareholding information of an Owner (Owner Name, Percentage of Ownership)
+ */
+   
+    public class OwnerFieldsEntity implements Comparable {
+        
+        public String name;
+        public String financialInterest;
+        
+        public OwnerFieldsEntity(){}
+
+        public OwnerFieldsEntity( String name, String financialInterest){
+            this.name = name;
+            this.financialInterest = financialInterest;
+        }
+
+        public String convertToCSV (String csvFormat)
+        {
+            return name + csvFormat + financialInterest;
+
+        }
+
+        public void decodeFromCSV (String row)
+        {
+            List<String> onwerValues = row.split(',');
+
+            this.name = onwerValues.get(0);
+            this.financialInterest = onwerValues.get(1);
+        
+        }
+        public Integer compareTo(Object compareTo) {
+       
+            OwnerFieldsEntity compareToOE = (OwnerFieldsEntity)compareTo;
+             
+            Double order = double.valueOf(financialInterest);
+            Double orderCompareTo =  double.valueOf(compareToOE.financialInterest);
+
+            if (order == orderCompareTo) return 0;
+            if (order > orderCompareTo) return -1;
+            return 1;        
+        }
+    
+    }
+
+
     
 }

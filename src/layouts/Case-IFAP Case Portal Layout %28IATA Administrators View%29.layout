@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>File_Upload_completed</customButtons>
-    <customButtons>Create_Non_Compliance</customButtons>
+    <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Request_Reassessment</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Cancel_Assessment</customButtons>
     <customButtons>Close_Case_c</customButtons>
-    <customButtons>SIDRA_Lite_Action</customButtons>
+    <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -189,6 +189,10 @@
                 <field>SuppliedEmail</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Region__c</field>
             </layoutItems>
@@ -241,13 +245,6 @@
                 <behavior>Edit</behavior>
                 <field>Reason_for_change_of_Financial_result__c</field>
             </layoutItems>
-            <layoutItems>
-                <height>50</height>
-                <page>initialEmail_FAReminder</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -288,6 +285,22 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Financial Review Links</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>80</height>
+                <page>initialEmail_FAReminder</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -354,13 +367,6 @@
                 <behavior>Edit</behavior>
                 <field>FS_Letter_Sent__c</field>
             </layoutItems>
-            <layoutItems>
-                <height>50</height>
-                <page>FSRequest_FSReminder</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -389,6 +395,22 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Financial Security Links</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>80</height>
+                <page>FSRequest_FSReminder</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -575,7 +597,7 @@
         <label>Emails</label>
         <layoutColumns>
             <layoutItems>
-                <height>200</height>
+                <height>250</height>
                 <page>EmailMessagesView</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>

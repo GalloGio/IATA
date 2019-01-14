@@ -1,5 +1,5 @@
 <apex:page controller="vfIECEBC_TemplateList" applyHtmlTag="false" applyBodyTag="false" sidebar="false" showheader="false" standardStylesheets="false" language="en" docType="html-5.0">
-	<apex:composition template="IECEBC_Layout">
+    <apex:composition template="IECEBC_Layout">
         <apex:define name="pageHeadAdditions">
             <!-- Start of Page <head> -->
             <title>eBroadcast Manage New Templates</title>
@@ -14,14 +14,14 @@
             <!-- Start of Page Content -->
             <main class="main-content manage-resources">
                 <div class="inner-wrapper">
-           	     
+                 
                   <div class="tab-container">
                      
                    
                     <apex:form >
                     
                     <apex:outputPanel id="itemList" style="padding: 10px 0;" layout="block">
-                        <apex:inputHidden value="{!selectedTemplateId}" id="selectedTemplate" required="{!newTemplateStepNumber == 2}" />
+                        <apex:inputHidden value="{!selectedTemplateId}" id="selectedTemplate"  />
                         
                         <apex:actionFunction action="{!doNothing}" name="setAudience" rerender="create-template"> 
                             <apex:param assignTo="{!newTemplate.Audience__c}" name="firstParam" value="" /> 
@@ -30,7 +30,7 @@
                         </apex:actionFunction>
                         <script type="text/javascript">
                         function resetTemplate(recordId) {
-                            document.getElementById('{!$Component.selectedTemplate}').value = recordId;
+                            document.getElementById('{!$Component.selectedTemplate}').value = (typeof(recordId) != 'undefined' ? recordId : '');
                         }
                         </script>
                         <section >
@@ -47,18 +47,18 @@
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
                                                         <apex:outputText rendered="{!newTemplate.Audience__c == 'Agency'}">
-	                                                        <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agency" type="radio" name="audience" checked="checked" value="Agency" />
+                                                            <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agency" type="radio" name="audience" checked="checked" value="Agency" />
                                                         </apex:outputText>
                                                         <apex:outputText rendered="{!newTemplate.Audience__c != 'Agency'}">
-	                                                        <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agency" type="radio" name="audience" value="Agency" />
+                                                            <input class="user-input radio" onchange="setAudience(this.value);" id="new-template-agency" type="radio" name="audience" value="Agency" />
                                                         </apex:outputText>
                                                         <label class="custom-radio" for="new-template-agency"><i class="icon"></i></label>
                                                     </div>
-                                                    <label class="input-label" for="new-template-agency">IATA Travel Agencies<br />Can be used to target agencies only. All applicable merge fields available.</label>
+                                                    <label class="input-label" for="new-template-agency"><strong>IATA Travel Agencies</strong><br />Can be used to target agencies only. All applicable merge fields available.</label>
                                                 </div>
                                             </li>
                                             
-                                            <li class="{!IF(newTemplate.Audience__c == 'Agent', 'is-selected', '')}">
+                                            <li class="{!IF(newTemplate.Audience__c == 'Agent', 'is-selected', '')} {!IF(NOT(isIDCARDSelectionAllowed), ' disabled', '')}">
                                                 <div class="radio-box">
                                                     <div class="custom-user-input radio">
                                                         <apex:outputText rendered="{!isIDCARDSelectionAllowed}">
@@ -71,17 +71,17 @@
                                                         </apex:outputText>  
                                                         <apex:outputText rendered="{!NOT(isIDCARDSelectionAllowed)}">
                                                             <apex:outputText rendered="{!newTemplate.Audience__c == 'Agent'}">
-                                                                <input class="disabled-user-input radio"  style="min-width: 20px;" id="new-template-agent" type="radio" name="audience" value="Agent" checked="checked" disabled="true" />
+                                                                <input class="disabled user-input radio"  style="min-width: 20px;" id="new-template-agent" type="radio" name="audience" value="Agent" checked="checked" disabled="true" />
                                                             </apex:outputText>
                                                             <apex:outputText rendered="{!newTemplate.Audience__c != 'Agent'}">
-                                                                <input class="disabled-user-input radio" style="min-width: 20px;"  id="new-template-agent" type="radio" name="audience" value="Agent"  disabled="true"/>
+                                                                <input class="disabled user-input radio" style="min-width: 20px;"  id="new-template-agent" type="radio" name="audience" value="Agent"  disabled="true"/>
                                                             </apex:outputText>
                                                         </apex:outputText>  
-                                                       	<label class="{!IF(isIDCARDSelectionAllowed,'custom-radio','')}" for="new-template-agent"><i class="icon"></i></label>
+                                                        <label class="custom-radio" for="new-template-agent"><i class="icon"></i></label>
                                                         
                                                     </div>
                                                     
-                                                    <label class="input-label" for="new-template-agent">IATA/IATAN ID Cardholders<br />Can be used to target travel professionals only. All applicable merge fields available.</label>
+                                                    <label class="input-label" for="new-template-agent"><strong>IATA/IATAN ID Cardholders</strong><br />Can be used to target travel professionals only. All applicable merge fields available.</label>
                                                 </div>
                                             </li>
                                             
@@ -97,7 +97,7 @@
                                                         
                                                         <label class="custom-radio" for="new-template-neutral"><i class="icon"></i></label>
                                                     </div>
-                                                    <label class="input-label" for="new-template-neutral">General Audience<br />Can be used to target both agencies and travel professionals. Offers a limited number of merge fields.</label>
+                                                    <label class="input-label" for="new-template-neutral"><strong>General Audience</strong><br />Can be used to target both agencies and travel professionals. Offers a limited number of merge fields.</label>
                                                 </div>
                                             </li>
                                         </ul>
@@ -121,16 +121,18 @@
                                             </ul>
                                         </div>
                                     </footer>
-									-->
+                                    -->
                                 </apex:outputText>
                                 <apex:outputText rendered="{!newTemplateStepNumber == 2}">
                                     <div >
                                         <h3 class="step-title">Layout</h3>
+                                        
+                                        <apex:pageMessages />
                                         <div class="tab-container js-tabs">
                                             <ul class="nav tabs">
-                                                <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val());">Basic Templates</a></li>
+                                                <li class="active" data-target="#pane-1"><a href="#" onclick="resetTemplate(jQuery('input:checked', jQuery(this).closest('li').attr('data-target')).val()); rerenderFooterActions();">Basic Templates</a></li>
                                                 
-                                                <li data-target="#pane-2"><a href="#" onclick="resetTemplate('{!customHtmlTemplate.Id}');">Use your HTML code</a></li>
+                                                <li data-target="#pane-2"><a href="#" onclick="resetTemplate('{!customHtmlTemplate.Id}'); rerenderFooterActions();">Use your HTML code</a></li>
                                             </ul>
                                             
                                             <div class="tab-content">
@@ -187,7 +189,7 @@
                                             </ul>
                                         </div>
                                     </footer>
-									-->
+                                    -->
                                 </apex:outputText>
                                 
                                 <apex:outputPanel id="footerActions">
@@ -204,7 +206,7 @@
                                                     <apex:commandLink rendered="{!AND(newTemplateStepNumber == 1, NOT(ISBLANK(newTemplate.Audience__c)))}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template,bottom2" oncomplete="jQuery('body').css('cursor', 'auto');">
                                                         <apex:param assignTo="{!newTemplateStepNumber}" name="firstParam" value="2" />
                                                     </apex:commandLink>
-													<apex:outputText rendered="{!newTemplateStepNumber == 2 && (ISBLANK(selectedTemplateId) || selectedTemplateId == null)}">
+                                                    <apex:outputText rendered="{!newTemplateStepNumber == 2 && (ISBLANK(selectedTemplateId) || selectedTemplateId == null)}">
                                                         <a href="javascript:void(0);" class="button disabled" data-default-state="disabled">Continue</a> 
                                                     </apex:outputText>
                                                     <apex:commandLink rendered="{!newTemplateStepNumber == 2 && NOT(ISBLANK(selectedTemplateId) || selectedTemplateId == null)}" onclick="jQuery('body').css('cursor', 'wait');" action="{!validateNewTemplate}" styleClass="button" value="Continue" rerender="create-template" oncomplete="jQuery('body').css('cursor', 'auto');">

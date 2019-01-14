@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>41.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Page used to create a new case with a proposed template and to be used in customer responses (e-mail and chat) and AI training</description>
+    <label>DG_ProposedTemplate</label>
+</ApexPage>

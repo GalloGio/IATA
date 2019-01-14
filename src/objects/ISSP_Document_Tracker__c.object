@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -65,6 +62,19 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amazon_File__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the amazon file record</description>
+        <externalId>false</externalId>
+        <label>Amazon File</label>
+        <referenceTo>AmazonFile__c</referenceTo>
+        <relationshipLabel>ISSP Document Tracker</relationshipLabel>
+        <relationshipName>ISSP_Document_Tracker</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>IATA_Code__c</fullName>
@@ -102,6 +112,17 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Report_Id__c</fullName>
+        <description>Id of the external report</description>
+        <externalId>false</externalId>
+        <label>Report Id</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
@@ -136,4 +157,5 @@
     <pluralLabel>ISSP Document Tracker</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

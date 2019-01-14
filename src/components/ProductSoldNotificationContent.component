@@ -1,85 +1,159 @@
 <apex:component controller="ProductSoldNotificationContent_Ctrl" access="global" >
-	<apex:attribute name="OrderId" assignTo="{!idOrder}" description="Order ID" type="Id"/>
-	<apex:attribute name="OrderItemId" assignTo="{!idOrderItem}" description="Order Item ID" type="Id" />
+    <apex:attribute name="OrderId" assignTo="{!idOrder}" description="Order ID" type="Id"/>
+    <apex:attribute name="OrderItemId" assignTo="{!idOrderItem}" description="Order Item ID" type="Id" />
 
-	<p>Dear {!sContactName},</p>
-	
-	<p>
-		Thank you for ordering from IATA. <apex:outputText value="{!paymentTypeMsg}"/> <br /> 
-	</p>
-	
-	<!-- Contains Downloadable products -->
-	<apex:outputPanel rendered="{!containsWebDownload}">
-		<p>
-			This email contains the details of your order as well as product key(s) and download link(s), where applicable.
-		</p>
-	
-		<p>CUSTOMER INFORMATION</p>
-		
-		<p>Contact: {!sContactName}</p>
-		
-		<p>Company: {!sAccountName}</p>
-		
-		<p>Email: {!sEmail}</p>
-		
-		<p>Order Number: {!sOrderNumber}</p>
-	
-		<table style="font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;">
-	        <tr>
-	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Name</th>
-	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Description</th>
-	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Quantity</th>
-	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Manager</th>
-	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Download Link</th>
-	        </tr>
-	        <apex:repeat value="{!orderItems}" var="oi">
-		        <tr>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Name__c}</td>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputText value="{0, number}"><apex:param value="{!oi.Quantity}"/></apex:outputText></td>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Manager__c}</td>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputLink value="{!sBaseUrl}/iecWebDownload?itemNumber={!oi.OrderItemNumber}" rendered="{!oi.Is_Web_Download__c}">Download</apex:outputLink><apex:outputText value="N/A" rendered="{!NOT(oi.Is_Web_Download__c)}" /></td>
-		        </tr>
-	        </apex:repeat>        
-	    </table>
+    <p>Dear {!sContactName},</p>
+    
+    <p>
+        Thank you for ordering from IATA. <apex:outputText value="{!paymentTypeMsg}"/> <br /> 
+    </p>
+    
+    <!-- Contains Downloadable products -->
+    <apex:outputPanel rendered="{!containsWebDownload}">
+        <p>
+            This email contains the details of your order as well as product key(s) and download link(s), where applicable.
+        </p>
+    
+        <p>CUSTOMER INFORMATION</p>
+        
+        <p>Contact: {!sContactName}</p>
+        
+        <p>Company: {!sAccountName}</p>
+        
+        <p>Email: {!sEmail}</p>
+        
+        <p>Order Number: {!sOrderNumber}</p>
+        
+        <p>Please log in to your account at store.iata.org before clicking on the download link below to be able to download your products.</p>
+    
+        <table style="font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;">
+            <tr>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Name</th>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Description</th>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Quantity</th>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Manager</th>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Download Link</th>
+            </tr>
+            <apex:repeat value="{!orderItems}" var="oi">
+                <tr>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Name__c}</td>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputText value="{0, number}"><apex:param value="{!oi.Quantity}"/></apex:outputText></td>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Manager__c}</td>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputLink value="{!sBaseUrl}/iecWebDownload?itemNumber={!oi.OrderItemNumber}" rendered="{!oi.Is_Web_Download__c}">Download</apex:outputLink><apex:outputText value="N/A" rendered="{!NOT(oi.Is_Web_Download__c)}" /></td>
+                </tr>
+            </apex:repeat>        
+        </table>
     </apex:outputPanel>
 
-	<!-- Not contains Downloadable products -->
+    <!-- Not contains Downloadable products -->
     <apex:outputPanel rendered="{!!containsWebDownload}">
-		<p>	Your order {!sOrderNumber} is in progress. </p>
-		
-		<table style="font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;">
-	        <tr>
-	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Name</th>
-	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Description</th>
-	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Quantity</th>
-	            <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Item_Price}</th>
-            	<th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Total_Price}</th>
-	        </tr>
-	        <apex:repeat value="{!orderItems}" var="oi">
-		        <tr>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Name__c}</td>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputText value="{0, number}"><apex:param value="{!oi.Quantity}"/></apex:outputText></td>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
-					<apex:outputText value="{0, Number, Currency}" >
+        <p> Your order {!sOrderNumber} is in progress. </p>
+        
+        <table style="font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;">
+            <tr>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Name</th>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Description</th>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Quantity</th>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Item_Price}</th>
+                <apex:variable value="Flat Fee" var="setupFeeHeader" rendered="{! hasSetupFee == true}">
+                    <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Flat Fee</th>
+                </apex:variable>
+                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Total_Price}</th>
+            </tr>
+            <apex:repeat value="{!orderItems}" var="oi">
+                <tr>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Name__c}</td>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><apex:outputText value="{0, number}"><apex:param value="{!oi.Quantity}"/></apex:outputText></td>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                    <apex:outputText value="{0, Number, Currency}" >
                         <apex:param value="{!oi.UnitPrice}" />
                     </apex:outputText>
-					</td>
-					<td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
-						<apex:outputText value="{0, Number, Currency}" >
-	                        <apex:param value="{!oi.quantity * oi.UnitPrice}" />
-	                    </apex:outputText>
-					</td>
-		        </tr>
-	        </apex:repeat>        
-	    </table>
-		
-		<p>
-			Please allow: <br />
-			1-2 working days for issuing access details for digital products<br />
-			3-10 working days for delivery of physical products from our IATA YMQ location<br />
-		</p>
+                    </td>
+                    <apex:variable value="Flat Fee" var="setupFeeDetail" rendered="{! hasSetupFee == true}">
+                        <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                            <apex:outputText value="{0, Number, Currency}" rendered="{! oi.Setup_Fee__c != null}" >
+                                <apex:param value="{!oi.Setup_Fee__c}" />
+                            </apex:outputText>
+                        </td>
+                    </apex:variable>
+                    <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                        <apex:outputText value="{0, Number, Currency}" >
+                            <apex:param value="{!oi.quantity * oi.UnitPrice + IF(oi.Setup_Fee__c == null, 0, oi.Setup_Fee__c)}" />
+                        </apex:outputText>
+                    </td>
+                       <!-- <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                            <apex:outputText value="{0, Number, Currency}" >
+                                <apex:param value="{!discountedAmount}" />
+                            </apex:outputText>
+                        </td>
+                        <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                             <apex:outputText value="{0, Number, Currency}" >
+                                <apex:param value="{!totalAmount}" />
+                            </apex:outputText>
+                        </td>-->
+                </tr>
+            </apex:repeat>
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Discounted_Amount}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!discountedAmount}" />
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 8)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Subtotal}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.SubTotal_Amount__c - ord.Discount_Amount__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Taxes}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.Taxes__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Shipping}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.Total_Freight_Charge__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Handling}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.Total_handling_charges__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.IDCard_Total}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+               <strong>
+                     <apex:outputText value="{0, Number, Currency}" >
+                        <apex:param value="{!ord.Total_Amount__c}" />
+                    </apex:outputText>
+               </strong>
+            </td>
+        </tr>
+        </table>
+        
+        <p>
+            Please allow: <br />
+            1-2 working days for issuing access details for digital products<br />
+            3-10 working days for delivery of physical products from our IATA YMQ location<br />
+        </p>
     </apex:outputPanel>
 
     <p>Best regards,<br />

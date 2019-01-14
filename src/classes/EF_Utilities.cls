@@ -53,7 +53,8 @@ public with sharing class EF_Utilities
 
 	public static List <EF_Critical_Field_Notification__c> getCriticalFields ()
 	{
-		List<EF_Critical_Field_Notification__c> fieldList = [select id, name, Airline_Billing_Agreement_Fields__c, Account_Airline_Fields__c, Account_Client_Fields__c, Contact_Fields__c,Contract_Fields__c  from EF_Critical_Field_Notification__c];
+		//List<EF_Critical_Field_Notification__c> fieldList = [select id, name, Airline_Billing_Agreement_Fields__c, Account_Airline_Fields__c, Account_Client_Fields__c, Contact_Fields__c,Contract_Fields__c  from EF_Critical_Field_Notification__c];
+		List<EF_Critical_Field_Notification__c> fieldList = EF_Critical_Field_Notification__c.getAll().values();
 		return fieldList;	
 	}
 	

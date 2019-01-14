@@ -1,0 +1,165 @@
+<apex:component controller="ISSP_ICCS_ProcessNoaController" allowDML="true">
+    <apex:attribute name="caseProcessesCtrl" 
+                    type="ISSP_ICCS_CaseProcessesController" 
+                    assignTo="{! caseProcessesController}" 
+                    required="true" 
+                    description="The controller for the page." />
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<script>
+		$( function() {		
+			$( '[id$=datepicker]' ).datepicker();
+		} );
+	</script>
+
+    <!----------------------->
+    <!-- NEW OR DRAFT CASE -->
+    <!----------------------->
+
+    <apex:outputPanel rendered="{! caseProcessesController.cse.Id == null || caseProcessesController.cse.Status == 'Draft'}">
+        <!------------>
+        <!-- STEP 1 -->
+        <!------------>
+        <apex:outputPanel rendered="{! caseProcessesController.currentStep == 1}">
+            <apex:pageBlock>
+                <div class="col-md-6 col-sm-9 col-xs-6 center-card" style="padding-right:5px;padding-left:5px;">
+                    <div class="bottom-box no-pddg no-border" stye="text-align: justify;text-justify: inter-word;">
+						<apex:outputPanel>
+							<apex:outputText value="{! $Label.ICCS_NoA_Message}" escape="false"/>
+						</apex:outputPanel>
+                       <div class="table-form" style="padding-bottom : 0px;">
+                            <apex:pageBlockSection columns="1">
+			                    <apex:outputLabel value="{! $Label.ICCS_Category_Label}"/>
+                                <apex:outputLabel value="{! selectedProductType}" styleClass="selected-txt"/>
+
+			                    <apex:outputLabel value="{! $Label.ICCS_Country_Label}"/>
+                                <apex:outputLabel value="{! selectedCountry}" styleClass="selected-txt"/>
+
+			                    <apex:outputLabel value="{! $Label.ICCS_Currency_Label}"/>
+                                <apex:outputLabel value="{! selectedCurrency}" styleClass="selected-txt"/>
+
+								<apex:outputLabel value="{! $Label.ICCS_Expected_Deadline}"/>
+								<apex:outputPanel>
+		                            <apex:inputField value="{! caseProcessesController.cse.Expected_Deadline__c}" id="datepicker"/>
+								</apex:outputPanel>
+			                </apex:pageBlockSection>
+                        </div>
+                    </div>
+
+					<div class="divider-4"/>
+
+					<div class="bold-txt">
+						<apex:outputText value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].Name}" escape="false"/>
+					</div>
+					<br/>
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'pdf-file.png')}" height="28"/>
+					<div class="down-btn">
+						<div class="ic-pstn">
+							<a href="/servlet/servlet.FileDownload?file={! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].Id}" target="_blank">
+								<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'download.png')}" width="24"/>
+								<apex:outputText value="{! $Label.ICCS_Download_Action}" escape="false"/>
+							</a>
+						</div>
+					</div>
+					&nbsp;
+					<apex:outputText styleClass="LastModifiedOn" value="{! $Label.ICCS_Last_Modified_Date}" escape="false"/>
+					<apex:outputText styleClass="LastModifiedOn" value="{0,date,yyyy-MM-dd}">
+						<apex:param value="{! caseProcessesController.pageController.downloadableDocumentsMap['ICCS_Revised_Instructions'].LastModifiedDate}" />
+					</apex:outputText>
+
+					<div class="divider-4"/>
+
+					<div class="bold-txt">
+						<apex:outputText value="{! $Label.ICCS_Uploads_Label}" escape="false"/>
+					</div>
+
+					<br/>
+
+					<table>
+						<tr>
+							<td style="width: 1%;white-space: nowrap;">
+								NoA Release
+							</td>
+							<td>
+								<c:ISSP_ICCS_TypedDocument docType="NoA Release" caseProcessCtrl="{! thisCtrl}"/>
+							</td>
+						</tr>
+
+						<tr>
+							<td style="width: 1%;white-space: nowrap;">
+								Revised Instructions
+							</td>
+							<td>
+								<c:ISSP_ICCS_TypedDocument docType="Revised Instructions" caseProcessCtrl="{! thisCtrl}"/>
+							</td>
+						</tr>
+					</table>
+                </div>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:outputPanel>
+    
+    <!----------------->
+    <!-- OPENED CASE -->
+    <!----------------->
+	<apex:outputPanel rendered="{! caseProcessesController.cse.Id != null && caseProcessesController.cse.Status != 'Draft'}">
+		<apex:pageBlock>
+			<div class="col-md-6 col-sm-6 col-xs-6 text-center left-card" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray prfl">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Case_Account_Contact_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg left-right" style="text-align: left;">  
+					<apex:pageBlockSection columns="1">
+						<apex:outputField value="{! caseProcessesController.cse.Account.Name}"/>
+						<apex:outputField value="{! caseProcessesController.cse.IATA_Code__c}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Name}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Email}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Contact.Phone}"/>
+					</apex:pageBlockSection>
+				</div>
+			</div>
+			
+			<div class="col-md-6 col-sm-6 col-xs-6 text-center right-card" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray cases">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Case_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg left-right" style="text-align: left;">
+					<apex:pageBlockSection columns="1" >
+						<apex:outputField value="{! caseProcessesController.cse.CaseNumber}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Subject}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Status}"/>
+						<apex:outputField value="{! caseProcessesController.cse.CaseArea__c}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Type_of_Change__c}"/>
+						<apex:outputField value="{! caseProcessesController.cse.Expected_Deadline__c}"/>
+					</apex:pageBlockSection>
+				</div>
+			</div>
+			
+			<div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding-right:5px;padding-left:5px;">
+				<div class="section-title-gray cycle">
+					<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'titles.png')}" height="48"/>
+					<apex:outputText value="{! $Label.ICCS_Participation_Information}" escape="false"/>
+				</div>
+				<div class="bottom-box no-pddg mrgn left-right" style="text-align: justify;text-justify: inter-word;">
+					<apex:pageBlockSection columns="1">
+						<apex:pageBlockSectionItem>
+		                    <apex:outputLabel value="{! $Label.ICCS_Category_Label}"/>
+							<apex:outputText value="{! caseProcessesController.cse.ICCS_Product__c}"/>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem >
+		                    <apex:outputLabel value="{! $Label.ICCS_Country_Label}"/>
+							<apex:outputText value="{! caseProcessesController.cse.ICCS_Country__c}"/>
+						</apex:pageBlockSectionItem>
+						<apex:pageBlockSectionItem>
+		                    <apex:outputLabel value="{! $Label.ICCS_Currency_Label}"/>
+							<apex:outputText value="{! caseProcessesController.cse.ICCS_Currencies__c}"/>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+				</div>
+			</div>
+		</apex:pageBlock>
+	</apex:outputPanel>
+</apex:component>

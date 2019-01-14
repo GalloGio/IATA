@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Newgen ISS - Agency Changes Configuration with fields to migrated, change codes and possible combinations.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>TCA_Application_withdrawal__c</fullName>
+        <description>Change Code to be applied after application withdrawal</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Change Code to be applied after application withdrawal</inlineHelpText>
+        <label>Application withdrawal</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TCA_Manager_approval__c</fullName>
+        <description>Change Code to be applied after manager approval</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Change Code to be applied after manager approval</inlineHelpText>
+        <label>Manager approval</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TCA_Not_Applicable_Steps__c</fullName>
+        <externalId>false</externalId>
+        <label>Not Applicable Steps</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TCA_Sanity_check__c</fullName>
+        <description>Change Code to be applied after sanity check</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Change Code to be applied after sanity check</inlineHelpText>
+        <label>Sanity check</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TC_Accreditation_Type__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Accreditation type</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Hierarchy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Hierarchy</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Legal_Name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Legal name</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Legal_Status__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Legal status</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Location_Type__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Location type</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Location__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Location</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Location_type_diff_legal_ent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Location type to different legal entity</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Major_Shareholding__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Major shareholding</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Minor_Shareholding__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Minor shareholding</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Ownership__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Ownership</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Trade_name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Trade name</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_VMFR__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>VMFR</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>ANG Agency Changes Configuration</label>
+    <listViews>
+        <fullName>Multiple_Changes_ANG</fullName>
+        <columns>NAME</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>TC_Accreditation_Type__c</columns>
+        <columns>TCA_Not_Applicable_Steps__c</columns>
+        <columns>TC_Legal_Name__c</columns>
+        <columns>TC_Legal_Status__c</columns>
+        <columns>TC_Location__c</columns>
+        <columns>TC_Ownership__c</columns>
+        <columns>TC_Hierarchy__c</columns>
+        <columns>TC_Location_Type__c</columns>
+        <columns>TC_Major_Shareholding__c</columns>
+        <columns>TC_Minor_Shareholding__c</columns>
+        <columns>TC_Trade_name__c</columns>
+        <columns>TCA_Sanity_check__c</columns>
+        <columns>TCA_Manager_approval__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Multiple Changes ANG</label>
+        <language>en_US</language>
+    </listViews>
+    <visibility>Protected</visibility>
+</CustomObject>

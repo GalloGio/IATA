@@ -1,0 +1,88 @@
+<apex:page standardController="Tracked_Email__c" extensions="SignaturitRecipientsStatusController">
+    <apex:pageBlock >
+        <apex:pageBlock title="Tracked Email Status per Recipient" rendered="{! !embedded}">
+
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Subject</apex:outputLabel>
+                    <apex:outputText >{!trackedEmail.Subject__c}</apex:outputText>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection columns="2">
+                <apex:pageblockSectionItem >
+                    <apex:outputLabel >Tracked Email</apex:outputLabel>
+                    <a href="/{!trackedEmail.Id}">{!trackedEmail.Name}</a>
+                </apex:pageblockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Status</apex:outputLabel>
+                    <apex:outputText >{!trackedEmail.Status__c}</apex:outputText>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Case</apex:outputLabel>
+                    <a href="/{!trackedEmail.Case__r.Id}">{!trackedEmail.Case__r.CaseNumber}</a>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Signaturit Id</apex:outputLabel>
+                    <apex:outputText >{!trackedEmail.Signaturit_Id__c}</apex:outputText>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Created By</apex:outputLabel>
+                    <apex:outputText ><a href="/{!trackedEmail.CreatedById}">{!createdByName}</a>, {!trackedEmail.CreatedDate}</apex:outputText>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Last Modified By</apex:outputLabel>
+                    <apex:outputText ><a href="/{!trackedEmail.LastModifiedById}">{!lastModifiedByName}</a>, {!trackedEmail.CreatedDate}</apex:outputText>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    
+        <apex:pageBlockTable value="{!events}" var="comparableEvent" rows="{!rowsDisplayed}">
+            
+            <apex:column >
+                <apex:facet name="header">Recipient Type</apex:facet>
+                {!comparableEvent.recipientType}
+            </apex:column>
+            
+            <apex:column >
+                <apex:facet name="header">Tracked Email Event Name</apex:facet>
+                {!comparableEvent.event.Name}
+            </apex:column>
+        
+            <apex:column >
+                <apex:facet name="header">Current Status</apex:facet>
+                {!comparableEvent.event.Status__c}
+            </apex:column>
+                
+            <apex:column >
+                <apex:facet name="header">Recipient Name</apex:facet>
+                {!comparableEvent.event.Recipient_Name__c}
+            </apex:column>
+        
+            <apex:column >
+                <apex:facet name="header">Recipient Address</apex:facet>
+                {!comparableEvent.event.Recipient_Address__c}
+            </apex:column>
+        
+            <apex:column >
+                <apex:facet name="header">Timestamp</apex:facet>
+                <apex:outputField value="{! comparableEvent.event.Timestamp__c}"/>
+            </apex:column>
+        
+        </apex:pageblockTable>
+        
+        <apex:outputPanel rendered="{!rowsDisplayed < eventsSize}">
+            <a target="_parent" href="/apex/SignaturitRecipientsStatus?id={!trackedEmail.Id}&rows=all">Go to List ({!eventsSize})</a>
+        </apex:outputPanel>
+    </apex:pageBlock>
+
+</apex:page>

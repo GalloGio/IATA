@@ -1,241 +1,421 @@
 <apex:page controller="IEC_ProductDetailController" action="{!onLoadAction}" language="{!language}" 
-	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
-	
-	<!--[if lte IE 8]>
+    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+    
+    <!--[if lte IE 8]>
     <html lang="en" class="ie lte-ie8 no-svg">
-	<![endif]-->
-	<!--[if IE 9]>
-	    <html lang="en" class="ie ie9">
-	<![endif]-->
-	<!--[if !IE]><!-->
-	
-	<html lang="{!language}">
-	<!--<![endif]-->
+    <![endif]-->
+    <!--[if IE 9]>
+        <html lang="en" class="ie ie9">
+    <![endif]-->
+    <!--[if !IE]><!-->
 
-		<head>
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1"/>
-			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
-			<title>{!$Label.PageTitleProductDetails} - {!$Label.SiteTitle}</title>
-		</head>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+   <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+
+<script type="text/javascript">
+    j$ = jQuery.noConflict(); 
+   function blockme() {
+       j$.blockUI({ css: {
+           border: 'none',
+           padding: '15px',
+           backgroundColor: '#000',
+           '-webkit-border-radius': '10px',
+           '-moz-border-radius': '10px',
+           opacity: .5,
+           color: '#fff'
+           } }); 
+     }
+
+    function redirectToCart() {
+        var current = window.self.location.href;
+        
+        var prefix = current.substr(0, current.lastIndexOf("/"));
+
+        window.location.href = prefix + '/IEC_ShoppingCart';
+    }
+</script>
+
+    <html lang="{!language}">
+    <!--<![endif]-->
+
+        <head>
+            <!-- Google Tag Manager -->     
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }
+
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "language": "{!language}",
+                        "breadcrumb": "{!$Label.Home} > {!selectedCategory.label} > {!selectedTopicLabel} > {!ecomProduct.ProductName}"
+                    },
+                    "ecommerce": {!productWrapper}
+                });
+
+
+                function differenceBetweenCACsPush() {
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Product Details Page",
+                        "eventAction": "Click on Difference between CAC Evaluation & CAC Professional"
+                    });
+                }
+
+                function accessChechACodeEvaluationPush(description) {
+                    if(description === 'Access CheckACode Evaluation'){
+                        dataLayer.push({
+                            "event": "userAction",
+                            "eventCategory": "Product Details Page",
+                            "eventAction": "Click on Access CheckACode Evaluation",
+                            "eventLabel": "{!ecomProduct.ProductName} - {!ecomProduct.ProductId}"
+                        });
+                    }
+                }
+
+                function overviewTabPush() {
+                    dataLayer.push({
+                        "event": "VPV",
+                        "page": {
+                            "requestURI": window.location.pathname + window.location.search + "&ga_step=view-tab-overview"
+                        }
+                    });
+                }
+
+                function featuresTabPush() {
+                    dataLayer.push({
+                        "event": "VPV",
+                        "page": {
+                            "requestURI": window.location.pathname + window.location.search + "&ga_step=view-tab-features"
+                        }
+                    });
+                }
+
+                function pricingTabPush() {
+                    dataLayer.push({
+                        "event": "VPV",
+                        "page": {
+                            "requestURI": window.location.pathname + window.location.search + "&ga_step=view-tab-pricing"
+                        }
+                    });
+                }
+
+                function resourcesTabPush() {
+                    dataLayer.push({
+                        "event": "VPV",
+                        "page": {
+                            "requestURI": window.location.pathname + window.location.search + "&ga_step=view-tab-resources"
+                        }
+                    });
+                }
+
+                function createAnAccountPush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Product Details Page",
+                        "eventAction": "Click on Create an Account",
+                        "eventLabel": "{!ecomProduct.ProductName} - {!ecomProduct.ProductId}"
+                    });
+                }
+
+                function freeProTrialPush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Product Details Page",
+                        "eventAction": "Click on Free Pro Trial",
+                        "eventLabel": "{!ecomProduct.ProductName} - {!ecomProduct.ProductId}"
+                    });
+                }
+
+            </script>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+            <title>{!$Label.PageTitleProductDetails} - {!$Label.SiteTitle}</title>
+        </head>
 
         <body data-media-size="" data-is-modal-open="false" id="page-top">
-        	
-        	<div id="js-breakpoint-finder">
-				<span class="device-xs screen-xsmall"/>
-				<span class="device-sm screen-small"/>
-				<span class="device-md screen-medium"/>
-				<span class="device-lg screen-large"/>
-				<span class="device-xl screen-xlarge"/>
-			</div>
-			
-			<!-- App Container -->
-			<div id="js-app-container" class="app-container">
-				<!-- Page Header -->
-				<c:IEC_PageHeader />
-				
-				<!-- Page Container -->
-				<div class="page-container" id="js-page-container">
-					<main class="main-content product-details-page">
-						<!-- Top Banner -->
-						<div class="reader-only" id="reader-main-content">Main Content</div>
-						<div class="section top-banner">
-							<div class="inner-wrapper">
-								<h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
-							</div>
-						</div>
+            <!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
+            <div id="js-breakpoint-finder">
+                <span class="device-xs screen-xsmall"/>
+                <span class="device-sm screen-small"/>
+                <span class="device-md screen-medium"/>
+                <span class="device-lg screen-large"/>
+                <span class="device-xl screen-xlarge"/>
+            </div>
+            
+            <!-- App Container -->
+            <div id="js-app-container" class="app-container">
+                <!-- Page Header -->
+                <c:IEC_PageHeader />
+                
+                <!-- Page Container -->
+                <div class="page-container" id="js-page-container">
+                    <main class="main-content product-details-page">
+                        <!-- Top Banner -->
+                        <div class="reader-only" id="reader-main-content">Main Content</div>
+                        <div class="section top-banner">
+                            <div class="inner-wrapper">
+                                <h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
+                            </div>
+                        </div>
 
-						<div class="inner-wrapper">
+                        <div class="inner-wrapper">
 
-							<!-- breadcrumb -->
-							<ol class="list breadcrumb">
-								<li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
-								<!-- <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_mega_menu}">{!mega_menus[ecomProduct.megaMenu]}</a></li> -->
-								<li>{!ecomProduct.ProductName}</li>
-							</ol>
-							<section class="product-details global-system-solutions">
-								<div class="for-sticky-header">
-					                <div class="sticky-header">
-					                    <div class="sticky-header-wrapper">
-					                        <h1 class="page-title">{!ecomProduct.ProductName}</h1>
-					                        <div class="page-anchors">
-					                            <ol class="list js-anchors">
-					                                <li class="active"><a href="#overview" data-scroll="">Overview</a></li>
-					                                <li><a href="#features" data-scroll="">Features</a></li>
-					                                <li><a href="#pricing" data-scroll="">Pricing</a></li>
-					                                <li><a href="#resources" data-scroll="">Resources</a></li>
-					                            </ol>
-					                        </div>
-					                    </div>
-					                </div>
-					            </div>
-					            <!-- Overview -->
-								<section class="section-container overview" id="overview" style="min-height:270px;">
-					                <h2 class="section-title">Overview</h2>
-					                <apex:outputText value="{!ecomProduct.ProductDesc}" escape="false" />
-					            </section>
+                            <!-- breadcrumb -->
+                            <ol class="list breadcrumb">
+                                <li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
+                                <li>
+                                    <a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
+                                    <apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
+                                </li>
+                                <li>
+                                    <a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
+                                    <apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
+                                </li>
+                                <li>{!ecomProduct.ProductName}</li>
+                            </ol>
+                            <section class="product-details global-system-solutions">
+                                <div class="for-sticky-header">
+                                    <div class="sticky-header">
+                                        <div class="sticky-header-wrapper">
+                                            <h1 class="page-title">{!ecomProduct.ProductName}</h1>
+                                            <div class="page-anchors">
+                                                <ol class="list js-anchors">
+                                                    <li class="active"><a onclick="overviewTabPush();" href="#overview" data-scroll="">Overview</a></li>
+                                                    <li><a onclick="featuresTabPush();" href="#features" data-scroll="">Features</a></li>
+                                                    <li><a onclick="pricingTabPush();" href="#pricing" data-scroll="">Pricing</a></li>
+                                                    <li><a onclick="resourcesTabPush();" href="#resources" data-scroll="">Resources</a></li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Overview -->
+                                <section class="section-container overview" id="overview" style="min-height:270px;background-image:url({!URLFOR($Resource.IECStyles,'img/') + sProductIcon});background-size:275px 210px">
+                                    <h2 class="section-title">Overview</h2>
+                                    <apex:outputText value="{!ecomProduct.ProductDesc}" escape="false" />
+                                </section>
 
-					            <!-- Features -->
-					            <section class="section-container features" id="features">
-					                <h2 class="section-title">Features</h2>
-					                <ul class="list dot">
-			                            <apex:variable value="{!$User}" var="u" rendered="{!bFeature1Show}">
-			                                <li>
-			                                    <apex:outputText value="{!sFeature1Description}" escape="yes" />
-			                                </li>
-			                            </apex:variable>
-			                            <apex:variable value="{!$User}" var="u" rendered="{!bFeature2Show}">
-			                                <li>
-			                                    <apex:outputText value="{!sFeature2Description}" escape="yes" />
-			                                </li>
-			                            </apex:variable>
-			                            <apex:variable value="{!$User}" var="u" rendered="{!bFeature3Show}">
-			                                <li>
-			                                    <apex:outputText value="{!sFeature3Description}" escape="yes" />
-			                                </li>
-			                            </apex:variable>
-			                            <apex:variable value="{!$User}" var="u" rendered="{!bFeature4Show}">
-			                                <li>
-			                                    <apex:outputText value="{!sFeature4Description}" escape="yes" />
-			                                </li>
-			                            </apex:variable>
-			                            <apex:variable value="{!$User}" var="u" rendered="{!bFeature5Show}">
-			                                <li>
-			                                    <apex:outputText value="{!sFeature5Description}" escape="yes" />
-			                                </li>
-			                            </apex:variable>
-			                            <apex:variable value="{!$User}" var="u" rendered="{!bFeature6Show}">
-			                                <li>
-			                                    <apex:outputText value="{!sFeature6Description}" escape="yes" />
-			                                </li>
-			                            </apex:variable>
-			                        </ul>
+                                <!-- Features -->
+                                <section class="section-container features" id="features" style="padding-top:0; margin-bottom:50px;">
+                                    <h2 class="section-title">Features</h2>
+                                    <ul class="list dot">
+                                        <apex:variable value="{!$User}" var="u" rendered="{!bFeature1Show}">
+                                            <li>
+                                                <apex:outputText value="{!sFeature1Description}" escape="yes" />
+                                            </li>
+                                        </apex:variable>
+                                        <apex:variable value="{!$User}" var="u" rendered="{!bFeature2Show}">
+                                            <li>
+                                                <apex:outputText value="{!sFeature2Description}" escape="yes" />
+                                            </li>
+                                        </apex:variable>
+                                        <apex:variable value="{!$User}" var="u" rendered="{!bFeature3Show}">
+                                            <li>
+                                                <apex:outputText value="{!sFeature3Description}" escape="yes" />
+                                            </li>
+                                        </apex:variable>
+                                        <apex:variable value="{!$User}" var="u" rendered="{!bFeature4Show}">
+                                            <li>
+                                                <apex:outputText value="{!sFeature4Description}" escape="yes" />
+                                            </li>
+                                        </apex:variable>
+                                        <apex:variable value="{!$User}" var="u" rendered="{!bFeature5Show}">
+                                            <li>
+                                                <apex:outputText value="{!sFeature5Description}" escape="yes" />
+                                            </li>
+                                        </apex:variable>
+                                        <apex:variable value="{!$User}" var="u" rendered="{!bFeature6Show}">
+                                            <li>
+                                                <apex:outputText value="{!sFeature6Description}" escape="yes" />
+                                            </li>
+                                        </apex:variable>
+                                    </ul>
 
-					                
-					            </section>
-								
+                                    
+                                </section>
+                                
+                                <!-- Section 2 -->
+                                <section class="section-container features" id="section2" style="padding-top:0; margin-bottom:50px; display:{!IF(bSection2Show, 'block','none')}">
+                                    <h2 class="section-title">{!sSection2Name}</h2>
+                                    <apex:outputText value="{!sSection2Description}" escape="false" />
+                                </section>
 
-					            <!-- Prices -->
-					            <section class="section-container pricing" id="pricing">
-					            	<apex:form >
-						                <h2 class="section-title">Pricing</h2>
+                                <!-- Section 3 -->
+                                <section class="section-container features" id="section3" style="padding-top:0; margin-bottom:50px; display:{!IF(bSection3Show, 'block','none')}">
+                                    <h2 class="section-title">{!sSection3Name}</h2>
+                                    <apex:outputText value="{!sSection3Description}" escape="false" />
+                                </section>
 
-						                <apex:outputPanel layout="block" id="ratePlanMsgs">
-											<!-- Error Messages -->
-				        					<apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
-									        	<apex:pageMessages escape="false"/>
-								        	</apex:outputPanel>
-										</apex:outputPanel>
-										
-						                <apex:outputPanel layout="block" rendered="{!loggedCustomer == null}">
-						                	<p class="light">
-						                		Iata member Airline get preferential pricing. 
-						                		<a href="{!$Site.BaseUrl}/IEC_Login?returl=/IEC_ProductDetail?id={!ecomProduct.productNumber}" class="text-link"></a>
-						                		or 
-						                		<apex:commandLink styleClass="text-link" action="{!register}" value="create an account" />
-					                		</p>
-						                </apex:outputPanel>
+                                <!-- Prices -->
+                                <section class="section-container pricing" id="pricing">
+                                    <apex:form >
+                                        <h2 class="section-title">Pricing</h2>
 
-						                <ul class="list product-pricing-list">
-						                	<apex:repeat var="subProd" value="{!subProducts}">
-							                    <li class="list-item {!IF(subProd.ratePlanInformation.Is_Most_Popular__c, ' has-best-value','')}">
-							                    	<apex:outputPanel layout="block" styleClass="best-value" rendered="{!subProd.ratePlanInformation.Is_Most_Popular__c}">Best Value</apex:outputPanel>
+                                        <apex:outputPanel layout="block" id="ratePlanMsgs">
+                                            <!-- Error Messages -->
+                                            <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
+                                                <apex:pageMessages escape="false"/>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        
+                                        <apex:outputPanel layout="block" rendered="{!loggedCustomer == null}">
+                                            <p class="light">
+                                                IATA Member Airlines get preferential pricing.<br/>Sign in to view applicable pricing 
+                                                <a href="{!$Site.BaseUrl}/IEC_Login?returl=/IEC_ProductDetail?id={!ecomProduct.productNumber}" class="text-link"></a>
+                                                or&nbsp;
+                                                <apex:commandLink onclick="createAnAccountPush();" styleClass="text-link" action="{!register}" value="create an account" />
+                                            </p>
+                                        </apex:outputPanel>
 
-							                        <h3 class="item-label">
-							                        	<!-- If monthly price displayed -->
-										                <apex:outputPanel rendered="{!subProd.ratePlanInformation.Display_As_Monthly_Fee__c}">
-										                    <apex:outputText value="${0, number,###,###,##0.00}"  styleClass="price">
-										                        <apex:param value="{!subProd.ratePlanInformation.Monthly_Price__c}"/>
-										                    </apex:outputText>
-										                </apex:outputPanel>
-										                            
-										                <!-- If annual price display -->
-										                <apex:outputPanel rendered="{!AND(NOT(subProd.ratePlanInformation.Display_As_Monthly_Fee__c),subProd.ratePlanInformation.Product_Rate_Plan__c!=null)}">
-										                    <apex:variable var="chargeTotal" value="{!0.0}" />  
-										                    <!-- Get the rate plan charges -->
-										                    <apex:repeat var="charge" value="{!charges[subProd.ratePlanInformation.Product_Rate_Plan__c]}">
-										                        <apex:variable var="chargeTotal" value="{!chargeTotal + charge.zqu__ListPrice__c}" />
-										                    </apex:repeat>
-										                    <apex:outputText value="${0, number,###,###,##0.00}" rendered="{!NOT(chargeTotal==0.0)}">
-										                        <apex:param value="{!chargeTotal}"/>
-										                    </apex:outputText>
-										                    <apex:outputText value="Free"  rendered="{!chargeTotal==0.0}" />
-										                </apex:outputPanel>
-										                
-										                <span class="break">{!subProd.ratePlanInformation.Name}</span>
+                                        <ul class="list product-pricing-list">
+                                            <apex:repeat var="subProd" value="{!subProducts}">
+                                                <li class="list-item {!IF(subProd.ratePlanInformation.Is_Most_Popular__c, ' has-best-value','')}">
+                                                    <apex:outputPanel layout="block" styleClass="best-value" rendered="{!subProd.ratePlanInformation.Is_Most_Popular__c}">Best Value</apex:outputPanel>
 
-						                        	</h3>
-							                        <h4 class="item-name">{!subProd.ratePlanInformation.Short_Description__c}</h4>
-							                        <div class="item-description"><apex:outputText value="{!subProd.ratePlanInformation.Long_Description__c}" escape="false" /></div>
-							                        <!-- <ul class="list check-circle">
-							                            <li>North America</li>
-							                            <li>South America</li>
-							                            <li>Caribbean</li>
-							                        </ul> -->
-							                        <div class="action">
-							                            <apex:commandLink styleClass="button" id="btnAddToCart" value="Buy now" action="{!addToCart}" rerender="ratePlanMsgs" rendered="{!(subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy Now' || subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(subProd.ratePlanInformation.Is_Triable__c)}">
-			                                                <apex:param name="selectedRatePlanInformationId" value="{!subProd.ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
-			                                            </apex:commandLink>
-			                                            <apex:commandLink styleClass="button"  id="btnQuote" value="Get a quote" action="{!getQuote}" rerender="ratePlanMsgs" rendered="{!(subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Get a Quote' || subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(subProd.ratePlanInformation.Is_Triable__c)}">
-			                                                <apex:param name="selectedRatePlanInformationId" value="{!subProd.ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
-			                                            </apex:commandLink> 
-			                                            <apex:commandLink styleClass="button" id="btnTryMe"  value="Try now" action="{!tryMe}" rerender="ratePlanMsgs" rendered="{!subProd.ratePlanInformation.Is_Triable__c}">
-			                                                <apex:param name="selectedRatePlanInformationId" value="{!subProd.ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
-			                                            </apex:commandLink>						                        
-		                                            </div>
-							                    </li>
-						                    </apex:repeat>
-						                </ul>
-					                </apex:form>
-					            </section>
+                                                    <h3 class="item-label">
+                                                        <!-- If monthly price displayed -->
+                                                        <apex:outputPanel rendered="{!subProd.ratePlanInformation.Display_As_Monthly_Fee__c}">
+                                                            <apex:outputText value="${0, number,###,###,##0.00}"  styleClass="price">
+                                                                <apex:param value="{!subProd.ratePlanInformation.Monthly_Price__c}"/>
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                                    
+                                                        <!-- If annual price display -->
+                                                        <apex:outputPanel rendered="{!AND(NOT(subProd.ratePlanInformation.Display_As_Monthly_Fee__c),subProd.ratePlanInformation.Product_Rate_Plan__c!=null)}">
+                                                            <apex:variable var="chargeTotal" value="{!0.0}" />  
+                                                            <!-- Get the rate plan charges -->
+                                                            <apex:repeat var="charge" value="{!charges[subProd.ratePlanInformation.Product_Rate_Plan__c]}">
+                                                                <apex:variable var="chargeTotal" value="{!chargeTotal + charge.zqu__ListPrice__c}" />
+                                                            </apex:repeat>
+                                                            <apex:outputText value="${0, number,###,###,##0.00}" rendered="{!NOT(chargeTotal==0.0)}">
+                                                                <apex:param value="{!chargeTotal}"/>
+                                                            </apex:outputText>
+                                                            <apex:outputText value="Free"  rendered="{!chargeTotal==0.0}" />
+                                                        </apex:outputPanel>
+                                                        
+                                                        <span class="break">{!subProd.ratePlanInformation.Name}</span>
 
-					            <!-- Resources -->
-					            <section class="section-container resources" id="resources">
-					                <h2 class="section-title">Resources</h2>
-					                <ul class="list download">
-					                	<!-- for CAC Comparison page only -->
-			                            <apex:outputPanel rendered="{!pc.Name=='CACPRO'}">
-			                                <li>
-			                                    Difference between CAC Evaluation and CAC Professional 
-			                                    <a href="javascript:void(window.open('{!$Site.BaseURL}/IECCACCompare','CAC','menubar=no,width=1011,height=784,toolbar=no,location=no,status=no,scrollbars=yes,resizable=no'))"> click here</a>                           
-			                               </li>
-	                                                                   
-			                            </apex:outputPanel>
-			                        
-			                            <apex:variable value="{!$User}" var="u" rendered="{!bResource1Show}">
-			                                <li>
-			                                    {!sResource1Description} <a href="{!sResource1File}">(click Here)</a>
-			                                </li>
-			                            </apex:variable>
+                                                    </h3>
+                                                    <h4 class="item-name">{!subProd.ratePlanInformation.Short_Description__c}</h4>
+                                                    <div class="item-description"><apex:outputText value="{!subProd.ratePlanInformation.Long_Description__c}" escape="false" /></div>
+                                                    <!-- <ul class="list check-circle">
+                                                        <li>North America</li>
+                                                        <li>South America</li>
+                                                        <li>Caribbean</li>
+                                                    </ul> -->
+                                                    <div class="action">
+                                                        <apex:commandLink styleClass="button" id="btnAddToCart" value="Buy now" onclick="blockme()" oncomplete="j$.unblockUI(); redirectToCart();" action="{!addToCart}" rerender="ratePlanMsgs" rendered="{!(subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy Now' || subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(subProd.ratePlanInformation.Is_Triable__c)}">
+                                                            <apex:param name="selectedRatePlanInformationId" value="{!subProd.ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                                        </apex:commandLink>
+                                                        <apex:commandLink styleClass="button"  id="btnQuote" value="Get a quote" action="{!getQuote}" rerender="ratePlanMsgs" rendered="{!(subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Get a Quote' || subProd.ratePlanInformation.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c=='Buy/Quote') && NOT(subProd.ratePlanInformation.Is_Triable__c)}">
+                                                            <apex:param name="selectedRatePlanInformationId" value="{!subProd.ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                                        </apex:commandLink> 
+                                                        <apex:commandLink styleClass="button" id="btnTryMe"  value="Try now" action="{!tryMe}" rerender="ratePlanMsgs" rendered="{!subProd.ratePlanInformation.Is_Triable__c}" onclick="freeProTrialPush();">
+                                                            <apex:param name="selectedRatePlanInformationId" value="{!subProd.ratePlanInformation.Id}" assignTo="{!selectedRatePlanInformationId}"/>
+                                                        </apex:commandLink>                                             
+                                                    </div>
+                                                </li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </apex:form>
+                                </section>
 
-			                            <apex:variable value="{!$User}" var="u" rendered="{!bResource2Show}">
-			                                <li>
-			                                    {!sResource2Description}<a href="{!sResource2File}">(click Here)</a>
-			                                </li>
-			                            </apex:variable>
+                                <!-- Section 5 -->
+                                <section class="section-container features" id="section5" style="margin-bottom:50px; margin-top:50px; display:{!IF(bSection5Show, 'block','none')}">
+                                    <h2 class="section-title">{!sSection5Name}</h2>
+                                    <apex:outputText value="{!sSection5Description}" escape="false" />
+                                </section>
 
-			                            <apex:variable value="{!$User}" var="u" rendered="{!bResource3Show}">
-			                                <li>
-			                                    {!sResource3Description}<a href="{!sResource3File}">(click Here)</a>
-			                                </li>
-			                            </apex:variable>
+                                <!-- Resources -->
+                                <section class="section-container resources" id="resources" style="{! IF(bSection6Show == true, '', 'display:none')}">
+                                    <h2 class="section-title">Resources</h2>
+                                    <ul class="list download">
+                                        <!-- for CAC Comparison page only -->
+                                        <apex:outputPanel rendered="{!pc.Name=='CACPRO'}">
+                                            <li>
+                                                Difference between CAC Evaluation and CAC Professional 
+                                                <a onclick="differenceBetweenCACsPush();" href="javascript:void(window.open('{!$Site.BaseURL}/IECCACCompare','CAC','menubar=no,width=1011,height=784,toolbar=no,location=no,status=no,scrollbars=yes,resizable=no'))"> click here</a>                           
+                                           </li>
+                                                                       
+                                        </apex:outputPanel>
+                                    
+                                        <apex:variable value="{!$User}" var="u" rendered="{!bResource1Show}">
+                                            <li>
+                                                {!sResource1Description} <a href="{!sResource1File}" onclick="accessChechACodeEvaluationPush('{!sResource1Description}');">(click Here)</a>
+                                            </li>
+                                        </apex:variable>
 
-					                </ul>
-					            </section>
-							</section>
-						</div>
-					</main>
+                                        <apex:variable value="{!$User}" var="u" rendered="{!bResource2Show}">
+                                            <li>
+                                                {!sResource2Description}<a href="{!sResource2File}">(click Here)</a>
+                                            </li>
+                                        </apex:variable>
 
-					<!-- Footer -->
-					<c:Footer />
-					
-				</div>
+                                        <apex:variable value="{!$User}" var="u" rendered="{!bResource3Show}">
+                                            <li>
+                                                {!sResource3Description}<a href="{!sResource3File}">(click Here)</a>
+                                            </li>
+                                        </apex:variable>
 
-			</div>
+                                    </ul>
+                                </section>
 
-			<!-- Load JS -->
-			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
-			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+                                <!-- Interactive Maps -->
+                                <apex:outputPanel rendered="{!bSection7Show}">
+                                    <section class="section-container resources" id="interactiveMap">
+                                        <h2 class="section-title">Interactive Statistics</h2>
+                                        <p class="light">IATA agencies on maps and charts</p>
+                                        <a class="button" href="{!$Site.BaseUrl}/IECGADMaps">View now</a>
+                                    </section>
+                                </apex:outputPanel>
+                            </section>
+                        </div>
+                    </main>
+
+                    <!-- Footer -->
+                    <c:Footer />
+                    
+                </div>
+
+            </div>
+
+            <!-- Load JS -->
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
 
         </body>
 

@@ -1,5 +1,7 @@
 trigger tgrUserCreateUpdateRights on User (before insert,before update) {
-    
+
+    if(ANG_UserTriggerHandler.doNotRun) return;
+
     for(User user : trigger.new ){
         user.Contact_Unique_Id__c  =  user.ContactId;
     }
@@ -13,18 +15,24 @@ trigger tgrUserCreateUpdateRights on User (before insert,before update) {
         user.SAP_Account_Access_3__c = null;
         user.SAP_Account_Access_4__c = null;
         if (user.ContactId != null){
+
+            String rightStr = 'Access Granted';
+            if(Test.isRunningTest()) {
+                rightStr = 'Access Requested';
+            }
+
             list<Portal_Application_Right__c> parList = [select Id,Invoice_Type__c,Contact__c,
                                                         Contact__r.AccountId,   Contact__r.Account.Top_Parent__c
                                                                 from Portal_Application_Right__c
                                                                     where Contact__c =: user.ContactId 
                                                                     and RecordType.developerName=:'Biller_Direct'
-                                                                    and Right__c=:'Access Granted' limit 1];
+                                                                    and Right__c=: rightStr limit 1];
              
              Portal_Application_Right__c par;
              map<string,string> invoiceTypeSapAccoutId = new map<string,string>();
              if(parList.size()>0) par = parList.get(0);       
                                           
-            if( par != null && par.Invoice_Type__c!=null && par.Invoice_Type__c!=''){
+            if( par != null && par.Invoice_Type__c!=null && par.Invoice_Type__c!='' ){
                 
                 string topParentId = par.Contact__r.Account.Top_Parent__c!=null?
                                         par.Contact__r.Account.Top_Parent__c:

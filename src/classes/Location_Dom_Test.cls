@@ -35,33 +35,39 @@ private class Location_Dom_Test {
 		     		, Type__c = 'Sold To'
 		     		, Active__c = true);
 	     	insert oLocation;
+	     	
+		// Test.stopTest() specifically added here 
+		// because otherwise too many queueable jobs 
+		// are added to the queue in this context
+     	Test.stopTest();
      	
-			// Test 02: make an update to one of the fields on the account to trigger a sync to SAP     		
-     		oAccount.Name = 'TestNewSAP';
-	     	update oAccount;
+		// Test 02: make an update to one of the fields on the account to trigger a sync to SAP     		
+ 		oAccount.Name = 'TestNewSAP';
+     	update oAccount;
 	     	
-	     	// Test 03: make an update to the address object
-	     	oAddress.State__c = 'ON';
-	     	update oAddress;
+     	// Test 03: make an update to the address object
+     	oAddress.State__c = 'ON';
+     	update oAddress;
 	     	
-	     	// Test 04: Replace location's address with a new one
-	     	IECAddress__c oAddress2 = new IECAddress__c(
-	     		Street__c = '1 test street'
-		     	, City__c = 'Toronto'
-		     	, Address_Type__c = 'SoldTo'
-		     	, ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
-		     	, ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'ON')
-		     	, ZipCode__c = 'A9A9A9');
-			insert oAddress2;
+     	// Test 04: Replace location's address with a new one
+     	IECAddress__c oAddress2 = new IECAddress__c(
+     		Street__c = '1 test street'
+	     	, City__c = 'Toronto'
+	     	, Address_Type__c = 'SoldTo'
+	     	, ISO_Country__r = new IATA_ISO_Country__c (ISO_Code__c = 'CA')
+	     	, ISO_State__r = new IATA_ISO_State__c (ISO_Code__c = 'ON')
+	     	, ZipCode__c = 'A9A9A9');
+		insert oAddress2;
 			
-			oLocation.Address__c = oAddress2.Id;
-			update oLocation;
+		oLocation.Address__c = oAddress2.Id;
+		update oLocation;
 
-			//Cover sync to SAP when some field changed on the contact
-			oContact.Email = 'testSAPSync@test.com';
-			update oContact;
+		//Cover sync to SAP when some field changed on the contact
+		oContact.Email = 'testSAPSync@test.com';
+		update oContact;
 	    
-	    Test.stopTest();
+	    delete oLocation;   //cover deletion
+	    
      }
      
      // Test location after update when address field is replaced by another to sync with Zuora
@@ -81,10 +87,7 @@ private class Location_Dom_Test {
 
     	set<Id> addressIds = new set<Id>();
     	
-
-		IFAP_BusinessRulesTest.createIsoCountry();
-
-
+		TestDataGenerator.generateISOCountryState();
     	IECAddress__c oAddress = new IECAddress__c(
 	     	Street__c = '12 main street'
 	     	, City__c = 'Montreal'
@@ -154,21 +157,28 @@ private class Location_Dom_Test {
 	     	, ZipCode__c = 'A9A9A9');
 		insert oAddress2;
 	
-		// Create Bill/Ship to locations
-    	List<Location__c> lstLocation = new List<Location__c>();
-    	lstLocation.add(new Location__c(
-	     		Address__c = oAddress.Id
-	     		, Account__c = oAccount.Id
-	     		, Contact__c = oContact.Id
-	     		, Type__c = 'Bill To'
-	     		, Active__c = true));
-	     lstLocation.add(new Location__c(
-	     		Address__c = oAddress.Id
-	     		, Account__c = oAccount.Id
-	     		, Contact__c = oContact.Id
-	     		, Type__c = 'Ship To'
-	     		, Active__c = true));
-     	insert lstLocation;
+	    Test.startTest();
+	
+			// Create Bill/Ship to locations
+	    	List<Location__c> lstLocation = new List<Location__c>();
+	    	lstLocation.add(new Location__c(
+		     		Address__c = oAddress.Id
+		     		, Account__c = oAccount.Id
+		     		, Contact__c = oContact.Id
+		     		, Type__c = 'Bill To'
+		     		, Active__c = true));
+		     lstLocation.add(new Location__c(
+		     		Address__c = oAddress.Id
+		     		, Account__c = oAccount.Id
+		     		, Contact__c = oContact.Id
+		     		, Type__c = 'Ship To'
+		     		, Active__c = true));
+	     	insert lstLocation;
+		
+		// Test.stopTest() specifically added here 
+		// because otherwise too many queueable jobs 
+		// are added to the queue in this context
+	    Test.stopTest();
 
     	List<Order> lstOrder = TestDataGenerator.generateOrder(2, oAccount.Id, oContact.Id, oContact.Id, false);
     	// Set billing address for first order
@@ -181,21 +191,18 @@ private class Location_Dom_Test {
     	
     	insert lstOrder;
 
-     	Test.startTest();
-			// Test 01: make an update to the address field to trigger a sync to Order object     		
-     		lstLocation[0].Address__c = oAddress2.Id;
-     		lstLocation[1].Address__c = oAddress2.Id;
-			update lstLocation;
+		// Test 01: make an update to the address field to trigger a sync to Order object     		
+ 		lstLocation[0].Address__c = oAddress2.Id;
+ 		lstLocation[1].Address__c = oAddress2.Id;
+		update lstLocation;
 			
-			for (Order ord : Order_Sel.getNewOrdersByLocation(new Set<Id> {lstLocation[0].Id, lstLocation[1].Id}))
-			{
-				if (ord.BillTo_Address__c != null)
-					System.assertEquals(ord.BillTo_Address__c, oAddress.Id, 'Billing address must be updated to the new address');
-
-				//if (ord.ShipTo_Address__c != null)
-				//	System.assertEquals(ord.ShipTo_Address__c, oAddress2.Id, 'Shipping address must be updated to the new address');
+		for (Order ord : Order_Sel.getNewOrdersByLocation(new Set<Id> {lstLocation[0].Id, lstLocation[1].Id}))
+		{
+			if (ord.BillTo_Address__c != null){
+				System.assertEquals(ord.BillTo_Address__c, oAddress.Id, 'Billing address must be updated to the new address');
 			}
-	    Test.stopTest();
+		}
+		
      }
      
      // Test location validation to prevent multiple soldto location

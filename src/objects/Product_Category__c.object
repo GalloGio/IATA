@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Contains the main product categories and their related information to be displayed on the product viewer page, and some extra configurations used for browsing products and rate plans.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -81,32 +78,39 @@
         <externalId>false</externalId>
         <inlineHelpText>Number of days allowed before end of subscription to change the Auto-Renew flag</inlineHelpText>
         <label>Auto Renewal Window</label>
-        <picklist>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>30</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>60</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>90</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>900</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>30</fullName>
+                    <default>false</default>
+                    <label>30</label>
+                </value>
+                <value>
+                    <fullName>60</fullName>
+                    <default>false</default>
+                    <label>60</label>
+                </value>
+                <value>
+                    <fullName>90</fullName>
+                    <default>false</default>
+                    <label>90</label>
+                </value>
+                <value>
+                    <fullName>900</fullName>
+                    <default>false</default>
+                    <label>900</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Banner_Image_Small__c</fullName>
@@ -130,24 +134,29 @@
         <externalId>false</externalId>
         <inlineHelpText>Determines whether to show the buttons on the sections as &quot;Buy now&quot; or as &quot;Get a Quote&quot;</inlineHelpText>
         <label>Button Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Buy Now</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Get a Quote</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Buy/Quote</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Buy Now</fullName>
+                    <default>true</default>
+                    <label>Buy Now</label>
+                </value>
+                <value>
+                    <fullName>Get a Quote</fullName>
+                    <default>false</default>
+                    <label>Get a Quote</label>
+                </value>
+                <value>
+                    <fullName>Buy/Quote</fullName>
+                    <default>false</default>
+                    <label>Buy/Quote</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Display_Name__c</fullName>
@@ -298,24 +307,29 @@
         <description>Grouping of the product category. These 3 features are displayed on the home page</description>
         <externalId>false</externalId>
         <label>Product Feature</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Data</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lookup</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Data</fullName>
+                    <default>false</default>
+                    <label>Data</label>
+                </value>
+                <value>
+                    <fullName>Lookup</fullName>
+                    <default>false</default>
+                    <label>Lookup</label>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
@@ -355,32 +369,39 @@
         <externalId>false</externalId>
         <inlineHelpText>Number of days allowed for the renewal window</inlineHelpText>
         <label>Renewal Window</label>
-        <picklist>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>30</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>60</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>90</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>400</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>30</fullName>
+                    <default>false</default>
+                    <label>30</label>
+                </value>
+                <value>
+                    <fullName>60</fullName>
+                    <default>false</default>
+                    <label>60</label>
+                </value>
+                <value>
+                    <fullName>90</fullName>
+                    <default>false</default>
+                    <label>90</label>
+                </value>
+                <value>
+                    <fullName>400</fullName>
+                    <default>false</default>
+                    <label>400</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Resource_1_Description__c</fullName>
@@ -559,6 +580,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Section_7_Show__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Show/Hide Section #7 - Interactive Statistics</description>
+        <externalId>false</externalId>
+        <label>Section 7 Show</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Short_Description__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Short description can be used at the top of the page under the product display name.</inlineHelpText>
@@ -573,20 +603,24 @@
         <fullName>Show_price_on_eCommerce__c</fullName>
         <externalId>false</externalId>
         <label>Show price on eCommerce?</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No - Validation Required</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>true</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No - Validation Required</fullName>
+                    <default>false</default>
+                    <label>No - Validation Required</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Trial_available_for_this_Product__c</fullName>
@@ -619,4 +653,5 @@
         <customTabListAdditionalFields>Product_Feature__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

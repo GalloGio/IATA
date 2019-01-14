@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Used by ICCS to store bank account codes.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -113,21 +110,25 @@
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Third_Party_Payment__c</fullName>
@@ -208,6 +209,7 @@ LEN(Name) &lt;= 6
         <errorDisplayField>CurrencyIsoCode</errorDisplayField>
         <errorMessage>The Currency field is mandatory, please select a value.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Back_to_Account</fullName>
         <availability>online</availability>

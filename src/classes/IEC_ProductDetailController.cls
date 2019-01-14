@@ -60,6 +60,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	public boolean bSection4Show {get; set;}
 	public boolean bSection5Show {get; set;}
 	public boolean bSection6Show {get; set;}
+	public boolean bSection7Show {get; set;}
 	
 	// Boolean variables to dynamically show and hide the product features
 	public boolean bFeature1Show {get; set;}
@@ -78,6 +79,36 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	// Boolean to determine whether to show the price on the rateplans or not
 	public boolean bShowPrice {get; set;}
 	
+	public String selectedTopic{get;set;}
+	public String selectedTopicLabel{get;set;}
+
+	public String productWrapper {
+		get {
+			Map<String,Object> ecommObj = new Map<String,Object>();
+			Map<String,Object> detailObj = new Map<String,Object>();
+			Map<String,Object> actionObj = new Map<String,Object> {'list' => selectedCategory.getLabel() + ' > ' + selectedTopicLabel};
+			Map<String,Object> prodObj = new Map<String,Object>();
+
+			ecommObj.put('detail', detailObj);
+			detailObj.put('actionField', actionObj);
+			detailObj.put('products', new List<Object> {prodObj});
+
+			prodObj.put('id', ecomProduct.ProductNumber);
+			prodObj.put('name', ecomProduct.ProductName);
+			prodObj.put('category', ecomProduct.Portfolio);
+			prodObj.put('price', ecomProduct.unitPrice == null ? 0.00 : ecomProduct.unitPrice);    
+            prodObj.put('brand', ecomProduct.ProductCategory);        
+            prodObj.put('dimension1', ecomProduct.Edition);
+            prodObj.put('dimension2', ecomProduct.Language);
+            prodObj.put('dimension3', ecomProduct.InventoryStatus);
+            prodObj.put('dimension4', ecomProduct.AvailabilityDate);
+            prodObj.put('dimension5', ecomProduct.Media);
+            prodObj.put('dimension6', ecomProduct.EffectiveTo);
+
+			return JSON.serialize(ecommObj);
+		}
+		set;
+	}
 	
 
 	public IEC_ProductDetailController() 
@@ -95,20 +126,19 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			iColWidth = 100;
 
 			String searchCond = 'SAP_Material_Number__c=\''+productNumber+'\'';
-			List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, searchCond, null, true);
-
+			system.debug('susana searchCond : '+searchCond);
+			List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, searchCond, null, true, null);
+			system.debug('susana ecomProducts : '+ecomProducts);
 			if(ecomProducts.size() > 0)
 			{
 				//Parent found 
 				ecomProduct = ecomProducts[0];
-
-				
-
-
+				system.debug('susana ecomProduct : '+ecomProduct);
 				//Query sub-products 
 				String subCond = 'IEC_Parent_Product__c=\''+ecomProduct.ProductId+'\'';
-				List<EComProduct_DTO> ecomSubProducts = Product_Sel.getEComProduct(null, false, subCond, null, false);
-
+				system.debug('susana subCond : '+subCond);
+				List<EComProduct_DTO> ecomSubProducts = Product_Sel.getEComProduct(null, false, subCond, null, false, null);
+				system.debug('susana ecomSubProducts : '+ecomSubProducts);
 				//Query sub-product's RatePlanInfo
 				Set<Id> productRatePlanInfoIds = new Set<Id>(); 
 				for(EComProduct_DTO prod :ecomSubProducts)
@@ -134,6 +164,29 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 				charges = IECProductManager.getZuoraRatePlanChargesByRatePlanIDs(planIds);
 				iColWidth = (subProducts.size() > 0) ? 100/subProducts.size() : 100;
+				//*** get category
+				selectedCategory = new SelectOption('', '');
+				for(SelectOption so : categories)
+					if (so.getValue() == ecomProduct.megaMenu)
+					{
+						selectedCategory = so;
+						break;
+					}
+
+				//*** get topic
+				selectedTopic = [select Display_Ecom_Topic__c from Product2 where Id = :ecomProduct.ProductId limit 1][0].Display_Ecom_Topic__c;
+				selectedTopicLabel = '';
+				if (!String.isBlank(selectedTopic))
+				{
+					selectedTopic = selectedTopic.split(';')[0];   //*** take the first topic if contains multiple
+					if (subCategories.containsKey(selectedCategory.getValue()))
+						for (SelectOption so : subCategories.get(selectedCategory.getValue()))
+							if (so.getValue() == selectedTopic)
+							{
+								selectedTopicLabel = so.getLabel();
+								break;
+							}
+				}
 			}
 			else
 			{
@@ -143,13 +196,18 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 			//Features
 			pc = IECProductManager.getProductCategoryBySFDCProduct(ecomProduct.ProductId);
-			
+			system.debug('susana pc : '+pc);
 			sButtonType = pc.Button_Type__c;
 			bTryButtonShow = pc.Trial_available_for_this_Product__c;
 			sBannerImage = pc.Banner_Image__c;
 			sProductIcon = pc.Product_Icon__c;
+			sProductIcon = 'imgbloc5.png';   //*** default - GSS image
+			Map<String,String> mapCategory_ImageName = Utility.buildMapFromString(Utility.getTextSetting('GDP Category-Image'), ',', '=');
+			if (mapCategory_ImageName.containsKey(pc.Name))
+				sProductIcon = mapCategory_ImageName.get(pc.Name);
 			
 			bShowPrice = (pc.Show_price_on_eCommerce__c == null || pc.Show_price_on_eCommerce__c == 'Yes');
+			system.debug('susana pc : '+pc);
 			sDisplayName = pc.Display_Name__c;
 			sShortDescription = pc.Short_Description__c;
 			sLongDescription = pc.Long_Description__c;
@@ -179,6 +237,8 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			bSection4Show = pc.Section_4_Show__c;
 			bSection5Show = pc.Section_5_Show__c;
 			bSection6Show = pc.Section_6_Show__c;
+			bSection7Show = pc.Section_7_Show__c;
+			
 			// Determines which feature to show
 			bFeature1Show = !(String.isEmpty(sFeature1Description) || String.isEmpty(sFeature1Image));
 			bFeature2Show = !(String.isEmpty(sFeature2Description) || String.isEmpty(sFeature2Image));
@@ -238,7 +298,18 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			} 
 
 			String productNumber2Add = p.SAP_Material_Number__c;
-			Map<String, Decimal> cookieContent = IECOrder_Svc.getItemsInCookie();
+			//Map<String, Decimal> cookieContent = IECOrder_Svc.getItemsInCookie();
+			Map<String, Decimal> cookieContent = new Map<String, Decimal>();
+
+			if (newShoppingCart == false) {
+				cookieContent = IECOrder_Svc.getItemsInCookie();
+			} else {
+				List<IEC_Cart.CartItem> cartItemList = storeCart.getCartContent();
+
+				for (IEC_Cart.CartItem cartItem : cartItemList) {
+					cookieContent.put(cartItem.productNumber, cartItem.quantity);
+				}
+			}
 
 			//-- Validate another sub-product does not exist in the cart 
 			Boolean sibblingInCart = false; 
@@ -268,13 +339,22 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 			if(!sibblingInCart && !existSubscriptionProd)
 			{
-				return IECOrder_Svc.addCartToCookie(p.SAP_Material_Number__c, 1);	
+				// Ecommerce Enhancements R2 - aosantos, do not redirect immediately when creating cookie, it might not be stored
+				
+				if (newShoppingCart == false) {
+					PageReference pageRef = IECOrder_Svc.addCartToCookie(p.SAP_Material_Number__c, 1);
+				} else {
+					storeCart.addItem(p.SAP_Material_Number__c, 1, null);
+				}
+
+				return null;
 			}
 			else
 			{
 				
 				String urlParamMsg = (sibblingInCart) ? 'siblingInCart' : 'subscriptionAlreadyExist';
 
+				
 				PageReference pageRef = new Pagereference('/IEC_ShoppingCart?msg=' + urlParamMsg);
 				pageRef.setRedirect(true);
 				return pageRef;

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Detail object for Case for general purpose</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Amount_Expected__c</fullName>
+        <description>Agreed amount to be paid for an instalment</description>
+        <externalId>false</externalId>
+        <label>Amount Expected</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_Received__c</fullName>
+        <description>Amount received on payment (of an instalment)</description>
+        <externalId>false</externalId>
+        <label>Amount Received</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <description>Lookup to master object</description>
+        <externalId>false</externalId>
+        <label>Case Number</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Case Details</relationshipLabel>
+        <relationshipName>Case_Details</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Currency__c</fullName>
+        <description>Currency taken from the case</description>
+        <externalId>false</externalId>
+        <formula>Case__r.Currency__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Currency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date_received__c</fullName>
+        <description>Date the payment of an instalment was received</description>
+        <externalId>false</externalId>
+        <label>Date received</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Due_date__c</fullName>
+        <description>Date and instalment needs to be paid</description>
+        <externalId>false</externalId>
+        <label>Due date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Exchange_Rate__c</fullName>
+        <description>Exchange rate of the currency taken from the case</description>
+        <externalId>false</externalId>
+        <formula>Case__r.CurrencyExchangeRateUSD__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Exchange Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Status__c</fullName>
+        <description>Status of the payment of the instalment</description>
+        <externalId>false</externalId>
+        <label>Payment Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>true</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Received</fullName>
+                    <default>false</default>
+                    <label>Received</label>
+                </value>
+                <value>
+                    <fullName>To be confirmed</fullName>
+                    <default>false</default>
+                    <label>To be confirmed</label>
+                </value>
+                <value>
+                    <fullName>Not received by due date</fullName>
+                    <default>false</default>
+                    <label>Not received by due date</label>
+                </value>
+                <value>
+                    <fullName>Amount Received After Termination</fullName>
+                    <default>false</default>
+                    <label>Amount Received After Termination</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Case Detail</label>
+    <nameField>
+        <displayFormat>CD-{00000000}</displayFormat>
+        <label>Case Details Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Case Details</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Repayment_Instalment</fullName>
+        <active>true</active>
+        <description>Payment information for SIDRA cases</description>
+        <label>Repayment Instalment</label>
+        <picklistValues>
+            <picklist>Payment_Status__c</picklist>
+            <values>
+                <fullName>Amount Received After Termination</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not received by due date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be confirmed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -6,6 +6,7 @@ public with sharing class ISSP_PortalUserStatusChange {
     public Boolean portalUser {get;set;}
     public List<String> errorMessages {get;set;}
     public String contactStatus {get;set;}
+    public List<SelectOption> portalStatusOptions {get;set;}
     public List<SelectOption> rejectionReasonOptions {get;set;}
     public List<SelectOption> inactiveReasonOptions {get;set;}
     public String createUserStatus {get;set;}
@@ -15,8 +16,15 @@ public with sharing class ISSP_PortalUserStatusChange {
     public String inactivationReason {get;set;}
     public Boolean hasIdCard {get; set;}
     public Boolean hasProducts {get; set;}
+    public List<SelectOption> communityOptions {get;set;}
+    public String selectedVal {get;set;}
+    public List<String> firstCommunity {get;set;}
+     //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     
     public ISSP_PortalUserStatusChange(Apexpages.Standardcontroller ctrl){
+        Map<String, String> communityMap = new Map<String, String>{'CNS' => 'CNS Customer Portal', 'IEC' => 'E-Commerce','ISSP' => 'ISS Customer Portal'};
         portalUser = false;
         userExists = false;
         hasIdCard = false;
@@ -31,7 +39,7 @@ public with sharing class ISSP_PortalUserStatusChange {
         }
         if (!con.IEC_Subscriptions_History__r.isEmpty()){
             hasProducts = true;
-        }
+        }        
         system.debug('con.Id: ' + con.Id);
         UserPortalStatus = con.User_Portal_Status__c;
         fieldSetCtrl = new ISSP_FieldSetController(getCountrysMap(),con.Regional_Administrator_Countries__c);
@@ -43,9 +51,22 @@ public with sharing class ISSP_PortalUserStatusChange {
                 userExists = true;
             }
         }
-        User currentUser = [select Id, ContactId, UserType from User where Id = :Userinfo.getUserId()];
+        User currentUser = [select Id, ContactId, UserType, Profile.Name from User where Id = :Userinfo.getUserId()];
         if (currentUser.UserType == 'PowerPartner'){
             portalUser = true;
+        }
+        
+        String contactType = ISSP_Utilities.getContactTypeById(con.Id);
+        map<String,SelectOption> mapPortalStatusOptions = new map<String,SelectOption>();
+        for( Schema.PicklistEntry f : Contact.User_Portal_Status__c.getDescribe().getPicklistValues()) {
+            mapPortalStatusOptions.put(f.getValue(),new SelectOption(f.getValue(),f.getLabel()));
+        }
+        portalStatusOptions = new List<SelectOption>();
+        portalStatusOptions.add(new SelectOption('',System.Label.ANG_ISSP_Picklist_None));
+        portalStatusOptions.add(mapPortalStatusOptions.get('Deactivated'));
+        portalStatusOptions.add(mapPortalStatusOptions.get('Approved Admin'));
+        if (contactType!='DPC') {
+            portalStatusOptions.add(mapPortalStatusOptions.get('Approved User'));
         }
         
         rejectionReasonOptions = new List<SelectOption>();
@@ -59,6 +80,18 @@ public with sharing class ISSP_PortalUserStatusChange {
         inactiveReasonOptions.add(new SelectOption('LeftCompany', Label.ISSP_RejectReason_Left));
         //inactiveReasonOptions.add(new SelectOption('AccessDenied', Label.ISSP_RejectReason_Denied));
         inactiveReasonOptions.add(new SelectOption('UnknownContact', Label.ISSP_RejectReason_Unknown));
+        //CummunityOptions
+        communityOptions = new List<SelectOption>();
+        communityOptions.add(new SelectOption('','-Select a Community-'));
+        if(con.Community__c != ''){
+            for (String key : communityMap.keySet()) {
+                communityOptions.add(new SelectOption(key,communityMap.get(key)));
+                if(con.Community__c == communityMap.get(key))
+                    selectedVal = key;
+            }            
+        }
+
+
     }
 
     public Pagereference save(){
@@ -76,11 +109,14 @@ public with sharing class ISSP_PortalUserStatusChange {
                  con.Regional_Administrator_Countries__c = '';
               }
         }
-        if (con.Community__c == '' || con.Community__c == null)
+        if ((con.Community__c == '' || con.Community__c == null) && communityName!='CNS'){
             con.Community__c = 'ISS Customer Portal';
+        }else if((con.Community__c == '' || con.Community__c == null) && communityName =='CNS'){
+             con.Community__c = 'CNS Customer Portal';
+        }
         update con;
         if (portalUser){
-            return new Pagereference('/ISSP_Contact?Id='+con.Id);
+            return new Pagereference('/ISSP_Contact?Id='+con.Id + commParam);
         }
         else{
             return new Pagereference('/'+con.Id);
@@ -88,7 +124,7 @@ public with sharing class ISSP_PortalUserStatusChange {
     }
     
     public PageReference customCancel(){
-        return new Pagereference('/ISSP_Contact?Id='+con.Id);
+        return new Pagereference('/ISSP_Contact?Id='+con.Id + commParam);
     }
     
     public map<string,string> getCountrysMap(){
@@ -246,7 +282,12 @@ public with sharing class ISSP_PortalUserStatusChange {
             User user = [select Id from User where ContactId =:contactId];
             ISSP_Registration.password =  ISSP_Registration.generatePassword();
             system.setPassword(user.Id, ISSP_Registration.password);
+            if(CommunityName=='CNS'){
+                ISSP_Registration.sendCNSEmail(user.Id,contactId);
+                }else{
             ISSP_Registration.sendEmail(user.Id,contactId);
+            }
+            
         }catch(Exception e){        
            
         } 
@@ -323,7 +364,7 @@ public with sharing class ISSP_PortalUserStatusChange {
      }
     public static void createNewUser(Id userProfile,string contactId){
         system.debug('\n\n\n contactId'+contactId+'\n\n\n');
-        Contact con = [select id,email,firstName,lastname,accountId,Preferred_Language__c, Salutation from Contact where Id =:contactId];
+        Contact con = [select id,email,firstName,lastname,accountId,Preferred_Language__c, Salutation, Community__c from Contact where Id =:contactId];
         Database.DMLOptions dmo = new Database.DMLOptions();
         dmo.EmailHeader.triggerUserEmail = false; 
         dmo.EmailHeader.triggerOtherEmail = false; 
@@ -352,10 +393,16 @@ public with sharing class ISSP_PortalUserStatusChange {
             String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
             cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
             string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
-            String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart;
+
+            String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart ;
             String template = 'ISSP_New_Member_Welcome_Email_2';
-            Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link);
-            Comm_User_Helper.sendEmail( template ,emailWrap, con);
+            if(con.Community__c != null && con.Community__c.contains('CNS')){
+                link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?CommunityName=CNS&c='+encodedPart ;
+                template = 'ISSP_New_Member_Welcome_Email_2_CNS';
+            }
+
+            Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
+            Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
             Comm_User_Helper.permissionASS(new list<Id>{newUser.Id});
             
             //ISSP_Registration.password =  ISSP_Registration.generatePassword();
@@ -388,7 +435,7 @@ public with sharing class ISSP_PortalUserStatusChange {
           
         } 
         update new Contact(Id=contactId,User_Portal_Status__c='');
-    }
+    } 
      public static String createAlias(String pFirstName, String pLastName) {
         if(pFirstName==null)
             pFirstName='-';
@@ -599,7 +646,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                                                             'Japanese' =>'ja',
                                                             'Portuguese' =>'pt_BR'
                                                     };
-     public static void maasUserCreation(list<Contact> vContactList){
+     public static void maasUserCreation(list<Contact> vContactList, String communityName){ //CNS added parameter to change the email template, for cns users
         list<Contact> conList = vContactList.deepClone(true, false, false);
         map<Id,Contact> conMap = new map<Id,Contact>( [select Id,Account.RecordType.DeveloperName,Preferred_Language__c from Contact where Id in:conList]);
         Database.DMLOptions dmo = new Database.DMLOptions();
@@ -625,6 +672,9 @@ public with sharing class ISSP_PortalUserStatusChange {
             Database.SaveResult[] results = Database.insert(UserList, false);
            list<Messaging.SingleEmailMessage> ml = new list<Messaging.SingleEmailMessage>();
             EmailTemplate et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email'];
+           if(communityName=='CNS'){ //
+                et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email_CNS'];
+           }           
                 
             for(Database.SaveResult r:results){
                 system.debug('\n\n\n'+r.getErrors()+'\n\n\n');
@@ -634,7 +684,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                     string password =  ISSP_Registration.generatePassword();
                     ISSP_Registration.passwordMap.put(r.getId(),password);
                     system.setPassword(r.getId(), password);
-                    ml.add(createEmail( et.Id,r.getId()));
+                    ml.add(createEmail( et.Id,r.getId(), communityName));
                 }
             }
             Messaging.sendEmail(ml);
@@ -694,18 +744,27 @@ public with sharing class ISSP_PortalUserStatusChange {
         }  
     }
     
-       public static Messaging.SingleEmailMessage createEmail(string templateId,string userId){
+       public static Messaging.SingleEmailMessage createEmail(string templateId,string userId, string communityName){
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             mail.setTemplateId(templateId);
             mail.setTargetObjectId(userId);
             mail.setSaveAsActivity(false); 
-            mail.setReplyTo('noreply@iata.org'); 
-            mail.setSenderDisplayName('ISS Portal ');
+            if(communityName=='CNS'){
+                mail.setReplyTo('cns_noreply@cnsc.us'); mail.setSenderDisplayName('CNS Portal ');
+            }else{ mail.setReplyTo('noreply@iata.org'); mail.setSenderDisplayName('ISS Portal ');}            
+            
             return mail;
        }
        
-     public static String runAction(Id conId, String currentEmail, String theAction, String newValue, String inactiveReason){
+     public static String runAction(Id conId, String currentEmail, String theAction, String newValue, String inactiveReason, List<String> firstCommunity){
         ISSP_ContactList.avoidContactStatusTrigger = true;
+        system.debug('firstCommunity: ' + firstCommunity);
+        if(firstCommunity == null || firstCommunity.isEmpty()){        
+            firstCommunity = new List<String>();   
+            firstCommunity.add('');
+            firstCommunity.add('');
+            system.debug('firstCommunity!!!: ' + firstCommunity);
+        }
         system.debug('runAction CONTACT ID: ' + conId);
         system.debug('runAction ACTION: ' + theAction);
         system.debug('runAction NEW STATUS: ' + newValue);
@@ -717,7 +776,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                 return errorMessageResult;
             }
             String thisEmail = currentEmail;
-            List <Contact> conList = [SELECT Id, Status__c, (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like 'Cancelled%') FROM Contact WHERE Id = :conId];
+            List <Contact> conList = [SELECT Id, Status__c, Community__c, (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like 'Cancelled%') FROM Contact WHERE Id = :conId];
             if (!conList.isEmpty()){
                 try{
                     integer emailDigit = 0;
@@ -762,26 +821,24 @@ public with sharing class ISSP_PortalUserStatusChange {
                     conList[0].Contact_Old_Email__c = currentEmail;
                     conList[0].Status__c = newContactStatus;
                     conList[0].Email = thisEmail;
-                    conList[0].User_Portal_Status__c = 'Deactivated';
+                    conList[0].User_Portal_Status__c = 'Deactivated'; 
                     update conList[0];
                     if (!conList[0].ID_Cards__r.isEmpty()){
                         List <ID_Card__c> idCardList = new List <ID_Card__c>();
                         for (ID_Card__c thisCard : conList[0].ID_Cards__r){
-                            thisCard.Card_Status__c = 'Cancelled';
+                            thisCard.Card_Status__c = 'Cancelled ID Card';
                             idCardList.add(thisCard);
                         }
                         update idCardList;
                     }
                 }
-                catch(Exception e){
-                    system.debug('ERROR: ' + e.getMessage());
-                    errorMessageResult = e.getMessage();
-                    return errorMessageResult;
+                catch(Exception e){                    
+                    return AMS_Utils.errorMessageBeautifyer(e);                     
                 }
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
                 if (!userList.isEmpty()){
-                    updateUser(conId, false, thisEmail, '');
+                    updateUser(conId, false, thisEmail, '', firstCommunity[0]);
                     ISSP_HierarchyAccountTeamAccounts.deleteHierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
                 }
             }
@@ -856,7 +913,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
                 if (!userList.isEmpty()){
-                    updateUser(conId, false, thisEmail, '');
+                    updateUser(conId, false, thisEmail, '', firstCommunity[0]);
                     ISSP_HierarchyAccountTeamAccounts.deleteHierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
                 }
             }
@@ -872,17 +929,22 @@ public with sharing class ISSP_PortalUserStatusChange {
                     conList[0].Status__c = 'Active';
                     conList[0].Email = currentEmail;
                     conList[0].User_Portal_Status__c = 'Approved User';
+                    if(firstCommunity[1] != ''){                  
+                        conList[0].Community__c = firstCommunity[1];
+                    }else{
+                        conList[0].Community__c = 'ISS Customer Portal';
+                    }
                     update conList[0];
                 }
                 catch(Exception e){
                     system.debug('ERROR: ' + e.getMessage());
-                    errorMessageResult = e.getMessage();
-                    return errorMessageResult;
+                    errorMessageResult = AMS_utils.errorMessageBeautifyer(e);
+                    return errorMessageResult.remove('ERROR: ');
                 }
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
                 if (!userList.isEmpty()){
-                    updateUser(conId, true, currentEmail, profileId);
+                    updateUser(conId, true, currentEmail, profileId, firstCommunity[0]);
                     ISSP_HierarchyAccountTeamAccounts.deleteHierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
                 }
                 else{
@@ -901,17 +963,19 @@ public with sharing class ISSP_PortalUserStatusChange {
                     conList[0].Status__c = 'Active';
                     conList[0].Email = currentEmail;
                     conList[0].User_Portal_Status__c = 'Approved Admin';
+                    if(firstCommunity[1] != '')                   
+                        conList[0].Community__c = firstCommunity[1];
                     update conList[0];
                 }
                 catch(Exception e){
                     system.debug('ERROR: ' + e.getMessage());
-                    errorMessageResult = e.getMessage();
-                    return errorMessageResult;
+                    errorMessageResult = AMS_utils.errorMessageBeautifyer(e);
+                    return errorMessageResult.remove('ERROR: ');
                 }
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
                 if (!userList.isEmpty()){
-                    updateUser(conId, true, currentEmail, profileId);
+                    updateUser(conId, true, currentEmail, profileId, firstCommunity[0]);
                     ISSP_HierarchyAccountTeamAccounts.HierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
                 }
                 else{
@@ -929,6 +993,8 @@ public with sharing class ISSP_PortalUserStatusChange {
                     conList[0].Status__c = 'Active';
                     conList[0].Email = currentEmail;
                     conList[0].User_Portal_Status__c = newValue;
+                    if(firstCommunity[1] != '')                   
+                        conList[0].Community__c = firstCommunity[1];
                     update conList[0];
                 }
                 catch(Exception e){
@@ -939,7 +1005,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
                 if (!userList.isEmpty()){
-                    updateUser(conId, true, currentEmail, profileId);
+                    updateUser(conId, true, currentEmail, profileId, firstCommunity[0]);
                     ISSP_HierarchyAccountTeamAccounts.deleteHierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
                 }
                 else{
@@ -951,7 +1017,16 @@ public with sharing class ISSP_PortalUserStatusChange {
     }
      
      public PageReference saveNewStatus(){
+        firstCommunity = new List<String>();
         errorMessages = new List<String>();
+        for (SelectOption so : communityOptions){
+            if (so.getValue() == selectedVal){
+                firstCommunity.add(so.getValue());
+                firstCommunity.add(so.getLabel());
+            }
+        }
+
+        system.debug('firstCommunity: ' + firstCommunity);
         system.debug('userExists: ' + userExists);
         system.debug('createUser: ' + createUser);
         system.debug('con.User_Portal_Status__c: ' + con.User_Portal_Status__c);
@@ -995,15 +1070,16 @@ public with sharing class ISSP_PortalUserStatusChange {
                 return null;
             }
         }
-        if (theAction == 'DisableTheUser'){
+        if (theAction == 'DisableTheUser'){ 
             contactStatus = inactivationReason;
         }
         else if (theAction == 'DisableTheUserReject'){
             contactStatus = rejectionReason;
         }
         system.debug('contactStatus: ' + contactStatus);
-        Savepoint sPointContact = Database.setSavepoint();
-        String runActionResult = runAction(con.Id, contactList[0].Email, theAction, newValue, contactStatus);
+        Savepoint sPointContact = Database.setSavepoint();       
+        String runActionResult = runAction(con.Id, contactList[0].Email, theAction, newValue, contactStatus, firstCommunity);
+        
         if (runActionResult != ''){
             Database.rollback(sPointContact);
             if (portalUser){
@@ -1017,7 +1093,7 @@ public with sharing class ISSP_PortalUserStatusChange {
         }
         else{
             if (portalUser){
-                return new Pagereference('/ISSP_Contact?Id='+con.Id);
+             return new Pagereference('/ISSP_Contact?Id='+con.Id + commParam);
             }
             else{
                 return new Pagereference('/'+con.Id);
@@ -1120,8 +1196,13 @@ public with sharing class ISSP_PortalUserStatusChange {
     }
     
     @future
-    public static void updateUser(String conId, Boolean isActive, String email, String profileId){
-        list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Email, u.Contact.Email
+    public static void updateUser(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
+        updateUserSync(conId, isActive, email, profileId, firstCommunity);
+    }
+
+    /*** AMSU-163 ***/
+    public static void updateUserSync(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
+        list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Email, u.Contact.Email, u.Community__c, u.ProfileId
                                             from User u where contactId =:conId];
         if (!usersToUpdate.isEmpty()){
             for(User u : usersToUpdate){
@@ -1133,6 +1214,8 @@ public with sharing class ISSP_PortalUserStatusChange {
                 u.Email = email;
                 string userName = ISSP_Utilities.buildPortalUserName(email);
                 u.Username = userName;
+                if(firstCommunity != '')
+                    u.Community__c = firstCommunity;
             }
 
             update usersToUpdate;

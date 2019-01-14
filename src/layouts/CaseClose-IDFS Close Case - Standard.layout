@@ -77,6 +77,10 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
+                <behavior>Required</behavior>
+                <field>Case_Language__c</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>

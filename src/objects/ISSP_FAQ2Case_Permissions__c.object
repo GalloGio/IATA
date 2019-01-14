@@ -4,6 +4,16 @@
     <description>Holds Topic / Subtopic view Permissions according to Account Sector</description>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>ISO_Country__c</fullName>
+        <externalId>false</externalId>
+        <label>ISO Country</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Sector_Permission__c</fullName>
         <externalId>false</externalId>
         <label>Sector Permission</label>
@@ -34,5 +44,19 @@
         <unique>false</unique>
     </fields>
     <label>ISSP FAQ2Case Permissions</label>
+    <listViews>
+        <fullName>DetailedView</fullName>
+        <columns>NAME</columns>
+        <columns>Sector_Permission__c</columns>
+        <columns>Topic__c</columns>
+        <columns>Subtopic__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>DetailedView</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

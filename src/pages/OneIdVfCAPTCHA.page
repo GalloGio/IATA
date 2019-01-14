@@ -1,0 +1,110 @@
+<apex:page showHeader="false" controller="LightningRegistrationProcess">
+    <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl={!LanguageFromURL}' />
+    <apex:includeScript value="{!$Resource.jQuery224min}"/>
+
+    <div id="widgetId1" class="g-recaptcha" data-callback="iframeResize" style="transform: scale(0.74);transform-origin: 0 0;-webkit-transform:scale(0.74);-webkit-transform-origin: 0 0"></div>
+
+    <style>
+    body, div{
+        background:transparent !important;
+    }
+    </style>
+
+    <script type="text/javascript">
+        var onloadCallback = function() {
+            grecaptcha.render('widgetId1', {
+                //'sitekey' : '6LeNKhcUAAAAAIe7102yRk9A_UTkt42jTOjU_MAN',
+                //'sitekey' : '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', //dev,
+                'sitekey': '{!$Label.IEC_Recaptcha_SiteKey}',
+                'data-size' : 'compact',
+                'data-theme' : 'light',
+                'callback' : iframeResize
+            });
+        };
+
+        function iframeResize(){
+            setTimeout(function(){
+                var hostURL = 'https://'+ '{!HostURL}';
+                var iframeHeight = j$('.container').height();
+                window.parent.postMessage( { action: "callIframeResizeCallback", height: iframeHeight } , hostURL);
+            }, 1000);
+        }
+
+        function findTag(obj, key){
+            var objects = [];
+            for (var i in obj) {
+                if (!obj.hasOwnProperty(i)) continue;
+                if (typeof obj[i] == 'object') {
+                    objects = objects.concat(findTag(obj[i], key));
+                } else if (i == key) {
+                    objects.push(obj[i]);
+                }
+            }
+            return objects;
+        }
+
+        window.addEventListener("message", function(event) {
+            var hostURL = 'https://'+ '{!HostURL}';
+            var captchaURL = 'https://www.google.com';
+            
+            if(event.origin !== hostURL && event.origin !== captchaURL){
+                return;
+            }
+
+            if(event.origin == captchaURL){
+                var captchaData = JSON.parse(event.data);
+                var iframeHeight = findTag(captchaData, 'height');
+                parent.postMessage({ action: "callIframeResizeCallback", height: iframeHeight }, hostURL);
+            }
+
+            if(event.origin !== hostURL){
+                return;
+            }
+            
+            if(event.data.action == "alohaCallingCAPTCHA"){  
+                
+                if(event.data.country != 'CN'){
+                    var message = document.getElementById("g-recaptcha-response").value;                                    
+                }
+                
+                if(event.data.country == 'CN'){                    
+                    parent.postMessage({ action: "alohaCallingCAPTCHA", alohaResponseCAPTCHA : "OK" },  hostURL);
+                }
+                else if (message == ''){                    
+                    parent.postMessage({ action: "alohaCallingCAPTCHA", alohaResponseCAPTCHA : "NOK" }, hostURL);
+                }
+                else{                    
+                    parent.postMessage({ action: "alohaCallingCAPTCHA", alohaResponseCAPTCHA : "OK" },  hostURL);
+                }
+            }
+
+        }, false);
+        
+        var j$ = jQuery;
+        j$(window).load(function() {
+            var iframeParent = j$('iframe').parent('div');
+            iframeParent.closest('div').attr('class','iframeAdjust');
+            
+        });
+        
+        MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
+        var observer = new MutationObserver(function(mutations, observer) {
+            // fired when a mutation occurs
+            mutations.forEach(function (mutation) {
+                if(mutation.target.style.visibility == 'hidden'){
+                    var hostURL = 'https://'+ '{!HostURL}';
+                    window.parent.postMessage( { action: "callIframeResizeCallback", height: 0 } , hostURL);
+                }
+            });
+        });
+
+        // define what element should be observed by the observer
+        // and what types of mutations trigger the callback
+        observer.observe(document, {
+          subtree: true,
+          attributes: true
+        });
+
+    </script>
+</apex:page>

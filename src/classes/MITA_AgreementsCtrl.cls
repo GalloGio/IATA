@@ -361,7 +361,7 @@ public with sharing class MITA_AgreementsCtrl {
     }
     public void newContact(){
         resetContact();
-        ID rt = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        ID rt = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         this.c = new Contact(MITA_Contact__c=true, RecordTypeId = rt, Status__c='Active');
         chosenContact = true;
         editContactMode = true;
@@ -565,6 +565,13 @@ public with sharing class MITA_AgreementsCtrl {
                 return this.agreementPax.Airline_1__c==this.sourceAccount.Id ? this.agreementPax.Airline_2__r.Name_on_AOC__c : this.agreementPax.Airline_1__r.Name_on_AOC__c;
             } else {
                 return this.agreement.Airline_1__c==this.sourceAccount.Id ? this.agreement.Airline_2__r.Name_on_AOC__c : this.agreement.Airline_1__r.Name_on_AOC__c;
+            }
+        }
+        public Account getOther() {
+            if (this.agreement.Id == null) {
+                return this.agreementPax.Airline_1__c==this.sourceAccount.Id ? this.agreementPax.Airline_2__r : this.agreementPax.Airline_1__r;
+            } else {
+                return this.agreement.Airline_1__c==this.sourceAccount.Id ? this.agreement.Airline_2__r : this.agreement.Airline_1__r;
             }
         }
         public String getAgreementType() {

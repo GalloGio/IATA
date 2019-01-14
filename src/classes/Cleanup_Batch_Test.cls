@@ -6,10 +6,8 @@ private class Cleanup_Batch_Test {
 		TestDataGenerator.generateApexSetting();
 		
 		Account sfAccount = TestDataGenerator.generateAccounts(1, true)[0];
-        List<Contact> lstContactToDelete = TestDataGenerator.generateContacts(sfAccount.Id, 51, true);
-        Contact sfContactToSave = lstContactToDelete[50];
-        lstContactToDelete.remove(50);
-        
+        List<Contact> lstContactToDelete = TestDataGenerator.generateContacts(sfAccount.Id, 50, true);
+        Contact sfContactToSave = TestDataGenerator.generateContacts(sfAccount.Id, 1, true)[0];
         Campaign sfCampaign = TestDataGenerator.generateCampaigns(1, true)[0];
 
 		List<CampaignMember> lstCampMem = new List<CampaignMember>();

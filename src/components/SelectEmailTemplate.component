@@ -1,68 +1,65 @@
-<apex:component controller="SelectEmailTemplateController" >
-	<apex:attribute name="ctrl" description="parentController" type="sendSingleTrackedEmailController" required="false" assignTo="{!parent}" />
-<!-- 	<apex:attribute name="show" description="this shows current panel." type="Boolean" required="true" assignTo="{!viewTemplatePanel}" /> -->
+<apex:component controller="SelectEmailTemplateController"  allowDML="true">
+    <apex:attribute name="ctrl" description="parentController" type="sendSingleTrackedEmailController" required="false" assignTo="{!parent}" />
 
-<script>
-	function showTemplatePanel(show) {
-		var value = show?"block":"none";
-		document.getElementById('templatePanel').style.display=value;
-		document.getElementById('templateBackground').style.display=value;
-	}
-</script>
+	<script>
+        function startTemplateSpinner(){
+            var lock = document.getElementById('templateSpinner'); 
+            if (lock){
+                lock.className = 'LockOn';
+            }
+        }
 
-<style>
-	.black_overlay{
-		display: none;
-		position: absolute;
-		top: 0%;
-		left: 0%;
-		width: 100%;
-		height: 100%;
-		background-color: black;
-		z-index:1001;
-		-moz-opacity: 0.8;
-		opacity:.80;
-		filter: alpha(opacity=80);
-	}
-	.white_content {
-		display: none;
-		position: absolute;
-		top: 10%;
-		left: 20%;
-		width: 60%;
-		height: 80%;
-		padding: 16px;
-		border: 1px solid black;
-		background-color: white;
-		z-index:1002;
-		overflow: auto;
-	}
-</style>
+        function stopTemplateSpinner(){
+            var lock = document.getElementById('templateSpinner');
+            if (lock){
+                lock.className = 'LockOff'; 
+            }
+        }
 
-	<div id="templatePanel" class="white_content">
+	    function showTemplatePanel(show) {
+	        var value = show?"block":"none";
+	        document.getElementById('templatePanel').style.display=value;
+	        document.getElementById('templateBackground').style.display=value;
+	    }
+	</script>
 
-		<apex:pageBlock title="Select Template">
+	<style>
+	    .white_content {
+	        left: 20%;
+	        width: 60%;
+	    }
+	</style>
 
-			<apex:outputLabel value="Choose a Folder: " />
-			<apex:selectList value="{!selectedFolderId}" size="1" >
-				<apex:actionSupport event="onchange" action="{!fillListTemplate}" rerender="templateTable"/>
-				<apex:selectOptions value="{!ListFolder}" />
-			</apex:selectList>
-
-			<apex:pageBlockTable value="{!ListTemplate}" var="template" id="templateTable" >
-				<apex:column >
-					<a href="{!currentUrl}&template={!template.Id}">{!template.Name}</a>
-				</apex:column>
-				<apex:column value="{!template.TemplateType}" />
-				<apex:column value="{!template.Description}" />
-			</apex:pageBlockTable> 
-
-			<apex:pageBlockButtons location="bottom" >
-				<input value="Cancel" class="btn" type="button" onclick="showTemplatePanel(false);" ></input>
-			</apex:pageBlockButtons>
-
-		</apex:pageBlock>
-	</div>
-	<div id="templateBackground" class="black_overlay"></div>
-
+    <div id="templatePanel" class="white_content">
+        <div id="templateSpinner" class="LockOff"/>
+        <apex:actionStatus id="templateActStatusId" onstart="startTemplateSpinner();" onstop="stopTemplateSpinner();" />
+        <apex:form>
+	        <apex:pageBlock title="Select Template">
+	
+	            <apex:outputLabel value="Choose a Folder: " />
+	            <apex:actionRegion >
+	                <apex:selectList value="{!selectedFolderId}" size="1" >
+	                    <apex:actionSupport event="onchange" action="{!fillListTemplate}" rerender="templateTable" status="templateActStatusId"/>
+	                    <apex:selectOptions value="{!ListFolder}" />
+	                </apex:selectList>
+	            </apex:actionRegion>
+                <div style="max-height:400px;overflow:scroll;padding-top:10px;">
+		            <apex:pageBlockTable value="{!ListTemplate}" var="template" id="templateTable" >
+		                <apex:column >
+	                        <apex:facet name="header">Template Name</apex:facet>
+		                    <apex:commandLink action="{!setTemplate}" value="{!template.Name}">
+		                        <apex:param name="templateId" value="{!template.Id}" assignTo="{!selectedTemplate}"/>
+		                    </apex:commandLink>                    
+		                </apex:column>
+		                <apex:column value="{!template.TemplateType}" />
+		                <apex:column value="{!template.Description}" />
+		            </apex:pageBlockTable> 
+			    </div>
+	            <apex:pageBlockButtons location="bottom" >
+	                <apex:commandButton value="Cancel" action="{!cancel}"/>
+	            </apex:pageBlockButtons>
+	        </apex:pageBlock>
+        </apex:form>
+    </div>
+    <div id="templateBackground" class="black_overlay"></div>
 </apex:component>

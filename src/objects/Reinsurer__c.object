@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Used for the re-insurers details related to the DIP process</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -105,37 +102,45 @@
         <fullName>Disclosure_covering_the_last_10_years__c</fullName>
         <externalId>false</externalId>
         <label>Disclosure covering the last 10 years</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Accusations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bankruptcy</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fines or penalties assessed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Investigations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lawsuits</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Regulatory actions</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Accusations</fullName>
+                    <default>false</default>
+                    <label>Accusations</label>
+                </value>
+                <value>
+                    <fullName>Bankruptcy</fullName>
+                    <default>false</default>
+                    <label>Bankruptcy</label>
+                </value>
+                <value>
+                    <fullName>Fines or penalties assessed</fullName>
+                    <default>false</default>
+                    <label>Fines or penalties assessed</label>
+                </value>
+                <value>
+                    <fullName>Investigations</fullName>
+                    <default>false</default>
+                    <label>Investigations</label>
+                </value>
+                <value>
+                    <fullName>Lawsuits</fullName>
+                    <default>false</default>
+                    <label>Lawsuits</label>
+                </value>
+                <value>
+                    <fullName>Regulatory actions</fullName>
+                    <default>false</default>
+                    <label>Regulatory actions</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>6</visibleLines>
     </fields>
     <fields>
@@ -233,4 +238,5 @@
     <pluralLabel>Re-insurers</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

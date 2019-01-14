@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -68,6 +65,53 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_GDP_Key__c</fullName>
+        <externalId>true</externalId>
+        <label>AMS GDP Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_City_Uppercase__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_City__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address City Uppercase.</inlineHelpText>
+        <label>Address City Uppercase</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_City__c</fullName>
         <externalId>false</externalId>
         <label>Address City</label>
@@ -82,7 +126,7 @@
         <fullName>Address_Country_Name_Uppercase__c</fullName>
         <description>IATA_ISO_Country Name in uppercase, this is intended for generating the GDP Files.</description>
         <externalId>false</externalId>
-        <formula>UPPER(IATA_ISO_Country__r.Name)</formula>
+        <formula>UPPER(IF(IATA_ISO_Country__r.ISO_Code__c = &apos;UP&apos;,IATA_ISO_State__r.Name,IATA_ISO_Country__r.Name))</formula>
         <inlineHelpText>IATA_ISO_Country Name in uppercase</inlineHelpText>
         <label>Address Country Name Uppercase</label>
         <required>false</required>
@@ -95,7 +139,20 @@
         <fullName>Address_Country_Name__c</fullName>
         <externalId>false</externalId>
         <formula>IATA_ISO_Country__r.Name</formula>
+        <inlineHelpText>Lookup: IATA_ISO_Country__r.Name</inlineHelpText>
         <label>Address Country Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Country_Short_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(IATA_ISO_Country__r.ISO_Code__c = &apos;UP&apos;, IATA_ISO_State__r.Name, IATA_ISO_Country__r.ISO_Country_Short_Name__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address Country Short Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -124,6 +181,7 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <fullName>Address_ISO_Country_Code__c</fullName>
         <externalId>false</externalId>
         <formula>IATA_ISO_Country__r.ISO_Code__c</formula>
+        <inlineHelpText>Lookup: IATA_ISO_Country__r.ISO_Code__c</inlineHelpText>
         <label>Address ISO Country Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -136,8 +194,31 @@ For UP (US Proctectorates), use the State Code, otherwise, it is equals to Addre
         <description>Remove bar from Address line 1. 
 This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c.</description>
         <externalId>false</externalId>
-        <formula>SUBSTITUTE( Address_Line_1__c, &apos;|&apos;, &apos;/&apos;)</formula>
-        <inlineHelpText>Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_Line_1__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
+        <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address Line 1.</inlineHelpText>
         <label>Address Line 1 Clean</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -157,12 +238,84 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Address_Line_2_Clean__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_Line_2__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address Line 2.</inlineHelpText>
+        <label>Address Line 2 Clean</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_Line_2__c</fullName>
         <externalId>false</externalId>
         <label>Address Line 2</label>
         <length>32</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Line_3_Clean__c</fullName>
+        <externalId>false</externalId>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_Line_3__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Capitalization &amp; Substitution rule from “|” to “/” in Address Line 3.</inlineHelpText>
+        <label>Address Line 3 Clean</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -195,9 +348,22 @@ This is needed because there is bad data with &apos;|&apos; in Address_Line_1__c
 The source of information is taken from IATA_ISO_State.
 In case the dash (-) does not exist,  e.g. CA60, it will only display the Country ISO Code.</description>
         <externalId>false</externalId>
-        <formula>IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;)
-, SUBSTITUTE(IATA_ISO_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c+ &apos;-&apos;, &apos;&apos;)
-, IATA_ISO_Country__r.ISO_Code__c
+        <formula>IF( 
+OR(IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AE&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;), 
+
+IF( CONTAINS(IATA_ISO_State__r.ISO_Code__c, &apos;-&apos;) 
+, RIGHT(IATA_ISO_State__r.ISO_Code__c, LEN(IATA_ISO_State__r.ISO_Code__c) - FIND(&apos;-&apos;, IATA_ISO_State__r.ISO_Code__c)) 
+, IATA_ISO_Country__r.ISO_Code__c 
+), 
+
+NULL 
 )</formula>
         <inlineHelpText>State Code without the preceding country code. 
 The source of information is taken from IATA_ISO_State.</inlineHelpText>
@@ -212,7 +378,30 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <fullName>Address_State_Name_Uppercase__c</fullName>
         <description>IATA_ISO_State Name in uppercase, this is intended for generating the GDP Files.</description>
         <externalId>false</externalId>
-        <formula>UPPER(IATA_ISO_State__r.Name)</formula>
+        <formula>UPPER(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(
+SUBSTITUTE(
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE( 
+SUBSTITUTE(Address_State_Name__c, 
+&apos;|&apos;, &apos;/&apos;),
+&apos;é&apos;, &apos;e&apos;),
+&apos;É&apos;, &apos;E&apos;),
+&apos;è&apos;, &apos;e&apos;),
+&apos;È&apos;, &apos;E&apos;),
+&apos;Ñ&apos;, &apos;N&apos;),
+&apos;ñ&apos;, &apos;n&apos;),
+&apos;á&apos;, &apos;a&apos;),
+&apos;Á&apos;, &apos;A&apos;),
+&apos;ç&apos;, &apos;c&apos;),
+&apos;Ç&apos;, &apos;C&apos;)
+)</formula>
         <inlineHelpText>IATA_ISO_State Name in uppercase</inlineHelpText>
         <label>Address State Name Uppercase</label>
         <required>false</required>
@@ -224,7 +413,25 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     <fields>
         <fullName>Address_State_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IATA_ISO_State__r.Name</formula>
+        <formula>IF( 
+And( 
+OR(
+IATA_ISO_Country__r.ISO_Code__c=&apos;US&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;CA&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AU&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;AE&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;MX&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;UP&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;BR&apos;, 
+IATA_ISO_Country__r.ISO_Code__c=&apos;VE&apos;), 
+!OR(IATA_ISO_State__r.Name=&apos;BR57&apos;, 
+IATA_ISO_State__r.Name=&apos;MX86&apos;, 
+IATA_ISO_State__r.Name=&apos;VE95&apos;) 
+), 
+IATA_ISO_State__r.Name, 
+NULL 
+)</formula>
+        <inlineHelpText>Conditional Lookup: IF Country = AU, BR, CA, AE, MX, UP, US, VE, return IATA_ISO_State__r.Name</inlineHelpText>
         <label>Address State Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -233,37 +440,54 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Address_Type_Uniqueness_Validation__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>GDP Product Id + Address Type</description>
+        <externalId>false</externalId>
+        <label>Address Type Uniqueness Validation</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Address_Type__c</fullName>
         <externalId>false</externalId>
         <label>Address Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Location</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mailing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Registered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Location</fullName>
+                    <default>true</default>
+                    <label>Location</label>
+                </value>
+                <value>
+                    <fullName>Mailing</fullName>
+                    <default>false</default>
+                    <label>Mailing</label>
+                </value>
+                <value>
+                    <fullName>Registered</fullName>
+                    <default>false</default>
+                    <label>Registered</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Address__c</fullName>
         <description>Formula address, containing the concatenation of Address_1, Address_2, Address_3</description>
         <externalId>false</externalId>
-        <formula>SUBSTITUTE( Address_Line_1__c 
-+ IF( ISBLANK(Address_Line_2__c), &apos;&apos;, &apos; &apos; + Address_Line_2__c)
-+ IF( ISBLANK(Address_Line_3__c), &apos;&apos;, &apos; &apos; + Address_Line_3__c)
-, &apos;|&apos;, &apos;/&apos;)</formula>
+        <formula>Address_Line_1_Clean__c 
++ IF( ISBLANK(Address_Line_2_Clean__c), &apos;&apos;, &apos; &apos; + Address_Line_2_Clean__c)
++ IF( ISBLANK(Address_Line_3_Clean__c), &apos;&apos;, &apos; &apos; + Address_Line_3_Clean__c)</formula>
         <label>Address</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -280,7 +504,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -304,7 +528,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <precision>2</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -321,6 +545,19 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Numeric_Country_Code__c</fullName>
+        <description>Lookup on field &quot;state numeric code&quot; at Account level</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(IATA_ISO_Country__c), &apos;&apos;, Related_Account__r.state_numeric_code__c)</formula>
+        <inlineHelpText>Lookup on field &quot;state numeric code&quot; at Account level</inlineHelpText>
+        <label>IATA Numeric Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Profit_Center__c</fullName>
@@ -343,7 +580,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <relationshipLabel>GDP Addresses</relationshipLabel>
         <relationshipName>GDP_Addresses</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -413,22 +650,62 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Address_State_Codes_Accepted</fullName>
+        <columns>NAME</columns>
+        <columns>Related_Account__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Address_ISO_Country_Code__c</columns>
+        <columns>Address_State_Name__c</columns>
+        <columns>Address_State_Name_Uppercase__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>notEqual</operation>
+            <value>Australia,Brazil,Canada,Mexico,United States</value>
+        </filters>
+        <filters>
+            <field>Address_State_Code__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>notEqual</operation>
+            <value>US TERRITORIES AND POSSESS,Venezuela</value>
+        </filters>
+        <label>Address State Codes Accepted</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Address_State_Codes_UP</fullName>
+        <columns>NAME</columns>
+        <columns>Related_Account__c</columns>
+        <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Address_ISO_Country_Code__c</columns>
+        <columns>Address_State_Name__c</columns>
+        <columns>Address_State_Name_Uppercase__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Address_IATA_Custom_ISO_Country_Code__c</field>
+            <operation>equals</operation>
+            <value>UP</value>
+        </filters>
+        <label>Country Code UP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Related_Account__c</columns>
         <columns>Related_GDP_Products_Account_View__c</columns>
-        <columns>Address__c</columns>
-        <columns>Address_City__c</columns>
-        <columns>Address_Country_Name__c</columns>
         <columns>Address_ISO_Country_Code__c</columns>
-        <columns>Address_Postal_Code__c</columns>
-        <columns>Address_State_Name__c</columns>
-        <columns>Address_Type__c</columns>
-        <columns>GDP_Geo_Detail__c</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <columns>IATA_ISO_State__c</columns>
-        <columns>AIMS_ID__c</columns>
-        <columns>WebStar_ID__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>AMS_GDP_Key__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -436,7 +713,7 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     <nameField>
         <displayFormat>A-{00000}</displayFormat>
         <label>GDP Address Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP Addresses</pluralLabel>
@@ -483,4 +760,5 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

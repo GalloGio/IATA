@@ -1,12 +1,15 @@
-<apex:page controller="AMS_OSCAR_Attachments" title="Manage Attachments" >
+<apex:page controller="AMS_OSCAR_Attachments" title="Manage Attachments" showHeader="{!NOT(isEmbedded)}" sidebar="{!NOT(isEmbedded)}">
     <!-- <c:GenericAttachmentList sobjectId="{!oscCase.Id}" uploaderWizard="AMS_File" sourceSystem="Internal" scrollable="true"/> -->
-    
+
     <apex:includeScript value="/support/console/30.0/integration.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
     <apex:includeScript value="{!URLFOR($Resource.Tablesorter, 'jquery.tablesorter.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.Tablesorter,'/themes/blue/style.css')}" />
+
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip-utils.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/FileSaver.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.min.js')}"/>
 
     <c:Loading />
     <style>
@@ -18,7 +21,7 @@
         .iocontainer{
             padding-right: 15px !important;
         }
-    
+
         .iocontainer:hover{
             background-color: #e3f3ff;
             background: url("../img/func_icons/util/pencil12.gif") no-repeat center right 2px;
@@ -28,7 +31,7 @@
             font-weight: bold;
             color: #FA6A00;
         }
-        
+
         /*this makes sure that even blank fields have a height and can be clicked*/
         .output:after{
             content: "\00a0";
@@ -180,13 +183,49 @@
           startLoading();
           AMS_OSCAR_Attachments.getAllExpiringLink("{!caseId}",function(result, event){
           // alert(result);
-          try {
-            downloadAndZipFiles(result, "files.zip");
-          } catch (e) {
-            alert(e);
-          }
-          stopLoading();
+              try {
+                var zipfiles = new ZipFiles(result, "files.zip");
+                zipfiles.downloadZip();
+              } catch (e) {
+                alert(e);
+              }
+              stopLoading();
           }, {buffer: true, escape: false, timeout: 120000} );
+        }
+        
+        function downloadSelectedZIP() {
+            startLoading();
+            var selection = new Array();
+            $(":checkbox.selectZipFilesCheckbox:checked").each(function(){
+                selection.push(this.value);
+            });
+            if (selection.length == 0) {
+                console.log("No files selected");
+                stopLoading();
+                return;
+            }
+            console.log(selection.length + ' files selected');
+            AMS_OSCAR_Attachments.getSelectedExpiringLink("{!caseId}",selection,function(result, event){
+                try {
+                    var zipfiles = new ZipFiles(result, "files.zip");
+                    zipfiles.downloadZip();
+                } catch (e) {
+                    alert(e);
+                }
+                stopLoading();
+            }, {buffer: true, escape: false, timeout: 120000} );
+          
+        }
+
+        /*** AMSU-168 ***/
+        function selectAll() {
+            var val = $('#chk_selectAll').prop('checked');
+            $('*[id*=fileList] input.selectZipFilesCheckbox').prop('checked', val);
+            $('.selectionDiv input').val(val);
+        }
+
+        function setSelected(value) {
+            value.siblings().find('input').val(value.prop('checked'));
         }
     </script>
 
@@ -197,12 +236,17 @@
 
 <!--            BUTTONS -->
             <apex:pageblockButtons location="top" >
-                <c:UploadMultipleFileToAmazonButton sObjectId="{!caseId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="AMS_File" sourceSystem="Internal"/>
-                <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect();" immediate="true" />
-                <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" oncomplete="refreshPage();" />
-                <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" oncomplete="refreshPage()" />
-                <apex:commandButton value="{!$Label.site.save}" action="{!updateAllAttach}" oncomplete="refreshPage()" styleClass="saveButton" />
+                <c:UploadMultipleFileToAmazonButton sObjectId="{!caseId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="AMS_File" sourceSystem="Internal" rendered="{!NOT(isReadOnly)}" 
+                    sObjectOwnerId="{!caseOwnerId}"/> <!-- AMSU-154 -->
+                <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect();" immediate="true" rendered="{!NOT(isReadOnly)}" />
+                <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" oncomplete="refreshPage();" rendered="{!NOT(isReadOnly)}"  />
+                <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" oncomplete="refreshPage()" rendered="{!NOT(isReadOnly)}"  />
+                <apex:commandButton value="{!$Label.site.save}" action="{!updateAllAttach}" oncomplete="refreshPage()" styleClass="saveButton" rendered="{!NOT(isReadOnly)}"  />
                 <input type="button" class="btn" value="Download All Files" onclick="downloadZIP(); return false;"/>
+                <input type="button" class="btn" value="Download Selected Files" onclick="downloadSelectedZIP(); return false;"/>
+                <apex:commandButton value="Accept" action="{!acceptFiles}"/> <!-- AMSU-168 -->
+                <apex:commandButton value="Reject" action="{!rejectFiles}"/> <!-- AMSU-168 -->
+                <apex:commandButton value="Delete" action="{!deleteFiles}" oncomplete="refreshPage()"/> <!-- AMSU-186 -->
             </apex:pageblockButtons>
 
             <apex:pageMessages />
@@ -224,6 +268,17 @@
 
             <apex:pageBlockTable styleClass="tablesorter" id="tableAttachments" value="{!listAttachments}" var="attach" rendered="{!listAttachments.size > 0}">
 
+                <apex:column headerValue="" >
+                    <!-- AMSU-168 -->
+                    <apex:facet name="header">
+                        <input type="checkbox" id="chk_selectAll" onclick="selectAll();" />
+                    </apex:facet>
+                    <input type="checkbox" value="{!attach.Id}" class="selectZipFilesCheckbox" onclick="setSelected($(this));" />
+                    <div class="selectionDiv">
+                        <apex:inputHidden value="{!attach.isSelected}"/>
+                    </div>
+                </apex:column>
+
                 <!--  ACTIONS -->
                 <apex:column headerValue="{!$Label.Action}" styleClass="actionColumn">
 
@@ -239,11 +294,13 @@
                         <a title="view" escape="false" target="_blank" onclick="getS3LInk('{!attach.fullName}');" class="actionLink" >{!$Label.View}</a>
                     </apex:outputPanel>
 
+                    <apex:outputPanel  rendered="{!NOT(isReadOnly)}" >
                     &nbsp;|&nbsp;
+                    </apex:outputPanel>
 
                     <!-- DEL ACTION -->
 
-                    <apex:outputLink onclick="return deleteAttachment('{!attach.Id}','{!attach.fullName}');" styleClass="actionLink" >{!$Label.Del}</apex:outputLink>
+                    <apex:outputLink onclick="return deleteAttachment('{!attach.Id}','{!attach.fullName}');" styleClass="actionLink" rendered="{!NOT(isReadOnly)}" >{!$Label.Del}</apex:outputLink>
 
                     <!-- MAKE PUBLIC ACTION -->
                     <!-- &nbsp;|&nbsp;
@@ -252,28 +309,28 @@
                 </apex:column>
 
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Review_Status__c.Label}" >
-                    <apex:outputPanel styleClass="iocontainer" layout="block" >
+                    <apex:outputPanel styleClass="{! IF(isReadOnly, '', 'iocontainer')}" layout="block" >
                         <apex:inputField styleClass="input" value="{!attach.fileAmazon.amazonFile.Review_Status__c}"/>
                         <apex:outputText styleClass="output" value="{!attach.reviewStatus}" />
                     </apex:outputPanel>
                 </apex:column>
 
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.File_Identifier_picklist__c.Label}" >
-                    <apex:outputPanel styleClass="iocontainer" layout="block" >
+                    <apex:outputPanel styleClass="{! IF(isReadOnly, '', 'iocontainer')}" layout="block" >
                         <apex:inputField styleClass="input" value="{!attach.fileAmazon.amazonFile.File_Identifier_picklist__c}" />
                         <apex:outputText styleClass="output" value="{!attach.fileIdentifierPick}"/>
                     </apex:outputPanel>
                 </apex:column>
 
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Source__c.Label}" >
-                    <apex:outputPanel styleClass="iocontainer" layout="block" >
+                    <apex:outputPanel styleClass="{! IF(isReadOnly, '', 'iocontainer')}" layout="block" >
                         <apex:inputField styleClass="input" value="{!attach.fileAmazon.amazonFile.Source__c}"/>
                         <apex:outputText styleClass="output" value="{!attach.source}"/>
                     </apex:outputPanel>
                 </apex:column>
 
                 <apex:column headerValue="{!$Label.Public}" >
-                    <apex:outputPanel styleClass="{!IF(attach.isArchived, '', 'iocontainer')}" layout="block" >
+                    <apex:outputPanel styleClass="{!IF(OR(attach.isArchived, isReadOnly), '', 'iocontainer')}" layout="block" >
                         <apex:inputCheckbox styleClass="input" value="{!attach.isPublic}"/>
                         <apex:outputPanel styleClass="output">
                             <apex:outputText styleClass="checkvalue" value="{!IF(attach.isPublic, 1, 0)}"/> <!-- lets the collumn be sorted -->
@@ -290,7 +347,7 @@
                 </apex:column>
 
                 <apex:column headerValue="{!$Label.File_Description}" >
-                    <apex:outputPanel styleClass="iocontainer" layout="block" >
+                    <apex:outputPanel styleClass="{! IF(isReadOnly, '', 'iocontainer')}" layout="block" >
                         <apex:outputText styleClass="output truncate" value="{!attach.Description}"/>
                         <apex:outputPanel styleClass="input popUp" layout="block">
                             <apex:inputTextarea value="{!attach.Description}" cols="42" rows="2" />
@@ -299,7 +356,7 @@
                 </apex:column>
 
                 <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Internal_Comments__c.Label}" >
-                    <apex:outputPanel styleClass="iocontainer" layout="block" rendered="{!OR(attach.isAmazon, attach.isArchived)}" >
+                    <apex:outputPanel styleClass="{! IF(isReadOnly, '', 'iocontainer')}" layout="block" rendered="{!OR(attach.isAmazon, attach.isArchived)}" >
                         <apex:outputText styleClass="output truncate" value="{!attach.internalComments}"/>
                         <apex:outputPanel styleClass="input popUp" layout="block">
                             <apex:inputTextarea value="{!attach.internalComments}" cols="42" rows="2" />
@@ -334,7 +391,27 @@
                         <apex:outputText value="{!attach.filetype}"/>
                     </apex:outputPanel>
                 </apex:column>
-
+                <!-- AMSU-139 -->
+                <apex:column headerValue="{!$Label.AMS_File_UpdatedBy}">
+                    <apex:outputPanel layout="block">
+                        <apex:outputText value="{!attach.updatedBy}"/>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="{!$Label.AMS_File_UpdatedDate}">
+                    <apex:outputPanel layout="block">
+                        <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
+                            <apex:param value="{!attach.updatedDate}" />
+                        </apex:outputText>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="History" >
+                    <apex:outputPanel layout="block" rendered="{!attach.isAmazon}">
+                        <apex:outputLink value="/{!attach.id}" id="theLink" target="_blank"> History </apex:outputLink>  
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="block" rendered="{!attach.isSalesforce}">
+                        <apex:outputText value="---------"/>  
+                    </apex:outputPanel>
+                </apex:column>
             </apex:pageBlockTable>
 
             <apex:outputPanel styleClass="backdrop"/>

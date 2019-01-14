@@ -23,6 +23,14 @@
                 <behavior>Edit</behavior>
                 <field>Maximum_File_Size_Upload__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EBC_Admin_CC_Email__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Included_Location_Classes__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

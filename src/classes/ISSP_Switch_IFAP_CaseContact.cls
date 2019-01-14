@@ -2,7 +2,7 @@ global class ISSP_Switch_IFAP_CaseContact{
     //Called by AssignFinancialAssessmentContact visula flow to change IFAP Case Owner
     //Apex allows us to bypass case sharing for Portal Admin (on Account Team which is Read-only)
     
-    private static String RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('IATA Financial Review').RecordTypeId;
+    private static Id RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     
     @InvocableMethod
     
@@ -19,7 +19,7 @@ global class ISSP_Switch_IFAP_CaseContact{
       
         for(Case ifapcase : ifapOpenCases) {
             ifapCase.ContactId = newifapcon.Id;
-            update ifapCase;
         }
+        update ifapOpenCases;
     }
 }

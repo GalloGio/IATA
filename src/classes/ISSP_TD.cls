@@ -25,7 +25,7 @@ public without sharing class ISSP_TD {
 		List <Portal_Applications__c> tdServiceList = 
 			[SELECT Id, Name, Agency__c, Aplication_Start_Icon__c, Application_icon__c,
 			Application_icon_URL__c, Application_URL__c, Case_creation_record_type__c, Confirm_Box__c,
-			Confirm_Text__c, Description__c, GSA__c, GSSA__c, Hide_on_Homepage__c,
+			Confirm_Text__c, Description__c, GSSA__c, Hide_on_Homepage__c,
 			ICH_Airline__c, New_Window__c, Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
 			Requestable__c, Restricted_App__c, Visible__c, Service_Description__c, TD_Access_Level__c
 			FROM Portal_Applications__c
@@ -45,18 +45,10 @@ public without sharing class ISSP_TD {
 		ISSP_Record_Type_Mgmt__c rtMgmt =  ISSP_Record_Type_Mgmt__c.getValues('Treasury Dashboard');
 		if (rtMgmt != null){
 			if (rtMgmt.Record_Type_Name__c != null){
-				recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = :rtMgmt.Record_Type_Name__c LIMIT 1].Id;
+				recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', rtMgmt.Record_Type_Name__c);
 			}
 		}
-		/*
-		defaultTopic = '';
-		ISSP_FAQ2Case_Default_Topic__c topicRecord =  ISSP_FAQ2Case_Default_Topic__c.getValues('Treasury Dashboard');
-		if (topicRecord != null){
-			if (topicRecord.Topic_Value__c != null){
-				defaultTopic = topicRecord.Topic_Value__c;
-			}
-		}
-		*/
+
 		User myUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
 		List <Portal_Application_Right__c> accessList = [SELECT Id, Portal_Application__r.TD_Access_Level__c,
 														Portal_Application__r.TD_Included_Dashboards__c,
@@ -133,17 +125,8 @@ public without sharing class ISSP_TD {
 			}
 		}
 		
-		/*
-		List <User> userList = [SELECT Id, ISSP_2FA_Key__c, ISSP_2FA_Valid_Session__c
-								FROM User WHERE Id = :UserInfo.getUserId()];
-		if (!userList.isEmpty()){
-			if (!userList[0].ISSP_2FA_Valid_Session__c){
-				PageReference pr = new PageReference('/ISSP_2FA');
-				return pr;
-			}
-		}
-		*/
 		return null;
+		
 	}
 	
 	public static PageReference toLogout_TD(){

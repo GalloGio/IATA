@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
+        <fullName>CS_site_guest</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Sharing all contacts with the IATA portal site guest user (for the registration process)</description>
+        <label>CS site guest</label>
+        <sharedTo>
+            <group>CS_portal_guest</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Email</field>
+            <operation>contains</operation>
+            <value>@</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Contact_Sharing_Rule_with_IFG_Support_Team</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Contact Sharing Rule with IFG Support Team</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Record_Sharing_Criteria_AUX__c</field>
+            <operation>contains</operation>
+            <value>IFG Active Users</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>IDCardReadOnly</fullName>
         <accessLevel>Read</accessLevel>
         <label>IDCardReadOnly</label>
@@ -36,15 +63,44 @@
             <value>0</value>
         </criteriaItems>
     </sharingCriteriaRules>
-    <sharingOwnerRules>
-        <fullName>Timba_Survey_Contact_Sharing_Rule</fullName>
-        <accessLevel>Read</accessLevel>
-        <label>Timba Survey Contact Sharing Rule</label>
+    <sharingCriteriaRules>
+        <fullName>Old_RTs_to_E_F</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Granting write access to E&amp;F so clean contacts in the old record types</description>
+        <label>Old RTs to E&amp;F</label>
         <sharedTo>
-            <group>Timba_Survey_User</group>
+            <role>IDFSEFServices</role>
         </sharedTo>
-        <sharedFrom>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>MACS Sales</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SIS_visibility</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>SIS visibility</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>SISCustomerSupport</roleAndSubordinatesInternal>
+        </sharedTo>
+        <criteriaItems>
+            <field>Email</field>
+            <operation>contains</operation>
+            <value>@</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Standard_Contacts</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Standard Contacts</label>
+        <sharedTo>
             <allInternalUsers></allInternalUsers>
-        </sharedFrom>
-    </sharingOwnerRules>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standard</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
 </SharingRules>

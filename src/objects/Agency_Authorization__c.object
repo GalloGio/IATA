@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,12 +46,26 @@
     <description>Object is used to store agency Authorization such as BSPLink authorization</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ANG_FormOfPayment_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Form of Payment ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Form_Of_Payment_Options</valueSetName>
+        </valueSet>
+    </fields>
     <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
@@ -73,12 +83,57 @@
         <fullName>Authority__c</fullName>
         <description>Use this field to get the type of authority. Currently used for BSPLink only. FIeld is for future implementation</description>
         <externalId>false</externalId>
-        <formula>CASE( RecordType.DeveloperName , &quot;BSPLink&quot;, &quot;BSPLink&quot;, &quot;&quot;)</formula>
-        <label>Authority</label>
+        <formula>CASE( RecordType.DeveloperName , 
+&quot;BSPLink&quot;, 
+&quot;BSPLink&quot;, 
+&quot;FormOfPayment&quot;,
+   CASE(ANG_FormOfPayment_ID__c, 
+   &quot;CC&quot;, &quot;Card Payment Method&quot;,
+   &quot;CA&quot;, &quot;Cash Payment Method&quot;,
+   &quot;EP&quot;, &quot;IEP Payment Method&quot;,&quot;&quot;),
+&quot;&quot;
+)</formula>
+        <label>Authorization</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>&quot; &quot;</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(Account__r.RecordTypeId =&quot;012w0000000QBMW&quot;,ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),OR(ISPICKVAL(Account__r.Status__c,&quot;Changes processed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/no commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Cash basis/with commission&quot;),ISPICKVAL(Account__r.Status__c,&quot;Listed&quot;),ISPICKVAL(Account__r.Status__c,&quot;Review&quot;),ISPICKVAL(Account__r.Status__c,&quot;Under review&quot;),ISPICKVAL(Account__r.Status__c,&quot;approved&quot;)),OR(CONTAINS(Account__r.Country_ISO_Code__c,&quot;IS&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;NO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;FI&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SE&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;DK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;GL&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;BM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;CA&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;PM&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;HK&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;MO&quot;),CONTAINS(Account__r.Country_ISO_Code__c,&quot;SG&quot;))),
+
+IF(ISBLANK(Email_Used_for_BSP_Creation__c),0,100),2)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Used_for_BSP_Creation__c</fullName>
+        <externalId>false</externalId>
+        <label>Email (Used for BSP Creation)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -97,7 +152,15 @@
         <fullName>ISO_Country__c</fullName>
         <description>Get the BSP Country associated with the Billing Country of the account</description>
         <externalId>false</externalId>
-        <formula>IF(TEXT(Account__r.IATA_ISO_Country__r.BSP__c) = &quot;YES&quot;, Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c, Account__r.IATA_ISO_Country__r.ISO_Code__c)</formula>
+        <formula>IF( 
+  TEXT(Account__r.IATA_ISO_Country__r.BSP__c) = &quot;YES&quot; ,
+  IF(AND(Account__r.IATA_ISO_Country__r.ISO_Code__c = &quot;ID&quot;,TEXT(Account__r.Location_Class__c) = &quot;P&quot;)
+    ,&quot;II&quot;
+    ,Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c)
+  
+  ,
+  Account__r.IATA_ISO_Country__r.ISO_Code__c
+)</formula>
         <label>ISO Country</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -121,30 +184,41 @@
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not set</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non-Active</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deactivation in process</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not set</fullName>
+                    <default>true</default>
+                    <label>Not set</label>
+                </value>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Non-Active</fullName>
+                    <default>false</default>
+                    <label>Non-Active</label>
+                </value>
+                <value>
+                    <fullName>Deactivation in process</fullName>
+                    <default>false</default>
+                    <label>Deactivation in process</label>
+                </value>
+                <value>
+                    <fullName>Not Authorized</fullName>
+                    <default>false</default>
+                    <label>Not Authorized</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Unique_Identifier__c</fullName>
@@ -172,6 +246,21 @@
         <active>true</active>
         <label>BSPLink</label>
         <picklistValues>
+            <picklist>ANG_FormOfPayment_ID__c</picklist>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -191,7 +280,85 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <recordTypes>
+        <fullName>FormOfPayment</fullName>
+        <active>true</active>
+        <label>Form Of Payment</label>
+        <picklistValues>
+            <picklist>ANG_FormOfPayment_ID__c</picklist>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Authorized</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Form_Of_Payment_CC_and_PCI_Compliant</fullName>
+        <active>true</active>
+        <description>The Form of payment CC cannot be active if the Account &apos;Is PCI Compliant&apos; is set to false</description>
+        <errorConditionFormula>AND(  ISPICKVAL(ANG_FormOfPayment_ID__c ,&apos;CC&apos;)  ,
+ISPICKVAL(Status__c ,&apos;Active&apos;),
+ISPICKVAL(Account__r.Is_PCI_compliant__c ,&apos;No&apos;) 
+,$RecordType.Name = &quot;Form Of Payment&quot;
+)</errorConditionFormula>
+        <errorMessage>The Form of payment CC cannot be active if the Account &apos;Is PCI Compliant&apos; is set to false</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>New_Agency_Authorization</fullName>
+        <availability>online</availability>
+        <description>Create Agency Authorization</description>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Agency Authorization</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/support/console/36.0/integration.js&quot;)} 
+
+var changeTab = function(result){ 
+if(result.success == true){ 
+} 
+}; 
+
+var openSubtab = function(result) 
+{ 
+
+var recordtypeResult = sforce.connection.query(&quot;Select id FROM RecordType WHERE DeveloperName=&apos;BSPLink&apos;&quot;); 
+
+var recordTypeValue = recordtypeResult.getArray(&apos;records&apos;); 
+
+
+sforce.console.openSubtab(result.id, &apos;/a8t/e?CF00Nw00000094V1O=&apos;+&apos;{!Account.Name}&apos;+&apos;&amp;CF00Nw00000094V1O_lkid=&apos;+&apos;{!Account.Id}&apos;+&apos;&amp;RecordType=&apos;+recordTypeValue[0].Id, true, &apos;Agency Authorization&apos;, null, changeTab); 
+}; 
+
+sforce.console.getEnclosingPrimaryTabId(openSubtab);</url>
+    </webLinks>
 </CustomObject>

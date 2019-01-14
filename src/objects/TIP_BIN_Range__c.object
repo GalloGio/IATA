@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>TIP_Effective_From_Date_To_Show__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISNULL(TIP_Effective_From_Date__c ),  TIP_Payment_Provider_Product__r.PP_Effective_from_Date__c , TIP_Effective_From_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Effective From Date To Show</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TIP_Effective_From_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Effective From Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TIP_Effective_To_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Effective To Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TIP_Payment_Provider_Product__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Provider Product</label>
+        <referenceTo>Partner_products__c</referenceTo>
+        <relationshipLabel>BIN Ranges</relationshipLabel>
+        <relationshipName>BIN_Ranges</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>TIP_Range_End__c</fullName>
+        <externalId>false</externalId>
+        <label>Range To</label>
+        <length>19</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIP_Range_Start__c</fullName>
+        <externalId>false</externalId>
+        <label>Range From</label>
+        <length>19</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TIP_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ACTIVE</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>INACTIVE</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>IN_PROGRESS</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>DRAFT</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>BIN Range</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>TIP_Range_Start__c</columns>
+        <columns>TIP_Range_End__c</columns>
+        <columns>TIP_Effective_From_Date__c</columns>
+        <columns>TIP_Effective_To_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>BIN-{0000000}</displayFormat>
+        <label>BIN Range Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>BIN Ranges</pluralLabel>
+    <recordTypes>
+        <fullName>Enrolled</fullName>
+        <active>true</active>
+        <label>Enrolled</label>
+        <picklistValues>
+            <picklist>TIP_Status__c</picklist>
+            <values>
+                <fullName>ACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN_PROGRESS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Statistical</fullName>
+        <active>true</active>
+        <label>Statistical</label>
+        <picklistValues>
+            <picklist>TIP_Status__c</picklist>
+            <values>
+                <fullName>ACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN_PROGRESS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Unenrolled_Known</fullName>
+        <active>true</active>
+        <label>Unenrolled Known</label>
+        <picklistValues>
+            <picklist>TIP_Status__c</picklist>
+            <values>
+                <fullName>ACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INACTIVE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN_PROGRESS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Check_If_BIN_Range_Active</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT(ISCHANGED(TIP_Status__c)) &amp;&amp; 
+ISPICKVAL(TIP_Status__c, &quot;Active&quot;) &amp;&amp; (ISCHANGED(TIP_Effective_From_Date__c) || ISCHANGED(TIP_Range_Start__c) || ISCHANGED(TIP_Range_End__c))</errorConditionFormula>
+        <errorMessage>Only Effective To Date can be changed for active Bin Ranges.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_if_product_is_Active</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+   NOT(ISPICKVAL(TIP_Payment_Provider_Product__r.PP_Status__c, &quot;Active&quot;)),
+   ISPICKVAL(TIP_Status__c, &quot;Active&quot;)
+)</errorConditionFormula>
+        <errorMessage>BIN Range cannot be activated if related Product is not active</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Effective_from_before_effective_To</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( TIP_Payment_Provider_Product__r.Provider__r.RecordType.DeveloperName = &quot;TIP_Payment_Provider&quot;, TIP_Effective_From_Date__c &gt; TIP_Effective_To_Date__c )</errorConditionFormula>
+        <errorMessage>Effective to Date needs to be greater than Effective from Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_PP_name_for_IATA_RT</fullName>
+        <active>true</active>
+        <description>Validates Partner Product&apos;s name if the Bin Range record type is Listed by IATA</description>
+        <errorConditionFormula>RecordType.DeveloperName = &apos;Listed_by_IATA&apos; &amp;&amp;  TIP_Payment_Provider_Product__r.Name != $Setup.TIP_Configuration__c.Product_Listed_By_IATA_Name__c</errorConditionFormula>
+        <errorMessage>Listed by IATA Bin Range must be linked to the Generic Product</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Range_End_Is_Number</fullName>
+        <active>true</active>
+        <description>Range End needs to be a number</description>
+        <errorConditionFormula>NOT(ISNUMBER(TIP_Range_End__c))</errorConditionFormula>
+        <errorDisplayField>TIP_Range_End__c</errorDisplayField>
+        <errorMessage>Range To needs to be a number</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Range_End_Lower_Than_Start</fullName>
+        <active>true</active>
+        <description>Range To Should always be higher than Range From</description>
+        <errorConditionFormula>AND(ISNUMBER(TIP_Range_Start__c), ISNUMBER(TIP_Range_End__c), VALUE(TIP_Range_Start__c) &gt; VALUE(TIP_Range_End__c))</errorConditionFormula>
+        <errorMessage>Range To has to be greater than Range From</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Range_Start_Is_Number</fullName>
+        <active>true</active>
+        <description>Range Start needs to be a number</description>
+        <errorConditionFormula>NOT(ISNUMBER(TIP_Range_Start__c))</errorConditionFormula>
+        <errorDisplayField>TIP_Range_Start__c</errorDisplayField>
+        <errorMessage>Range From needs to be a number</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

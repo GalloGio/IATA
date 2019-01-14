@@ -1,223 +1,254 @@
 public class EmailMessagesViewCon {
 
-     private void loadEmails(){
-   try {
-         
-          map<String,Archived_Message__c> archMessPerIdMessOrig = new map<String,Archived_Message__c>();
+    private void loadEmails() {
+        try {
+            unifiedList = new List<EmailWrapper>();
 
-        originalEmail = new Map<String,EmailMessage>();
-        //load records related to case
-        this.archivedMessages = [SELECT  Name,EmailMessage__c,  Case__c, CreatedById, CreatedDate, Id FROM Archived_Message__c where Case__c =:this.cse.Id ];
+            originalEmail = new Map<String, EmailMessage>();
+            //load records related to case
+            this.archivedMessages = [SELECT  Name, EmailMessage__c,  Case__c, CreatedById, CreatedDate, Id FROM Archived_Message__c where Case__c = :this.cse.Id ];
 
-        if(archivedMessages <> null && archivedMessages.size() > 0)
-        for(Archived_Message__c arch :archivedMessages)
-            archMessPerIdMessOrig.put(arch.EmailMessage__c, arch);
+            Map<String, Archived_Message__c> tmpArchivedMessages = new Map<String, Archived_Message__c>();
+            for (Archived_Message__c a : archivedMessages )
+                tmpArchivedMessages .put(a.EmailMessage__c, a);
 
-        Map<String,Archived_Message__c> tmpArchivedMessages = new Map<String,Archived_Message__c>();
-        for(Archived_Message__c a:archivedMessages )
-            tmpArchivedMessages .put(a.EmailMessage__c,a);
+            //load tracked emails
+            this.trackedEmails = [SELECT ToContact__c, Email__c, TextBody__c, Subject__c, Status__c, CreatedById, CreatedDate, Id, Has_Attachment__c FROM Tracked_Email__c where Case__c = :this.cse.Id ];
 
-        //load tracked emails
-        this.trackedEmails = [SELECT ToContact__c, Html_Body__c, Subject__c, Status__c, CreatedById, CreatedDate, Id FROM Tracked_Email__c where Case__c =:this.cse.Id ];
+            for (Tracked_Email__c trackedEmail : trackedEmails) {
+                unifiedList.add(new EmailWrapper(trackedEmail));
+            }
 
-        //load Email activity status to print it in view  using a map: em.Activity --> Stirng
-        List<String> l = new List<String>();
-        this.emails = new List<EmailMessage>();
+            //load Email activity status to print it in view  using a map: em.Activity --> Stirng
+            List<String> l = new List<String>();
+            this.emails = new List<EmailMessage>();
 
-        List<EmailMessage > tmpEmails = [SELECT ParentId, Status, Incoming, FromName, ActivityId,
-                                         BccAddress, CcAddress, CreatedById, CreatedDate, 
-                                         IsDeleted, Id, FromAddress, HtmlBody, HasAttachment, Headers,
-                                          LastModifiedById, LastModifiedDate, MessageDate, Subject,
-                                           SystemModstamp, TextBody, ToAddress 
-                                           FROM EmailMessage 
-                                         where ParentId = :cse.id order by CreatedDate desc ];
+            List<EmailMessage > tmpEmails = [SELECT ParentId, Status, Incoming, FromName, ActivityId,
+                                             BccAddress, CcAddress, CreatedById, CreatedDate,
+                                             IsDeleted, Id, FromAddress, HtmlBody, HasAttachment, Headers,
+                                             LastModifiedById, LastModifiedDate, MessageDate, Subject,
+                                             SystemModstamp, TextBody, ToAddress
+                                             FROM EmailMessage
+                                             where ParentId = :cse.id order by CreatedDate desc ];
 
-        emailsTasksStatus = new Map<String,String>();
-        for(EmailMessage e:tmpEmails  ) {
-           if(!tmpArchivedMessages.containsKey(e.Id)){
-                emails.add(e);
-              UnifiedList.add(new EmailWrapper(e,false,null));
-              
-           }
-               
-           else{
-         // throw new transformationException('' + tmpArchivedMessages);
-               originalEmail.put(e.Id,e);
-               
-               UnifiedList.add(new EmailWrapper(e,true,archMessPerIdMessOrig.get(e.id)));
+            emailsTasksStatus = new Map<String, String>();
+            for (EmailMessage e : tmpEmails  ) {
+                if (!tmpArchivedMessages.containsKey(e.Id)) {
+                    unifiedList.add(new EmailWrapper(e));
+                    emails.add(e);
+                }
 
-               }
+                else {
+                    unifiedList.add(new EmailWrapper(tmpArchivedMessages.get(e.Id), e));
+                    originalEmail.put(e.Id, e);
+                }
 
+            }
+
+            try {
+                EmailsAvailable  = (archivedMessages.size() + trackedEmails.size() + emails.size()) > 0;
+            } catch (Exception e) {
+                EmailsAvailable = true;
+            }
+
+            unifiedList.sort();
+
+            if (this.emails == null)
+                this.emails = new List<EmailMessage>();
+
+
+
+
+        } catch (Exception e) {
+            ApexPages.Message   myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Error: Invalid Input.' + e.getmessage());
+            ApexPages.addMessage(myMsg);
         }
-         
-        //throw new transformationException('' + UnifiedList);
-      //  UnifiedList.sort();
-       try
-        {
-            EmailsAvailable  = (archivedMessages.size() + trackedEmails.size() + emails.size())>0;
-        }catch(Exception ex){
-            EmailsAvailable = true;
-        }
-        if(this.emails==null)
-            this.emails= new List<EmailMessage>();
-            
-            
-            
-          
-        }catch(Exception e){
-      ApexPages.Message   myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Error: Invalid Input.' + e.getmessage());
-           ApexPages.addMessage(myMsg);
-        }    
-            
+
     }
 
+    public List<EmailWrapper> unifiedList {get; set;}
 
+    public class EmailWrapper implements Comparable {
+        public String emailType {get; set;}
 
-public transient List<EmailWrapper> UnifiedList {get; set;}
+        public String displayEmailActions {
+            get{return emailType == 'email' ? '' : 'none';}
+        }
 
-public class EmailWrapper  implements Comparable {
+        public String displayArchivedActions {
+            get{return emailType == 'archived' ? '' : 'none';}
+        }
 
-    public boolean ArchivedEmail {get;set;}
-    public EmailMessage message {get;set;}
-    public Datetime emailCreation {get;set;}
-    public Id ArchEmailMessageID {get;set;}
+        public String displayTrackedActions {
+            get{return emailType == 'tracked' ? '' : 'none';}
+        }
 
+        public String displayEmailAddress {
+            get{return emailType != 'tracked' ? '' : '';}
+        }
 
-    public EmailWrapper(EmailMessage message, boolean archived,Archived_Message__c archMess) {
+        public Id emailId {get; set;}
+        public String status {get; set;}
+        public String image {get; set;}
+        public String title {get; set;}
+        public String displayHasAttachmentImage {get; set;}
+        public String subject {get; set;}
+        public String body {get; set;}
+        public String emailAddress {get; set;}
+        public Id contact {get; set;}
+        public Datetime messageDate {get; set;}
+        public Tracked_Email__c trackedEmail {get; set;}
+        public Id archivedEmailId {get; set;}
+        public Boolean isArchived {get{return emailType == 'archived';}}
 
-            this.ArchivedEmail = archived;
-            this.message = message;
-            this.emailCreation = message.CreatedDate;
-            this.ArchEmailMessageID = archMess <> null ? archMess.id :null;
-           //  throw new transformationException('' + archMess);
+        public EmailWrapper(Tracked_Email__c trackedEmail) {
+            emailType = 'tracked';
+            emailId = trackedEmail.Id;
+            status = trackedEmail.Status__c + ' [Tracked]';
+            image = '/img/emailOutbound.gif';
+            title = 'Outbound';
+            displayHasAttachmentImage = trackedEmail.Has_Attachment__c ? '' : 'none';
+            subject = trackedEmail.Subject__c == null || trackedEmail.Subject__c == '' ? 'No Subject' : trackedEmail.Subject__c;
+            body = trackedEmail.TextBody__c != null ? trackedEmail.TextBody__c.substring(0, Math.min(trackedEmail.TextBody__c.length() - 1, 77)) : '';
+            contact = trackedEmail.ToContact__c;
+            emailAddress = trackedEmail.Email__c;
+            messageDate = trackedEmail.CreatedDate;
+            this.trackedEmail = trackedEmail;
+        }
+
+        public EmailWrapper(EmailMessage email) {
+            emailType = 'email';
+            setup(email);
+        }
+
+        public EmailWrapper(Archived_Message__c archivedMessage, EmailMessage originalEmail) {
+            emailType = 'archived';
+            archivedEmailId = archivedMessage.Id;
+            setup(originalEmail);
+            //override some behaviors defined in setup method
+            displayHasAttachmentImage = '';     //different behavior than for other email types, is it normal?
+            if (status != '') {
+                status += ' [Archived]';
+            }
+        }
+
+        private void setup(EmailMessage email) {
+            emailId = email.Id;
+            if (email.Status == '0') {status = 'New';}
+            else if (email.Status == '1') {status = 'Read';}
+            else if (email.Status == '2') {status = 'Replied';}
+            else if (email.Status == '3') {status = 'Sent';}
+            else if (email.Status == '4') {status = 'Forwarded';}
+            else {status = '';}
+
+            image = email.Incoming ? '/img/emailInbound.gif' : '/img/emailOutbound.gif';
+            title = email.Incoming ? 'Inbound' : 'Outbound';
+            displayHasAttachmentImage = email.HasAttachment ? '' : 'none';      //different behavior than for other email types, is it normal?
+            subject = email.Subject == null || email.Subject == '' ? 'No Subject' : email.Subject;
+            if (email.TextBody != null) {
+                if (email.TextBody.length() < 78) {
+                    body = email.TextBody;
+                } else {
+                    body = email.TextBody.substring(0, 77);
+                }
+            }
+            emailAddress = email.Incoming ? email.FromAddress : email.ToAddress;
+            messageDate = email.MessageDate;
+        }
+
+        public Integer compareTo(Object compareTo) {
+            EmailWrapper compareToEmail = (EmailWrapper) compareTo;
+            if (messageDate > compareToEmail.messageDate) {return -1;}
+            else if (messageDate == compareToEmail.messageDate) {return 0;}
+            return 1;
+        }
+
     }
-
-
-    public Integer compareTo(Object compareTo){
-
-        EmailWrapper compareToEmail = (EmailWrapper)compareTo;
-        if (emailCreation == compareToEmail.emailCreation) return 0;
-        if (emailCreation > compareToEmail.emailCreation) return 1;
-        return -1;
-
-
-    } 
-  
-}
 
 
     public transient List<EmailMessage> emails {get; set;}
     public transient List<Archived_Message__c> archivedMessages {get; set;}
 
     public Case cse {get; set;}
-    public Boolean EmailsAvailable{get;set;}
+    public Boolean EmailsAvailable {get; set;}
 
     //jfo
     public transient List<Archived_Attachment__c> archivedAttachments {get; set;}
     public transient List<Attachment> sfdcAttachments {get; set;}
-    public transient Map<String,String> emailsTasksStatus {get; set;}
-    public transient Map<String,EmailMessage> originalEmail {get; set;}
+    public transient Map<String, String> emailsTasksStatus {get; set;}
+    public transient Map<String, EmailMessage> originalEmail {get; set;}
     public transient List<Tracked_Email__c> trackedEmails {get; set;}
     public boolean hasAttachment  {get; set;}
 
 
 
     public EmailMessagesViewCon (ApexPages.StandardController controller) {
-        UnifiedList = new List<EmailWrapper>(); 
-        //EmailsAvailable = true;
-        try{
-            if(!Test.isRunningTest()) {
-                controller.addFields(new List<String>{'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c' });
+        try {
+            if (!Test.isRunningTest()) {
+                controller.addFields(new List<String> {'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c', 'Case_Group__c', 'CNSCase__c'});
             }
-            this.cse= (Case)controller.getRecord();
+            this.cse = (Case)controller.getRecord();
             loadEmails();
             loadAttachments();
-       }
-       catch(Exception e){
+        } catch (Exception e) {
             String temp = ApexPages.currentPage().getParameters().get('fieldValue');
-            this.cse = [Select id, Status,CaseNumber, BSPCountry__c, ContactId, RecordType.DeveloperName from Case where id = :temp];
-            system.debug('ERROR Exception while creating controller '+e.getMessage());
-       }
+            this.cse = [Select id, Status, CaseNumber, BSPCountry__c, ContactId, RecordType.DeveloperName from Case where id = :temp];
+            system.debug('ERROR Exception while creating controller ' + e.getMessage());
+        }
     }
 
-    private void loadAttachments(){
-        archivedAttachments  = [SELECT AWS_S3_URL__c, Name, ArchivedMessage__c, Bucket__c, Case__c, Id  , BodyLength__c, Original_Creation_Date__c, OriginalCreatedBy__c, ContentType__c FROM Archived_Attachment__c where Case__c= :this.cse.Id ];
-          //load attchament linked directly to this case
+    private void loadAttachments() {
+        archivedAttachments  = [SELECT AWS_S3_URL__c, Name, ArchivedMessage__c, Bucket__c, Case__c, Id  , BodyLength__c, Original_Creation_Date__c, OriginalCreatedBy__c, ContentType__c FROM Archived_Attachment__c where Case__c = :this.cse.Id ];
+        //load attchament linked directly to this case
         sfdcAttachments =  [SELECT Id, ParentId, OwnerId, Name, CreatedById, LastModifiedDate, BodyLength FROM Attachment where ParentId = :this.cse.Id];
-        if(archivedAttachments!=null)
-            hasAttachment = (archivedAttachments.size() + sfdcAttachments.size())>0;
+        if (archivedAttachments != null)
+            hasAttachment = (archivedAttachments.size() + sfdcAttachments.size()) > 0;
         else hasAttachment = false;
     }
 
-    public String getACaseId(){
+    public String getACaseId() {
         return this.cse.Id;
     }
 
-    private void loadEmails2(){
-        originalEmail = new Map<String,EmailMessage>();
-        //load records related to case
-        this.archivedMessages = [SELECT  Name,EmailMessage__c,  Case__c, CreatedById, CreatedDate, Id FROM Archived_Message__c where Case__c =:this.cse.Id ];
-
-        Map<String,Archived_Message__c> tmpArchivedMessages = new Map<String,Archived_Message__c>();
-        for(Archived_Message__c a:archivedMessages )
-            tmpArchivedMessages .put(a.EmailMessage__c,a);
-
-        //load tracked emails
-        this.trackedEmails = [SELECT ToContact__c, Html_Body__c, Subject__c, Status__c, CreatedById, CreatedDate, Id FROM Tracked_Email__c where Case__c =:this.cse.Id ];
-
-        //load Email activity status to print it in view  using a map: em.Activity --> Stirng
-        List<String> l = new List<String>();
-        this.emails = new List<EmailMessage>();
-
-        List<EmailMessage > tmpEmails = [SELECT ParentId, Status, Incoming, FromName, ActivityId,
-                                         BccAddress, CcAddress, CreatedById, CreatedDate, 
-                                         IsDeleted, Id, FromAddress, HtmlBody, HasAttachment, Headers,
-                                          LastModifiedById, LastModifiedDate, MessageDate, Subject,
-                                           SystemModstamp, TextBody, ToAddress 
-                                           FROM EmailMessage 
-                                         where ParentId = :cse.id order by CreatedDate desc ];
-
-        emailsTasksStatus = new Map<String,String>();
-        for(EmailMessage e:tmpEmails  ) {
-           if(!tmpArchivedMessages .containsKey(e.Id))
-               emails.add(e);
-           else
-               originalEmail.put(e.Id,e);
-
-        }
-        try {
-            EmailsAvailable  = (archivedMessages.size() + trackedEmails.size() + emails.size())>0;
-        }catch(Exception e){
-            EmailsAvailable = true;
-        }
-        if(this.emails==null)
-            this.emails= new List<EmailMessage>();
-    }
-
-    public Case getCse(){
+    public Case getCse() {
         return this.cse;
     }
 
 
-    public List<EmailMessage> getEmails(){
+    public List<EmailMessage> getEmails() {
 
-        if(this.emails==null)loadEmails();
+        if (this.emails == null)loadEmails();
 
         return emails;
     }
 
     public Boolean getShowSendTrackedEmailButton() {
         try {
-            // if account is SAAM, Region has to be Europe and caseArea = Risk Management Process
-            Id saamRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-            if (cse.RecordTypeId == saamRt) {
-                return cse.Region__c == 'Europe' && cse.CaseArea__c == 'Risk Management Process';
+
+            // In any case, Region has to be 'Europe' or 'Africa & Middle East'
+            if (cse.Region__c == 'Europe' || cse.Region__c == 'Africa & Middle East' || cse.Region__c == 'Americas' || cse.Region__c == 'Asia & Pacific') {
+
+                // if case record type is 'SAAM', caseArea has to be 'Risk Management Process', 'Accreditation Process', 'Accreditation Products'
+                // or 'Cargo Process'  
+                Id saamRt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
+                if (cse.RecordTypeId == saamRt) {
+
+                    return (cse.CaseArea__c == 'Risk Management Process' || cse.CaseArea__c == 'Accreditation Process' 
+                        || cse.CaseArea__c == 'Accreditation Products' || cse.CaseArea__c == 'Cargo Process' || cse.CaseArea__c == 'Collection');
+                }
+
+                // if case record type is 'IATA Financial Review', 'sMAP(sales Monitoring Alert Process)', 'SIDRA', 'SIDRA Lite' or 'Oscar communication', return true
+                Id financialReviewRt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+                Id sMapRt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'sMAP_sales_Monitoring_Alert_Process');
+                Id sidraId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+                Id sidraLiteId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+                Id oscarComm = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+                Id invCollectionCases = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases');
+
+                return (cse.RecordTypeId == financialReviewRt || cse.RecordTypeId == sMapRt || cse.RecordTypeId == sidraId
+                    || cse.RecordTypeId == sidraLiteId || cse.RecordTypeId == oscarComm || cse.RecordTypeId == invCollectionCases);
             }
-            // if account is IATA Financial Review, only Region has to be Europe
-            Id financialReviewRt = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
-            if (cse.RecordTypeId == financialReviewRt) {
-                return cse.Region__c == 'Europe';
-            }
+            return false;
         } catch (Exception e) {
             System.debug('Permission not granted to see Tracked email button ' + e.getMessage());
         }

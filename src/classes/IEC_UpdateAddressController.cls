@@ -32,6 +32,8 @@ public String autocompleteFullAddress { get; set; }
 
 Contact currentContact;
 
+public Boolean stopProcess { get; set; }
+
 
 /****************************************************************************************************
     Created by CGI, Thai 2016-04-25
@@ -61,10 +63,17 @@ public PageReference onPageLoad()
         return retPage;
     }
 
-    //*** initialize default locations for first time customer
+    //*** check/initialize default locations -> stop if error on sold to partner
+    stopProcess = false;
+    List<String> lstError = Location_Svc.initializeDefaultLocations(new List<Id>{loggedCustomer.sfContact.Id});
+    if (lstError[0] != null && lstError[0].startsWith('\nST'))
+    {
+        stopProcess = true;
+        addErrorMessage(Label.IEC_SAP_Customer_Issue);
+        return null;
+    }
     if (loggedCustomer.billTo == null || loggedCustomer.shipTos == null || loggedCustomer.shipTos.size() == 0)
     {
-        Location_Svc.InitializeContactLocations(loggedCustomer.sfContact.Id);
         loggedCustomer = Customer_DTO.getCustomerByUser(UserInfo.getUserId());
         Customer_DTO.setCustomerAddresses(loggedCustomer);
     }
@@ -298,6 +307,13 @@ public void cancelBillToAddress()
 } //*** end of "cancelBillToAddress"
 
 
+/*
+	TC 2017-05-17
+*/
+public Boolean isStreetAddressToLong(String street, Integer maxSize) {
+	return !String.isBlank(street) && street.length() > maxSize;
+}
+
 /****************************************************************************************************
     Created by CGI, Thai 2016-04-25
         Validate and save bill to address
@@ -307,6 +323,7 @@ public void saveBillToAddress()
     List<IECAddress__c> lstAddress;
     Address_DTO sourceAddress = loggedCustomer.billTo;
     Location__c locationBillTo = null;
+    Savepoint sp;
 
     //*** clear not applicable fields
     if (!showBillToZip)
@@ -326,6 +343,13 @@ public void saveBillToAddress()
     lstAddress = checkAddress(dtoBillToAddress, false);
     if (lstAddress == null)
         return;
+        
+	/*TC 2017-05-17*/
+	if(isStreetAddressToLong(dtoBillToAddress.street1, 70)) {
+		addErrorMessage(Label.IEC_BillingAddressLimit);
+		return;
+	}
+	/* end TC */
 
     //*** do nothing if address is not modified
     if (!isAddressModified(dtoBillToAddress, sourceAddress))
@@ -337,41 +361,60 @@ public void saveBillToAddress()
 
     //*** add new address if not in database yet
     if (lstAddress.size() == 0)
-        lstAddress.add(IECAddress_Svc.newAddress(dtoBillToAddress.street1, dtoBillToAddress.city, dtoBillToAddress.countryCode, dtoBillToAddress.stateCode, dtoBillToAddress.postalCode));
+        lstAddress.add(IECAddress_Svc.newAddressForSAPSync(dtoBillToAddress.street1, dtoBillToAddress.city, dtoBillToAddress.countryCode, dtoBillToAddress.stateCode, dtoBillToAddress.postalCode));
     
     if (dtoBillToAddress.countryCode != sourceAddress.countryCode || dtoBillToAddress.stateCode != sourceAddress.stateCode)
     {
         //*** what to do when country/province changes
 
-        //*** check if a location for country/province already exist
-        for (Location__c location : [select Id
-                                     from Location__c
-                                     where Contact__c = :currentContact.Id and Type__c = :IECConstants.BILLTO and Active__c = false
-                                       and ISO_Country_Code__c = :dtoBillToAddress.countryCode and ISO_State_Code__c = :dtoBillToAddress.stateCode limit 1])
-            locationBillTo = new Location__c(Id=location.Id, Address__c=lstAddress[0].Id, Email__c=dtoBillToAddress.email, Phone__c=dtoBillToAddress.phone
-                                           , VAT_Number__c=dtoBillToAddress.vatNumber, Address_Name__c=null, Active__c=true);
-        
-        //*** deactivate existing location -> should be before create/update because of trigger for uniqueness
-        update (new Location__c(Id=currentBillToLocationId, Active__c=false));
+        //*** get old location and prepare to deactivate it
+        Location__c locationBillToInactive = Location_Sel.getLocationToSyncSAP(new List<Id>{currentBillToLocationId}, null, null, IECConstants.BILLTO, false).values()[0];
+        locationBillToInactive.Active__c = false;
 
-        //*** create/update location
-        if (locationBillTo == null)
-            locationBillTo = Location_Svc.createLocation(lstAddress[0].Id, currentContact.Id, dtoBillToAddress.email, dtoBillToAddress.phone, dtoBillToAddress.vatNumber, IECConstants.BILLTO);
-        else
-            update locationBillTo;
-        dtoBillToAddress.locationId = locationBillTo.Id;
+        //*** prepare to create new location -> cancel action on error
+        locationBillTo = new Location__c(Active__c = true, Type__c = IECConstants.BILLTO, Address__c = lstAddress[0].Id, Address__r = lstAddress[0]
+                                       , Account__c = locationBillToInactive.Account__c, Account__r = locationBillToInactive.Account__r
+                                       , Contact__c = locationBillToInactive.Contact__c, Contact__r = locationBillToInactive.Contact__r
+                                       , Email__c = dtoBillToAddress.email, Phone__c = dtoBillToAddress.phone , VAT_Number__c = dtoBillToAddress.vatNumber);
+        List<IEC_Error_Log__c> lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationBillTo}, null, false);
+        if (lstSyncResult[0] != null)
+        {
+            addErrorMessage(Label.IEC_SAP_Customer_Address_Issue);
+            return;
+        }
 
-        //*** update new location as default on contact
-        update (new Contact(Id=currentContact.Id, BillTo_Location__c=locationBillTo.Id));
-        currentContact.BillTo_Location__c = locationBillTo.Id;
-        currentBillToLocationId = locationBillTo.Id;
+        //*** commit changes
+        sp = Database.setSavepoint();
+        try
+        {
+            //*** create address if applicable
+            if (lstAddress[0].Id == null)
+                insert lstAddress[0];
+
+            //*** deactivate old location and create new location
+            update locationBillToInactive;
+            locationBillTo.Address__c = lstAddress[0].Id;
+            insert locationBillTo;
+            dtoBillToAddress.locationId = locationBillTo.Id;
+
+            //*** update new location as default on contact
+            update (new Contact(Id=currentContact.Id, BillTo_Location__c=locationBillTo.Id));
+            currentContact.BillTo_Location__c = locationBillTo.Id;
+            currentBillToLocationId = locationBillTo.Id;
+        }
+        catch(Exception ex)
+        {
+            addErrorMessage(ex.getMessage());
+            Database.rollback(sp);   //*** -> need to review SAP partners
+            return;
+        }
     }
     else
     {
         //*** update location when no change on country/province
-        locationBillTo = new Location__c(Id=currentBillToLocationId, Address__c=null, Email__c=dtoBillToAddress.email, Phone__c=dtoBillToAddress.phone
-                                       , VAT_Number__c=dtoBillToAddress.vatNumber, Address_Name__c=null);
-        
+        locationBillTo = new Location__c(Id=currentBillToLocationId, Address__c=null
+                                       , Email__c=dtoBillToAddress.email, Phone__c=dtoBillToAddress.phone, VAT_Number__c=dtoBillToAddress.vatNumber);
+
         //*** ensure not to update address if not necessary
         for (IECAddress__c addr : lstAddress)
             if (addr.Id == currentContact.BillTo_Location__r.Address__c)
@@ -379,13 +422,26 @@ public void saveBillToAddress()
                 locationBillTo.Address__c = addr.Id;
                 break;
             }
-        if (locationBillTo.Address__c == null)
-            locationBillTo.Address__c = lstAddress[0].Id;
-        
-        update locationBillTo;
-        
-        //if (locationBillTo.Address__c != currentContact.BillTo_Location__r.Address__c)
-        //    Customer_DTO.setCustomerAddresses(loggedCustomer);
+
+        //*** commit changes
+        sp = Database.setSavepoint();
+        try
+        {
+            //*** create address if applicable
+            if (lstAddress[0].Id == null)
+                insert lstAddress[0];
+
+            if (locationBillTo.Address__c == null)
+                locationBillTo.Address__c = lstAddress[0].Id;
+
+            update locationBillTo;
+        }
+        catch(Exception ex)
+        {
+            addErrorMessage(ex.getMessage());
+            Database.rollback(sp);   //*** -> need to review SAP partners
+            return;
+        }
     }
 
     //*** update original address
@@ -563,7 +619,6 @@ public void prepareNewShipToAddress()
     changeShipToCountry(false);
 } //*** end of "prepareNewShipToAddress"
 
-
 /****************************************************************************************************
     Created by CGI, Thai 2016-04-25
         Validate and save ship to address
@@ -571,12 +626,14 @@ public void prepareNewShipToAddress()
 public void saveShipToAddress()
 {
     List<IECAddress__c> lstAddress;
-    Address_DTO sourceAddress;
-    Location__c locationShipTo = null;
+    Address_DTO sourceAddress, copiedAddress;
+    Location__c locationShipTo = null, locationShipToInactive = null;
     Boolean isNewShipToAddress = dtoShipToAddress.locationId == null;
     Boolean newAddressCreated;
     Map<Id, Location__c> mapId_Location;
-    Set<Id> setAddreddId = new Set<Id>();
+    Set<Id> setAddressId = new Set<Id>();
+    Savepoint sp;
+    List<IEC_Error_Log__c> lstSyncResult;
 
     //*** clear not applicable fields
     if (!showShipToZip)
@@ -593,9 +650,26 @@ public void saveShipToAddress()
     dtoShipToAddress.street1 = ApexPages.currentPage().getParameters().get('shipToStreet');
     
     //*** check if address enterred is valid and is already in system
+    Boolean hasError = false;
     lstAddress = checkAddress(dtoShipToAddress, true);
     if (lstAddress == null)
-        return;
+        hasError = true;
+        
+    /*TC 2017-05-17*/
+	if(isStreetAddressToLong(dtoShipToAddress.street1, 70)) {
+		addErrorMessage(Label.IEC_ShippingAddressLimit);
+		hasError = true;
+	}
+	
+	if(dtoShipToAddress != null && !String.isBlank(dtoShipToAddress.street1) && IECUtil.isPostOfficeBox(dtoShipToAddress.street1)) {
+    	addErrorMessage(Label.IEC_PO_BOX_ERROR);
+    	hasError = true;
+    }
+    
+    if(hasError) {
+    	return;
+    }
+	/* end TC */
 
     //*** do nothing if address is not modified
     if (!isNewShipToAddress)
@@ -622,122 +696,120 @@ public void saveShipToAddress()
         }
     }
 
+    //*** get active Ship To locations
+    mapId_Location = Location_Sel.getLocationToSyncSAP(null, null, new List<Id>{currentContact.Id}, IECConstants.SHIPTO, true);
+
     //*** prepare to check addresses
     newAddressCreated = lstAddress.size() == 0;
     if (lstAddress.size() > 0)
     {
-        //*** get Ship To locationss
-        mapId_Location = new Location_Sel().getContactsLocations(new Set<Id>{currentContact.Id});
-        for (Id idLocation : mapId_Location.keySet())
-            if (mapId_Location.get(idLocation).Type__c != IECConstants.SHIPTO)
-                mapId_Location.remove(idLocation);
-
         //*** prepare checking address exists
         for (IECAddress__c addr : lstAddress)
-            setAddreddId.add(addr.Id);
+            setAddressId.add(addr.Id);
+        
+        //*** validate if inserting/updating address already exists
+        for (Id idLocation : mapId_Location.keySet())
+            if ((isNewShipToAddress || idLocation != currentShipToLocationId) && setAddressId.contains(mapId_Location.get(idLocation).Address__c))
+            {
+                addErrorMessage(labels.get('msgAddrExist'));
+                return;
+            }
     }
     else
-        lstAddress.add(IECAddress_Svc.newAddress(dtoShipToAddress.street1, dtoShipToAddress.city, dtoShipToAddress.countryCode, dtoShipToAddress.stateCode, dtoShipToAddress.postalCode));
+        lstAddress.add(IECAddress_Svc.newAddressForSAPSync(dtoShipToAddress.street1, dtoShipToAddress.city, dtoShipToAddress.countryCode, dtoShipToAddress.stateCode, dtoShipToAddress.postalCode));
     
-    //*** insert/update location
     if (isNewShipToAddress)
     {
-        //*** validate if inserting location already exists
-        if (!newAddressCreated)
-            for (Id idLocation : mapId_Location.keySet())
-                if (setAddreddId.contains(mapId_Location.get(idLocation).Address__c))
-                {
-                    //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgAddrExist')));
-                    addErrorMessage(labels.get('msgAddrExist'));
-                    return;
-                }
+        //*** add location -> prepare to create new location -> cancel action on error
+        locationShipTo = mapId_Location.values()[0];   //*** get one location for account and contact information
+        locationShipTo = new Location__c(Active__c = true, Type__c = IECConstants.SHIPTO, Address__c = lstAddress[0].Id, Address__r = lstAddress[0]
+                                       , Account__c = locationShipTo.Account__c, Account__r = locationShipTo.Account__r
+                                       , Contact__c = locationShipTo.Contact__c, Contact__r = locationShipTo.Contact__r
+                                       , Address_Name__c=dtoShipToAddress.addressName, Attention__c=dtoShipToAddress.attention
+                                       , Email__c = dtoShipToAddress.email, Phone__c = dtoShipToAddress.phone , VAT_Number__c = dtoShipToAddress.vatNumber);
+        lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationShipTo}, null, false);
+        if (lstSyncResult[0] != null)
+        {
+            addErrorMessage(Label.IEC_SAP_Customer_Address_Issue);
+            return;
+        }
         
-        //*** validate if inserting location was inactivated
-        locationShipTo = null;
-        for (Location__c location : [select Id
-                                     from Location__c
-                                     where Contact__c = :currentContact.Id and Type__c = :IECConstants.SHIPTO and Active__c = false
-                                       and Address__c = :lstAddress[0].Id limit 1])
-            locationShipTo = new Location__c(Id=location.Id, Address__c=lstAddress[0].Id, Address_Name__c=dtoShipToAddress.addressName, Attention__c=dtoShipToAddress.attention
-                                           , Email__c=dtoShipToAddress.email, Phone__c=dtoShipToAddress.phone, VAT_Number__c=dtoShipToAddress.vatNumber, Active__c=true);
-        
-        //*** new address or location for this address not exists -> create
-        if (locationShipTo == null)
-            locationShipTo = Location_Svc.createLocation(lstAddress[0].Id, currentContact.Id, dtoShipToAddress.email, dtoShipToAddress.phone, dtoShipToAddress.vatNumber, IECConstants.SHIPTO, dtoShipToAddress.attention, dtoShipToAddress.addressName);
-        else
-            update locationShipTo;
-        currentShipToLocationId = locationShipTo.Id;
-        dtoShipToAddress.locationId = currentShipToLocationId;
-        loggedCustomer.shipTos.add(copyAddress(dtoShipToAddress, null));
+        copiedAddress = copyAddress(dtoShipToAddress, null);
+        loggedCustomer.shipTos.add(copiedAddress);
     }
     else
     {
-        //*** validate if updating address already exists
-        if (!newAddressCreated)
-            for (Id idLocation : mapId_Location.keySet())
-                if (idLocation == currentShipToLocationId)
-                {
-                    if (setAddreddId.contains(mapId_Location.get(idLocation).Address__c))
-                        break;
-                }
-                else if (setAddreddId.contains(mapId_Location.get(idLocation).Address__c))
-                {
-                    //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgAddrExist')));
-                    addErrorMessage(labels.get('msgAddrExist'));
-                    return;
-                }
-        
         //*** update location
-        if (dtoShipToAddress.countryCode != sourceAddress.countryCode || dtoShipToAddress.stateCode != sourceAddress.stateCode)
+        if (dtoShipToAddress.countryCode != sourceAddress.countryCode || dtoShipToAddress.stateCode != sourceAddress.stateCode || dtoShipToAddress.city != sourceAddress.city || dtoShipToAddress.postalCode != sourceAddress.postalCode || dtoShipToAddress.vatNumber != sourceAddress.vatNumber)         
         {
             //*** what to do when country/province changes
 
-            //*** check if a location for country/province already exist
-            locationShipTo = null;
-            for (Location__c location : [select Id
-                                         from Location__c
-                                         where Contact__c = :currentContact.Id and Type__c = :IECConstants.SHIPTO and Active__c = false
-                                           and ISO_Country_Code__c = :dtoShipToAddress.countryCode and ISO_State_Code__c = :dtoShipToAddress.stateCode limit 1])
-                locationShipTo = new Location__c(Id=location.Id, Address__c=lstAddress[0].Id, Address_Name__c=dtoShipToAddress.addressName, Attention__c=dtoShipToAddress.attention
-                                               , Email__c=dtoShipToAddress.email, Phone__c=dtoShipToAddress.phone, VAT_Number__c=dtoShipToAddress.vatNumber, Active__c=true);
+            //*** get current location and prepare to deactivate it
+            locationShipToInactive = mapId_Location.get(currentShipToLocationId);
+            locationShipToInactive.Active__c = false;
             
-            //*** deactivate existing location -> should be before create/update because of trigger for uniqueness
-            update (new Location__c(Id=currentShipToLocationId, Active__c=false));
-
-            //*** create/update location
-            if (locationShipTo == null){
-                locationShipTo = Location_Svc.createLocation(lstAddress[0].Id, currentContact.Id, dtoShipToAddress.email, dtoShipToAddress.phone, dtoShipToAddress.vatNumber, IECConstants.SHIPTO, dtoShipToAddress.attention, dtoShipToAddress.addressName);
+            //*** prepare to create new location -> cancel action on error
+            locationShipTo = new Location__c(Active__c = true, Type__c = IECConstants.SHIPTO, Address__c = lstAddress[0].Id, Address__r = lstAddress[0]
+                                           , Account__c = locationShipToInactive.Account__c, Account__r = locationShipToInactive.Account__r
+                                           , Contact__c = locationShipToInactive.Contact__c, Contact__r = locationShipToInactive.Contact__r
+                                           , Address_Name__c=dtoShipToAddress.addressName, Attention__c=dtoShipToAddress.attention
+                                           , Email__c = dtoShipToAddress.email, Phone__c = dtoShipToAddress.phone , VAT_Number__c = dtoShipToAddress.vatNumber);
+            lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationShipTo}, null, false);
+            if (Test.isRunningTest() == null && lstSyncResult[0] != null)
+            {
+                addErrorMessage(Label.IEC_SAP_Customer_Address_Issue);
+                return;
             }
-            else
-                update locationShipTo;
-            dtoShipToAddress.locationId = locationShipTo.Id;
-            currentShipToLocationId = locationShipTo.Id;
         }
         else
         {
-            if (!newAddressCreated && setAddreddId.contains(mapId_Location.get(currentShipToLocationId).Address__c))
-                update new Location__c(Id=currentShipToLocationId, Address_Name__c=dtoShipToAddress.addressName, Attention__c=dtoShipToAddress.attention
-                                     , Email__c=dtoShipToAddress.email, Phone__c=dtoShipToAddress.phone, VAT_Number__c=dtoShipToAddress.vatNumber);
-            else
-                update new Location__c(Id=currentShipToLocationId, Address__c=lstAddress[0].Id, Address_Name__c=dtoShipToAddress.addressName, Attention__c=dtoShipToAddress.attention
-                                     , Email__c=dtoShipToAddress.email, Phone__c=dtoShipToAddress.phone, VAT_Number__c=dtoShipToAddress.vatNumber);
+            //*** prepare to update location when no change on country/province -> synchronize asynchronously to SAP 
+            locationShipTo = new Location__c(Id=currentShipToLocationId, Address__c=mapId_Location.get(currentShipToLocationId).Address__c
+                                           , Address_Name__c=dtoShipToAddress.addressName, Attention__c=dtoShipToAddress.attention
+                                           , Email__c=dtoShipToAddress.email, Phone__c=dtoShipToAddress.phone, VAT_Number__c=dtoShipToAddress.vatNumber);
+            
+            //*** determine if to update address
+            if (!setAddressId.contains(locationShipTo.Address__c))
+                locationShipTo.Address__c = null;
         }
-        copyAddress(dtoShipToAddress, sourceAddress);
+        copiedAddress = copyAddress(dtoShipToAddress, sourceAddress);
     }
 
-    //*** update default
-    if (!isDefaultShipTo && makeShipToDefault)
+    //*** commit changes
+    sp = Database.setSavepoint();
+    try
     {
-        update (new Contact(Id=currentContact.Id, ShipTo_Location__c=currentShipToLocationId));
-        currentContact.ShipTo_Location__c = currentShipToLocationId;
-        isDefaultShipTo = true;
-    }
+        //*** create address if applicable
+        if (lstAddress[0].Id == null)
+            insert lstAddress[0];
+        
+        //*** inactivate existing location if applicable
+        if (locationShipToInactive != null)
+            update locationShipToInactive;
+        
+        //*** create/update location
+        if (locationShipTo.Address__c == null)
+            locationShipTo.Address__c = lstAddress[0].Id;
+        upsert locationShipTo;
 
-    if(makeShipToDefault && locationShipTo != null)
+        //*** refresh working variables
+        currentShipToLocationId = locationShipTo.Id;
+        dtoShipToAddress.locationId = locationShipTo.Id;
+        copiedAddress.locationId = locationShipTo.Id;
+
+        //*** update default
+        if ((isDefaultShipTo || makeShipToDefault) && currentContact.ShipTo_Location__c != currentShipToLocationId)
+        {
+            update (new Contact(Id=currentContact.Id, ShipTo_Location__c=currentShipToLocationId));
+            currentContact.ShipTo_Location__c = currentShipToLocationId;
+            isDefaultShipTo = true;
+        }
+    }
+    catch(Exception ex)
     {
-        update (new Contact(Id=currentContact.Id, ShipTo_Location__c=locationShipTo.Id));
-        currentContact.ShipTo_Location__c = locationShipTo.Id;
-        isDefaultShipTo = true;
+        addErrorMessage(ex.getMessage());
+        Database.rollback(sp);   //*** -> need to review SAP partners
+        return;
     }
 
     //*** rebuild picklist for addresses and display message

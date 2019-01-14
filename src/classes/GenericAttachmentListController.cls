@@ -1,5 +1,5 @@
 global with sharing class GenericAttachmentListController {
-	
+
     public String uploader {get;set;}
     public String source {get;set;}
     public Boolean scroll {get;set;}
@@ -12,7 +12,13 @@ global with sharing class GenericAttachmentListController {
 	public String amazonPath  {
 		get { return WrapperAttach.getAmazonFolder(this.Id); }
 	}
-	
+
+	//new CNS
+	public String communityName{
+	  get{
+		return ApexPages.currentPage().getParameters().get('CommunityName');
+	  }set;}
+
 	public list<WrapperAttach> listAttachments {get; set;}
 	public Id editAttachmentId {get; set;}
 	public WrapperAttach editAttachment {get; set;}
@@ -20,13 +26,33 @@ global with sharing class GenericAttachmentListController {
 	public Boolean showFileIdentifier {get; set;}
 	Boolean canAttachFiles;
     private Case cse;
+
+    public Boolean hasOscar{
+        get{
+            if(hasOscar == null) hasOscar = false;
+            return hasOscar;
+        }
+        private set;
+    }
+
+    public Case relatedCase {
+        get; 
+        set{
+            relatedCase = value;
+            hasOscar = String.isNotEmpty(relatedCase.parent.OSCAR__c);
+        }
+    }
+    
+    public string sObjectType	{get; set;}	//stores the API name of the object we are looking the attachments for
 	
 	// assgnTo variable
+	private static Boolean isForPortalStatic = false; // used only for Remote actions
 	public Boolean isForPortal {
 		get;
 		set {
 			if (this.isForPortal == null ) {
 				this.isForPortal = value;
+				isForPortalStatic = value;
 				init();
 			}
 		}
@@ -37,32 +63,41 @@ global with sharing class GenericAttachmentListController {
 		set {
 			if (this.Id == null ) {
 				this.Id = value;
+				//Assign the name of the object
+				sObjectType = getObjectAPIName(this.id);
+				//if is null, is assumed we are working with case
+				if(sObjectType=='') sObjectType = 'Case';
 				init();
 			}
 		}
 	}
-	
+
 	/**
 		check all assignTo calls have been done and execute initial methods
 	**/
 	private void init() {
 		if (this.isForPortal == null ) return;
 		if (this.id == null ) return;
-		
+
 		// check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
-        
+        if(sObjectType=='Case')
+	        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c, parent.RecordType__c, parent.RecordTypeId from Case where id = :this.id];
+
         if (this.isForPortal) {
             this.showFileIdentifier = false;
-            cse = [Select Recordtype.DeveloperName, Status from Case where id = :this.id];
+            if(sObjectType=='Case')
+           		cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
         } else {
-            // check if case is in recordtypes SAAM (ProcessEuropeSCE) or Oscar Communication
-            cse = [Select Recordtype.DeveloperName, Status from Case where id = :this.id];
-            set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
-            this.showFileIdentifier = setRecordTypes.contains(cse.Recordtype.DeveloperName);
+        	if(sObjectType=='Case'){
+	            // check if case is in recordtypes SAAM (ProcessEuropeSCE) or Oscar Communication
+	            cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
+	            set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
+	            this.showFileIdentifier = setRecordTypes.contains(cse.Recordtype.DeveloperName);
+        	}
         }
-		
+
 		refreshList();
 	}
 
@@ -112,7 +147,7 @@ global with sharing class GenericAttachmentListController {
 		//System.debug('GenericAttachmentListController.deleteAttachment: ' + strId + ' object not recognized');
 		return result;
 	}
-	
+
 	/**
 		Delete a standard attachment in Salesforce
 	**/
@@ -125,7 +160,7 @@ global with sharing class GenericAttachmentListController {
 			return false;
 		}
 	}
-	
+
 	/**
 		Delete an archived attachment object
 	**/
@@ -138,7 +173,7 @@ global with sharing class GenericAttachmentListController {
 			return false;
 		}
 	}
-	
+
 	/**
 		Delete a file in Amazon Bucket, including AmazonFile object in Amazon
 	**/
@@ -148,27 +183,27 @@ global with sharing class GenericAttachmentListController {
 			WrapperAttach attach = WrapperAttach.getAmazonAttachment( sObjectId, fullName);
 			Boolean result = attach.moveToBucket();
 			return result;
-			
+
 		} catch (Exception e) {
 			System.debug('GenericAttachmentListController.deleteAmazonAttachment' + e.getMessage());
 			return false;
 		}
 	}
-	
+
 	/**
 		Change all Attachments to public
 	**/
 	public void makeAllPublic() {
 		changePermissionToAll(true);
 	}
-	
+
 	/**
 		Change all Attachments to private
 	**/
 	public void makeAllPrivate() {
 		changePermissionToAll(false);
 	}
-	
+
 	/**
 		Set the same permission to all attachments
 	**/
@@ -177,7 +212,7 @@ global with sharing class GenericAttachmentListController {
 			attachment.changePermission(value);
 		}
 	}
-	
+
 	/**
 		redirect to the Trasnfer Attachments page
 	**/
@@ -187,7 +222,7 @@ global with sharing class GenericAttachmentListController {
 		pageref.setRedirect(true);
 		return pageref.getUrl();
 	}
-	
+
 		public PageReference callEditAttachment() {
 		for ( WrapperAttach attach: listAttachments ) {
 			if (attach.id == this.editAttachmentId) {
@@ -206,7 +241,7 @@ global with sharing class GenericAttachmentListController {
 		this.editAttachmentId = null;
 		return null;
 	}
-	
+
 	/**
 		Close the edit attachment popup saving changes
 	**/
@@ -218,10 +253,22 @@ global with sharing class GenericAttachmentListController {
 		}
 		return cancelPopupAttach();
 	}
-	
-	
+
+
 	public Boolean getCanAttachFilesToCase() {
-        if(cse.Status != 'Draft') {
+		if(sObjectType!='Case') return false;
+		
+        if((cse.Status != 'Draft' && cse.Status != 'Open - EDMC') || ((cse.Reason1__c == 'New SA / CHV – New Code' || cse.Reason1__c == 'CLO - Closure') && cse.Status == 'Draft')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean getParentIsOscar() {
+    	if(sObjectType!='Case') return false;
+    	
+        if(relatedCase.parent.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')) {
             return true;
         } else {
             return false;
@@ -229,6 +276,49 @@ global with sharing class GenericAttachmentListController {
     }
     
     public PageReference goToAttachmentPage() {
-        return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&retURL=%2F' + id);
+        return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&CommunityName=' + CommunityName + '&retURL=%2F' + id);
     }
+
+    /**
+        get a list of files with valid links to download them from Amazon
+        this funcion needs a isportal variable to know what files can retrieve
+    **/
+    @RemoteAction
+    global static list<FileDef> getAllExpiringLink(String objectId) {
+        list<WrapperAttach> listAttach = new list<WrapperAttach>();
+        if (isforPortalStatic) {
+            listAttach = WrapperAttach.getListAttachmentsForPortal(objectId);
+        } else {
+            listAttach = WrapperAttach.getListAttachments(objectId);
+        }
+        list<FileDef> listFileDef = new list<FileDef>();
+        for (WrapperAttach attach: listAttach) {
+            FileDef filedef = new FileDef();
+            filedef.name = attach.name;
+            filedef.url = getExpiringLink(attach.fullName);
+            filedef.data = '';
+            listFileDef.add(filedef);
+        }
+        return listFileDef;
+    }
+
+        global class FileDef {
+        String name;
+        String url;
+        String data;
+    }
+    
+    //Return the API Name of the object of the ID received in input
+    public static string getObjectAPIName(id theObjId){
+    	if(theObjId == null){
+    		return '';
+    	}else{
+    		try{
+	    		return theObjId.getSObjectType().getDescribe().getName();
+    		}catch(exception e){
+    			return '';
+    		}
+    	}
+    }
+    
 }

@@ -1,0 +1,146 @@
+<apex:page controller="ISSP_CurrencyCenterHomeController" action="{!checkAccess}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+<c:ISSP_Header ></c:ISSP_Header>
+
+<link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/home_page.css')}" />
+  <style>
+  </style>
+
+<body>
+  <div class="container">
+    <c:ISSP_CustomNavigation />
+    <apex:form >
+      <div class="row">
+          <div class="col-xs-12 service-header">
+            <div class="row">
+              <div class="col-xs-12 text-center currency-center-title">IATA Currency Center</div>
+            </div>
+
+            <div class="row boxes-row text-center">
+              <apex:commandLink action="{!GoToBlockedFunds}" styleClass="col-md-2 col-sm-4 header-box blocked-funds"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_Blocked_Funds}</div></div></apex:commandLink>
+              <apex:commandLink action="{!GoToWatchList}" styleClass="col-md-2 col-sm-4 header-box watch-list"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_Watch_List}</div></div></apex:commandLink>
+              <apex:commandLink styleClass="col-md-2 col-sm-4 header-box all-others"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_All_Others}</div></div></apex:commandLink>
+              <apex:commandLink action="{!GoToManageNotifications}" styleClass="col-md-2 col-sm-4 header-box manage-notif"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_Manage_Notifications_Button}</div></div></apex:commandLink>
+              <apex:commandLink action="{!GoToHeatMap}" styleClass="col-md-2 col-sm-4 header-box heat-map"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_Heat_Map}</div></div></apex:commandLink>
+            </div>
+          </div>
+      </div>
+      
+      <div class="row margin-top-bottom">
+
+          <!-- REGIONAL OUTLOOK & NEWS -->
+          <div class="col-md-8 col-sm-12 col-xs-12 text-center">
+              <div class="section-title-gray">{!$Label.CurrencyCenter_Regional_Outlook_News}</div>
+              <div class="col-xs-12 regions-map">
+                  <apex:repeat value="{!regionsList}" var="row">
+                    <div class="region-link {!row.trimmedRegion}"><a href="/ISSP_CurrencyCenterRegOutlook?region={!row.encodedRegion}" class="btn btn-region">{!row.region}</a></div>
+                  </apex:repeat>
+              </div>
+          </div>
+
+          <!-- UPDATE FEEDS -->
+          <div class="col-md-4 col-sm-12 col-xs-12 text-center">
+            <div class="section-title-gray">{!$Label.CurrencyCenter_Update_Feeds}</div>
+            <div class="update-feeds-list">
+              <apex:repeat value="{!newsList}" var="entry">
+                <div class="col-xs-12 news-item">
+                  <div class="arrow">
+                    <img src="{!URLFOR($Resource.CurrencyCenter_Style,'/small_arrow.png')}"/>
+                  </div>
+                  <div class="news-text">
+                    <a href="/ISSP_CurrencyCenterCountry?Id={!entry.ICCS_Country_Profile__c}">{!entry.ICCS_Country_Profile__r.Country_Name__r.Name} (<apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!entry.CreatedDate}"/></apex:outputText>):</a>&nbsp;{!entry.Detail__c}
+                  </div>
+                </div>
+              </apex:repeat>
+            </div>
+          </div>
+
+      </div>
+
+      <div class="row margin-top-bottom">
+
+          <!-- EXCHANGE RATE DIRECTORY -->
+          <div class="col-md-4 col-sm-6 col-xs-12 text-center nopadding" >
+            <div class="bottom-box">
+              <div class="arrows">
+                <a href="/ISSP_CurrencyCenterExchangeRatesDir">
+                  <img src="{!URLFOR($Resource.CurrencyCenter_Style,'/multiArrows.png')}"/>
+                </a>
+              </div>
+              <div class="section-title-gray">
+                <a href="/ISSP_CurrencyCenterExchangeRatesDir">{!$Label.CurrencyCenter_Exchange_Rates_Directory}</a>
+              </div>
+              <div class="text">{!$Label.CurrencyCenter_Exchange_Rates_Directory_Text}</div>
+            </div>
+          </div>
+
+          <!-- NEWS FEEDS -->
+          <div class="col-md-4 col-sm-6 col-xs-12 text-center nopadding" >
+            <div class="bottom-box">
+              <div class="bloomberg-title-blue">{!$Label.CurrencyCenter_Bloomberg_Feeds}</div>
+
+              <div id="BloombergCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <!--
+                <ol class="carousel-indicators">
+                  <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                  <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                  <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>-->
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+
+                  <apex:variable value="{!1}" var="counter"/>
+                  <apex:repeat value="{!NewsFeed}" var="newsItem">
+                      <div class="item  {!IF(counter == 1, 'active', '')}">
+                          <p><span class="bloomberg-title-blue">{!counter} </span>/ {!NewsFeed.size}</p>
+                          <div class="text">
+                            {!newsItem.description}
+                            <apex:outputPanel rendered="{!newsItem.link != null}">
+                                <a href="{!newsItem.link}" target="_blank">Click for more.</a>
+                            </apex:outputPanel>
+                          </div>
+                      </div>
+
+                      <apex:variable value="{!counter + 1}" var="counter"/>
+                  </apex:repeat>
+
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#BloombergCarousel" role="button" data-slide="prev">
+                  <img src="{!URLFOR($Resource.CurrencyCenter_Style,'/left_arrow.png')}"/>
+                </a>
+                <a class="right carousel-control" href="#BloombergCarousel" role="button" data-slide="next">
+                  <img src="{!URLFOR($Resource.CurrencyCenter_Style,'/right_arrow.png')}"/>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- TREASURY DASHBOARD -->
+          <div class="col-md-4 col-sm-6 col-xs-12 text-center nopadding" >
+            <div class="bottom-box">
+              <div class="arrows">
+                <a href="/ISSP_TDNavigation">
+                  <img src="{!URLFOR($Resource.CurrencyCenter_Style,'/multiArrows.png')}"/>
+                </a>
+              </div>
+              <div class="treasury-logo">
+                <a href="{! tdLinkURL}">
+                  <img src="{!URLFOR($Resource.CurrencyCenter_Style,'/treasuryDashboard_logo.png')}"/>
+                </a>
+              </div>
+              <div class="text">{!$Label.CurrencyCenter_Treasury_Dashboard}</div>
+            </div>
+          </div>
+      </div>
+
+    </apex:form>
+    <c:ISSP_CustomFooter />
+  </div>
+</body>
+</html>
+</apex:page>

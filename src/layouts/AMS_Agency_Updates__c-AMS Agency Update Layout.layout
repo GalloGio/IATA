@@ -8,7 +8,7 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
@@ -16,7 +16,7 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Update_Type__c</field>
             </layoutItems>
             <layoutItems>
@@ -24,7 +24,7 @@
                 <field>Sector__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Change_Code__c</field>
             </layoutItems>
             <layoutItems>
@@ -56,6 +56,33 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CurrencyIsoCode</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Integration_System__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ConfigurationID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Action_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Agency_Applied_Change_code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RelationShip__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Account_Portal_Service__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

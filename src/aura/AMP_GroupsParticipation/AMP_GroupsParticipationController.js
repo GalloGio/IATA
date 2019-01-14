@@ -48,7 +48,7 @@
                              Under : previousUnder != currentUnder ? currentUnder : '',
 							 GroupId : participants[i].Local_Governance__c,
 							 GroupName : participants[i].Local_Governance__r.Name,
-							 GroupOwner : ownerName,
+							 GroupOwner : ownerName != '' ? ownerName : participants[i].Local_Governance__r.Group_Owner_Text__c,
 							 Mission : participants[i].Local_Governance__r.Mission__c,
 							 Role : participants[i].Participant_Type__c.replace(/^\d+\s/,''),
 							 Salutation : participants[i].Contact__r.Salutation,

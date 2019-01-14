@@ -3,6 +3,19 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>sakhafs@iata.org</email>
     <name>Due Diligence</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>Corporate_Compliance</role>
+            <role>DistributionAgencyManagementHOA</role>
+            <role>Distribution_Airline_Coding</role>
+            <role>E_F</role>
+            <role>IDFSEFServicesA</role>
+            <role>StaffTIESSA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

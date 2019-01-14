@@ -1,3 +1,4 @@
+@isTest
 public without sharing class TestObjectCreator {
 
     public static List<FAQ__kav> createFAQArticles(Integer size)
@@ -26,52 +27,6 @@ public without sharing class TestObjectCreator {
         return lstFaqsCategories;
     }
 
-    //public static RecordType buildRT_HQ()
-    //{
-    //    List<RecordType> lstRts = [SELECT Id FROM RecordType 
-    //                                WHERE SobjectType = 'Account'
-    //                                AND DeveloperName = 'IATA_Airline'];
-    //    return lstRts.size() > 0 ? lstRts[0] : NULL;
-    //}
-
-    //public static RecordType buildRT_BR()
-    //{
-    //    List<RecordType> lstRts = [SELECT Id FROM RecordType 
-    //                                WHERE SobjectType = 'Account'
-    //                                AND DeveloperName = 'IATA_Airline_BR'];
-    //    return lstRts.size() > 0 ? lstRts[0] : NULL;
-    //}                                
-
-    //public static Account buildAccountHeadQuarter(Id rtIdHqId)
-    //{
-    //    Account headQuarter = new Account(name = 'Hq', recordTypeId = rtIdHqId);       
-    //    insert  headQuarter;
-    //    return headQuarter;
-    //}        
-
-    //public static List<Account> buildAccounts(Integer amount, Id headQuarterId, Id rtIdBrId)
-    //{
-    //    List<Account> lstAccounts = new List<Account>();
-    //    for (Integer i = 0; i < amount; ++i)
-    //    {
-    //        lstAccounts.add(new Account(name = 'consumer ' + i , recordTypeId = rtIdBrId, parentId = headQuarterId));
-    //    }
-    //    insert lstAccounts;
-    //    return lstAccounts;
-    //}
-
-    //public static List<Services_Rendered__c> buildServices(List<Account> lstAccounts)
-    //{
-    //    List<Services_Rendered__c> lstServices = new List<Services_Rendered__c>();
-    //    for (Account cons : lstAccounts)
-    //    { 
-    //        lstServices.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'CASS Participation',Services_Rendered_to_Airline__c = cons.id));
-    //        lstServices.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'BSP Representation',Services_Rendered_to_Airline__c = cons.id));
-    //        lstServices.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'THIS ONE WILL NOT FIRE !!!!',Services_Rendered_to_Airline__c = cons.id));
-    //    }
-    //    insert lstServices;
-    //    return lstServices;
-    //}
 
 	public static Portal_Application_Right__c buildPortalApplicationRight(ID contId, ID applicationId) {
 		return buildPortalApplicationRight(contId, applicationId, 'Access Requested');
@@ -89,6 +44,17 @@ public without sharing class TestObjectCreator {
 		return 
 			new Portal_Applications__c(Name = appName);
 	}
+
+    public static Portal_Applications__c buildPortalApplications2(String appName) {
+        return 
+            new Portal_Applications__c(
+                    Name = appName,
+                    ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.CARGO_AGENT,
+                    ANG_Accredited_Agents_Only__c = false,
+                    Agency__c = true,
+                    Cannot_be_managed_by_portal_admin__c = false                
+                );
+    }
 
 	/**
      * Create User Object.

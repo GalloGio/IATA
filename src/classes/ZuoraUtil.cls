@@ -10,7 +10,23 @@ public class ZuoraUtil
     public static final Integer INVOICE_PREVIEW_TERM = 12;
     public static final Integer SUBSCRIPTION_TERM = 12;
 
-    public static Zuora.zApi zconnection{get {if (zconnection == null){zconnection = new Zuora.zApi(); zconnection.zlogin();}return zconnection;}set {zconnection = value;}}
+    public static Zuora.zApi zconnection{
+        
+        get {
+            System.debug('aqui zconnection ' + zconnection);
+            if (zconnection == null){
+                zconnection = new Zuora.zApi(); 
+                zconnection.zlogin();
+            }
+            System.debug('### get zconnection ' + zconnection);
+            return zconnection;
+        }
+        set {
+            zconnection = value;
+            System.debug('### set zconnection ' + zconnection);
+        }
+
+    }
 
 	public static List<Zuora.zObject> zquery(String zoql, String ztype, Integer nb) 
 	{
@@ -19,36 +35,54 @@ public class ZuoraUtil
 	}
 
 	public static List<Zuora.zApi.SaveResult> zcreate(List<Zuora.zObject> zobjects,  Boolean calloptions) 
-	{
+	{  system.debug('### zcreate zobjects :: '+zobjects);
     	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'create') : zconnection.zcreate(zobjects, calloptions);
-    	return results;
+    	system.debug('### results zcreate :: ' + results);
+        return results;
 	}
 
 	public static List<Zuora.zApi.SaveResult> zupdate(List<Zuora.zObject> zobjects) 
-	{
-    	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'update') : zconnection.zupdate(zobjects);
+	{system.debug('### zupdate zobjects :: '+zobjects);
 
-    	return results;
+    	List<Zuora.zApi.SaveResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSaveResults(zobjects, 'update') : zconnection.zupdate(zobjects); 
+    	system.debug('### results zupdate :: ' + results);
+        return results;
 	}
 
     public static List<Zuora.zApi.SubscribeResult> zsubscribe(List<Zuora.zApi.SubscribeRequest> requests)
-    {
+    {   system.debug('### zsubscribe requests :: '+requests);
         List<Zuora.zApi.SubscribeResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateSubscribeResults(requests) :  zconnection.zsubscribe(requests);
+        system.debug('### results zsubscribe :: ' + results);
         return results;
     }
 
     public static List<Zuora.zApi.DeleteResult> zdelete(String ztype, String[] ids)
-    {
+    {   system.debug('### zdelete :: '+ztype+' - '+ids);
         List<Zuora.zApi.DeleteResult> results = (Test.isRunningTest()) ? TestDataGenerator.generateDeleteResults(ids) :  zconnection.zdelete(ztype,ids);
+        system.debug('### results ztype :: ' + ztype);
+        system.debug('### results ids :: ' + ids);
+        system.debug('### results zdelete :: ' + results);
         return results;
     }
 
     public static List<Zuora.zObject> getPaymentMethodsFromZuora(String zuoraAccountId) {
-        String zoql = 'select Id,NumConsecutiveFailures,Active,PaymentMethodStatus,Name,CreditCardAddress1,CreditCardAddress2,CreditCardCity,CreditCardCountry,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardMaskNumber,CreditCardType,LastTransactionStatus,Type from PaymentMethod where PaymentMethodStatus=\'Active\' and AccountId = \'' + zuoraAccountId + '\'';
+        String zoql = 'select Id,NumConsecutiveFailures,Active,PaymentMethodStatus,Name,CreditCardAddress1,CreditCardAddress2,CreditCardCity,CreditCardCountry,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardMaskNumber,CreditCardType,LastTransactionStatus,LastTransactionDateTime,Type from PaymentMethod where PaymentMethodStatus=\'Active\' and AccountId = \'' + zuoraAccountId + '\'';
         if (String.isNotBlank(zuoraAccountId)) 
         {
             try{return (Test.isRunningTest())? TestDataGenerator.generatePaymentMethods(zuoraAccountId,1) : zconnection.zquery(zoql);}
             catch(Exception ex){throw new IECApplicationException('Could not retreive Payment Methods for accountId ' + zuoraAccountId + '. Error: ' + ex.getMessage());}
+        }
+        else return null;
+    }
+
+    public static List<Zuora.zObject> getPaymentMethodDetails(String paymentId) {
+        String zoql = 'select Id,NumConsecutiveFailures,Active,PaymentMethodStatus,Name,CreditCardAddress1,CreditCardAddress2,CreditCardCity,CreditCardCountry,CreditCardExpirationMonth,CreditCardExpirationYear,CreditCardHolderName,CreditCardMaskNumber,CreditCardType,LastTransactionStatus,LastTransactionDateTime,Type from PaymentMethod where PaymentMethodStatus=\'Active\' and Id = \'' + paymentId + '\'';
+        if (String.isNotBlank(paymentId)) 
+        {
+            try{
+                return Test.isRunningTest() ? TestDataGenerator.generatePaymentMethodDetails(paymentId) : zconnection.zquery(zoql);
+            }catch(Exception ex){
+                throw new IECApplicationException('Could not retreive Payment Method details for id ' + paymentId + '. Error: ' + ex.getMessage());}
         }
         else return null;
     }
@@ -84,8 +118,9 @@ public class ZuoraUtil
             billToContact.setValue('WorkEmail', billTo.BillTo_Location__r.Email__c);
             billToContact.setValue('WorkPhone', billTo.BillTo_Location__r.Phone__c);
 
-            billToContact.setValue('Country', billTo.BillTo_Location__r.ISO_Country_Name__c);
-            billToContact.setValue('State', billTo.BillTo_Location__r.ISO_State_Name__c);
+            //*** Thai (2016-11-10) use ISO country code and ISO state code instead of name to mitigate the reject from Zuora
+            billToContact.setValue('Country', (billTo.BillTo_Location__r.ISO_Country_Code__c == null ? billTo.BillTo_Location__r.ISO_Country_Name__c : billTo.BillTo_Location__r.ISO_Country_Code__c));
+            billToContact.setValue('State', (billTo.BillTo_Location__r.ISO_State_Code_SAP__c == null ? billTo.BillTo_Location__r.ISO_State_Name__c : billTo.BillTo_Location__r.ISO_State_Code_SAP__c));
             billToContact.setValue('City', billTo.BillTo_Location__r.City__c);
             billToContact.setValue('PostalCode', billTo.BillTo_Location__r.ZipCode__c);
             billToContact.setValue('Address1', billTo.BillTo_Location__r.Street__c);
@@ -97,17 +132,19 @@ public class ZuoraUtil
     //createZuoraSoldToContact
     public static Zuora.zObject createZuoraSoldToContact(Contact soldTo,Order order) {
 
+        //*** Thai (2016-11-10) change the source of information from sold to contact and use ISO country code and ISO state code instead of name to mitigate the reject from Zuora
         Zuora.zObject soldToContact = new Zuora.zObject('Contact');
         if(soldTo != null){
             soldToContact.setValue('FirstName', soldTo.FirstName);
             soldToContact.setValue('LastName', soldTo.LastName);
-            soldToContact.setValue('WorkEmail', order.ShipToContact_Email__c);
-            soldToContact.setValue('WorkPhone', order.ShipToContact_Phone__c);
-            soldToContact.setValue('Country', order.ShippingCountry);
-            soldToContact.setValue('State', order.ShippingState);
-            soldToContact.setValue('City', order.ShippingCity);
-            soldToContact.setValue('PostalCode', order.ShippingPostalCode);
-            soldToContact.setValue('Address1', order.ShippingStreet);
+            soldToContact.setValue('WorkEmail', soldTo.ShipTo_Location__r.Email__c);
+            soldToContact.setValue('WorkPhone', soldTo.ShipTo_Location__r.Phone__c);
+
+            soldToContact.setValue('Country', (soldTo.ShipTo_Location__r.ISO_Country_Code__c == null ? soldTo.ShipTo_Location__r.ISO_Country_Name__c : soldTo.ShipTo_Location__r.ISO_Country_Code__c));
+            soldToContact.setValue('State', (soldTo.ShipTo_Location__r.ISO_State_Code_SAP__c == null ? soldTo.ShipTo_Location__r.ISO_State_Name__c : soldTo.ShipTo_Location__r.ISO_State_Code_SAP__c));
+            soldToContact.setValue('City', soldTo.ShipTo_Location__r.City__c);
+            soldToContact.setValue('PostalCode', soldTo.ShipTo_Location__r.ZipCode__c);
+            soldToContact.setValue('Address1', soldTo.ShipTo_Location__r.Street__c);
         }
         return soldToContact;
     }

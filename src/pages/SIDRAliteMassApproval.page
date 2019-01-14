@@ -37,11 +37,62 @@
     $(".regionPicklist option[value='GVA HO']").remove();
     $(".regionPicklist option[value='Europe (Americas Countries)']").remove();
     // apply table pagination
-    $(".result-table").DataTable();
+    $(".result-table").DataTable( {
+      "lengthMenu": [ 10, 25, 50, 100, 200, 500, 1000 ]
+    });
+    $( ".requiredBox" ).each(function() {
+      $(this).wrap( '<div class="requiredInput"></div>');
+      $(this).before('<div class="requiredBlock"></div>');
+    });
   });
+
+  function selectCheckboxes(value) {
+    $(".line-select").each(function() {
+      this.checked = value;
+    });
+  }
+
+  function triggerActionClick(approveReject) {
+    var selectedIds = getSelectedIds();
+    if (selectedIds.length == 0)  {
+      alert("No cases selected");
+      return;
+    }
+    if (approveReject == "APPROVED") {
+      confirmMassApproveCases(selectedIds.join(","));
+    }
+    if (approveReject == "REJECTED") {
+      confirmMassRejectCases(selectedIds.join(","));
+    }
+  }
+
+  function getSelectedIds() {
+    var selectedIds = [];
+    $(".result-table .dataRow").each(function() {
+
+      var ischecked = false;
+
+      $(this).find(".line-select").each(function() {
+        ischecked = $(this).prop('checked');
+      });
+      if (ischecked) {
+        $(this).find(".id-value").each(function() {
+          selectedIds.push(this.innerHTML.trim());
+        });
+      }
+    });
+    return selectedIds;
+  }
+
   </script>
 
   <apex:actionFunction name="search" action="{!search}" rerender="mainForm" status="Loading"/>
+  <apex:actionFunction name="confirmMassApproveCases" action="{!confirmMassApproveCases}" rerender="mainForm" status="Loading" >
+    <apex:param name="selectedIds" value="selectedIds" assignTo="{!selectedIds}"/>
+  </apex:actionFunction>
+  <apex:actionFunction name="confirmMassRejectCases" action="{!confirmMassRejectCases}" rerender="mainForm" status="Loading" >
+    <apex:param name="selectedIds" value="selectedIds" assignTo="{!selectedIds}"/>
+  </apex:actionFunction>
 
   <c:Loading />
 
@@ -61,10 +112,28 @@
 
         <apex:pageBlockSection id="filterSection" columns="1">
           <apex:inputField value="{!filter.cse.BSP_CASS__c}" styleclass="filterBox" onchange="search();"/>
+          <apex:inputField value="{!filter.cse.SIDRA_Lite_Reason__c}" styleclass="filterBox" onchange="search();"/>
           <apex:inputField value="{!filter.cse.Region__c}" styleclass="filterBox regionPicklist" required="true" onchange="search();"/>
           <apex:inputField value="{!filter.cse.BSPCountry__c}" styleclass="filterBox" onchange="search();"/>
-          <apex:selectList value="{!filter.selectedActionType}" label="Action Type" multiselect="false" size="1" styleclass="filterBox" onchange="search();">
-              <apex:selectOptions value="{!filter.actionTypeList}" />
+          <!--  Filter for Action Type  -->
+          <apex:selectList value="{!filter.selectedActionType}" label="Action Type" multiselect="false" size="1" required="true" styleclass="filterBox requiredBox" onchange="search();">
+              <apex:selectOption itemValue="" itemLabel="-- None --" />
+              <apex:selectOption itemValue="DEF" itemLabel="DEF Approval" />
+              <apex:selectOption itemValue="DEF Withdrawal" itemLabel="DEF Withdrawal Approval" />
+              <apex:selectOption itemValue="IRR Withdrawal" itemLabel="IRR Withdrawal Approval" />
+              <apex:selectOption itemValue="REI" itemLabel="REI Approval" />
+              <apex:selectOption itemValue="TER" itemLabel="TER Approval" />
+              <apex:selectOption itemValue="REI After TER" itemLabel="REI After TER Approval" />
+              <apex:selectOption itemValue="NOT" itemLabel="NOT Approval" />
+          </apex:selectList>
+          <!--  Filter for Account Category  -->
+          <apex:selectList value="{!filter.category}" label="Account Category" multiselect="false" size="1" styleclass="filterBox" onchange="search();">
+            <apex:selectOption itemValue="" itemLabel="-- None --" />
+            <apex:selectOption itemValue="IATA Passenger Sales Agent" itemLabel="IATA Passenger Sales Agent" />
+            <apex:selectOption itemValue="Domestic Agent" itemLabel="Domestic Agent" />
+            <apex:selectOption itemValue="IATA Cargo Agent" itemLabel="IATA Cargo Agent" />
+            <apex:selectOption itemValue="CASS Associate" itemLabel="CASS Associate" />
+            <apex:selectOption itemValue="TIDS Agent" itemLabel="TIDS Agent" />
           </apex:selectList>
         </apex:pageBlockSection>
 
@@ -75,23 +144,28 @@
 
     <!-- List Cases Section -->
     <apex:pageBlock title="Cases" mode="edit" id="results" rendered="{!!showProcessedSection}" >
-
-      <apex:pageBlockButtons location="both">
-          <apex:commandButton value="{!approvalButtonLabel}" action="{!confirmMassApproveCases}" rerender="mainForm" status="Loading" rendered="{!filter.selectedActionType!=''}"/>
-          <apex:commandButton value="{!rejectionButtonLabel}" action="{!confirmMassRejectCases}" rerender="mainForm" status="Loading" rendered="{!filter.selectedActionType!=''}"/>
+      <apex:pageBlockButtons location="both" rendered="{!AND(NOT(ISNULL(listWrapperCase)),listWrapperCase.size>0)}" >
+        <input id="trigger-action" class="btn" value="{!approvalButtonLabel}" onclick="triggerActionClick('APPROVED');" type="button" style="display: {!IF(filter.selectedActionType='','none','')}"/>
+        <input id="trigger-action" class="btn" value="{!rejectionButtonLabel}" onclick="triggerActionClick('REJECTED');" type="button" style="display: {!IF(filter.selectedActionType='','none','')}"/>
+        <apex:commandButton value="Export to CSV" action="{!exportCSV}" />
       </apex:pageBlockButtons>
 
       <apex:pageMessage summary="No cases found" severity="info" strength="3" rendered="{!listWrapperCase.size=0}"/>
 
+      <apex:outputPanel rendered="{!listWrapperCase.size>0}" style="float: left;margin: 3px;" >
+        <input id="selectAllButton" class="selectbutton btn" value="Select All" onclick="selectCheckboxes(true);" type="button"/>
+        <input id="deselectAllButton" class="selectbutton btn" value="Deselect All" onclick="selectCheckboxes(false);" type="button"/>
+        <div id="info-selection" style="float: right;padding: 3px 20px;"></div>
+      </apex:outputPanel>
+
       <apex:pageBlockTable value="{!listWrapperCase}" styleclass="result-table" var="wrapper" id="cases" rendered="{!listWrapperCase.size>0}">
 
+        <apex:column styleclass="id-value hidden" headerClass="hidden">
+          {!wrapper.cse.Id}
+        </apex:column>
+
         <apex:column >
-          <apex:facet name="header">
-            <apex:inputCheckbox id="SelectAll" value="{!SelectAllCheckbox}" >
-            <apex:actionSupport event="onclick" action="{!SelectAll}" reRender="mainForm" status="Loading" />
-          </apex:inputCheckbox>
-          </apex:facet>
-          <apex:inputCheckbox styleclass="line-select" value="{!wrapper.selected}"/>
+          <input class="line-select" type="checkbox"/>
         </apex:column>
 
         <apex:column >
@@ -121,10 +195,17 @@
         <apex:column value="{!wrapper.cse.Reason_for_Default__c}" rendered="{!filter.selectedActionType=='REI'}"/>
         <apex:column value="{!wrapper.cse.REI_ApprovalRejectin__c}" rendered="{!filter.selectedActionType=='REI'}"/>
         <apex:column value="{!wrapper.cse.DEF_Withdrawal_Reason__c}" rendered="{!filter.selectedActionType=='REI'}"/>
+        <!--Specific columns for REI After TER -->
+        <apex:column value="{!wrapper.cse.DEF_Approval_Rejection__c}" rendered="{!filter.selectedActionType=='REI After TER'}"/>
+        <apex:column value="{!wrapper.cse.Reason_for_Default__c}" rendered="{!filter.selectedActionType=='REI After TER'}"/>
+        <apex:column value="{!wrapper.cse.REI_ApprovalRejectin__c}" rendered="{!filter.selectedActionType=='REI After TER'}"/>
+        <apex:column value="{!wrapper.cse.DEF_Withdrawal_Reason__c}" rendered="{!filter.selectedActionType=='REI After TER'}"/>
         <!--Specific columns for TER -->
         <apex:column value="{!wrapper.cse.TER_Approval_Rejection__c}" rendered="{!filter.selectedActionType=='TER'}"/>
         <apex:column value="{!wrapper.cse.Termination_Reason__c}" rendered="{!filter.selectedActionType=='TER'}"/>
         <apex:column value="{!wrapper.cse.Termination_date__c}" rendered="{!filter.selectedActionType=='TER'}"/>
+        <!--Specific columns for NOT -->
+        <apex:column value="{!wrapper.cse.NOT_Date__c}" rendered="{!filter.selectedActionType=='NOT'}"/>
 
         <apex:column value="{!wrapper.cse.AccountId}"/>
         <apex:column value="{!wrapper.cse.AIMS_status__c}"/>
@@ -135,8 +216,7 @@
 
     <!-- Approved Cases Section -->
     <apex:pageBlock title="Processed results" mode="edit" id="processed" rendered="{!showProcessedSection}">
-
-      <apex:pageBlockTable value="{!listWrapperCase}" styleclass="result-table" var="wrapper" id="results" rendered="{!listWrapperCase.size>0}">
+      <apex:pageBlockTable value="{!listWrapperResult}" styleclass="result-table" var="wrapper" id="results" rendered="{!listWrapperResult.size>0}">
 
         <apex:column >
           <apex:facet name="header">Case Number</apex:facet>
@@ -167,7 +247,7 @@
           <apex:commandButton value="Approve All" action="{!massApproveUpdateCases}" rerender="mainForm" status="Loading"/>
         </apex:pageBlockButtons>
         <apex:pageBlockSection columns="1">
-          <apex:outputText value="Please confirm the action {!filter.selectedActionType} Approval for the {!numSelected} selected cases"/>
+          <apex:outputText value="Please confirm the action {!filter.selectedActionType} Approval for the {!selectedIdsSize} selected cases"/>
           <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
           <!-- IRR Withdrawal fields -->
           <apex:inputField value="{!filter.cse.IRR_Withdrawal_Reason__c}" required="true" rendered="{!filter.selectedActionType=='IRR Withdrawal'}"/>
@@ -180,6 +260,11 @@
           <apex:inputField value="{!filter.cse.DEF_Withdrawal_Approval_Rejection_Remark__c}" required="false" rendered="{!filter.selectedActionType=='DEF Withdrawal'}" style="width: 50%;"/>
           <!-- REI fields -->
           <apex:inputField value="{!filter.cse.REI_Approval_Rejection_remarks__c}" required="false" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Reason_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Type_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <!-- REI After TER fields -->
+          <apex:inputField value="{!filter.cse.Reason_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI After TER'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Type_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI After TER'}" style="width: 50%;"/>
           <!-- TER fields -->
           <apex:inputField value="{!filter.cse.Termination_Reason__c}" required="true" rendered="{!filter.selectedActionType=='TER'}"/>
           <apex:inputField value="{!filter.cse.FS_Action_requested__c}" required="true" rendered="{!filter.selectedActionType=='TER'}"/>
@@ -200,7 +285,7 @@
           <apex:commandButton value="Reject All" action="{!massRejectUpdateCases}" rerender="mainForm" status="Loading"/>
         </apex:pageBlockButtons>
         <apex:pageBlockSection columns="1">
-          <apex:outputText value="Please confirm the action {!filter.selectedActionType} Rejection for the {!numSelected} selected cases"/>
+          <apex:outputText value="Please confirm the action {!filter.selectedActionType} Rejection for the {!selectedIdsSize} selected cases"/>
           <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
           <!-- IRR Withdrawal fields -->
           <apex:inputField value="{!filter.cse.IRR_Withdrawal_Remarks__c}" required="false" rendered="{!filter.selectedActionType=='IRR Withdrawal'}" style="width: 50%;"/>
@@ -210,6 +295,11 @@
           <apex:inputField value="{!filter.cse.DEF_Withdrawal_Approval_Rejection_Remark__c}" required="false" rendered="{!filter.selectedActionType=='DEF Withdrawal'}" style="width: 50%;"/>
           <!-- REI fields -->
           <apex:inputField value="{!filter.cse.REI_Approval_Rejection_remarks__c}" required="false" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Reason_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Type_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <!-- REI After TER fields -->
+          <apex:inputField value="{!filter.cse.Reason_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI After TER'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Type_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI After TER'}" style="width: 50%;"/>
           <!-- TER fields -->
           <apex:inputField value="{!filter.cse.TER_Approval_Rejection_Remarks__c}" required="false" rendered="{!filter.selectedActionType=='TER'}"/>
 

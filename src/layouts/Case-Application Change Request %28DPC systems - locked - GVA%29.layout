@@ -484,7 +484,7 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
@@ -577,11 +577,12 @@
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
+    <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showKnowledgeComponent>false</showKnowledgeComponent>
-    <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
+    <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
         <masterLabel>00h2000000MXTdv</masterLabel>

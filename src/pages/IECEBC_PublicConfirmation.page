@@ -22,13 +22,27 @@
 -->
             <div class="inner-wrapper">
                 <div class="group-container confirmation">
-                    <h1 class="page-title">Your preferences have been saved.</h1>
-                    <div class="confirmation-box">
-                        <p><strong>We'll miss you!</strong>
-                            <br />You will receive one final email to confirm that we unsubscribed you. You may still get marketing emails from us since they are on a different system. They all have unsubscribe links if you want to stop getting those too.
-                        </p>
-                        <strong>Changed your mind? </strong><a href="{!URLFOR($Page.iecebc_resubscribe)}">Opt back in from here</a>
-                    </div>
+                    <h1 class="page-title">Confirmation</h1>                                        
+                    <apex:outputPanel rendered="{!NOT(fromResubscribe)}">                    
+                        <div class="confirmation-box">
+                            <p><strong>We'll miss you.</strong>
+                                <br /><br />Your email preferences have been saved and may take a few days to become effective.
+                            </p>
+                            <strong>Didn't want to unsubscribe? </strong>
+                            <br/>                        
+                            <br /><a href="{!URLFOR($Page.iecebc_resubscribe)}?e={!emailurl}">Click here to re-subscribe</a>
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!fromResubscribe}">
+                        <div class="confirmation-box">
+                            <p><strong>Thank you.</strong>
+                                <br /><br/>Your request has been recorded and may take a few days to become effective.
+                            </p>
+                            <br/><a href="http://www.iata.org/about/pages/priorities.aspx/">Take a look at IATA's Industry Priorities and Targets</a>
+                        </div>
+                    </apex:outputPanel>
+
                 </div>
             </div>
             <!-- End of Page Content -->

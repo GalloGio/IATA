@@ -118,6 +118,10 @@
                 <field>SuppliedEmail</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>New_interaction__c</field>
             </layoutItems>
@@ -194,7 +198,20 @@
                 <field>ContactId</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CS_Contact_Result__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CS_Contact_Remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CS_Rep_Contact_Customer__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -381,7 +398,7 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -144,61 +141,75 @@
         <description>The month of the KPI</description>
         <externalId>false</externalId>
         <label>Month</label>
-        <picklist>
-            <picklistValues>
-                <fullName>January</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>February</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>March</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>April</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>May</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>June</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>July</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>August</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>September</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>October</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>November</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>December</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>January</fullName>
+                    <default>false</default>
+                    <label>January</label>
+                </value>
+                <value>
+                    <fullName>February</fullName>
+                    <default>false</default>
+                    <label>February</label>
+                </value>
+                <value>
+                    <fullName>March</fullName>
+                    <default>false</default>
+                    <label>March</label>
+                </value>
+                <value>
+                    <fullName>April</fullName>
+                    <default>false</default>
+                    <label>April</label>
+                </value>
+                <value>
+                    <fullName>May</fullName>
+                    <default>false</default>
+                    <label>May</label>
+                </value>
+                <value>
+                    <fullName>June</fullName>
+                    <default>false</default>
+                    <label>June</label>
+                </value>
+                <value>
+                    <fullName>July</fullName>
+                    <default>false</default>
+                    <label>July</label>
+                </value>
+                <value>
+                    <fullName>August</fullName>
+                    <default>false</default>
+                    <label>August</label>
+                </value>
+                <value>
+                    <fullName>September</fullName>
+                    <default>false</default>
+                    <label>September</label>
+                </value>
+                <value>
+                    <fullName>October</fullName>
+                    <default>false</default>
+                    <label>October</label>
+                </value>
+                <value>
+                    <fullName>November</fullName>
+                    <default>false</default>
+                    <label>November</label>
+                </value>
+                <value>
+                    <fullName>December</fullName>
+                    <default>false</default>
+                    <label>December</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Not_Available__c</fullName>
@@ -215,62 +226,80 @@
         <description>CPS</description>
         <externalId>false</externalId>
         <label>Operation</label>
-        <picklist>
-            <picklistValues>
-                <fullName>BSP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>BSP</fullName>
+                    <default>false</default>
+                    <label>BSP</label>
+                </value>
+                <value>
+                    <fullName>CASS</fullName>
+                    <default>false</default>
+                    <label>CASS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <label>Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Global</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia &amp; Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>Central</fullName>
+                    <default>false</default>
+                    <label>Central</label>
+                </value>
+                <value>
+                    <fullName>GDC Madrid</fullName>
+                    <default>false</default>
+                    <label>GDC Madrid</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Reminder_sent_to_responsible__c</fullName>
@@ -373,7 +402,7 @@
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>All</fullName>
+        <fullName>Cesar</fullName>
         <columns>Area_Concerned__c</columns>
         <columns>NAME</columns>
         <columns>Region__c</columns>
@@ -387,11 +416,20 @@
         <columns>Responsible__c</columns>
         <columns>Reminder_sent_to_responsible__c</columns>
         <filterScope>Everything</filterScope>
-        <label>*All</label>
+        <filters>
+            <field>Deadline__c</field>
+            <operation>equals</operation>
+            <value>THIS_MONTH</value>
+        </filters>
+        <filters>
+            <field>Responsible__c</field>
+            <operation>contains</operation>
+            <value>CESAR</value>
+        </filters>
+        <label>Cesar</label>
         <language>en_US</language>
         <sharedTo>
-            <group>CS_Systems</group>
-            <group>FDS_KPI_Reporting_Team</group>
+            <role>DistributionAirlineManagementHO</role>
         </sharedTo>
     </listViews>
     <listViews>
@@ -416,6 +454,11 @@
             <field>Deadline__c</field>
             <operation>equals</operation>
             <value>THIS_MONTH</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>notContain</operation>
+            <value>weekly</value>
         </filters>
         <label>Customer Service - Phone Calls</label>
         <language>en_US</language>
@@ -488,9 +531,9 @@
         <columns>Year__c</columns>
         <columns>Region__c</columns>
         <columns>Value_Percentage__c</columns>
-        <columns>Not_Available__c</columns>
         <columns>Deadline__c</columns>
         <columns>Responsible__c</columns>
+        <columns>Not_Available__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>FDS_KPI_Reporting__c</field>
@@ -623,7 +666,7 @@
         <filters>
             <field>Responsible__c</field>
             <operation>equals</operation>
-            <value>Yazan Naouri</value>
+            <value>Manuel garcia del salto</value>
         </filters>
         <filters>
             <field>Deadline__c</field>
@@ -650,8 +693,8 @@
         <filterScope>Everything</filterScope>
         <filters>
             <field>NAME</field>
-            <operation>contains</operation>
-            <value>actions from kc,actions from sop</value>
+            <operation>startsWith</operation>
+            <value>SOP Live Test,Compliance to records,Compliance to KC,Compliance to EXE</value>
         </filters>
         <filters>
             <field>Deadline__c</field>
@@ -672,6 +715,7 @@
         <columns>Year__c</columns>
         <columns>Region__c</columns>
         <columns>Value_Percentage__c</columns>
+        <columns>KPI_Value__c</columns>
         <columns>Not_Available__c</columns>
         <columns>Deadline__c</columns>
         <columns>Responsible__c</columns>
@@ -679,7 +723,7 @@
         <filters>
             <field>NAME</field>
             <operation>contains</operation>
-            <value>1 improvement initiative,% of resulting actions</value>
+            <value>Number of initiatives log,% of Initiatives (OIs) managed within overall deadline</value>
         </filters>
         <filters>
             <field>Deadline__c</field>
@@ -741,6 +785,11 @@
             <field>Deadline__c</field>
             <operation>equals</operation>
             <value>THIS_MONTH</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>notContain</operation>
+            <value>weekly</value>
         </filters>
         <label>RET Management</label>
         <language>en_US</language>
@@ -855,6 +904,56 @@
             <group>FDS_KPI_Reporting_Team</group>
         </sharedTo>
     </listViews>
+    <listViews>
+        <fullName>Weekly_Abandoned_calls_rate</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Value_Percentage__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Responsible__c</columns>
+        <columns>Not_Available__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Abandoned calls rate (Weekly)</value>
+        </filters>
+        <filters>
+            <field>Deadline__c</field>
+            <operation>equals</operation>
+            <value>THIS_WEEK</value>
+        </filters>
+        <label>(Weekly) Abandoned calls rate</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>FDS_KPI_Reporting_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Weekly_RET_Management_performance</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Value_Percentage__c</columns>
+        <columns>Responsible__c</columns>
+        <columns>Not_Available__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>% RET files processing performance (Weekly)</value>
+        </filters>
+        <filters>
+            <field>Deadline__c</field>
+            <operation>equals</operation>
+            <value>THIS_WEEK</value>
+        </filters>
+        <label>(Weekly) RET Management performance</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>FDS_KPI_Reporting_Team</group>
+        </sharedTo>
+    </listViews>
     <nameField>
         <label>KPI Value Name</label>
         <trackHistory>true</trackHistory>
@@ -873,7 +972,7 @@
     <validationRules>
         <fullName>KPI_No_entry_after_the_deadline_in_3d</fullName>
         <active>true</active>
-        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot;</errorConditionFormula>
+        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot; &amp;&amp; $User.Id &lt;&gt; &quot;0051r000007mhLq&quot;</errorConditionFormula>
         <errorMessage>You can not update this record 3 days after the deadline. Please contact the Workflow &amp; Metrics Team</errorMessage>
     </validationRules>
     <validationRules>
@@ -900,8 +999,9 @@
     <validationRules>
         <fullName>Perce_No_entry_after_the_deadline_in_3d</fullName>
         <active>true</active>
-        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot;</errorConditionFormula>
+        <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot; &amp;&amp;  $User.Id &lt;&gt; &quot;0051r000007mhLq&quot;</errorConditionFormula>
         <errorDisplayField>Value_Percentage__c</errorDisplayField>
         <errorMessage>You can not update this record 3 days after the deadline. Please contact the Workflow &amp; Metrics Team</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

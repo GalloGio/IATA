@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>perezp@iata.org</email>
+    <email>noreply@iata.org</email>
     <name>Cases - R&amp;S</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSBelgiumLuxembourg</publicGroup>
+            <publicGroup>IDFSBulgaria</publicGroup>
+            <publicGroup>IDFSCyprus</publicGroup>
+            <publicGroup>IDFSEuropeallusers</publicGroup>
+            <publicGroup>IDFSEuropeRegionalOffice</publicGroup>
+            <publicGroup>IDFSFinland</publicGroup>
+            <publicGroup>IDFSFrance</publicGroup>
+            <publicGroup>IDFSGreece</publicGroup>
+            <publicGroup>IDFSHungary</publicGroup>
+            <publicGroup>IDFSIreland</publicGroup>
+            <publicGroup>IDFSNetherlands</publicGroup>
+            <publicGroup>IDFSNordicBaltic</publicGroup>
+            <publicGroup>IDFSPortugal</publicGroup>
+            <publicGroup>IDFSRomaniaMoldova</publicGroup>
+            <publicGroup>IDFSSpainAndorra</publicGroup>
+            <publicGroup>IDFSSwitzerlandLiechtenstein</publicGroup>
+            <publicGroup>IDFSUnitedKingdom</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>DistributionAirlineManagementHOI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

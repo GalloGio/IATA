@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>orlikr@iata.org</email>
     <name>Local Office - CZ &amp; SK</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IDFSCzechRepublicSlovakia</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

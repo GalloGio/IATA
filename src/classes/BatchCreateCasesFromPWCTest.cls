@@ -12,7 +12,7 @@ public class BatchCreateCasesFromPWCTest {
     private static list<Account> createListAccount( Integer quantity) {
         list<Account> listAccount = new list<Account>();
         for ( Integer i = 0; i < quantity; i++ ) {
-            listAccount.add( new Account( Name = 'account' + i, IATAcode__c = String.ValueOf(i), Type = 'IATA Cargo Agent', Location_Type__c = 'HO') );
+            listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Type = 'IATA Cargo Agent', Location_Type__c = 'HO') );
         }
         return listAccount;
     }
@@ -21,24 +21,24 @@ public class BatchCreateCasesFromPWCTest {
         list<Contact> listcontact = new list<Contact>();
         Integer i = 0;
         for ( Account account: listAccount ) {
-            listcontact.add( new Contact( LastName = 'TestName ' + i, AccountId = account.Id, Financial_Assessment_Contact__c = true) );
+            listcontact.add( new Contact( FirstName = 'Name', LastName = 'TestName ' + i, AccountId = account.Id, Financial_Assessment_Contact__c = true) );
             i++;
         }
         return listcontact;
     }
-
+    
     private static void insertDefaultTemplate() {
     	String language = 'English';
         String country = 'WW';
-        String IATA_code = '12345678';
+        String aimsid = '12345678';
 
-        Recordtype recordtypeFSM = [Select Id, DeveloperName From RecordType where developerName like 'FSM' and sObjectType = 'EmailTemplate__c'];
+        Id recordtypeFSMId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'FSM');
 
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c( ISO_Code__c = country);
         insert isoCountry;
         System.assert( isoCountry!= null );
 
-        EmailTemplate__c template = new EmailTemplate__c( RecordtypeId = recordtypeFSM.Id, Template_Language__c = language, IATA_ISO_Country__c = isoCountry.Id, Agent_Type__c='All');
+        EmailTemplate__c template = new EmailTemplate__c( RecordtypeId = recordtypeFSMId, Template_Language__c = language, IATA_ISO_Country__c = isoCountry.Id, Agent_Type__c='All');
         insert template;
 
     	EmailTemplateCustomHandler templateHandler = new EmailTemplateCustomHandler();
@@ -87,15 +87,15 @@ public class BatchCreateCasesFromPWCTest {
         //System.assert( answer.ResultList.size() == numberOfTestCases );
 
         map<String, Case> mapCase = new map<String, Case>();
-        for ( Case caseObj: [Select Id, CaseNumber, Account.IATAcode__c from Case ]) {
-            mapCase.put( caseObj.Account.IATAcode__c, caseObj);
+        for ( Case caseObj: [Select Id, CaseNumber, Account.Aims_Id__c from Case ]) {
+            mapCase.put( caseObj.Account.Aims_Id__c, caseObj);
         }
 
 
         for ( BatchCreateCasesFromPWC.ResponsePWCCase result : answer.ResultList ) {
             System.assert( result.status == 'SUCCESS', result);
             //BatchCreateCasesFromPWC.ResponsePWCCaseSuccess resultSuccess = (BatchCreateCasesFromPWC.ResponsePWCCaseSuccess)result;
-            Case caseObj = mapCase.get( result.IATA_code );
+            Case caseObj = mapCase.get( result.aimsId );
             System.assert( result.caseNumber == caseObj.CaseNumber );
         }
     }
@@ -122,12 +122,12 @@ public class BatchCreateCasesFromPWCTest {
 
     static testmethod void testCreateCaseWithEmailTemplate() {
     	insertDefaultTemplate();
-
+    	
         String language = 'English';
         String country = 'FR';
-        String IATA_code = '123456';
+        String aimsid = '123456';
 
-        Recordtype recordtypeFSM = [Select Id, DeveloperName From RecordType where developerName like 'FSM' and sObjectType = 'EmailTemplate__c'];
+       	RecordType recordtypeFSM = RecordTypeSingleton.getInstance().getRecordType('EmailTemplate__c', 'FSM');
 
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c( ISO_Code__c = country);
         insert isoCountry;
@@ -135,27 +135,28 @@ public class BatchCreateCasesFromPWCTest {
 
         EmailTemplate__c template = new EmailTemplate__c( RecordtypeId = recordtypeFSM.Id, Template_Language__c = language, IATA_ISO_Country__c = isoCountry.Id, Agent_Type__c='All');
         insert template;
-
+        
         template = [Select UniqueId__c from EmailTemplate__c where id = :template.Id];
         System.assert( template.UniqueId__c == recordtypeFSM.DeveloperName + '_' + country + '_' + language, template.UniqueId__c );
 
-
-        Account account = new Account( Name = 'Test Account', IATAcode__c = IATA_code, IATA_ISO_Country__c  = isoCountry.Id, Type = 'IATA Cargo Agent', Location_Type__c = 'HO');
+        Account account = new Account( Name = 'Test Account', AIMS_ID__c = aimsid, IATA_ISO_Country__c  = isoCountry.Id, Type = 'IATA Cargo Agent', Location_Type__c = 'HO');
         insert account;
 
-        Recordtype recordtypeStandardContact = [Select Id, DeveloperName From RecordType where Name like 'Standard' and sObjectType = 'Contact'];
+        Id recordtypeStandardContactId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        
         Contact contact = new Contact(
-            RecordtypeId = recordtypeStandardContact.Id,
+            RecordtypeId = recordtypeStandardContactId,
             Preferred_Language__c = language,
             Financial_Assessment_Contact__c = true,
             AccountId = account.Id,
+            FirstName = 'Name',
             LastName = 'lastName'
         );
         insert contact;
 
         //Prepare batch call
         list<WSCreateCasesFromPWC.securityCase> listCases = new list<WSCreateCasesFromPWC.securityCase>();
-        listCases.add( new WSCreateCasesFromPWC.SecurityCase( IATA_code, 1000, 'EUR', 0, '') );
+        listCases.add( new WSCreateCasesFromPWC.SecurityCase( aimsid, 1000, 'EUR', 0, '') );
         String response = WSCreateCasesFromPWC.doPost( listCases );
         WSCreateCasesFromPWC.ResponsePOST responsePOST = (WSCreateCasesFromPWC.ResponsePOST)JSON.deserialize(response, WSCreateCasesFromPWC.ResponsePOST.class);
         String batchName = responsePOST.UniqueId;

@@ -77,7 +77,10 @@ private class ISSP_Ctrl_AccountStatementsTest {
         Test.startTest();
         System.runAs(testUser) {
             controller = new ISSP_Ctrl_AccountStatements();
+            controller.initActions();
             System.AssertEquals(0, controller.listMessages.size());
+            controller.getInstance();
+            controller.updateAppRight();
         }
         Test.stopTest();
     }
@@ -130,7 +133,7 @@ private class ISSP_Ctrl_AccountStatementsTest {
 
         ISSP_Ctrl_AccountStatements controller = new ISSP_Ctrl_AccountStatements();
         list<Account_Statement__c> listStatements = [
-            Select Id, Period__c, Operation__c, Name, Key__c, CurrencyIsoCode, Account__c, Amount_to_be_Paid__c, Balance__c, Billing_Amount__c, Paid__c, Remittance_Date__c, Status__c, Billing_Adjustment__c, Group__c, Account__r.Site, LastModifiedDate
+            Select Id, Period__c, Operation__c, Name, Key__c, CurrencyIsoCode, Account__c, Amount_to_be_Paid__c, Balance__c, Billing_Amount__c, Paid__c, Remittance_Date__c, Status__c, Billing_Adjustment__c, Group__c, Account__r.Name, Account__r.Site, LastModifiedDate
             From Account_Statement__c];
 
         Test.startTest();
@@ -145,6 +148,75 @@ private class ISSP_Ctrl_AccountStatementsTest {
         wrapper.getParentBillingAdjustment();
         new list<ISSP_Ctrl_AccountStatements.WrapperStatement>().sort();
 
+        Test.stopTest();
+    }
+
+    @istest
+    static void test_Attachments()
+    {
+
+        loadData();
+
+        ISSP_Ctrl_AccountStatements controller = new ISSP_Ctrl_AccountStatements();
+
+        list<Account_Statement__c> listStatements = [Select Id, Period__c, Operation__c,
+                                                        Name, Key__c, CurrencyIsoCode, Account__c,
+                                                        Amount_to_be_Paid__c, Balance__c,
+                                                        Billing_Amount__c, Paid__c, Remittance_Date__c,
+                                                        Status__c, Billing_Adjustment__c,
+                                                        Group__c, Account__r.Name, Account__r.Site,
+                                                        LastModifiedDate
+                                                       From Account_Statement__c];
+
+        //String fileName = controller.amazonFileStartName;
+        //String fileIdentifier = controller.amazonFileNameIdentifier;
+
+        Test.startTest();
+            controller.accountSelectedId = listStatements[0].Account__c;
+            controller.accountStatementSelectedId = listStatements[0].Id;
+            controller.accountSelectedName = listStatements[0].Account__r.Name;
+            controller.accountStatementPeriod = listStatements[0].Period__c;
+            controller.billingAmount = String.valueOf(listStatements[0].Billing_Amount__c);
+            controller.amazonFileName = 'ICE POP' + ' ' + controller.accountStatementPeriod + ' ' + controller.billingAmount;
+
+            List<AmazonFile__c> listAttachmentsAux = controller.listAttachments;
+
+
+            Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+            insert Amazon_Cred;
+            Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+            insert Amazon_Cred2;
+
+
+
+            list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+                    new AWSKey__c(
+                            name = 'adevconf',
+                            Key__c = 'asd',
+                            Secret__c = 'asd',
+                            IAS_configuration_name__c = 'asdas',
+                            IAS_Access_Point__c = 'asd',
+                            Bucket__c = 'asd',
+                            AWS_ENDPOINT_URL__c = 'asd')
+                    };
+            insert AWS_KEYs;
+
+            AmazonFile__c azFile = new AmazonFile__c(
+                Name='ICE POP' + ' ' + controller.accountStatementPeriod + ' ' + controller.billingAmount,
+                RecordTypeId = controller.amazonRecordTypeId,
+                Remittance_Period__c = controller.accountStatementPeriod,
+                Category__c = 'ICE POP',
+                File_Identifier_picklist__c = 'ICE_POP',
+                Account__c =controller.accountSelectedId,
+                Full_Name_Unique__c = '500/'+controller.accountSelectedId+'/ICE POP'
+            );
+            insert azFile;
+
+        controller.addAttachment();
+        controller.saveAttachment();
+        String credName = controller.credentialName;
+
+        controller.refreshList();
         Test.stopTest();
     }
 }

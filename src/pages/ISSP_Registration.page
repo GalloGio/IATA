@@ -1,33 +1,90 @@
-<apex:page controller="ISSP_Registration" showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}">
+<apex:page controller="ISSP_Registration" showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}" action="{!redirectID}">
     
   <head>
-    <title>IATA</title>
- </head>
+      <title>{!CASE(communityName, 'CNS', 'CNS', 'IATA')}</title>
+  </head>
  
   <apex:outputPanel rendered="{!displayNewCaseForm}" >
-
   </apex:outputPanel>
   
-  <apex:outputPanel rendered="{!show90Days}" >
-    <script>
-    alert('{!$Label.ISSP_Frozen_User_Alert_Message}');
-    if ("{!sRefererCommunity}"=="iss")  window.location.replace('/ISSP_Login');
-    else if ("{!sRefererCommunity}"=="iec") {
-      if (document.URL.indexOf("/iec")!=-1) window.location.replace('/iec/IEC_Home');
-      else window.location.replace('/IEC_Home');
+  <script>
+    window.onload = function() {
+      if (navigator.geolocation && typeof localStorage !== "undefined") {
+        if("{!sRefererCommunity}"=="iec") {
+          localStorage.setItem("geoCode", "auto");
+          navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+        }
+      }
+    };
+    
+    function geoSuccess(pos) {
+      var crd = pos.coords;
+      var lat = crd.latitude;
+      var lng = crd.longitude;
+      getGeoCode(lat, lng);
     }
-    </script>
+    
+    function geoError(err) {
+      localStorage.setItem("geoCode", "auto");
+    }
+    
+    function getGeoCode(lat, lng) {
+      var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng;
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, false);
+        xhr.send(null);
+        
+        if(xhr.status == "200") {
+          var cObj = JSON.parse(xhr.response);
+            var cCode = "auto";
+            if(cObj.results) {
+            for(var i=0; i<cObj.results.length; i++) {
+                var cAddr = cObj.results[i];
+                for(var j=0; j<cAddr.address_components.length; j++) {
+                  var elem = cAddr.address_components[j];
+                  if(elem.types && elem.types.length == 2 && elem.types[0] == "country" && elem.types[1] == "political") {
+                    cCode = elem.short_name.toLowerCase();
+                    break;
+                  }
+                }
+                if(cCode != "auto") {
+                break;                    
+                }
+              }
+            }
+            localStorage.setItem("geoCode", cCode);   
+        } else {
+          console.log(xhr.status);
+          localStorage.setItem("geoCode", "auto");
+        } 
+      } catch(e) {
+        console.log(e);
+        localStorage.setItem("geoCode", "auto");
+      }
+    }
+  </script>
+  
+  <apex:outputPanel rendered="{!show90Days}" >
+      <script>
+        alert('{!$Label.ISSP_Frozen_User_Alert_Message}');
+        if ("{!sRefererCommunity}"=="iss")  window.location.replace('/ISSP_Login');
+        else if ("{!sRefererCommunity}"=="iec") {         
+          if (document.URL.indexOf("/iec")!=-1) window.location.replace('/iec/IEC_Home');
+          else window.location.replace('/IEC_Home');
+        }
+      </script>
   </apex:outputPanel>
 
   <apex:composition template="{!templatename}">
     <apex:define name="body">
       <!-- FIRST LOG BOX  -->
       <div class="registration_page" id="Registration">
-        <div class="logo"> </div>
+        <div class="{!CASE(communityName, 'CNS', 'logocns', 'logo')}"> </div>
         <div class="col-md-6 col-md-push-3">
           <div class="panel panel-default">
             <div class="panel-heading2">
-              <h3 class="panel-title"> {!$Label.ISSP_Registration_RegistrationProcess}</h3>
+              <h3 class="panel-title">{!$Label.ISSP_Registration_RegistrationProcess}</h3>
             </div>
             
             <!-- MESSAGE BOX -->
@@ -48,12 +105,17 @@
                          else if (url.indexOf(".com/")!=-1) {
                             domain = ".com/";
                          }
+                         else if (url.indexOf(".net/")!=-1) {
+                            domain = ".net/";
+                         }
                          //alert("domain: " +domain);
                          
                          first=url.split(domain);
                         
                          var redir = first[0] + domain + '{!urlredirect}'; 
-                         if (redir.indexOf("iec/IEC_Login")!=-1 && domain == ".org/")
+                         if ('{!communityName}' !== undefined && '{!communityName}' !== '') { redir += '?CommunityName={!communityName}';}
+                         //if (redir.indexOf("iec/IEC_Login")!=-1 && domain == ".org/")
+                         if (redir.indexOf("IEC_Login")!=-1 && domain == ".com/")
                             redir = "IEC_Login";
                          location.href = redir;
                          },
@@ -82,7 +144,7 @@
                 </apex:repeat>
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
+                <label for="email"><span class="required">*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
                   <div class="hiddenerror" style="display: none;">
                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Email}</p>
                   </div>                  
@@ -142,25 +204,20 @@
                     $("#NewCasePopUp").modal('show');
                 
                 function validateNewUser(){
-                    var type = $("select[id*='TypeSelect']").val();
-                    var flag = true;
-                    $('#recFields').hide();
-                    $('.rec').each(function (){
-                            $(this).parents('.form-group').removeClass('has-error');
-                            if(!$(this).val()){
-                                flag = false;
-                                $(this).parents('.form-group').addClass('has-error');
-                            }
-                            
-                        }
-                    )
-                    if(flag == false){
-                        $('#recFields').show();
-                    }
+                  var flag = true;
+                  $('.rec').each(function (){
+                          $(this).parents('.form-group').removeClass('has-error');
+                          if(!$(this).val()){
+                              flag = false;
+                              $(this).parents('.form-group').addClass('has-error');
+                          }
+                          
+                      }
+                  )
                     
-                    return flag;
+                  return flag;
                     
-                 }
+                }
                 
               </script>
         

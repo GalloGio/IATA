@@ -101,7 +101,7 @@ private class AutoAssignmentEngineSFTest {
         AutoAssignmentEngineSF batch = new AutoAssignmentEngineSF();
         Database.executeBatch(batch, 1);
         
-        string jobId = System.schedule('AutoAssignmentEngineScheduler',
+        string jobId = System.schedule('AutoAssignmentEngineSchedulerTest',
                '0 0 0 15 3 ? 2022', 
         new AutoAssignmentEngineScheduler ());
         

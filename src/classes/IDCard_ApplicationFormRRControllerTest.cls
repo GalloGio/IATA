@@ -424,20 +424,20 @@ private class IDCard_ApplicationFormRRControllerTest {
     
     public static TestMethod void ValidatePromotionTest() {
     	TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-    	InitIDCard_ApplicationFormRRControllerTest();
-    	
-    	Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-        
-        
-        test.startTest();
+
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c( Name = 'Australia',
                     ISO_Code__c = '12',
                     AIMS_Area_Name__c = 'Australia'
         ); 
         insert isoc;
+
+    	InitIDCard_ApplicationFormRRControllerTest();
+    	
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         
-    
+        test.startTest();
+
 	    pricetables = new List<Price_Table__c>();
 	    pricetables.add(new Price_Table__c(CurrencyIsoCode='CAD',ISO_Country__c =isoc.Id, Type_Class_of_Agent__c  ='Domestic',ID_Card_Fee__c=100));
 	    pricetables.add(new Price_Table__c(CurrencyIsoCode='CAD',ISO_Country__c =isoc.Id ,Type_Class_of_Agent__c  ='TIDS',ID_Card_Fee__c=100));
@@ -513,7 +513,7 @@ private class IDCard_ApplicationFormRRControllerTest {
         ID_Card__c idcard = new ID_Card__c(Related_Contact__c = cs[0].id,
                                 Valid_To_Date__c = date.today().addDays(40),
                                 Name_on_ID_Card__c = 'nameidcard',
-                                Card_status__c = 'Approved',
+                                Card_status__c = 'Sent ID Card',
                                 VER_Number__c = '111'
  
         ); insert idcard;

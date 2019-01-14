@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <excludeButtons>ChangeOwnerOne</excludeButtons>
+    <excludeButtons>ChangeRecordType</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Edit</excludeButtons>
@@ -18,6 +19,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>IATACode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ISO_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
@@ -28,14 +37,6 @@
                 <behavior>Edit</behavior>
                 <field>Last_Request_Result__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ISO_Country__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>IATACode__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -43,8 +44,8 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CurrencyIsoCode</field>
+                <behavior>Required</behavior>
+                <field>Email_Used_for_BSP_Creation__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -78,13 +79,16 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000JVVk</masterLabel>
+        <masterLabel>00hw000000hfVP7</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

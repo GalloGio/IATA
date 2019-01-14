@@ -18,12 +18,16 @@ global class AMS_2_MDM_Schedule implements Schedulable {
         // Cron EXP for hourly schedule
         String CRON_EXP = '';
 
-        if(Region.equalsIgnoreCase('AIMS1')){
-            CRON_EXP = AMS_SAP_Settings__c.getOrgDefaults().AIMS1_CRON_EXP__c;
-        }else if(Region.equalsIgnoreCase('AIMS2')){
-            CRON_EXP = AMS_SAP_Settings__c.getOrgDefaults().AIMS2_CRON_EXP__c;
-        }else if(Region.equalsIgnoreCase('AIMS3')){
-            CRON_EXP = AMS_SAP_Settings__c.getOrgDefaults().AIMS3_CRON_EXP__c;
+        if(Region.equalsIgnoreCase('MIA')){
+            CRON_EXP = AMS_SAP_Settings__c.getOrgDefaults().REGION1_CRON_EXP__c;
+        }else if(Region.equalsIgnoreCase('MAD')){
+            CRON_EXP = AMS_SAP_Settings__c.getOrgDefaults().REGION2_CRON_EXP__c;
+        }else if(Region.equalsIgnoreCase('AMM')){
+            CRON_EXP = AMS_SAP_Settings__c.getOrgDefaults().REGION3_CRON_EXP__c;
+        }else if(Region.equalsIgnoreCase('SIN')){
+            CRON_EXP = AMS_SAP_Settings__c.getOrgDefaults().REGION4_CRON_EXP__c;
+        }else if(Region.equalsIgnoreCase('BJS')){
+            CRON_EXP = AMS_SAP_Settings__c.getOrgDefaults().REGION5_CRON_EXP__c;
         } 
 
         AMS_2_MDM_Schedule sch = new AMS_2_MDM_Schedule(Region);
@@ -59,7 +63,8 @@ global class AMS_2_MDM_Schedule implements Schedulable {
 
     global static void stop_region(String Region){
         String sJobName = '';
-		if(!Test.isRunningTest()) {
+        
+        if(!Test.isRunningTest()) {
             sJobName = 'AMS 2 MDM Sales Orders - ' + Region;
         }else{
             sJobName = 'AMS 2 MDM Sales Orders TEST - ' + Region;
@@ -76,42 +81,24 @@ global class AMS_2_MDM_Schedule implements Schedulable {
     
         CronTrigger ct = [SELECT CronJobDetail.name FROM CronTrigger WHERE Id = :sc.getTriggerId()];
 
-       
-
-
-        if(localRegion.equalsIgnoreCase('AIMS1')){
+        if(localRegion.equalsIgnoreCase('MIA')){
             setAIMSRegion.add('Americas');
-        }else if(localRegion.equalsIgnoreCase('AIMS2')){
+        }else if(localRegion.equalsIgnoreCase('MAD')){
             setAIMSRegion.add('Europe');
+        }else if(localRegion.equalsIgnoreCase('AMM')){
             setAIMSRegion.add('Africa & Middle East');
-        }else if(localRegion.equalsIgnoreCase('AIMS3')){
-            setAIMSRegion.add('China & North Asia');
+        }else if(localRegion.equalsIgnoreCase('SIN')){
             setAIMSRegion.add('Asia & Pacific');
+        }else if(localRegion.equalsIgnoreCase('BJS')){
+            setAIMSRegion.add('China & North Asia');
         } 
 
-        //Batch Call by Country and Agency RecordType (Passenger and Cargo) 
-
-        //doens't work because of governor limits!!!
-        //List<IATA_ISO_Country__c> lIsoCountry = [SELECT id,Name,ISO_Code__c FROM IATA_ISO_Country__c order by Name];
-
-        //query to get the countries of the agencies to be updates
-        //only brings countries that are marked to be integrated with MDM
-        //it's limited to 50 because of governor limits (limit of 100 batch jobs).
-
-        //List<AggregateResult> lIsoCountry = [SELECT country__c FROM AMS_Agency__c 
-        //        where id in (SELECT Agency__c 
-        //                        FROM AMS_Agency_Updates__c 
-        //                        where Update_Type__c = 'Update' 
-        //                        AND Agency__c != null) 
-        //        AND country__r.MDM_Integration__c = true
-        //        group by country__c limit 50];
-
-        List<IATA_ISO_Country__c> lIsoCountry = [SELECT ID FROM IATA_ISO_Country__c WHERE Region__c in :setAIMSRegion];
+        List<IATA_ISO_Country__c> lIsoCountry = IATAIsoCountryDAO.getIsoCountriesByRegion(setAIMSRegion);
 
         System.debug('lIsoCountry: ' + lIsoCountry);
           
     
-//Initiate Log
+        //Initiate Log
         Technical_Logs__c tlog = new Technical_Logs__c();
         tlog.Status__c = 'Region: ' + localRegion;
         tlog.Operation__c = 'Schedule Job - '+ ct.CronJobDetail.name;
@@ -125,6 +112,8 @@ global class AMS_2_MDM_Schedule implements Schedulable {
 
         String[] tmp1 = New String[]{};
         String[] tmp1Country = New String[]{};
+        List<String> lstBillable_Countries_To_Exclude = new List<String>(); 
+        List<String> lstBillable_Location_Class_To_Exclude = new List<String>();
         String changeCodeString;
         String countryString;
 
@@ -144,33 +133,10 @@ global class AMS_2_MDM_Schedule implements Schedulable {
         countryString = string.join(tmp1Country,'\',\'');
         countryString = '\'' + countryString + '\'';
 
-            //String sQueryPassenger = 'SELECT Agency__c,Id,Name,OwnerId,RelationShip__c,Update_Type__c ' +
-            //        'FROM AMS_Agency_Updates__c ' +
-            //            'where Update_Type__c = \'Update\' AND Agency__c != null ' +
-            //        'and Agency__r.Country__c = \''+ isoCountry.get('country__c') + '\' ' +
-            //        'and Agency__r.RecordType.name in (\'PASSENGER\') ' +
-            //        'and Agency__r.Agency_Status__c not in (\'New application pending\') ' +
-            //        'limit 8000' ; 
-
-            //String sQueryCargo = 'SELECT Agency__c,Id,Name,OwnerId,RelationShip__c,Update_Type__c ' +
-            //        'FROM AMS_Agency_Updates__c ' +
-            //            'where Update_Type__c = \'Update\' AND Agency__c != null ' +
-            //        'and Agency__r.Country__c = \''+ isoCountry.get('country__c') + '\' ' +
-            //        'and Agency__r.RecordType.name in (\'CARGO\') ' +
-            //        'and Agency__r.Agency_Status__c not in (\'New application pending\') ' +
-            //        'limit 8000' ; 
-
-            //String sQueryPassenger = 'SELECT Account__c,Account__r.location_class__c,Active__c,Change_Code__c,Sent_to_external_system__c ' +
-            //        'FROM Agency_Applied_Change_code__c ' +
-            //            'where Active__c = true ' +
-            //            'and Change_Code__c <> null' +
-            //            'and Sent_to_external_system__c = false ' +
-            //            'and Change_Code__c in (' + changeCodeString + ')' +
-            //        'and Agency__r.Country__c in (' + countryString + ')' +
-            //        'limit 8000' ;
-
             //Ignore the "Active" field, since it only inform on the last change code used!
-            String sQueryPassenger = 'SELECT Change_Code__c, Account__c, Account__r.IATACode__c, Account__r.Location_Class__c, Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c ' +
+            String sQueryPassenger = 'SELECT Change_Code__c, Account__c, Account__r.IATACode__c, Account__r.Location_Class__c, ' +
+                        'Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c, ' +
+                        'Account__r.IATA_ISO_Country__r.Iso_code__c, OSCAR__c, OSCAR__r.Oscar_Communication_Case_Id__c ' +
                     'FROM Agency_Applied_Change_code__c ' +
                         'where Change_Code__c <> null ' +
                         'and Account__r.IATACode__c <> null ' +
@@ -187,55 +153,6 @@ global class AMS_2_MDM_Schedule implements Schedulable {
             AMS_2_MDM_Batch bPassenger = new AMS_2_MDM_Batch(sQueryPassenger); 
             database.executebatch(bPassenger,(Integer)AMS_SAP_Settings__c.getOrgDefaults().Sales_Order_Batch_Size__c);  //Parameters of ExecuteBatch(context,BatchSize)
 
-            
-        
-        
-
-       // //Batch Call by Settlements - BSP and DPC used
-       // String sSettlements = '';
        
-       // List<AggregateResult> lSettlement = [SELECT Operation__r.Settlement__c
-       //                         FROM AMS_Agency_Operations__c
-       //                         where Agency__c in (SELECT Agency__c 
-       //                                             FROM AMS_Agency_Updates__c 
-       //                                             where Update_Type__c = 'Update' 
-       //                                             AND Agency__c != null) 
-       //                         group by Operation__r.Settlement__c];
-    
-       
-       // for(AggregateResult sett : lSettlement){
-      
-       //     //for agencies without settlement
-       //     if(sSettlements.equalsIgnoreCase('')){
-       //         sSettlements = '\'' + (String)sett.get('Settlement__c') + '\'';
-       //     }else{
-       //         sSettlements = sSettlements + ',\'' + (String)sett.get('Settlement__c') + '\'';
-       //     } 
-            
-       //     String sQuery = 'SELECT Agency__c,Id,Name,OwnerId,RelationShip__c,Update_Type__c ' +
-       //             'FROM AMS_Agency_Updates__c ' +
-       //                 'where Update_Type__c = \'Update\' AND Agency__c != null ' +
-       //             'and Agency__c in (select Agency__c from AMS_Agency_Operations__c where Operation__r.Settlement__c = \''+ sett.get('Settlement__c') + '\') ' +
-       //             'limit 8000' ; 
-        
-       //     System.debug('teste1: ' + sQuery);
-       //     AMS_2_MDM_Batch b = new AMS_2_MDM_Batch(sQuery); 
-            
-       //     //Parameters of ExecuteBatch(context,BatchSize)
-       //     database.executebatch(b,2000);
-       // } 
-       
-       ////Get agencies without settlement
-       //String sQuery = 'SELECT Agency__c,Id,Name,OwnerId,RelationShip__c,Update_Type__c ' +
-       //             'FROM AMS_Agency_Updates__c ' +
-       //                 'where Update_Type__c = \'Update\' AND Agency__c != null ' +
-       //             'and Agency__c not in (select Agency__c from AMS_Agency_Operations__c where Operation__r.Settlement__c in ('+ sSettlements + ')) ' +
-       //             'limit 8000' ; 
-       //System.debug('teste2: ' + sQuery); 
-       //AMS_2_MDM_Batch b = new AMS_2_MDM_Batch(sQuery); 
-            
-       ////Parameters of ExecuteBatch(context,BatchSize)
-       //database.executebatch(b,2000);
-        
     }
 }

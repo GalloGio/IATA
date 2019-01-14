@@ -169,7 +169,7 @@ public class AMS_CertificateManagerController {
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateManagerController - parseFile] iataCodes - ' + iataCodes);
 
 		Set<String> iataCodesSet = iataCodes.keySet();
-		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE IataCode__c IN :iataCodesSet');
+		List<Account> accounts = Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE recordtype.developername= \'Iata_Agency\' and IataCode__c IN :iataCodesSet order by iata_iso_country__r.name, Name');
 
 
 		List<Account> warnings = new List<Account>();
@@ -224,12 +224,13 @@ public class AMS_CertificateManagerController {
 		
 		requestCreation = System.enqueueJob(new AMS_CertificateHelper.CertificateCreation(requests, (year == 'Other' ? yearText : year), UserInfo.getUserEmail()));
 
-		updateAccounts();
+		updateAccounts(accountIds);
 	}
 
-	private void updateAccounts() {
+	@future
+		private static void updateAccounts(Set<Id> accountIds) {
 		Map<Id, Account> accounts = new Map<Id, Account>();
-		for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ', ')+' FROM Account WHERE Id IN :accountIds')){
+		for(Account a : Database.query('SELECT Id,Certificate_Generated_Current_Year__c, Name, IATACode__c FROM Account WHERE Id IN :accountIds')){
 			if(!a.Certificate_Generated_Current_Year__c){
 				a.Certificate_Generated_Current_Year__c = true;
 				accounts.put(a.Id, a);

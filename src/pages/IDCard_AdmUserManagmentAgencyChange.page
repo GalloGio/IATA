@@ -42,6 +42,11 @@
 
                color: #333435;
            }
+
+          table.ex2 {
+          border-spacing: 10px;
+          }
+
        </style>
        
        <div id="page_wrapper">
@@ -138,54 +143,99 @@
                             
                             <apex:form forceSSL="true" id="CHECKform">
                                   
-                                 <apex:outputPanel rendered="{!(currentRecordssize>0)}" >
+                                 <apex:pageBlock mode="edit"  rendered="{!(currentRecordssize>0)}" id="x">
+                                 <!--<apex:outputPanel r id="panelid">-->
+                                  <apex:pageBlockSection collapsible="false" id="sc1">
                                   
                                      <h2>{!$Label.IDCard_KA_ChangeAgency_Step2_title}</h2><br/> <br/>
-                                     <table>
-                                        <apex:repeat value="{!currentRecords}" var="key">
+                                     <table class="ex2" id="table">
+                                        <apex:repeat value="{!currentRecords}" var="key" id="e">
                                         <tr>
-                                            <td rowspan="4">
+                                            <td rowspan="8">
                                                 <!--<img src="{!$Label.IDCard_CroppingTool}/images/{!currentRecords[key].Photo}" style="height:120px; width:90px;"/>-->
                                                 <img src="{!currentRecords[key].awsImageURL}" style="height:120px; width:90px;"/>
                                             </td>
-                                            
-                                            
-                                            <td><b>Ver Number:&nbsp;&nbsp;</b> <apex:outputText value="{!currentRecords[key].verNum}" /></td>
-                                            <td><b>Name:&nbsp;&nbsp;</b> <apex:outputText value="{!currentRecords[key].previousContact.Name}" /></td>
-                                        </tr><tr>
-                                            <td><b>Previous IATA Code:&nbsp;&nbsp;</b> <apex:outputText value="{!currentRecords[key].previousContact.IATA_Code__c}" /></td>
-                                            <td><b>Package 1:&nbsp;&nbsp;</b> 
-                                                <apex:selectList value="{!currentRecords[key].packageTravel1}"  size="1">
-                                                    <apex:selectOptions value="{!packages}"/>
+
+                                            <apex:pageBlockSectionItem >                                           
+                                            <apex:outputLabel >Title</apex:outputLabel>
+                                                <apex:selectList value="{!currentRecords[key].title}" size="1">
+                                                    <apex:selectOptions value="{!title}"/>
                                                 </apex:selectList>
-                                            </td>
-                                        </tr><tr>
-                                            <td><b>New IATA Code:&nbsp;&nbsp;</b>
-                                                <apex:selectList value="{!currentRecords[key].newIataCode}"  size="1" rendered="{!NOT(moreThan1000Iatacodes)}"  styleclass="drawRedBar">
+                                            </apex:pageBlockSectionItem>
+ 
+                                            <apex:pageBlockSectionItem dataStyle="width:10%" labelStyle="width:23%" id="item"> 
+                                              <apex:outputLabel style="display:block;width:170px;" value="Name on the Previous ID Card:"/>
+                                              <apex:outputText value="{!currentRecords[key].previousContact.Name}"/>
+                                            </apex:pageBlockSectionItem>
+ 
+                                            <apex:pageBlockSectionItem id="first">
+                                              <apex:outputLabel style="display:block;width:100px;" value="First Name:"/>
+                                              <apex:outputText value="{!currentRecords[key].firstName}" id="firstName" />
+                                            </apex:pageBlockSectionItem>
+                                      
+                                            <apex:pageBlockSectionItem > 
+                                              <apex:outputLabel >Email</apex:outputLabel>
+                                              <apex:inputText value="{!currentRecords[key].email}"/>
+                                            </apex:pageBlockSectionItem>
+                                         
+                                            <apex:pageBlockSectionItem id="section"> 
+                                              <apex:outputLabel style="display:block;width:100px;" value="Last Name:"/>
+                                              <apex:outputPanel styleClass="requiredInput" layout="block">
+                                              <apex:inputText value="{!currentRecords[key].lastName}" id="lastName" />
+                                             <!--onclick="alert('{!$Component.lastName}').value;"-->
+ 
+                                                </apex:outputPanel>
+                                            </apex:pageBlockSectionItem>
+ 
+                                            <apex:pageBlockSectionItem >
+                                              <apex:outputLabel >Ver Number:</apex:outputLabel>
+                                              <apex:outputText value="{!currentRecords[key].verNum}" /> 
+                                            </apex:pageBlockSectionItem>
+ 
+                                            <apex:pageBlockSectionItem >
+                                                <apex:outputLabel >Previous IATA Code:</apex:outputLabel>
+                                                <apex:outputText value="{!currentRecords[key].previousContact.IATA_Code__c}"  styleclass="drawRedBar" id="year"/>
+                                            </apex:pageBlockSectionItem>
+
+                                            <apex:pageBlockSectionItem >
+                                              <apex:outputLabel >Package 1:</apex:outputLabel>
+                                              <apex:selectList value="{!currentRecords[key].packageTravel1}"  size="1">
+                                                    <apex:selectOptions value="{!packages}"/>
+                                                </apex:selectList> 
+                                            </apex:pageBlockSectionItem>
+ 
+                                            <apex:pageBlockSectionItem >
+                                              <apex:outputLabel style="display:block;width:100px;" value="New IATA Code:"/>
+                                              <apex:selectList value="{!currentRecords[key].newIataCode}"  size="1" rendered="{!NOT(moreThan1000Iatacodes)}"  styleclass="drawRedBar">
                                                     <apex:selectOptions value="{!IATAcodes}"/>
                                                 </apex:selectList>
-						                       <apex:inputText value="{!currentRecords[key].newIataCode}" rendered="{!moreThan1000Iatacodes}" styleclass="drawRedBar"/>
-						                                                
-                                                
-                                                
-                                                
-                                            </td>
+                                            </apex:pageBlockSectionItem>
+                                                <apex:inputText value="{!currentRecords[key].newIataCode}" rendered="{!moreThan1000Iatacodes}" styleclass="drawRedBar"/> 
                                             
-                                            <td><b>Package 2:&nbsp;&nbsp;</b>
-                                                <apex:selectList value="{!currentRecords[key].packageTravel2}"  size="1">
+ 
+ 
+ 
+                                            <apex:pageBlockSectionItem >
+                                              <apex:outputLabel >Package 2:</apex:outputLabel>
+ 
+                                              <apex:selectList value="{!currentRecords[key].packageTravel2}"  size="1">
                                                     <apex:selectOptions value="{!packages}"/>
                                                 </apex:selectList>
-                                            </td>
-                                        </tr>
-                                        	<td><b>{!$ObjectType.ID_Card_Application__c.Fields.Start_Date_Agency_Month__c.Label}:&nbsp;&nbsp;</b>
+                                            </apex:pageBlockSectionItem>
+ 
+                                            <apex:pageBlockSectionItem >
+                                            <b>{!$ObjectType.ID_Card_Application__c.Fields.Start_Date_Agency_Month__c.Label}:</b>
                                                 <apex:selectList value="{!currentRecords[key].startmonth}"  size="1"  styleclass="drawRedBar">
                                                     <apex:selectOptions value="{!months}"/>
                                                 </apex:selectList>
-                                            </td>
-                                            <td><b>{!$ObjectType.ID_Card_Application__c.Fields.Start_Date_Agency_Year__c.Label}:&nbsp;&nbsp;</b>
-                                                <apex:inputText value="{!currentRecords[key].startyear}"  styleclass="drawRedBar" id="year" />
-                                            </td>
-                                        
+                                            </apex:pageBlockSectionItem>
+ 
+                                            <apex:pageBlockSectionItem > 
+                                              <apex:outputLabel >{!$ObjectType.ID_Card_Application__c.Fields.Start_Date_Agency_Year__c.Label}:</apex:outputLabel>
+                                              <apex:inputText value="{!currentRecords[key].startyear}"  styleclass="drawRedBar" id="year"/>
+                                            </apex:pageBlockSectionItem>
+
+
                                         <tr> 
                                         </tr><tr>   
                                             <td> 
@@ -194,6 +244,7 @@
                                                 </apex:commandButton>
                                             </td>
                                             
+                                        </tr>
                                         </tr>
                                         </apex:repeat>
                                     </table>
@@ -204,9 +255,11 @@
 										});	
 										stopLoading();*/
 									</script>
-                                 </apex:outputPanel>
+                    </apex:pageBlockSection>
+                     <!--</apex:outputPanel>-->
+                     </apex:pageBlock>
 					
-                            </apex:form>
+                         </apex:form>
                         </div>
                         
                         

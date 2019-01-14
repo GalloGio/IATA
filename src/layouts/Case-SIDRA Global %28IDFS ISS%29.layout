@@ -5,10 +5,16 @@
     <customButtons>R_S_feedback_complete</customButtons>
     <customButtons>CS_actions_complete</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
+    <customButtons>Deactivate_BSPLink</customButtons>
+    <customButtons>Undo_Deactivation_BSPLink</customButtons>
+    <customButtons>Reactivate_BSPLink</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
+    <customButtons>Create_SAAM_Case</customButtons>
+    <customButtons>OscarFOP</customButtons>
+    <customButtons>Conga_Merge_JS</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
-    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -21,7 +27,16 @@
                 <field>SIDRA_logo__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>OneColumn</style>
+        <layoutColumns>
+            <layoutItems>
+                <height>50</height>
+                <page>AMS_Change_Code_Notification</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -74,6 +89,10 @@
                 <field>SuppliedEmail</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Priority</field>
             </layoutItems>
@@ -88,10 +107,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_count_last_30_days__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>IRR_Processed_on_Time__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -252,6 +267,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IATA_Charges__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GDI_Premium__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Agency_Fees__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -457,7 +480,7 @@
                 <field>IRR_Approval_Rejection_Remarks__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>IRR_Approval_Rejection_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -961,6 +984,22 @@
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Risk Forecast Properties</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>ANG_RiskForecastPropertiesPage</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
         <label>System Information</label>
         <layoutColumns>
@@ -1005,10 +1044,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Non_payment_date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Irregularity_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -1025,27 +1060,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Age_IRR_ACC__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Age_DEF_ACC_days__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Age_REI_ACC_days__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Defaulted_Amount_USD__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>default_approved_by_LO__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Email_Comment_Received_in_queue__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -1077,16 +1096,8 @@
                 <field>R_S_feedback_requested__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>R_S_feedback_age__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Last_CS_action_request__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CS_pending_age__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -1181,6 +1192,29 @@
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
+            <layoutItems>
+                <height>1</height>
+                <page>AMS_Case_AccIrr_Popup</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>1</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Repayment instalments</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>320</height>
+                <page>SIDRARepaymentInstalments</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -1269,6 +1303,35 @@
         <fields>Financial_Institution__c</fields>
         <fields>Remarks__c</fields>
         <relatedList>Financial_Security__c.Release_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>Change_Code__c</fields>
+        <fields>Account__c</fields>
+        <fields>Reason_Code__c</fields>
+        <fields>Reason_Description__c</fields>
+        <fields>Created_Date_To_Show__c</fields>
+        <relatedList>Agency_Applied_Change_code__c.SIDRA_Case__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_Name_Link_FF__c</fields>
+        <fields>ANG_Account_IATA_Code__c</fields>
+        <fields>ANG_Risk_Type__c</fields>
+        <fields>ANG_Issued_Date__c</fields>
+        <fields>ANG_Source__c</fields>
+        <fields>ANG_expiration_date_ff__c</fields>
+        <fields>ANG_Event_Status__c</fields>
+        <relatedList>ANG_Agency_Risk_Event__c.ANG_CaseId__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

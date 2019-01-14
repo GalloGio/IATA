@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>used to host information on the ISS / ICH / ICCS calendars</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_BSP_Agency</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Agencies and BSP</description>
+        <displayedFields>
+            <field>Period_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>frequency_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Operation_Currency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For BSP Agency</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_BSP_Airline</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Airline and BSP</description>
+        <displayedFields>
+            <field>Period_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>frequency_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Operation_Currency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For BSP Airline</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_CASS_Agency</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Agencies and CASS</description>
+        <displayedFields>
+            <field>Period_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Input_Upload_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>CASS_reports_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Agent_Correction_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For CASS Agency</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_CASS_Airline</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Airlines and CASS</description>
+        <displayedFields>
+            <field>Period_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Operation_Currency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Input_Upload_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>CASS_reports_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Agent_Correction_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Correction_Response_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For CASS Airline</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Hover_For_BSP_Agency</fullName>
+        <description>ISSP_OperationCalendar.page uses this Field Set to show a description in hover popup, but only for Agency and BSP</description>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Hover For BSP Agency</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Hover_For_BSP_Airline</fullName>
+        <description>ISSP_OperationCalendar.page uses this Field Set to show a description in hover popup, but only for Airlines and BSP</description>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Hover For BSP Airline</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Hover_For_CASS_Agency</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Agency and CASS</description>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Input_Upload_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>CASS_reports_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Agent_Correction_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Correction_Response_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Hover For CASS Agency</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Hover_For_CASS_Airline</fullName>
+        <description>ISSP_OperationCalendar.page uses this Field Set to show a description in hover popup, but only for Airlines and CASS</description>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Input_Upload_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>CASS_reports_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Agent_Correction_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Correction_Response_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Hover For CASS Airline</label>
+    </fieldSets>
+    <fields>
+        <fullName>Agent_Correction_Cut_Off__c</fullName>
+        <description>Deadline for the agent to make corrections</description>
+        <externalId>false</externalId>
+        <label>Agent Correction Cut-Off</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Billing_HOT__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Billing &amp; HOT</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Correction_Response_Cut_Off__c</fullName>
+        <description>Deadline for the airlines to respond to the agents submitted corrections</description>
+        <externalId>false</externalId>
+        <label>Airline Correction Response Cut-Off</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Input_Upload_Cut_Off__c</fullName>
+        <description>Deadline for the airline to upload CASS billing to the agent</description>
+        <externalId>false</externalId>
+        <label>Airline Input Upload Cut-Off</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Availability__c</fullName>
+        <description>Date of when the billing BSP/CASS is available to the agent to pay</description>
+        <externalId>false</externalId>
+        <label>Billing Availability</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>CASS_reports_Availability__c</fullName>
+        <description>Date of CASS initial reports availability uploaded by the airlines</description>
+        <externalId>false</externalId>
+        <label>CASS reports Availability</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>EP_Settlement_date__c</fullName>
+        <externalId>false</externalId>
+        <label>EP Settlement date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ExternalId__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Used to allow updates from external systems: Mulesoft + IRIS</description>
+        <externalId>true</externalId>
+        <label>ExternalId</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>First_Day__c</fullName>
+        <description>first day of the period</description>
+        <externalId>false</externalId>
+        <label>Billing From</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>HAR_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>HAR Day</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ISS_operation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISS Operation</label>
+        <referenceTo>AMS_Settlement_System__c</referenceTo>
+        <relationshipLabel>Operational Calendars</relationshipLabel>
+        <relationshipName>Operational_Calendars</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Last_Day__c</fullName>
+        <description>period last day</description>
+        <externalId>false</externalId>
+        <label>Billing To</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Operation_Code__c</fullName>
+        <description>IRIS operation code</description>
+        <externalId>false</externalId>
+        <label>Operation Code</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operation_Currency__c</fullName>
+        <externalId>false</externalId>
+        <label>Operation Currency</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operation_Period_code__c</fullName>
+        <description>IRIS combination of period and operation</description>
+        <externalId>false</externalId>
+        <label>Operation + Period code</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operation_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Operation Type</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>BSP International</fullName>
+                    <default>false</default>
+                    <label>BSP International</label>
+                </value>
+                <value>
+                    <fullName>BSP Domestic</fullName>
+                    <default>false</default>
+                    <label>BSP Domestic</label>
+                </value>
+                <value>
+                    <fullName>CASS Export</fullName>
+                    <default>false</default>
+                    <label>CASS Export</label>
+                </value>
+                <value>
+                    <fullName>CASS Import</fullName>
+                    <default>false</default>
+                    <label>CASS Import</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Period_Code__c</fullName>
+        <description>IRIS period code</description>
+        <externalId>false</externalId>
+        <label>Period Code</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remittance_Day__c</fullName>
+        <description>remittance date</description>
+        <externalId>false</externalId>
+        <label>Remittance Day</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Settlement_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>Settlement Day</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Visible_on_the_portal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to show/hide the record on the customer service portal. This field is unchecked by default</description>
+        <externalId>false</externalId>
+        <label>Visible on the portal</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>frequency_code__c</fullName>
+        <externalId>false</externalId>
+        <label>Remittance Frequency Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Operational Calendar</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ISS_operation__c</columns>
+        <columns>Operation_Code__c</columns>
+        <columns>Period_Code__c</columns>
+        <columns>Operation_Period_code__c</columns>
+        <columns>First_Day__c</columns>
+        <columns>Last_Day__c</columns>
+        <columns>Remittance_Day__c</columns>
+        <columns>Settlement_Day__c</columns>
+        <columns>Operation_Currency__c</columns>
+        <columns>frequency_code__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Allrd</fullName>
+        <columns>NAME</columns>
+        <columns>ISS_operation__c</columns>
+        <columns>Operation_Code__c</columns>
+        <columns>Period_Code__c</columns>
+        <columns>Operation_Period_code__c</columns>
+        <columns>First_Day__c</columns>
+        <columns>Last_Day__c</columns>
+        <columns>Remittance_Day__c</columns>
+        <columns>Settlement_Day__c</columns>
+        <columns>Operation_Currency__c</columns>
+        <columns>frequency_code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Remittance_Day__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>All with remittance day</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>mgo</fullName>
+        <columns>NAME</columns>
+        <columns>ISS_operation__c</columns>
+        <columns>Operation_Code__c</columns>
+        <columns>Period_Code__c</columns>
+        <columns>Operation_Period_code__c</columns>
+        <columns>First_Day__c</columns>
+        <columns>Last_Day__c</columns>
+        <columns>Remittance_Day__c</columns>
+        <columns>Settlement_Day__c</columns>
+        <columns>Operation_Currency__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ISS_operation__c</field>
+            <operation>equals</operation>
+            <value>BSP-IN</value>
+        </filters>
+        <label>. mgo</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>Calendar-{00000000}</displayFormat>
+        <label>FDS Calendar Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Operational Calendars</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>ISS_Calendar</fullName>
+        <active>true</active>
+        <description>used to host ISS (BSP and CASS) Calendars</description>
+        <label>ISS Calendar</label>
+        <picklistValues>
+            <picklist>Operation_Type__c</picklist>
+            <values>
+                <fullName>BSP Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Import</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

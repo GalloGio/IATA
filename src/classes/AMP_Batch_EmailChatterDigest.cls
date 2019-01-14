@@ -4,6 +4,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 
 	// variables
 	public List<Account> lsHQAccounts;
+	public Map<Id, Account> mpAccountId2Account;
 	private String dailyOrWeekly;
 	public List<FeedItem> lsAllFeedItems;
 	public List<Topic> lsBroadcastTopics;
@@ -27,6 +28,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 		} else {
 			lsAllFeedItems = AMP_ChatterTopicSubscribeController.getDailyFeedItems(lsHQAccounts);
 		}
+		if(Test.isRunningTest() ) { query += ' LIMIT 100 ';}
 		System.debug(query);
 
 		return Database.getQueryLocator(query);
@@ -35,17 +37,30 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
    	global void execute(Database.BatchableContext BC, List<User> lsUsers) {
 		System.debug('execute');
 		System.debug(dailyOrWeekly);
-		List<FeedItem> lsAllFeedItems = AMP_ChatterTopicSubscribeController.getFeedItems(lsHQAccounts);
+		System.debug(lsUsers);
+		System.debug(lsHQAccounts);
+		Map<Id, Account> mpAccountId2Account = new Map<Id,Account>();
+		for(Account a: lsHQAccounts) {
+			mpAccountId2Account.put(a.Id,a);
+		}
+		System.debug(mpAccountId2Account);
+		//List<FeedItem> lsAllFeedItems = AMP_ChatterTopicSubscribeController.getFeedItems(lsHQAccounts);
 
 		// Send an email
 		List<Messaging.SingleEmailMessage> lsEmails = new List<Messaging.SingleEmailMessage>();
-		// User u = [SELECT Id, FirstName, LastName, Name, Email, AMP_Digest_Topics__c, AMP_Digest_Daily_or_Weekly__c FROM User WHERE Id='005w0000003Pu27'];
+		List<TopicAssignment> lsTopicAssignments = AMP_ChatterTopicSubscribeController.getTopicAssignments(lsAllFeedItems);
+		// Use Organization Wide Address
+		OrgWideEmailAddress owa = [select id, Address from OrgWideEmailAddress WHERE Address='noreply@iata.org'];
 		for(User u : lsUsers) {
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setOrgWideEmailAddressId(owa.id);
 			String[] toAddresses = new String[] {u.Email};
 			mail.setToAddresses(toAddresses);
-			mail.setSubject('Your Daily Digest by Topic(s)');
-			String emailBody = AMP_ChatterTopicSubscribeController.getEmailBody(u, lsAllFeedItems);
+			if(dailyOrWeekly == 'weekly')
+				mail.setSubject('Your Weekly Digest by Topic(s)');
+			else
+				mail.setSubject('Your Daily Digest by Topic(s)');
+			String emailBody = AMP_ChatterTopicSubscribeController.getEmailBody(u, lsAllFeedItems, lsTopicAssignments, mpAccountId2Account);
 			mail.setHtmlBody(emailBody);
 			// System.debug(getEmailBody(u));
 			if (emailBody != '') lsEmails.add(mail);

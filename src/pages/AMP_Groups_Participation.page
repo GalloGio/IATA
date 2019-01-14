@@ -35,7 +35,17 @@
 								<apex:outputLink value="/{!pWrapper.participant.Local_Governance__c}" target="_blank">{! pWrapper.participant.Local_Governance__r.Name }</apex:outputLink>
 						</td>
 						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.gOwner}</td>
-						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.participant.Local_Governance__r.Mission__c }</td>
+						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">
+							<!-- {! pWrapper.participant.Local_Governance__r.Mission__c } -->
+							<apex:outputPanel styleClass="long-text-area hidden"  >
+							  <apex:outputText value="{!pWrapper.participant.Local_Governance__r.Mission__c}"   />
+							  <a href="#" class="show-less">[show less]</a>
+							</apex:outputPanel>
+							<apex:outputPanel styleClass="short-text-area">
+							  <apex:outputText value="{!LEFT(pWrapper.participant.Local_Governance__r.Mission__c,100)}" />
+							  <apex:outputPanel rendered="{!LEN(pWrapper.participant.Local_Governance__r.Mission__c)>100}"> <a href="#" class="show-more">[show more]</a></apex:outputPanel>
+							</apex:outputPanel>
+						</td>
 					</apex:outputPanel>
 
 					<td class="dataCell" >{! pWrapper.participant.Participant_Type__c }</td>
@@ -56,5 +66,24 @@
 
 		</table>
 	</apex:pageBlock>
+	<!-- JAVASCRIPT -->
+    <apex:includeScript value="{!$Resource.jQuery172}" />
+    <script>
+      $(document).ready(function(){
+        enableShowMoreOrLess();
+      });
+      function enableShowMoreOrLess() {
+        $('.show-more').click(function() {
+          event.preventDefault();
+          $(this).parents('.short-text-area').hide().siblings('.long-text-area').show();
+          // $(this).parent().siblings('.long-text-area').show();
+        });
+        $('.show-less').click(function() {
+          event.preventDefault();
+          $(this).parents('.long-text-area').hide();
+          $(this).parent().siblings('.short-text-area').show();
+        });
 
+      }
+    </script>
 </apex:page>

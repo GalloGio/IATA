@@ -1,7 +1,16 @@
-trigger AMS_InspectionTrigger on AMS_Inspection__c (before insert, before update, after insert, after update) {
+trigger AMS_InspectionTrigger on AMS_Inspection__c (before insert, before update, after insert, after update, after delete) {
 
+	   
     if(!AMS_TriggerExecutionManager.checkExecution(AMS_Inspection__c.getSObjectType(), 'AMS_InspectionTrigger')) { return; }
+
+     //Delete Agency Owner created by AMS AccountRole
+    //if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAccreditations(Trigger.old);
     
+    /*AMSU-161 - begin*/
+    if(Trigger.isBefore && Trigger.isInsert){
+        AMS_InspectionTriggerHandler.handleBeforeInsert(Trigger.new);
+    }
+    /*AMSU-161 - end*/
 
     if(Trigger.isAfter && Trigger.isInsert){
 

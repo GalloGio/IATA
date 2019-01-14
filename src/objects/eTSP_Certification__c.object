@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Ticket Service Provider test progresses</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -95,37 +92,45 @@
         <fullName>Certification_status__c</fullName>
         <externalId>false</externalId>
         <label>Certification status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>On hold</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pending customer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Signed off</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certified</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>On hold</fullName>
+                    <default>false</default>
+                    <label>On hold</label>
+                </value>
+                <value>
+                    <fullName>In progress</fullName>
+                    <default>false</default>
+                    <label>In progress</label>
+                </value>
+                <value>
+                    <fullName>Pending customer</fullName>
+                    <default>false</default>
+                    <label>Pending customer</label>
+                </value>
+                <value>
+                    <fullName>Signed off</fullName>
+                    <default>false</default>
+                    <label>Signed off</label>
+                </value>
+                <value>
+                    <fullName>Certified</fullName>
+                    <default>false</default>
+                    <label>Certified</label>
+                </value>
+                <value>
+                    <fullName>Closed</fullName>
+                    <default>false</default>
+                    <label>Closed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Coordinate_delivery_of_HOT_Billing_Ana__c</fullName>
@@ -235,6 +240,16 @@
     <fields>
         <fullName>Not_Applicable4__c</fullName>
         <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Not Applicable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Not_Applicable5__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This field is checked when it&apos;s not required to send the HOT to the test partner airline</description>
         <externalId>false</externalId>
         <label>Not Applicable</label>
         <trackHistory>false</trackHistory>
@@ -443,4 +458,5 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

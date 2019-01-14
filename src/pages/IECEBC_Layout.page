@@ -22,9 +22,6 @@
                 jQuery(document).ready(function(){resetForms()});
             </script>
             <apex:insert name="pageHeadAdditions" />
-            <style type="text/css">
-                main { margin-bottom: 140px; }
-            </style>
         </head>
         <body data-is-modal-open="false" id="page-top">
             <div class="app-container">
@@ -51,15 +48,15 @@
                                         <!-- In Progress -->
                                         <div class="sub-nav tab-container js-tabs">
                                             <ul class="nav tabs">
-                                                <li class="active" data-target="#sub-nav-pane-1">
-                                                    <a href="#">Service Details</a>
-                                                </li>
-                                                <li data-target="#sub-nav-pane-2">
+                                                <li class="active" data-target="#sub-nav-pane-2">
                                                     <a href="#">Manage Services</a>
+                                                </li>
+                                                <li data-target="#sub-nav-pane-1">
+                                                    <a href="#">Service Details</a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content">
-                                                <div class="tab-pane is-open" id="sub-nav-pane-1">
+                                                <div class="tab-pane" id="sub-nav-pane-1">
                                                     <div class="title">Service Details</div>
                                                     <table class="table-service-details">
                                                         <apex:outputText rendered="{!IF(productRatePlan.EBC_SubscriptionType__c='Pay-as-You-Go',False,True)}">   
@@ -98,7 +95,7 @@
                                                     </table>
                                                     <a href="mailto:globaldata@iata.org?subject=eBroadcast upgrade" class="button block dark">Contact Support</a>
                                                 </div>
-                                                <div class="tab-pane" id="sub-nav-pane-2">
+                                                <div class="tab-pane is-open" id="sub-nav-pane-2">
                                                     <div class="title">View</div>
                                                     <ul class="list angle-double-right">
                                                         <li>
@@ -136,8 +133,61 @@
                 
                         <div class="column column-account">
                             <ul class="nav account-nav">
-				                <apex:variable rendered="{!isUserLoggedIn}" value="{!$User}" var="u">
-	                                <li><a class="icon user" href="#">{!$User.FirstName} {!$User.LastName}</a></li>
+                                <apex:form >
+                                     <apex:actionFunction name="logout" action="{!logout}"/>   
+                                </apex:form>  
+                                <apex:variable rendered="{!isUserLoggedIn}" value="{!$User}" var="u">
+                                    <script type="text/javascript">
+                                    var j$=jQuery.noConflict();
+                                    j$(document).ready(function(){
+                                    j$('#js-account-nav').on('click', function(event) {
+                                            event.preventDefault();
+                                            var self = j$(this),
+                                            subNav = j$("#js-account-nav-menu");
+                                            if (!subNav.hasClass('is-open')) {
+                                                self.addClass(className.open);
+                                                subNav.addClass(className.open);
+                                                var body = j$('body');
+                                                body.append('<div id="js-main-nav-overlay" class="overlay"></div>')
+                                            } else {
+                                                self.removeClass(className.open);
+                                                subNav.removeClass(className.open);
+                                                j$('#js-main-nav-overlay').remove();
+                                            }
+                                        });
+                                     });
+                                    </script>
+                                    <li><a class="icon user"  id="js-account-nav" href="#">{!$User.FirstName} {!$User.LastName}</a></li>
+                                    <div id="js-account-nav-menu" style="margin-left:330px; width:270px;text-align: left;" class="sub-nav tab-container js-tabs">
+                                        
+                                            <ul class="nav tabs">
+                                                <li class="active" data-target="#sub-nav-pane-1" style="width: 100%;">
+                                                    <a href="#">Menu Items</a>
+                                                </li>
+                                                
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane is-open" id="sub-nav-pane-1">                                                    
+                                                    <ul class="list angle-double-right" style="margin-left:-20px">
+                                                            <li style="display: block;">
+                                                                <a href="{!URLFOR($Page.IEC_ContactInformation)}">My Account</a>
+                                                            </li>
+                                                            <li style="display: block;">
+                                                                <a href="{!URLFOR($Page.IEC_DataStatisticsSubscriptions)}">My Subscriptions</a>
+                                                            </li>
+                                                            <li style="display: block;">
+                                                                <a href="{!URLFOR($Page.IEC_OrderHistory)}">My Invoices</a>
+                                                            </li>
+                                                            <li style="display: block;">
+                                                                <a href="{!URLFOR($Page.IEC_ZQuotes)}">My Quotes</a>
+                                                            </li>
+                                                            <li style="display: block;">
+                                                                <a style="margin-top:34px;" class="button block dark" href="#" onClick="logout();">Already done? &nbsp;Logout</a>
+                                                            </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </apex:variable>
                                 <li><a class="icon shopping-cart" href="{!URLFOR($Page.IECHomepage)}">Shopping area</a></li>
                             </ul>

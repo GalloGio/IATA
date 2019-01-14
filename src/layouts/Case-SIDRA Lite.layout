@@ -4,10 +4,13 @@
     <customButtons>Approve_Default</customButtons>
     <customButtons>EasyUpload</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
+    <customButtons>Send_Email_with_Attachment</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
     <customButtons>Deactivate_BSPLink</customButtons>
+    <customButtons>Undo_Deactivation_BSPLink</customButtons>
     <customButtons>Reactivate_BSPLink</customButtons>
+    <customButtons>OscarFOP</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -24,7 +27,16 @@
                 <field>SIDRA_logo__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>OneColumn</style>
+        <layoutColumns>
+            <layoutItems>
+                <height>50</height>
+                <page>AMS_Change_Code_Notification</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -37,12 +49,16 @@
                 <field>Subject</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Description</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CaseNumber</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Case_Remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Description</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -105,6 +121,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SuppliedEmail</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -254,10 +274,29 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Default amounts information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Current_Outstanding_Amount_all_periods__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Confirmation_Remarks__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Default/Suspension</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>SIDRA_Lite_Default_Date__c</field>
             </layoutItems>
             <layoutItems>
@@ -646,6 +685,22 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
+        <label>Forecast Risk Properties</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>ANG_RiskForecastPropertiesPage</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
         <label>System Information</label>
         <layoutColumns>
             <layoutItems>
@@ -682,12 +737,12 @@
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
         <label>Web Links</label>
-        <layoutColumns/>
         <layoutColumns>
             <layoutItems>
-                <customLink>Conga_Merge_Letters</customLink>
+                <customLink>Thread_ID_QMS</customLink>
             </layoutItems>
         </layoutColumns>
+        <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
@@ -726,8 +781,15 @@
                 <height>200</height>
                 <page>GenericAttachmentListCase</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
+            </layoutItems>
+            <layoutItems>
+                <height>1</height>
+                <page>AMS_Case_AccIrr_Popup</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>1</width>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -802,6 +864,42 @@
         <fields>Financial_Institution__c</fields>
         <fields>Remarks__c</fields>
         <relatedList>Financial_Security__c.Release_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>Change_Code__c</fields>
+        <fields>Account__c</fields>
+        <fields>Reason_Code__c</fields>
+        <fields>Reason_Description__c</fields>
+        <fields>Created_Date_To_Show__c</fields>
+        <relatedList>Agency_Applied_Change_code__c.SIDRA_Case__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>OSCAR__c</fields>
+        <fields>HOId__c</fields>
+        <fields>AMS_IATAcode__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_Name_Link_FF__c</fields>
+        <fields>ANG_Account_IATA_Code__c</fields>
+        <fields>ANG_Risk_Type__c</fields>
+        <fields>ANG_Issued_Date__c</fields>
+        <fields>ANG_Source__c</fields>
+        <fields>ANG_expiration_date_ff__c</fields>
+        <fields>ANG_Event_Status__c</fields>
+        <relatedList>ANG_Agency_Risk_Event__c.ANG_CaseId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

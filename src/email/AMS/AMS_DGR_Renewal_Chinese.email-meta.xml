@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS DGR Renewal CN</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – DGR renewal</subject>
+    <textOnly>尊敬的先生/女士：
+
+
+国际航空运输协会决议的规定，作为国际航协认可货运代理人的资格保持条件，所有经批准的货运代理人在任何时候均应满足代理人手册的要求和规定。
+
+
+根据国际航空运输协会决议，贵公司至少需要有3名全职员工持有有效的危险品培训合格证书，以确保能够提供代理人手册规定的服务并进行操作。危险品培训合格证书的有效期为两年。
+
+
+根据我处备案信息，贵公司提供的的《危险品培训合格证书》即将于{!AMS_OSCAR__c.Change_effective_as_of__c}过期。因此，请发送新培训/复训的危险品证书复印件，以及贵公司基本信息至国际航协，以证明贵公司遵守了这一规定。
+
+
+请在{!AMS_OSCAR__c.Change_effective_as_of__c}前，通过国际航协客户入口http://www.iata.org/cs， 将上述证书提供至国际航协。请将证书扫描件作为附件上传到客户入口主页“我最近的案例”栏下，编号{!AMS_OSCAR__c.Name} 的案例中。
+
+
+我处相关负责人将审核证书是否符合要求。因此，请密切关注审核结果。
+
+
+请回复确认已收悉此邮件提醒并将及时跟进处理。
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+
+
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+</EmailTemplate>

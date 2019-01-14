@@ -4,6 +4,7 @@ private class CongaManagerTest{
     @isTest
     static void TestSendMail_OK() {
         String sessionId = 'sessionId';
+        String serverUrl = 'http://test.com';
         Id caseId = '500000000000000';
         Id contactId = '003000000000000';
         Id congaTemplate = '01H000000000000';
@@ -13,13 +14,14 @@ private class CongaManagerTest{
         CongaManager.TEST_RESPONSE.setStatusCode(200);
 
         Test.StartTest();
-        CongaManager.sendMail(sessionId, caseId, contactId, congaTemplate, emailTemplateId);
+        CongaManager.sendMail(sessionId, serverUrl, caseId, contactId, congaTemplate, emailTemplateId);
         Test.StopTest();
     }
 
     @isTest
     static void TestSendMail_BadResponse() {
         String sessionId = 'sessionId';
+        String serverUrl = 'http://test.com';
         Id caseId = '500000000000000';
         Id contactId = '003000000000000';
         Id congaTemplate = '01H000000000000';
@@ -30,7 +32,7 @@ private class CongaManagerTest{
 
         Test.StartTest();
         try {
-            CongaManager.sendMail(sessionId, caseId, contactId, congaTemplate, emailTemplateId);
+            CongaManager.sendMail(sessionId, serverUrl, caseId, contactId, congaTemplate, emailTemplateId);
             System.assert(false, 'An exception was expected');
         } catch(Exception e) {
             System.assert(true);
@@ -41,6 +43,7 @@ private class CongaManagerTest{
     @isTest
     static void TestAttachFile() {
         String sessionId = 'sessionId';
+        String serverUrl = 'http://test.com';
         Id caseId = '500000000000000';
         Id congaTemplate = '01H000000000000';
 
@@ -48,13 +51,14 @@ private class CongaManagerTest{
         CongaManager.TEST_RESPONSE.setStatusCode(200);
 
         Test.StartTest();
-        CongaManager.attachFile(sessionId, caseId, congaTemplate);
+        CongaManager.attachFile(sessionId, serverUrl, caseId, congaTemplate);
         Test.StopTest();
     }
 
     @isTest
     static void TestSendEmailURL() {
         String sessionId = 'sessionId';
+        String serverUrl = 'http://test.com';
         Id caseId = '500000000000000';
         Id contactId = '003000000000000';
         Id congaTemplate = '01H000000000000';
@@ -62,7 +66,7 @@ private class CongaManagerTest{
         Id OrgWideDefaultsId = '0D2000000000000';
 
         Test.StartTest();
-        String result = CongaManager.sendEmailURL(sessionId, caseId, contactId, congaTemplate, emailTemplateId, OrgWideDefaultsId);
+        String result = CongaManager.sendEmailURL(sessionId, serverUrl, caseId, caseId, contactId, congaTemplate, emailTemplateId, OrgWideDefaultsId, null);
         Test.StopTest();
 
         System.AssertEquals(true, result!=null);
@@ -71,14 +75,25 @@ private class CongaManagerTest{
     @isTest
     static void TestGoToSendEmailConga() {
         String sessionId = 'sessionId';
+        String serverUrl = 'http://test.com';
         Id caseId = '500000000000000';
         Id contactId = '003000000000000';
         Id OrgWideDefaultsId = '0D2000000000000';
 
         Test.StartTest();
-        String result = CongaManager.goToSendEmailConga(sessionId, caseId, contactId, OrgWideDefaultsId);
+        String result = CongaManager.goToSendEmailConga(sessionId, serverUrl, caseId, caseId, contactId, OrgWideDefaultsId, null);
         Test.StopTest();
 
         System.AssertEquals(true, result!=null);
     }
+
+    @isTest
+    static void TestgetValidSessionId() {
+        Test.StartTest();
+        String sessionId = CongaManager.getValidSessionId();
+        Test.StopTest();
+
+        System.AssertEquals(true, sessionId!=null);
+    }
+
 }

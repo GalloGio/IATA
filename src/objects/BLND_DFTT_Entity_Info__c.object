@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -117,24 +114,29 @@
         <fullName>BLND_Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>RecentlyCreated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RecentlyModified</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RecentlyViewed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>RecentlyCreated</fullName>
+                    <default>false</default>
+                    <label>RecentlyCreated</label>
+                </value>
+                <value>
+                    <fullName>RecentlyModified</fullName>
+                    <default>false</default>
+                    <label>RecentlyModified</label>
+                </value>
+                <value>
+                    <fullName>RecentlyViewed</fullName>
+                    <default>false</default>
+                    <label>RecentlyViewed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>TableTop Entity Info</label>
     <nameField>
@@ -144,4 +146,5 @@
     <pluralLabel>TableTop Entity Infos</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

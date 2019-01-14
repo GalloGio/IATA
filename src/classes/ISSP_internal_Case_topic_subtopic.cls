@@ -50,8 +50,10 @@ public list<String> errorMessage {get; set;}
         private void initTopicsList()
         { 
                 this.DataCategoryContainer.lst_DataCategories.sort();
-
+			System.debug('basto1p - lst_DataCategories.lst_DataCategories.size='+this.DataCategoryContainer.lst_DataCategories.size());
+            System.debug('basto1p - lst_DataCategories.lst_DataCategories='+this.DataCategoryContainer.lst_DataCategories);
                 if (parentCase.Topic__c != null && parentCase.Topic__c != ''){
+                System.debug('basto1p - NOT NULL parentCase.Topic__c='+parentCase.Topic__c);
                     String tmpTopic = (parentCase.Topic__c).replace(' ' ,'_');
                         for(Integer index = 0; index < this.DataCategoryContainer.lst_DataCategories.size(); index++)
                         {
@@ -73,6 +75,7 @@ public list<String> errorMessage {get; set;}
                         refreshTopicPickList();
                 }
                 else{
+                    System.debug('basto1p - NULL parentCase.Topic__c!');
                         this.lst_selectTopics.add(new SelectOption(Env.SelectOptionDefaultValue, Env.SelectOptionDefaultValue));
                         for(Integer index = 0; index < this.DataCategoryContainer.lst_DataCategories.size(); index++)
                         {
@@ -85,6 +88,7 @@ public list<String> errorMessage {get; set;}
 
         public void refreshTopicPickList()
         {   
+            system.debug('basto1p refreshTopicPickList.topic='+topic);
             if (topic.compareTo(Env.SelectOptionDefaultValue) == 0)
             {
                 this.lst_selectsubTopics = new list<SelectOption>();
@@ -127,6 +131,7 @@ public list<String> errorMessage {get; set;}
             Integer index = Integer.valueOf(topic.trim());
 
             clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+            System.debug('basto1p - index='+index+' parentCase.SubTopic__c='+parentCase.SubTopic__c+'; selectDataCategory.lst_childs.size()='+selectDataCategory.lst_childs.size());
             if (parentCase.SubTopic__c == null || parentCase.SubTopic__c == '')
             {
                 //subtopic = selectDataCategory.CategoryName;
@@ -217,10 +222,8 @@ public list<String> errorMessage {get; set;}
             //String to be used in the LIKE query 
             string varCountry = '%' + parentCase.IFAP_Country_ISO__c + '%';
 
-            list<IATA_ISO_Country__c> lst_Country = new list<IATA_ISO_Country__c>([SELECT Id, Name , Case_BSP_Country__c , ISO_Code__c
-                                                                                    FROM IATA_ISO_Country__c 
-                                                                                    WHERE ISO_Code__c  =: parentCase.IFAP_Country_ISO__c 
-                                                                                    LIMIT 1 ]);
+            list<IATA_ISO_Country__c> lst_Country = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{parentCase.IFAP_Country_ISO__c});
+            
             if(lst_Country != null && lst_Country.size() > 0){
                 parentCase.BSPCountry__c =  lst_Country[0].Case_BSP_Country__c ;
                 parentCase.Country_concerned_by_the_query__c = lst_Country[0].Case_BSP_Country__c ;
@@ -326,11 +329,11 @@ public list<String> errorMessage {get; set;}
                 ChoosenCS = FinalMatch_Lst[0];
                 //Select the choosen Record Type
                 String recordType = ChoosenCS.RecordType__c;
-                List <RecordType> recordTypeList = [SELECT Id FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
+                Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', recordType);
 
-                if (!recordTypeList.isEmpty()){
+                if (String.isNotBlank(recordTypeId)){
                     //Assign RecordType according to custom Settings
-                    parentCase.RecordTypeId = recordTypeList[0].Id;
+                    parentCase.RecordTypeId = recordTypeId;
                     system.debug('KER0 parentCase.RecordTypeId'+parentCase.RecordTypeId);
                     system.debug('KER0 ChoosenCS.OwnerId__c'+ChoosenCS.OwnerId__c);
 
@@ -405,7 +408,7 @@ public list<String> errorMessage {get; set;}
     }
 
 
-    private void addDecsription() {
+    @TestVisible private void addDecsription() {
         
 
         String addDecsription ;

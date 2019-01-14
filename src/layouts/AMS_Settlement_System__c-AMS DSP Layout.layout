@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -42,6 +41,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DPC__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CurrencyIsoCode</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ISS_Joining_fee_cluster__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -100,6 +107,13 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>BSP_Billing__c</fields>
+        <fields>CurrencyIsoCode</fields>
+        <fields>DPC_System__c</fields>
+        <fields>ISS_Joining_fee_cluster__c</fields>
+    </miniLayout>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
@@ -113,6 +127,19 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Operation_Period_code__c</fields>
+        <fields>Operation_Type__c</fields>
+        <fields>First_Day__c</fields>
+        <fields>Last_Day__c</fields>
+        <fields>Operation_Currency__c</fields>
+        <fields>Period_Code__c</fields>
+        <fields>Remittance_Day__c</fields>
+        <relatedList>operational_Calendar__c.ISS_operation__c</relatedList>
+        <sortField>Remittance_Day__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>IATA_ISO_Country__c.AMS_Settlement_System_CASS__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -121,7 +148,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hg0000000TaG1</masterLabel>
+        <masterLabel>00hw000000dO5nt</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

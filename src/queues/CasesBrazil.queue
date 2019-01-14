@@ -3,6 +3,17 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - Brazil</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATABrazil</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasCustomerService</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>MADHubCSManagerA</role>
+            <role>MADHubCSstaffA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

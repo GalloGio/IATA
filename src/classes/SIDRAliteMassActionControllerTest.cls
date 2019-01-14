@@ -30,7 +30,7 @@ public class SIDRAliteMassActionControllerTest {
         System.assert(associatedCountry != null && associatedCountry.size() > 0);
 
         Contact contact = new Contact(
-            RecordtypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId(),
+            RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'),
             FirstName = 'Dummy',
             LastName = 'Contact',
             Type_of_Contact__c = 'IFAP Contact',
@@ -75,15 +75,15 @@ public class SIDRAliteMassActionControllerTest {
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.getListRecordtype();
         controller.filter.getListIFAPCountries();
         controller.triggerSidraLiteAction();
+        controller.exportCSV();
         Test.stopTest();
     }
 
     @isTest
     public static void testSearchIFAPFS() {
-        Case ifapCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_IFAP_ID);
+        Case ifapCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_IFAP.Id);
         ifapCase.Status = 'Financial Security Requested';
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.firstFSnonComplianceDate__c = null;
@@ -94,7 +94,7 @@ public class SIDRAliteMassActionControllerTest {
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_IFAP_ID;
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_IFAP.Id;
         controller.filter.cse.Region__c = 'Americas';
         controller.filter.cse.BSPCountry__c = 'Canada';
         controller.filter.ifapType = 'FS';
@@ -115,12 +115,14 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.filter.getListFinancialReviews();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
     @isTest
     public static void testSearchIFAPFA() {
-        Case ifapCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_IFAP_ID);
+        Case ifapCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_IFAP.Id);
         ifapCase.Status = 'Financial Statements Uploaded';
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.firstFAnonComplianceDate__c = null;
@@ -131,7 +133,7 @@ public class SIDRAliteMassActionControllerTest {
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_IFAP_ID;
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_IFAP.Id;
         controller.filter.cse.Region__c = 'Americas';
         controller.filter.cse.BSPCountry__c = 'Canada';
         controller.filter.ifapType = 'FA';
@@ -152,19 +154,20 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
     @isTest
     public static void testSearchSMAP() {
-        Case smapCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_SMAP_ID);
+        Case smapCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_SMAP.Id);
         smapCase.Decision__c = 'Prejudiced Collection of Funds';
         smapCase.Suspension_Date__c = Date.today().addDays(-1);
         insert smapCase;
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_SMAP_ID;
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_SMAP.Id;
         controller.filter.cse.Region__c = 'Americas';
         controller.filter.cse.BSPCountry__c = 'Canada';
 
@@ -183,19 +186,20 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
     @isTest
     public static void testSearchSAAM_ReasonType1() {
-        Case saamCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_SAAM_ID);
+        Case saamCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_SAAM.Id);
         saamCase.Reason1__c = 'Financial Security Renewal';
         saamCase.Bank_Guarantee_deadline__c = Date.today().addDays(-1);
         insert saamCase;
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_SAAM_ID;
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_SAAM.Id;
         controller.filter.cse.Region__c = 'Americas';
         controller.filter.cse.BSPCountry__c = 'Canada';
         controller.filter.cse.Reason1__c = saamCase.Reason1__c;
@@ -215,19 +219,20 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
     @isTest
     public static void testSearchSAAM_ReasonType2() {
-        Case saamCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_SAAM_ID);
+        Case saamCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_SAAM.Id);
         saamCase.Reason1__c = 'Certificate DGR';
         saamCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         insert saamCase;
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_SAAM_ID;
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_SAAM.Id;
         controller.filter.cse.Region__c = 'Americas';
         controller.filter.cse.BSPCountry__c = 'Canada';
         controller.filter.cse.Reason1__c = saamCase.Reason1__c;
@@ -247,19 +252,20 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
     @isTest
     public static void testSearchSAAM_ReasonType3() {
-        Case saamCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_SAAM_ID);
+        Case saamCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_SAAM.Id);
         saamCase.Reason1__c = 'Annual Fees';
         saamCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         insert saamCase;
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_SAAM_ID;
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_SAAM.Id;
         controller.filter.cse.Region__c = 'Americas';
         controller.filter.cse.BSPCountry__c = 'Canada';
         controller.filter.cse.Reason1__c = saamCase.Reason1__c;
@@ -279,23 +285,29 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
     @isTest
-    public static void testSearchOSCAR() {
-        Case oscarCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_OSCAR_ID);
-        oscarCase.Reason1__c = 'CHO / CHS – Change of Ownership / Legal Status';
+    public static void testSearchOSCAR_Reasons1() {
+        Case oscarCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_OSCAR.Id);
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
         insert oscarCase;
+        
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+            Account__c = account.Id,
             RPM_Approval__c = 'Authorize Disapproval'
         );
         insert oscar;
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_OSCAR_ID;
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_OSCAR.Id;
         controller.filter.cse.Region__c = 'Americas';
         controller.filter.cse.BSPCountry__c = 'Canada';
 
@@ -315,12 +327,55 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testSearchOSCAR_Reasons2() {
+        Case oscarCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_OSCAR.Id);
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS2).get(0);
+        oscarCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        oscarCase.Termination_date_manual_entry__c = null;
+        oscarCase.Documentation_Complete__c = null;
+        insert oscarCase;
+
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
+        insert account;
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = account.Id);
+        insert oscar;
+
+        Test.startTest();
+        SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_OSCAR.Id;
+        controller.filter.cse.Region__c = 'Americas';
+        controller.filter.cse.BSPCountry__c = 'Canada';
+
+        oscarCase.OSCAR__c = oscar.Id;
+        oscarCase.Region__c = 'Americas';
+        update oscarCase;
+
+        controller.search();
+        System.assert(controller.listWrapperCase.size()==1);
+        selectAll(controller);
+        controller.triggerSidraLiteAction();
+
+        for (SIDRAliteMassActionController.WrapperCase result: controller.listWrapperCase) {
+            System.assert(result.getIsSuccess());
+            result.getChildId();
+        }
+
+        controller.filter.getShortName();
+        controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
     @isTest
     public static void testSearchInvoicing() {
-        Case invoicingCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_INVOICING_ID);
+        Case invoicingCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_INVOICING.Id);
         invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
         invoicingCase.Has_the_agent_paid_invoice__c = 'Not paid';
         invoicingCase.Reason1__c = 'Annual Fees';
@@ -328,7 +383,7 @@ public class SIDRAliteMassActionControllerTest {
 
         Test.startTest();
         SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
-        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_INVOICING_ID;
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_INVOICING.Id;
         controller.filter.cse.Region__c = 'Americas';
         controller.filter.cse.BSPCountry__c = 'Canada';
 
@@ -347,6 +402,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 

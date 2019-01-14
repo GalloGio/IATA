@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Agency Risk Management - Americas</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasAgencyManagement</publicGroup>
+            <publicGroup>IDFSAmericasHUB</publicGroup>
+        </publicGroups>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

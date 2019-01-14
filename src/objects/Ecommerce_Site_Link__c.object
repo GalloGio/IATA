@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>IEC - static URLs to use in Ecommerce pages</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -82,24 +79,29 @@
         <description>IEC - Page section to display URL</description>
         <externalId>false</externalId>
         <label>Page Section</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Customer Care Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Legal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Stay Informed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Customer Care Services</fullName>
+                    <default>false</default>
+                    <label>Customer Care Services</label>
+                </value>
+                <value>
+                    <fullName>Legal</fullName>
+                    <default>false</default>
+                    <label>Legal</label>
+                </value>
+                <value>
+                    <fullName>Stay Informed</fullName>
+                    <default>false</default>
+                    <label>Stay Informed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>URL__c</fullName>
@@ -136,4 +138,5 @@
     <pluralLabel>Ecommerce Site Links</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

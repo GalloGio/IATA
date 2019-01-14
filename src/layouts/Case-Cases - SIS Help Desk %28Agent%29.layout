@@ -151,10 +151,6 @@
                 <field>Non_Business_Hours_Case_Creation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>First_Call_Resolution__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Age_Days__c</field>
             </layoutItems>
@@ -335,7 +331,7 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
@@ -358,6 +354,15 @@
     </relatedContent>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.PRIORITY</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.STATUS</fields>
+        <fields>OWNER_NAME</fields>
+        <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>SOLUTION.ISSUE</fields>

@@ -85,15 +85,19 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
                         //, LastViewedDate
                         , Maximum_Allowed_Step__c
                         , Number_of_Recipients__c
+                        , Is_Payment_Step__c
+                        , Is_Step6_Valid__c
+                        , Is_Step5_Valid__c
+                        , Is_Step7_Valid__c
                         //, OwnerId
                         //, Scheduled_Date_Valid_Until__c
                         //, Scheduled_Date__c
-                        //, Status__c
+                        , Status__c
                         //, Subject__c
                         //, Test_Email_Last_Send_Time_Stamp__c
                         //, Test_Email_Total_Sent_On_Stamp_Period__c
                         //, Test_Email_Total_Sent_Today__c 
-                from EBC_Campaign__c 
+                from EBC_Campaign__c
                 where Id = :ebcCampaignId
                 limit 1] ;
             ebcCampaign = ( campaignList.size() == 0)  ? null :campaignList[0];
@@ -261,7 +265,10 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
     // please note that the detail on the product rate plan charge will be recalculated and reselected
     // this ensure the data integrity and simplify the caller
     public PageReference goToPaymentPage()
-    {
+    {   String id = ApexPages.currentPage().getParameters().get('id');
+        ebcCampaignId = id;
+        system.debug('goToPaymentPage ebcCampaignId :: ' + ebcCampaignId);
+
         String campaignPaymentOption = payWithExactAmount ? EBC_PAYMENT_CAMPAIGN_EXACT 
                                     : ( payWithEmailPackage ? EBC_PAYMENT_CAMPAIGN_EMAIL_PACKAGE  
                                         : ( payWithRatePlan ? EBC_PAYMENT_CAMPAIGN_RATE_PLAN : null )
@@ -277,6 +284,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
                             , ebcCampaignId // campaignId
                             , emailCreditPurchased // emailCreditAmount
                             );
+        system.debug('paymentPage :: ' + paymentPage);
         return paymentPage;
     }
     
@@ -293,6 +301,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
         a.New_Balance__c = newEmailBalance;
         a.Related_Billing_Account__c = billingAccount.Id;
         a.Total_Count__c = -1 * Integer.valueOf(ebcCampaign.Number_of_Recipients__c);
+        a.Name = 'Campaign Send';
         
         insert a;
         

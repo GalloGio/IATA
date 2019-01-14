@@ -12,6 +12,18 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISS_email_from_notification</template>
     </alerts>
+    <alerts>
+        <fullName>ISS_send_email_from_notification_CNS</fullName>
+        <description>ISS - send email from notification - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_email_from_notification_CNS</template>
+    </alerts>
     <fieldUpdates>
         <fullName>ISS_Portal_Auto_Archive_notification</fullName>
         <field>Archive__c</field>
@@ -38,19 +50,5 @@
             <timeLength>0</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>ISS Portal - send email from notification</fullName>
-        <actions>
-            <name>ISS_send_email_from_notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Notification__c.Alert_Contact_By_Email__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

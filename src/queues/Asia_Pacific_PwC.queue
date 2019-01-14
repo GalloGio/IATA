@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>muhammedw@iata.org</email>
     <name>Asia &amp; Pacific PwC</name>
+    <queueMembers>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>APAgencyManagementI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

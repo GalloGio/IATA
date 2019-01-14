@@ -15,7 +15,7 @@ public with sharing class TestDataGenerator
     public static String generateProductCode()
     {
         //Product format is 9999-99
-        String pCode = Utility.generateRandomDigit(4) + '-' + Utility.generateRandomDigit(2);
+        String pCode = '+' + Utility.generateRandomDigit(3) + '-' + Utility.generateRandomDigit(2);
 
         return pCode; 
     }
@@ -98,6 +98,18 @@ public with sharing class TestDataGenerator
             results = generateZSubscriptions(nb);
         }   
 
+        return results;
+    }
+
+    public static List<Zuora.zObject> generatePaymentMethodDetails(String paymentId){
+        List<Zuora.zObject> results = new List<Zuora.zObject>(); 
+
+        Zuora.zObject obj = new Zuora.zObject('PaymentMethod');
+        obj.setValue('Id',paymentId);
+        obj.setValue('LastTransactionStatus', 'Approved');
+        obj.setValue('LastTransactionDateTime', System.today());
+
+        results.add(obj);     
         return results;
     }
 
@@ -281,6 +293,42 @@ public with sharing class TestDataGenerator
         return new List<Zuora.zApi.SaveResult>{sr};
     }
 
+    public static List<Zuora.zApi.SaveResult> generatePaymentResults(List<Zuora.zObject> lstInvoicePayment, String strType){
+        List<Zuora.zApi.SaveResult> lstSaveResult = new List<Zuora.zApi.SaveResult>();
+        for (Integer i = 0; i < lstInvoicePayment.size(); i++)
+        {
+            Zuora.zApi.SaveResult sr = new Zuora.zApi.SaveResult();
+            sr.Id = '2c92c0f850dca6710150dea56af04z' + i;
+            if (strType == 'error')
+            {
+                sr.Success = false;
+                Zuora.zObject error = new Zuora.zObject('Error');
+                error.setValue('Code', 'Invalid card');
+                error.setValue('Field', 'ReferenceId');
+                error.setValue('Message', 'Invalid credit card');
+                sr.Errors = new List<Zuora.zObject>{error};
+            }
+            else
+                sr.Success = true;
+            lstSaveResult.add(sr);
+        }
+        return lstSaveResult;
+    }
+
+    public static List<Zuora.zApi.SaveResult> generatePaymentResultsWithError(){
+        Zuora.zApi.SaveResult sr = new Zuora.zApi.SaveResult();
+        sr.Success = false;
+        sr.Id = '2c92c0f850dca6710150dea56af04813';
+        sr.Errors = new List<Zuora.zObject>();
+        Zuora.zObject error = new Zuora.zObject('Error');
+        error.setValue('Code', 'Invalid card');
+        error.setValue('Field', 'ReferenceId');
+        error.setValue('Message', 'Invalid credit card');
+        sr.Errors.add(error);
+
+        return new List<Zuora.zApi.SaveResult>{sr};
+    }
+
 
     /****************************************************************************************************
         Created by CGI, Kevin Ky 2015-11-06
@@ -291,7 +339,16 @@ public with sharing class TestDataGenerator
         set<Id> orderIds = orderMap.keySet();
         for(Id orderId : orderIds){
             Zuora.zObject pay = new Zuora.zObject('Payment');
-            pay.setValue('ReferenceId','4468443943645000001521');
+            if (orderMap.get(orderId).Sales_Order_Remark__c == 'error')
+            {
+                pay.setValue('Status', 'Error');
+                pay.setValue('GatewayResponseCode', 'code');
+                pay.setValue('GatewayState', 'state');
+                pay.setValue('GatewayResponse', 'response');
+            }
+            else
+                pay.setValue('ReferenceId','4468443943645000001521');
+            pay.setValue('Id', '2c92c0f850dca6710150dea56af04813');
             pay.setValue('SFDCOrderId__c',orderId);
             payments.add(pay);
         }
@@ -304,8 +361,10 @@ public with sharing class TestDataGenerator
         String name = (String) zObject.getValue('Name');
         String startDate = (String) zObject.getValue('EffectiveStartDate');
         String endDate = (String) zObject.getValue('EffectiveEndDate');
+        String idValue = (String) zObject.getValue('Id');
 
-        if(String.isBlank(name) || String.isBlank(startDate) || String.isBlank(endDate))
+        if(String.isBlank(name) || String.isBlank(startDate) || String.isBlank(endDate)
+            || String.isBlank(idValue))
             return false;
         else
             return true;
@@ -415,9 +474,10 @@ public with sharing class TestDataGenerator
             @param doInsert : insert or not the records
     ****************************************************************************************************/
     public static List<Contact> generateContacts(String accountId, Integer nb, Boolean doInsert){
+        Long lngTimeStamp = system.now().getTime();
         List<Contact> contacts = new List<Contact>();
         for(Integer i = 0; i < nb; i++){
-            contacts.add(new Contact(FirstName = 'firstName', LastName = 'LastName ' + i, Email = 'test'+i+'@z1x2y3.com', phone='(514) 111 2222',AccountId=accountId));
+            contacts.add(new Contact(FirstName = 'firstName', LastName = 'LastName ' + lngTimeStamp + i, Email = 'test'+lngTimeStamp+i+'@test.com', phone='(514) 111 2222',AccountId=accountId));
         }
         if(doInsert)
             insert contacts;
@@ -443,7 +503,7 @@ public with sharing class TestDataGenerator
         }
 
         if(doInsert)
-            database.insert(   zCustomerAccount,false);
+            insert zCustomerAccount;
 
         return zCustomerAccount;
     }
@@ -491,7 +551,7 @@ public with sharing class TestDataGenerator
         }
 
         if(doInsert)
-           database.insert(  paymentMethodes, false);
+            insert paymentMethodes;
 
         return paymentMethodes;
 
@@ -512,7 +572,7 @@ public with sharing class TestDataGenerator
         }
         
         if(doInsert)
-            database.insert(  pricebookEntry,false);
+            insert pricebookEntry;
 
         return pricebookEntry;
     }
@@ -551,7 +611,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            database.insert(orderItems,false);
+            insert orderItems;
 
         return orderItems;
     }
@@ -565,7 +625,7 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        database.insert(  pricebookEntries,false);
+        insert pricebookEntries;
     
         for(Integer i = 0; i < nb; i++)
         {
@@ -579,7 +639,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            database.insert(  orderItems,false);
+            insert orderItems;
 
         return orderItems;
     }
@@ -595,7 +655,7 @@ public with sharing class TestDataGenerator
         {
             pricebookEntries.addAll(generatePricebookEntry(Test.getStandardPricebookId(),prod.Id,1,false));
         }
-        database.insert(pricebookEntries,false);
+        insert pricebookEntries;
     
         for(Integer i = 0; i < products.size(); i++)
         {
@@ -609,7 +669,7 @@ public with sharing class TestDataGenerator
             ));
         }
         if(doInsert)
-            database.insert( orderItems,false);
+            insert orderItems;
 
         return orderItems;
     }
@@ -729,7 +789,10 @@ public with sharing class TestDataGenerator
             products[x].Post_to_Ecommerce_Date__c = System.today().addDays(-7);
             products[x].ZProduct__c = zProducts[x].Id;
         }
-        database.insert(products,false) ;
+        
+        //insert products;
+        upsert products SAP_Material_Number__c;
+
         System.debug('products generated::'+products);
 
         insert zRatePlans;
@@ -839,7 +902,8 @@ public with sharing class TestDataGenerator
         }
         insert zTiers;
         System.debug('zTiers::'+zTiers);
-                database.insert(products,false) ;
+        //database.insert(products,false) ;
+        upsert products SAP_Material_Number__c;
 
         
         //-- Create PriceBookEntries for each product       
@@ -865,11 +929,11 @@ public with sharing class TestDataGenerator
     public static List<Product2> generateProducts(Integer nb, Boolean doInsert)
     {
         List<Product2> products = new List<Product2>();
-
         
         for(Integer i=0; i < nb;  i++)
-        {
-            String productCode = generateProductCode(); 
+        {   
+
+            String productCode = generateProductCode();
             String activityCode = productCode.split('-')[0];
             products.add(new Product2(
                 Name                            = 'Product '+i,
@@ -896,7 +960,53 @@ public with sharing class TestDataGenerator
                 Product_Segment__c              = Utility.getRandomPicklistValue('Product2','Product_Segment__c'),
                 Sales_Channel__c                = Utility.getRandomPicklistValue('Product2','Sales_Channel__c'),
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
-                Sales_Notification__c           = true
+                Sales_Notification__c           = true,
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
+            ));
+        }
+
+        if(doInsert)
+            upsert products SAP_Material_Number__c; //Validate uniqueness of SAP_Material_Number__c
+
+        return products;
+    }
+
+    public static List<Product2> generateProducts(String zId, Integer nb, Boolean doInsert)
+    {
+        List<Product2> products = new List<Product2>();
+
+        
+        for(Integer i=0; i < nb;  i++)
+        {
+            String productCode = generateProductCode(); 
+            String activityCode = productCode.split('-')[0];
+            products.add(new Product2(
+                Name                            = 'Product '+i,
+                Short_Title__c                  = 'P '+i,
+                Short_Description__c            = 'This is a short Description for Product P'+i,
+                Family                          = Utility.getRandomPicklistValue('Product2','Family'),  
+                SAP_Material_Number__c          = productCode,
+                SAP_Status_Code__c              = 'A',
+                Is_Shippable__c                 = true,
+                Activity_Code__c                = activityCode,
+                Post_to_Ecommerce_Date__c       = Date.today().addDays(-1),
+                Effective_From__c               = DEFAULT_EFFECTIVE_START_DATE,
+                Effective_To__c                 = DEFAULT_EFFECTIVE_END_DATE,
+                Zuora_Id__c                     = zId,
+                //Division__c                     = Utility.getRandomPicklistValue('Product2','Division__c'),
+                //Taxation_Country__c             = Utility.getRandomPicklistValue('Product2','Taxation_Country__c'),
+                Inventory_Status__c             = Utility.getRandomPicklistValue('Product2','Inventory_Status__c'),
+                Language__c                     = Utility.getRandomPicklistValue('Product2','Language__c'),
+                Line_of_Business__c             = Utility.getRandomPicklistValue('Product2','Line_of_Business__c'),
+                Product_Marketing_Manager__c    = Utility.getRandomPicklistValue('Product2','Product_Marketing_Manager__c'),
+                Media__c                        = Utility.getRandomPicklistValue('Product2','Media__c'),
+                Product_Manager__c              = Utility.getRandomPicklistValue('Product2','Product_Manager__c'),
+                Product_Type__c                 = Utility.getRandomPicklistValue('Product2','Product_Type__c'),
+                Product_Segment__c              = Utility.getRandomPicklistValue('Product2','Product_Segment__c'),
+                Sales_Channel__c                = Utility.getRandomPicklistValue('Product2','Sales_Channel__c'),
+                Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
+                Sales_Notification__c           = true,
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
             ));
         }
 
@@ -940,7 +1050,8 @@ public with sharing class TestDataGenerator
                 Status__c                       = Utility.getRandomPicklistValue('Product2','Status__c'),
                 Sales_Notification__c           = true,
                 File_Path__c                    = 'OneTimeWebDownload/9648-53/Visio-Quote_Business_Process.pdf',
-                Days_available_for_download_1__c= 1
+                Days_available_for_download_1__c= 1,
+                Accepted_Payment_Methods__c     = 'Bank Transfer; Credit Card; IATA Clearing House'
             ));
         }
 
@@ -1073,7 +1184,16 @@ public with sharing class TestDataGenerator
             Create Apex settings to use in various triggers/classes
     ****************************************************************************************************/
     public static void generateApexSetting() {
+/*
         delete [SELECT Id FROM Apex_Setting__c];
+*/
+        // Ecommerce Enhancements R1
+        List<Apex_Setting__c> listCSold = [SELECT Id FROM Apex_Setting__c];
+
+        if (listCSold.isEmpty() == false) {
+            delete listCSold;
+        }
+
         List<Apex_Setting__c> listCS = new List<Apex_Setting__c>();
         listCS.add(new Apex_Setting__c(Name='Products email notification admin', Text_1__c='test@test.com'));
         listCS.add(new Apex_Setting__c(Name='PRODUCT_LIST_PAGE_SIZE_LIMIT', Number_1__c=12));
@@ -1088,7 +1208,7 @@ public with sharing class TestDataGenerator
         listCS.add(new Apex_Setting__c(Name='Order sold status to send notification', Text_1__c='Paid'));
         listCS.add(new Apex_Setting__c(Name='Order Cancel status', Text_1__c='Cancelled'));
         listCS.add(new Apex_Setting__c(Name='Order Paid Status for Payment Types', Text_1__c='Credit Card,ICH'));
-        listCS.add(new Apex_Setting__c(Name='Order Payment Types allowed for CSR', Text_1__c='Credit Card Deferred,Bank Transfer,Check'));
+        listCS.add(new Apex_Setting__c(Name='Order Payment Types allowed for CSR', Text_1__c='Credit Card Deferred,Bank Transfer,Check,ICH,Bill me later'));
         listCS.add(new Apex_Setting__c(Name='Order Payment Types allowed for CUS', Text_1__c='Bank Transfer,Credit Card,ICH,Check'));
         listCS.add(new Apex_Setting__c(Name='Order fields to allow modification1', Text_1__c='SAP_Order_Number__c,Status,Zuora_Credit_Card_Id__c'));
         listCS.add(new Apex_Setting__c(Name='Order fields to allow modification2', Text_1__c='Payment_Transaction_Number__c,Zuora_Transaction_Id__c'));
@@ -1281,7 +1401,7 @@ public with sharing class TestDataGenerator
         mapping.add(new SFDC_SAP_Mapping__c(SFDC_Order_Type__c='Order', SFDC_Order_Source__c='Inbound call', SFDC_Order_Channel__c='Central Direct Sales'
                                           , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='03', SAP_Division__c='01'));
         mapping.add(new SFDC_SAP_Mapping__c(SFDC_Order_Type__c='Order', SFDC_Order_Source__c='Inbound call', SFDC_Order_Channel__c='eCommerce'
-                                          , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='02', SAP_Division__c='02'));
+                                          , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='03', SAP_Division__c='02'));
         mapping.add(new SFDC_SAP_Mapping__c(SFDC_Order_Type__c='Order', SFDC_Order_Source__c='Inbound call', SFDC_Order_Channel__c='Telesales'
                                           , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='04', SAP_Division__c='04'));
 
@@ -1306,6 +1426,7 @@ public with sharing class TestDataGenerator
             listCountry.add(new IATA_ISO_Country__c(Name='Mexico', ISO_Code__c='MX'));
             listCountry.add(new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US'));
             Database.upsert(listCountry, IATA_ISO_Country__c.ISO_Code__c, false);
+
         }
         catch (Exception e) {}
         
@@ -1325,9 +1446,11 @@ public with sharing class TestDataGenerator
         }
         catch (Exception e) {}
         
-        return [select Id, Name, ISO_Code__c, ISO_Code_Numeric__c, Region__c
-                     , (select Id, Name, ISO_Code__c from IATA_ISO_States__r)
-                from IATA_ISO_Country__c];
+        //Forcing the countries to be refetched
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
+        
+		return IATAIsoCountryDAO.getIsoCountries();
+		
     } //*** end of "generateISOCountryState"
     
     public static List<Term_And_Condition__c> generateTermAndConditions(Integer nb, Boolean doInsert)
@@ -1443,26 +1566,6 @@ public with sharing class TestDataGenerator
         return ret;
     }
 
-    public static List<Discount_DTO> generateDiscounts(Integer nb)
-    {
-        List<Discount_DTO> ret = new List<Discount_DTO>(); 
-
-        for(integer x = 0; x < nb; x++)
-        {
-            Discount_DTO disc = new Discount_DTO();
-                disc.isPercentageDiscount = (Math.mod(x, 2) == 0 ) ? false : true;
-                disc.discountName = 'Discount '+x;
-
-                //disc.discountType = (Math.mod(x, 2) == 0 ) ? 'Discount-Fixed Amount' : 'Discount-Percentage';
-                disc.discountValue = Utility.generateRandomDecimal(1, 50); 
-                disc.chargeId = generateZuoraFakeId();
-                disc.planId = generateZuoraFakeId();
-            ret.add(disc);
-        }
-
-        return ret; 
-    }
-
     /****************************************************************************************************
         Created by CGI, Thai 2015-11-11
             Generate payment threshold data
@@ -1474,6 +1577,7 @@ public with sharing class TestDataGenerator
         data.add(new IEC_Payment_Threshold__c(Name='Bank Transfer', Payment_Type__c='Bank Transfer', Min_amount__c=1, Max_amount__c=10000));
         data.add(new IEC_Payment_Threshold__c(Name='Check', Payment_Type__c='Check', Min_amount__c=1, Max_amount__c=10000));
         data.add(new IEC_Payment_Threshold__c(Name='ICH', Payment_Type__c='ICH', Min_amount__c=1, Max_amount__c=10000));
+        data.add(new IEC_Payment_Threshold__c(Name='Bill me later', Payment_Type__c='Bill me later', Min_amount__c=1, Max_amount__c=10000));
         insert data; 
     } //*** end of "generatePaymentThreshold"
     

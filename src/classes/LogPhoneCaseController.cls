@@ -8,26 +8,17 @@ public with sharing class LogPhoneCaseController {
 	public Task newtask {get; set;}
 	public Boolean isNewTaskRequested {get; set;}
 	public String strSelectedRType {get; set;}
-	public List<SelectOption> lstRecordTypes {
-		public get {
-            List<SelectOption> options = new List<SelectOption>();
-            options.add(new SelectOption('','--None--'));
-            
-            for( String s : mapCaseRTNamePerUserRole.values()) {
-                options.add(new SelectOption(s, s));
-            }
-            
-            return options;
-        } private set;
-	}
 	
 	private map<String, String> mapCaseRTNamePerUserRole = new map<String, String>{
 				'MAD Hub' => 'Cases - Europe',
 				'China & N. Asia' => 'Cases - China & North Asia',
 				'Africa & ME' => 'Cases - Africa & Middle East',
 				'A&P' => 'Cases - Asia & Pacific',
-				'Americas' => 'Cases - Americas'};
+				'Americas' => 'Cases - Americas',
+				'IATAN' => 'Cases - Americas',
+                'Cases - Global' => 'Cases - Global'};
 	
+    private Map<String, String> caseRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('Case');
 	
 	public LogPhoneCaseController() {
 		if (ApexPages.currentPage().getParameters().get('ContactId') != null) {
@@ -57,7 +48,8 @@ public with sharing class LogPhoneCaseController {
 		String usrRoleId = UserInfo.getUserRoleId();
 		UserRole usrRole = [SELECT Id, Name FROM UserRole WHERE Id = :usrRoleId];
 		
-		strSelectedRType = 'Cases - Europe';
+		strSelectedRType = 'Cases - Europe'; 
+		
 		for (String rolePrefix : mapCaseRTNamePerUserRole.keyset()) {
 			if (usrRole.Name.startsWith(rolePrefix)) {
 				strSelectedRType = mapCaseRTNamePerUserRole.get(rolePrefix);
@@ -67,8 +59,9 @@ public with sharing class LogPhoneCaseController {
         // prepare the new case, prefill the fields
         newcase = new Case();
         if (strSelectedRType != '') {
-        	newcase.RecordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get(strSelectedRType).RecordTypeId ;
+        	newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
         }
+        
     	newcase.ContactId = con.Id;
     	newcase.AccountId = con.AccountId;
     	newcase.ParentId = CaseId;
@@ -97,7 +90,7 @@ public with sharing class LogPhoneCaseController {
     
     public PageReference Save() {
         try {
-        	newcase.RecordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get(strSelectedRType).RecordTypeId ;
+        	newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
         	
         	insert newcase;
         	
@@ -119,7 +112,7 @@ public with sharing class LogPhoneCaseController {
     
     public PageReference SaveAndClose() {
         try {
-        	newcase.RecordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get(strSelectedRType).RecordTypeId ;
+        	newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
         	newcase.Status = 'Closed';
         	
         	insert newcase;
@@ -139,5 +132,41 @@ public with sharing class LogPhoneCaseController {
         	system.debug(e);
         	return null;        	
         }
+    }
+    
+    public PageReference cancel() {
+        PageReference retPage = new PageReference('/' + con.Id);
+        retPage.setRedirect(true);
+        return retPage;
+    }
+    
+    public List<SelectOption> getCaseLanguageOptions(){
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--'));
+        for(Schema.PicklistEntry entry : Case.Case_Language__c.getDescribe().getPicklistValues()) {
+            options.add(new SelectOption(entry.getLabel(), entry.getValue())); 
+        }
+        return options;
+     }
+     
+     public List<SelectOption> getlstRecordTypes() {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--'));
+        for( String s : mapCaseRTNamePerUserRole.values()) {
+            options.add(new SelectOption(s, s));
+        }
+        return options;
+	}
+
+    private static final list<String> VALID_CASE_TYPES = new list<String>{'Complaint','Compliment','General Question','Incident','Request'};
+    public List<SelectOption> getlstCaseTypes() {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('','--None--'));
+        for(Schema.PicklistEntry entry : Case.Type.getDescribe().getPicklistValues()) {
+            if (VALID_CASE_TYPES.contains(entry.getValue())) {
+                options.add(new SelectOption(entry.getLabel(), entry.getValue())); 
+            }
+        }
+        return options;
     }
 }

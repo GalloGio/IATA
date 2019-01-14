@@ -1,0 +1,22 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" aEditID="c1r1" locked="0" >
+<![CDATA[<div style=" background-color:#FFFFFF; font-size:10pt; font-family: Arial, sans-serif;" ><p>Dear Agent,</p>
+<p>&nbsp;</p>
+<p>We would like to inform you that according to our records your Risk Status / Cash conditions have been recently updated.</p>
+<p>Your risk information result now in:</p>
+<p>&nbsp;</p>
+
+<p><i>Risk Status:</i> <b>{!Account.ANG_HE_RiskStatus__c}</b><br>
+<i>Cash conditions limited to Financial Security:</i> <b>{!IF(Account.ANG_HE_CashCondition__c, 'Yes','No')}</b></p>
+<p>&nbsp;</p>
+<p>Please check more details to the IATA Customer Portal.<br>
+Thank you</p>
+
+<p>&nbsp;</p>
+<p>IATA – Global Delivery Center</p>
+<p>&nbsp;</p>
+<p>-----------------------------------------------------------------------------<br>
+<span style="color: navy;">In order to obtain information or assistance from IATA, do not hesitate to access at any time our&nbsp;</span><a href="http://www.iata.org/cs" target="_blank" style="">Customer Portal</a></p></div>]]></td>
+</tr>
+</table>

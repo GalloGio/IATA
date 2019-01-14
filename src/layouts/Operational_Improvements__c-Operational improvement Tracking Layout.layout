@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>Submitted_for_extension</customButtons>
-    <customButtons>Extension_approved</customButtons>
+    <customButtons>Submit_for_Approval</customButtons>
+    <customButtons>Submit_for_extension</customButtons>
+    <customButtons>Concluded_OI</customButtons>
+    <customButtons>Terminate_OI</customButtons>
     <customButtons>Close_OI</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Share</excludeButtons>
+    <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
@@ -23,10 +26,6 @@
                 <behavior>Required</behavior>
                 <field>Description__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Sequency_of_events__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -41,12 +40,12 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>OI_Status_auto__c</field>
+                <behavior>Edit</behavior>
+                <field>Related_Case_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Related_Case_Number__c</field>
+                <behavior>Readonly</behavior>
+                <field>OI_Status_auto__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -88,6 +87,10 @@
                 <behavior>Edit</behavior>
                 <field>Overall_Deadline__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Closest_Action_Plan_due_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -102,12 +105,28 @@
                 <field>Root_Cause_s__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Risk_Significance_Level_of_initiative__c</field>
+                <behavior>Edit</behavior>
+                <field>Likelihood_of_issue__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Legal_Impact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reputational_Impact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Impact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Financial_Impact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Please_indicate_reasoning__c</field>
+                <field>Risk_Significance_Level_of_initiative__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -162,6 +181,10 @@
                 <behavior>Edit</behavior>
                 <field>Extension_approved_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Extension_rejected_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -172,12 +195,24 @@
                 <behavior>Readonly</behavior>
                 <field>Days_passed_until_submission_for_approva__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Closest_Action_Plan_due_date__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Action Plan</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>270</height>
+                <page>SIDRAOIActionPlans</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -192,17 +227,23 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Action Plan</label>
+        <label>Action Plans effectiveness assessment</label>
         <layoutColumns>
             <layoutItems>
-                <height>300</height>
-                <page>SIDRAOIActionPlans</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>true</showScrollbars>
-                <width>100%</width>
+                <behavior>Edit</behavior>
+                <field>Likelihood_Post_Improvements__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Impact_Post_Improvements__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Overall_effectiveness_of_improvements__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>OneColumn</style>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -221,6 +262,18 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Conclusion_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Pending_eff_validation_date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Terminated_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -276,6 +329,15 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Description__c</fields>
+        <fields>Action_Owner__c</fields>
+        <fields>Closure_Date__c</fields>
+        <fields>Comment__c</fields>
+        <fields>Due_Date__c</fields>
+        <relatedList>OI_Action_Plan__c.OI__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -283,7 +345,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>OI_Action_Plan__c.OI__c</relatedList>
+        <fields>SOP_Type__c</fields>
+        <fields>Exception_Classification_Type__c</fields>
+        <fields>OWNER.ALIAS</fields>
+        <fields>Status__c</fields>
+        <relatedList>Quality__c.OI_number_if_logged__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

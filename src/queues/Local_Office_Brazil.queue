@@ -2,6 +2,14 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>Local Office - Brazil</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATABrazil</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>AmericasCustomerServiceManagerA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

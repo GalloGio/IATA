@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -53,12 +49,24 @@ Records in this objects holds the date of the last modification related to the F
 Records in this object holds the nature of the modification ( A=Added, C=Changed or D=Deleted)</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>CNS_Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Product_Account_View__r.CNS_Agency__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Shows if related GDP Account is CNS</inlineHelpText>
+        <label>CNS_Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>Change_Code__c</fullName>
         <description>A=Added, C=Changed or D=Deleted</description>
@@ -116,23 +124,59 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
     </fields>
     <label>GDP_Delta</label>
     <listViews>
-        <fullName>All</fullName>
+        <fullName>Additions</fullName>
         <columns>NAME</columns>
-        <columns>GDP_File_Description__c</columns>
         <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
         <columns>DeltaLastModifiedDate__c</columns>
         <columns>Change_Code__c</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>A</value>
+        </filters>
+        <label>03-All Additions (RecID &quot;A&quot;)</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>00-All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_TODAY</fullName>
+        <columns>NAME</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DeltaLastModifiedDate__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>01-All Today</label>
         <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>All_TODAY_1</fullName>
         <columns>NAME</columns>
-        <columns>GDP_File_Description__c</columns>
         <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
         <columns>DeltaLastModifiedDate__c</columns>
         <columns>Change_Code__c</columns>
         <columns>CREATEDBY_USER</columns>
@@ -141,9 +185,135 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
         <filters>
             <field>DeltaLastModifiedDate__c</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>YESTERDAY</value>
         </filters>
-        <label>All - TODAY</label>
+        <label>02-All Yesterday</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Changes</fullName>
+        <columns>NAME</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>C</value>
+        </filters>
+        <label>05-All Changes (RecID &quot;C&quot;)</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Reinstatements</fullName>
+        <columns>NAME</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>B</value>
+        </filters>
+        <label>04-All Reinstatements (RecID &quot;B&quot;)</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X01_Searcg_by_GDP_Product_Account_View</fullName>
+        <columns>NAME</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Related_GDP_Product_Account_View__c</field>
+            <operation>equals</operation>
+            <value>FLIGHT CENTRE TRAVEL GROUP LIMITED</value>
+        </filters>
+        <label>YY - Search by GDP Product Account View</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X06_All_Terminations_RecID_D</fullName>
+        <columns>NAME</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>D</value>
+        </filters>
+        <label>06-All Terminations (RecID &quot;D&quot;)</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X07_Reference_GSS_Member_NewGen</fullName>
+        <columns>NAME</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member NewGen</value>
+        </filters>
+        <label>08 - Reference - GSS Member NewGen</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X08_Reference_Reference_GSS_Member</fullName>
+        <columns>NAME</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member</value>
+        </filters>
+        <label>07 - Reference - GSS Member</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X09_Reference_GSS_Non_Member</fullName>
+        <columns>NAME</columns>
+        <columns>Related_GDP_Product_Account_View__c</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>DeltaLastModifiedDate__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <label>09 - Reference - GSS Non Member</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -160,4 +330,5 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
         <customTabListAdditionalFields>Related_GDP_Product_Account_View__c</customTabListAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

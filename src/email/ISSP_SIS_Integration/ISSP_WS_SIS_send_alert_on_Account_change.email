@@ -1,0 +1,9 @@
+Dear SIS help desk,</br>
+</br>
+The below SIS contact was moved to another account in Salesforce which resulted in deactivating the user in SIS System.</br>
+As per the procedures, please note that the user has to be manually activated in SIS and linked to the new account.</br>
+</br>
+<b>Contact name:</b> {!Contact.Name}</br>
+<b>Email:</b> {!Contact.Email}</br>
+<b>federation id:</b> {!Contact.Id}</br>
+<b>Link to the contact in SF:</b> {!Contact.Link}</br>

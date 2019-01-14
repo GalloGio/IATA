@@ -23,7 +23,7 @@
     </alerts>
     <alerts>
         <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org</ccEmails>
+        <ccEmails>brazeaug@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K (non rcrm)</description>
         <protected>false</protected>
         <recipients>
@@ -54,15 +54,23 @@
             <type>role</type>
         </recipients>
         <recipients>
-            <recipient>abulkheirk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ayarik@iata.org</recipient>
+            <recipient>auragh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bertolusj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>debonol2@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>deghelderc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -75,6 +83,10 @@
         </recipients>
         <recipients>
             <recipient>kikanor@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>krishnanh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -97,12 +109,16 @@
             <recipient>wangw@iata.org</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>wyattj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderType>CurrentUser</senderType>
         <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org</ccEmails>
+        <ccEmails>brazeaug@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K</description>
         <protected>false</protected>
         <recipients>
@@ -129,15 +145,27 @@
             <type>role</type>
         </recipients>
         <recipients>
-            <recipient>abulkheirk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ayarik@iata.org</recipient>
+            <recipient>auragh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bertolusj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>debonol2@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>deghelderc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>greenwayt@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -153,6 +181,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>krishnanh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>legerf@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
@@ -162,10 +194,6 @@
         </recipients>
         <recipients>
             <recipient>mckayt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>seifeddinh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -188,7 +216,7 @@
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Opportunity_Notification_to_Ben_Barrocas</template>
+        <template>All/Opportunity_Notification_to_Ben_Barrocas</template>
     </alerts>
     <alerts>
         <fullName>Opportunity_owner_Change</fullName>

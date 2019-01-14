@@ -17,11 +17,58 @@ global class UploadMultipleFileToAmazonButtonCtrl {
     public Id parentId {get; set;}
     public String folder {get; set;}
 
+    /*** AMSU-154 ***/
+    public Id ownerId {get;set;}
+
     public UploadMultipleFileToAmazonButtonCtrl() {
         //IE9 hack
         String browserType = Apexpages.currentPage().getHeaders().get('USER-AGENT');
         if(browserType != null && browserType.contains('MSIE')){
             Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=edge');
+        }
+    }
+
+    /*** AMSU-154 ***/
+    /*** notify Owner ***/
+    @RemoteAction
+    global static String notifyOscarOwner(Id caseId, String fileIdentifier) {
+        try {
+            Case cse = [SELECT Id, OwnerId, Reason1__c, CaseArea__c, CaseNumber, Subject FROM Case WHERE Id = :caseId];
+            User usr = [SELECT Id, Name FROM User WHERE Id = :cse.OwnerId];
+            EmailTemplate template = [Select DeveloperName, Id, HtmlValue, Body, Subject From EmailTemplate where DeveloperName = :Label.AMS_AttchNotifyOwner];
+            Id orgAddressId = [select Id from OrgWideEmailAddress where Address = :Label.noreplyEmail][0].Id;
+
+            String htmlBody = template.HtmlValue;
+            String subject = template.Subject;
+            String caseLink = URL.getSalesforceBaseUrl().toExternalForm() + '/' + cse.Id;
+
+            Messaging.SingleEmailMessage emailToSend = new Messaging.SingleEmailMessage();
+            emailToSend.saveAsActivity = false;
+            emailToSend.setTargetObjectId(usr.Id);
+            emailToSend.setOrgWideEmailAddressId(orgAddressId);
+
+            if(!String.isBlank(htmlBody)) { 
+                subject = subject.replace('{!Case.CaseNumber}', cse.CaseNumber);   
+                emailToSend.setSubject(subject);          
+                htmlBody = htmlBody.replace('<![CDATA[', '');
+                htmlBody = htmlBody.replace('{!Case.OwnerFullName}', usr.Name);
+                htmlBody = htmlBody.replace('{!$User.FirstName}', UserInfo.getFirstName());
+                htmlBody = htmlBody.replace('{!$User.LastName}', UserInfo.getLastName());
+                htmlBody = htmlBody.replace('{!Case.Link}', caseLink);
+                htmlBody = htmlBody.replace('{!Case.CaseNumber}', cse.CaseNumber);
+                htmlBody = htmlBody.replace('{!Case.Subject}', String.isBlank(cse.Subject) ? '' : cse.Subject);
+                htmlBody = htmlBody.replace('{!FileIdentifier}', String.isBlank(fileIdentifier) ? '' : fileIdentifier);  
+                htmlBody = htmlBody.replace('{!Case.CaseArea__c}', String.isBlank(cse.CaseArea__c) ? '' : cse.CaseArea__c);
+                htmlBody = htmlBody.replace('{!Case.Reason1__c}', String.isBlank(cse.Reason1__c) ? '' : cse.Reason1__c);
+                htmlBody = htmlBody.replace(']]>', '');
+                emailToSend.setHtmlBody(htmlBody);
+            }
+
+            Messaging.SendEmailResult[] EmailResult = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {emailToSend});
+
+            return Label.AMS_NotificationSent;
+        } catch(Exception e) {
+            return e.getMessage();
         }
     }
 
@@ -81,15 +128,18 @@ global class UploadMultipleFileToAmazonButtonCtrl {
             );
 
             if(recordType != null) {
-                RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get(recordType.replaceAll('_', ' '));
-                if (rtInfo!=null) {
-                    amazonFile.RecordTypeId = rtInfo .getRecordTypeId();
+                Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', recordType);
+                if (rtId != null) {
+                    amazonFile.RecordTypeId =rtId;
                 }
             }
 
             if (parentId.startsWith('500')) {
                 amazonFile.Case__c = parentId;
-            }
+            }//Fix: use sObject_id__c field!
+            else
+                amazonFile.sObject_Id__c = parentId;
+            
             upsert amazonFile;
 
             return true;

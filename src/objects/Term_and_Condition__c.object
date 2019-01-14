@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -72,23 +69,80 @@
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Status__c</fullName>
+        <fullName>NewGenApp_Language__c</fullName>
+        <description>Language used in each specific terms and conditions item</description>
         <externalId>false</externalId>
-        <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Draft</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Final</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <label>NewGenApp Language</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>EN</fullName>
+                    <default>false</default>
+                    <label>EN</label>
+                </value>
+                <value>
+                    <fullName>FR</fullName>
+                    <default>false</default>
+                    <label>FR</label>
+                </value>
+                <value>
+                    <fullName>PT</fullName>
+                    <default>false</default>
+                    <label>PT</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NewGenApp_PortalService__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Portal Service Item</description>
+        <externalId>false</externalId>
+        <label>NewGenApp Portal Service</label>
+        <referenceTo>Portal_Applications__c</referenceTo>
+        <relationshipLabel>Terms &amp; Conditions</relationshipLabel>
+        <relationshipName>Terms_Conditions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>NewGenApp_T_C_Description__c</fullName>
+        <description>Terms and conditions description text for a specific language and version. If there isn&apos;t a description for a specific language by default it will be selected the English version.</description>
+        <externalId>false</externalId>
+        <label>NewGenApp T&amp;C Description</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>true</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>Final</fullName>
+                    <default>false</default>
+                    <label>Final</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>T_C_Key_Formula__c</fullName>
@@ -140,6 +194,70 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Terms &amp; Conditions</pluralLabel>
+    <recordTypes>
+        <fullName>Bypass_Trigger_Behavior</fullName>
+        <active>true</active>
+        <description>Record type to NOT RUN (isolate) trigger behavior when handling terms and conditions object (created for New Gen Mobile App Project)</description>
+        <label>Bypass Trigger Behavior</label>
+        <picklistValues>
+            <picklist>NewGenApp_Language__c</picklist>
+            <values>
+                <fullName>EN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Final</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>NOT_Bypass_Trigger_Behavior</fullName>
+        <active>true</active>
+        <description>Record type to use when need to run Term_And_Condition_Dom.triggerHandler() Trigger behavior</description>
+        <label>NOT Bypass Trigger Behavior</label>
+        <picklistValues>
+            <picklist>NewGenApp_Language__c</picklist>
+            <values>
+                <fullName>EN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Final</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts>
         <customTabListAdditionalFields>Version_Number__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
@@ -147,4 +265,5 @@
         <lookupDialogsAdditionalFields>Version_Number__c</lookupDialogsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

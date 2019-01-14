@@ -4,7 +4,8 @@
     <customButtons>Accept_Case</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
-    <customButtons>SIDRA_Lite_Action</customButtons>
+    <customButtons>Reset_New_interactions</customButtons>
+    <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -50,6 +51,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>New_interaction__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Region__c</field>
             </layoutItems>
             <layoutItems>
@@ -67,10 +72,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Reason1__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>test_owner__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -124,6 +125,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Case_Type__c</field>
             </layoutItems>
             <layoutItems>
@@ -139,10 +144,6 @@
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Set_CONFIDENTIAL__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -179,11 +180,27 @@
                 <behavior>Edit</behavior>
                 <field>Amount__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>CurrencyIsoCode</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_the_agent_paid_invoice__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Invoice_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invoice_number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Payment_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -200,10 +217,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Has_the_agent_paid_invoice__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>POP_Received_Date__c</field>
             </layoutItems>
         </layoutColumns>
@@ -214,11 +227,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CS_Contact_Remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Contact_Agent_by_Phone__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Demand_by_Email_Fax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CS_Contact_Result__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -252,6 +273,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Make_All_Attachments_Public__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Termination_date_manual_entry__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Thread_ID__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -307,13 +336,29 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Emails</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>EmailMessagesView</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Attachments</label>
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
@@ -340,9 +385,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedEmailMessageList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

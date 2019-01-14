@@ -6,17 +6,27 @@ private class FinancialSecurityHandlerTest {
         insert country;
         
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
-        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id);
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id, Type = 'IATA Passenger Sales Agent');
         insert a;        
         
+        Account b = new Account(Name = 'Qatar Airways',parent = a, Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id, Type = 'IATA Passenger Sales Agent');
+        
+
+        Contact co1 = new Contact(AccountId = a.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, Financial_Assessment_Contact__c = true, User_Portal_Status__c = 'Approved Admin');
+        Contact co2 = new Contact(AccountId = a.id, Firstname = 'teste2', Lastname='test2', Phone = '911111112', MobilePhone = '911111112', Email = 'test2@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved Admin');
+        Contact co3 = new Contact(AccountId = a.id, Firstname = 'teste3', Lastname='test3', Phone = '911111113', MobilePhone = '911111113', Email = 'test3@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved');
+        
+        List<Contact> cos = new List<Contact>{co1,co2}; 
+        insert cos;
+
         // Create a new Financial Institution
         Financial_Institution__c fi = new Financial_Institution__c(Name = 'Test FI', Region__c = 'Americas', Country__c = 'Canada', Institution_Type__c = 'Bank');
         insert fi;
         
         // create a reception case
         Case c = new Case(Subject = 'rception case', AccountId = a.Id, Status = 'Open', 
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('InternalCasesEuropeSCE') );
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE') );
         insert c;
                 
         // Create a new Financial Security
@@ -35,8 +45,8 @@ private class FinancialSecurityHandlerTest {
         update fs;      
         
         // check that the renewal case has been created and linked to the FS record
-        fs = [SELECT Id, Renewal_Case__c FROM Financial_Security__c WHERE Id = :fs.Id];
-        if (userinfo.getProfileId() != '00e20000000h0gFAAQ') {
+        fs = [SELECT Id, Renewal_Case__c,Region__c FROM Financial_Security__c WHERE Id = :fs.Id];
+        if (userinfo.getProfileId() != '00e20000000h0gFAAQ' || (userinfo.getProfileId() == '00e20000000h0gFAAQ' && Test.isRunningTest()) ) {
         	system.assertNotEquals(null, fs.Renewal_Case__c);
             lstCases = [SELECT Id FROM Case LIMIT 10];
         	system.assertEquals(2, lstCases.size());
@@ -44,6 +54,9 @@ private class FinancialSecurityHandlerTest {
             system.assertEquals(null, fs.Renewal_Case__c);
         }  
         
-        
+        FinancialSecurityUtil.sendEmailAlert(null, fs, null, null);
+
+        delete fs;
+        undelete fs;
     }   
 }

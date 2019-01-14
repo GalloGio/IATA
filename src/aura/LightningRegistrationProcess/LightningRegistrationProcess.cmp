@@ -1,0 +1,260 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningRegistrationProcess">
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+
+    <ltng:require styles="{!join(',', 
+							    $Resource.SLDS102 + '/assets/styles/salesforce-lightning-design-system-ltng.css',
+							    $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
+
+	<aura:attribute name="Page" type="Integer" default="1"/>
+    <aura:attribute name="contact"  type="Contact" default="{ sobjectType: 'Contact' }" />
+    <aura:attribute name="account"  type="Account" default="{ sobjectType: 'Account', Type: '' }" />
+
+
+    <aura:attribute name="salutationOptions" type="String[]"/>
+    <aura:attribute name="jobFunctionOptions" type="String[]"/>
+    <aura:attribute name="sectorOptions" type="String[]"/>
+    <aura:attribute name="categoryOptions" type="String[]"/>
+    <aura:attribute name="countryOptions" type="String[]"/>
+    <!--<aura:attribute name="rtcategorysector" type="String[]" access="private"/>-->
+    <aura:attribute name="contactLabels" type="Map"/>
+    <aura:attribute name="accountLabels" type="Map"/>
+
+	<aura:attribute name="Results" type="Account[]"/>
+    <aura:attribute name="isAirline1" type="Boolean" default="false"/>
+    <aura:attribute name="isAirline2" type="Boolean" default="false"/>
+    <aura:attribute name="showCompanyName" type="Boolean" default="false"/>
+    <aura:attribute name="isCargoTravel1" type="Boolean" default="false"/>
+    <aura:attribute name="isCargoTravel2" type="Boolean" default="false"/>
+    <aura:attribute name="isIataCodeCT" type="Boolean" default="false"/>
+    <aura:attribute name="showCountry" type="Boolean" default="false"/>
+    <aura:attribute name="Terms" type="Boolean" default="false"/>
+    <aura:attribute name="serviceName" type="String"/>
+
+    <aura:attribute name="IataCode" type="String"/>
+    <aura:attribute name="DesCode" type="String"/>
+    <aura:attribute name="AccName" type="String"/>
+    <aura:attribute name="IataCodeCargotravel" type="String"/>
+
+	<aura:attribute name="NoAccounts" type="String"/>
+    <aura:attribute name="ShowSave" type="Boolean" default="false"/>
+    <aura:attribute name="ShowSubmit" type="Boolean" default="false"/>
+    <aura:attribute name="ShowSearch" type="Boolean" default="false"/>
+	<aura:attribute name="ShowResults" type="Boolean" default="false"/>
+    <aura:attribute name="ShowNoResults" type="Boolean" default="false"/>
+    <aura:attribute name="ShowCreateAccount" type="Boolean" default="false"/>
+	<aura:attribute name="ShowCategoryOther" type="Boolean" default="false"/>
+
+    <!-- ShowCategoryOther -->
+    <aura:attribute name="AccountT" type="String"/>
+
+
+	<!-- for the accordion -->
+	<aura:attribute name="ShowPage1" type="Boolean" default="true"/>
+	<aura:attribute name="ShowPage2" type="Boolean" default="false"/>
+	<aura:attribute name="ShowPage3" type="Boolean" default="false"/>
+	<aura:attribute name="ShowPage4" type="Boolean" default="false"/>
+
+	<aura:attribute name="emailOK" type="Boolean" default="false"/>
+	<aura:attribute name="termsOK" type="Boolean" default="false"/>
+    <aura:attribute name="captchaOK" type="Boolean" default="false"/>
+    <aura:attribute name="vfHost" type="String" default=""/>
+    <aura:attribute name="commName" type="String" default=""/>
+
+	<aura:attribute name="emailLocked" type="Boolean" default="false"/>
+
+	<aura:attribute name="disableButtons" type="Boolean" default="false"/>
+
+	<aura:attribute name="language" type="string" default=""/>
+
+	<aura:attribute name="styl" type="String"/>
+	<aura:attribute name="captchaIframeHeight" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+
+	<ltng:require scripts="{!join(',', 
+							    $Resource.jQuery224min, 
+							    $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/intlTelInput.js',
+							    $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/js/data.js',
+							    $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
+							    $Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}" />
+
+
+    <style>
+    	.slds .slds-hide {
+		    display: none !important;
+		}
+		.vfFrameAccount {
+			z-index:9997;position:relative;overflow-y:scroll;visibility:hidden;max-height:0px;
+		}
+		.page-invisible{
+			visibility:hidden;
+			height:0px !important;
+			overflow: hidden;
+		}
+		.changeMe {
+			visibility: visible !important;
+			max-height:none;
+		}
+    </style>
+
+	<div class="slds">
+  		<div class="slds-grid">
+			<h1>{!$Label.c.OneId_Create_an_account}</h1>
+  		</div>
+
+        <!-- /////////////////////////////////////////////// -->
+		<!-- $Label.c.ISSP_Registration_step_1 '' -->
+        <!-- //////////////////////PAGE 1: Email/////////////////// -->
+        <!-- /////////////////////////////////////////////// -->
+
+		<div class="tabContainers slds">
+			<div class="tabElement section">
+				<div onclick="{!c.showPage}" id="1" class="showPage">
+					<div class="tabHeader page-header-1">
+						<span class="bullet">1</span><span class="liWrap" aura:id="1">{!$Label.c.OneId_Contact_Association_Validation}</span>
+						<aura:if isTrue="{!v.Page == 1}">
+							<button class="slds-button leftarrow slds-button--icon-bare " type="button"><span class="icon icon-navArrowLeft"></span></button>
+							<aura:set attribute="else">
+								<span class="icon icon-navArrowDown" click="{!c.showPage}"></span>
+							</aura:set>
+						</aura:if>
+					</div>
+				</div> 
+				<aura:if isTrue="{!v.Page == 1}">
+					<div class="slds-p-horizontal--small slds-size--1-of-1 page-body-1">
+						<div class="email item">
+							<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Email}</label>
+							<ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.contact.Email}" class="slds-input required-input" required="true" keypress="{!c.emailChanged}" disabled="{!v.emailLocked}" />
+						</div>
+						<aura:if isTrue="{!!v.emailLocked}">
+	                        <div class="captcha item">
+	                           	<iframe aura:id="vfFrame" src="{!v.vfHost + '/'+v.commName+'/OneIdVfCAPTCHA?language=' + v.language}" class="iframe captchaIframe" style="{!v.captchaIframeHeight}" scrolling="no" frameborder="0" width="100%" allowtransparency="true" />
+	                           	<div aura:id="captchaError" class="captchaError hide">{!$Label.c.OneId_Please_check_reCaptcha}</div>
+	                        </div>
+                        </aura:if>
+						<div class="terms item">
+							<ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" disabled="{!v.emailLocked}"/>
+							<a class="termsaccepted" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
+						</div>
+	                </div>
+		        </aura:if>
+				<!-- <ui:spinner aura:id="spinner"/> -->
+			</div>
+
+            <!-- /////////////////////////////////////////////// -->
+        	<!-- //////////////////////PAGE 2: Contact Info/////////////////// -->
+        	<!-- /////////////////////////////////////////////// -->
+			<div class="tabElement section">
+				<div onclick="{!c.showPage}" id="2" class="showPage">
+					<div class="tabHeader page-header-2">
+						<span class="bullet">2</span><span class="liWrap" aura:id="2">{!$Label.c.OneId_Contact_Creation}</span>
+						<aura:if isTrue="{!v.Page == 2}">
+							<button class="slds-button leftarrow slds-button--icon-bare" type="button"><span class="icon icon-navArrowLeft"></span></button>
+							<aura:set attribute="else">
+								<span class="icon icon-navArrowDown" click="{!c.showPage}"></span>
+							</aura:set>
+						</aura:if>
+					</div>
+				</div>
+	            <!-- <aura:if isTrue="{!v.ShowPage2}"> -->
+	            <!--aura:if isTrue="{!v.Page == 2}"-->
+	            <div aura:id="page-2" class="page-2 page-invisible">
+					<div class="slds-p-horizontal--small slds-size--1-of-1 page-body-2">
+						<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+	                		<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Salutation}</label>
+			                <ui:inputSelect aura:id="Salutation" class="slds-input required-input" required="true">
+			                        <ui:inputSelectOption text="Mr." label="{!$Label.c.ISSP_Registration_MR}"/>
+			                        <ui:inputSelectOption text="Mrs." label="{!$Label.c.ISSP_Registration_MRS}"/>
+			                        <ui:inputSelectOption text="Ms." label="{!$Label.c.ISSP_Registration_MS}"/>
+			                </ui:inputSelect>
+						</div>
+
+						<div class="slds-grid slds-wrap ">
+							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+								<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.FirstName}</label>
+								<ui:inputText aura:id="firstName" value="{!v.contact.FirstName}" class="slds-input required-input" required="true"/>
+
+							</div>
+
+							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+									<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.LastName}</label>
+									<ui:inputText aura:id="lastName" value="{!v.contact.LastName}" class="slds-input required-input" required="true"/>
+							</div>
+
+							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+								<div class="">
+									<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Title}</label>
+									<ui:inputText aura:id="title" value="{!v.contact.Title}" class="slds-input required-input" required="true"/>
+								</div>
+							</div>
+
+							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+
+								<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Membership_Function__c}</label>
+								<ui:inputSelect multiple="true" class="multiple required" aura:id="membershipFunction" required="true">
+									<aura:iteration items="{!v.jobFunctionOptions}" var="function" indexVar="index" aura:id="function">
+										<ui:inputSelectOption text="{!function}" label="{!function}" /><!-- value="true" -->
+									</aura:iteration>
+								</ui:inputSelect>
+								<label class="slds-form-element__label" >{!$Label.c.OneId_JobFunction_Help_Msg}</label>
+							</div>
+
+							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+									<label class="slds-form-element__label" ><abbr class="slds-required" title="required">*</abbr>{!v.contactLabels.Phone}</label>
+									<!--<ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="slds-input required-input contactPhone" required="true" keyup="{!c.validateContact}" />-->
+									<ui:inputPhone aura:id="contactPhone" value="{!v.contact.Phone}" class="slds-input required-input contactPhone" required="true" />
+							</div>
+
+							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+									<label class="slds-form-element__label" >{!v.contactLabels.MobilePhone}</label>
+									<ui:inputPhone aura:id="contactMobilePhone" value="{!v.contact.MobilePhone}" class="contactPhone slds-input" />
+							</div>
+
+							<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+									<label class="slds-form-element__label" >{!v.contactLabels.Fax}</label>
+									<ui:inputPhone aura:id="contactFaxPhone" value="{!v.contact.Fax}" class="contactPhone slds-input" />
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+	            <!--/aura:if-->
+			</div>
+
+            <!-- /////////////////////////////////////////////// -->
+        	<!-- //////////////////////PAGE 3: Account Selection/////////////////// -->
+        	<!-- /////////////////////////////////////////////// -->
+			<div class="tabElement section" id="accountManagement">
+				<div onclick="{!c.showPage3}" id="3" class="showPage">
+					<div class="tabHeader page-header-3">
+						<span class="bullet">3</span><span class="liWrap" aura:id="3">{!$Label.c.OneId_Account_Association}</span>
+						<aura:if isTrue="{!v.Page == 3}">
+							<button class="slds-button leftarrow slds-button--icon-bare" type="button"><span class="icon icon-navArrowLeft"></span></button>
+							<aura:set attribute="else">
+								<span class="icon icon-navArrowDown" click="{!c.showPage3}"></span>
+							</aura:set>
+						</aura:if>
+					</div>
+				</div>
+
+				<iframe  aura:id="vfFrameAccount" src="{!v.vfHost + '/'+v.commName+'/OneIdVfDSE?language=' + v.language}" class="vfFrameAccount" scrolling="no" frameborder="0" width="100%" allowtransparency="true" style="{!v.styl}" allow-forms="true" />
+				
+				<div aura:id="spinner" class="slds-spinner_container slds-hide">
+			        <div class="slds-spinner--brand slds-spinner slds-spinner--large" aria-hidden="false" role="alert">
+			            <div class="slds-spinner__dot-a"></div>
+			            <div class="slds-spinner__dot-b"></div>
+			        </div>
+			    </div>
+
+			</div>
+
+    	</div>
+
+    </div>
+
+</aura:component>

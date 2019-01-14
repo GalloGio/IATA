@@ -11,34 +11,34 @@ public class IECVATUtil {
 	public static VATConfiguration GetVATConfiguration(String CountryName) {
 		if (String.isBlank(CountryName)) return null;
 		
-		List<IATA_ISO_Country__c> lstCountry =
-			[SELECT Id, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, ISO_Code__c, Name
-			FROM IATA_ISO_Country__c
-			WHERE Name = : CountryName];
-		
+		List<IATA_ISO_Country__c> lstCountry = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{CountryName});
+
 		return (lstCountry != null && lstCountry.isEmpty()) ? null : new VATConfiguration(lstCountry.get(0));
 	}
 	
 	// Query the VAT configuration for the country based on the country ID
 	public static VATConfiguration GetVATConfiguration(Id idCountry) {
-		if (idCountry == null) return null;
-		
-		List<IATA_ISO_Country__c> lstCountry =
-			[SELECT Id, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c, ISO_Code__c, Name
-			FROM IATA_ISO_Country__c
-			WHERE Id = :idCountry];
-		
+
+ 		if (idCountry == null) return null;
+
+		List<IATA_ISO_Country__c> lstCountry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{idCountry});
+
 		return (lstCountry.isEmpty()) ? null : new VATConfiguration(lstCountry.get(0));
 	}
 	
-	public static String Validate_VAT(String sCountryCode, String sVATNumber)
+public static String Validate_VAT(String sCountryCode, String sVATNumber)
 	{
 	    VATWebService ws = new VATWebService();
 	    String sErrorMessage = '';
 	    
 	    try
-	    {
+
+	    {	sCountryCode = (sCountryCode.contains('GR') ? 'EL' : sCountryCode);
+	    	system.debug('Validate VAT # - sCountryCode : ' + sCountryCode);
+         	system.debug('Validate VAT # - sVATNumber : ' + sVATNumber);
 	        VATResponse res = ws.ValidateVAT(sCountryCode, ((sVATNumber.startsWithIgnoreCase(sCountryCode)) ? sVATNumber.substring(sCountryCode.length()) : sVATNumber));
+	        system.debug('Validate VAT # - VIES response : ' + res);
+
 	        if (!res.valid) 
 	            sErrorMessage = String.format(Label.IEC_Invalid_VAT, new List<String>{sVATNumber});
 	    }

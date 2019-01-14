@@ -24,26 +24,44 @@ public class ParticipantHelperTest {
 
     static testMethod void myUnitTest() {
         List<User> users = [SELECT Id FROM User WHERE isActive = true AND Profile.Name = 'System Administrator' LIMIT 2 ];
+
+        //Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        /*User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );*/
+
+        //insert testUser;
+
+        PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Local_group_owners'];
+        PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = users[0].Id);
+        insert psa;
+
+        
         
         //List<User> users = new List<User>();
         //users.add(new User(FirstName='babbo', LastName='natale', Alias='bnatale', Email='bnatale@gmail.com'));
         //insert users;
         
-        List<IATA_ISO_Country__c>isocs = new List<IATA_ISO_Country__c>();
-        isocs.add(new IATA_ISO_Country__c(
-            Name='Italy', Country_Manager__c=users[0].id, ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy'
-        ));
-        isocs.add(new IATA_ISO_Country__c(
-            Name='France', Country_Manager__c=users[0].id, ISO_Code__c='FR', Region__c='Europe', ISS_Office_Location__c='France'
-        ));
-        insert isocs;
-        
-        Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
-        Id rtBr =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId();
-        Id rtAG =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Id rtBr =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+        Id rtAG =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         
         system.runAs(users[0]){
+
+            List<IATA_ISO_Country__c>isocs = new List<IATA_ISO_Country__c>();
+            isocs.add(new IATA_ISO_Country__c(
+                Name='Italy', Country_Manager__c=users[0].id, ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy'
+            ));
+            isocs.add(new IATA_ISO_Country__c(
+                Name='France', Country_Manager__c=users[0].id, ISO_Code__c='FR', Region__c='Europe', ISS_Office_Location__c='France'
+            ));
+            insert isocs;
+
             Account hq = new Account(Name='Lufthansa', RecordTypeId = rtHQ, IATA_ISO_Country__c = isocs[0].Id);
             insert hq;
             Account branch = new Account(Name='Lufthansa', RecordTypeId = rtBr, IATA_ISO_Country__c = isocs[0].Id, ParentId=hq.id);
@@ -54,9 +72,12 @@ public class ParticipantHelperTest {
             Contact cont = new Contact(AccountId=agency.id, FirstName='Complete', LastName='Contact', Email='myCompany@test.com', Title='Director', APJC_Participant__c = false);
             insert cont;
             
+            Test.startTest();
             
-            Id rtLocalGroup =  Schema.SObjectType.LocalGovernance__c.getRecordTypeInfosByName().get('Local Groups').getRecordTypeId();
+            Id rtLocalGroup =  RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups');
             
+            List<LocalGovernance__c> localGovernanceList = new List<LocalGovernance__c>();
+
             LocalGovernance__c lg = new LocalGovernance__c();
                 lg.Name = 'Name';
                 lg.Cargo_Passenger__c = 'BSP';
@@ -64,7 +85,8 @@ public class ParticipantHelperTest {
                 lg.Country__c = isocs[0].Id;
                 lg.Active__c = true; 
                 lg.RecordTypeId = rtLocalGroup;
-            insert lg;
+
+            localGovernanceList.add(lg);
             
             LocalGovernance__c lg2 = new LocalGovernance__c();
                 lg2.Name = 'DifferentName';
@@ -73,10 +95,12 @@ public class ParticipantHelperTest {
                 lg2.Country__c = isocs[1].Id;
                 lg2.Active__c = true; 
                 
-                lg.RecordTypeId = rtLocalGroup;
-            insert lg2;
+                lg2.RecordTypeId = rtLocalGroup;
+
+            localGovernanceList.add(lg2);
+
+            insert localGovernanceList;
             
-            test.startTest();
                 Participant__c part = new Participant__c();
                     part.Contact__c = cont.Id;
                     part.Local_Governance__c = lg.Id;
@@ -114,6 +138,6 @@ public class ParticipantHelperTest {
             
            }
             
-        test.stopTest();
+        Test.stopTest();
     }
 }

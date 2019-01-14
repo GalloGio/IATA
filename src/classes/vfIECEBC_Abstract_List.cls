@@ -1,5 +1,5 @@
 public virtual class vfIECEBC_Abstract_List extends vfIECEBC_Controller {
-    public static final Integer DEFAULT_ITEMS_PER_PAGE = 5;
+    public static Integer DEFAULT_ITEMS_PER_PAGE = 10;
    
     
     public static Integer itemsPerPage {

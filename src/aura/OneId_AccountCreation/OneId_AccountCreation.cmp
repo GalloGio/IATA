@@ -1,0 +1,265 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" controller="OneId_RegistrationProcessController">
+
+	<aura:attribute type="Account" name="account" required="true" />
+	<aura:attribute type="IATA_ISO_Country__c" name="country" required="true"/>
+	
+	<aura:attribute type="Boolean" name="copyAddress" default="false"/>
+	<aura:attribute type="Boolean" name="changeSector" default="true"/>
+	<aura:attribute type="Boolean" name="changeCategory" default="true"/>
+	<aura:attribute type="Boolean" name="changeName" default="true"/>
+
+	<aura:attribute type="Map" name="accountLabels" access="private"/>
+	<aura:attribute type="Map" name="sectors" access="private"/>
+	<aura:attribute type="Integer" name="validBilling" default="0" access="private"/>
+	<aura:attribute type="Integer" name="validShipping" default="0" access="private"/>
+	<aura:attribute type="Boolean" name="validationError" default="false" access="private"/>
+	
+
+	<aura:attribute type="Boolean" name="hasJquery" default="false" access="private"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.handleInit}"/>
+	<aura:handler name="change" value="{!v.country}" action="{!c.changedCountry}"/>
+	<aura:handler name="change" value="{!v.account.Sector__c}" action="{!c.sectorChanged}"/>
+
+	<aura:handler name="addressSelected" event="c:OneId_AddressSelected_EVT" action="{!c.setAddress}"/>
+
+	<aura:method name="validateRequiredFields"/>
+	
+	<ltng:require scripts="{!join(',', 
+		$Resource.jquery321minStandard,
+		$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/intlTelInput.js',
+		$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/js/data.js',
+		$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/src/spec/helpers/helpers.js',
+		$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/js/utils.js')}"
+		styles="{!$Resource.InternationalPhoneNumberFormatS + '/intl-tel-input-master/build/css/intlTelInput.css'}"		
+		afterScriptsLoaded="{!c.jsLoaded}"
+	/>
+
+	<div class="slds-grid slds-wrap slds-gutters slds-p-horizontal_medium">
+		<h2 class="slds-text-heading_medium slds-size_1-of-1 slds-m-bottom_medium">{!$Label.c.ISSP_CompanyInformation}</h2>
+	
+		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
+			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Legal_name__c}</label>
+			<div class="slds-form-element__control">
+				<ui:inputText value="{!v.account.Name}" class="slds-input" disabled="{!!v.changeName}" />
+			</div>
+		</div>
+
+		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
+			<label class="slds-form-element__label">{!v.accountLabels.TradeName__c}</label>
+			<div class="slds-form-element__control">
+				<ui:inputText value="{!v.account.TradeName__c}" class="slds-input"/>
+			</div>
+		</div>
+
+		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
+			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Sector__c}</label>
+			<div class="slds-form-element__control slds-select_container">
+				<ui:inputSelect aura:id="sectorSelection" value="{!v.account.Sector__c}" class="slds-select" disabled="{!!v.changeSector}"/>
+				<!-- options are set on the setOption function -->
+			</div>
+		</div>
+		
+		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
+			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Category__c}</label>
+			<div class="slds-form-element__control slds-select_container">
+				<ui:inputSelect aura:id="categorySelection" value="{!v.account.Category__c}" class="slds-select" disabled="{!!v.changeCategory}"/>
+				<!-- options are set on the setOption function -->
+			</div>
+		</div>
+
+		
+	</div>
+
+
+	
+	<div class="slds-grid slds-wrap slds-gutters slds-grid_pull-padded-small slds-p-horizontal_medium">
+
+		<h2 class="slds-text-heading_medium slds-size_1-of-1 slds-m-bottom_medium">{!$Label.c.ISSP_CompanyAddressInformation}</h2>
+
+		<div class="{!'addressValidationMessage slds-col slds-media slds-media_center slds-size_1-of-1 slds-m-bottom_medium slds-p-around_table-cell-spacing '+ (v.validationError ? 'slds-theme_error' : 'text-warning')}">
+			<div class="slds-media__figure">
+				<aura:if isTrue="{!v.validationError}">
+					<lightning:icon iconName="utility:error" variant="inverse" size="small"/>
+					<aura:set attribute="else">
+						<lightning:icon iconName="action:priority" size="x-small"/>
+					</aura:set>
+				</aura:if>
+			</div>
+			<div class="slds-media__body">
+				<aura:unescapedHTML value="{!$Label.c.AddressDoctorValidate}"/>
+			</div>
+		</div>
+	</div>
+
+	<div class="slds-grid slds-wrap slds-gutters slds-grid_pull-padded-small slds-p-horizontal_medium">
+		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds slds-order_2 slds-medium-order_1">
+			<div class="slds-form-element">
+				<label class="slds-form-element__label">{!$Label.c.ISSP_CopyBillingAddress}</label>
+
+				<div class="slds-form-element__control">
+					<ui:inputCheckbox value="{!v.copyAddress}" change="{!c.copyBilling}"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds-medium-size_1-of-2 slds-order_1 slds-medium-order_2">
+			<div class="slds-media slds-media_center slds-m-bottom_small">
+				<h3 class="slds-media__body slds-text-heading_small">{!v.accountLabels.BillingAddress}</h3>
+				<div class="slds-media__figure slds-media__figure_reverse slds-is-relative">
+					<aura:if isTrue="{!v.validBilling == 0}">
+						<button class="slds-button slds-button_icon button-bordered" onclick="{!c.validateAddress}" data-mode="Billing">
+							<lightning:icon iconName="utility:check" size="xx-small"/>
+							<!-- <input type="image" src="https://iata-.-c.eu12.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&oid=00D2000000008TF"/> -->
+						</button>
+					</aura:if>
+					<aura:if isTrue="{!v.validBilling == -1}">
+						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Billing"/>
+					</aura:if>
+					<aura:if isTrue="{!v.validBilling == 1}">
+						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/ok.gif'}" onclick="{!c.validateAddress}" data-mode="Billing"/>
+					</aura:if>
+					<aura:if isTrue="{!v.validBilling == 2}">
+						<lightning:spinner size="small"/>
+					</aura:if>
+				</div>
+			</div>
+			
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingStreet}</label>
+				<div class="slds-form-element__control">
+					<c:OneId_AddressDoctorSearch countryCode="{!v.country.ISO_Code__c}" type="Billing" />
+				</div>
+			</div>
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingCity}</label>
+				<div class="slds-form-element__control">
+					<ui:inputText value="{!v.account.BillingCity}" class="slds-input" change="{!c.updateAddress}"/>
+				</div>
+			</div>
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingState}</label>
+				<div class="slds-form-element__control">
+					<ui:inputText value="{!v.account.BillingState}" class="slds-input" change="{!c.updateAddress}"/>
+				</div>
+			</div>
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingPostalCode}</label>
+				<div class="slds-form-element__control">
+					<ui:inputText value="{!v.account.BillingPostalCode}" class="slds-input" change="{!c.updateAddress}"/>
+				</div>
+			</div>
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingCountry}</label>
+				<div class="slds-form-element__control">
+					<ui:inputText value="{!v.country.Name}" class="slds-input" disabled="true"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds-medium-size_1-of-2 slds-order_3">
+			<div class="slds-media slds-media_center slds-m-bottom_small">
+				<h3 class="slds-media__body slds-text-heading_small">{!v.accountLabels.ShippingAddress}</h3>
+				<div class="slds-media__figure slds-media__figure_reverse slds-is-relative">
+					<aura:if isTrue="{!v.validShipping == 0}">
+						<button class="slds-button slds-button_icon button-bordered" onclick="{!c.validateAddress}" data-mode="Shipping">
+							<lightning:icon iconName="utility:check" size="xx-small"/>
+							<!-- <input type="image" src="https://iata-.-c.eu12.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&oid=00D2000000008TF"/> -->
+						</button>
+					</aura:if>
+					<aura:if isTrue="{!v.validShipping == -1}">
+						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/invalid.gif'}" onclick="{!c.validateAddress}" data-mode="Shipping"/>
+					</aura:if>
+					<aura:if isTrue="{!v.validShipping == 1}">
+						<img src="{!$Resource.DSE__dataquality + '/dataquality/images/ok.gif'}" onclick="{!c.validateAddress}" data-mode="Shipping"/>
+					</aura:if>
+					<aura:if isTrue="{!v.validShipping == 2}">
+						<lightning:spinner size="small"/>
+					</aura:if>
+				</div>
+			</div>
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingStreet}</label>
+				<div class="slds-form-element__control">
+					<c:OneId_AddressDoctorSearch countryCode="{!v.country.ISO_Code__c}" type="Shipping" inputValue="{!v.account.ShippingStreet}"  disabled="{!v.copyAddress}"/>
+				</div>
+			</div>
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingCity}</label>
+				<div class="slds-form-element__control">
+					<input type="text" disabled="{!v.copyAddress}" value="{!v.account.ShippingCity}" class="slds-input"/>
+				</div>
+			</div>
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingState}</label>
+				<div class="slds-form-element__control">
+					<input type="text" disabled="{!v.copyAddress}" value="{!v.account.ShippingState}" class="slds-input"/>
+				</div>
+			</div>
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingPostalCode}</label>
+				<div class="slds-form-element__control">
+					<input type="text" disabled="{!v.copyAddress}" value="{!v.account.ShippingPostalCode}" class="slds-input"/>
+				</div>
+			</div>
+			<div class="slds-form-element slds-m-bottom_small">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.ShippingCountry}</label>
+				<div class="slds-form-element__control">
+					<ui:inputText value="{!v.country.Name}" class="slds-input" disabled="true"/>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="slds-grid slds-wrap slds-gutters slds-grid_pull-padded-small slds-p-horizontal_medium">
+	
+		<div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium">
+			<div class="slds-form-element">
+				<label class="slds-form-element__label">{!v.accountLabels.Website}</label>
+				<div class="slds-form-element__control">
+					<ui:inputURL aura:id= "website" value="{!v.account.Website}" class="slds-input "/>
+				</div>
+			</div>
+		</div>
+
+	
+		<div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-m-top_medium">
+			<div class="slds-form-element">
+				<label class="slds-form-element__label">{!v.accountLabels.Email__c}</label>
+				<div class="slds-form-element__control">
+					<ui:inputEmail aura:id="email" value="{!v.account.Email__c}" class="slds-input "/>
+				</div>
+			</div>
+		</div>
+		
+
+		<div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-m-top_medium">
+			<div class="slds-form-element">
+				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_Office_Phone}</label>
+				<div class="slds-form-element__control">
+					<ui:inputPhone aura:id="officePhone" value="{!v.account.Phone}" class="phoneFormat slds-input" required="true" updateOn="keyup" keyup="{!c.validateNumber}" />
+				</div>				
+			</div>
+		</div>
+
+		<div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-m-top_medium">
+			<div class="slds-form-element">
+				<label class="slds-form-element__label">{!$Label.c.ISSP_Office_Mobile}</label>
+				<div class="slds-form-element__control">
+					<ui:inputPhone aura:id="officeMobile" value="{!v.account.Mobile__c}" class="mobileFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-m-top_medium">
+			<div class="slds-form-element">
+				<label class="slds-form-element__label">{!$Label.c.ISSP_Office_Fax}</label>
+				<div class="slds-form-element__control">
+					<ui:inputPhone aura:id="officeFax" value="{!v.account.Fax}" class="phoneFormat slds-input" updateOn="keyup" keyup="{!c.validateNumber}"/>
+				</div>
+			</div>
+		</div>
+	</div>
+
+ </aura:component>

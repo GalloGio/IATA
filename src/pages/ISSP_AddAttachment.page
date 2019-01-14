@@ -1,14 +1,18 @@
 <apex:page controller="ISSP_AddAttachment"
            extensions="ISSP_AmazonS3_Ctrl,ISSP_AMS_Accreditation"
-           standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" >
+           standardStylesheets="true"
+           showHeader="false"
+           sidebar="false"
+           applyBodyTag="false"
+           applyHtmlTag="false" >
  <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>        
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
  
     <div class="container">
-    <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     
 <script type="text/javascript">
     function showArticle() {
@@ -58,6 +62,11 @@
 </script>
      
  <style>
+ ul li, ol li {
+            margin-left: inherit;
+            padding-left: inherit;
+ }
+     
  .close {
   float: right;
   font-size: 21px;
@@ -257,8 +266,8 @@ margin-top:50px;
       <div class="row"><!-- row 1 -->
            <div class="col-md-12">
                <p>
-                  <apex:outputLabel value="{!$Label.ISSP_File}" for="file" rendered="{!AND(isCase, !isOSCARCase)}"/>
-                  <apex:inputFile value="{!attachment.body}" filename="{!attachment.name}" id="file" rendered="{!AND(isCase, !isOSCARCase)}"/>
+                  <apex:outputLabel value="{!$Label.ISSP_File}" for="file" rendered="{!NOT(isOSCARCase)}"/>
+                  <apex:inputFile value="{!attachment.body}" filename="{!attachment.name}" id="file" rendered="{!NOT(isOSCARCase)}"/>
                </p>
               
                <!-- this functionality allows the user to add a description to the file they upload
@@ -274,20 +283,32 @@ margin-top:50px;
     <div class="row">
        <hr />
           <div class="col-md-3">
-            <apex:commandButton action="{!upload}" value="{!$Label.IFAP_Save}" StyleClass="btn_iata btn-sm btn-block btn-success" rendered="{!AND(isCase, !isOSCARCase)}"/>
-            <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}" value="{!$Label.ISSP_Return_to_Case}" StyleClass="btn_iata btn-sm btn-block btn-success" rendered="{!AND(isCase, IsOSCARCase)}"/>
+            <apex:commandButton action="{!upload}" value="{!$Label.IFAP_Save}" StyleClass="btn_iata btn-sm btn-block btn-success" rendered="{!NOT(isOSCARCase)}"/>
             </div>
           <div class="col-md-3">
-           <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!AND(isCase, !IsOSCARCase)}" />
+           <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!NOT(isOSCARCase)}" />
          <!--
            <apex:commandButton action="/ISSP_Baggage_Proration_Claim?id={!tmpClaim.Id}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!isClaim}" /> 
           -->   
           </div>
     </div>  
     <!-- button row -->
+      <apex:outputPanel rendered="{!AND(tmpCase.Status='Draft',BEGINS(tmpCase.Reason1__c, 'New SA'))}">
+       <div class="form-group">
+       	<label for="operationtype" class="col-lg-5 control-label">{!$Label.ISSP_AMS_SA_Office_Select}</label>
+        	<div class="col-lg-7">
+      		<apex:selectList styleClass="form-control" id="office" style="width:55%" value="{!vAccountConcerned}" size="1" rendered="{!tmpCase.Reason1__c =='New SA / CHV – New Code'}">
+      			<apex:selectOptions value="{!NonSAOffices}"/>
+      		</apex:selectList>
+       </div>
+       </div>
+       </apex:outputPanel>
+      <br/>
+      <div style="float:right;">
+			<apex:commandButton action="{!submitToIATA}" value="{!IF(tmpCase.Status='Draft', IF(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA), $Label.ISSP_Return_to_Case)}" rendered="{!AND(IsOSCARCase, OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products',tmpCase.CaseArea__c == 'Remittance & Settlement Process', tmpCase.CaseArea__c == 'Remittance & Settlement'))}"/>
+       </div>
   </apex:form>
-  <br/>
-  <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Rejected_File}" rendered="{!isOnlineOSCARCase}"/><br/><br/>
+    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Rejected_File}" rendered="{!isOnlineOSCARCase}"/><br/><br/>
 	
     <apex:outputText styleClass="bg-info" style="font-weight:bold" escape="false" value="{!$Label.ISSP_AMS_Case_Attach_Limit}" rendered="{!isOSCARCase}"/><br/>
 
@@ -306,17 +327,16 @@ margin-top:50px;
     <!-- PORTAL_DIRECT files can always be uploaded to SAAM / OSCAR Comm. cases once it is beyondd the draft status -->
     <br/>
         <c:ISSP_AMS_FormUpload reqCnt="100"
-            reqRequired="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='CLO - Closure', tmpCase.Reason1__c=='TIDS'), $Label.ISSP_Mandatory, $Label.ISSP_Optional)}"
-            reqName="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='CLO - Closure', tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form, $Label.ISSP_AMS_Case_Attach)}"
-            reqDescription="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='CLO - Closure', tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form_message + ' - ' + newCase.Subject, $Label.ISSP_AMS_Case_Attach_Description)}"
+            reqRequired="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='TIDS'), $Label.ISSP_Mandatory, $Label.ISSP_Optional)}"
+            reqName="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form, $Label.ISSP_AMS_Case_Attach)}"
+            reqDescription="{!IF(OR(BEGINS(tmpCase.Reason1__c, 'New SA'), tmpCase.Reason1__c=='TIDS'), $Label.ISSP_AMS_Upload_Form_message + ' - ' + newCase.Subject, $Label.ISSP_AMS_Case_Attach_Description)}"
             reqIdentifier="PORTAL_CASE_DIRECT"
-            rendered="{!AND(isOSCARCase, tmpCase.Status!='Draft', OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products', tmpCase.CaseArea__c == 'Remittance & Settlement Process'))}"
+            rendered="{!AND(isOSCARCase, OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products', tmpCase.CaseArea__c == 'Remittance & Settlement Process', tmpCase.CaseArea__c == 'Remittance & Settlement'))}"
         />
     <!-- EO PORTAL_DIRECT Upload -->
-
-            </div><!-- end panel body -->
+    </div><!-- end panel body -->
             </div><!-- end  div class="panel panel-primary"-->
-       <c:ISSP_CustomFooter />
+       <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div><!-- end container-->  
     </body>
     </html>

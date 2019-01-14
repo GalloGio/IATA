@@ -9,29 +9,21 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Name</field>
+                <field>Email__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Type__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Source_Campaign__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Is_Relation_Created__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Email__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Event_Date__c</field>
+                <field>Name</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -51,6 +43,33 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Other_Reason__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Technical Details</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Relation_Created__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Active__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Event_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Event_Date_Timestamp__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -85,11 +104,19 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
+        <fields>NAME</fields>
+        <fields>Is_Global__c</fields>
+        <fields>Billing_Account__c</fields>
+        <fields>GDP_Products_Account_View__c</fields>
+        <fields>ID_Card__c</fields>
+        <fields>Is_Email_Changed__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>EBC_Email_Exclusion_Relation__c.EBC_Email_Exclusion__c</relatedList>
+        <sortField>Is_Global__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>EBC_Email_Exclusion_Relation__c.EBC_Email_Exclusion__c</relatedList>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -97,7 +124,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000Ny6H</masterLabel>
+        <masterLabel>00hw000000hfV2z</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -29,5 +29,7 @@ Please select the topic(s) that you would like to follow:
 	<apex:outputText escape="false" value="{!preview}" />
 
 				</apex:outputPanel>
-
+	<style>
+		h1{display: block;margin-bottom: 1em;}
+	</style>
 </apex:page>

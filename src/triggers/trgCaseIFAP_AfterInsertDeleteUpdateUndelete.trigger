@@ -4,7 +4,7 @@ trigger trgCaseIFAP_AfterInsertDeleteUpdateUndelete on Case (after delete, after
     if(CaseChildHelper.noValidationsOnTrgCAseIFAP )return;
 
 
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     List<Case> cases;
     Boolean caseRecType = false;
     list<Case> casesToConsider = new list<Case>();
@@ -118,7 +118,7 @@ trigger trgCaseIFAP_AfterInsertDeleteUpdateUndelete on Case (after delete, after
               
           if(!casesToUdpateTheAccts.isEmpty())  {              
                // throw new transformationException();
-                AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
+                //AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
             }
       }          
     } 

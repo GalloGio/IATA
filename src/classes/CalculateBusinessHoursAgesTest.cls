@@ -3,8 +3,6 @@ private class CalculateBusinessHoursAgesTest {
 
     static void inserTestData() {
 
-        //map<string,map<string,id>> RtIDsPerDeveloperNamePerObj(list<string> SobjectTypes)
-
         list<Stop_Status__c> stopThisOnes = new list<Stop_Status__c> { new Stop_Status__c(name = 'With Customer' ,
                     Status_Bucket__c = 'With Customer'),
                                      new Stop_Status__c(name = 'Escalated Internally' ,
@@ -31,11 +29,9 @@ private class CalculateBusinessHoursAgesTest {
 
         inserTestData();
 
-        map<string, map<string, id>> RtIDsPerDeveloperNamePerObj = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account', 'Contact'});
-
-        Account a = new Account(name = 'test', recordtypeid = RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline') );
+        Account a = new Account(name = 'test', recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') );
         insert a;
-        Contact con = new Contact(accountid = a.id, LastName = 'Test', phone = '321321', recordtypeid = RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact') );
+        Contact con = new Contact(accountid = a.id, FirstName = 'Name', LastName = 'Test', phone = '321321', recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact') );
         insert con;
 
         Case myCase = [select  id, Short_Payment_Date__c, status, First_closure_date__c, ClosedSameDay__c, Short_Payment_Next_Business_Date__c, CreatedDate , contactId, AccountId
@@ -45,17 +41,12 @@ private class CalculateBusinessHoursAgesTest {
         system.assertNotEquals(myCase.Short_Payment_Date__c, myCase.Short_Payment_Next_Business_Date__c);
 
         mycase.Status = 'Closed';
-        //mycase.First_closure_date__c = myCase .CreatedDate ;
 
         myCase.AccountId = a.id;
         myCase.ContactID = con.id;
 
-        List<RecordType> casert = [SELECT Id from RecordType WHERE DeveloperName = 'CasesEurope' limit 1];
-
-        if (casert.size() > 0) {
-            myCase.RecordTypeId = casert[0].Id;
-        }
-
+		myCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+		
         system.debug('ANTES DO UPDATE mycase.RecordTypeId    ++++++++++++++++++++++' +  mycase.RecordTypeId);
         system.debug('ANTES DO UPDATE mycase.ClosedSameDay__c    ++++++++++++++++++++++' +  mycase.ClosedSameDay__c);
         system.debug('ANTES DO UPDATE mycase.First_closure_date__c     ++++++++++++++++++++++' +  mycase.First_closure_date__c);
@@ -79,12 +70,12 @@ private class CalculateBusinessHoursAgesTest {
      static void inserTestData2() {
 
         BusinessHours  defaultBusinessHours = [ SELECT Id from BusinessHours where IsDefault  = true];
-        ID casesEurRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesEurope') ;
+        ID casesEurRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope') ;
         
-        Account a = new Account(Name = 'test', RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') );
+        Account a = new Account(Name = 'test', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') );
         insert a;
         
-        Contact con = new Contact(AccountId = a.id, LastName = 'Test', Email = 'test@test.com', phone = '321321', RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact') );
+        Contact con = new Contact(AccountId = a.id, FirstName = 'Name', LastName = 'Test', Email = 'test@test.com', phone = '321321', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact') );
         insert con;
         
         Case c = new Case(ContactId = con.Id, Status = 'Open', BusinessHoursId = defaultBusinessHours.id, RecordTypeId = casesEurRT);

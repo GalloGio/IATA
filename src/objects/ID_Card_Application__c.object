@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object that holds information on the application of a new/renew/reissue/replacement ID Card</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -83,37 +80,45 @@
 Unpaid: cards had been created but waiting for payment
 Completed: Process is complete</inlineHelpText>
         <label>Application Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Incomplete</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pending</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Unpaid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Rejected</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Completed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Paid</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Incomplete</fullName>
+                    <default>false</default>
+                    <label>Incomplete</label>
+                </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>true</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Unpaid</fullName>
+                    <default>false</default>
+                    <label>Unpaid</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Paid</fullName>
+                    <default>false</default>
+                    <label>Paid</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Approving_Manager_s_Email__c</fullName>
@@ -208,45 +213,55 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Duties_in_Current_Agency__c</fullName>
         <externalId>false</externalId>
         <label>Duties in Current Agency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Administration</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Marketing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accounting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reservations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other Duties</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Administration</fullName>
+                    <default>false</default>
+                    <label>Administration</label>
+                </value>
+                <value>
+                    <fullName>Sales</fullName>
+                    <default>false</default>
+                    <label>Sales</label>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+                <value>
+                    <fullName>Accounting</fullName>
+                    <default>false</default>
+                    <label>Accounting</label>
+                </value>
+                <value>
+                    <fullName>Reservations</fullName>
+                    <default>false</default>
+                    <label>Reservations</label>
+                </value>
+                <value>
+                    <fullName>Customer Services</fullName>
+                    <default>false</default>
+                    <label>Customer Services</label>
+                </value>
+                <value>
+                    <fullName>Other Duties</fullName>
+                    <default>false</default>
+                    <label>Other Duties</label>
+                </value>
+                <value>
+                    <fullName>Operations</fullName>
+                    <default>false</default>
+                    <label>Operations</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Email_admin__c</fullName>
@@ -273,21 +288,25 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Gender__c</fullName>
         <externalId>false</externalId>
         <label>Gender</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Female</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Male</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Female</fullName>
+                    <default>false</default>
+                    <label>Female</label>
+                </value>
+                <value>
+                    <fullName>Male</fullName>
+                    <default>false</default>
+                    <label>Male</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Hours_Worked_Code__c</fullName>
@@ -326,29 +345,35 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Hours_worked__c</fullName>
         <externalId>false</externalId>
         <label>Hours worked</label>
-        <picklist>
-            <picklistValues>
-                <fullName>35 h or more</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>25-34 h</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>20-24 h</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Less than 20 h</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>35 h or more</fullName>
+                    <default>false</default>
+                    <label>35 h or more</label>
+                </value>
+                <value>
+                    <fullName>25-34 h</fullName>
+                    <default>false</default>
+                    <label>25-34 h</label>
+                </value>
+                <value>
+                    <fullName>20-24 h</fullName>
+                    <default>false</default>
+                    <label>20-24 h</label>
+                </value>
+                <value>
+                    <fullName>Less than 20 h</fullName>
+                    <default>false</default>
+                    <label>Less than 20 h</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>IATA_Code__c</fullName>
@@ -440,25 +465,30 @@ Completed: Process is complete</inlineHelpText>
         <fullName>IDCard_Prefered_Language__c</fullName>
         <externalId>false</externalId>
         <label>IDCard Prefered Language</label>
-        <picklist>
-            <picklistValues>
-                <fullName>en_US</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>es</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>fr</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>en_US</fullName>
+                    <default>true</default>
+                    <label>en_US</label>
+                </value>
+                <value>
+                    <fullName>es</fullName>
+                    <default>false</default>
+                    <label>es</label>
+                </value>
+                <value>
+                    <fullName>fr</fullName>
+                    <default>false</default>
+                    <label>fr</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ID_Card_Fee__c</fullName>
@@ -488,21 +518,25 @@ Completed: Process is complete</inlineHelpText>
         <fullName>ITDI_Courses_Status__c</fullName>
         <externalId>false</externalId>
         <label>ITDI Courses Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Granted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Withdrew</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Granted</fullName>
+                    <default>false</default>
+                    <label>Granted</label>
+                </value>
+                <value>
+                    <fullName>Withdrew</fullName>
+                    <default>false</default>
+                    <label>Withdrew</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Last_Name__c</fullName>
@@ -557,65 +591,80 @@ Completed: Process is complete</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>IATA Package of Travel Professionals Course 1</inlineHelpText>
         <label>Package of Travel Professionals Course 1</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Geography in Travel Planning - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Destination Geography - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Serving the T and T Customer - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Intro to BSPLink - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Le service au client voyageur - FR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Selling Intl Rail Transportation - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Intro al BSPlink - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Intro al Sistema y Lenguaje BSP - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Informes y procedimientos de facturacion BSP - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Social Media for T and T Industry - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fundamentals Journey Pricing - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Repricing, Exchange and Reissue - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agency Fees - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Travel Agency Fees - EN</fullName>
+                    <default>false</default>
+                    <label>Travel Agency Fees - EN</label>
+                </value>
+                <value>
+                    <fullName>Assist Travelers Special Needs - EN</fullName>
+                    <default>false</default>
+                    <label>Assist Travelers Special Needs - EN</label>
+                </value>
+                <value>
+                    <fullName>Fundamentals Journey Pricing - EN</fullName>
+                    <default>false</default>
+                    <label>Fundamentals Journey Pricing - EN</label>
+                </value>
+                <value>
+                    <fullName>Notions essent&apos;l en tarif et billet - FR</fullName>
+                    <default>false</default>
+                    <label>Notions essent&apos;l en tarif et billet - FR</label>
+                </value>
+                <value>
+                    <fullName>Adv. Skills Journey Price&amp;Ticket - EN</fullName>
+                    <default>false</default>
+                    <label>Adv. Skills Journey Price&amp;Ticket - EN</label>
+                </value>
+                <value>
+                    <fullName>Geography in Travel Planning - EN</fullName>
+                    <default>false</default>
+                    <label>Geography in Travel Planning - EN</label>
+                </value>
+                <value>
+                    <fullName>Serving the Travel  Customer - EN</fullName>
+                    <default>false</default>
+                    <label>Serving the Travel  Customer - EN</label>
+                </value>
+                <value>
+                    <fullName>Le service au client voyageur - FR</fullName>
+                    <default>false</default>
+                    <label>Le service au client voyageur - FR</label>
+                </value>
+                <value>
+                    <fullName>Selling Intl Rail Transportation - EN</fullName>
+                    <default>false</default>
+                    <label>Selling Intl Rail Transportation - EN</label>
+                </value>
+                <value>
+                    <fullName>Social Media for Travel Industry - EN</fullName>
+                    <default>false</default>
+                    <label>Social Media for Travel Industry - EN</label>
+                </value>
+                <value>
+                    <fullName>Destination Geography - EN</fullName>
+                    <default>false</default>
+                    <label>Destination Geography - EN</label>
+                </value>
+                <value>
+                    <fullName>Repricing, Exchange and Reissue - EN</fullName>
+                    <default>false</default>
+                    <label>Repricing, Exchange and Reissue - EN</label>
+                </value>
+                <value>
+                    <fullName>Acc. &amp; Fin. Mgmt for agencies -EN</fullName>
+                    <default>false</default>
+                    <label>Acc. &amp; Fin. Mgmt for agencies -EN</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Package_of_Travel_Professionals_Course_2__c</fullName>
@@ -623,65 +672,80 @@ Completed: Process is complete</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>IATA Package of Travel Professionals Course 2</inlineHelpText>
         <label>Package of Travel Professionals Course 2</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Geography in Travel Planning - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Destination Geography - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Serving the T and T Customer - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Intro to BSPLink - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Le service au client voyageur - FR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Selling Intl Rail Transportation - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Intro al BSPlink - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Intro al Sistema y Lenguaje BSP - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Informes y procedimientos de facturacion BSP - ES</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Social Media for T and T Industry - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fundamentals Journey Pricing - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Repricing, Exchange and Reissue - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Travel Agency Fees - EN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Travel Agency Fees - EN</fullName>
+                    <default>false</default>
+                    <label>Travel Agency Fees - EN</label>
+                </value>
+                <value>
+                    <fullName>Assist Travelers Special Needs - EN</fullName>
+                    <default>false</default>
+                    <label>Assist Travelers Special Needs - EN</label>
+                </value>
+                <value>
+                    <fullName>Fundamentals Journey Pricing - EN</fullName>
+                    <default>false</default>
+                    <label>Fundamentals Journey Pricing - EN</label>
+                </value>
+                <value>
+                    <fullName>Notions essent&apos;l en tarif et billet - FR</fullName>
+                    <default>false</default>
+                    <label>Notions essent&apos;l en tarif et billet - FR</label>
+                </value>
+                <value>
+                    <fullName>Adv. Skills Journey Price&amp;Ticket - EN</fullName>
+                    <default>false</default>
+                    <label>Adv. Skills Journey Price&amp;Ticket - EN</label>
+                </value>
+                <value>
+                    <fullName>Geography in Travel Planning - EN</fullName>
+                    <default>false</default>
+                    <label>Geography in Travel Planning - EN</label>
+                </value>
+                <value>
+                    <fullName>Serving the Travel  Customer - EN</fullName>
+                    <default>false</default>
+                    <label>Serving the Travel  Customer - EN</label>
+                </value>
+                <value>
+                    <fullName>Le service au client voyageur - FR</fullName>
+                    <default>false</default>
+                    <label>Le service au client voyageur - FR</label>
+                </value>
+                <value>
+                    <fullName>Selling Intl Rail Transportation - EN</fullName>
+                    <default>false</default>
+                    <label>Selling Intl Rail Transportation - EN</label>
+                </value>
+                <value>
+                    <fullName>Social Media for Travel Industry - EN</fullName>
+                    <default>false</default>
+                    <label>Social Media for Travel Industry - EN</label>
+                </value>
+                <value>
+                    <fullName>Destination Geography - EN</fullName>
+                    <default>false</default>
+                    <label>Destination Geography - EN</label>
+                </value>
+                <value>
+                    <fullName>Repricing, Exchange and Reissue - EN</fullName>
+                    <default>false</default>
+                    <label>Repricing, Exchange and Reissue - EN</label>
+                </value>
+                <value>
+                    <fullName>Acc. &amp; Fin. Mgmt for agencies -EN</fullName>
+                    <default>false</default>
+                    <label>Acc. &amp; Fin. Mgmt for agencies -EN</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Payment_Amount__c</fullName>
@@ -746,29 +810,35 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Payment_Type__c</fullName>
         <externalId>false</externalId>
         <label>Payment Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Invoice</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Credit Card</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Key Account</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FOC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Invoice</fullName>
+                    <default>false</default>
+                    <label>Invoice</label>
+                </value>
+                <value>
+                    <fullName>Credit Card</fullName>
+                    <default>false</default>
+                    <label>Credit Card</label>
+                </value>
+                <value>
+                    <fullName>Key Account</fullName>
+                    <default>false</default>
+                    <label>Key Account</label>
+                </value>
+                <value>
+                    <fullName>FOC</fullName>
+                    <default>false</default>
+                    <label>FOC</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Photo__c</fullName>
@@ -824,41 +894,50 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Position_in_Current_Agency__c</fullName>
         <externalId>false</externalId>
         <label>Position in Current Agency</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Director</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Employee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Independent Consultant/Broker</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Manager</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sole Owner</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Partner</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Shareholder</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Director</fullName>
+                    <default>false</default>
+                    <label>Director</label>
+                </value>
+                <value>
+                    <fullName>Employee</fullName>
+                    <default>false</default>
+                    <label>Employee</label>
+                </value>
+                <value>
+                    <fullName>Independent Consultant/Broker</fullName>
+                    <default>false</default>
+                    <label>Independent Consultant/Broker</label>
+                </value>
+                <value>
+                    <fullName>Manager</fullName>
+                    <default>false</default>
+                    <label>Manager</label>
+                </value>
+                <value>
+                    <fullName>Sole Owner</fullName>
+                    <default>false</default>
+                    <label>Sole Owner</label>
+                </value>
+                <value>
+                    <fullName>Partner</fullName>
+                    <default>false</default>
+                    <label>Partner</label>
+                </value>
+                <value>
+                    <fullName>Shareholder</fullName>
+                    <default>false</default>
+                    <label>Shareholder</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Profit_Center__c</fullName>
@@ -924,54 +1003,65 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Selected_Preferred_Language__c</fullName>
         <externalId>false</externalId>
         <label>Selected/Preferred Language</label>
-        <picklist>
-            <picklistValues>
-                <fullName>English</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>French</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Spanish</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>English</fullName>
+                    <default>false</default>
+                    <label>English</label>
+                </value>
+                <value>
+                    <fullName>French</fullName>
+                    <default>false</default>
+                    <label>French</label>
+                </value>
+                <value>
+                    <fullName>Spanish</fullName>
+                    <default>false</default>
+                    <label>Spanish</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Single_Application_Processing_Step__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>This field is used by Batch on Mass Application to know what is current process step</inlineHelpText>
         <label>Single Application Processing Step</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Waiting for processing</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Queue for processing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Locked</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Processed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Waiting for processing</fullName>
+                    <default>true</default>
+                    <label>Waiting for processing</label>
+                </value>
+                <value>
+                    <fullName>In Queue for processing</fullName>
+                    <default>false</default>
+                    <label>In Queue for processing</label>
+                </value>
+                <value>
+                    <fullName>Locked</fullName>
+                    <default>false</default>
+                    <label>Locked</label>
+                </value>
+                <value>
+                    <fullName>Processed</fullName>
+                    <default>false</default>
+                    <label>Processed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Solicitation_Flag__c</fullName>
@@ -986,69 +1076,83 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Start_Date_Agency_Month__c</fullName>
         <description>Start date of employment with above agency</description>
         <externalId>false</externalId>
-        <label>Start Date Agency Month</label>
-        <picklist>
-            <picklistValues>
-                <fullName>January</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>February</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>March</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>April</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>May</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>June</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>July</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>August</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>September</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>October</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>November</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>December</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <label>Start Month in the Agency</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>January</fullName>
+                    <default>false</default>
+                    <label>January</label>
+                </value>
+                <value>
+                    <fullName>February</fullName>
+                    <default>false</default>
+                    <label>February</label>
+                </value>
+                <value>
+                    <fullName>March</fullName>
+                    <default>false</default>
+                    <label>March</label>
+                </value>
+                <value>
+                    <fullName>April</fullName>
+                    <default>false</default>
+                    <label>April</label>
+                </value>
+                <value>
+                    <fullName>May</fullName>
+                    <default>false</default>
+                    <label>May</label>
+                </value>
+                <value>
+                    <fullName>June</fullName>
+                    <default>false</default>
+                    <label>June</label>
+                </value>
+                <value>
+                    <fullName>July</fullName>
+                    <default>false</default>
+                    <label>July</label>
+                </value>
+                <value>
+                    <fullName>August</fullName>
+                    <default>false</default>
+                    <label>August</label>
+                </value>
+                <value>
+                    <fullName>September</fullName>
+                    <default>false</default>
+                    <label>September</label>
+                </value>
+                <value>
+                    <fullName>October</fullName>
+                    <default>false</default>
+                    <label>October</label>
+                </value>
+                <value>
+                    <fullName>November</fullName>
+                    <default>false</default>
+                    <label>November</label>
+                </value>
+                <value>
+                    <fullName>December</fullName>
+                    <default>false</default>
+                    <label>December</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Start_Date_Agency_Year__c</fullName>
         <description>Start date (year) of employment for above agency</description>
         <externalId>false</externalId>
         <inlineHelpText>Numeric value. (YYYY format)</inlineHelpText>
-        <label>Start Date Agency Year</label>
+        <label>Start Year in the Agency</label>
         <length>4</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1061,7 +1165,7 @@ Completed: Process is complete</inlineHelpText>
         <description>Start date of employment in the industry</description>
         <externalId>false</externalId>
         <inlineHelpText>YYYY</inlineHelpText>
-        <label>Start Date Industry Year</label>
+        <label>Start Year in the Industry</label>
         <length>4</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1137,53 +1241,64 @@ Completed: Process is complete</inlineHelpText>
         <fullName>Title__c</fullName>
         <externalId>false</externalId>
         <label>Title</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Mr</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ms</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mrs</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Mr</fullName>
+                    <default>false</default>
+                    <label>Mr</label>
+                </value>
+                <value>
+                    <fullName>Ms</fullName>
+                    <default>false</default>
+                    <label>Ms</label>
+                </value>
+                <value>
+                    <fullName>Mrs</fullName>
+                    <default>false</default>
+                    <label>Mrs</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Type_of_application__c</fullName>
         <externalId>false</externalId>
         <label>Type of application</label>
-        <picklist>
-            <picklistValues>
-                <fullName>New</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Replacement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Renewal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reissue</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New</fullName>
+                    <default>false</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>Replacement</fullName>
+                    <default>false</default>
+                    <label>Replacement</label>
+                </value>
+                <value>
+                    <fullName>Renewal</fullName>
+                    <default>false</default>
+                    <label>Renewal</label>
+                </value>
+                <value>
+                    <fullName>Reissue</fullName>
+                    <default>false</default>
+                    <label>Reissue</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>UIR__c</fullName>
@@ -1198,7 +1313,7 @@ Completed: Process is complete</inlineHelpText>
     </fields>
     <fields>
         <fullName>VER_Number__c</fullName>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>VER#</label>
         <length>18</length>
         <required>false</required>
@@ -1209,29 +1324,7 @@ Completed: Process is complete</inlineHelpText>
     </fields>
     <label>ID Card Application</label>
     <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Start_Date_Agency_Month__c</columns>
-        <columns>Start_Date_Agency_Year__c</columns>
-        <columns>Start_Date_Industry__c</columns>
-        <columns>Applicable_Fee__c</columns>
-        <columns>Approving_Manager_s_Email__c</columns>
-        <columns>Displayed_Name__c</columns>
-        <columns>IATA_Code__c</columns>
-        <columns>Type_of_application__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>UIR__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>VER_Number__c</field>
-            <operation>equals</operation>
-        </filters>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>Completed_Paid_ID_Card_Applications</fullName>
-        <booleanFilter>1 OR 2 OR 3</booleanFilter>
         <columns>NAME</columns>
         <columns>Payment_Amount__c</columns>
         <columns>First_Name__c</columns>
@@ -1242,20 +1335,6 @@ Completed: Process is complete</inlineHelpText>
         <columns>Photo__c</columns>
         <columns>UIR__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Payment_Date__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>Payment_Type__c</field>
-            <operation>equals</operation>
-            <value>FOC / Key Account</value>
-        </filters>
-        <filters>
-            <field>Payment_Type__c</field>
-            <operation>equals</operation>
-            <value>Invoice</value>
-        </filters>
         <label>Completed/Paid ID Card Applications</label>
         <language>en_US</language>
         <sharedTo>
@@ -1286,6 +1365,7 @@ Completed: Process is complete</inlineHelpText>
         <fullName>For_specific_VER</fullName>
         <columns>CREATED_DATE</columns>
         <columns>NAME</columns>
+        <columns>VER_Number__c</columns>
         <columns>RECORDTYPE</columns>
         <columns>Application_Status__c</columns>
         <columns>IATA_Code__c</columns>
@@ -1296,7 +1376,7 @@ Completed: Process is complete</inlineHelpText>
         <filters>
             <field>VER_Number__c</field>
             <operation>equals</operation>
-            <value>5990038761</value>
+            <value>Z5990063819</value>
         </filters>
         <label>For specific VER</label>
         <language>en_US</language>
@@ -1328,7 +1408,7 @@ Completed: Process is complete</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Uncomplete_IDCard_Application</fullName>
+        <fullName>Incomplete_Unpaid_ID_Card_Applications</fullName>
         <booleanFilter>1</booleanFilter>
         <columns>NAME</columns>
         <columns>Application_Status__c</columns>
@@ -1338,9 +1418,9 @@ Completed: Process is complete</inlineHelpText>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>VER_Number__c</field>
+            <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>5990029464</value>
+            <value>TODAY</value>
         </filters>
         <label>Incomplete/Unpaid ID Card Applications</label>
         <language>en_US</language>
@@ -2305,6 +2385,7 @@ Completed: Process is complete</inlineHelpText>
         <errorDisplayField>VER_Number__c</errorDisplayField>
         <errorMessage>The VER# must be numeric.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Approve_ID_Card</fullName>
         <availability>online</availability>
@@ -2316,133 +2397,147 @@ Completed: Process is complete</inlineHelpText>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/26.0/connection.js&quot;)} 
 {!REQUIRESCRIPT(&quot;/soap/ajax/26.0/apex.js&quot;)} 
-sforce.connection.sessionId = &quot;{!$Api.Session_ID}&quot;;
-try{ 	
+sforce.connection.sessionId = &quot;{!$Api.Session_ID}&quot;; 
+try{ 
 
-    var IDCardAppID = &apos;{!ID_Card_Application__c.Id}&apos;; 
-    var caseNumber = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;getIDCardApplicationCase&quot;, {IDCardApplicationID:IDCardAppID}); 
-	var paymentType = &apos;{!ID_Card_Application__c.Payment_Type__c}&apos;;
-	var typeOfApplication = &apos;{!ID_Card_Application__c.Type_of_application__c}&apos;;
-	
-	var query = &apos;Select c.ID_Card_Status__c, c.OwnerId, c.ContactId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;;
-		
-	var queryresult = sforce.connection.query(query); 
-	var records = queryresult.getArray(&apos;records&apos;);
-	if (records.length &gt; 0) {
-		var record = records[0];
-		var currentUser = &apos;{!User.Id}&apos;;
-		var valid = true;		
-		
-		//Validation to check if contact is not IFAP contact with &apos;Financial Assessment Contact&apos; checked
-		// for Replacement
-		if(typeOfApplication== &apos;Replacement&apos; &amp;&amp; record.ContactId != null)
-		{
-			var getContactQuery = &apos;Select c.Financial_Assessment_Contact__c From Contact c where c.Id = \&apos;&apos;+record.ContactId+&apos;\&apos;&apos;; 
-			var queryGetContact = sforce.connection.query(getContactQuery); 
-			var ContactRecords = queryGetContact.getArray(&apos;records&apos;);
-			if(ContactRecords.length&gt;0)
-			{
-				var con = ContactRecords[0];
-				if(con.Financial_Assessment_Contact__c == &apos;true&apos;)
-				{					
-					alert(&quot;The current Contact is a Financial Assessment Contact. It cannot be moved to another Agency. Please check with IFAP admin to make changes regarding this Contact &quot;+record.ContactId);
-					valid = false;
-				}
-				
-			}
-		}
-		
-		if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Approved&apos;)
-		{
-			alert(&quot;This application is already approved&quot;);
-			valid = false;
-		}
-		if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Pending Manager Approval&apos;)
-		{
-			alert(&quot;This application is already submitted for Manager Approval&quot;);
-			valid = false;
-		}
-		// If Current user is not the owner of the case
-		if (valid == true &amp;&amp; !((record.OwnerId).indexOf(currentUser) != -1)) 
-		{
-			alert(&quot;Please, you have to accept the case before approve.&quot;); 
-			valid = false;			
-		}
-		if(valid == true)
-		{
-			if(paymentType == &apos;&apos; || paymentType == null)
-				alert(&apos;Please select a payment type&apos;);
-				
-			if (paymentType == &apos;Credit Card&apos; || paymentType == &apos;FOC&apos; || paymentType == &apos;Key Account&apos;)
-			{
-				var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;UpdateCaseToApproved_Rejected&quot;,{cNum:caseNumber,isApproved:true}); 			
-				if(st == &apos;true&apos;) 
-				{ 
-					alert(&quot;The Case has been approved.&quot;); 
-					window.location.reload(); 
-				} 
-				else{ 
-					alert(&quot;Error! Unable to approve this Application/Case. Issue with Util. \n&quot;+ st); 
-				}
-			}
+var IDCardAppID = &apos;{!ID_Card_Application__c.Id}&apos;; 
+var caseNumber = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;getIDCardApplicationCase&quot;, {IDCardApplicationID:IDCardAppID}); 
+var paymentType = &apos;{!ID_Card_Application__c.Payment_Type__c}&apos;; 
+var typeOfApplication = &apos;{!ID_Card_Application__c.Type_of_application__c}&apos;; 
 
-			if (paymentType == &apos;Invoice&apos;)
-			{
-				var getGroupsQuery = &apos;SELECT Id FROM GroupMember where group.name = \&apos;IDCardManager\&apos; and UserOrGroupId = \&apos;&apos;+currentUser+&apos;\&apos;&apos;; 
-				var queryGetGroups = sforce.connection.query(getGroupsQuery); 
-				var GroupsRecords = queryGetGroups.getArray(&apos;records&apos;);
+var query = &apos;Select c.ID_Card_Status__c, c.OwnerId, c.ContactId From Case c where CaseNumber = \&apos;&apos;+caseNumber+&apos;\&apos;&apos;; 
 
-				// is part of manager group =&gt; allow to approve right away
-				if(GroupsRecords.length&gt;0)
-				{
-					var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;UpdateCaseToApproved_Rejected&quot;,{cNum:caseNumber,isApproved:true}); 			
-					if(st == &apos;true&apos;) 
-					{ 
-						alert(&quot;The Case has been approved.&quot;); 
-						window.location.reload(); 
-					} 
-					else{ 
-						alert(&quot;Error! Unable to approve this Application/Case. No Access to groups.\n&quot;+ st); 
-					}					
-				}
-				else
-				{
-					var currentUserManager = &apos;{!User.ManagerId}&apos;;
+var queryresult = sforce.connection.query(query); 
+var records = queryresult.getArray(&apos;records&apos;); 
+var valid = true; 
 
-					if (currentUserManager != null &amp;&amp; currentUserManager != &apos;&apos;)
-					{
+if(&apos;{!ID_Card_Application__c.Type_of_application__c}&apos; == &apos;Replacement&apos; ){ 
 
-						var st = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;ConfirmChequePayment&quot;, {cNum:caseNumber}); 
-							
-						if(st == &apos;true&apos;) 
-						{ 
-							alert(&quot;This Case is submitted to the manager for approval.&quot;); 
-							window.location.reload(); 
-						} 
-						else { 
-							alert(&quot;Error! Unable to approve this Application/Case. ConfirmChequePayment. \n&quot;+st); 
-						}
-						
-					}
-					
-					else
-					{		
-					
-						alert(&quot;A manager is required to approve this application. Please update your profile with your manager information.&quot;);
-					} 
-				}
-				
-			}
-		}
-	}
-	else{	
-		alert(&quot;No Case is available for this ID Card Application&quot;);
-	}
-	
+var queryPAR = &apos;Select Contact__c from Portal_Application_Right__c where contact__r.VER_Number_2__c = \&apos;&apos;+ {!ID_Card_Application__c.VER_Number__c}+&apos;\&apos; and ((( PortalServiceTranslatedName__c=\&apos;bsplink\&apos; or PortalServiceTranslatedName__c=\&apos;casslink\&apos; or PortalServiceTranslatedName__c=\&apos;ifap\&apos;) and Right__c = \&apos;access granted\&apos;) or contact__r.User_Portal_Status__c = \&apos;Approved Admin\&apos; or contact__r.Invoicing_Contact__c = true)&apos;; 
+var queryPARresult = sforce.connection.query(queryPAR); 
+var recordsPAR = queryPARresult.getArray(&apos;records&apos;); 
+
+
+if(recordsPAR.length &gt; 0){ 
+alert(&apos;Please report to CS team that the contact is applying for change of agency&apos;); 
+valid = false;
+}
+}
+
+if (records.length &gt; 0) { 
+var record = records[0]; 
+var currentUser = &apos;{!User.Id}&apos;; 
+
+//Validation to check if contact is not IFAP contact with &apos;Financial Assessment Contact&apos; checked 
+// for Replacement 
+if(typeOfApplication== &apos;Replacement&apos; &amp;&amp; record.ContactId != null) 
+{ 
+var getContactQuery = &apos;Select c.Financial_Assessment_Contact__c From Contact c where c.Id = \&apos;&apos;+record.ContactId+&apos;\&apos;&apos;; 
+var queryGetContact = sforce.connection.query(getContactQuery); 
+var ContactRecords = queryGetContact.getArray(&apos;records&apos;); 
+if(ContactRecords.length&gt;0) 
+{ 
+var con = ContactRecords[0]; 
+if(con.Financial_Assessment_Contact__c == &apos;true&apos;) 
+{	
+alert(&quot;The current Contact is a Financial Assessment Contact. It cannot be moved to another Agency. Please check with IFAP admin to make changes regarding this Contact &quot;+record.ContactId); 
+valid = false; 
+} 
+
+} 
+} 
+
+if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Approved&apos;) 
+{ 
+alert(&quot;This application is already approved&quot;); 
+valid = false; 
+} 
+if(valid == true &amp;&amp; record.ID_Card_Status__c == &apos;Pending Manager Approval&apos;) 
+{ 
+alert(&quot;This application is already submitted for Manager Approval&quot;); 
+valid = false; 
+} 
+// If Current user is not the owner of the case 
+if (valid == true &amp;&amp; !((record.OwnerId).indexOf(currentUser) != -1)) 
+{ 
+alert(&quot;Please, you have to accept the case before approve.&quot;); 
+valid = false;	
+} 
+if(valid == true) 
+{ 
+if(paymentType == &apos;&apos; || paymentType == null) 
+alert(&apos;Please select a payment type&apos;); 
+
+if (paymentType == &apos;Credit Card&apos; || paymentType == &apos;FOC&apos; || paymentType == &apos;Key Account&apos;) 
+{ 
+var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;UpdateCaseToApproved_Rejected&quot;,{cNum:caseNumber,isApproved:true}); 
+if(st == &apos;true&apos;) 
+{ 
+alert(&quot;The Case has been approved.&quot;); 
+window.location.reload(); 
+} 
+else{ 
+alert(&quot;Error! Unable to approve this Application/Case. Issue with Util. \n&quot;+ st); 
+} 
+} 
+
+if (paymentType == &apos;Invoice&apos;) 
+{ 
+var getGroupsQuery = &apos;SELECT Id FROM GroupMember where group.name = \&apos;IDCardManager\&apos; and UserOrGroupId = \&apos;&apos;+currentUser+&apos;\&apos;&apos;; 
+var queryGetGroups = sforce.connection.query(getGroupsQuery); 
+var GroupsRecords = queryGetGroups.getArray(&apos;records&apos;); 
+
+// is part of manager group =&gt; allow to approve right away 
+if(GroupsRecords.length&gt;0) 
+{ 
+var st= sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;UpdateCaseToApproved_Rejected&quot;,{cNum:caseNumber,isApproved:true}); 
+if(st == &apos;true&apos;) 
+{ 
+alert(&quot;The Case has been approved.&quot;); 
+window.location.reload(); 
+} 
+else{ 
+alert(&quot;Error! Unable to approve this Application/Case. No Access to groups.\n&quot;+ st); 
+}	
+} 
+else 
+{ 
+var currentUserManager = &apos;{!User.ManagerId}&apos;; 
+
+if (currentUserManager != null &amp;&amp; currentUserManager != &apos;&apos;) 
+{ 
+
+var st = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;ConfirmChequePayment&quot;, {cNum:caseNumber}); 
+
+if(st == &apos;true&apos;) 
+{ 
+alert(&quot;This Case is submitted to the manager for approval.&quot;); 
+window.location.reload(); 
+} 
+else { 
+alert(&quot;Error! Unable to approve this Application/Case. ConfirmChequePayment. \n&quot;+st); 
+} 
+
+} 
+
+else 
+{	
+
+alert(&quot;A manager is required to approve this application. Please update your profile with your manager information.&quot;); 
+} 
+} 
+
+} 
+} 
+} 
+else{	
+alert(&quot;No Case is available for this ID Card Application&quot;); 
+} 
+
 } 
 catch(err) 
 { 
-	alert(err); 
+alert(err); 
 }</url>
     </webLinks>
     <webLinks>
@@ -2502,7 +2597,7 @@ if (records.length &gt; 0) {
 		}
 		if(conf == true){
 			
-			var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setPendingAdditionalInfo&quot;, {applicationId:&quot;{!ID_Card_Application__c.Id}&quot;});
+			var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setPendingAdditionalInfo&quot;, {applicationIdParam:&quot;{!ID_Card_Application__c.Id}&quot;});
 			var contactId = &quot;&quot;;
                         parent.location.href = &quot;/&quot;+caseId; 
 			if(caseId == &quot;&quot;) 
@@ -2514,10 +2609,11 @@ if (records.length &gt; 0) {
 				var cid = caseId.substring(0,15);
 				
 				if (records[0].ContactId != null)				
-					contactId = (records[0].ContactId).substring(0,15);	
-					
-				parent.location.href = &quot;/_ui/core/email/author/EmailAuthor?retURL=%2F&quot;+cid+&quot;&amp;p3_lkid=&quot; + cid + &quot;&amp;rtype=003&amp;p2_lkid=&quot; + contactId; 
+					contactId = (records[0].ContactId).substring(0,15);
+                 			
+				
 			}
+                     
 		}
 	}
 }
@@ -2693,7 +2789,7 @@ conf = confirm(&quot;This ID Card will be &apos;To Be Approved&apos;&quot;);
 }
 if(conf == true){
 
-var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setTobeapproved&quot;, {applicationId:&quot;{!ID_Card_Application__c.Id}&quot;});
+var caseId = sforce.apex.execute(&quot;IDCardUtil&quot;,&quot;setTobeapproved&quot;, {applicationIdParam:&quot;{!ID_Card_Application__c.Id}&quot;});
 var contactId = &quot;&quot;;
 
 

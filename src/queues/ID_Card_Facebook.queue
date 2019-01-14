@@ -2,6 +2,16 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>ID Card Facebook</name>
+    <queueMembers>
+        <users>
+            <user>salima@iata.org</user>
+            <user>hernandezda@iata.org</user>
+            <user>bradshawde@iata.org</user>
+            <user>herrerak@iata.org</user>
+            <user>makp@iata.org</user>
+            <user>al-maanis@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

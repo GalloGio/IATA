@@ -103,7 +103,7 @@
         <div class="slds-grid slds-page-header__detail-row resize">
 
             <!-- PAGE HEADER / ROW 2 / COLUMN 1 -->
-            <div class="slds-col--padded slds-size--1-of-7">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Record Type</p>
@@ -115,7 +115,7 @@
             </div>
 
             <!-- PAGE HEADER / ROW 2 / COLUMN 2 -->
-            <div class="slds-col--padded slds-size--1-of-7">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Verified</p>
@@ -127,7 +127,7 @@
             </div>
 
             <!-- PAGE HEADER / ROW 2 / COLUMN 3 -->
-            <div class="slds-col--padded slds-size--1-of-7">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Country</p>
@@ -137,7 +137,7 @@
             </div>
 
             <!-- PAGE HEADER / ROW 2 / COLUMN 4 -->
-            <div class="slds-col--padded slds-size--1-of-7">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Sector</p>
@@ -147,7 +147,7 @@
             </div>
 
             <!-- PAGE HEADER / ROW 2 / COLUMN 5 -->
-            <div class="slds-col--padded slds-size--1-of-7">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Category</p>
@@ -157,17 +157,17 @@
             </div>
 
             <!-- PAGE HEADER / ROW 2 / COLUMN 6 -->
-            <div class="slds-col--padded slds-size--1-of-7">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Airline Business Model</p>
                     </dt>
                     <dd>
 
+                        {!v.account.Airline_Model_Type__c}
                         <!-- <aura:if isTrue="{!v.account.Airline_Business_Model_Detail__c != undefined}">
                             {!v.account.Airline_Business_Model_Detail__c}
                             <aura:set attribute="else">
-                                {!v.account.Airline_Model_Type__c}
                             </aura:set>
                         </aura:if> -->
                     </dd>
@@ -175,7 +175,7 @@
             </div>
 
             <!-- PAGE HEADER / ROW 2 / COLUMN 7 -->
-            <div class="slds-col--padded slds-size--1-of-7">
+            <div class="slds-col--padded ">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Membership Status</p>

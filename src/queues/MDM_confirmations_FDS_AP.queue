@@ -3,6 +3,15 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>MDM confirmations (FDS AP)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSDistributionAirlineManagement</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>Distribution_Airline_Coding</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>DistributionAirlineManagementHOI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -47,7 +47,7 @@
 			h1 .address{font-weight: normal;}
 			p{
 				margin: 0;
-				font-size: 1.5em;
+				font-size: 1.4em;
 				color: #bbb;
 				font-weight: bold;
 				font-style: normal;
@@ -61,19 +61,21 @@
 			<div class="certificate">
 				<h1>
 					<span class="iata-code">
-						<apex:outputText value="{0}-{1} {2} {3}" rendered="{!acc.Location_Class__c == 'P'}">
+						<apex:outputText value="{0}-{1} {2} {3}" rendered="{!AND(acc.Location_Class__c <> 'C', acc.Location_Class__c <> 'R', acc.Location_Class__c <> 'I', acc.Location_Class__c <> 'Q')}">
 							<apex:param value="{!LEFT(acc.IATACode__c, 2)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 3), 1)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 7), 4)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 8), 1)}"/>
 						</apex:outputText> 
-						<apex:outputText value="{0}-{1} {2}" rendered="{!NOT(acc.Location_Class__c == 'P')}">
+						<apex:outputText value="{0}-{1} {2} {3} {4}" rendered="{!OR(acc.Location_Class__c == 'C', acc.Location_Class__c == 'R', acc.Location_Class__c == 'I', acc.Location_Class__c == 'Q')}">
 							<apex:param value="{!LEFT(acc.IATACode__c, 2)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 3), 1)}"/>
 							<apex:param value="{!RIGHT(LEFT(acc.IATACode__c, 7), 4)}"/>
+							<apex:param value="{!LEFT(acc.CASS_Number__c, 3)}"/>
+							<apex:param value="{!acc.Check_Digit__c}"/>
 						</apex:outputText> 
 					</span>
-					{!IF(ISBLANK(acc.TradeName__c), acc.Name, acc.TradeName__c)}
+					{!IF( acc.Region_formula__c == 'China & North Asia', acc.Name, IF(ISBLANK(acc.TradeName__c), UPPER(acc.Name), UPPER(acc.TradeName__c)))}
 					<span class="address"><apex:outputText value="{!acc.BillingCity & ', '}" rendered="{!acc.Location_Class__c == 'P'}" /> <apex:outputText value="{!acc.IATA_ISO_Country__r.Name}"/></span>
 				</h1>
 				<p>{!IF(ISBLANK($CurrentPage.Parameters.year), YEAR(TODAY()), $CurrentPage.Parameters.year)}</p>

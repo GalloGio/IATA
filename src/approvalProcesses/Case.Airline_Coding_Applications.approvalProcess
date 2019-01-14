@@ -3,23 +3,11 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
-        <submitter>DistributionAirlineManagementHO</submitter>
-        <type>role</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>farrella@iata.org</submitter>
+        <submitter>bricenoa@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
         <submitter>jeffrey@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>kalajil@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>szajkod@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <approvalPageFields>
@@ -42,7 +30,7 @@
         <name>Step_1</name>
     </approvalStep>
     <description>Used for Airline Coding Application process approval</description>
-    <emailTemplate>unfiled$public/Airline_Coding_Application_Assignment</emailTemplate>
+    <emailTemplate>All/Airline_Coding_Application_Assignment</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>

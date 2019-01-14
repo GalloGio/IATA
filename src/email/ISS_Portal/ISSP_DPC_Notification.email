@@ -1,0 +1,42 @@
+<messaging:emailTemplate subject="{!relatedTo.Subject}- case n° {!relatedTo.CaseNumber} - New {!relatedTo.Type}" recipientType="Contact" relatedToType="Case">
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="{!if(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000')}"/>
+
+<BR/>
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+
+Dear DPC Partner,
+<p/>
+This is to inform you that case no. {!relatedTo.CaseNumber} ({!relatedTo.Type}) has been added to the {!if(relatedTo.CNSCase__c ==true, 'CNS','IATA')} Customer Portal for your attention.
+<p/>
+<i>Case Suject</i><br/>
+<apex:outputField value="{!relatedTo.Subject}"></apex:outputField><BR/>
+
+<i>Case description</i><br/>
+<apex:outputField value="{!relatedTo.Description}"></apex:outputField>
+<br/><br/><br/>
+Please access the case by clicking the link below and logging into the portal with your email address:<br/>
+ <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_LogIn?retURL=/ISSP_Case?caseId={!relatedTo.id}{!if(relatedTo.CNSCase__c, '&CommunityName=CNS', '')}">Case no. {!relatedTo.CaseNumber}</a>
+<p/>
+Thank you,<BR/>
+<br/>
+{!if(relatedTo.CNSCase__c ==true, 'CNS','IATA')}  DPC Team
+
+<p>
+<!--The URL of the following image is the one of PROD-->
+<!--<apex:image value="https://iata--transform--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000VVJN" width="176" height="89" />-->
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="{!if(relatedTo.CNSCase__c, '', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}"/>
+</a>
+</p>
+
+
+<apex:image value="{!if(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/ervlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000')}"/>
+<br/>
+</span>
+</div>
+{!relatedTo.Case_Thread_ID__c}
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

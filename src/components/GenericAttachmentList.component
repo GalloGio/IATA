@@ -4,8 +4,14 @@
     <apex:attribute name="uploaderWizard" description="uploader" type="String" required="false" assignTo="{!uploader}" />
     <apex:attribute name="sourceSystem" description="source" type="String" required="false" assignTo="{!source}" />
     <apex:attribute name="scrollable" description="scrollable" type="Boolean" required="false" assignTo="{!scroll}" />
+    <apex:attribute name="showAttachFileButton" description="showAttachFileButton" type="Boolean" required="false" default="true"/>
 
     <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip-utils.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/FileSaver.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.js')}"/>
     <apex:includeScript value="/support/console/30.0/integration.js"/>
 
     <c:Loading />
@@ -73,6 +79,19 @@
             }
             //return false;
         }
+
+        function downloadZIP() {
+          startLoading();
+          GenericAttachmentListController.getAllExpiringLink("{!sobjectId}",function(result, event){
+              try {
+                var zipfiles = new ZipFiles(result, "files.zip");
+                zipfiles.downloadZip();
+              } catch (e) {
+                alert(e);
+              }
+              stopLoading();
+          }, {buffer: true, escape: false, timeout: 120000} );
+        }
     </script>
 
         <apex:pageblock id="fileList" title="{!$Label.Attachments}" > 
@@ -82,11 +101,13 @@
                 <apex:outputPanel rendered="{!NOT(isPortal)}">
                     <c:UploadMultipleFileToAmazonButton sObjectId="{!sObjectId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="{!uploader}" sourceSystem="{!source}"/>
                     <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
+                    <apex:commandButton value="{!$Label.Oscar_Attachments}" onclick="oscarAttachments();return false;" rendered="{!ParentIsOscar}" />
                     <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList();" />
                     <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList()" />
+                    <apex:commandButton value="Download All Files" action="{!makeAllPrivate}" onclick="downloadZIP(); return false;" />
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!isPortal}" >
-                    <apex:commandButton action="{!goToAttachmentPage}" value="{!$Label.ISSP_Attach_File}" rendered="{!canAttachFilesToCase}"/>
+                    <apex:commandButton action="{!goToAttachmentPage}" value="{!$Label.ISSP_Attach_File}" rendered="{!AND(showAttachFileButton,canAttachFilesToCase)}"/>
                 </apex:outputPanel>
             </apex:pageblockButtons>
             <div class="{!IF(scroll == true, 'tableWrapper', '')}">
@@ -142,6 +163,10 @@
                     <apex:outputText value="{!attach.name}"/>
                 </apex:column>
 
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.File_Identifier__c.Label}">
+                    <apex:outputText value="{!attach.fileAmazon.amazonFile.File_Identifier__c}"/>
+                </apex:column>
+
                 <apex:column headerValue="{!$Label.File_Size}">
                     <apex:outputText value="{0,number,0.##} MB">
                         <apex:param value="{!attach.size}" />
@@ -149,8 +174,7 @@
                 </apex:column>
 
                 <apex:column headerValue="{!$Label.Created_Date}" >
-                    <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
-                        <apex:param value="{!attach.createdDate}" />
+                    <apex:outputText value=" {!attach.createdDate}">                  
                     </apex:outputText>
                 </apex:column>
 

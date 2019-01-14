@@ -2,7 +2,7 @@
 private class ISSP_TC_Accept_Test {
 
 	static testMethod void myUnitTest_1() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -20,27 +20,38 @@ private class ISSP_TC_Accept_Test {
 	                            timezonesidkey = 'Asia/Dubai',
 	                            username = contact.email+'dfgdf',
 	                            PortalRole = 'Manager',
-	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+                                CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
-	                            IsActive = true);
+                                IsActive = true);
     	insert newUser;
 		
     	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
     	insert issc;
+        //Instantiated outside of the RunAs just to be able to access to a field that a newUser don't have access
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
     	system.runAs(newUser){
-        	ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+            system.setPassword(newUser.id, 'testpassword1');
+        	
         	cttr.accept = false;
         	cttr.redirectChangePassword();
         	cttr.redirectTC_Accept();
         	cttr.docontinue();
         	cttr.accept = true;
         	cttr.docontinue();
+
+            PageReference pageRef = Page.ISSP_TC_Accept;
+            Test.setCurrentPage(pageRef);
+            PageReference pr1 = cttr.pageLoad();
+            Boolean bget = cttr.getCountryRequirementPermission();
+
+            cttr.searchText ='test';
+            List<SelectOption> lsoLanguages = cttr.languages;
     	}
     }
     
     static testMethod void myUnitTest_2() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -79,17 +90,22 @@ private class ISSP_TC_Accept_Test {
 		
     	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
     	insert issc;
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
     	system.runAs(newUser){
-        	ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+        	
         	cttr.accept = true;
         	cttr.redirectChangePassword();
         	cttr.redirectTC_Accept();
+
+            PageReference pageRef = Page.ISSP_TC_Accept;
+            Test.setCurrentPage(pageRef);
+            PageReference pr1 = cttr.pageLoad();
     	}
     }
     
     static testMethod void myUnitTest_3() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -121,15 +137,16 @@ private class ISSP_TC_Accept_Test {
     	newSurvey.Survey_Link__c = 'http:\\test&iv=1234';
     	newSurvey.isActive__c = true;
     	insert newSurvey;
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
     	system.runAs(newUser){
-        	ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+        	
         	cttr.CheckLogoutorSurvey();
     	}
     }
     
     static testMethod void myUnitTest_4() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -165,11 +182,24 @@ private class ISSP_TC_Accept_Test {
     	newSurvey1.SurveyUserID__c = newUser.Id;
     	newSurvey1.SurveyURL__c = '1234';
     	insert newSurvey1;
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
-    	system.runAs(newUser){
-        	ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+    	system.runAs(newUser){	
         	cttr.CheckLogoutorSurvey();
     	}
+    }
+	
+    static testMethod void myUnitTest_5() {
+        ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
+        insert issc;
+        Test.startTest();
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+        cttr.getOperationalCalendarPermission();
+        cttr.CheckLogoutorSurvey();
+        PageReference pageRef = Page.ISSP_TC_Accept;
+        Test.setCurrentPage(pageRef);
+        PageReference pr1 = cttr.pageLoad();
+		Test.stopTest();        
     }
 
 }

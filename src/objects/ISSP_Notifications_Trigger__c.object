@@ -33,5 +33,14 @@ Message shown to user: Hello User, you phone number is: 123456789</inlineHelpTex
         <unique>false</unique>
     </fields>
     <label>ISSP Notifications Trigger</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>FieldSetAPIName__c</columns>
+        <columns>Notification_Template_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

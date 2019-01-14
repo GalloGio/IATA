@@ -109,9 +109,15 @@ public class EF_ContactHandler {
            }
            emailBody = emailBody + '</table>';
 
+			List<String> recipientEmails = new List <String> {'efs@iata.org'};
+			
+			if(c.EF_Client_Services_Specialist_Email__c != null && c.EF_Client_Services_Specialist_Email__c != ''){
+				recipientEmails.add(c.EF_Client_Services_Specialist_Email__c);
+			}
+			
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             mail.setSaveAsActivity(false);
-            mail.setToAddresses(new List <String> {'efs@iata.org'}); 
+            mail.setToAddresses(recipientEmails); 
             mail.setSubject('E&F Contact Critical Changes Notification');
             mail.setBccSender(false);
             mail.setUseSignature(false);       

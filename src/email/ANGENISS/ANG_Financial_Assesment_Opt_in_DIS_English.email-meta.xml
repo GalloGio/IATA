@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>ANG Financial Assesment Opt-in DIS EN</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – Financial Assesment Opt-in declined</subject>
+    <textOnly>Dear Sir/Madam,
+
+Your request of opting-in from the process of financial review has been declined.
+
+Yours faithfully,
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

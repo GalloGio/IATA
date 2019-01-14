@@ -19,10 +19,10 @@ global Integer InitialStep = USPartOne;
 
 public IECMapsResourceData(Integer c) {
       
-            Count = c;            
-            List <IATA_ISO_Country__c> countries = [Select ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c <> null ];
-            MaxCount = (Integer) countries.size();                   
-           System.debug('*** setting job counts    count = ' + Count + ' maxcount = ' + MaxCount);         
+      Count = c;            
+      List <IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountries();
+      MaxCount = (Integer) countries.size();                   
+      System.debug('*** setting job counts    count = ' + Count + ' maxcount = ' + MaxCount);         
                      
     }
 
@@ -106,12 +106,12 @@ public IECMapsResourceData(Integer c) {
                     string month = string.valueof(nextScheduleTime.month());
                     string day = string.valueof(nextScheduleTime.day());
                     
-                    // 5:00 AM stats to run
-                    string hour = '05';
+                    // 8:00 AM Montreal stats to run [15:00 PM GMT+2]
+                    string hour = '15';
                     string minute = '00';
                     string second = '00';
                     
-                    string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
+                    string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + '*' + ' ' + '*' + ' ?'; // runs every day at 15:00 PM.
                     string jobName = 'SchdlIECMapsResourceData ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
                     
                     system.schedule(jobName, cronvalue , new IECMapsResourceData(InitialStep)); // ############################################# reset process

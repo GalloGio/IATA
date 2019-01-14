@@ -1,0 +1,87 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b style="font-family: Arial, sans-serif; background-color: rgb(255, 255, 255); font-size: 12pt;">{!Account.Name}</b></p>
+
+<p class="MsoSalutation" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 163.45pt;"><span lang="EN-GB" style="font-family: Arial, sans-serif; color: black; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: rgb(255, 255, 255);">{!Account.TradeName__c}</span></p>
+
+<p class="MsoSalutation" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 163.45pt;"><span lang="EN-GB" style="font-family: Arial, sans-serif; color: black; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: rgb(255, 255, 255);">{!Account.BillingStreet}</span></p>
+
+<p class="MsoSalutation" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 163.45pt;"><span style="background-color: rgb(255, 255, 255);"><span lang="EN-GB" style="font-family: Arial, sans-serif; color: black; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">{!Account.BillingCity}&nbsp;</span><span lang="EN-GB" style="font-family: Arial, sans-serif; color: black; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">{!Account.BillingPostalCode}</span></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-right: 163.45pt; text-align: justify;"><span lang="EN-GB" style="font-family: Arial, sans-serif; color: black; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: rgb(255, 255, 255);">{!Account.BillingCountry}</span></p>
+
+<p class="MsoNormal" style=""><span style="background-color: rgb(255, 255, 255);"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><i style="mso-bidi-font-style:
+normal"><span lang="PT-BR" style="font-family:&quot;Arial&quot;,sans-serif;mso-ansi-language:
+PT-BR;mso-no-proof:yes">IATA Numeric Code: </span></i></b></span><font face="Arial, sans-serif"><b>{!Account.IATACode__c}</b></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><b style="mso-bidi-font-weight:normal"><span lang="PT-BR" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-ansi-language:PT-BR"><o:p>&nbsp;</o:p></span></b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif">Dear Sir/Madam,<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US">FINANCIAL
+ASSESSMENT OPT IN - ACCEPTED<o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US">This is to confirm that your financial statements were
+received and forwarded for assessment in accordance with Local Financial
+Criteria for <span style="background-color: rgb(255, 255, 255);"><span style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;">{!Account.BillingCountry}.</span>
+O</span>nce the review is completed you will be notified of the following:<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-left: 36pt; text-align: justify; text-indent: -18pt;"><!--[if !supportLists]--><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:Arial;
+mso-ansi-language:EN-US"><span style="mso-list:Ignore">-<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><!--[endif]--><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US">Outcome of the
+financial review<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-left: 36pt; text-align: justify; text-indent: -18pt;"><!--[if !supportLists]--><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:Arial;
+mso-ansi-language:EN-US"><span style="mso-list:Ignore">-<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><!--[endif]--><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US">Your
+agency’s Risk Status<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin-left: 36pt; text-align: justify; text-indent: -18pt;"><!--[if !supportLists]--><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:Arial;
+mso-ansi-language:EN-US"><span style="mso-list:Ignore">-<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><!--[endif]--><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US">Established
+Remittance Holding Capacity level for your agency <o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US">BSP airlines will be also informed that your agency
+has now opted in for financial assessment.<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US">Sincerely,<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><b style="mso-bidi-font-weight:normal"><span lang="EN-US" style="font-family:&quot;Arial&quot;,sans-serif;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US">IATA Global Delivery Center<o:p></o:p></span></b></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span lang="EN-GB" style="font-family:&quot;Arial&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><b style="mso-bidi-font-weight:normal"><span lang="PT-BR" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-ansi-language:PT-BR"><o:p>&nbsp;</o:p></span></b></p><br><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"></p>]]></td>
+</tr>
+</table>

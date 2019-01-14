@@ -1,0 +1,65 @@
+<apex:component >
+    <apex:attribute name="newForm" description="AP_Process_Form__c" type="AP_Process_Form__c" required="true"/>
+    <apex:attribute name="showParticipation" description="show SIS Particiapation Agreement section" type="Boolean" required="true"/>
+
+<script>
+    $(document).ready(function() {
+       $(".required").prop('required',true);
+    });
+</script>
+
+<div id="form-container">
+
+    <apex:pageBlockSection columns="1" id="section" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                {!$Label.ISSP_SIS_Membership_Participation_Agreement}
+            </apex:outputpanel>
+        </apex:facet>
+
+        <apex:outputPanel>
+            <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+            <a href="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}" target="_new" class="link-highlighted">
+                {!$Label.ISSP_SIS_Membership_Download_PDF}
+            </a>
+        </apex:outputPanel>
+
+        <apex:outputpanel rendered="{!showParticipation}">
+            {!$Label.ISSP_SIS_Membership_Originals_To_IATA}
+
+            <p style="font-weight: bold; margin-left: 3em; margin-top: 1em;">
+                IATA Global Delivery Center (GDC)
+            </p>
+            <p style="margin-left: 3em;">
+                Attn: Participation Department<br/>
+                Torre Europa<br/>
+                Paseo de la Castellana, 95<br/>
+                28046 Madrid<br/>
+                Spain<br/>
+                Ref nr {!newForm.Case__r.CaseNumber}<br/>
+            </p>
+        </apex:outputpanel>
+
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section9" collapsible="false">
+        <apex:facet name="header">
+            <apex:outputpanel >
+                {!$Label.ISSP_SIS_Membership_Terms_Disclaimer}
+            </apex:outputpanel>
+        </apex:facet>
+
+        <p style="text-align: justify; margin: 1em;">
+            {!$Label.ISSP_SIS_Membership_Disclaimer_Line1}
+        </p>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Accept Disclaimer"/>
+            <apex:inputCheckbox value="{!newForm.Accept_terms_and_conditions__c}" required="true" styleclass="required"/>
+        </apex:pageBlockSectionItem>
+
+    </apex:pageBlockSection>
+
+</div>
+
+</apex:component>

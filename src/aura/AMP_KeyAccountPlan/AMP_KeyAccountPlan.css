@@ -28,3 +28,19 @@
   white-space: normal !important;
 
 }
+
+.THIS .close-button {
+    border: 0 !important;
+    background-color: transparent !important;
+}
+
+@media (max-width: 1200px) {
+    .THIS .slds-button {
+        display: block !important;
+    }
+
+    .THIS .slds-truncate {
+        /*word-break: break-all !important;*/
+        white-space: normal !important;
+    }
+}

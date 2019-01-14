@@ -1,7 +1,7 @@
 trigger trgPortalUserAfterInserUpdate on User (after insert, after update) {
     
     
-    if(IECTestUtil.trgPortalUserAfterInserUpdate) return;
+    if(IECTestUtil.trgPortalUserAfterInserUpdate || ANG_UserTriggerHandler.doNotRun) return;
                                                 
     
     //create apex sharing for Accounts in Hierarchy

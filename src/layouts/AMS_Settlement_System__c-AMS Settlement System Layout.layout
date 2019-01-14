@@ -116,6 +116,14 @@
         <fields>NAME</fields>
         <relatedList>IATA_ISO_Country__c.AMS_Settlement_System_CASS__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>First_Day__c</fields>
+        <fields>Last_Day__c</fields>
+        <fields>Operation_Code__c</fields>
+        <fields>Operation_Period_code__c</fields>
+        <relatedList>operational_Calendar__c.ISS_operation__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

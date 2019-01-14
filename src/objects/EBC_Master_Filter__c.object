@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Hold the name of the filter created by the customer</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -62,25 +59,30 @@
         <externalId>false</externalId>
         <inlineHelpText>Audience will affect the filter list presented to the customer</inlineHelpText>
         <label>Audience</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agency</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Custom</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agency</fullName>
+                    <default>false</default>
+                    <label>Agency</label>
+                </value>
+                <value>
+                    <fullName>Agent</fullName>
+                    <default>false</default>
+                    <label>Agent</label>
+                </value>
+                <value>
+                    <fullName>Custom</fullName>
+                    <default>false</default>
+                    <label>Custom</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Billing_Account__c</fullName>
@@ -115,21 +117,25 @@
         <externalId>false</externalId>
         <inlineHelpText>Either the geo filters should be joined using AND or OR</inlineHelpText>
         <label>Geo Condition</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AND</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OR</fullName>
-                <default>true</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AND</fullName>
+                    <default>false</default>
+                    <label>AND</label>
+                </value>
+                <value>
+                    <fullName>OR</fullName>
+                    <default>true</default>
+                    <label>OR</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>IATA_Codes__c</fullName>
@@ -171,21 +177,25 @@
         <externalId>false</externalId>
         <inlineHelpText>Either the refinement filters should be joined using AND or OR</inlineHelpText>
         <label>Refinement Condition</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AND</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OR</fullName>
-                <default>true</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AND</fullName>
+                    <default>false</default>
+                    <label>AND</label>
+                </value>
+                <value>
+                    <fullName>OR</fullName>
+                    <default>true</default>
+                    <label>OR</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>EBC Master Filter</label>
     <listViews>
@@ -220,7 +230,7 @@
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>System Generated Lists</label>
+        <label>Global Lists</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -245,4 +255,5 @@
         <errorDisplayField>IATA_Codes__c</errorDisplayField>
         <errorMessage>IATA Codes must be 7 to 11 digits separated by semicolon. Do not use spaces or breaks to separate entries.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

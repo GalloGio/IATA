@@ -18,7 +18,7 @@
              }
 			</script>
 			<!-- Start of Page Content -->
-			<main class="main-content manage-account">
+			<main class="main-content">
 				<div class="inner-wrapper">
 					<h1 class="page-title">Account Details</h1>
 					
@@ -96,8 +96,7 @@
 										</apex:form>
 										
 										<apex:outputPanel id="upgradeOptionMessage" rendered="{!IF((showUpgradeOption),true,false)}">
-											<h2 class="heading-2 strong">Change your plan</h2>
-                                            <p class="description light small">Choose one of the following pre-paid plans to secure a lower cost per email.<br />Each rate plan buys you a defined number of emails at the corresponding cost per unit.</p>
+											<h2 class="heading-2 strong">Upgrade your plan to one of the following</h2>
 										</apex:outputPanel>
 										
 										<apex:form id="productRatePlanForm" >   										

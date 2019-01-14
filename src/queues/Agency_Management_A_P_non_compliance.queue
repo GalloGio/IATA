@@ -3,6 +3,20 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>wongsf@iata.org</email>
     <name>AGM Non Compliance - A&amp;P</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <users>
+            <user>ryoojs@iata.org</user>
+            <user>widjajan@iata.org</user>
+            <user>thantnanp@iata.org</user>
+            <user>wongsf@iata.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -481,13 +481,14 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
         <fields>Active__c</fields>
-        <fields>Contact__c</fields>
-        <fields>Person__c</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Unified_Owner_Name__c</fields>
         <fields>Owner_Name__c</fields>
         <fields>Owner_Account__c</fields>
+        <fields>Contact__c</fields>
         <fields>Percentage__c</fields>
-        <fields>Contact_Email__c</fields>
         <fields>Termination_Date__c</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
         <sortField>Active__c</sortField>
@@ -521,14 +522,14 @@
         <excludeButtons>New</excludeButtons>
         <fields>Active__c</fields>
         <fields>Change_Code__c</fields>
+        <fields>NAME</fields>
         <fields>Bulletin_Information__c</fields>
         <fields>OSCAR__c</fields>
+        <fields>SIDRA_Case__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
         <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <fields>Source__c</fields>
-        <fields>AIMS_Updated_by__c</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
         <sortField>Created_Date_To_Show__c</sortField>
         <sortOrder>Desc</sortOrder>
@@ -616,6 +617,7 @@
     <relatedLists>
         <fields>Contact.NAME</fields>
         <fields>Contact.VER_Number_2__c</fields>
+        <fields>NAME</fields>
         <fields>Delegate__c</fields>
         <relatedList>Managed_agency__c.Account__c</relatedList>
     </relatedLists>
@@ -656,7 +658,12 @@
         <fields>Address__c</fields>
         <fields>Country__c</fields>
         <fields>Type__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>Active__c</fields>
         <relatedList>Location__c.Account__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -725,6 +732,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -733,12 +741,14 @@
         <fields>Update_Type__c</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>CREATED_DATE</fields>
+        <fields>UPDATEDBY_USER</fields>
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>

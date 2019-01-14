@@ -1,0 +1,146 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" access="global" controller="UserProvisioningRequestController">
+    
+    <aura:attribute name="requests" type="UserProvisioningRequest[]"/>
+    <aura:attribute name="pageRequests" type="UserProvisioningRequest[]"/>
+    <aura:attribute name="requestsPerPage" type="integer" default="100"/>
+    <aura:attribute name="selectedRequests" type="List"/>
+    <aura:attribute name="view" type="String" default="failed"/>
+    <aura:attribute name="allChecked" type="Boolean" default="false"/>
+    <aura:attribute name="pages" type="integer"/>
+    <aura:attribute name="page" type="integer" default="0"/>
+    <aura:attribute name="search" type="String"/>
+    
+    <aura:registerEvent name="CheckAllCheckBoxes" type="c:CheckAllCheckBoxes"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="searchChange" event="c:UprSearchChange" action="{!c.handleSearchChange}"/>
+    <aura:handler name="pageChange" event="c:uprPageChangeEvent" action="{!c.handlePageChange}"/>
+    
+    <span align="left" id="onlyFailedButtons" class="slds-m-top--small">
+        <c:UPRSearchBar />
+        <span style="float:right">
+            <div class="slds-button-group" role="group">
+            <div class="slds-button-group" role="group">
+                <button class="slds-button slds-button--neutral" onclick="{!c.refreshView}">Refresh</button>
+                <button id="onlyFailedButton" class="slds-button slds-button--neutral toggle" onclick="{!c.onlyFailedRequests}">Show Failed Requests</button> 
+                <button id="allRequestsButton" class="slds-button slds-button--neutral" onclick="{!c.allRequests}">Show All Requests</button>
+            </div>
+            <div class="slds-button-group slds-p-left--xsmall" role="group">
+                <button class="slds-button slds-button--neutral" onclick="{!c.handleRetry}">Retry</button> 
+                <button class="slds-button slds-button--neutral" onclick="{!c.handleManuallyComplete}">Manually Complete</button> 
+            </div>
+            </div>
+        </span>
+    </span>  
+    
+    <table class="slds-table slds-table--bordered slds-m-top--small" role="grid">
+        <thead>
+            <tr class="slds-text-heading--label">
+                <th class="slds-cell-shrink">
+                    <ui:inputCheckbox aura:id="checkAll" text="Select Every Row" change="{!c.checkAllCheckBoxes}"/>
+                </th>
+                <th scope="col">
+                    <span id="Created Date" class="slds-truncate">Created Date</span>
+                </th>
+                <th id="AppName" scope="col">
+                    <span id="AppName" class="slds-truncate">App Name</span>
+                </th>
+                <th scope="col">
+                    <span class="slds-truncate">User Name</span>
+                </th>
+                <th scope="col">
+                    <span class="slds-truncate">Operation</span>
+                </th>
+                <th scope="col">
+                    <span class="slds-truncate">State</span>
+                </th>
+                <th scope="col">
+                    <span class="slds-truncate">Last Modified Date</span>
+                    <div class="slds-icon_container slds-p-left--xx-small">
+                  <c:svgIcon svgPath="/resource/SLDS202/assets/icons/utility-sprite/svg/symbols.svg#arrowdown" category="text" size="x-small" name="default"/>
+                    </div>
+                </th>
+                <th scope="col">
+                    <span class="slds-truncate">External Username</span>
+                </th>
+                <th scope="col">
+                    <span class="slds-truncate">RetryCount</span>
+                </th>
+                <th scope="col"><span class="slds-truncate">Logs</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.pageRequests}" var="request">
+                <tr>
+                    <td class="slds-cell-shrink" data-label="Select Row">
+                        <aura:if isTrue="{!request.State == 'Failed'}">
+                            <ui:inputCheckbox aura:id="RowSelect" text="{!request}" change="{!c.handleCheckbox}"/>
+                        </aura:if>
+                        
+                    </td>  
+                    <td><ui:outputDateTime value="{!request.CreatedDate}"/></td>
+                    <td>
+                        <aura:if isTrue="{!request.AppName}">
+                            {!request.AppName}
+                            <aura:set attribute="else">
+                                N/A
+                            </aura:set>
+                        </aura:if>
+                    </td>
+                    <td>
+                        <aura:if isTrue="{!request.SalesforceUser.Name}">
+                            {!request.SalesforceUser.Name}
+                            <aura:set attribute="else">
+                                N/A
+                            </aura:set>
+                        </aura:if>
+                    </td>
+                    <td>
+                        <aura:if isTrue="{!request.Operation}">
+                            {!request.Operation}
+                            <aura:set attribute="else">
+                                N/A
+                            </aura:set>
+                        </aura:if>
+                    </td>
+                    <td>
+                        <aura:if isTrue="{!request.State}">
+                            {!request.State}
+                            <aura:set attribute="else">
+                                N/A
+                            </aura:set>
+                        </aura:if>
+                    </td>
+                    <td><ui:outputDateTime value="{!request.LastModifiedDate}"/></td>
+                    <td>
+                        <aura:if isTrue="{!request.UserProvAccount.ExternalUsername}">
+                            {!request.UserProvAccount.ExternalUsername}
+                            <aura:set attribute="else">
+                                N/A
+                            </aura:set>
+                        </aura:if>
+                    </td>                
+                    <td>
+                        <aura:if isTrue="{!request.RetryCount}">
+                            {!request.RetryCount}
+                            <aura:set attribute="else">
+                                0
+                            </aura:set>
+                        </aura:if>
+                    </td>
+                    <td>
+                        <ui:outputURL label="Show Logs" target="{!request.Id}" aura:id="{!request.Id}" click="{!c.showLog}">
+                        </ui:outputURL>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+    <c:UPRPaginator page="{!v.page}" pages="{!v.pages}"/>
+    <div class="slds-spinner_container" aura:id="spinner">
+    <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+    </div>
+    </div>
+</aura:component>

@@ -1,0 +1,252 @@
+<aura:component controller="OneIdProfileCompanySettings" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">
+	
+	<aura:attribute name="userinfo" type="Map"/>
+	<aura:attribute name="contactinfo" type="Map"/>
+	<aura:attribute name="newinfo" type="Map"/>
+
+	<aura:attribute name="categorylist" type="List"/>
+	<aura:attribute name="preferredlanguagelist" type="List"/>
+	<aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+
+	<div class="">
+		<div class="profileCompany_container align_verticalaxis">
+			<div aura:id = "block-read" class="profileCompany_read">
+				<div class="profile_container">
+					<div class="titleheader">
+						<div class="profile_titlecontainer">
+							<div class="profileinformationtitle">
+								<h1 class=""> {!$Label.c.OneId_Profile_Information} </h1>
+							</div>
+							<div class="editbutton">
+								<ui:button class="editbuttonfloat" label="{!$Label.c.OneId_Profile_Edit}" press="{!c.showEdit}"/>
+							</div>
+						</div>
+					</div>
+					
+					<div class="profile_body">
+						<div class="  profile_col1">
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_MyProfile_EMAIL}</span>
+								<ui:outputText class="   read_output" value="{!v.userinfo.Email}"/>
+							</div>
+							<div class="    profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_MyProfile_FIRSTNAME} </span>
+								<ui:outputText class="  read_output" value="{!v.contactinfo.FirstName}"/>
+							</div>
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_MyProfile_LASTNAME} </span>
+								<ui:outputText class="  read_output" value="{!v.contactinfo.LastName}"/>
+							</div>
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_MyProfile_TITLE} </span>
+								<ui:outputText class="  read_output" value="{!v.contactinfo.Title}"/>
+							</div>
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_Registration_BusinessPhone} </span>
+								<ui:outputPhone class="  read_output" value="{!v.contactinfo.Phone}"/>
+							</div>
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_Registration_MobilePhone} </span>
+								<ui:outputPhone class="  read_output" value="{!v.contactinfo.MobilePhone}"/>
+							</div>
+						</div>
+
+						<div class="  profile_col1">
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.OneId_Profile_BusinessFax} </span>
+								<ui:outputPhone class="  read_output" value="{!v.contactinfo.Fax}"/>
+							</div>
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_MyProfile_FUNCTION} </span>
+								<ui:outputText class="  read_output" value="{!v.contactinfo.Membership_Function__c}"/>
+							</div>
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_Homepage_My_status} </span>
+								<ui:outputText class="  read_output" value="{!v.contactinfo.User_Portal_Status__c}"/>
+							</div>
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_Preferred_Language} </span>
+								<ui:outputText class="  read_output" value="{!v.contactinfo.Preferred_Language__c}"/>
+							</div>
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_Services} </span>
+								<ui:outputText class="  read_output" value="{!v.contactinfo.Services__c}"/>
+							</div>
+							<div class="   profile_readItem">
+								<br/>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="company_container">
+					<div class="company_titlecontainer">
+						<h1 class=""> {!$Label.c.OneId_Profile_BusinessInformation} </h1>
+					</div>
+					<div class="company_body">
+						<div class="   company_body-part1">
+							<div class="  profile_col1">
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_AMS_Noc_Legal_Name} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.Name}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_TradeName} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.TradeName__c}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_CATEGORY} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.Category__c}"/>
+								</div>
+
+							</div>
+							<div class="  profile_col1">
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_IATA_Designator} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.Airline_designator__c}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Profile_ICAODesignator} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.ICAO_designator__c}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_IATACODE} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.IATACode__c}"/>
+								</div>
+							</div>
+						</div>
+						<div class="company_body-part2  ">
+							
+							<div class="profile_col1">
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Profile_BillingStreet} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.BillingStreet}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Profile_BillingCity} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.BillingCity}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Profile_BillingState} </span>
+									<ui:outputText class="  read_output" value="{!v.contactinfo.Account.BillingState}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Profile_BillingPostal}  </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.BillingPostalCode}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Profile_BillingCountry} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.BillingCountry}"/>
+								</div>
+							</div>
+							<div class="  profile_col1">
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_Registration_BusinessPhone} </span>
+									<ui:outputPhone class="  read_output"  value="{!v.contactinfo.Account.Phone}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Profile_BusinessFax} </span>
+									<ui:outputPhone class="  read_output"  value="{!v.contactinfo.Account.Fax}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Profile_OfficeEmail} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.Email__c}"/>
+								</div>
+								<div class="   company_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_AMS_FACILITIES_Website} </span>
+									<ui:outputText class="  read_output"  value="{!v.contactinfo.Account.Website}"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+			<div aura:id = "block-edit" class="profileCompany_edit hide">
+				<div class="profile_container">
+
+					<div class="profile_titlecontainer">
+						<h1 class=""> {!$Label.c.OneId_Profile_Information} </h1>
+						<ui:button label="{!$Label.c.ISSP_Back}" press="{!c.hideEdit}"/>
+						<ui:button label="{!$Label.c.ISSP_Save}" press="{!c.saveEdit}"/>
+						<ui:button label="{!$Label.c.ISSP_ChangePassword}" press="{!c.goToChangePassword}"/>
+					</div>
+					
+					<div class="profile_body">
+						<div class="  profile_edit-part1">
+							<div class="  profile_column1">
+								<div class="   profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_EMAIL} </span>
+									<ui:outputText aura:id="email" class="   read_output" value="{!v.userinfo.Email}"/>
+								</div>
+							</div>
+						</div>
+						<div class="  profile_edit-part1">
+
+							<div class="  profile_column1">
+
+								<div class="    profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_FIRSTNAME} </span>
+									<ui:inputText aura:id="editfirstname" class="slds-size--2-of-4  read_output" value="{!v.contactinfo.FirstName}"/>
+								</div>
+								<div class="   profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_LASTNAME} </span>
+									<ui:inputText aura:id="editlastname" class="slds-size--2-of-4  read_output" value="{!v.contactinfo.LastName}"/>
+								</div>
+
+								<div class="   profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_Registration_BusinessPhone} </span>
+									<ui:inputPhone aura:id="editphone" class="  read_output" value="{!v.contactinfo.Phone}"/>
+								</div>
+
+								<div class="   profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_Registration_MobilePhone} </span>
+									<ui:inputPhone aura:id="editmobilephone" class="  read_output" value="{!v.contactinfo.MobilePhone}"/>
+								</div>
+
+								<div class="   profile_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Profile_BusinessFax} </span>
+									<ui:inputPhone aura:id="editfax" class="  read_output" value="{!v.contactinfo.Fax}"/>
+								</div>
+							</div>
+
+							<div class="  profile_column2">
+								<div class="   profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_TITLE} </span>
+									<ui:inputText aura:id="editjobtitle" class="slds-size--2-of-4  read_output" value="{!v.contactinfo.Title}"/>
+								</div>
+								<div class="   profile_readItem">
+									<span class="  read_span"> {!$Label.c.OneId_Job_Function} </span>
+									<ui:inputSelect class="slds-size--2-of-4  read_output multiple multiplepicklistheight" multiple="true" aura:id="functionpicklist" value="">
+										<aura:iteration items="{!v.categorylist}" var="category">
+											<ui:inputSelectOption aura:id="{!category}" text="{!category}"/>
+										</aura:iteration>
+									</ui:inputSelect>
+								</div>
+								<div class="   profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_Preferred_Language} </span>
+									<ui:inputSelect aura:id="preferredlanguagepicklist" class="slds-size--2-of-4  read_output"  value="">
+										<aura:iteration items="{!v.preferredlanguagelist}" var="language">
+											<ui:inputSelectOption text="{!language}" />
+										</aura:iteration>
+									</ui:inputSelect>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+</aura:component>

@@ -3,7 +3,7 @@ public class ObjectiveHandlerTest {
 
 	public static Objective__c getDivisionObjective() {
 		return new Objective__c(
-			RecordtypeId = ObjectiveHandler.MAP_RT.get('Division').id,
+			RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division'),
 			Name = 'testName',
 			Division__c = 'FDS',
 			Forecast_Deadline__c = Date.parse('12/31/2015')
@@ -12,7 +12,7 @@ public class ObjectiveHandlerTest {
 
 	public static Objective__c getRegionObjective() {
 		return new Objective__c(
-			RecordtypeId = ObjectiveHandler.MAP_RT.get('Region').id,
+			RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Region'),
 			Name = 'testName',
 			Division__c = 'FDS',
 			Region__c = 'Americas',
@@ -22,7 +22,7 @@ public class ObjectiveHandlerTest {
 
 	public static Objective__c getAreaObjective() {
 		return new Objective__c(
-			RecordtypeId = ObjectiveHandler.MAP_RT.get('Area').id,
+			RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Area'),
 			Name = 'testName',
 			Division__c = 'FDS',
 			Region__c = 'Americas',
@@ -32,7 +32,7 @@ public class ObjectiveHandlerTest {
 	}
 
 	public static Objective__c getAccountObjective() {
-		String rtAirlaine = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+		String rtAirlaine = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account account = new Account(
 			Name = 'testAccount',
@@ -41,7 +41,7 @@ public class ObjectiveHandlerTest {
 		insert account;
 
 		return new Objective__c(
-			RecordtypeId = ObjectiveHandler.MAP_RT.get('Account').id,
+			RecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account'),
 			Name = 'testName',
 			Division__c = 'FDS',
 			Region__c = 'Americas',
@@ -89,12 +89,24 @@ public class ObjectiveHandlerTest {
 		Objective__c objective = getAccountObjective();
 
 		Test.startTest();
-		insert objective;
+		insert objective; 
 		Test.stopTest();
 
 		Objective__c result = [Select Name from Objective__c where id = :objective.Id];
 		System.debug(result.Name);
 		System.assert(result.Name == 'FDS-testAccount-testName-2015');
+	}
+
+	public static testMethod void testSetAccountObjectiveName80() {
+		Objective__c objective = getAccountObjective();
+		Account account = [Select Name from Account where id = :objective.Account__c];
+		Test.startTest();        
+		update account;
+		insert objective;		 
+		Test.stopTest();
+
+		Objective__c result = [Select Name, Account__r.name from Objective__c where id = :objective.Id];
+		System.assert(result.name == 'FDS-testAccount-testName-2015');
 	}
 
 	public static testMethod void testSetAccountObjectiveNameWithNoAccount() {

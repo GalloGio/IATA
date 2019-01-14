@@ -8,6 +8,15 @@ trigger AMS_AddressPrimaryTypeSetterTrigger on AMS_Address__c (before insert, be
     
     if(!AMS_TriggerExecutionManager.checkExecution(AMS_Address__c.getSObjectType(), 'AMS_AddressPrimaryTypeSetterTrigger')) { return; }
     
+
+    if(trigger.isBefore){
+        if(trigger.isUpdate)
+            AMS_AddressTriggerHandler.handleBeforeUpdate(trigger.new);
+        if(trigger.isInsert)
+            AMS_AddressTriggerHandler.handleBeforeInsert(trigger.new);
+    }
+
+
     Map<String,AMS_Address__c> addressMapPerAgency = new Map<String,AMS_Address__c > ();
     //list of Agency id 
     Set<Id> l = new Set<Id>();

@@ -78,6 +78,7 @@
         <fields>File_Identifier2__c</fields>
         <fields>File_to_Upload__c</fields>
         <fields>Sort_Order__c</fields>
+        <fields>ANG_Accreditation_Model__c</fields>
         <fields>Location_type__c</fields>
         <fields>Language__c</fields>
         <fields>RECORDTYPE</fields>

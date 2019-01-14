@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -104,20 +101,24 @@
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Associated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Substitution</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Associated</fullName>
+                    <default>false</default>
+                    <label>Associated</label>
+                </value>
+                <value>
+                    <fullName>Substitution</fullName>
+                    <default>false</default>
+                    <label>Substitution</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Related Product</label>
     <listViews>
@@ -140,4 +141,5 @@
         <errorDisplayField>Related_Product__c</errorDisplayField>
         <errorMessage>You cannot select the same product</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -33,37 +33,44 @@
                                     <apex:outputLink rendered="{!c.Status__c != 'REJECTED'}" value="{!URLFOR($Page.IECEBC_Campaign)}?id={!c.Id}" styleClass="js-campaign-name">{!c.Name}</apex:outputLink>
                                     <apex:outputText rendered="{!c.Status__c == 'REJECTED'}" styleClass="js-campaign-name">{!c.Name}</apex:outputText>
                                 </li>
-                                <li>{!c.EBC_Master_Filter__r.Name}</li>
                                 <li><strong class="js-campaign-status"><apex:outputField value="{!c.Status__c}" /></strong></li>
+                                <li>List Name:&nbsp;{!c.EBC_Master_Filter__r.Name}</li>
                                 <li>
                                     <apex:outputText rendered="{!IF(c.Status__c == 'DRAFT', true, false)}">
-                                        <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
-                                            <apex:param value="{!c.LastModifiedDate + timezoneOffset}" /> 
+                                        Last updated:&nbsp;<apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss a zz}">
+                                            <apex:param value="{!c.LastModifiedDate}" /> 
                                         </apex:outputText>
                                     </apex:outputText>
-                                    <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED' || c.Status__c == 'SENT', true, false)}">
-                                         <apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss}">
-                                            <apex:param value="{!c.Scheduled_Date__c + timezoneOffset}" /> 
+                                    <apex:outputText rendered="{!IF(c.Status__c == 'PENDING_APPROVAL' || c.Status__c == 'APPROVED', true, false)}">
+                                         Scheduled:&nbsp;<apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss a zz}">
+                                            <apex:param value="{!c.Scheduled_Date__c}" /> 
+                                        </apex:outputText>
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{!IF(c.Status__c == 'SENT', true, false)}">
+                                         Sent:&nbsp;<apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss a zz}">
+                                            <apex:param value="{!c.Send_Datetime__c}" /> 
                                         </apex:outputText>
                                     </apex:outputText>
                                 </li>
                             </ul>
                         </td>
                         <td class="recipients">
+                             <apex:outputText styleClass="value" style="font-weight: 600;" value="{0, number, ###,###,##0}" rendered="{!c.Status__c == 'SENT'}">
+                                <apex:param value="{!c.NumberSent__c}"/>
+                            </apex:outputText>
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">{!c.NumberSent__c}</strong> 
                                 <span class="label">Recipients</span>
                             </apex:outputText>
                         </td>
                         <td class="opens">
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.Number_of_Unique_Opens__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
+                                <strong class="value">{!c.OpenRate7Days__c}%</strong> 
                                 <span class="label">Opens</span>
                             </apex:outputText>
                         </td>
                         <td class="clicks">
                             <apex:outputText rendered="{!c.Status__c == 'SENT'}">
-                                <strong class="value">{!IF(c.NumberSent__c > 0, TEXT(ROUND(c.Number_of_Unique_Clicks__c * 100 / c.NumberSent__c, 1)) + '%', 'n/a')}</strong> 
+                                <strong class="value">{!c.ClickRate7Days__c}%</strong> 
                                 <span class="label">Clicks</span>
                             </apex:outputText>
                         </td>
@@ -106,20 +113,24 @@
                 </div>
             </apex:outputText>
             
-            
-            <apex:form rendered="{!NOT(isLimitedComponent)}">
-                <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
-                    Page
-                    <div class="custom-user-input select">
-                        <i class="icon angle-down"></i>
-                        <apex:selectList value="{!page}" styleClass="user-input select" size="1">
-                            <apex:selectOptions value="{!pageOptions}"/>
-                            <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
-                        </apex:selectList> 
-                    </div>
-                    of {!maxPage}
-                </apex:outputPanel>
-            </apex:form>
+                        
+            <div class="pagination">
+                <div class="page-number">
+                    <apex:form rendered="{!NOT(isLimitedComponent)}">
+                        <apex:outputPanel styleClass="paginator" rendered="{!maxPage > 1}">
+                            Page
+                            <div class="custom-user-input select">
+                                <i class="icon angle-down"></i>
+                                <apex:selectList value="{!page}" styleClass="user-input select" size="1">
+                                    <apex:selectOptions value="{!pageOptions}"/>
+                                    <apex:actionSupport event="onchange" action="{!doNothing}" reRender="campaignList" />
+                                </apex:selectList> 
+                            </div>
+                            of {!maxPage}
+                        </apex:outputPanel>
+                    </apex:form>
+                </div>
+            </div>
         </apex:outputText>
         <apex:outputText rendered="{!IF(CampaignsCount == 0, true, false)}">
             <h3 class="lead">You have no saved campaigns</h3>
@@ -137,7 +148,6 @@
             </apex:repeat>
         </script>
     </apex:outputPanel>
-    
     
     <apex:outputText rendered="{!IF(CampaignsCount == 0 && !isLimitedComponent, true, false)}">
         <div class="action-box">

@@ -13,6 +13,18 @@
         <template>ISS_Portal/ISSP_Change_Email_Address</template>
     </alerts>
     <alerts>
+        <fullName>ISSP_Change_email_address_cns</fullName>
+        <description>ISSP - Change email address - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISSP_Change_Email_Address_cns</template>
+    </alerts>
+    <alerts>
         <fullName>Notify_if_new_admins_are_granted</fullName>
         <description>Notify if new admins are granted</description>
         <protected>false</protected>
@@ -52,16 +64,6 @@
         </criteriaItems>
         <description>On deactivation the user nickname will be updated to prevent conflicts when a new user with the same nickname is created.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP Change Email Address</fullName>
-        <actions>
-            <name>ISSP_Change_email_address</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <formula>AND( ISCHANGED(Email), CONTAINS( Profile.Name , &apos;ISS&apos; ),Community__c &lt;&gt;&apos;IEC&apos;,Community__c &lt;&gt;&apos;E-commerce&apos;)</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Notify if new admins</fullName>

@@ -10,11 +10,20 @@ public class CampaignCustomers_Ctrl_Test
 		TestDataGenerator.generateApexSetting();
 		TestDataGenerator.generateISOCountryState();
 
+		test.startTest();
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
 		if(usr.Id == null)insert usr;
 
 		//Create location for the customer
-		Location_Svc.InitializeContactLocations(usr.ContactId);
+		Contact oContact = new Contact_Sel().getContactById(usr.contactId);
+		List<IECAddress__c> lstAddress = TestDataGenerator.generateAddresses(1, true);
+		List<Location__c> lstLocation = new List<Location__c>();
+		lstLocation.add(new Location__c(Type__c='Sold To', Address__c=lstAddress[0].Id, Account__c=oContact.AccountId, SAP_Id__c='sold1'));
+		lstLocation.add(new Location__c(Type__c='Bill To', Address__c=lstAddress[0].Id, Account__c=oContact.AccountId, Contact__c=oContact.Id, SAP_Id__c='bill1'));
+		lstLocation.add(new Location__c(Type__c='Ship To', Address__c=lstAddress[0].Id, Account__c=oContact.AccountId, Contact__c=oContact.Id, SAP_Id__c='ship1'));
+		insert lstLocation;
+		update new Account(Id=oContact.AccountId, SoldTo_Location__c=lstLocation[0].Id);
+		update new Contact(Id=oContact.Id, BillTo_Location__c=lstLocation[1].Id, ShipTo_Location__c=lstLocation[2].Id);
 
 		//Products
 		List<Product2> products = TestDataGenerator.generateProducts(5, false);
@@ -30,14 +39,23 @@ public class CampaignCustomers_Ctrl_Test
 		}
 		upsert products SAP_Material_Number__c;
 
+
+		List<IEC_Event_Subscription__c> lstSubscriptions = new  List<IEC_Event_Subscription__c>();
+		lstSubscriptions.add(new IEC_Event_Subscription__c(Subscriber__c = oContact.Id, Product__c = products[0].Id, Quantity__c = 1, Active__c = true, Start_Date__c = Date.today()));
+		insert lstSubscriptions;
+
 		//Orders & OrderItems
-		List<Account> accounts = TestDataGenerator.generateAccounts(1,true);
-		List<Contact> contacts = TestDataGenerator.generateContacts(accounts[0].Id,1,true);
-		List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, usr.ContactId, usr.ContactId,true); 
+		List<Order> orders = TestDataGenerator.generateOrder(1, oContact.AccountId, usr.contactId, usr.contactId, false); 
+		orders[0].Type = 'Order';
+		orders[0].Status = 'Order Created';
+		orders[0].SoldTo_Location__c = lstLocation[0].Id;
+		orders[0].BillTo_Location__c = lstLocation[1].Id;
+		orders[0].ShipTo_Location__c = lstLocation[2].Id;
+		insert orders;
 		List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(orders[0].Id, products, true);
 
 		List<Apex_Setting__c> listCS = new List<Apex_Setting__c>();
-        	listCS.add(new Apex_Setting__c(Name='ContactId to populate email Template', Text_1__c=contacts[0].Id));
+        	listCS.add(new Apex_Setting__c(Name='ContactId to populate email Template', Text_1__c=usr.contactId));
     	insert listCS;
 
 		//Campaigns
@@ -49,7 +67,7 @@ public class CampaignCustomers_Ctrl_Test
 		}
 		insert campaigns;
 
-
+		Test.stopTest();
 		//-- Call controller methods 
 		Test.setCurrentPage(new PageReference('/apex/CampaignCustomers'));
 		CampaignCustomers_Ctrl ctrl = new CampaignCustomers_Ctrl(); 
@@ -88,16 +106,25 @@ public class CampaignCustomers_Ctrl_Test
 		System.assertEquals(2, ctrl.selectedProducts.size());
 
 		//-- Generate Campaign Members & Campaign Products 
-		Test.startTest();
+		//Test.startTest();
 			ctrl.generateCampaignMembers();
 		
-		/*
 		//Create Campaign Members
 		CampaignMember cm = new CampaignMember(
 			CampaignId = campaigns[0].Id,
 			ContactId = usr.ContactId
 		);
 		insert cm;
+
+		List<Id> lstSelectedProdId = new List<Id>();
+		for (Integer id : ctrl.selectedProducts.keySet())
+			lstSelectedProdId.add(ctrl.selectedProducts.get(Id).id);
+		orderItems = [select Id, PriceBookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c, ServiceDate, Product__c, Invoice_Date__c, Order.BillToContactId, Product_Number__c
+		              from OrderItem where OrderId = :orders[0].Id and PricebookEntry.Product2.Id in :lstSelectedProdId];
+
+		insert new CampaignMember(CampaignId = campaigns[1].Id, ContactId = usr.ContactId );
+		CampaignMembers_Batch batch = new CampaignMembers_Batch('renewalNotice', campaigns[1].Id, campaigns[1].Campaign_AutoNumber__c);
+		Database.executeBatch(batch);
 
 		//-- Generate Campaign_Member_Product__c to validate no-duplicates 
 		//String key = ctrl.campaignId+'_'+contacts[0].Id+'_'+products[0].Id; 
@@ -124,6 +151,18 @@ public class CampaignCustomers_Ctrl_Test
         insert cmp2;
 
         CampaignMemberProduct_Svc.removeDuplicates(new Set<String>{key});
+        for (Integer i1 = orderItems.size() - 1; i1 >= 0; i1--)
+        {
+            orderItems.add(orderItems[i1].clone(false, true));
+            orderItems[orderItems.size() - 1].Invoice_Date__c = Date.today().addDays(10);
+        }
+        cmp1.Id = null;
+        cmp1.Key__c = campaigns[0].Id+'_'+ usr.ContactId +'_'+orderItems[0].Product__c;
+        insert cmp1;
+        cmp2.Id = null;
+        cmp2.Key__c = campaigns[0].Id+'_'+ usr.ContactId +'_'+orderItems[0].Product__c;
+        insert cmp2;
+        CampaignMemberProduct_Svc.generateCampaignMemberProducts(campaigns[0].Id,orderItems);
 
 
 		//System.assertEquals(1, [SELECT Id FROM CampaignMember WHERE CampaignId = :campaigns[0].Id].size());
@@ -152,17 +191,17 @@ public class CampaignCustomers_Ctrl_Test
 
 		
 		Campaign_Svc.generateRenewalNotice(campaign.Id, campaign.Campaign_AutoNumber__c);
-Test.stopTest();
-*/
-		//Cover generateRenewalNotice
-		//Campaign_Svc.generateRenewalNotice(campaigns[0].Id, campaigns[0].Campaign_AutoNumber__c);
+		CampaignMember_Svc.generateRenewalOrder(campaign.Id, new List<CampaignMember>{cm});
+
+		CampaignMember_Svc.generateCampaignMembers(campaign.Id, orderItems);
+		
+
 
 		////Cover the sendBatchFinishNotification Class in CampaignMember_Svc
-		//List<EmailTemplate> lstEmailTemplate = TestDataGenerator.generateTemplate(1, false);
-		//try{
-		//	CampaignMember_Svc.sendBatchFinishNotification(new List<String> {'test@test.ca'},campaigns[0].Campaign_AutoNumber__c,UserInfo.getName(),lstEmailTemplate[0]);
-		//}
-		//catch(Exception ex){}
-
+		List<EmailTemplate> lstEmailTemplate = TestDataGenerator.generateTemplate(1, false);
+		try{
+			CampaignMember_Svc.sendBatchFinishNotification(new List<String> {'test@test.ca'},campaigns[0].Campaign_AutoNumber__c,UserInfo.getName(),lstEmailTemplate[0]);
+		}
+		catch(Exception ex){}
 	}
 }

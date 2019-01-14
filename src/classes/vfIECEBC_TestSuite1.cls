@@ -447,10 +447,10 @@ public class vfIECEBC_TestSuite1 {
         EBC_Template__c tpl = new EBC_Template__c();
         tpl.Name = 'unittesttemplate';
         tpl.Audience__c = 'Agency';
-        tpl.RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId();
+        tpl.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global');
         insert tpl;
         
-        Id userRecTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId();
+        Id userRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates');
         List<EBC_Template__c> tpls = new List<EBC_Template__c>{
             new EBC_Template__c(Name = 'a1', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
                 new EBC_Template__c(Name = 'a2', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
@@ -512,6 +512,9 @@ public class vfIECEBC_TestSuite1 {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
+		newContact.FirstName = 'Name';
+        newContact.Phone='5142640908';
+        newContact.Email='dashboard@iata.com';
         newContact.LastName = 'w00t';
         insert newContact;
         
@@ -543,6 +546,10 @@ public class vfIECEBC_TestSuite1 {
             layoutController.getSProdGSS();
             layoutController.getSContactEmail();
             layoutController.getSContactSubject();
+            layoutController.logout();
+            Boolean newNow=layoutController.showRenewNow;
+            String pageUrl=layoutController.renewalPageUrl;
+            layoutController.getIsUserLoggedIn();
             
             vfIECEBC_Dashboard dashboardCon = new vfIECEBC_Dashboard();
             System.assertEquals(4, dashboardCon.campaignsCount);
@@ -736,6 +743,7 @@ insert gpavs;*/
             recipientEditCon.validateNewFilter();
             System.assertEquals(3, recipientEditCon.newListStepNumber);
             
+            recipientEditCon.newFilter.Name = 'EBC_TEST_RUN';
             Integer cnt = vfIECEBC_RecipientEdit.getNewFilterCnt(recipientEditCon.getNewFilterJSON());
             System.assert(cnt > 0);
             recipientEditCon.newFilter.Number_of_Recipients__c = cnt;
@@ -761,18 +769,18 @@ insert gpavs;*/
         User usr = initPreRunAs(true);
         
         List<EBC_Template__c> globTpl = new List<EBC_Template__c>{
-            new EBC_Template__c(Name = 'Global Agent 1', Audience__c = 'Agent', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId()),
-                new EBC_Template__c(Name = 'Global Neutral 1', Audience__c = 'Neutral', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId()),
-                new EBC_Template__c(Name = 'Global Agency 1', Audience__c = 'Agency', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId()),
-                new EBC_Template__c(Name = 'Global Agency 2', Audience__c = 'Agency', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId()),
-                new EBC_Template__c(Name = 'Custom Agency 2', External_Id__c = 'customhtml-agencytest', Audience__c = 'Agency', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('Global').getRecordTypeId())
+            new EBC_Template__c(Name = 'Global Agent 1', Audience__c = 'Agent', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
+                new EBC_Template__c(Name = 'Global Neutral 1', Audience__c = 'Neutral', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
+                new EBC_Template__c(Name = 'Global Agency 1', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
+                new EBC_Template__c(Name = 'Global Agency 2', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
+                new EBC_Template__c(Name = 'Custom Agency 2', External_Id__c = 'customhtml-agencytest', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global'))
                 };
                     upsert globTpl; 
         
         insert new List<EBC_Template__c>{
-            new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Agent 1', Audience__c = 'Agent', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId(), Parent_Template__c = globTpl[0].Id),
-                new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Neutral 1', Audience__c = 'Neutral', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId(), Parent_Template__c = globTpl[1].Id),
-                new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Agency 1', Audience__c = 'Agency', RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId(), Parent_Template__c = globTpl[2].Id)
+            new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Agent 1', Audience__c = 'Agent', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates'), Parent_Template__c = globTpl[0].Id),
+                new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Neutral 1', Audience__c = 'Neutral', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates'), Parent_Template__c = globTpl[1].Id),
+                new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Agency 1', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates'), Parent_Template__c = globTpl[2].Id)
                 };
                     
                     List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
@@ -829,6 +837,10 @@ insert gpavs;*/
             
             templateExtCon.selectedTemplate = templateExtCon.customHtmlTemplate.Id;
             templateExtCon.upsertDesignAndContinue();
+            // next() coverage
+            PageReference nextStep = campaignExtCon.next();
+            // previous() coverage
+            PageReference prevStep = campaignExtCon.previous();
         }
     }
     

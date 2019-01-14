@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>NewTask</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -60,6 +56,12 @@
         <fullName>Email</fullName>
     </fields>
     <fields>
+        <fullName>IsRecurrence</fullName>
+    </fields>
+    <fields>
+        <fullName>IsReminderSet</fullName>
+    </fields>
+    <fields>
         <fullName>IsVisibleInSelfService</fullName>
     </fields>
     <fields>
@@ -71,24 +73,6 @@
     </fields>
     <fields>
         <fullName>Priority</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>High</fullName>
-                <default>false</default>
-                <highPriority>true</highPriority>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Normal</fullName>
-                <default>true</default>
-                <highPriority>false</highPriority>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Low</fullName>
-                <default>false</default>
-                <highPriority>false</highPriority>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -99,167 +83,10 @@
     </fields>
     <fields>
         <fullName>Status</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>true</default>
-                <closed>false</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-                <closed>false</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Completed</fullName>
-                <default>false</default>
-                <closed>true</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Waiting on someone else</fullName>
-                <default>false</default>
-                <closed>false</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deferred</fullName>
-                <default>false</default>
-                <closed>false</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aborted</fullName>
-                <default>false</default>
-                <closed>false</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>On track</fullName>
-                <default>false</default>
-                <closed>false</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>On hold</fullName>
-                <default>false</default>
-                <closed>false</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Delayed</fullName>
-                <default>false</default>
-                <closed>false</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Delivered</fullName>
-                <default>false</default>
-                <closed>true</closed>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-                <closed>true</closed>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Subject</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Busy Call</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Call - Busy</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Call customer!</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Call - No Answer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Call - Successful</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Call - Voice Mail</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Call - Wrong Number - Answered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Call - Wrong Number - No Line</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Contract elaboration</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FAX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Feedback request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Follow up</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Needs assessment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No Answer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Post sales follow-up</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Preparation of product information</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Presentation preparation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>R&amp;S reinstatement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Send information</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Send letter</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Update application</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Voice Mail</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -267,61 +94,6 @@
     </fields>
     <fields>
         <fullName>Type</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Call</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Email</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Meeting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DG Brief</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>90-Day Rolling Plan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Create Field / Picklist Value</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Edit Field / Picklist Values</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Edit Page Layout</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Edit Report Content</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Edit Dashboard</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Delete Record</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Send Email</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -332,6 +104,270 @@
         <fullName>WhoId</fullName>
         <type>Lookup</type>
     </fields>
+    <recordTypes>
+        <fullName>Airlines_Industry_Communication</fullName>
+        <active>true</active>
+        <description>Airlines Industry Communication - originally used by Currency Center</description>
+        <label>Airlines Industry Communication</label>
+        <picklistValues>
+            <picklist>Call_TIme__c</picklist>
+            <values>
+                <fullName>0</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Communication_Sent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delayed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Track</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Busy Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Busy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Successful</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Voice Mail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - Answered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - No Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call customer%21</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract elaboration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FAX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Feedback request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Follow up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Needs assessment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post sales follow-up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preparation of product information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Presentation preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R%26S reinstatement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Update application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voice Mail</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>90-Day Rolling Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Create Field %2F Picklist Value</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DG Brief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delete Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Field %2F Picklist Values</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Page Layout</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Report Content</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Email</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>FieldSalesTask</fullName>
         <active>true</active>
@@ -458,6 +494,270 @@
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>IATA_Airlines_Survey</fullName>
+        <active>true</active>
+        <description>IATA Airlines Survey - originally used by Currency Center</description>
+        <label>IATA Airlines Survey</label>
+        <picklistValues>
+            <picklist>Call_TIme__c</picklist>
+            <values>
+                <fullName>0</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Communication_Sent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delayed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Track</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Busy Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Busy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Successful</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Voice Mail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - Answered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - No Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call customer%21</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract elaboration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FAX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Feedback request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Follow up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Needs assessment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post sales follow-up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preparation of product information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Presentation preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R%26S reinstatement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Update application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voice Mail</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>90-Day Rolling Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Create Field %2F Picklist Value</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DG Brief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delete Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Field %2F Picklist Values</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Page Layout</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Report Content</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Email</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>Key_Account_Plan_Milestone</fullName>
         <active>true</active>
         <description>Used by the Account Management project to implement milestones for the Key Account Plan activities</description>
@@ -534,11 +834,15 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>Not Delivered</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>On track</fullName>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Track</fullName>
                 <default>true</default>
             </values>
         </picklistValues>
@@ -689,6 +993,534 @@
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Official_Letter</fullName>
+        <active>true</active>
+        <description>Official Letter - originally used by Currency Center</description>
+        <label>Official Letter</label>
+        <picklistValues>
+            <picklist>Call_TIme__c</picklist>
+            <values>
+                <fullName>0</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Communication_Sent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delayed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Track</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Busy Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Busy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Successful</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Voice Mail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - Answered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - No Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call customer%21</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract elaboration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FAX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Feedback request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Follow up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Needs assessment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post sales follow-up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preparation of product information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Presentation preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R%26S reinstatement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Update application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voice Mail</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>90-Day Rolling Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Create Field %2F Picklist Value</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DG Brief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delete Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Field %2F Picklist Values</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Page Layout</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Report Content</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Email</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Press_Release</fullName>
+        <active>true</active>
+        <description>Press Release - originally used by Currency Center</description>
+        <label>Press Release</label>
+        <picklistValues>
+            <picklist>Call_TIme__c</picklist>
+            <values>
+                <fullName>0</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Communication_Sent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delayed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Track</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Busy Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Busy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Successful</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Voice Mail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - Answered</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call - Wrong Number - No Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call customer%21</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract elaboration</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FAX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Feedback request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Follow up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Needs assessment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Answer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post sales follow-up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Preparation of product information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Presentation preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R%26S reinstatement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send information</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Update application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voice Mail</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>90-Day Rolling Plan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Create Field %2F Picklist Value</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DG Brief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delete Record</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Field %2F Picklist Values</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Page Layout</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edit Report Content</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Email</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -865,6 +1697,7 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
         <fullName>Date_Mandatory_If_Communication_Sent</fullName>
@@ -884,82 +1717,12 @@
         <errorConditionFormula>AND ( 
   RecordType.DeveloperName = &apos;Key_Account_Plan_Milestone&apos;, 
   OR ( 
-    ISBLANK( Subject ), 
+    AND(ISBLANK( Subject__c),ISBLANK( Subject)), 
     ISBLANK( ActivityDate ) 
   ) 
 )</errorConditionFormula>
         <errorMessage>Please fill in the Milestone and the End Date fields</errorMessage>
     </validationRules>
-    <webLinks>
-        <fullName>Close_Task</fullName>
-        <availability>online</availability>
-        <description>Mark all selected task records as completed (closed).</description>
-        <displayType>massActionButton</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Close Tasks</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <requireRowSelection>true</requireRowSelection>
-        <url>{!requireScript(&quot;/soap/ajax/10.0/connection.js&quot;)};
-sforce.connection.session = &quot;{!$Api.Session_ID}&quot;;
-//sforce.debug.trace = true;
-
-/**
- * Multi-record update of task.status field.
- * @param newStatus - a string, must be valid status, 
- * e.g. &quot;Completed&quot;, &quot;Deferred&quot;, etc.
- * @author Chris Wolf cw10025 AT gmail.com
- */
-function taskStatusUpdateAll(newStatus) {
-  try { 
-    var taskUpdates = new Array();
-
-    var taskIds = {!GETRECORDIDS($ObjectType.Task)}; // returns Tasks AND Events (unfortunately)
-    if (taskIds == null || taskIds.length == 0) {
-      alert(&quot;Please select the tasks you wish to mark as complete.&quot;);
-      return;
-    }
-   
-    // Must retrieve by ids to filter for Tasks and ignore Events
-    var result = sforce.connection.retrieve(&quot;Id&quot;, &quot;Task&quot;, taskIds);
-    if (result.length != taskIds.length) {
-      throw(&quot;Task ids list length, &quot; + taskIds + &quot; not equal to number retrieved: &quot; + result.length);
-     }
-
-    for (var i = 0; i &lt; result.length; i++) {
-      if (result[i] == null) {
-        continue;
-      }
-      result[i].Status = newStatus;
-      taskUpdates.push(result[i]);
-    } 
-
-    var result = sforce.connection.update(taskUpdates);
-
-    var hasErrors = false;
-    var errorReport = &quot;The following tasks could not be updated:\n&quot;;
-    for (var i = 0; i &lt; result.length; i++) {
-      if (!result[i].getBoolean(&quot;success&quot;)) {
-        hasErrors = true;
-        errorReport += (&quot;TaskId: &quot; + taskUpdates[i].Id + &quot;, error: &quot; + result[i].errors.message + &quot;\n&quot;);
-        if (i == 20 &amp;&amp; i &lt; result.length) {
-          errorReport += (&quot;...more errors - showing first 20 out of &quot; + &quot;result.length\n&quot;);
-          break;
-        }
-      }
-    }
-    if (hasErrors) {
-      alert(errorReport);
-    }
-    //window.location.reload(); &lt;== causes re-post warning alert in some cases
-    window.location = window.location.href;
-  } catch(e) {
-    alert(e); // catch-all for any unspecified errors...
-  }
-}
-
-taskStatusUpdateAll(&quot;Completed&quot;);</url>
-    </webLinks>
     <webLinks>
         <fullName>Mark_Task_Complete</fullName>
         <availability>online</availability>

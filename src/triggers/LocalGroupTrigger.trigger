@@ -1,8 +1,9 @@
 trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, before delete) {
 
+    localgroupTriggerHandler handler = new localgroupTriggerHandler();
+
     List<Profile> sysAdminId = [SELECT Id FROM Profile WHERE  Name = 'System Administrator' LIMIT 1];
-    RecordType draftRecordType = [SELECT Id, DeveloperName FROM RecordType
-    WHERE SObjectType = 'LocalGovernance__c' AND DeveloperName = 'Draft_Reg_Div_Group'];
+    List<Profile> accManagmTeam = [SELECT Id FROM Profile WHERE  Name = 'Account management team' LIMIT 1]; //INC298981
 
     // If the record is new or if the country has changed I get IATA ISO Country
     Set<ID> countryIds = new Set<ID>();
@@ -23,9 +24,8 @@ trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, b
 
     // I update the Local Group adding Region, Country manager and IATA office FROM COUNTRY
     if(countryIds.size()>0){
-        Map<Id,IATA_ISO_Country__c> countryMap = new Map<Id,IATA_ISO_Country__c> ([SELECT Name, Region__c, Country_Manager__c, ISS_Office_Location__c
-                                                                                   FROM IATA_ISO_Country__c
-                                                                                   WHERE ID IN :countryIds]);
+        Map<Id,IATA_ISO_Country__c> countryMap = new Map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(countryIds));
+
         for(LocalGovernance__c lg : Trigger.new){
             IATA_ISO_Country__c myCountry = countryMap.get(lg.Country__c);
             if(myCountry!=null){
@@ -94,6 +94,17 @@ trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, b
 
     }
 
+    // disable deactivation if child groups are inactive
+    List<LocalGovernance__c> lsAllGroups = [SELECT Id, Reporting_to__c, Active__c FROM LocalGovernance__c];
+    for (LocalGovernance__c lg : Trigger.new) {
+        if(lg.Active__c == false && Trigger.oldMap.get(lg.Id).Active__c == true) {
+            List<LocalGovernance__c> allChildren = handler.getAllChildren(lg.Id, lsAllGroups);
+            if(handler.hasActiveGroups(allChildren)) {
+                lg.addError('cannot deactive if child groups are active');
+            }
+        }
+
+    }
 
   }
     // Industry Groups can be deleted only for System Administrators
@@ -102,11 +113,11 @@ trigger LocalGroupTrigger on LocalGovernance__c (before insert, before update, b
     if( Trigger.isDelete ){
 
         for(LocalGovernance__c g : trigger.Old){
-            if(UserInfo.getProfileId() == sysAdminId[0].Id || g.RecordTypeId == draftRecordType.Id){
+            if( UserInfo.getProfileId() == sysAdminId[0].Id || UserInfo.getProfileId() == accManagmTeam[0].Id){
                 system.debug('[LocalGroupTrigger] delete industry group:  ' + g.Id);
             }
             else {
-                g.addError('<b>Industry Groups can only be deleted by System Administrators.</b>', false);
+                g.addError('<b>Industry Groups can only be deleted by System Administrators or by Account management team.</b>', false);
             }
         }
 

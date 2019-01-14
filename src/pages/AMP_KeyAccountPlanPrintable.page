@@ -32,14 +32,16 @@
                   <apex:variable value="{!ticker*-1}" var="ticker" />
                   <tr class="headerRow">
                     <th>Activity</th>
+                    <th>Division</th>
                     <th>Description</th>
                     <th>Overall Status</th>
                     <th>Account Issue or Priority</th>
-                    <th>Benefits to the Account</th>
+                    <th>Comment</th>
                     <th>End Date</th>
                   </tr>
                   <tr class="dataRow {!IF(ticker==1, 'odd', 'even')}">
                   <td class="dataCell" ><apex:outputField value="{!objective.Name}"  /></td>
+                  <td class="dataCell"><apex:outputField value="{!objective.Division__c}"  /></td>
                   <td class="dataCell"><apex:outputField value="{!objective.Details__c}"  /></td>
                   <td class="dataCell"><apex:outputField value="{!objective.Status__c}"  /></td>
                   <td class="dataCell"><apex:outputField value="{!objective.Account_Issue_or_Priority__c}"  /></td>
@@ -58,13 +60,13 @@
                         <th>Involved</th>
                         <th>Support</th>
                         <th class="narrowColumn">Status</th>
-                        <th>Description</th>
+                        <th>Comments</th>
                         <th class="narrowColumn">End Date</th>
                       </tr>
                       <apex:repeat value="{!objective.Tasks}" var="task">
                       <tr class="dataRow">
 
-                        <td class="dataCell"><apex:outputText value="{!task.Subject}"   /></td>
+                        <td class="dataCell"><apex:outputText value="{!task.Subject__c}"   /></td>
                         <td class="dataCell"><apex:outputText value="{!task.AM_Responsible__c}"   /></td>
                         <td class="dataCell"><apex:outputText value="{!task.AM_Involved__c}"   /></td>
                         <td class="dataCell"><apex:outputText value="{!task.AM_Support_Required_from_Account__c}"   /></td>

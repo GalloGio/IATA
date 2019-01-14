@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
-    <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>shahb@iata.org</email>
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <email>noreply@iata.org</email>
     <name>India BG queue</name>
+    <queueMembers>
+        <users>
+            <user>shahb@iata.org</user>
+            <user>vitharanai@iata.org</user>
+            <user>boonsinsup@iata.org</user>
+            <user>rodrigos@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

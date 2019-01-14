@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Object representing an access given to a customer for a Product</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -228,6 +225,11 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <displayFormat>PA-{00000}</displayFormat>
         <label>IEC Product Access Name</label>
@@ -237,6 +239,7 @@
     <pluralLabel>IEC Product Accesses</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Toggle_Suspension</fullName>
         <availability>online</availability>

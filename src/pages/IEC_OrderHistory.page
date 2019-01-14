@@ -39,28 +39,9 @@
 			    <div class="inner-wrapper">
 			        <h1 class="page-title">{!$Label.Orders}</h1>
 
-			        <!-- <div class="field-group checkbox">
-			            <div class="checkbox-box">
-			                <div class="custom-user-input checkbox">
-			                    <input class="user-input checkbox" type="checkbox" id="active-subscriptions" />
-			                    <label class="custom-checkbox" for="active-subscriptions"><i class="icon"></i></label>
-			                </div>
-			                <label class="input-label" for="active-subscriptions">Show only active subscriptions</label>
-			            </div>
-			        </div> -->
-			        
-			        <!-- <?php 
-			            $table_header = '<tr class="heading">
-			                                <th class="order-number">Order number</th>
-			                                <th class="date">Date</th>
-			                                <th class="action"></th>
-			                            </tr>';
-			        ?> -->
-
 			        <div class="table-container orders">
 			            <div class="table-heading">
 			                <table class="data-table table-history">
-			                    <!-- <?= $table_header ?> -->
 			                    <tr class="heading">
 	                                <th class="order-number">{!$Label.Order_number}</th>
 	                                <th class="date">{!$Label.Date}</th>
@@ -71,14 +52,12 @@
 			            <div class="scroll-container history long">
 
 			                <table class="data-table table-history table-togglable">
-			                    <!-- <?= $table_header ?> -->
 			                    <tr class="heading">
 	                                <th class="order-number">{!$Label.Order_number}</th>
 	                                <th class="date">{!$Label.Date}</th>
 	                                <th class="action"></th>
 	                            </tr>
 
-			                    <!-- <?php for ($i=0; $i < 20; $i++) { ?> -->
 			                    <apex:repeat value="{!myOrders}" var="ord">
 			                    <tr class="listing-item">
 			                        <td class="order-number" data-label="Order number">
@@ -103,7 +82,12 @@
 			                        </td>
 			                        <td class="details js-toggle-details is-hidden">
 			                            <div class="quote-details-container">
-			                                <div class="caption"><apex:outputText value="{!ord.OrderNumber}" /></div>
+			                                <div class="caption">
+												<!-- <apex:outputText value="{!ord.OrderNumber}" /> -->
+												<apex:outputLink value="{!$Site.BaseUrl}/IEC_ConfirmOrder?orderId={!ord.Id}">{!ord.OrderNumber}</apex:outputLink>
+												&nbsp;
+												<apex:outputText value="{!ord.Status}" />
+											</div>
 			                                <div class="dates">
 			                                    <div class="box">
 			                                        <strong>{!$Label.Date}: </strong>
@@ -116,9 +100,7 @@
 			                                <div class="section-container">
 			                                    <div class="group-container group-billing-shipping row">
 			                                        <div class="columns small-12 medium-6">
-			                                            <!-- <?php include 'includes/components/output/billing-address.php'; ?> -->
-			                                            <!-- Start billing address -->
-														<section class="group-container billing-address">
+			                    						<section class="group-container billing-address">
 														    <h2 class="group-title">{!$Label.Billing_address}</h2>
 														    <div class="field-group output inline">
 														        <span class="input-label">{!$Label.Address_Line_1}</span>
@@ -126,12 +108,6 @@
 														            <apex:outputText value="{!ord.BillingStreet}" />
 														        </span>
 														    </div>
-
-														    <!-- <div class="field-group output inline">
-														        <span class="input-label">Address 2</span>
-														        <span class="output-value">
-														        </span>
-														    </div> -->
 
 														    <div class="field-group output inline">
 														        <span class="input-label">{!$Label.Postal_code}</span>
@@ -184,19 +160,11 @@
 			                                            <!-- end billing address section -->
 			                                        </div>
 			                                        <div class="columns small-12 medium-6">
-			                                            <!-- <?php include 'includes/components/output/shipping-address.php'; ?> -->
 			                                            <!-- Start shipping address section -->
 														<section class="group-container shipping-address">
 														    <h2 class="group-title">{!$Label.Shipping_address}</h2>
 
 														    <div class="shipping-address-container">
-
-														        <!-- <div class="field-group output inline">
-														            <span class="input-label">Address nickname</span>
-														            <span class="output-value">
-														                Work
-														            </span>
-														        </div> -->
 
 														        <div class="field-group output inline">
 														            <span class="input-label">{!$Label.Address_Line_1}</span>
@@ -204,12 +172,6 @@
 														                <apex:outputText value="{!ord.ShippingStreet}" />
 														            </span>
 														        </div>
-
-														        <!-- <div class="field-group output inline">
-														            <span class="input-label">Address 2</span>
-														            <span class="output-value">
-														            </span>
-														        </div> -->
 
 														        <div class="field-group output inline">
 														            <span class="input-label">{!$Label.Postal_code}</span>
@@ -246,20 +208,7 @@
 														            </span>
 														        </div>
 
-														        <!-- <div class="field-group output inline">
-														            <span class="input-label">{!$Label.Phone}</span>
-														            <span class="output-value">
-														                <apex:outputText value="{!ord.ShipToContact_Phone__c}" />
-														            </span>
-														        </div>
-
-														        <div class="field-group output inline">
-														            <span class="input-label">{!$Label.Email_address}</span>
-														            <span class="output-value">
-														                <apex:outputText value="{!ord.ShipToContact_Email__c}" />
-														            </span>
-														        </div> -->
-
+														
 														        <div class="group-container shipping-instructions">
 														            <h3 class="group-title">{!$Label.Shipping_instructions}</h3>
 
@@ -301,41 +250,27 @@
 			                                    <div class="group-container group-shopping-cart">
 			                                        <div class="table-container your-order">
 			                                            <table class="data-table table-shopping-cart js-adjust-tooltip-placement">
-			                                                <!-- <?php 
-			                                                $shopping_cart = $your_order;
-			                                                include 'includes/components/data-table/cart.php'; 
-			                                                ?> -->
 			                                                <!-- Start cart section -->
 															<tr class="heading">
 															    <th class="product-name">{!$Label.Product_Name}</th>
 															    <th class="product-number">{!$Label.Product_Number}</th>
-															    <!-- <?php if ($page != 'view_quotes') { ?> -->
 															    <th class="promotion-code">{!$Label.Promo_code}</th>
-															    <!-- <?php } ?> -->
 															    <th class="quantity">{!$Label.Quantity}</th>
 															    <th class="item-price">{!$Label.Item_Price}</th>
 															    <th class="total-price">{!$Label.Total_Price}</th>
 															</tr>
-															<!-- <?php
-															$cart_quantity = 0;
-															$cart_total = 0;
-															$index = 1;
-															foreach ($shopping_cart as $product): 
-															    ?> -->
 															<apex:repeat value="{!ord.Orderitems}" var="item">
 															<tr class="item">
 															    <td class="product-name">
-															        <h2 class="item-name"><!-- <?= $product['name'] ?> -->{!item.Product_Name__c}</h2>
-															        <div class="product-number">{!$Label.Product_Number}: <!-- <?= $product['sku'] ?> -->{!item.Product_Number__c}</div>
+															        <h2 class="item-name">{!item.Product_Name__c}</h2>
+															        <div class="product-number">{!$Label.Product_Number}: {!item.Product_Number__c}</div>
 															        
-															        <!-- <?php if ($page == 'order_history') { ?> -->
 															        <apex:outputPanel rendered="{!item.Carrier_Tracking_URL__c != null}">
 															        <div class="tracking-number">
-															        {!$Label.Tracking_Number}: <br /> <!-- <a href="#">{!item.Carrier_Tracking_Number__c}</a> --> <apex:outputText value="{!item.Carrier_Tracking_URL__c}" escape="false" />
+															        {!$Label.Tracking_Number}: <br />  <apex:outputText value="{!item.Carrier_Tracking_URL__c}" escape="false" />
 															        </div>
 															        </apex:outputPanel>
 															        <div class="download-invoice">
-															        	<!-- <a href="#">Download Invoice</a> -->
 															        	<apex:outputPanel rendered="{!ord.Payment_Type__c != 'ICH' && item.Invoice_Number__c != null}">
 															        	<apex:outputLink value="/apex/IECInvoice?invoice={!item.Invoice_Number__c}" id="invoiceLink" target="_blank">{!$Label.Download_Invoice}</apex:outputLink>
 																		</apex:outputPanel>
@@ -343,55 +278,54 @@
 																		<a class="js-open-modal" data-target-modal="#js-modal-ICH-Customer" href="#">{!$Label.Download_Invoice}</a>
 																		</apex:outputPanel>
 															        </div>
-															        <!-- </apex:outputPanel> -->
-																	
+															        
 
 															    </td>
 															    <td class="product-number">
-															        <!-- <?= $product['sku'] ?> -->
 															        <apex:outputText value="{!item.Product_Number__c}" />
 															    </td>
 
-															    <!-- <?php if ($page != 'view_quotes') { ?> -->
 															    <td class="promotion-code">
 															    </td>
-															    <!-- <?php } ?> -->
-
+															    
 															    <td class="quantity">
 															        <span class="input-label quantity">{!$Label.Quantity}: </span>
-															        <!-- <?= $product['quantity'] ?> -->
 															        {!item.quantity}
-															        <!-- <?php
-															        $cart_quantity = $cart_quantity + $product['quantity'];
-															        $product_total = $product['price'] * $product['quantity'];
-															        $cart_total = $cart_total + $product_total;
-															        ?> -->
 															    </td>
 															    <td class="price item-price">
-															        <!-- $<?= number_format($product['price'], 2, '.', '') ?> -->
-															        {!item.UnitPrice}
+															        <apex:outputText value="{0, Number, Currency}" >
+											                            <apex:param value="{!item.UnitPrice}" />
+											                        </apex:outputText>
 															    </td>
 															    <td class="price total-price">
-															        <!-- $<?= number_format($product_total, 2, '.', '') ?> -->
 															        <apex:outputText value="{0, Number, Currency}" >
 											                            <apex:param value="{!item.quantity * item.UnitPrice}" />
 											                        </apex:outputText>
-											                        
-															    </td>
+											                    </td>
 															</tr>
-															<!-- <?php 
-															$index++;
-															endforeach; 
-															?> -->
+
+															<apex:variable value="0" var="setup" rendered="{!AND(item.Setup_Fee__c != null, item.Setup_Fee__c > 0)}"> 
+															<tr class="promotion">
+																<td class="product-name"><i>Flat fee</i></td>
+																<td class="product-number"></td>
+																<td class="promotion-code"></td>
+																<td class="quantity"></td>
+																<td class="price item-price"></td>
+																<td class="price total-price">
+																	<apex:outputText value="{0, number, currency}">
+						                                                <apex:param value="{!item.Setup_Fee__c}" />
+						                                            </apex:outputText>
+																</td>
+															</tr>
+										                	</apex:variable>
+															
 															<apex:outputPanel rendered="{!item.Discount__c != null && item.Discount__c > 0}">
 															<tr class="promotion">
 															    <td class="product-name">
 															        <strong>{!$Label.Promotion}</strong>
 															    </td>
 															    <td class="product-number"></td>
-															    <!-- <?php if ($page != 'view_quotes') { ?> -->
 															    <td class="promotion-code"></td>
-															    <!-- <?php } ?> -->
 															    <td class="quantity"></td>
 															    <td class="price item-price"></td>
 															    <td class="price total-price">
@@ -404,28 +338,21 @@
 															</apex:repeat>
 															
 															<tr class="total sub-total">
-															    
-
-															    <!-- <td class="sub-total" colspan="<?= $colspan ?>"> -->
 															    <td class="sub-total" colspan="5">
 															        {!$Label.Subtotal}
 															    </td>
 															    <td class="price total-price">
-															        <!-- $<?= number_format($cart_total, 2, '.', '') ?> -->
 															        <apex:outputText value="{0, Number, Currency}" >
 											                            <apex:param value="{!ord.SubTotal_Amount__c - ord.Discount_Amount__c}" />
 											                        </apex:outputText>
 															    </td>
 															</tr>
-															<tr class="tax">
-															    
+															<tr class="tax">															    
 															    <th colspan="6">
 															        {!$Label.Taxes}
 															    </th>
 															</tr>
 															<tr class="tax">
-															    
-															    <!-- <td class="product-name" colspan="<?= $colspan ?>"> -->
 															    <td class="product-name" colspan="3">
 															        {!$Label.Taxes}
 															    </td>
@@ -433,23 +360,18 @@
 															    </td>
 															    <td class="price item-price">
 															    </td>
-															    <td class="price total-price">
-															        
+															    <td class="price total-price">															        
 															        <apex:outputText value="{0, Number, Currency}" >
 											                            <apex:param value="{!ord.Taxes__c}" />
 											                        </apex:outputText>
 															    </td>
 															</tr>
 															<tr class="shipping handling">
-															    
-															    <!-- <th colspan="<?= $colspan ?>"> -->
 															    <th colspan="6">
 															        {!$Label.Shipping_and_handling}
 															    </th>
 															</tr>
 															<tr class="shipping">
-															    
-															    <!-- <td class="product-name" colspan="<?= $colspan ?>"> -->
 															    <td class="product-name" colspan="3">
 															        {!$Label.Shipping}
 															    </td>
@@ -467,7 +389,6 @@
 															    </td>
 															</tr>
 															<tr class="handling">
-															    <!-- <td class="product-name" colspan="<?= $colspan ?>"> -->
 															    <td class="product-name" colspan="3">
 															        {!$Label.Handling}
 															    </td>
@@ -485,13 +406,10 @@
 															    </td>
 															</tr>
 															<tr class="total">
-															    
-															    <!-- <td class="total" colspan="<?= $colspan ?>"> -->
 															    <td class="total" colspan="5">
 															        {!$Label.IDCard_Total}
 															    </td>
 															    <td class="price total-price">
-															        <!-- $<?= number_format($cart_total, 2, '.', '') ?> -->
 															        <apex:outputText value="{0, Number, Currency}" >
 											                            <apex:param value="{!ord.Total_Amount__c}" />
 											                        </apex:outputText>
@@ -504,16 +422,12 @@
 			                                            <div class="footer text-right table-actions">
 			                                            	<apex:commandLink rendered="{!ord.Status == 'New'}" action="/IEC_CustomerInformation?id={!ord.OrderNumber}" value="Pay Now" id="ConfirmPurchase" styleClass="button confirmPurchase" />
 			                                            </div>
-
-
 			                                        </div>
 			                                    </div>
-
 			                                </div>
 			                            </div>
 			                        </td>
 			                    </tr>
-			                    <!-- <?php } ?> -->
 			                    </apex:repeat>
 			                </table>
 			            </div>

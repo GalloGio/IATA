@@ -3,8 +3,8 @@ private class DownloadAgentsCtrlTest {
        
        static testMethod void myUnitTest() {
        
-        ID Hq  =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        ID IFAPCaseID  =Schema.SObjectType.Case.RecordTypeInfosByName.get('IATA Financial Review').RecordTypeId ;
+        ID Hq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+        ID IFAPCaseID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review') ;
                 
          IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
          insert isoCountry;
@@ -21,7 +21,7 @@ private class DownloadAgentsCtrlTest {
         insert Hqrter;
         
         
-        Contact con = new Contact(lastname ='bingo',email='bingo@asdf.it', accountID = Hqrter.id, Financial_Assessment_Contact__c = true);
+        Contact con = new Contact(firstName='Name',lastname ='bingo',email='bingo@asdf.it', accountID = Hqrter.id, Financial_Assessment_Contact__c = true);
         
         
                 insert con;
@@ -39,7 +39,7 @@ private class DownloadAgentsCtrlTest {
                               contactid = con.id,
                               AccountId = Hqrter.id,
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'very good'                                                    
+                              Financial_Review_Result__c = 'Satisfactory - No Action'                                                    
                               );
             
             insert c;

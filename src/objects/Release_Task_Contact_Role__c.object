@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Which contacts are related to a release task and why.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -84,28 +81,34 @@
         <fullName>Role__c</fullName>
         <externalId>false</externalId>
         <label>Role</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Tester</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Developer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Signoff Designee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Tester</fullName>
+                    <default>false</default>
+                    <label>Tester</label>
+                </value>
+                <value>
+                    <fullName>Developer</fullName>
+                    <default>false</default>
+                    <label>Developer</label>
+                </value>
+                <value>
+                    <fullName>Signoff Designee</fullName>
+                    <default>false</default>
+                    <label>Signoff Designee</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Release Task Contact Role</label>
     <nameField>
@@ -116,4 +119,5 @@
     <pluralLabel>Release Task Contact Roles</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

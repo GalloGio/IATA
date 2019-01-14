@@ -99,7 +99,7 @@
         <label>section</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Subject</field>
             </layoutItems>
             <layoutItems>
@@ -107,7 +107,7 @@
                 <field>BSPlink_Subject__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Description</field>
             </layoutItems>
             <layoutItems>
@@ -501,7 +501,7 @@
                 <height>200</height>
                 <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

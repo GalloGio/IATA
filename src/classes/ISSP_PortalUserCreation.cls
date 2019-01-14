@@ -14,13 +14,23 @@ public with sharing class ISSP_PortalUserCreation {
     public String lastName {set; get;}
     public String emailAddress {set; get;}
     public list<String> errorMessage {get; set;}
+
+     //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+    public String firstCommParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
     
     public ISSP_PortalUserCreation() {
         popContact(); //Get the current contact assoc. with logged in portal user
         
         errorMessage = new list<string>();
         con = new Contact();
-        con.Community__c = 'ISS Customer Portal';
+        if(communityName!=null && communityName=='CNS'){
+            con.Community__c = 'CNS Customer Portal';
+        }else{
+            con.Community__c = 'ISS Customer Portal';
+        }
+       
         retUrl = ApexPages.currentPage().getParameters().get('retUrl');
     }
     /**
@@ -36,7 +46,7 @@ public with sharing class ISSP_PortalUserCreation {
             return null;
         }
         con = newContact;
-        return new PageReference('/apex/ISSP_PortalUserCreation?retUrl=' + retUrl);
+        return new PageReference('/apex/ISSP_PortalUserCreation?retUrl=' + retUrl + commParam);
 
     }
     /**
@@ -51,11 +61,11 @@ public with sharing class ISSP_PortalUserCreation {
             //con = newContact;
             return null;
         }
-        return new PageReference('/ISSP_Contact?mid=M4S1&id=' + con.id);
+        return new PageReference('/ISSP_Contact?mid=M4S1&id=' + con.id + commParam);
         
     }
     public PageReference cancel(){
-        return new PageReference(retUrl);
+        return new PageReference(retUrl + firstCommParam);
 
     }
     public Boolean save(){
@@ -141,8 +151,7 @@ public with sharing class ISSP_PortalUserCreation {
     public List<SelectOption> getCountries() {
         List<SelectOption> options = new List<SelectOption>();
         
-        List <IATA_ISO_Country__c> isoList = [SELECT Id, Name from IATA_ISO_Country__c
-                                              ORDER by Name];
+        List <IATA_ISO_Country__c> isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
         options.add(new SelectOption('', '--None--'));
         for(IATA_ISO_Country__c iso : isoList){
             options.add(new SelectOption(iso.Id,iso.Name));

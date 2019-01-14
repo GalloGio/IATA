@@ -35,7 +35,7 @@ private class ISSP_PortalUserStatusChangeTest {
         ISSP_PortalUserStatusChange.preformAction(actionName,controler.con.Id,controler.con.User_Portal_Status__c);
         controler.save();
 
-        ISSP_PortalUserStatusChange.createEmail(null,null);
+        ISSP_PortalUserStatusChange.createEmail(null,null, null);
         //controler.disabelUser();
 
  //       ISSP_PortalUserStatusChange.maasUserCreation(con);
@@ -52,6 +52,7 @@ private class ISSP_PortalUserStatusChangeTest {
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Pending Approval';
+        con.Community__c = 'E-Commerce';
         insert con;
         ISSP_PortalUserStatusChange controler = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(con));
 
@@ -63,7 +64,7 @@ private class ISSP_PortalUserStatusChangeTest {
     public static testMethod void testISSP_PortalUserStatusChangeTest3() {
 
         //ISSP_ObjectFactory.fiilIncludedFields();
-        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+        String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
         //Account acc = (Account)ISSP_ObjectFactory.createSObject('Account',false,4);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
@@ -87,12 +88,12 @@ private class ISSP_PortalUserStatusChangeTest {
                                 ProfileId = profileId,
                                 IsActive = true);
         insert newUser;
-
+		/*
         Test.startTest();
         ISSP_PortalUserStatusChange controler = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(contact));
         controler.contactId = contact.Id;
         controler.sendEmailToUser();
-
+		
         ISSP_PortalUserStatusChange.preformActionFuture(contact.Id,'Active','Approved User');
         ISSP_PortalUserStatusChange.preformActionImmediate(contact.Id,'Pending Approval','Approved User');
 
@@ -100,6 +101,7 @@ private class ISSP_PortalUserStatusChangeTest {
         action.processAction(contact.Id);
 
         Test.stopTest();
+		*/
     }
 
     public static testMethod void testISSP_PortalUserStatusChangeTest4() {
@@ -111,6 +113,7 @@ private class ISSP_PortalUserStatusChangeTest {
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Pending Approval';
+        con.Community__c = 'E-Commerce';
         insert con;
         ISSP_PortalUserStatusChange controler = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(con));
         controler.contactId = con.Id;
@@ -151,7 +154,7 @@ private class ISSP_PortalUserStatusChangeTest {
         contactListId.add(con2.Id);
 
         ISSP_PortalUserStatusChange.removeInactiveEmail(con2.Email);
-        ISSP_PortalUserStatusChange.maasUserCreation(contactList);
+        ISSP_PortalUserStatusChange.maasUserCreation(contactList, 'CNS');
         ISSP_PortalUserStatusChange.futureUpdateUsers(contactListId);
         ISSP_PortalUserStatusChange.futureDeactivateUsers(contactListId);
 
@@ -166,6 +169,7 @@ private class ISSP_PortalUserStatusChangeTest {
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Pending Approval';
         con.Email = 'test1@test.com';
+        con.Community__c = 'E-Commerce';
         insert con;
 
         Portal_Applications__c portalApp = new Portal_Applications__c();
@@ -260,6 +264,7 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Pending Approval';
         con.Email = 'test1@test.com';
         con.Preferred_Language__c = 'English';
+        con.Community__c = 'E-Commerce';
         insert con;
 
         Portal_Applications__c portalApp = new Portal_Applications__c();
@@ -307,9 +312,11 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Regional Administrator';
         controller.con = con;
         controller.saveNewStatus();
+        
+        Test.stopTest();
+
         System.assert([SELECT Id, ProfileId FROM User WHERE ProfileId = :profileMap.get('ISS Portal Delegated Admin User').Id].size() > 0, 'User should have been created');
 
-        Test.stopTest();
 
     }
 
@@ -331,7 +338,7 @@ private class ISSP_PortalUserStatusChangeTest {
 
         insert cSettings;
 
-        Id rtId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.RecordTypeId = rtId;
         insert acc;
@@ -343,6 +350,7 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Rejected';
         con.Email = 'test1@test.com';
         con.Preferred_Language__c = 'English';
+        con.Community__c = 'E-Commerce';
         insert con;
 
         Test.startTest();
@@ -375,7 +383,7 @@ private class ISSP_PortalUserStatusChangeTest {
 
         insert cSettings;
 
-        Id rtId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.RecordTypeId = rtId;
         insert acc;
@@ -387,6 +395,7 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Rejected';
         con.Email = 'test1@test.com';
         con.Preferred_Language__c = 'English';
+        con.Community__c = 'E-Commerce';
         insert con;
 
         Test.startTest();
@@ -397,17 +406,20 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Pending Approval';
         Controller.con = con;
         controller.saveNewStatus();
+        
+        Test.stopTest();
+        
 
         System.assert([SELECT Id, ProfileId, Name FROM User WHERE ProfileId =:portalProfile.Id limit 10 ].size() > 0, 'User should have been created');
 
-        Test.stopTest();
     }
 
-    Public static testMethod void testUpdateUser(){
+    @isTest
+    Public static void testUpdateUser(){
 
         Profile portalProfile = [SELECT Id, Name FROM Profile WHERE Name = 'ISS Portal (Partner)'][0];
 
-        Id rtId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.RecordTypeId = rtId;
         insert acc;
@@ -437,13 +449,13 @@ private class ISSP_PortalUserStatusChangeTest {
                                 IsActive = true);
         insert newUser;
 
-        System.runAs(newUser){
-            Test.startTest();
+        //System.runAs(newUser){
+        Test.startTest();
 
-            ISSP_PortalUserStatusChange.updateUser(con.Id, true, con.Email, portalProfile.Id);
+        ISSP_PortalUserStatusChange.updateUser(con.Id, true, con.Email, portalProfile.Id, '');
 
-            Test.stopTest();
-        }
+        Test.stopTest();
+        //}
 
     }
 

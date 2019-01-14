@@ -12,7 +12,17 @@
             <layoutItems>
                 <field>To_display_on_Homepage__c</field>
             </layoutItems>
+            <layoutItems>
+                <field>Chat_Answer__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>false</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <layoutColumns/>
+        <style>CustomLinks</style>
     </layoutSections>
 </Layout>

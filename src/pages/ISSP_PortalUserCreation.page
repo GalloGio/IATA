@@ -1,6 +1,6 @@
 <apex:page controller="ISSP_PortalUserCreation"  showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
    <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
 <style>
   .iatainputbox{    
     // display: block;
@@ -26,7 +26,7 @@
        </style>
  <body>
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="row">
              <div class="col-md-12">
                  <h4>{!$Label.ISSP_NewContact}<small> : {!$Label.ISSP_PortalUserCreation_Description}</small></h4>
@@ -137,7 +137,7 @@
     </div><!-- end class="panel-body-->
     </div><!-- end panel primary -->
                 
-         <c:ISSP_CustomFooter />
+         <c:ISSP_CustomFooter communityName="{!communityName}"/>
      </div>
        </body>
     </html>

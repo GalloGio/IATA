@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>support.deskom@cegedim.com</email>
     <name>Cegedim (Deskom) (IATA IW Work Orders)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIWProjectTeam</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>DeskomA</role>
+            <role>IATAInvoiceWorksA</role>
+            <role>IATAIWCallCentreA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Work_Order__c</sobjectType>
     </queueSobject>

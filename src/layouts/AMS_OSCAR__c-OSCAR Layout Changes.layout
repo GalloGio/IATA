@@ -55,6 +55,10 @@
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_Step_Completed__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -278,6 +282,10 @@
                 <behavior>Edit</behavior>
                 <field>Approval_disapproval_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Disapproval_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -486,6 +494,35 @@
         <fields>CREATEDBY_USER</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>AMS_Inspection__c.OSCAR__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Active__c</fields>
+        <fields>Change_Code__c</fields>
+        <fields>NAME</fields>
+        <fields>Bulletin_Information__c</fields>
+        <fields>Account__c</fields>
+        <fields>Reason_Code__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>Source__c</fields>
+        <fields>Created_Date_To_Show__c</fields>
+        <relatedList>Agency_Applied_Change_code__c.OSCAR__c</relatedList>
+        <sortField>Created_Date_To_Show__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>ACTIVITY.TASK</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>TASK.LAST_UPDATE</fields>
+        <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

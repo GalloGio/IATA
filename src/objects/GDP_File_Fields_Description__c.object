@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,9 +46,10 @@
     <description>Placholder for the fields that need to be sent to the Amazon Server to produce the Delta and Master Files</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -100,7 +97,7 @@
         <defaultValue>false</defaultValue>
         <description>Field will not be tracked to trigger Delta update records</description>
         <externalId>false</externalId>
-        <inlineHelpText>Field will not be tracked to trigger Delta update records</inlineHelpText>
+        <inlineHelpText>DRIVES GDP_DELTA CREATION. If Checked, the field will not be tracked by the GDP_Delta trigger.</inlineHelpText>
         <label>Do Not Track</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -215,7 +212,7 @@
         <defaultValue>false</defaultValue>
         <description>Remove the field from the Txt file type generation</description>
         <externalId>false</externalId>
-        <inlineHelpText>Remove the field from the Txt file type generation</inlineHelpText>
+        <inlineHelpText>Remove the field from the Txt file. THIS ALTERS THE LAYOUT and will shift the information fields backward.</inlineHelpText>
         <label>TXT Hidden Column</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -227,25 +224,30 @@
         <externalId>false</externalId>
         <inlineHelpText>Target is the object field type where the data is going to be loading from</inlineHelpText>
         <label>Group</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agency</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Territory</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agency</fullName>
+                    <default>false</default>
+                    <label>Agency</label>
+                </value>
+                <value>
+                    <fullName>Territory</fullName>
+                    <default>false</default>
+                    <label>Territory</label>
+                </value>
+                <value>
+                    <fullName>Airline</fullName>
+                    <default>false</default>
+                    <label>Airline</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Type__c</fullName>
@@ -253,48 +255,57 @@
         <externalId>false</externalId>
         <inlineHelpText>Allow proper transformation to happen during file production and depending on the file type.</inlineHelpText>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Boolean</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Date YYYYMMDD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Date YYYYMMDDHHMM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Datetime</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Decimal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Integer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>String</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Boolean</fullName>
+                    <default>false</default>
+                    <label>Boolean</label>
+                </value>
+                <value>
+                    <fullName>Date YYYYMMDD</fullName>
+                    <default>false</default>
+                    <label>Date YYYYMMDD</label>
+                </value>
+                <value>
+                    <fullName>Date YYYYMMDDHHMM</fullName>
+                    <default>false</default>
+                    <label>Date YYYYMMDDHHMM</label>
+                </value>
+                <value>
+                    <fullName>Datetime</fullName>
+                    <default>false</default>
+                    <label>Datetime</label>
+                </value>
+                <value>
+                    <fullName>Decimal</fullName>
+                    <default>false</default>
+                    <label>Decimal</label>
+                </value>
+                <value>
+                    <fullName>Integer</fullName>
+                    <default>false</default>
+                    <label>Integer</label>
+                </value>
+                <value>
+                    <fullName>String</fullName>
+                    <default>false</default>
+                    <label>String</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Visible__c</fullName>
         <defaultValue>true</defaultValue>
         <description>Value Field Visible or not visible in the output</description>
         <externalId>false</externalId>
-        <inlineHelpText>Value Field Visible or not visible in the output</inlineHelpText>
+        <inlineHelpText>Makes the information visible or not in the field WITHOUT ALTERING THE LAYOUT (spacing maintained with blank information)</inlineHelpText>
         <label>Visible</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -305,9 +316,9 @@
         <defaultValue>false</defaultValue>
         <description>Remove the field from the XML file type generation</description>
         <externalId>false</externalId>
-        <inlineHelpText>Remove the field from the XML file type generation</inlineHelpText>
+        <inlineHelpText>Remove the field from the XML file. THIS ALTERS THE LAYOUT (XML block will no be present in files).</inlineHelpText>
         <label>XML Hidden Column</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -338,6 +349,277 @@
         <unique>false</unique>
     </fields>
     <label>GDP File Fields Description</label>
+    <listViews>
+        <fullName>Field_Details_GSS_Member_TXT</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member Legacy</value>
+        </filters>
+        <label>01- Field Details - TXT - GSS Member Leg</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Details_GSS_Non_Member_TXT</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <label>02- Field Details - TXT - GSS NonMember</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Details_MDP_NO_Address</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Hidden_Column__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - MDP NO Address</value>
+        </filters>
+        <filters>
+            <field>Hidden_Column__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>03- Field Details - MDP NO Address</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Details_MDP_WITH_Address</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Hidden_Column__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - MDP WITH Address</value>
+        </filters>
+        <filters>
+            <field>Hidden_Column__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>04- Field Details - MDP WITH Address</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Tracking_GSS_Member_TXT</fullName>
+        <columns>NAME</columns>
+        <columns>Position__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member Legacy</value>
+        </filters>
+        <label>90- Field Tracking - GSS Member Legacy</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Field_Tracking_GSS_Non_Member_TXT</fullName>
+        <columns>NAME</columns>
+        <columns>Position__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <label>91- Field Tracking - GSS NonMember</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X01_Field_Details_TXT_GSS_MemberANG</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member NewGen</value>
+        </filters>
+        <label>01- Field Details - TXT - GSS MemberANG</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X10_Field_Details_ALL_CAC_WEB</fullName>
+        <columns>NAME</columns>
+        <columns>GDP_File_Description__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
+        <columns>Type__c</columns>
+        <columns>Name__c</columns>
+        <columns>Description__c</columns>
+        <columns>Hidden_Column__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>startsWith</operation>
+            <value>CAC</value>
+        </filters>
+        <label>10- Field Details - ALL CAC WEB</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X21_Field_Details_XLSX_GSS_Member</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
+        <columns>Hidden_Column__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member NewGen</value>
+        </filters>
+        <label>21- Field Details - XLSX - MemberNewGen</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X22_Field_Details_XLSX_GSS_NonMember</fullName>
+        <columns>NAME</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Name__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
+        <columns>Hidden_Column__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Non Member</value>
+        </filters>
+        <label>22- Field Details - XLSX - GSS NonMember</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X90_Field_Tracking_GSS_MemberANG</fullName>
+        <columns>NAME</columns>
+        <columns>Position__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member NewGen</value>
+        </filters>
+        <label>90- Field Tracking - GSS Member NewGen</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_Search_By_API_Field_Name</fullName>
+        <columns>NAME</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>Size__c</columns>
+        <columns>Position__c</columns>
+        <columns>Target__c</columns>
+        <columns>Visible__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+            <value>Reference - GSS Member</value>
+        </filters>
+        <filters>
+            <field>API_Name__c</field>
+            <operation>startsWith</operation>
+            <value>Location_Type</value>
+        </filters>
+        <label>ZZ-Search By API Field Name</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>GDP-FFD-{00000}</displayFormat>
         <label>GDP File Fields Description Name</label>
@@ -347,4 +629,5 @@
     <pluralLabel>GDP File Fields Description</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

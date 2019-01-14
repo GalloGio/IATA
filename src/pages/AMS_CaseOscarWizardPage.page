@@ -1,0 +1,68 @@
+<apex:page standardController="Case" extensions="AMS_CaseOscarWizardController" TabStyle="Case" sidebar="false" showHeader="false" wizard="true">
+
+    <apex:includeScript value="/support/console/37.0/integration.js"/>
+
+    <script>
+
+        function openNewTab(tabId,tabName) {
+            sforce.console.openPrimaryTab(null, tabId, true, tabName, closeFlow);
+        }
+
+        function closeFlow() {
+            //First find the ID of the current tab to close it
+            sforce.console.getEnclosingTabId(closeSubtab);
+        }
+        
+        var closeSubtab = function closeSubtab(result) {
+            //Now that we have the tab ID, we can close i
+            var tabId = result.id;
+            sforce.console.closeTab(tabId);
+        };
+
+        function closeAndOpen(objectId, oscarName){
+            sforce.console.closeTab("{!$CurrentPage.parameters.originalTab}", function(result){
+                openNewTab(objectId, oscarName);
+            });
+        }
+
+    </script>
+
+
+    <style type="text/css">
+
+            .dataCol, .labelCol{
+                padding-top: 5px !important;
+                padding-bottom: 5px !important;
+                
+            }
+
+            .FlowContainer {
+              line-height: 150%;
+              margin-left: 80px;
+              margin-top: 70px;
+              padding: 10px 10px;
+              width: 1000px;
+              background-color: white ;
+            }
+
+    </style>
+
+    <flow:interview name="OscarCaseMigration" interview="{!myflow}"  buttonLocation="bottom"  rerender="myPageBlock" buttonStyle="color:black; background-color:#fed; border:1px solid;" finishLocation="/{!$CurrentPage.parameters.caseId}"  >
+        <apex:param name="AccountConcerned" value="{!Case.Account_Concerned__c}"/>
+        <apex:param name="AccountId" value="{!$CurrentPage.parameters.accountId}"/><!-- AMSU-140 -->
+    </flow:interview>
+    
+    <apex:form >
+       
+         <apex:pageBlock mode="maindetail" tabStyle="Case" id="myPageBlock"> 
+            <apex:pageBlockSection columns="2" rendered="{!NOT(OR(ISNULL(oscarId),ISBLANK(oscarId)))}" collapsible="false">
+                        <script type="text/javascript">
+                            openPrimaryTab('/{!caseId}','{!oscarName}');
+                            closeFlow();
+                        </script>
+            </apex:pageBlockSection>
+
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>

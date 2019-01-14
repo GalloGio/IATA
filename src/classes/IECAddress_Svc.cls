@@ -54,11 +54,281 @@ public class IECAddress_Svc
         return (SAPPaymentMap.containsKey(str)) ? SAPPaymentMap.get(str) : paymentType;
     }
 
+
+	/****************************************************************************************************
+	    Created by Thai 2016-12-01
+	        Return SAP code for region (province)
+	****************************************************************************************************/
+	String getSAPRegion(IECAddress__c address)
+	{
+		String isoStateCodeSAP = '';
+		String isoCountryCode = address.ISO_Country__r.ISO_Code__c;
+		String isoStateCode = address.ISO_State__r.ISO_Code__c;
+		
+		if (!String.isBlank(isoCountryCode) && !String.isBlank(isoStateCode) && address.ISO_State__r.IEC_Valid_SAP__c == true)
+			if (isoStateCode.length() > 3 && isoStateCode.substring(0, 3) == isoCountryCode + '-')
+				isoStateCodeSAP = isoStateCode.substring(3);
+			else
+				isoStateCodeSAP = isoStateCode;
+		
+		return isoStateCodeSAP;
+	} //*** end of "getSAPRegion"
+
+
+	/****************************************************************************************************
+	    Created by Thai 2016-12-01
+	        Return VAT number in SAP format
+	****************************************************************************************************/
+	String getSAPVATNumber(String VATNumber, String isoCountryCode)
+	{
+		String SAPVATNumber = '';
+        system.debug('VATNumber : ' + VATNumber);
+		system.debug('isoCountryCode : ' + isoCountryCode);
+		
+		if (!String.isBlank(VATNumber) && !String.isBlank(isoCountryCode) && isoCountryCode.contains('GR')){
+            
+            // SPECIAL CASE FOR GREECE - SEND isoCountryCode = EL
+            if (!VATNumber.startsWithIgnoreCase(isoCountryCode) && !VATNumber.contains('EL'))
+                SAPVATNumber = Utility.truncate('EL' + VATNumber, 20);
+			else // VATNumber.contains('EL')
+				SAPVATNumber = Utility.truncate(VATNumber, 20);
+            // SPECIAL CASE FOR GREECE - SEND isoCountryCode = EL
+        }
+        
+        if (!String.isBlank(VATNumber) && !String.isBlank(isoCountryCode) && !isoCountryCode.contains('GR')){
+            if (!VATNumber.startsWithIgnoreCase(isoCountryCode))
+                SAPVATNumber = Utility.truncate(isoCountryCode + VATNumber, 20);
+			else
+				SAPVATNumber = Utility.truncate(VATNumber, 20);
+		}
+        system.debug('SAPVATNumber : ' + SAPVATNumber);
+		return SAPVATNumber;
+
+	} //*** end of "getSAPVATNumber"
+
+
+
+	/****************************************************************************************************
+	    Created by Thai 2016-12-01
+	        Create/Update Sold To or Bill To or Ship To partners with SAP
+	****************************************************************************************************/
+	Enum SAPPartnerType {SOLD, BILL, SHIP}
+	public static List<IEC_Error_Log__c> syncCustomerWithSAP(List<Location__c> lstLocation, Map<Id, String> mapContactId_SoldToSAP, Boolean commitDLM)
+	{
+		return syncCustomerWithSAP(lstLocation, mapContactId_SoldToSAP, commitDLM, null);
+	}
+	public static List<IEC_Error_Log__c> syncCustomerWithSAP(List<Location__c> lstLocation, Map<Id, String> mapContactId_SoldToSAP, Boolean commitDLM, List<Account> lstAccountToUpdate)
+	{
+		SAPPartnerType forPartnerType;
+		Boolean isCreating;
+		List<IEC_Error_Log__c> lstResult = new List<IEC_Error_Log__c>();
+		SAP_CustomerMaster.HTTPS_Port http = new SAP_CustomerMaster.HTTPS_Port();
+		setCalloutHeader(http);
+		SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request request;
+		SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Response response;
+		IECAddress_Svc cls = new IECAddress_Svc();
+		
+		for (Location__c loc : lstLocation)
+			try
+			{
+				//*** create request
+				request = new SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request();
+				request.RequestType = getRequestType(loc);
+				if (request.RequestType == null)
+				{
+					lstResult.add(IECErrorLogger.createErrorLog('IECAddress_Svc.syncCustomerWithSAP', JSON.serialize(loc), 'Not a customer', null));
+					continue;
+				}
+				else if (request.RequestType == 'DSP')   //*** do no deactivate sold to
+				{
+					lstResult.add(null);
+					continue;
+				}
+				isCreating = (request.RequestType.left(1) == 'C');
+				if (request.RequestType.right(2) == 'SP')
+					forPartnerType = SAPPartnerType.SOLD;
+				else if (request.RequestType.right(2) == 'BP')
+					forPartnerType = SAPPartnerType.BILL;
+				else
+					forPartnerType = SAPPartnerType.SHIP;
+				
+				//*** information to send
+				request.SoldTo = new SAP_CustomerMaster.SoldTo_element();
+				if (forPartnerType == SAPPartnerType.SOLD)
+				{
+					request.SoldTo.Name1         = Utility.truncate(loc.Account__r.Name, 40);
+					request.SoldTo.Name2         = Utility.truncate(loc.Account__r.Name, 40, 40);
+					request.SoldTo.Name3         = Utility.truncate(loc.Account__r.Name, 80, 40);
+					request.SoldTo.SearchTerm1   = Utility.truncate(loc.Account__c, 15);
+					List<String> addressLines 	 = Utility.splitAddress(loc.Address__r.Street__c, 35);
+					request.SoldTo.Street2       = addressLines[0];
+					request.SoldTo.Street3       = addressLines[1];
+					request.SoldTo.PostalCode    = Utility.truncate(loc.Address__r.ZipCode__c, 10);
+					request.SoldTo.City          = Utility.truncate(loc.Address__r.City__c, 40);
+					request.SoldTo.Country       = Utility.truncate(loc.Address__r.ISO_Country__r.ISO_Code__c,3);
+					request.SoldTo.Region        = Utility.truncate(cls.getSAPRegion(loc.Address__r), 3);
+					request.SoldTo.VAT_Reg_No    = Utility.truncate(cls.getSAPVATNumber(loc.VAT_Number__c, loc.Address__r.ISO_Country__r.ISO_Code__c), 20);
+					request.SoldTo.Telephone     = Utility.truncate(loc.Account__r.Phone, 30);
+					request.SoldTo.Email         = Utility.truncate(loc.Account__r.Email__c, 241);
+					request.SoldTo.PaymentMethod = getSAPPaymentType(loc.Account__r.Default_Payment_Type__c);
+					//request.SoldTo.PaymentTerms  = Utility.truncate(loc.Account__r.Account_Payment_Term__c, 4);   //*** this attribute belongs to SAP therefore do not send
+					if (isCreating)
+						request.SFDCAccountID = Utility.truncate(loc.Account__c, 15);       //*** SFDC Account ID to be used in SAP on creation
+					else
+						request.SoldTo.SAPSoldToID = Utility.truncate(loc.SAP_Id__c, 10);   //*** SAP Id to update
+				}
+				else
+				{
+					request.SoldTo.SAPSoldToID = Utility.truncate((mapContactId_SoldToSAP != null && mapContactId_SoldToSAP.containsKey(loc.Contact__c) ? mapContactId_SoldToSAP.get(loc.Contact__c) : loc.Account__r.SoldTo_Location__r.SAP_Id__c), 10);
+					
+					SAP_CustomerMaster.Contact_element contactInfo = new SAP_CustomerMaster.Contact_element(); 
+					contactInfo.Title     = Utility.truncate(loc.Contact__r.Salutation, 30);
+					contactInfo.FirstName = Utility.truncate(loc.Contact__r.FirstName, 40);
+					contactInfo.LastName  = Utility.truncate(loc.Contact__r.LastName, 40);
+					contactInfo.Telephone = Utility.truncate(loc.Phone__c, 30);
+					contactInfo.Email     = Utility.truncate(loc.Email__c, 241);
+					
+					if (forPartnerType == SAPPartnerType.BILL)
+					{
+						request.BillTo               = new SAP_CustomerMaster.BillTo_element();
+						request.BillTo.Contact       = contactInfo;
+						request.BillTo.Name1         = Utility.truncate(loc.Account__r.Name, 40);
+						request.BillTo.Name2         = Utility.truncate(loc.Account__r.Name, 40, 40);
+						request.BillTo.Name3         = Utility.truncate(loc.Account__r.Name, 80, 40);
+						request.BillTo.SearchTerm1   = Utility.truncate(loc.Contact__c, 15);
+						List<String> addressLines 	 = Utility.splitAddress(loc.Address__r.Street__c, 35);
+						request.BillTo.Street2       = addressLines[0];
+						request.BillTo.Street3       = addressLines[1];	
+						request.BillTo.PostalCode    = Utility.truncate(loc.Address__r.ZipCode__c, 10);
+						request.BillTo.City          = Utility.truncate(loc.Address__r.City__c, 40);
+						request.BillTo.Country       = Utility.truncate(loc.Address__r.ISO_Country__r.ISO_Code__c, 3);
+						request.BillTo.Region        = Utility.truncate(cls.getSAPRegion(loc.Address__r), 3);
+						request.BillTo.VAT_Reg_No    = Utility.truncate(cls.getSAPVATNumber(loc.VAT_Number__c, loc.Address__r.ISO_Country__r.ISO_Code__c), 20);
+						request.BillTo.PaymentMethod = getSAPPaymentType(loc.Account__r.Default_Payment_Type__c);
+					}
+					else
+					{
+						request.ShipTo               = new SAP_CustomerMaster.ShipTo_element();
+						request.ShipTo.Contact       = contactInfo;
+						request.ShipTo.Name1         = Utility.truncate(loc.Account__r.Name, 40);
+						request.ShipTo.Name2         = Utility.truncate(loc.Account__r.Name, 40, 40);
+						request.ShipTo.Name3         = Utility.truncate(loc.Account__r.Name, 80, 40);
+						request.ShipTo.SearchTerm1   = Utility.truncate(loc.Contact__c, 15);
+						//TC: Enhancement
+                		List<String> addressLines 	 = Utility.splitAddress(loc.Address__r.Street__c, 35);
+						request.ShipTo.Street2       = addressLines[0];
+						request.ShipTo.Street3       = addressLines[1];
+						request.ShipTo.PostalCode    = Utility.truncate(loc.Address__r.ZipCode__c, 10);
+						request.ShipTo.City          = Utility.truncate(loc.Address__r.City__c, 40);
+						request.ShipTo.Country       = Utility.truncate(loc.Address__r.ISO_Country__r.ISO_Code__c, 3);
+						request.ShipTo.Region        = Utility.truncate(cls.getSAPRegion(loc.Address__r), 3);
+						request.ShipTo.VAT_Reg_No    = Utility.truncate(cls.getSAPVATNumber(loc.VAT_Number__c, loc.Address__r.ISO_Country__r.ISO_Code__c), 20);
+					}
+					
+					if (isCreating)
+						request.SFDCContactID = Utility.truncate(loc.Contact__c, 15);       //*** SFDC Contact ID to be used in SAP on creation
+					else if (forPartnerType == SAPPartnerType.BILL)
+						request.BillTo.SAPBillToID = Utility.truncate(loc.SAP_Id__c, 10);   //*** SAP Id to update
+					else
+						request.ShipTo.SAPShipToID = Utility.truncate(loc.SAP_Id__c, 10);   //*** SAP Id to update
+				}
+				
+				//*** sync with SAP
+				if (String.isBlank(request.SoldTo.SAPSoldToID) && (forPartnerType != SAPPartnerType.SOLD  || (!isCreating && forPartnerType == SAPPartnerType.SOLD)))
+					lstResult.add(IECErrorLogger.createErrorLog('IECAddress_Svc.syncCustomerWithSAP', JSON.serialize(request), 'Missing Sold To SAP Id', null));
+				else if (!isCreating && forPartnerType == SAPPartnerType.BILL && String.isBlank(request.BillTo.SAPBillToID))
+					lstResult.add(IECErrorLogger.createErrorLog('IECAddress_Svc.syncCustomerWithSAP', JSON.serialize(request), 'Missing Bill To SAP Id', null));
+				else if (!isCreating && forPartnerType == SAPPartnerType.SHIP && String.isBlank(request.ShipTo.SAPShipToID))
+					lstResult.add(IECErrorLogger.createErrorLog('IECAddress_Svc.syncCustomerWithSAP', JSON.serialize(request), 'Missing Ship To SAP Id', null));
+				else
+				{
+					response = http.SI_SFDC_CustomerMasterUpdate_SYNC(request);
+					if (response.Error == null)
+					{
+						//*** save SAP Id if request of creation
+						if (isCreating)
+							if (forPartnerType == SAPPartnerType.SOLD)
+							{
+
+								loc.SAP_Id__c = response.SAP_SoldTo.SAPSoldToID;
+								if (lstAccountToUpdate == null){
+									lstAccountToUpdate = new List<Account>();
+								}
+
+								if(String.isBlank(response.SAP_SoldTo.PaymentTerms)){
+									lstAccountToUpdate.add(new Account(Id = loc.Account__c));
+								}else{
+									lstAccountToUpdate.add(new Account(Id = loc.Account__c, Sales_Office__c = response.SAP_SoldTo.SalesOffice
+								                                 , Payment_Term__c = response.SAP_SoldTo.PaymentTerms, Price_Group__c = response.SAP_SoldTo.PriceGroup));
+								}
+
+
+							}
+							else if (forPartnerType == SAPPartnerType.BILL)
+								loc.SAP_Id__c = response.SAP_BillTo.SAPBillToID;
+							else
+							{
+								loc.SAP_Id__c = response.SAP_ShipTo.SAPShipToID;
+								loc.Shipping_Condition__c = response.SAP_ShipTo.ShippingCondition;
+							}
+						lstResult.add(null);
+					}
+					else
+						lstResult.add(IECErrorLogger.createErrorLog('IECAddress_Svc.syncCustomerWithSAP', JSON.serialize(request), String.valueOf(response.Error.Message), null));
+				}
+			}
+			catch (Exception e)
+			{
+				lstResult.add(IECErrorLogger.createErrorLog('IECAddress_Svc.syncCustomerWithSAP', JSON.serialize(request), e.getMessage(), e.getStackTraceString()));
+			}
+		
+		//*** save to database if instructed
+		if (commitDLM)
+		{
+			Savepoint sp = Database.setSavepoint();
+			try
+			{
+				//*** save locations
+				upsert lstLocation;
+				
+				//*** save accounts
+				if (lstAccountToUpdate != null && lstAccountToUpdate.size() > 0)
+					update lstAccountToUpdate;
+				
+				//*** save errors if any
+				try
+				{
+					List<IEC_Error_Log__c> lstError = new List<IEC_Error_Log__c>();
+					for (Integer i = 0; i < lstResult.size(); i++)
+						if (lstResult[i] != null)
+							lstError.add(lstResult[i]);
+					if (lstError.size() > 0)
+						insert lstError;
+				}
+				catch (Exception e) {}
+			}
+			catch (Exception e)
+			{
+				IECErrorLogger.logApexException('IECAddress_Svc.syncCustomerWithSAP', String.valueOf(lstLocation), e.getMessage(), e.getStackTraceString());
+				
+				Database.rollback(sp);   //*** -> need to review SAP partners
+				
+				//*** add error to return result
+				for (Integer i = 0; i < lstResult.size(); i++)
+					if (lstResult[i] == null)
+						lstResult[i] = IECErrorLogger.createErrorLog('IECAddress_Svc.syncCustomerWithSAP', String.valueOf(lstLocation), e.getMessage(), e.getStackTraceString());
+			}
+		}
+		
+		return lstResult;
+	} //*** end of "syncCustomerWithSAP"
+
+
     /************************************************************************************************
      *  Created By David D 02/2016                                                                  *
      *      This function return the Request Object to send to SAP                                  *
      ************************************************************************************************/
-    public static SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request createCustomerMasterRequestObject(Location__c location, Map<Id, Location__c> soldToLocationByContactId)
+/*    public static SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request createCustomerMasterRequestObject(Location__c location, Map<Id, Location__c> soldToLocationByContactId)
     {
         SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request request = new SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request();
             
@@ -185,7 +455,7 @@ public class IECAddress_Svc
 
         return request;
     } 
-
+*/
     
     /************************************************************************************************
      *  Created By David D 02/2016                                                                  *
@@ -193,6 +463,62 @@ public class IECAddress_Svc
      ************************************************************************************************/
     public static void syncCustomerMasterWithSAP(List<Location__c> locations)
     {
+
+		if (locations == null || locations.size() == 0)
+			return;
+		
+		Map<Id, Location__c> mapAccountId_SoldToLoc = new Map<Id, Location__c>();
+		List<Location__c> lstBillToShipToLoc = new List<Location__c>();
+		Map<Id, String> mapContactId_SoldToSAP = new Map<Id, String>();
+		List<IEC_Error_Log__c> lstResult = new List<IEC_Error_Log__c>();
+		List<Account> lstAccountToUpdate = new List<Account>();
+		Integer i1;
+		
+		//*** split requests to sold to and bill/ship to
+		for (i1 = 0; i1 <locations.size(); i1++)
+			if (locations[i1].Type__c == IECConstants.SOLDTO)
+				mapAccountId_SoldToLoc.put(locations[i1].Account__c, locations[i1]);
+			else
+			{
+				lstBillToShipToLoc.add(locations[i1]);
+				mapContactId_SoldToSAP.put(locations[i1].Contact__c, locations[i1].Account__r.SoldTo_Location__r.SAP_Id__c);
+			}
+		
+		//*** send sold to requests
+		if (mapAccountId_SoldToLoc.size() > 0)
+			lstResult.addAll(syncCustomerWithSAP(mapAccountId_SoldToLoc.values(), null, false, lstAccountToUpdate));
+		
+		//*** finalize list of sold to SAP Id for bill/ship to requests if applicable
+		for (i1 = 0; i1 <lstBillToShipToLoc.size(); i1++)
+			if (mapAccountId_SoldToLoc.containsKey(lstBillToShipToLoc[i1].Account__c))
+				mapContactId_SoldToSAP.put(lstBillToShipToLoc[i1].Contact__c, mapAccountId_SoldToLoc.get(lstBillToShipToLoc[i1].Account__c).SAP_Id__c);
+		
+		//*** send bill/ship to requests
+		lstResult.addAll(syncCustomerWithSAP(lstBillToShipToLoc, mapContactId_SoldToSAP, false, null));
+		
+		//*** save results
+		Savepoint sp = Database.setSavepoint();
+		try
+		{
+			update locations;
+			if (lstAccountToUpdate.size() > 0)
+				update lstAccountToUpdate;
+		}
+		catch (Exception e)
+		{
+			lstResult.add(IECErrorLogger.createErrorLog('IECAddress_Svc.syncCustomerMasterWithSAP'
+			                                          , '***** Need to validate partners in SAP *****\n\n' + String.valueOf(locations)
+			                                          , e.getMessage(), e.getStackTraceString()));
+			Database.rollback(sp);   //*** -> need to review SAP partners
+		}
+		
+		//*** log error if any
+		for (i1 = lstResult.size()-1; i1 >= 0; i1--)
+			if (lstResult[i1] == null)
+				lstResult.remove(i1);
+		if (lstResult.size() > 0)
+			try { insert lstResult; } catch (Exception e) { /* ignore error */ }
+/*
         //-- Build Request objects for SAP call 
         Map<Id, SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request> requestByLocation = new Map<Id, SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request>(); 
         Map<Id, SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Response> responseByLocation = new Map<Id, SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Response>();
@@ -241,7 +567,7 @@ public class IECAddress_Svc
             try
             {
             	SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Response response = req.SI_SFDC_CustomerMasterUpdate_SYNC(request);
-                if(response.Error != null /*&& response.Error.Message.contains('locked')*/)
+                if(response.Error != null)  //*&& response.Error.Message.contains('locked')
                 {
                    request2Reprocess.put(locationId, request); 
                 }
@@ -303,6 +629,7 @@ public class IECAddress_Svc
         
         //-- Update with SAP response 
         processResponse(responseByLocation, requestByLocation);
+*/
     }
 
     /************************************************************************************************
@@ -328,12 +655,13 @@ public class IECAddress_Svc
         //}
         
         //if(!locationIdsToSend.isEmpty())
-        if(locationIds.size() == 1)
-        {
-            List<Location__c> locations = (List<Location__c>) new Location_Sel().selectSObjectById(locationIds);
+        //if(locationIds.size() == 1)
+        //{
+            //List<Location__c> locations = (List<Location__c>) new Location_Sel().selectSObjectById(locationIds);
+            List<Location__c> locations = Location_Sel.getLocationToSyncSAP(new List<Id>(locationIds), null, null, null, null).values();
             System.enqueueJob(new Location_Queue(locations));
-        }
-        else if (!locationIds.isEmpty()) Database.executeBatch(new Location_Batch(locationIds), 10);
+        //}
+        //else if (!locationIds.isEmpty()) Database.executeBatch(new Location_Batch(locationIds), 10);
             
     }
 
@@ -344,9 +672,14 @@ public class IECAddress_Svc
      ************************************************************************************************/
     public static void syncCustomerMasterWithSAP(Set<Id> locationIds, Set<Id> soldToLocationIds2CreateFirst)
     {
-    	
-        if (!locationIds.isEmpty() || !soldToLocationIds2CreateFirst.isEmpty())
-            Database.executeBatch(new Location_Batch(locationIds, soldToLocationIds2CreateFirst), 10);
+        Set<Id> setAllLocationId = new Set<Id>();
+        if (locationIds != null)
+            setAllLocationId.addAll(locationIds);
+        if (soldToLocationIds2CreateFirst != null)
+            setAllLocationId.addAll(soldToLocationIds2CreateFirst);
+        syncCustomerMasterWithSAP(setAllLocationId);
+        //if (!locationIds.isEmpty() || !soldToLocationIds2CreateFirst.isEmpty())
+            //Database.executeBatch(new Location_Batch(locationIds, soldToLocationIds2CreateFirst), 10);
         
         //System.debug('syncCustomerMasterWithSAP CREATE SOLDTO FIRST');
 
@@ -385,6 +718,7 @@ public class IECAddress_Svc
      *  Created By David D 02/2016                                                                  *
      *      This function update SAP_Id fields on Location                                          *
      ************************************************************************************************/
+/*
     public static void processResponse(Map<Id, SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Response> responseByLocation, Map<Id, SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request> requestByLocation)
     {
         Location_Sel lSelector = new Location_Sel(); 
@@ -424,6 +758,7 @@ public class IECAddress_Svc
 
         if(errorLogs.size() > 0) IECErrorLogger.logErrors(errorLogs, true);
     }
+*/
 
     /**
      * Function will prepare a batch job to make api object update to Zuora with updated contacts' address
@@ -511,7 +846,7 @@ public class IECAddress_Svc
     }
 
     //verified if the address change
-	public static Location__c updateAddress(
+/*	public static Location__c updateAddress(
 							String street,String city, Id isoCountryId,Id isStateId,String zipCode, String VATNumber,
 							Contact loginContact,String locationType
 							){
@@ -552,7 +887,7 @@ public class IECAddress_Svc
 
         return lstBillToLocation[0];
 	}
-
+*/
 	public static IECAddress__c createNewIECAddress(String street,String city, Id isoCountryId,Id isStateId,String zipCode){
 		//Create a new IECAddress
         IECAddress__c iecAddress 	= 	new IECAddress__c();
@@ -604,4 +939,34 @@ public class IECAddress_Svc
 			return null;			
 		}
 	}
+
+
+	/****************************************************************************************************
+	    Created by Thai 2016-12-13
+	        Return a new address (not committed) compatible to call out to SAP in case of new address
+	****************************************************************************************************/
+	public static IECAddress__c newAddressForSAPSync(String street, String city, String countryCode, String stateCode, String zipCode)
+	{
+		//*** get ISO country and state information
+		IATA_ISO_Country__c isoCountry = null;
+		IATA_ISO_State__c isoState = null;
+		if (!String.isBlank(stateCode) && !String.isBlank(countryCode))
+			for (IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByIsoCodes(new Set<String>{stateCode})){
+				if(state.IATA_ISO_Country__r.ISO_Code__c == countryCode){
+					isoState = state;
+				}
+			}
+		if (isoState != null && isoState.Id != null)
+			isoCountry = isoState.IATA_ISO_Country__r;
+		else if (!String.isBlank(countryCode))
+			for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{countryCode}))
+				isoCountry = country;
+
+		//*** return address compatible for call out to SAP in case of new address
+		return new IECAddress__c(Street__c = street, City__c = city, ZipCode__c = zipCode
+		                       , ISO_State__c = (isoState == null ? null : isoState.Id), ISO_State__r = isoState
+		                       , ISO_Country__c = (isoCountry == null ? null : isoCountry.Id), ISO_Country__r = isoCountry
+		                       , Address_Type__c = (Test.isRunningTest() ? Utility.generateRandomString(8) : null));
+	} //*** end of "newAddressForSAPSync"
+
 }

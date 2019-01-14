@@ -38,6 +38,10 @@
                 <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>First_Step_Completed__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -124,6 +128,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Proof_of_payment_received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Confirm_second_payment_received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Confirm_third_payment_received__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -279,6 +291,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Approval_disapproval_date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Disapproval_date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -550,6 +566,18 @@
         <fields>Airline_Code__c</fields>
         <fields>CREATEDBY_USER</fields>
         <relatedList>AMS_Inspection__c.OSCAR__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>ACTIVITY.TASK</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>TASK.LAST_UPDATE</fields>
+        <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

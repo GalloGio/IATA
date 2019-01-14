@@ -4,9 +4,12 @@
     <apex:attribute name="reqRequired" type="String" required="true" description="Mandatory, Optional" />
     <apex:attribute name="reqName" type="String" required="true" description="Requirement name" />
     <apex:attribute name="reqDescription" type="String" required="true" description="Requirement description" />
-    <apex:attribute name="reqIdentifier" type="String" required="true" description="Requirement Identifier" />
-    
-    <div class="well">   
+    <apex:attribute name="reqIdentifier" type="String" required="true" description="Requirement Identifier" assignTo="{!currentIdentifier}"/>
+    <apex:attribute name="onlyOne" type="Boolean" required="false" description="True if only one file is allowed" default="false"/>
+
+    <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
+
+    <div class="well">
     <form action="{!AMAZONURL}" method="POST" enctype="multipart/form-data" class="direct-upload-{!reqCnt}">
     <!-- Note: Order of these is Important -->
         <input type="hidden" class="FileInput-{!reqCnt}" name="key" value="{!storageFolder}"/>
@@ -15,8 +18,8 @@
         <input type="hidden" name="success_action_status" value="201"/>
         <input type="hidden" name="policy" value="{!policy}"/>
         <input type="hidden" name="signature" value="{!signedPolicy}"/>
-        
-        <div class="row">
+
+        <apex:outputPanel id="mainblock" layout="block" styleclass="row">
             <!-- Progress Bar to show upload completion percentage -->
                                 <div class="col-md-6">
                                     <apex:outputText >
@@ -27,12 +30,21 @@
                                 <div class="col-md-4">
                                     <apex:variable var="reviewStatuses" value="{!''}{!reviewStatusMap}" />
                                     <apex:variable var="FileIdInReviewStatuses" value="{!reqIdentifier}=true"/>
-                                    
-                                    <apex:outputText rendered="{!reqRequired!=null}">
-                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', !CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
+                                    <apex:variable var="showUploadButton" value="{!OR(NOT(onlyOne),AND(onlyOne,countFiles=0))}"/>
+
+                                    <script>
+                                        if ({!countFiles}==0 && {!reqRequired=='Mandatory'}) {
+                                            $("div.well").addClass("empty-list");
+                                        } else {
+                                            $("div.well").removeClass("empty-list");
+                                        }
+                                    </script>
+
+                                    <apex:outputText rendered="{!reqRequired!=null && showUploadButton}">
+                                        <apex:outputText rendered="{!OR(caseStatus=='Draft',caseStatus == 'Open - EDMC', caseOwnerNewgenPCI, !CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
                                             <input type="file" id="input-{!reqCnt}" class="input-{!reqCnt}" name="file" style="color:black;" onchange="this.style.color = 'transparent'"/>
                                         </apex:outputText>
-                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
+                                        <apex:outputText rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC', !caseOwnerNewgenPCI, !caseOwnerModelA, CONTAINS(reviewStatuses, FileIdInReviewStatuses))}">
                                             <input type="file" class="input-{!reqCnt}" name="file" style="color:transparent;" disabled="true"/>
                                         </apex:outputText>
                                     </apex:outputText>
@@ -40,7 +52,7 @@
                                 <div class="col-md-2">
                                     {!CASE(reqRequired, 'Mandatory', '*', 'Optional', '(', '')}{!CASE(reqRequired, 'Mandatory', $Label.ISSP_Mandatory, 'Optional', $Label.ISSP_Optional, '')}{!CASE(reqRequired, 'Optional', ')', '')}
                                 </div>
-                            </div>
+        </apex:outputPanel>
         <div class="progress" style="height:8px;display:{!IF(reqRequired!=null,'','none')}"><div class="uploadbar-{!reqCnt} progress-bar progress-bar-success progress-bar-striped"></div></div>
         </form>
         <div class="row">
@@ -54,27 +66,27 @@
                                 <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMS_Updating_Files}
                             </div>
                         </div>
-                            <apex:actionFunction name="createAmazonFileObject{!reqCnt}_JS" action="{!createAmazonFileObject}" reRender="AmazonDocs,UniqueFileNamesList">
+                            <apex:actionFunction name="createAmazonFileObject{!reqCnt}_JS" action="{!createAmazonFileObject}" reRender="AmazonDocs,UniqueFileNamesList,mainblock">
                                 <apex:param assignTo="{!uploadedFileName}" name="filename" value=""/>
                                 <apex:param assignTo="{!uploadedFileSize}" name="filesize" value=""/>
                                 <apex:param assignTo="{!uploadedFileIdentifier}" name="fileidentifier" value="{!reqIdentifier}"/>
                             </apex:actionFunction>
-                            
+
                         <apex:outputPanel id="AmazonDocs">
-                            
+
                         <apex:repeat value="{!reqIdentifierList}" var="identifierName">
                             <apex:outputPanel rendered="{!identifierName == reqIdentifier}" >
-                                 
+
                                 <script type="text/javascript">
                                     function removeTextFromFile() {
                                         var id = '{!reqCnt}';
                                         $(".input-"+id).css({"color": "transparent"});
-                                                                               
+
                                     }
                                 if(!{!amazonFileMap[reqIdentifier]==null})
                                     removeTextFromFile();
                                 </script>
-                                <apex:dataTable id="tablefileones" styleClass="table table-striped" value="{!amazonFileMap[identifierName]}" var="theFile"> 
+                                <apex:dataTable id="tablefileones" styleClass="table table-striped" value="{!amazonFileMap[identifierName]}" var="theFile">
                                     <apex:column rendered="{!AND(caseStatus!='Draft',caseStatus != 'Open - EDMC')}" >
                                         <span class="{!CASE(theFile.status,'Rejected','glyphicon glyphicon-remove','Rejected Closed','glyphicon glyphicon-remove','Accepted','glyphicon glyphicon-ok','')}" style="color:{!CASE(theFile.status,'Rejected','red','Rejected Closed','red','Accepted','green','')}" aria-hidden="true"></span>
                                     </apex:column>
@@ -83,22 +95,22 @@
                                     </apex:column>
                                     <apex:column >
                                       <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                                      <a class="actionLink" title="view" escape="false" target="_blank" onclick="getFileLink('{!theFile.fullName}');" style="color:#015ba7; cursor: pointer;  text-decoration: underline;"  >{!$Label.ISSP_View}</a> 
+                                      <a class="actionLink" title="view" escape="false" target="_blank" onclick="getFileLink('{!theFile.fullName}');" style="color:#015ba7; cursor: pointer;  text-decoration: underline;"  >{!$Label.ISSP_View}</a>
                                        {!If(OR(caseStatus=='Draft',caseStatus=='Open - EDMC'),' | ','')}
-                                       <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display: {!IF(OR(caseStatus=='Draft',caseStatus=='Open - EDMC'),"inline","none")}"></span>
+                                       <span class="glyphicon glyphicon-trash" aria-hidden="true" style="display: {!IF(OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI, caseOwnerModelA),"inline","none")}"></span>
                                        <apex:commandLink value="{!$Label.IDCard_Delete}"
                                             action="{!deleteThisFile}"
                                             onclick="if(!confirm('{!$Label.ISSP_Confirm_File_Delete}'))return false;"
-                                            rendered="{!OR(caseStatus=='Draft',caseStatus=='Open - EDMC')}" 
+                                            rendered="{!OR(caseStatus=='Draft',caseStatus=='Open - EDMC', caseOwnerNewgenPCI, caseOwnerModelA)}"
                                             status="WaitingStatus"
                                             reRender="AmazonDocs"
                                            oncomplete="location.reload();"
                                        >
-                                            <apex:param value="{!theFile.FullName}" name="currentFileName" assignTo="{!currentFileName}" /> 
+                                            <apex:param value="{!theFile.FullName}" name="currentFileName" assignTo="{!currentFileName}" />
                                         </apex:commandLink>
                                     </apex:column>
                                 </apex:dataTable>
-                            </apex:outputPanel> 
+                            </apex:outputPanel>
                         </apex:repeat>
                             <input type="hidden" id="UniqueFileNamesList" class="UniqueFileNames" value="{!uniqueFileNames}"/>
                         </apex:outputPanel>
@@ -106,22 +118,55 @@
                         </div>
                         </div>
   </div>
-    
+
     <script>
     var folderInit = '{!storageFolder}';
+
+    function isIE(){
+        if (/MSIE/.test(navigator.userAgent)){
+            return true;
+        }
+        else if (/rv:11/.test(navigator.userAgent)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    function getFileLink(fileName) {
+        // alert(''+fileName);
+        $("#loading").show();
+        setTimeout(function(){
+        try{
+            ISSP_AmazonS3_Ctrl.getExpiringLinkIfap(fileName,function(result, event){
+                var result2= result.replace("&amp;","&");
+                var newWin = window.open(result2);
+                if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                    alert('{!$Label.ISSP_AMS_ACCR_Alert1}');
+                }
+                $("#loading").hide();
+            },{escape:false});
+        }catch(err){alert( err.message);}
+        },500);
+    }
 
     function getAllFileNames(){
         var res=[];
         for(i=0 ; i<$(".UniqueFileNames").length ; i++){
             var currFileNamesList = ($(".UniqueFileNames")[i].value).split(",");
             for(j=0 ; j<currFileNamesList.length ; j++){
-                if(res.indexOf(currFileNamesList[j])==-1)
-                    res.push(currFileNamesList[j]);
+                if(res.indexOf(currFileNamesList[j])==-1) {
+                    var filename = currFileNamesList[j];
+                    if (filename>'') {
+                        res.push(filename);
+                    }
+                }
             }
         }
         return res;
     }
- 
+
         $(document).ready( function() {
             $('.direct-upload-{!reqCnt}').each( function() {
                 var form = $(this);
@@ -131,70 +176,74 @@
                     type: 'POST',
                     datatype: 'xml',
                     forceIframeTransport: isIE(),
-                    
+
                     add: function (event, data) {
                         // Message on unLoad.
                         window.onbeforeunload = function() {
                             return 'You have unsaved changes.';
                         };
-                        
+
                        if(isIE()) {
                         $("#loading-{!reqCnt}").show();
                        }
-                        
+
                         var uploadErrors = [];
-        				var acceptFileTypes = {!allowedExtensions};
+                        var acceptFileTypes = {!allowedExtensions};
                         var currentAmazonFilesArray = getAllFileNames();
-                        
+
                         //Remove any special characters from file name
-                        	var fn = data.originalFiles[0]['name'];
-                        	fn = fn.replace(/ /gi,'_');
-                        	fn = fn.replace(/'|{|}|[|]|#|&/gi,'');
-                        
+                            var fn = data.originalFiles[0]['name'];
+                            fn = fn.replace(/ /gi,'_');
+                            fn = fn.replace(/'|{|}|[|]|#|&/gi,'');
+
                         //alert(data.originalFiles[0]['type']);
                         if (data.originalFiles[0]['type'] === undefined) {
                             //Don't do file ext check if IE8
                             $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
-                            
+
                         // and then Submit
                             data.submit();
                             $("#input-{!reqCnt}").attr('disabled', 'disabled');
                         } else {
-                            
-        				if((data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) || (data.originalFiles[0]['type']=='')) {
-            				uploadErrors.push('{!JSEncode($Label.ISSP_File_Extension)}');
-        				}
-                       
-                      	if(currentAmazonFilesArray.indexOf(fn) > -1) {
-                        	uploadErrors.push('{!JSEncode($Label.ISSP_File_Exists)}');
+
+                        if((data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) || (data.originalFiles[0]['type']=='')) {
+                            uploadErrors.push('{!JSEncode($Label.ISSP_File_Extension)}');
+                            window.onbeforeunload = null;
+                        }
+
+                        if(currentAmazonFilesArray.indexOf(fn) > -1) {
+                            uploadErrors.push('{!JSEncode($Label.ISSP_File_Exists)}');
+                            window.onbeforeunload = null;
                          }
-                        
-                        console.log('File size: '+ data.originalFiles[0]['size']);   
+
+                        console.log('File size: '+ data.originalFiles[0]['size']);
                         console.log('File length: '+ data.originalFiles[0]['name'].length);
-                            
-        				if(data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > {!maxFileSize}) {
-            				uploadErrors.push('Filesize is too big');
-        				}
-                         
+
+                        if(data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > {!maxFileSize}) {
+                            uploadErrors.push('Filesize is too big');
+                            window.onbeforeunload = null;
+                        }
+
                         if(data.originalFiles[0]['name'] && data.originalFiles[0]['name'].length > 80) {
-            				uploadErrors.push('Filename is too long (Max. 80 characters)');
-        				}
-                       
-                            
-        				if(uploadErrors.length > 0) {
-            				alert(uploadErrors.join("\n"));
+                            uploadErrors.push('Filename is too long (Max. 80 characters)');
+                            window.onbeforeunload = null;
+                        }
+
+
+                        if(uploadErrors.length > 0) {
+                            alert(uploadErrors.join("\n"));
                             $("#input-{!reqCnt}").removeAttr('disabled');
                             if(isIE()) {
-                        		$("#loading-{!reqCnt}").hide();
-                       		}
-        				} else {
+                                $("#loading-{!reqCnt}").hide();
+                            }
+                        } else {
                             $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
                         // and then Submit
-                        	data.submit();
+                            data.submit();
                             $("#input-{!reqCnt}").attr('disabled', 'disabled');
                         }
                       }
-                   	},
+                    },
                     progress: function(e, data){
                         // This is what makes everything really cool, thanks to that callback
                         // you can now update the progress bar based on the upload progress.
@@ -203,28 +252,28 @@
                     },
                     fail: function(e, data) {
                         // Remove 'unsaved changes' message.
-                       
+
                         window.onbeforeunload = null;
                         $('.uploadbar-{!reqCnt}').css('width', '100%').addClass('progress-bar progress-bar-danger progress-bar-striped');
                     },
                     done: function (event, data) {
                         //Remove any special characters from file name
-                       	var fn = data.originalFiles[0]['name'];
-                       	fn = fn.replace(/ /gi,'_');
-                       	fn = fn.replace(/'|{|}|[|]|#|&/gi,'');
-                        
+                        var fn = data.originalFiles[0]['name'];
+                        fn = fn.replace(/ /gi,'_');
+                        fn = fn.replace(/'|{|}|[|]|#|&/gi,'');
+
                         $(".FileInput-{!reqCnt}").val(folderInit); //Set folder back to init value in case rerendering fails in next line
                         createAmazonFileObject{!reqCnt}_JS(fn, data.originalFiles[0].size);
                         vReqNo = {!reqCnt};
-                        
+
                         $("#input-{!reqCnt}").removeAttr('disabled');
-                        
+
                         if(isIE()) {
-                        	$("#loading-{!reqCnt}").hide();
-                       	}
-                        
+                            $("#loading-{!reqCnt}").hide();
+                        }
+
                         window.onbeforeunload = null;
-                                                
+
                         // Fill the name field with the file's name.
                         //$('#upload_original_name').val(data.originalFiles[0].name);
                         ///$('#upload_custom_name').val(data.originalFiles[0].name);

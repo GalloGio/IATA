@@ -20,16 +20,16 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         
         <!-- jQuery -->
-    	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
          
         <script src="{!$Resource.pkb_jquery_simplemodal_1_4_4}" type="text/javascript" />
         
         <script src="{!URLFOR($Resource.JSTree, '/dist/jstree.min.js')}" type="text/javascript"/>
         <link rel="stylesheet" href="{!URLFOR($Resource.JSTree, '/dist/themes/default/style.min.css')}" />
             
-            <link rel="stylesheet" href="http://www.iata.org/Style%20Library/IATA.org-v1/Core/Css/main.css" />
-                <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="https://www.iata.org/Style%20Library/IATA.org-v1/Core/Css/main.css" />
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
                     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
                         
                         <apex:outputText rendered="{!viewingArticle}">
@@ -86,7 +86,7 @@ KNOWLEDGE ARTICLE ID (FROM CONTROLLER): {!KnowledgeArticle.Id}<br/>
                 <div id="header" class="noindex" style="width:1175px;">
                     <a id="iatalogo" href="http://www.iata.org"><span class="offs noindex">IATA.org homepage</span></a>
                     
-                    <a class="homeIcon" href="/faq"><img id="imgHome" src="http://www.iata.org/Style%20Library/IATA.org-v1/Core/Images/Icons/home-inactive.png" width="28" height="15" alt="Test Home" title="Home" /></a>       
+                    <a class="homeIcon" href="/faq"><img id="imgHome" src="https://www.iata.org/Style%20Library/IATA.org-v1/Core/Images/Icons/home-inactive.png" width="28" height="15" alt="Test Home" title="Home" /></a>       
                     <DIV id="sub-nav" class="noindex"><H1 class="offs noindex">Sub Navigation</H1>  
                         <UL>
                             <LI id="ctl00_Header_SubNav_FooterSiteNav_ctrl0_listItem" class="first"><A id="ctl00_Header_SubNav_FooterSiteNav_ctrl0_listItemLink" href="http://www.iata.org/about/Pages/index.aspx">About Us</A></LI>
@@ -171,13 +171,13 @@ KNOWLEDGE ARTICLE ID (FROM CONTROLLER): {!KnowledgeArticle.Id}<br/>
                         <apex:form >
                         <apex:outputPanel layout="block" style="width:85%" rendered="{!pkbCon.multiLanguage}">
                             <div style="float:right">
-  							<select id='langFilter' class="languages" onchange="setLanguage(this);" >
+                            <select id='langFilter' class="languages" onchange="setLanguage(this);" >
                                <apex:repeat value="{!pkbCon.languageOptions}" var="opt" id="theRepeat">
                                   <option value="{!opt.Value}"> {!$Label[opt.Label]}</option>
                                </apex:repeat>
-  							</select>
+                            </select>
                             </div>
-      					</apex:outputPanel>
+                        </apex:outputPanel>
                         <div style="color: #028FD7; font-size: 21pt; font-weight: normal; line-height: 28px; margin: 10px 0px;">Frequently Asked Questions</div>
                         
                         <div style="margin-bottom: 10px;margin-top: 0; width:75%">

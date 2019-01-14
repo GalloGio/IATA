@@ -5,13 +5,17 @@ private class AMP_CoreRelationshipExtensionTest {
 		// TODO: run this as a test User
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
 		User testUser = New User(
-
 			Alias = 'standt', Email='standarduser@testorg.com',
 			EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
 			LocaleSidKey='en_US', ProfileId = testProfile.Id,
 			TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
 			License_Cost_Center__c = 'ISF005CH01'
 		);
+		insert testUser;
+
+		PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Reg_Div_Group_Owners'];
+		PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = testUser.Id);
+		insert psa;
 
 		System.runAs(testUser) {
 			// Create a new ISO Country
@@ -19,7 +23,7 @@ private class AMP_CoreRelationshipExtensionTest {
 			insert country_qr;
 
 
-			Id accountRecordTypeId = [SELECT Id FROM RecordType WHERE Name ='Airline Headquarters'].Id;
+			Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 			Account a = new Account(
 				Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
 				RecordTypeId = accountRecordTypeId, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
@@ -31,8 +35,8 @@ private class AMP_CoreRelationshipExtensionTest {
 			testContact.Email = 'testLastname@test.ts';
 			testContact.Title = 'test Title';
 			testContact.AccountId = a.Id;
-			testContact.Function__c = 'testFunction';
-			testContact.Membership_Function__c = 'testFunction';
+			testContact.Function__c = 'Aeropolitical';
+			testContact.Membership_Function__c = 'Aeropolitical';
 			insert testContact;
 
 			// List<AMPCoreGroups__c> lsCoreGroups = AMPCoreGroups__c.getAll().Values();
@@ -50,14 +54,14 @@ private class AMP_CoreRelationshipExtensionTest {
 			testGroup.Name = 'testGroup';
 			testGroup.Region__c = 'testGroup';
 			testGroup.Division__c = 'N/A';
-			testGroup.RecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='LocalGovernance__c' AND DeveloperName = 'Reg_Div_Groups'].Id;
+			testGroup.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Reg_Div_Groups');
 			insert testGroup;
 
 			LocalGovernance__c testGroup2 = new LocalGovernance__c();
 			testGroup2.Name = 'testGroup2';
 			testGroup2.Region__c = 'testGroup2';
 			testGroup2.Division__c = 'N/A';
-			testGroup2.RecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='LocalGovernance__c' AND DeveloperName = 'Reg_Div_Groups'].Id;
+			testGroup2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Reg_Div_Groups');
 			insert testGroup2;
 
 			Participant__c testParticipant = new Participant__c();
@@ -73,7 +77,7 @@ private class AMP_CoreRelationshipExtensionTest {
 
 			List<LocalGovernance__c> lsGroups = AMP_CoreRelationshipExtension.getGroups();
 
-			List<AMP_CoreRelationshipExtension.Participant> lsParticipants = AMP_CoreRelationshipExtension.getParticipantWrappers(a.Id);
+			List<AMP_WrapperParticipant> lsParticipants = AMP_CoreRelationshipExtension.getParticipantWrappers(a.Id);
 			
 			// there are actually 2 participant wrappers since once has the place holder 'not this time'
 			System.assertEquals(2, lsParticipants.size(), 'There should be 2 Participant');

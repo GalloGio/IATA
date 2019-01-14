@@ -7,19 +7,27 @@ public with sharing class FeedItemHelper {
 	 */
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
 		
-		String strAcceptedValues = '';
-
-		for (AMP_Account_Topics__c at : AMP_Account_Topics__c.getAll().Values()) {
-			strAcceptedValues += (strAcceptedValues == '' ? '' : ', ') + at.Name;
-		}
-
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
-		set<Id> setRelatedAccountIds = new set<Id>();
+		set<Id> setRelatedAccountIds = new set<Id>();		
 		for (FeedItem fi : lstTriggerNew) {
- 	   		if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
- 	   			setRelatedAccountIds.add(fi.ParentId);
- 	   		}
+			//check apostrophe ' (&#39) RN-INC339011
+			if (fi.body != null) {
+				String check = fi.body.toUpperCase();
+				string finalS = fi.body.toUpperCase();
+				if(check.contains('&#39;')){
+					finalS = check.remove('&#39;');
+				}
+				Pattern p = Pattern.compile('.*#\\w+(?s).*');
+				Matcher regexMatcher = p.matcher(finalS);
+	
+				if (String.valueOf(fi.ParentId).startsWith('001') 
+					&& !regexMatcher.matches() 
+					&& fi.Type == 'TextPost') {
+						setRelatedAccountIds.add(fi.ParentId);
+				}
+			}
  	   	}
+ 	   	
 		if (!setRelatedAccountIds.isEmpty()) {
 
 			map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id FROM Account
@@ -30,15 +38,16 @@ public with sharing class FeedItemHelper {
 			// if there are IATA member Airline HQ accounts that have invalid feeditems posted to them, raise the error
 			if (!mapAccountsPerId.values().isEmpty()) {
 
-
+				TopicHelper.TopicsWrapper topicWrapper = TopicHelper.getTopicsInfo();
+				
+				String strAcceptedValues = topicWrapper.acceptedTopics;
+		
 				for (FeedItem fi : lstTriggerNew) {
- 	   			fi.addError ('Please use hashtags (#) to define the topic(s) of your post.\r\nYou can choose one or more of the following topics:\r\n' + strAcceptedValues);
-					// if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
-					// }
+ 	   				fi.addError(Label.Feed_Item_Invalid_Topics + '\r\n' + strAcceptedValues);
 				}
+ 	   		
  	   		}
  	   	}
-
 	}
-
+	
 }

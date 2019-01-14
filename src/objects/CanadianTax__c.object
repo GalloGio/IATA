@@ -43,5 +43,16 @@
         <type>Percent</type>
     </fields>
     <label>Countries Tax</label>
+    <listViews>
+        <fullName>Canadian_Taxes</fullName>
+        <columns>NAME</columns>
+        <columns>Province__c</columns>
+        <columns>Tax_Name__c</columns>
+        <columns>Tax_Percentage__c</columns>
+        <columns>Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Canadian Taxes</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

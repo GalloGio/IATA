@@ -1,6 +1,6 @@
 <apex:page controller="ISSP_Homepage" extensions="ISSP_CaseList" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" action="{!isLogined}" >
 <html>
-<c:ISSP_Header ></c:ISSP_Header>
+<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
     <head>
  <!--
  <apex:variable var="ShowBuyCertif" value="{!($Profile.Name == 'ISS Portal Agency User (Partner)' || $Profile.Name == 'ISS Portal Agency Delegated Admin User')&& con.User_Portal_Status__c !='Pending Approval' && con.Account.Category__c != 'CASS Associate' && con.Account.Category__c != 'TIDS Agent' }" />
@@ -10,15 +10,15 @@
     div.adminpanel{
     height:140px;
     }
-    
+
     .mygrid-wrapper-div {
         overflow:scroll;
       height:140px;
-    
+
         width:100%;
         overflow:auto;
     }
-    
+
      .mygrid-wrapper-div-BasicUser {
         overflow:scroll;
         height:314px;
@@ -34,21 +34,21 @@
   color: white;
    font-weight: 700;
     }
-    
+
     </style>
-   
+
     <script>
-        
+
       function newAppReq(appId){
         $('#myModal').modal('toggle');
         $('#ModalNewServiceRequest').modal('toggle');
         ISSP_Homepage.newAppsRequest(appId,'{!con.Id}',newAppReqCallback);
       }
-      
+
       function newAppReqCallback(res){
-      
+
       }
-      
+
       function archiveNotification(notId){
         bootbox.confirm('{!$Label.ISSP_Are_you_sure}', function(result) {
              if(result){
@@ -57,38 +57,38 @@
                 $('#NotificationsListSize').text($('#NotificationsListSize').text()-1);
                 ISSP_Homepage.archiveNotification(notId,newAppReqCallback);
             }
-        }); 
+        });
      }
-     
+
      function addNumberOfViews(notId){
          $('.text'+notId).removeClass('has_noread');
          $('.text'+notId).addClass('has_read');
          ISSP_Homepage.addNumberOfViews(notId,newAppReqCallback);
      }
-     
+
       function logAcase(){
          $('#ModalNewCase').modal('toggle');
         // fix problem in IE8, wont work in Jquery 1.9
         if ($.browser.msie  && parseInt($.browser.version, 10) <= 8) {
             $(".modal-backdrop").css("z-index", -1);
-            //alert('IE8'); 
+            //alert('IE8');
         }
       }
-      
+
       // Niv.g 24-10-2014 new redirect FAQ2Case
       function logAFaq2Case()
       {
-        window.location.replace('/ISSP_FAQ2Case?retURL=ISSP_homePage');
+        window.location.replace('/ISSP_FAQ2Case?retURL=ISSP_homePage{!if(communityName=='CNS','&CommunityName='+communityName,'')}' );
       }
       // Niv.g 24-10-2014 new redirect FAQ2Case
-      
+
       function gotoKnowledge()
       {
           //window.location.replace('_ui/knowledge/ui/KnowledgeHome')
           window.location.replace(window.location.toString().replace(/^(.*\/\/[^\/?#]*).*$/,"$1") + '/faq_home?MainNav=resources&subNav=faq&mid=M2S1' );
-      }      
-      
-        
+      }
+
+
     </script>
         <script src="{!urlfor($Resource.IIS_Portal,'/js/popover.js')}" type="text/javascript" > </script>
         <script src="{!urlfor($Resource.IIS_Portal,'/js/bootbox.min.js')}" type="text/javascript" > </script>
@@ -97,7 +97,7 @@
         -->
     </head>
     <body>
-     <!-- 
+     <!--
         <script>
     $.sessionTimeout({
         keepAliveUrl: 'keep-alive.html',
@@ -156,7 +156,7 @@
           </div>
           <div class="modal-body" style="display:{!if(newAppsList.size>0,'','none')}">
             <!-- <h5>Services list:</h5><br/> -->
-              
+
             <ul class="external_links clearfix nav">
               <apex:repeat value="{!newAppsList}" var="app">
                 <li>
@@ -166,8 +166,11 @@
                     </a>
                   </span>
                 </li>
-                <script> 
-                  if('{!JSENCODE(app.Service_Description__c)}'!=''){ 
+                <script>
+                  if('{!JSENCODE($Label[app.Service_Description_Label__c])}'!=''){
+                    var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label[app.Service_Description_Label__c])}'+'</div>';
+                    $('#appReq{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont});
+                  } else if('{!JSENCODE(app.Service_Description__c)}'!=''){
                     var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Service_Description__c)}'+'</div>';
                     $('#appReq{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont});
                   }
@@ -188,38 +191,39 @@
 
 
 
-  
+
     <div class="container">
-   <c:ISSP_CustomNavigation />
+   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+        <c:ISSP_Notification attShowPopUp="{!showSidraPopup}" attRecordId="{!sidraCaseIdToShow}"/>
           <div class="row">
 <apex:variable var="Compatilitymode" value="{!if(isIE == 'IE'  || isIE == 'notIE','none','block')}" />
     <div style="display:{!Compatilitymode}"  class="col-md-12 col-xs-12 alert alert-warning" >
-        
+
        {!isIE}
               </div>
 
 
 <!-------------------------------------------Recent Cases Section -------------------------------------------->
-                              <div class="col-md-8 col-xs-12 toprow"  id="RecentCases"> 
+                              <div class="col-md-8 col-xs-12 toprow"  id="RecentCases">
                                     <div class="panel panel-primary recentcasespanel">
                                           <div class="panel-heading head_panel_green">
                                                 <h3 class="panel-title"><span class="glyphicon glyphicon-inbox"></span> {!$Label.ISSP_MyRecentCases}</h3>
                                           </div>
-                                         <ul class="nav nav-pills"> 
+                                         <ul class="nav nav-pills">
                                                     <li>
-                                                        <a href="/ISSP_CaseList?ListViewName=2_MyOpenCases&mid=M1S2" value="" >{!$Label.ISSP_Homepage_My_open_cases}
+                                                        <a href="/ISSP_CaseList?ListViewName=2_MyOpenCases&mid=M1S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="" >{!$Label.ISSP_Homepage_My_open_cases}
                                                         <span class="badge">{!caseList.size}</span></a>
                                                     </li>
-                                                 
-                                                    <li > 
-                                                        <a href="/ISSP_CaseList?ListViewName=9_MyPendingCases&mid=M1S2" value="" >{!$Label.ISSP_Homepage_My_pending_cases}
+
+                                                    <li >
+                                                        <a href="/ISSP_CaseList?ListViewName=9_MyPendingCases&mid=M1S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="" >{!$Label.ISSP_Homepage_My_pending_cases}
                                                         <span class="{!if(caseList_ReqMyInput.size>0,"badge redbadge","badge")}">{!caseList_ReqMyInput.size}</span> </a>
                                                     </li>
-                                                 
-                                                    <li style="display:{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User',"","none")   }">
-                                                     
+
+                                                    <li style="display:{!if(isAdminUser,'','none')   }">
+
                                                         <!-- <a href="/ISSP_CaseList?ListViewName=3_MyCompanyOpenCases&mid=M1S2" value="" >{!$Label.ISSP_Homepage_All_Company_Open_cases} -->
-                                                        <a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true" value="" >{!$Label.ISSP_Homepage_All_Company_Open_cases}
+                                                        <a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="" >{!$Label.ISSP_Homepage_All_Company_Open_cases}
                                                         <span class="badge">{!caseList_CompanyOpenCases.size}</span></a>
                                                     </li>
                                                   </ul>
@@ -227,7 +231,7 @@
                                                 <apex:form id="MyRecentCases">
                                                   <apex:pageBlock id="Cases" >
                                                           <apex:pageBlockTable value="{!cases}" var="item" style="width:100%" styleclass="table"  styleClass="table-hover table table-condensed table-responsive">
-                                                              <apex:column > 
+                                                              <apex:column >
                                                                   <apex:facet name="header">
                                                                      <apex:commandLink action="{!refresh}" >{!$ObjectType.Case.fields.CaseNumber.label}
                                                                         <apex:outputPanel layout="none" rendered="{!AND(sortExpression=='CaseNumber', sortDirection='ASC')}">&#9650;</apex:outputPanel>
@@ -235,7 +239,7 @@
                                                                         <apex:param value="CaseNumber" name="column" assignTo="{!sortExpression}" ></apex:param>
                                                                      </apex:commandLink>
                                                                    </apex:facet>
-                                                                  <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}&mid=M1S2" target="_self">{!item.CaseNumber}</apex:outputLink>
+                                                                  <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}&mid=M1S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.CaseNumber}</apex:outputLink>
                                                               </apex:column>
                                                               <apex:repeat value="{!fields}" var="f">
                                                                     <apex:column >
@@ -246,107 +250,108 @@
                                                                             <apex:param value="{!f.FieldPath}" name="column" assignTo="{!sortExpression}" ></apex:param>
                                                                          </apex:commandLink>
                                                                       </apex:facet>
-                                                                      <apex:outputfield value="{!item[f.fieldPath]}" />
+
+        <!-- basto1p -->
+        <apex:outputfield value="{!item[f.fieldPath]}" rendered="{!IF(f.fieldPath!='Portal_Case_Status__c',true,false)}" />
+
+        <!-- basto1p -->
+        <apex:outputpanel rendered="{!IF(f.fieldPath=='Portal_Case_Status__c',true,false)}">
+            <apex:outputfield value="{!item[f.fieldPath]}" rendered="{!IF(mapFieldsValue['Status'+item.Status]=='NO_FIELD_MAP',true,false)}"/>
+            <apex:outputpanel rendered="{!IF(mapFieldsValue['Status'+item.Status]!='NO_FIELD_MAP',true,false)}"> {!mapFieldsValue['Status'+item.Status]} </apex:outputpanel>
+        </apex:outputpanel>
                                                                     </apex:column>
                                                               </apex:repeat>
                                                           </apex:pageBlockTable>
 
                                                            <div>
-                                                              <a class="more" href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M1S2&admin=false&ListViewName=3_MyRecentCases" >{!$Label.ISSP_See_more}</a>
+                                                              <a class="more" href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M1S2&admin=false&ListViewName=3_MyRecentCases{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >{!$Label.ISSP_See_more}</a>
                                                               &nbsp;<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
                                                           </div>
-                                                  </apex:pageBlock> 
+                                                  </apex:pageBlock>
                                             </apex:form>
-                                        
+
                                     </div>
                               </div>
 <!--------------------------------------------end recent cases Section -------------------------------------------->
               <!--------------------------------------------Admin task  Section------------------------------------------>
-              <apex:outputPanel layout="block" id="admintasks" styleClass="col-md-4 col-xs-12 makelarge" rendered="{!$Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User'}">
-        
-              <apex:outputPanel layout="block" styleClass="{!IF($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' 
-            || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User',
+              <apex:outputPanel layout="block" id="admintasks" styleClass="col-md-4 col-xs-12 makelarge" rendered="{!isAdminUser}">
+
+              <apex:outputPanel layout="block" styleClass="{!IF(isAdminUser,
             'panel primary blueborder',
             'col-md-4 col-xs-12 primary blueborder'
             )}">
-                  
+
                        <div class="panel-heading panel-halfsize">
                                   <h3 class="panel-title"><span class="glyphicon glyphicon-wrench"></span> {!$Label.ISSP_Administrative_tasks}</h3>
                             </div><!-- end panel heading-->
                                 <div class="panel-body">
                     <!-- content here onwards -->
-              
+
                 <ul class="nav">
-                
+
                 <li>
-                <a href="/ISSP_ContactList?ListViewName=3_PendingApproval&mid=M4S1" value="" >
+                <a href="/ISSP_ContactList?ListViewName=3_PendingApproval&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="" >
                     <span class="lbl_list">{!$Label.ISSP_Homepage_Users}</span>
                     {!$Label.ISSP_Homepage_Pending_approvals}
                     <span class="{!if(userMap['Pending approvals'] >0,"badge redbadge","badge")} pull-right  ">{!userMap['Pending approvals']}</span>
-                 </a> 
+                 </a>
                 </li>
-                
-                    
-                
+
+
+
                 <li>
-                
-                    <a href="/ISSP_AccessToService?mid=M4S2&ListViewName=ISSP_Pending_Approval" value="" >
+
+                    <a href="/ISSP_AccessToService?mid=M4S2&ListViewName=ISSP_Pending_Approval{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="" >
                             <span class="lbl_list">{!$Label.ISSP_Access_to_services}</span>:
-                            {!$Label.ISSP_Homepage_Pending_approvals} 
-                        
+                            {!$Label.ISSP_Homepage_Pending_approvals}
+
                         <span class=" pull-right {!if(appsPendingApprovalsList.size>0,"badge redbadge","badge")}" id="PendingApprovalsListSize">
                             {!appsPendingApprovalsList.size}
                         </span>
-                        </a>    
+                        </a>
                     </li>
-                
-                
+
+
               </ul>
-          
-                       
+
+
                             </div><!-- end panel body -->
                    </apex:outputPanel>
-              
+
                </apex:outputPanel>
               <!--------------------------------------------end Admin task Section------------------------------------------>
                 <!--------------------------------------------Notification Section------------------------------------------>
               <apex:outputPanel layout="block" id="Notifications" styleClass="col-md-4 col-xs-12 makelarge">
-          
-              <apex:outputPanel layout="block" styleClass=" {!IF($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' 
-            || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User',
-            'panel blueborder',
-            'panel panel-primary'
-            )}">
+
+              <apex:outputPanel layout="block" styleClass=" {!IF(isAdminUser,'panel blueborder','panel panel-primary')}">
                             <div class="panel-heading panel-halfsize">
                                   <h3 class="panel-title"><span class="glyphicon glyphicon-envelope"></span> {!$Label.ISSP_Homepage_My_Notifications}</h3>
                             </div>
-                            
-                                  <div id="my_notification" class="{!IF($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' 
-                                                                     || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' ,
-                                                                     'mygrid-wrapper-div' ,'mygrid-wrapper-div-BasicUser')}">
+
+                                  <div id="my_notification" class="{!IF(isAdminUser,'mygrid-wrapper-div' ,'mygrid-wrapper-div-BasicUser')}">
                                         <ul class="nav1">
                                             <apex:repeat value="{!myNotificationsList}" var="not">
                                                 <li id="{!not.Id}"  class="notification-style" style="border-left:6px solid {!not.Notificatin_color__c}">
-                                                    <a  class="btn-xs"  href="javascript:archiveNotification('{!not.Id}');"> 
+                                                    <a  class="btn-xs"  href="javascript:archiveNotification('{!not.Id}');">
                                                         <span class="glyphicon glyphicon-remove "> </span>
-                                                    </a>     
+                                                    </a>
                                                     <span class="date">
                                                             <apex:outputText value="{0, date, short}">
                                                                 <apex:param value="{!not.CreatedDate}" />
                                                             </apex:outputText>
                                                         </span>
-                                                   
-                                                   
+
+
                                                     <span>
-                                                        <a class="subject color_" data-toggle="modal" onclick="addNumberOfViews('{!not.Id}');" href="#popUp{!not.Id}">  
+                                                        <a class="subject color_" data-toggle="modal" onclick="addNumberOfViews('{!not.Id}');" href="#popUp{!not.Id}">
                                                             <span class="text{!not.Id} {!IF(OR(ISBLANK(not.Number_of_views__c),not.Number_of_views__c==0),'has_noread','has_read')}">
-                                                                <apex:outputField value="{!not.Subject__c}" /> &nbsp; &nbsp; 
+                                                                <apex:outputField value="{!not.Subject__c}" /> &nbsp; &nbsp;
                                                                 <apex:outputPanel styleClass="badge" rendered="{!not.Critical_notification__c}">!</apex:outputPanel>
                                                             </span>
                                                         </a>
-                                                         
+
                                                     </span>
-                                                     
+
                                                 </li>
                                                     <div class="modal fade" id="popUp{!not.Id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
@@ -356,11 +361,6 @@
                                                                     <span class="">
                                                                         <apex:outPutField value="{!not.Subject__c}" />
                                                                     </span>
-                                                                    <span class="modalDate">
-                                                                        <apex:outputText value="{0, date, short}">
-                                                                            <apex:param value="{!not.CreatedDate}" />
-                                                                        </apex:outputText>
-                                                                    </span>
                                                                   </div>
                                                                   <div class="modal-body">
                                                                       <apex:outPutField value="{!not.Message__c}" />
@@ -369,193 +369,272 @@
                                                           </div>
                                                       </div>
                                                   </apex:repeat>
-                                           
+
                                               </ul>
                                           </div>
-                                
-                 
-                  
+
+
+
                   </apex:outputPanel>
-                            
+
                   </apex:outputPanel>
 <!-------------------------------------------- end Notification Section--------------------------------------->
 
-               
+
                         </div><!--end row-->
-                          
+
                         <div class="row"><!--second row-->
 <!---------------------------------------------MyServices Section -------------------------------------------->
                               <div class="col-md-4 bottomrow  "  id="MyServices" >
                                     <div class="panel panel-primary">
                                         <div class="panel-heading head_panel_purple">
-                                       
+
                                               <h3 class="panel-title"><span class="glyphicon glyphicon-briefcase"></span> {!$Label.ISSP_Homepage_My_Services}
-                                                <!-- AEF:1 --> 
-                                               
+                                                <!-- AEF:1 -->
+
                                               </h3>
-                                           
+
                                             <div class="clearer"> </div>
                                         </div>
 
 
 
                                         <div class="panel-body">
-        
+
                                             <div id="my_Services" class="col-leg-6 ">
-                                                
+
                                                 <apex:outputLink value="ISSP_BuyCertificate?mid=M3S1" rendered="{!iataCertificatesVisible}">{!$Label.ISSP_IATAcertificate}</apex:outputLink>
-                                              
-                                              
+
+
                                               <!-- This will nolonger be the main access point for creating cases
                                                <ul class="nav" style="display: {!IF(isDPCUser == false ,'','none')}">
                                                    <span class="appfocus" id="LogACase">
                                                         <li id="Serv1"  class="left-color">
-                                                            <a  class="subject color_"  href="javascript:logAFaq2Case();">  
-                                                                 Contact Us 
+                                                            <a  class="subject color_"  href="javascript:logAFaq2Case();">
+                                                                 Contact Us
                                                             </a>
                                                         </li>
                                                     </span>
-                                                    <script> 
+                                                    <script>
                                                             var htmlCont = '<div class="sfdc_richtext">'+'{!$Label.ISSP_Log_a_case_Help_text}'+'</div>';
                                                             $('#LogACase').popover({trigger:'hover' ,html:true,content:htmlCont,placement:'top'});
                                                     </script>
                                                 </ul>-->
-                                               
+
                                                 <apex:repeat value="{!appsGrantedList}" var="app">
                                                     <ul class="nav1">
                                                           <span class="appfocus">
                                                               <li id="Serv2"  class="left-color">
-                                                                    <apex:outputPanel rendered="{!app.Right__c != 'Access Requested'}" >
+                                                                  <!-- temp for CNS -->
+                                                                  <apex:outputPanel rendered="{!app.PortalServiceTranslatedName__c != 'CNS Endorsement & Changes'}" >
+                                                                    <apex:outputPanel rendered="{!IF(app.IsSCIMIFG__c,IF(app.Right__c=='Access Granted', IF(app.Technical_Provisioning_Status__c=='External Access Granted', true,false),false), IF(app.Right__c=='Access Granted', true,false))}" >
                                                                     <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.Portal_Application__r.New_Window__c,'_blank','_self')}" href="{!IF(app.Right__c == 'Access     Requested','javascript:void(0)',app.Application_Start_URL__c)}">
-                                                                      <h5>{!app.PortalServiceTranslatedName__c}</h5> 
+                                                                      <h5>{!app.PortalServiceTranslatedName__c}</h5>
                                                                     </a>
                                                                     </apex:outputPanel>
-                                                                    <apex:outputPanel rendered="{!app.Right__c == 'Access Requested'}" >
-                                                                      <h5>{!app.PortalServiceTranslatedName__c}</h5> 
+                                                                    <apex:outputPanel rendered="{!IF(app.Right__c == 'Access Granted',IF(app.IsSCIMIFG__c,IF(app.Technical_Provisioning_Status__c!='External Access Granted', true,false),false),false)}" >
+                                                                      <h5>{!app.PortalServiceTranslatedName__c}</h5>
                                                                     </apex:outputPanel>
-                                                              </li>                                         
+                                                                    <apex:outputPanel rendered="{!app.Right__c == 'Access Requested'}" >
+                                                                      <h5>{!app.PortalServiceTranslatedName__c}</h5>
+                                                                    </apex:outputPanel>
+                                                                    </apex:outputPanel>
+                                                                    <apex:outputPanel rendered="{!app.PortalServiceTranslatedName__c == 'CNS Endorsement & Changes'}" >
+                                                                        <a  id="app{!app.Id}" class="subject color_"  href="javascript:void(0)" onclick="checkEligibility();">
+                                                                            <h5>{!app.PortalServiceTranslatedName__c}</h5>
+                                                                        </a>
+                                                                    </apex:outputPanel>
+                                                                    <!-- /temp for CNS -->
+                                                              </li>
                                                           </span>
-                                                          <span class="lbl_services" style="display: {!IF(app.Right__c == 'Access Requested','','none')}">
-                                                                {!$Label.ISSP_Pending_Approval}
-                                                          </span>
-                                                    </ul> 
+                                                          <apex:outputPanel rendered="{!app.Right__c == 'Access Requested'}" >
+                                              		  <span class="lbl_services" >
+                                                		{!$Label.ISSP_Pending_Approval}
+                                              		  </span>
+                                            		  </apex:outputPanel>
 
-                                                    <script> 
-                                                        if('{!app.Right__c}' == 'Access Requested'){ 
+                                            		  <apex:outputPanel rendered="{!IF(app.Right__c == 'Access Granted',IF(app.IsSCIMIFG__c,IF(app.Technical_Provisioning_Status__c!='External Access Granted', true,false),false),false)}" >
+                                            		  <span class="lbl_services" >
+                                              		  	{!$Label.ISSP_Access_Under_Provisioning}
+                                            		  </span>
+                                          		  </apex:outputPanel>
+                                                    </ul>
+
+                                                    <script>
+                                                        if('{!app.Right__c}' == 'Access Requested'){
                                                           var htmlCont = '<div class="sfdc_richtext">'+'{!app.Portal_Application__r.Name} Request: <br/> {!$Label.ISSP_Request_pending_approval}'+'</div>';
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
-                                                        }else if('{!JSENCODE(app.Portal_Application__r.Service_Description__c)}'!=''){ 
+                                                        } else if('{!JSENCODE($Label[app.Portal_Application__r.Service_Description_Label__c])}'!=''){
+                                                          var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label[app.Portal_Application__r.Service_Description_Label__c])}'+'</div>';
+                                                          $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                        } else if('{!JSENCODE(app.Portal_Application__r.Service_Description__c)}'!=''){
                                                           var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Portal_Application__r.Service_Description__c)}'+'</div>';
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
                                                         }
+
+                                                        function checkEligibility(){
+                                                            if ('{!app.PortalServiceTranslatedName__c}' === 'CNS Endorsement & Changes'){
+                                                                bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
+                                                                    if(result) {
+                                                                        window.open('https://mycnsc.com/accreditation/step1', '_blank');
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
                                                     </script>
                                                 </apex:repeat>
-                                                
+
                                                 <h5 class="blueback">{!$Label.ISSP_External_Links}</h5>
-                                                
+
                                                 <apex:repeat value="{!externalLinksList}" var="app">
+                                                <apex:outputPanel rendered="{!app.Name == 'CNS Endorsement & Changes'}" >
+                                                    <a  id="app{!app.Id}" class="subject color_"  href="javascript:void(0)" onclick="checkEligibility();">
+                                                        <h5>{!app.Name}</h5>
+                                                    </a>
+                                                    <script>
+                                                    if('{!JSENCODE($Label[app.Service_Description_Label__c])}'!=''){
+                                                        var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label[app.Service_Description_Label__c])}'+'</div>';
+                                                        $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                    } else if('{!JSENCODE(app.Service_Description__c)}'!=''){
+                                                        var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Service_Description__c)}'+'</div>';
+                                                        $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                    }
+                                                    function checkEligibility(){
+                                                        if ('{!app.Name}' === 'CNS Endorsement & Changes'){
+                                                            bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
+                                                                if(result) {
+                                                                    window.open('https://mycnsc.com/accreditation/step1', '_blank');
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                    </script>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!AND(app.Name != 'CNS Endorsement & Changes', OR(AND(communityName=='CNS',app.VisibleCNS__c==true), AND(communityName!='CNS',app.VisibleCNS__c==false)))}">
                                                     <ul class="nav1">
                                                         <span class="appfocus">
                                                               <li id="Serv3"  class="left-color">
-                                                                    <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.New_Window__c,'_blank','_self')}" href="{!IF(app.Name == 'Payment Link', con.Credit_Card_Payment_Link__c ,app.Application_URL__c)}">
-                                                                        <h5>{!app.Name}</h5> 
+                                                                    <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.New_Window__c,'_blank','_self')}" href="{!IF(OR(app.Name == 'Payment Link',app.Name == 'Paypal'), con.Credit_Card_Payment_Link__c ,app.Application_URL__c)}">
+                                                                        <h5>{!app.Name}</h5>
                                                                     </a>
-                                                              </li>  
+                                                              </li>
                                                         </span>
                                                     </ul>
-                                                    <script> 
-                                                        if('{!JSENCODE(app.Service_Description__c)}'!=''){ 
+                                                    <script>
+                                                        if('{!JSENCODE($Label[app.Service_Description_Label__c])}'!=''){
+                                                          var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE($Label[app.Service_Description_Label__c])}'+'</div>';
+                                                          $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                        } else if('{!JSENCODE(app.Service_Description__c)}'!=''){
                                                           var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Service_Description__c)}'+'</div>';
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
                                                         }
                                                     </script>
-                                                </apex:repeat>                                            
+                                                </apex:outputPanel>
+                                                </apex:repeat>
                                         </div>
-                                      <a class="pull-right btn_iata_success btn-sm btn-block " href="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1"> {!$Label.ISSP_Homepage_New_Service_Request}</a>    
+                                      <a class="pull-right btn_iata_success btn-sm btn-block " href="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"> {!$Label.ISSP_Homepage_New_Service_Request}</a>
                                   </div>
                             </div>
                       </div>
  <!--------------------------------------------- Carousel banner Section -------------------------------------------->
-                              <div class="col-md-4 bottomrow"  id="Carousel">
-                                   <div class="panel panel-primary panelsml">
-                                          <div class="panel-heading">
-                                                <h3 class="panel-title"><span class="glyphicon glyphicon-star"></span>{!$Label.ISSP_News}</h3>
-                                          </div>
-                                         <!-- <div class="panel-body">-->
-                                       <c:ISSP_DynamicBanner ></c:ISSP_DynamicBanner>
-                                                
-                                         <!-- </div> end panel body -->
-                                    </div>
+                              <div class="col-md-4 bottomrow" id="News">
+                                <div class="panel panel-primary">
+                                  <div class="panel-heading">
+                                    <h3 class="panel-title"><span class="glyphicon glyphicon-star"></span>{!$Label.ISSP_News}</h3>
+                                  </div>
+                                  <div id="Carousel">
+                                    <c:ISSP_DynamicBanner ></c:ISSP_DynamicBanner>
+                                  </div>
+                                </div>
                               </div>
   <!--------------------------------------------- end Carousel banner Section -------------------------------------------->
 <!---------------------------------------------key docs Section -------------------------------------------->
-                              <div class="col-md-4 bottomrow"  id="KeyDocuments">
+                              <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="KeyDocuments" rendered="{!NOT(OR(isOpCalendarAirlineUser,isOpCalendarAgencyUser))}">
                                     <div class="panel panel-primary">
                                           <div class="panel-heading">
                                                 <h3 class="panel-title"><span class="glyphicon glyphicon-book"></span> {!$Label.ISSP_Popular_FAQs}</h3>
                                           </div>
                                           <div class="panel-body">
-                                               
+
                                               <div id="my_Content" style="height: auto !important;">
                                                    <table class="table table-striped">
                                                         <tbody>
+
+                                                    <apex:outputPanel rendered="{!CommunityName=='CNS'}">
                                                     <knowledge:articleList articleVar="a"
-                                                        language="{!UserLanguage}"            
+                                                        language="{!UserLanguage}"
                                                         articleTypes="FAQ__kav"
-                                                        sortBy="mostViewed" 
+                                                        sortBy="mostViewed"
                                                         pageSize="5"
                                                         pageNumber="1"
+                                                          categories="FAQs:CNS_CASS_Operations_Cargo"
                                                        >
-                                                        <tr><td><a href="{!URLFOR($Action.KnowledgeArticle.View, a.id)}">{!a.title}</a></td></tr>
-                                                           
+                                                        <tr><td><a href="{!URLFOR($Action.KnowledgeArticle.View, a.id)}&CommunityName={!communityName}">{!a.title}</a></td></tr>
+
                                                       </knowledge:articleList>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!CommunityName!='CNS'}">
+                                                      <knowledge:articleList articleVar="a"
+                                                          language="{!UserLanguage}"
+                                                          articleTypes="FAQ__kav"
+                                                          sortBy="mostViewed"
+                                                          pageSize="5"
+                                                          pageNumber="1"
+                                                         >
+                                                          <tr><td><a href="{!URLFOR($Action.KnowledgeArticle.View, a.id)}&CommunityName={!communityName}">{!a.title}</a></td></tr>
+
+                                                        </knowledge:articleList>
+                                                    </apex:outputPanel>
                                                    </tbody>
                                                 </table>
                                              </div>
                                                 <div>
-                                                    <a class="more" href="/faq_home?MainNav=resources&subNav=faq&mid=M2S1" >{!$Label.ISSP_See_more}</a>
+                                                    <a class="more" href="/faq_home?MainNav=resources&subNav=faq&mid=M2S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" >{!$Label.ISSP_See_more}</a>
                                                     &nbsp;<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
                                                 </div>
-                                               
-                                               
-                                               
+
                                           </div>
                                     </div>
-                              </div>
+                              </apex:OutputPanel>
+                              
+<!--------------------------------------------OperationalCalendar Section------------------------------------------>
+                            <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="OperationalCalendar" rendered="{!OR(isOpCalendarAirlineUser,isOpCalendarAgencyUser)}">
+                                <c:ISSP_OperationalCalendarMini />
+                            </apex:OutputPanel>
+<!-------------------------------------------- end OperationalCalendar Section--------------------------------------->
                         </div>
+                        
 
   <!--------------------------------------------services Section -------------------------------------------->
-      <div class="row show-grid" style="display:none"> 
+      <div class="row show-grid" style="display:none">
         <div class="col-md-4">
           <div class="panel panel-primary">
             <div class="panel-heading head_panel_purple">
               <!-- Button trigger modal -->
-              
+
               <h3 class="panel-title"><b>{!$Label.ISSP_Homepage_My_Services}</b>
                 <!-- AEF:1 --> xzeze
                 <a data-toggle="modal" href="#myModal" class="pull-right btn btn-success"> {!$Label.ISSP_Homepage_New_Service_Request}</a>
               </h3>
             <div class="clearer"> </div>
            </div>
-            <div class="panel-body"> 
+            <div class="panel-body">
             </div>
           </div>
         </div>
       </div>
 
+     <c:ISSP_CustomFooter communityName="{!communityName}"/>
 
-
-     <c:ISSP_CustomFooter />
-        
                   </div>
- 
+
   </body>
 <!---------------------------------------------------------------------------------------------->
 <!------------------------------------Login Survey Popup---------------------------------------------------------->
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
-    <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
           rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
@@ -571,7 +650,7 @@
             if('{!showModal}' == 'true'){
                 setTimeout(function () {
                      window.open('{!SurveyLink}', "mywindow", "location=1,status=1,scrollbars=1,height=350,width=400");
-                    
+
                 }, '{!SurveyDelayTime}');
             }
 

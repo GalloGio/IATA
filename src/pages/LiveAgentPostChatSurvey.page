@@ -1,0 +1,168 @@
+<apex:page showHeader="false" sidebar="false" language="{!lang}" controller="LiveAgentPostChatController" standardStylesheets="false">
+    <c:ISSP_Header />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript"></script>
+    <style>
+        .iataLogo {
+            margin: 5px;
+        }
+        .btn_iata_primary {
+          border: none;
+          color: white;
+          background-color: #5cb85c;
+          margin: 5px;
+          width: 90px;
+        }
+        .btn_thumbs_down {
+          border: none;
+          color: white;
+          background-color: #d9534f;
+          margin: 5px;
+          width: 50px;
+          height: 30px;
+        }
+        .btn_thumbs_up {
+          border: none;
+          color: white;
+          background-color: #5cb85c;
+          margin: 5px;
+          width: 50px;
+          height: 30px;
+        }
+        .postChatForm{
+            margin: 5px;
+        }
+        .selectOptRadBtn{
+          margin: 5px;
+          font-stretch: semi-expanded;
+        }
+        .selectOptRadBtn label{
+          font-weight: normal;
+        }
+        .selectOptRadBtn input{
+          margin: 7px;
+        }
+        .questionLbl{
+          margin-left: 5px;
+        }
+        .requiredFieldLbl{
+          color: #d9534f;
+          font-size: 25px;
+          font-weight: bolder;
+        }
+        .thanksMessages{
+          font-size: 13px;
+          font-weight: bold;
+          margin-left: -60px;
+          margin-top: 30px;
+          position: fixed;
+        }
+        .inputField {
+            border-color: #337ab7;
+            border-radius: 4px;
+            margin: 5px;
+            width: calc(100% - 22px);
+            padding: 6px;
+            height: 100px;
+            overflow-y: hidden;
+        }
+    </style>
+
+    <script>
+      $(document).ready(function(){
+        $('[id$="commentInput"]').attr("placeholder","{!$Label.LiveAgentPostChatPlaceHolder}");
+
+        $("input[name='agentRadio']").change(function(){
+          var selected_value = $("input[name='agentRadio']:checked").val();
+          $("[id$='hidInp'").val(selected_value);
+          if (selected_value == "Yes"){
+            $(".glyphicon-thumbs-up").css("color","#255");
+            $(".glyphicon-thumbs-down").css("color","#ffffff");
+          }else if (selected_value == "No"){
+            $(".glyphicon-thumbs-up").css("color","#ffffff");
+            $(".glyphicon-thumbs-down").css("color","#255");
+          }
+        });
+      });
+    </script>
+<!--onload=" resizeTo(400,680);"-->
+    <body >
+        <apex:form >
+            <apex:image url="{!$Resource.IATAlogo}" width="65" height="40" styleClass="iataLogo"/>
+            <apex:outputPanel id="surveyPanel" layout="none">
+                <apex:outputPanel layout="block" rendered="{!AND(caseId != null,AND(NOT(isSuccess),NOT(isResubmission),NOT(isIncomplete)))}" styleclass="postChatForm">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h class="panel-title">{!$Label.LiveAgentPostChatTitle}</h>
+                        </div>
+                        <div class="questionLbl">
+                            <br/>
+                            <b>{!$Label.LiveAgentPostChatExperienceAnswer} {!agent.FirstName} ?</b>
+                            <apex:outputText value="*" rendered="{!AND(isSubmitted,OR(agentExperienceAnswer == null,agentExperienceAnswer == ''))}" styleclass="requiredFieldLbl"/>
+                        </div>
+
+                        <div class="selectOptRadBtn" >
+
+                        <label>
+                          <span class="btn btn-block btn_thumbs_up btn-sm">
+                            <span class="glyphicon glyphicon-thumbs-up" style="font-size: 20px;">
+                              <input type="radio" style="visibility:hidden; position:absolute;" name="agentRadio" id="optionUp" Value="Yes"/>
+                            </span>
+                          </span>
+                        </label>
+
+                        <label>
+                          <span class="btn btn-block btn_thumbs_down btn-sm">
+                            <span class="glyphicon glyphicon-thumbs-down" style="font-size: 20px;">
+                              <input type="radio" style="visibility:hidden; position:absolute;" name="agentRadio" id="optionDown" Value="No"/>
+                            </span>
+                          </span>
+                        </label>
+
+                        <apex:inputHidden id="hidInp" value="{!agentExperienceAnswer}"/>
+
+                        </div>
+
+                        <br/>
+                        <div class="questionLbl">
+                          <b>{!$Label.LiveAgentPostChatChannelQuestion}</b>
+                          <apex:outputText value="*" rendered="{!AND(isSubmitted, OR(channelAnswer == null, channelAnswer == ''))}" styleclass="requiredFieldLbl"/>
+                        </div>
+                        <apex:selectRadio styleClass="selectOptRadBtn" layout="pageDirection" value="{!channelAnswer}">
+                          <apex:selectOptions value="{!channel}"/>
+                        </apex:selectRadio>
+                        <br/>
+
+                        <div class="questionLbl">
+                          <b>{!$Label.LiveAgentPostChatComments}</b>
+                        </div>
+                        <apex:inputTextarea id="commentInput" styleClass="inputField" value="{!commentAnswer}"/>
+
+                        <br/>
+                        <apex:outputText value="*{!$Label.LiveAgentPostChatFieldsRequired}" rendered="{!AND(isSubmitted,OR(OR(channelAnswer == null, channelAnswer == ''), OR(agentExperienceAnswer == null, agentExperienceAnswer == '')))}" style="font-size: 13px; margin: 5px; right: 5px; position: absolute;" styleclass="requiredFieldLbl"/>
+                        <button onClick="subm(); return false;" class="btn btn-block btn_iata_primary">{!$Label.LiveAgentPostChatSubmitButton}</button>
+                        <apex:actionFunction action="{!submit}" name="subm" rerender="radbtns,surveyPanel,successPanel"/>
+                  </div>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:outputPanel styleclass="thanksMessages" rendered="{!OR(caseId == null,isIncomplete)}">
+                <br/>
+                <br/>
+                {!$Label.LiveAgentPostChatThankContact}
+            </apex:outputPanel>
+            <apex:outputPanel id="successPanel" layout="none">
+                <apex:outputPanel styleclass="thanksMessages" rendered="{!isSuccess}">
+                    <br/>
+                    <br/>
+                    {!$Label.LiveAgentPostChatThankFeedback}
+                </apex:outputPanel>
+                <apex:outputPanel styleclass="thanksMessages" rendered="{!isResubmission}">
+                    <br/>
+                    <br/>
+                    {!$Label.LiveAgentPostChatResubmission}
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:form>
+    </body>
+</apex:page>

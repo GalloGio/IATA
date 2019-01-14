@@ -1,6 +1,7 @@
-<apex:component controller="ISSP_TC_Accept" allowDML="true" 
+<apex:component controller="ISSP_TC_Accept" allowDML="true"
                  language="{!selectedLanguage}"
                 >
+<apex:attribute name="communityName" type="string" description="communityName" />
 
 <apex:form id="Mainfrm">
 <apex:actionFunction action="{!redirectChangePassword}" name="checkRedirectChangePassword" />
@@ -17,14 +18,14 @@
         //$('#ModalShowSurvey').modal({show:true})
            window.open('{!SurveyLink}', "mywindow", "location=1,status=1,scrollbars=1,height=350,width=400");
       }else{
-            window.open('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage','_self');
+            window.open('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage{!if(communityName=='CNS','&CommunityName='+communityName,'')}','_self');
       }
     }
  </script><!-- end jquery initialisation -->
- 
+
     <script src="{!urlfor($Resource.sessionTime2)}" type="text/javascript" > </script>
     <script src="{!urlfor($Resource.sessionTime2_aux)}" type="text/javascript" > </script>
- 
+
     <script type="text/javascript" charset="utf-8">
     //if ({!isBSP} == true){
      if (false){
@@ -91,7 +92,7 @@ window.onload = function HighlightBar() {
 
         //Skip redirect if exception page
         if (formsCollection!= null && formsCollection.length > 0) {
-            if (formsCollection[0].action != null && formsCollection[0].action.indexOf("/Exception")!=-1) {
+            if (formsCollection[0].action != null && formsCollection[0].action.indexOf("/Exception{!if(communityName=='CNS','&CommunityName='+communityName,'')}")!=-1) {
                 skipredirect = true;
               }
         }
@@ -124,9 +125,9 @@ window.onload = function HighlightBar() {
         var mainvar = getUrlParameter('MainNav');
         var mid = getUrlParameter('mid');
         var subvar = getUrlParameter('subNav');
-        var menuid=mid.substr(0,2)
+        var menuid = mid && mid.substr(0,2);
 
-     $("#searchbox").css("display", (menuid=="M2") ? "none" : "");    /* hides the search box if for resources & docs*/
+     $("#searchbox").css("display", (menuid=="M2" || mid=="M4S1") ? "none" : "");    /* hides the search box if for resources & docs*/
 
 
      $("#"+mid).parentsUntil("nav").addClass("in active-issp");
@@ -138,8 +139,7 @@ window.onload = function HighlightBar() {
     if(menuid=="M4"){
      $("#casebreadcrumbs").text("{!$Label.ISSP_Company_Administration}");
      $("#casebreadcrumbs2").text("{!$Label.ISSP_Company_Cases}");
-     $("#casebreadcrumbs3").text(" {!$Label.ISSP_PageDescription_ISSP_CaseList_adminview}");    
-
+     $("#casebreadcrumbs3").text(" {!$Label.ISSP_PageDescription_ISSP_CaseList_adminview}");
     }
         };
 
@@ -188,13 +188,19 @@ $(".topmenu").hover(function(){
       .panel-primary{
       min-height:314px;
       }
+      
+       .bankDetails {
+        	min-height: 142px;
+      	}
       }
 
    body{
-      font-family:Arial, Helvetica, sans-serif;
-      background-image: url("https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002oQOE&amp;oid=00D2000000008TF&amp;lastMod=1432543398000");
+      font-family:Arial, Helvetica, sans-serif; 
+      /*background-image: url("https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002oQOE&amp;oid=00D2000000008TF&amp;lastMod=1432543398000");*/
+      background-image: url("{!$Label.ISSP_Portal_BackgroundImage}");
       background-repeat: no-repeat;
-      background-size:200%;
+      /*background-size:200%;*/
+      background-size: {!$Label.ISSP_Portal_BackgroundImage_size};
       }
       div.container{
       background-color:white;
@@ -515,48 +521,46 @@ background-color:#428bca;
   padding-bottom: 15px;
 
    </style>
-
-<script>
-
-
-    function tarnsferSearchQuery() {
-        //createCookie("searchInput", document.getElementById("searchInput").value, 1);
-        //alert(document.cookie);
-        window.top.location.replace("/ISSP_SearchResult?q=" + document.getElementById("searchInput").value); 
-    }
-
-    function enterKey(evt) {
-      var evt = (evt) ? evt : ((event) ? event : null);
-      var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
-      if ((evt.keyCode == 13) && (node.type=="text"))  {
-           tarnsferSearchQuery();
+   <script>
+      function transferSearchQuery() {
+          //createCookie("searchInput", document.getElementById("searchInput").value, 1);
+          //alert(document.cookie);
+          window.top.location.replace("/ISSP_SearchResult?q=" + document.getElementById("searchInput").value + "{!if(communityName=='CNS','&CommunityName='+communityName,'')}"); 
       }
-    }
-
-    function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-    }
-    function changeLanguageLocaleKey(lang) {
-
-		    //var l = $("#LanguageLocaleKeySelect option:selected").val();
-        //var lang = document.getElementById('LanguageLocaleKeySelect').value;
-        var lang = lang.options[lang.selectedIndex].value;
-
-        //alert(window.location.pathname+window.location.search);
-        window.location.href = "/ISSP_ChangeLanguage?retUrl="+encodeURIComponent(window.location.pathname)+encodeURIComponent(window.location.search)+"&lang="+lang;
-    }
-
-    var lang = getCookie('apex__lang');
-
-</script>
-
+      
+      function enterKey(evt) {
+        var evt = (evt) ? evt : ((event) ? event : null);
+        var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+        if ((evt.keyCode == 13) && (node.type=="text"))  {
+             transferSearchQuery();
+        }
+      }
+      
+      function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0;i < ca.length;i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+      }
+      function changeLanguageLocaleKey(lang) {
+      
+        //var l = $("#LanguageLocaleKeySelect option:selected").val();
+          //var lang = document.getElementById('LanguageLocaleKeySelect').value;
+          var lang = lang.options[lang.selectedIndex].value;
+      
+          //alert(window.location.pathname+window.location.search);
+          window.location.href = "/ISSP_ChangeLanguage?retUrl="+encodeURIComponent(window.location.pathname)+encodeURIComponent(window.location.search)+"&lang="+lang;
+      }
+      
+      var lang = getCookie('apex__lang');
+      
+   </script>
+   
+   
 
 
 <nav class="navbar navbar-primary"  role="navigation" id="topmenu">
@@ -571,34 +575,39 @@ background-color:#428bca;
         <span class="icon-bar"></span>
 
       </button>
-        <a href="/ISSP_Homepage?mid=M0S1">
-      <img class="navbar-brand" height="70px" src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002pjCr&oid=00D2000000008TF&lastMod=1434447102000" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px;"></img>
+        <a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
+      <img class="navbar-brand" height="70px"  src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002pjCr&oid=00D2000000008TF&lastMod=1434447102000" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px;display:{!if(OR(communityName== null, communityName=='ISS'),'','none')};"></img>
+       <img class="navbar-brand" height="70px" src="{!urlfor($Resource.IIS_Portal,'/images/logocns.png')}" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px; display:{!if(communityName=='CNS','','none')};"></img>
      </a>
+      
+     
+ 
     <div  class="navbar-brand brandtext">
-       <a href="/ISSP_Homepage?mid=M0S1"> {!$Label.IFAP_Home_Page_Title_4}</a>
+       <a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"> {!$Label.IFAP_Home_Page_Title_4}</a>
     </div>
 </div><!--421 -->
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li class="topmenu">
-          <a  href="/ISSP_Homepage?mid=M0S1" data-target="#zero"  id="M0"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> {!$Label.ISSP_Home}</a>
+          <a  href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" data-target="#zero"  id="M0"><span class="glyphicon glyphicon-home"  aria-hidden="true"></span> {!$Label.ISSP_Home}</a>
 
          </li>
             <li class="topmenu" id="MainNav1">
-            <a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1"  data-target="#one" id="M1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {!$Label.LAQ_ContactUs}<!--{!$Label.LAQ_ContactUs}--></a>
+            <a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  data-target="#one" id="M1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {!$Label.LAQ_ContactUs}<!--{!$Label.LAQ_ContactUs}--></a>
             </li>
 
            <li class="topmenu">
-            <a href="/faq_home?MainNav=resources&subNav=faq&mid=M2S1" data-target="#two" id="M2"><span class="glyphicon glyphicon-book"></span> {!$Label.ISSP_Resources}</a>
+            <a href="/faq_home?MainNav=resources&subNav=faq&mid=M2S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" data-target="#two" id="M2"><span class="glyphicon glyphicon-book"></span> {!$Label.ISSP_Resources}</a>
             </li>
 
           <li class="topmenu">
-            <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1"  data-target="#three"  id="M3"><span class="glyphicon glyphicon-briefcase"></span> {!$Label.ISSP_Services}</a>
+            <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  data-target="#three"  id="M3"><span class="glyphicon glyphicon-briefcase"></span> {!$Label.ISSP_Services}</a>
             </li>
 
           <li class="topmenu">
-            <a href="/ISSP_CaseList?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M4S3&amp;admin=true" data-target="#four" id="M4" style="display:{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC' || $Profile.Name == 'ISS Portal PwC2',"","none")   }"><span class="glyphicon glyphicon-wrench"></span> {!$Label.ISSP_Company_Administration}</a>
+            <a href="/ISSP_CaseList?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M4S3&amp;admin=true
+            {!if(communityName=='CNS','&CommunityName='+communityName,'')}" data-target="#four" id="M4" style="display:{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' || $Profile.Name == 'ISS Portal DPC Admin' || $Profile.Name == 'ISS Portal PwC2',"","none")   }"><span class="glyphicon glyphicon-wrench"></span> {!$Label.ISSP_Company_Administration}</a>
             </li>
 
         <li>
@@ -621,7 +630,7 @@ background-color:#428bca;
               <option value="ar">Arabic</option>
       </select>
       -->
-      <apex:form id="LselectLanguage">
+      <apex:form id="LselectLanguage" rendered="{!communityName!='CNS'}">
       	<apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);"> 
               <apex:selectOption itemValue="-- Language --" itemLabel="Language"/>
               <apex:selectOptions value="{!languages}"/>
@@ -637,11 +646,11 @@ background-color:#428bca;
           <ul class="dropdown-menu" role="menu">
 
             <li style="background-color:#428BCA;color:white;padding:10px">{!$User.FirstName} {!$User.LastName}</li>
-            <li><a href="/apex/ISSP_PersonalInformation?mid=M5S1"  data-target="#five" id="M5">{!$Label.ISSP_Registration_MyInformation}</a></li>
-            <li><a href="/apex/ISSP_CompanyInformation?mid=M5S2"   data-target="#five" id="M5">{!$Label.ISSP_CompanyInformation}</a></li>
+            <li><a href="/apex/ISSP_PersonalInformation?mid=M5S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  data-target="#five" id="M5">{!$Label.ISSP_Registration_MyInformation}</a></li>
+            <li><a href="/apex/ISSP_CompanyInformation?mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}"   data-target="#five" id="M5">{!$Label.ISSP_CompanyInformation}</a></li>
 
             <li>
-                  <a href="ISSP_ChangePassword" target="_top">{!$Label.ISSP_Reset_Password}</a>
+                  <a href="ISSP_ChangePassword{!if(communityName=='CNS','?CommunityName='+communityName,'')}" target="_top">{!$Label.ISSP_Reset_Password}</a>
 
             </li>
 
@@ -678,61 +687,81 @@ background-color:#428bca;
     <div class="container-fluid">
     <div class="collapse navbar-collapse" style="max-width:1140px">
        <ul class="nav navbar-nav collapse" id="zero">
-           <li><a href="/ISSP_Homepage?MainNav=Home&subNav=Home&mid=M0S1" id="M0S1">{!$Label.ISSP_Home}</a></li>
+           <li><a href="/ISSP_Homepage?MainNav=Home&subNav=Home&mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M0S1">{!$Label.ISSP_Home}</a></li>
       </ul>
 
     <ul class="nav navbar-nav collapse" id="one">
-      <li><a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1" id="M1S1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {!$Label.ISSP_Create_query}<span class="sr-only">(current)</span></a></li>
-     <li><a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M1S2&admin=false" id="M1S2">{!$Label.ISSP_My_Cases}</a></li>
+      <li><a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1S1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {!$Label.ISSP_Create_query}<span class="sr-only">(current)</span></a></li>
+     <li><a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M1S2&admin=false{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M1S2">{!$Label.ISSP_My_Cases}</a></li>
 
       </ul>
    <ul class="nav navbar-nav collapse" id="two">
-     <li><a href="/faq_home?MainNav=resources&subNav=faq&mid=M2S1" id="M2S1">{!$Label.PKB2_Category_Group_Label_1}</a></li>
-      <li><a href="/ISSP_ContentPage?MainNav=resources&subNav=Contentpage&mid=M2S2" id="M2S2"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Documents}<span class="sr-only">(current)</span></a></li>
-      <li class="{!IF(countryRequirementPermission,'','hide')}"  ><a href="/ISSP_Country_Requirements?MainNav=resources&subNav=CountryRequirements&mid=M2S3" id="M2S3">{!$Label.ISSP_Country_Requirements}<span class="sr-only"></span></a></li>
+     <li><a href="/faq_home?MainNav=resources&subNav=faq&mid=M2S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S1">{!$Label.PKB2_Category_Group_Label_1}</a></li>
+      <li><a href="/ISSP_ContentPage?MainNav=resources&subNav=Contentpage&mid=M2S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S2"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Documents}<span class="sr-only">(current)</span></a></li>
+      <li class="{!IF(countryRequirementPermission,'','hide')}"  ><a href="/ISSP_Country_Requirements?MainNav=resources&subNav=CountryRequirements&mid=M2S3{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S3">{!$Label.ISSP_Country_Requirements}<span class="sr-only"></span></a></li>
+      <li class="{!IF(operationalCalendarPermission,'','hide')}"  ><a href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M2S4">{!$Label.ISSP_OperationalCalendar}<span class="sr-only"></span></a></li>
     </ul>
      <ul class="nav navbar-nav collapse" id="three">
 
       <li>
-    <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M3S1" id="M3S1">
+    <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M3S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M3S1">
                 {!$Label.ISSP_Available_services}
                 </a>
 </li>
     </ul>
      <ul class="nav navbar-nav collapse" id="four" >
       <li>
-        <a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true" id="M4S3" >
+        <a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S3" >
                 {!$Label.ISSP_My_Company_Cases}
                 </a>
     </li>
       <li>
     <!-- rendered only to admins -->
-        <a href="/ISSP_ContactList?MainNav=Admin&subNav=contacts&mid=M4S1"  id="M4S1" >
+        <a href="/ISSP_ContactList?MainNav=Admin&subNav=contacts&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  id="M4S1" >
         {!$Label.ISSP_Contacts}
         </a>
     </li>
 <li>
-    <a href="/ISSP_AccessToService?MainNav=Services&subNav=Access&mid=M4S2" id="M4S2" >
+    <a href="/ISSP_AccessToService?MainNav=Services&subNav=Access&mid=M4S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S2" >
                 {!$Label.ISSP_Access_to_services}
                 </a>
 </li>
          <li>
-    <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M4S5" id="M4S5" >
+    <a href="/ISSP_AvailableServices?MainNav=Services&subNav=Available&mid=M4S5{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S5" >
                {!$Label.ISSP_Manage_Services}
                 </a>
         </li>
-
+         <li>
+    <a href="/ISSP_LocalGroups?MainNav=Admin&subNav=LocalGroups&mid=M4S6{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S6" style="display:{!IF($Profile.Name == 'ISS Portal Airline Delegated Admin User','','none')}">
+               {!$Label.ISSP_Local_Groups_Industry}
+                </a>
+        </li>
+        <!-- * FM 31-07-2017 - AMSU-26 -->
+        <li>
+    <a href="/ISSP_CertificationCases?MainNav=Services&subNav=TrainedStaff&mid=M4S7{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M4S7" style="display:{!if(isCargoDGR,'','none')}"  >
+                <!--{-- ! $Label.ISSP_Manage_Services } - CREATE LABEL -->  
+                Trained Staff Certification 
+                </a>
+        </li>
     <!-- INC262760
     <li>
-    <a href="/00O/o?MainNav=Queries&subNav=MyQueries&mid=M4S4&admin=true" id="M4S4" style="display:{!if($Profile.Name == 'ISS Portal DPC','','none')}">
+    <a href="/00O/o?MainNav=Queries&subNav=MyQueries&mid=M4S4&admin=true" id="M4S4" style="display:{!if($Profile.Name == 'ISS Portal DPC Admin','','none')}">
                 Reports
                 </a>
     </li>-->
 
      </ul>
      <ul  class="nav navbar-nav collapse" id="five">
-         <li><a href="/ISSP_PersonalInformation?MainNav=Personalinfor&subNav=perso&mid=M5S1" id="M5S1"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Registration_MyInformation}</a></li>
-         <li><a href="/ISSP_CompanyInformation?MainNav=Companyinfor&subNav=account&mid=M5S2" id="M5S2">{!$Label.ISSP_Account_Information}</a></li>
+         <li><a href="/ISSP_PersonalInformation?MainNav=Personalinfor&subNav=perso&mid=M5S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S1"><!--{!$Label.ISSP_Resources}-->{!$Label.ISSP_Registration_MyInformation}</a></li>
+         <li><a href="/ISSP_CompanyInformation?MainNav=Companyinfor&subNav=account&mid=M5S2{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S2">{!$Label.ISSP_Account_Information}</a></li>
+                <!-- AMSU-201 -->
+                <apex:outputPanel layout="none" rendered="{!showFinancialSec}">
+                  <li>
+                    <a href="/ISSP_FinancialSecInformation?MainNav=FinInfo&subNav=financial_securities&mid=M5S3{!if(communityName=='CNS','&CommunityName='+communityName,'')}" id="M5S3">
+                      {!$Label.ISSP_Financial_Securities_Information}
+                    </a>
+                  </li>
+                </apex:outputPanel>
       </ul>
 
       <ul  class="nav navbar-nav collapse" id="six">
@@ -740,6 +769,10 @@ background-color:#428bca;
           <li> <a href="/ISSP_Baggage_Proration_ListClaims?mid=M6S2" id="M6S2" >Prorate Requests</a> </li>
           <li> <a href="/00O/o?MainNav=Queries&subNav=MyQueries&mid=M6S3" id="M6S3" >
                 Prorate Dashboard</a> </li>
+      </ul>
+
+      <ul  class="nav navbar-nav collapse" id="seven">
+          <li> <a href="/MITA_PortalMyAgreements?mid=M7S1" id="M7S1" >{!$Label.ISSP_View_My_Company_MITA_BIETA_Agreements}</a> </li>
       </ul>
 
       <ul class="pull-right" id="searchbox">
@@ -750,7 +783,7 @@ background-color:#428bca;
 
         <input id="searchInput" type="text" onkeypress="enterKey(event);" placeholder="{!$Label.ISSP_Search}" class="form-control"/>
 
-        <button class="searchbutton btn-group" type="button" onclick="tarnsferSearchQuery();"> 
+        <button class="searchbutton btn-group" type="button" onclick="tarnsferSearchQuery();">
             <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
         </button>
 
@@ -779,10 +812,10 @@ background-color:#428bca;
             </apex:outputPanel>
           </div>
           <center>
-            <a href="/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage" role="menuitem" title="Logout" target="_top"> 
+            <a href="/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage{!if(communityName=='CNS','?CommunityName='+communityName,'')}" role="menuitem" title="Logout" target="_top"> 
               <span class="glyphicon glyphicon-log-out" aria-hidden="true" style="font-size:1.5em;"></span>
                <h3>{!$Label.Logout}</h3>
-           </a> 
+           </a>
           </center>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

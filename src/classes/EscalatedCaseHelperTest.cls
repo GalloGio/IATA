@@ -345,16 +345,13 @@ private class EscalatedCaseHelperTest {
         
         Account acc = new Account(Name = 'TestSISAccount',BillingCity='Montreal', BillingCountry='Canada');
         insert acc;
-        Contact con = new Contact(LastName='TestSISContact', AccountId=acc.Id, email='testuser@iata.org');
+        Contact con = new Contact(FirstName = 'Name', LastName='TestSISContact', AccountId=acc.Id, email='testuser@iata.org');
         insert con;
         
         Account suppAcc = new Account(Name = 'TestSupportAccount',BillingCity='Montreal', BillingCountry='Canada');
         insert suppAcc;
         
-        RecordType recType = [Select id, name from RecordType where name =: 'Cases - SIS Help Desk' limit 1];
-        
-        ///////////////////
-        // test first if
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
         
         Case case1 = new Case ();
         case1.Subject = 'Test 1';
@@ -409,7 +406,7 @@ private class EscalatedCaseHelperTest {
         testCase10.Origin = 'E-mail to Case - SIS Help Desk';
         testCase10.Description = 'Case Type: Bug\\n'+'Case Classification: Application Error\\n'+'Case Defect/Issue: Functionality not working as expected';
         testCase10.Subject = 'Out Of Office';
-        testCase10.RecordTypeId = recType.Id;
+        testCase10.RecordTypeId = recTypeId;
         testCase10.Status = 'Open';             
         //insert testCase10;
         

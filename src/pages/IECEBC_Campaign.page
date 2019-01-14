@@ -51,13 +51,16 @@
                                 <div class="field-group text">
                                     <label>
                                         <span class="input-label">From name</span> 
+                                        <!--
                                         <apex:inputField rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" type="text" styleClass="user-input js-remaining-characters text" value="{!EBC_Campaign__c.From_Name__c}" html-data-target-element=".js-remaining-count" html-data-target-id="from-name" html-data-max-length="{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}" />
                                         <apex:outputText rendered="{!NOT(campaign.Id == null || campaign.Is_Step1_Writable__c)}" value="{!EBC_Campaign__c.From_Name__c}" styleClass="disabled-user-input text" />
+-->
+                                        <apex:outputText value="{!EBC_Campaign__c.From_Name__c}" styleClass="disabled-user-input text" />
                                     </label>
                                     <apex:outputPanel rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" styleClass="input-remaining">
                                         <span class="js-remaining-count" data-id="from-name">{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}</span>
                                     </apex:outputPanel>
-                                    <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
+                                    <p class="input-description">This is the default from name of your campaign</p>
                                 </div>
                             </div>
                             <div class="columns medium-6">

@@ -1,6 +1,6 @@
 global class SIDRALiteMassActionBatch implements Database.Batchable<Case>, Database.Stateful {
 
-    public static final Id RECORDTYPE_SIDRA_LITE = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
+    public static final Id RECORDTYPE_SIDRA_LITE = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
 
     public DateTime startDate;
     public list<Case> listCase;

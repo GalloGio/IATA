@@ -24,8 +24,8 @@
 private class AirlineInputHandlerTest {
 
     static testMethod void myUnitTest() {
-        ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        ID chinaRTID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_China_North_Asia');
+        ID hqrt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+        ID chinaRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia');
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c = 'CH', AIMS_Area_Name__c = 'Suisse', AIMS_Area_ID__c = '1' );
         insert isoCountry;
@@ -40,6 +40,7 @@ private class AirlineInputHandlerTest {
         insert a;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'name' ,
                                  phone = '123',
                                  accountid = a.id,
                                  Financial_Assessment_Contact__c = true,
@@ -68,7 +69,7 @@ private class AirlineInputHandlerTest {
                           contactid = con.id,
                           AccountId = a.id,
                           Assessment_Performed_Date__c = date.today(),
-                          Financial_Review_Result__c = 'very good' ,
+                          Financial_Review_Result__c = 'Satisfactory' ,
                           Subject = 'c1');
         insert c1;
         

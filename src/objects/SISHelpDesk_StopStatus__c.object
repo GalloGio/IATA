@@ -29,5 +29,15 @@
         <type>Checkbox</type>
     </fields>
     <label>SIS HelpDesk Stop Status</label>
+    <listViews>
+        <fullName>All_Stop_Status</fullName>
+        <columns>NAME</columns>
+        <columns>SISStopStatus__c</columns>
+        <columns>SISStopStatus_FromKale__c</columns>
+        <columns>KaleStopStatus__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Stop Status</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

@@ -1,0 +1,188 @@
+<apex:component controller="ISSP_ANG_ProductComparison">
+
+	<apex:attribute name="helperParam" type="ANG_ProductComparisonHelper" description="Helper" assignTo="{! helper}" />
+
+	<style>	
+		.scrollBar {
+		    width: auto;
+		    overflow-x: scroll;
+		    overflow-y: hidden;
+		    white-space: nowrap;
+		}
+
+		.ProdCompwrapper {
+			padding: 10px;
+			margin-top: 20px;
+			margin-bottom: 40px;
+		}
+
+		#productComparison table {
+		    table-layout: fixed;
+			margin-left:auto; 
+			margin-right:auto;			    
+		   /*width: 100%;*/
+		}
+
+		#productComparison tr th {				
+			padding: 10px;
+		   	color: white;
+		   	border: 1px solid white;
+		   	text-align: center;
+		   	white-space: normal;
+		   	word-wrap:break-word;
+		}
+
+		#productComparison tr td {			
+			padding: 5px;
+		    text-align: center;
+		    border-bottom: 1px solid #ddd;
+		   	white-space: normal;
+		   	word-wrap:break-word;			    
+		}
+	</style>
+
+	<script>
+	/*
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip();   
+		});
+		*/
+
+		$(document).ready(function(){
+    		$('[data-toggle="popover"]').popover();   
+		});
+	</script>		
+
+    <div class="col-md-12" id="productComparison">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3>{! $Label.ANG_ISSP_ProductComparisonTitle1}</h3>
+          <p><b>{! $Label.ANG_ISSP_ProductComparisonTitle2}</b></p>
+        </div>
+
+        <div class="panel-body scrollBar" id="body-results">
+			<div class="ProdCompwrapper">
+				<table>
+					<tr>
+					<apex:repeat value="{! helper.headers}" var="header">
+						<apex:outputPanel rendered="{! header == ''}">
+							<th style="background-color: white;">
+								
+							</th>
+						</apex:outputPanel>										
+						<apex:outputPanel rendered="{! header != ''}">
+							<th style="background-color: #999999">
+								<b>{! header}</b>
+							</th>										
+						</apex:outputPanel>										
+					</apex:repeat>									
+					</tr>
+					<apex:repeat value="{! helper.lines}" var="line">
+						<tr>
+						<apex:repeat value="{! line}" var="cell">
+							<apex:outputPanel rendered="{! cell.name == 'applyNow'}">
+								<td>
+									<apex:outputLink styleClass="btn btn_iata_primary" 
+										value="/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent&accredType={! cell.attribute}">{! $Label.ANG_ISSP_ProductComparisonApplyNow}</apex:outputLink>
+								</td>
+							</apex:outputPanel>
+
+							<apex:outputPanel rendered="{! cell.name == 'true' || cell.name == 'false'}">
+								<td style="padding-top: 10px; padding-bottom: 10px;">
+									<apex:image value="/img/msg_icons/confirm32.png" rendered="{! cell.name == 'true'}"/>
+								</td>
+							</apex:outputPanel>
+
+							<apex:outputPanel rendered="{! cell.name == 'link'}">
+								<td>
+									<a href="/ISSP_Country_Requirements?comp=true&accredType={! cell.attribute}">{! $Label.ANG_ISSP_ProductComparisonViewHere}</a>
+								</td>
+							</apex:outputPanel>
+
+							<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && NOT cell.flagFees}">									
+								<apex:outputPanel rendered="{! cell.name == 'Cost'}">
+									<td style="text-align: left; vertical-align: top; padding-right: 10px; padding-left: 10px;">
+										<apex:outputLabel value="{! cell.slabel}"/>
+										<apex:outPutpanel rendered="{!!(helper.costTooltip == '')}">
+
+											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
+											   title="{!cell.slabel}" data-content="<div escape='false'>{!helper.costTooltip}</div>">
+											   <apex:image value="/img/msg_icons/info16.png"/>
+											</a>
+
+										</apex:outPutpanel>
+									</td>
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!AND(cell.name != 'Cost', cell.name != 'Country Specific Requirements')}">
+									<td style="text-align: left; padding-right: 10px; padding-left: 10px; max-width: 250px">
+										<apex:outPutpanel rendered="{!(cell.tooltip == '')}">
+											<apex:outputLabel value="{! cell.slabel}"/>
+										</apex:outPutpanel>
+
+										<apex:outPutpanel rendered="{!!(cell.tooltip == '')}">
+											<apex:outputLabel value = "{! cell.slabel}" />
+
+											<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
+											   title="{!cell.slabel}" data-content="<div escape='false'>{!cell.tooltip}</div>">
+											   <apex:image value="/img/msg_icons/info16.png"/>
+											</a>
+										</apex:outPutpanel>
+									</td>
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!cell.name == 'Country Specific Requirements'}">
+									<td style="text-align: left; padding-right: 10px; padding-left: 10px; max-width: 250px">
+										<apex:outputLabel value="{! cell.slabel}"/>
+
+										<a href="#" data-html="true" data-toggle="popover" data-trigger="hover" 
+											title="{!cell.slabel}" data-content="<div escape='false'>{!$Label.ANG_ISSP_ProductComparisonCountrySpecificRequirementsTooltip}</div>">
+											<apex:image value="/img/msg_icons/info16.png"/>
+										</a>
+										
+									</td>
+								</apex:outputPanel>
+							</apex:outputPanel>
+
+							<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && cell.flagFees}">
+								<td style="text-align: left; vertical-align: top; display: {!IF(helper.type == 'A','','none')}">
+									<apex:outputPanel rendered="{! NOT(cell.fees.HE_AnnualFees_Small_Agents == '')}">
+										<p><b>{! $Label.ANG_ISSP_HeadEntity}</b></p>
+										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_HE_Application_Registration_Fees__c.Label}: {! cell.fees.HE_Application_Registration_Fees}</p>
+										<!--p style="padding-left: 20px">{! $Label.ANG_ISSP_AnnualFees}</p-->
+										<p style="padding-left: 20px">{!$Label.ISSP_ANG_ProdCompAnnualFees} :</p>
+										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Small_Agents__c.Label}: {! cell.fees.HE_AnnualFees_Small_Agents}</p>
+										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Medium_Agents__c.Label}: {! cell.fees.HE_AnnualFees_Medium_Agents}</p>
+										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Large_Agents__c.Label}: {! cell.fees.HE_AnnualFees_Large_Agents}</p>
+										<p><b>{! $Label.ANG_ISSP_AssociateEntity}</b></p>
+										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_AE_Application_Registration_Fees__c.Label}: {! cell.fees.AE_Application_Registration_Fees}</p>
+										<!--p style="padding-left: 20px">{! $Label.ANG_ISSP_AnnualFees}</p-->
+										<p style="padding-left: 20px">{!$Label.ISSP_ANG_ProdCompAnnualFees} :</p>
+										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_First_10_locations__c.Label}: {! cell.fees.AE_Fees_First_10_locations}</p>
+										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Next_15_Locations__c.Label}: {! cell.fees.AE_Fees_Next_15_Locations}</p>
+										<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Additional_Locations__c.Label}: {! cell.fees.AE_Fees_Additional_Locations}</p>
+									</apex:outputPanel>
+									<apex:outputPanel rendered="{! cell.fees.HE_AnnualFees_Small_Agents == ''}">
+										<p><b>{! $Label.ANG_ISSP_HeadEntity}</b></p>
+										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_HE_Application_Registration_Fees__c.Label}: {! cell.fees.HE_Application_Registration_Fees}</p>
+										<p style="padding-left: 20px">{!$Label.ISSP_ANG_ProdCompAnnualFees}: {! cell.fees.HE_Annual_Fees}</p>
+
+										<p><b>{! $Label.ANG_ISSP_AssociateEntity}</b></p>
+										<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_AE_Application_Registration_Fees__c.Label}: {! cell.fees.AE_Application_Registration_Fees}</p>
+										<p style="padding-left: 20px">{!$Label.ISSP_ANG_ProdCompAnnualFees}: {! cell.fees.AE_Annual_Fees}</p>
+									</apex:outputPanel>									
+								</td>
+								<td style="text-align: left; display: {!IF(helper.type == 'A','none','')}">
+									<apex:outputLabel value = "{! $Label.ANG_ISSP_ConversionFrom}" />
+									<!--&nbsp;
+									<apex:image value="/img/msg_icons/info16.png" title="{! cell.fees.ConversionFeesTooltip}" html-data-placement="right" html-data-toggle="tooltip"/-->
+									<p style="padding-left: 20px">{! cell.fees.ConversionFeesLabel}: {! cell.fees.ConversionFees}</p>
+								</td>
+							</apex:outputPanel>
+						</apex:repeat>
+						</tr>
+					</apex:repeat>
+				</table>
+            </div>
+          </div>
+        </div>
+    </div>
+</apex:component>

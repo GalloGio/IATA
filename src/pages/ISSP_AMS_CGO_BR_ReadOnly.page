@@ -10,10 +10,10 @@
 
     <apex:form >
     	<apex:pageBlock >
-	    <apex:pageBlockSection columns="1" title="{!$Label.ISSP_AMS_First_Page_Summary_Header}" collapsible="false">
+	    <apex:pageBlockSection columns="1" title="{!IF(newlabels,$Label.ISSP_AMS_First_Page_Summary_Header_New,$Label.ISSP_AMS_First_Page_Summary_Header)}" collapsible="false">
 	    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
-	                        <apex:outputText value="{!$Label.ISSP_Cargo_Agent}"/>
+	                        <apex:outputText value="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
 	                    	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
@@ -25,7 +25,7 @@
 	          <apex:pageBlockSection columns="1" collapsible="false">
 	              <apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!$Label.ISSP_AMS_STEP_3_1_Branch_Title}
+	                            {!IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)}
 	                        </apex:outputpanel>                       
 	                    </apex:facet>
 	    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2" rowClasses="cgo-readonly">
@@ -59,7 +59,7 @@
 	    <apex:pageBlockSection columns="1" collapsible="false">
 	        	<apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!$Label.ISSP_AMS_STEP_3_2_Title}
+	                            {!IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title)}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
 	                        </apex:outputpanel>                       
 	       		</apex:facet>
@@ -142,7 +142,7 @@
 	    <apex:pageBlockSection columns="1" collapsible="false">
 	    <apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!$Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION3}
+	                            {!IF(newlabels, $Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION3_NEW, $Label.ISSP_AMS_CGO_BR_ReadOnly_SECTION3)}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
 	                        </apex:outputpanel>                       
 	       		</apex:facet>

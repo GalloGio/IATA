@@ -5,20 +5,16 @@ private class AMSIntegrationServicesTest {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
         insert isoc;
 
-        Map<string, Id> accountsRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account');
-        Map<string, Id> settlementsRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Settlement_System__c'}).get('AMS_Settlement_System__c');
-        Map<string, Id>  programRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Segment__c'}).get('AMS_Segment__c');
-
-        Account acc1 = new Account(Sector__c = 'Travel Agent', Name='Test1 Account', recordTypeId = accountsRT.get('IATA_Agency'), IATAcode__c = '12345678', IATA_ISO_Country__c = isoc.id, AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Account acc1 = new Account(Sector__c = 'Travel Agent', Name='Test1 Account', recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'), IATAcode__c = '12345678', IATA_ISO_Country__c = isoc.id, AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
         insert acc1;
         
-        AMS_Settlement_System__c ass = new AMS_Settlement_System__c(Name = 'Test', recordTypeId = settlementsRT.get('BSP'));
+        AMS_Settlement_System__c ass = new AMS_Settlement_System__c(Name = 'Test', recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP'));
         insert ass;
         AMS_Operation__c op = new AMS_Operation__c(Settlement__c = ass.id, Country__c = isoc.id);
         insert op;
         GDP_Reference_Table__c gdp = new GDP_Reference_Table__c(Name = 'Test', Table__c = 'LOCTYP', Code__c = 'A');
         insert gdp;
-        AMS_Segment__c seg = new AMS_Segment__c(Label__c = 'Test', recordTypeId = programRT.get('IATA_Code_Programs'));
+        AMS_Segment__c seg = new AMS_Segment__c(Label__c = 'Test', recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Segment__c', 'IATA_Code_Programs'));
         insert seg;
     }
 
@@ -36,7 +32,6 @@ private class AMSIntegrationServicesTest {
         String isoCountryId = [select id from IATA_ISO_Country__c where Name = 'Test'].id;
        
         Boolean result = AMSIntegrationServices.assignAgencyPerDPC(accountId, isoCountryId);
-        //System.assertEquals(true, result);
 
         Account a = [select id from Account];
         //AMS_Operation__c o = [select id from AMS_Operation__c];
@@ -51,7 +46,6 @@ private class AMSIntegrationServicesTest {
         String isoCountryId = [select id from IATA_ISO_Country__c where Name = 'Test'].id;
        
         Boolean result = AMSIntegrationServices.assignAgencyPerDPCandLegacyIDs('12345678', 'AIMS2', isoCountryId);
-        //System.assertEquals(true, result);
 
         Account a = [select id from Account];
         //AMS_Operation__c o = [select id from AMS_Operation__c];
@@ -158,7 +152,7 @@ private class AMSIntegrationServicesTest {
     
     @isTest static void test_updateAccountGDPData2() {
         Test.startTest();
-        String accountId = [select id from Account where Name = 'Test1 Account'].id;
+        String accountId = [select id,Name from Account where Name = 'Test1 Account'].id;
         Boolean result = AMSIntegrationServices.updateAccountGDPData2(accountId, 'A', true, 'LOCTYPA','EN','12345','P');
         System.assertEquals(true, result);
         
@@ -167,10 +161,10 @@ private class AMSIntegrationServicesTest {
         result = AMSIntegrationServices.updateAccountShortName(accountId,'ashortname');
         System.assertEquals(true, result);
 
-        Account acc = [select id, GDP_Location_Type__c, GDP_Opt_In__c/*,Accumulated_Irregularities__c*/ ,Short_Name__c from Account];
+        Account acc = [select id, Name, GDP_Location_Type__c, GDP_Opt_In__c/*,Accumulated_Irregularities__c*/ ,Short_Name__c from Account];
         system.assertEquals(true, acc.GDP_Opt_In__c);
        // system.assertEquals(12, acc.Accumulated_Irregularities__c );
-        system.assertEquals('ashortname', acc.Short_Name__c );
+        system.assertEquals('Test1 Account', acc.Short_Name__c );
 
         GDP_Reference_Table__c g = [select id from GDP_Reference_Table__c];
         System.assertEquals(g.id, acc.GDP_Location_Type__c);
@@ -259,5 +253,33 @@ private class AMSIntegrationServicesTest {
         Integer result = AMSIntegrationServices.unSynchronizedAgencies(dtSelectedDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
         System.assertEquals(0, result);
         Test.stopTest();
+    }
+
+    @isTest static void test_failFindAccount() {
+        String invalidAccountId = '001000000000000000';
+        Boolean result;
+
+        Test.startTest();
+
+        result = AMSIntegrationServices.updateAccountIrregularities(invalidAccountId, 1);
+        result = AMSIntegrationServices.updateAccountShortName(invalidAccountId, null);
+        result = AMSIntegrationServices.updateAccountGDPData2(invalidAccountId, null, null, null, null, null, null);
+        result = AMSIntegrationServices.updateAccountGDPData3(invalidAccountId, null, null, null, null, null, null, null, null, null, null, null);
+        result = AMSIntegrationServices.updateAccountGDPDataWithLegacyData2(invalidAccountId, null, null, null, null, null, null, null);
+        result = AMSIntegrationServices.updateAccountGDPDataWithLegacyData(invalidAccountId, null, null, null, null, null);
+        result = AMSIntegrationServices.assignAgencyPerDPC(invalidAccountId, null);
+        result = AMSIntegrationServices.assignAgencyPerDPCandLegacyIDs(invalidAccountId, null, null);
+        result = AMSIntegrationServices.assignAgencyPerSettlementandLegacyIDs(invalidAccountId, null, null, null, null);
+
+        Test.stopTest();
+    }
+
+    @isTest static void test_failUpdateAccount() {
+        String longName = '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
+        Test.startTest();
+        String accountId = [select id,Name from Account where Name = 'Test1 Account'].id;
+        Boolean result;
+
+        result = AMSIntegrationServices.updateAccountShortName(accountId,longName);
     }
 }

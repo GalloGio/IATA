@@ -38,13 +38,15 @@
 								<div class="row row-payment">
 									<div class="columns main-container campaign-cost no-line">
 										<apex:form id="userGuideForm">
+                                            <!--
                                             <p class="description light small">
 												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, natus, vel laboriosam id excepturi repellat tempore sint quos, ut doloribus maxime ipsam temporibus hic molestias cumque obcaecati velit libero commodi.
                                             </p>
+											-->
                                             <div class="accordion-container js-accordion">
                                                 <dl class="list">
-                                                    <dt class="accordion-title">User Guides</dt>
-                                                    <dd class="accordion-panel">
+                                                    <dt class="accordion-title is-open">User Guides</dt>
+                                                    <dd class="accordion-panel is-open">
                                                         <p class="description light small">
 															The following are the EBC User Guides ready to download.
                                                         </p>

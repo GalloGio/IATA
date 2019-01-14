@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -59,25 +56,51 @@
         <fullName>AMS_Appointment_Type__c</fullName>
         <externalId>false</externalId>
         <label>Appointment Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>P</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>B</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>P</fullName>
+                    <default>false</default>
+                    <label>P</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>B</fullName>
+                    <default>false</default>
+                    <label>B</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AMS_GDP_Sort_By__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Accreditation_Endorsement_organisation__r.Air_Code__c == &apos;IATA&apos;
+	, 1
+	, IF( Accreditation_Endorsement_organisation__r.Air_Code__c == &apos;IATAN&apos;
+		, 2
+		, 3
+	)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AMS GDP Sort By</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Account__c</fullName>
@@ -115,53 +138,65 @@
 8 - Accredited (Change Processed)
 9 - Accredited</inlineHelpText>
         <label>Accreditation/Endorsement Status code</label>
-        <picklist>
-            <picklistValues>
-                <fullName>0</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>3</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>5</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>6</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>7</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>8</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>9</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Accreditation_Endorsement_organisation__c</fullName>
@@ -277,29 +312,46 @@
         <fullName>Legacy_System__c</fullName>
         <externalId>false</externalId>
         <label>Legacy System</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAIMS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Webstar</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AIMS</fullName>
+                    <default>false</default>
+                    <label>AIMS</label>
+                </value>
+                <value>
+                    <fullName>CAIMS</fullName>
+                    <default>false</default>
+                    <label>CAIMS</label>
+                </value>
+                <value>
+                    <fullName>Webstar</fullName>
+                    <default>false</default>
+                    <label>Webstar</label>
+                </value>
+                <value>
+                    <fullName>CNS</fullName>
+                    <default>false</default>
+                    <label>CNS</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Nr_of_AMS_Territories__c</fullName>
+        <description>This field&apos;s purpose is to count the nr of AMS territories created against an Appointment, to be used in validations for some scenarios.</description>
+        <externalId>false</externalId>
+        <label>Nr. of AMS Territories</label>
+        <summaryForeignKey>AMS_Territory__c.Appointment__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
     </fields>
     <fields>
         <fullName>OSCAR__c</fullName>
@@ -313,6 +365,81 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
+    <fields>
+        <fullName>Previous_status_code__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous status code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Valid_Code_For_GDP_Replication__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+    Accreditation_Endorsement_organisation__c != &apos;&apos;, 
+      Accreditation_Endorsement_organisation__r.Valid_Code_For_GDP_Replication__c, 
+      IF(Account__r.IATA_code_Lenght__c  &gt; 3
+        , False
+        , IF(AND(Account__r.IATA_code_Lenght__c  = 3, RIGHT(Account__r.IATACode__c ,1)!=&apos;*&apos;)
+          ,False
+          ,True
+        )
+      )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Valid Code For GDP Replication</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Appointment (AMS)</label>
     <nameField>
         <displayFormat>INS-{0000000}</displayFormat>
@@ -324,4 +451,50 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Class_G_Appointments</fullName>
+        <active>true</active>
+        <description>Prevent GSA/GSSA Appointment with status = 9 with no Territory Associated</description>
+        <errorConditionFormula>AND(Nr_of_AMS_Territories__c = 0, 
+AND(NOT(ISPICKVAL(Account__r.Status__c, &apos;Approved&apos;)),
+ISPICKVAL(Account__r.Location_Class__c, &apos;G&apos;)), 
+
+Value(Text(Accreditation_Endorsement_Status_code__c)) &gt; 4)</errorConditionFormula>
+        <errorMessage>You cannot create an Appointment for a GSA/GSSA with Status greater or equal than 5 without creating an AMS Territory first. Please create the Appointment with status 2 and change it &gt;= 5 once the Account is Approved and the AMS Territory is created.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Terminate</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Terminate</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)}
+   
+var recordId = &quot;{!AMS_Inspection__c.Id}&quot;;
+var currentStatus = &quot;{!AMS_Inspection__c.Accreditation_Endorsement_Status_code__c}&quot;;
+
+if(currentStatus != &quot;9&quot;) {
+	alert(&quot;You can only terminate appointments with status 9&quot;);
+} else {
+	var r = confirm(&quot;Are you sure you want to terminate this appointment?&quot;); 
+	if(r) {
+		try {
+			var record = new sforce.SObject(&quot;AMS_Inspection__c&quot;);
+			record.Id = recordId;
+			record.Accreditation_Endorsement_Status_code__c = &quot;0&quot;;
+			var updateResult = sforce.connection.update([record]); 
+			if(updateResult[0].success === &quot;true&quot;) {
+				window.location=window.location;
+			} else {
+				alert(updateResult[0].errors.message);
+			}
+		} catch(e) {
+			alert(e);
+		}
+	}
+}</url>
+    </webLinks>
 </CustomObject>

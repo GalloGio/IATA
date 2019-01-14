@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object used to store information on WHEN to generate the risk event</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ANG_Activate_In__c</fullName>
+        <externalId>false</externalId>
+        <label>Activate in N Days</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field01_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>Field01 Conditions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Event_Conditions</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Field01_Values__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>For lists of values, separate them with semi-colons ( ; )</inlineHelpText>
+        <label>Field01 Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field01__c</fullName>
+        <externalId>false</externalId>
+        <label>Field01</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field02_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>Field02 Conditions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Event_Conditions</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Field02_Values__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>For lists of values, separate them with semi-colons ( ; )</inlineHelpText>
+        <label>Field02 Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field02__c</fullName>
+        <externalId>false</externalId>
+        <label>Field02</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field03_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>Field03 Conditions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Event_Conditions</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Field03_Values__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>For lists of values, separate them with semi-colons ( ; )</inlineHelpText>
+        <label>Field03 Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field03__c</fullName>
+        <externalId>false</externalId>
+        <label>Field03</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field04_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>Field04 Conditions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Event_Conditions</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Field04_Values__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>For lists of values, separate them with semi-colons ( ; )</inlineHelpText>
+        <label>Field04 Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field04__c</fullName>
+        <externalId>false</externalId>
+        <label>Field04</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field05_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>Field05 Conditions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Event_Conditions</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Field05_Values__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>For lists of values, separate them with semi-colons ( ; )</inlineHelpText>
+        <label>Field05 Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field05__c</fullName>
+        <externalId>false</externalId>
+        <label>Field05</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field06_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>Field06 Conditions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Event_Conditions</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Field06_Values__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>For lists of values, separate them with semi-colons ( ; )</inlineHelpText>
+        <label>Field06 Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field06__c</fullName>
+        <externalId>false</externalId>
+        <label>Field06</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field07_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>Field07 Conditions</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Event_Conditions</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Field07_Values__c</fullName>
+        <externalId>false</externalId>
+        <label>Field07 Values</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Field07__c</fullName>
+        <externalId>false</externalId>
+        <label>Field07</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Object_Record_Type__c</fullName>
+        <description>Define the record type of the object that the risck event is created from (see Object Type)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Must be the Developer Name (e.g.: SIDRA_Lite)</inlineHelpText>
+        <label>Object Record Type</label>
+        <length>80</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Object_Type__c</fullName>
+        <description>Use the API name of the object that will generate the change code. (i.e: AMS_OSCAR__c) This information will be stored on the Created From field on the Risk Event</description>
+        <externalId>false</externalId>
+        <label>Object Type</label>
+        <length>80</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Risk_Event_Status__c</fullName>
+        <description>Indicates the status in which the risk event is going to be generated</description>
+        <externalId>false</externalId>
+        <label>Risk Event Status</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Event_Status</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Risk_Event_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Risk Event Type</label>
+        <referenceTo>ANG_Risk_Event_Type__c</referenceTo>
+        <relationshipLabel>Configurations</relationshipLabel>
+        <relationshipName>Risk_Event_Configurations</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>ANG_TargetAgency__c</fullName>
+        <description>Related Account: Create risk events on the main agency related with the source object
+Selected Accounts: Only available for OSCAR, creates risk events on all Process Details
+HE Account: Create risk event on the HE of the current hierarchy</description>
+        <externalId>false</externalId>
+        <label>Target Agency</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Related Account</fullName>
+                    <default>true</default>
+                    <label>Related Account</label>
+                </value>
+                <value>
+                    <fullName>Selected Accounts</fullName>
+                    <default>false</default>
+                    <label>Selected Accounts</label>
+                </value>
+                <value>
+                    <fullName>HE Account</fullName>
+                    <default>false</default>
+                    <label>HE Account</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_isUpdateOnly__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether the risk event generated should update an existing one or can be created directly. (Matching is made via the UniqueKey)</description>
+        <externalId>false</externalId>
+        <label>Is Update Only</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Risk Event Trigger Configuration</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Risk_Event_Type__c</columns>
+        <columns>ANG_isUpdateOnly__c</columns>
+        <columns>ANG_Risk_Event_Status__c</columns>
+        <columns>ANG_TargetAgency__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Object_Type__c</columns>
+        <columns>ANG_Risk_Event_Type__c</columns>
+        <columns>ANG_Field01__c</columns>
+        <columns>ANG_Field02__c</columns>
+        <columns>ANG_Field03__c</columns>
+        <columns>ANG_Field04__c</columns>
+        <columns>ANG_Field05__c</columns>
+        <columns>ANG_Field06__c</columns>
+        <columns>ANG_Field07__c</columns>
+        <columns>ANG_Risk_Event_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>REC-{00000000}</displayFormat>
+        <label>Risk Event Trigger Configuration Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Risk Event Trigger Configurations</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>RISK_EVENT_CONFIG</fullName>
+        <active>true</active>
+        <label>Risk Event Configuration</label>
+        <picklistValues>
+            <picklist>ANG_Field01_Conditions__c</picklist>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Does not Include</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greater than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Includes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Less than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not equal to</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Field02_Conditions__c</picklist>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Does not Include</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greater than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Includes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Less than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not equal to</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Field03_Conditions__c</picklist>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Does not Include</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greater than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Includes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Less than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not equal to</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Field04_Conditions__c</picklist>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Does not Include</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greater than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Includes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Less than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not equal to</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Field05_Conditions__c</picklist>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Does not Include</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greater than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Includes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Less than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not equal to</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Field06_Conditions__c</picklist>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Does not Include</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greater than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Includes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Less than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not equal to</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Field07_Conditions__c</picklist>
+            <values>
+                <fullName>%3C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E%3D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Does not Include</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equal to today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Greater than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Includes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Less than today</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not blank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not equal to</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Event_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Inactive_CHO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Migrated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Revoked</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_TER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_TargetAgency__c</picklist>
+            <values>
+                <fullName>HE Account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Related Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Selected Accounts</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>ANG_Risk_Event_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Object_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Object_Record_Type__c</customTabListAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>ANG_Risk_Event_Type__c</searchFilterFields>
+        <searchFilterFields>ANG_Object_Type__c</searchFilterFields>
+        <searchFilterFields>ANG_Object_Record_Type__c</searchFilterFields>
+        <searchResultsAdditionalFields>ANG_Object_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Object_Record_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Risk_Event_Type__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Target_Selected_Accounts_only_for_OSCARs</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(ANG_TargetAgency__c, &apos;Selected Accounts&apos;) &amp;&amp; UPPER(ANG_Object_Type__c ) != &apos;AMS_OSCAR__C&apos;</errorConditionFormula>
+        <errorDisplayField>ANG_TargetAgency__c</errorDisplayField>
+        <errorMessage>&apos;Selected Accounts&apos; can only be set for OSCARs</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

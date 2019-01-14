@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - Czech Republic &amp; Slovakia</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSCzechRepublicSlovakia</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>CountryManagerNetherlandsA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

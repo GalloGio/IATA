@@ -1,0 +1,56 @@
+<messaging:emailTemplate replyTo="{!$Label.ISSP_CaseCommentEmail}"  
+            subject="Expiration of online {!CASE(relatedTo.RecordType.DeveloperName,
+            'ProcessEuropeSCE', ' Agency Accreditation application',
+            'OSCAR_Communication', ' Agency Accreditation application',
+            'Process', ' Transparency in Payments(TIP) application',
+            ' Airline Participation Joining Process')} - case n° {!relatedTo.CaseNumber} {!relatedTo.E2CP__Case_Thread_Id__c}" 
+            recipientType="User" relatedToType="Case"  language="{!CASE(relatedTo.Contact.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}">
+<messaging:emailHeader name="CaseId">
+    {!relatedTo.Id}
+ </messaging:emailHeader>
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="{!if(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000')}"/>
+<BR/>
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+{!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact.Salutation} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
+<BR/>
+Thank you for having recently initiated the {!IF(OR(relatedTo.RecordType.DeveloperName == 'ProcessEuropeSCE',relatedTo.RecordType.DeveloperName == 'OSCAR_Communication'), 'online application for the accreditation of your Agency', relatedTo.Subject)}.
+<BR/>
+<BR/>
+This is to remind you that draft online {!relatedTo.CaseArea__c} applications must be submitted to {!if(relatedTo.CNSCase__c, 'CNS', 'IATA')} within 2 weeks of their creation.
+<br/><br/>
+Case no. {!relatedTo.CaseNumber} will expire in 2 days, after which it will no longer be accessible on the customer portal and you will then be required to restart the application by creating a new online application.
+<BR/>
+
+<BR/>
+You can access this application on the Customer Portal in order to complete and submit it to {!if(relatedTo.CNSCase__c, 'CNS', 'IATA')}.
+<center><br />
+
+<a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
+href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/{!CASE(relatedTo.RecordType.DeveloperName,
+'ProcessEuropeSCE', 'ISSP_AMSCases',
+'OSCAR_Communication','ISSP_AMSCases',
+'Process', 'ISSP_TIP_Home',
+'ISSP_APCases')}{!if(relatedTo.CNSCase__c, '?CommunityName=CNS', '')}">{!$Label.ISSP_Email_IataPortal}</a>
+  </center>
+
+<BR/>
+{!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
+<BR/>
+{!IF(relatedTo.CNSCase__c, $Label.ISSP_Email_CNS_Service,$Label.ISSP_Email_IataService)}<BR/>
+
+<p>
+<!--The URL of the following image is the one of PROD-->
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="{!IF(relatedTo.CNSCase__c, '', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}"/>
+</a>
+</p>
+
+<apex:image value="{!IF(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000')}"/>
+
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -30,6 +30,9 @@ public with sharing class IECEBC_TestUtility {
 	public static User oUser {get;private set;} // community user
 	public static Contact oContact {get;private set;}
 	public static Account oAccount {get;private set;}
+	public static Location__c oLocation {get;private set;}
+	public static IECAddress__c oAddress {get;private set;}
+	public static IATA_ISO_Country__c isoCountry {get;private set;} 
 	public static Zuora__CustomerAccount__c oBillingAccount {get;private set;}
 	public static EBC_Preference__c oEbcPreference {get;private set;}
 	
@@ -117,6 +120,7 @@ public with sharing class IECEBC_TestUtility {
 				, Contact.FirstName
 				, Contact.LastName
 				, Contact.Email
+				, Contact.Title
 				, Contact.AccountId
 				, Contact.Account.Id
 				, Contact.Account.Name
@@ -133,7 +137,7 @@ public with sharing class IECEBC_TestUtility {
 		
 		
 		
-		List<Contact> lContact = [select Id, Name, FirstName, LastName, Email
+		List<Contact> lContact = [select Id, Name, FirstName, LastName, Email, Title, Phone
 									, IATA_Code__c
 									, AccountId
 									, Account.Id
@@ -678,12 +682,18 @@ public with sharing class IECEBC_TestUtility {
         // insert account
         oAccount = createSampleAccount(ClientType);
         insert oAccount;
+
+        isoCountry = new IATA_ISO_Country__c();
+        isoCountry.ISO_Code__c='CT';
+		isoCountry.Name='canadatest';
+		isoCountry.Region__c = 'North-America';
+		isoCountry.ISO_Code_Numeric__c = 560;
+		insert isoCountry;
  
         // create Bill To contact info
         oContact = new Contact();
-        oContact.RecordTypeId = IECUserManager.getContactRecordTypeForIEC();
+        oContact.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Contact', 'Standard_Contact');
         oContact.AccountId = oAccount.Id;
-        oContact.OwnerId = IECUserManager.getIECContactOwnerId();
         oContact.FirstName = 'Test';
         oContact.LastName = 'User';
         oContact.Title = 'TestTitle';
@@ -691,9 +701,39 @@ public with sharing class IECEBC_TestUtility {
         oContact.Phone = '514123345';
         oContact.User_IECPortal_Status__c = IECConstants.APPROVED_CONTACT_STATUS;
         insert oContact;
-        
-        oBillingAccount = createSampleBillingAccount(oAccount, oContact);
-        insert oBillingAccount;        
+        system.debug('oContact->contact id : ' + oContact.id);
+
+        oBillingAccount = new Zuora__CustomerAccount__c(
+            Zuora__Account__c = oAccount.Id
+            , Contact__c = oContact.Id
+            , Name = oAccount.Name
+            , CRMContactID__c = oContact.Id
+            , Zuora__DefaultPaymentMethod__c = 'CreditCard'
+            , Zuora__BillToCity__c = 'Toronto'
+            , Zuora__BillToCountry__c = 'Canada'
+            , Zuora__BillToState__c = 'Ontario'
+            , Zuora__BillToAddress1__c = '123 Test St'
+            , Zuora__BillToPostalCode__c = 'A9A9A9'
+        );
+
+        //oBillingAccount = createSampleBillingAccount(oAccount, oContact);
+        insert oBillingAccount; 
+        system.debug('oBillingAccount->contact id : ' + oBillingAccount.Contact__c);
+
+        oAddress = new IECAddress__c();
+		oAddress.Address_Type__c = IECConstants.IECAddress_AddressType_Billing;
+		oAddress.Contact__c = oContact.Id;
+	    oAddress.Street__c = '12 main street';
+	    oAddress.City__c = 'Montreal';
+	    oAddress.Country__c = 'Canada';
+	    oAddress.State__c = 'QC';
+	    oAddress.ZipCode__c = 'h1q2w3';
+	    oAddress.ISO_Country__c = isoCountry.Id;
+	    insert oAddress; 
+
+	    oLocation = Location_Svc.createLocation(oAccount.Id,oAddress.Id,oContact.Id, oContact.Email,  oContact.Phone,  null, 'Bill To');
+	    //location  = Location_Svc.createLocation(accountHQ1.Id, lstAddress[0].Id, lstContact[0].Id, lstContact[0].Email, lstContact[0].Phone, null, 'Bill To');
+	    //insert oLocation;
 
         User u = new User(
             Username = ISSP_Utilities.buildPortalUserName('testIECGuest@test.iata.org')
@@ -716,14 +756,17 @@ public with sharing class IECEBC_TestUtility {
         //trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, oAccount.Id, 'testpassword');
       
-         
+        system.debug('oContact->contact id before : ' + oContact);
         IECUserManager.login(u.Username, 'testpassword', null);
-           
+           system.debug('oContact->contact id after : ' + oContact);
+
+
+
         return u;
     }
     
     public static Zuora__CustomerAccount__c createSampleBillingAccount(Account oRelatedAccount) {
-        return createSampleBillingAccount(oRelatedAccount, null);
+        return createSampleBillingAccount(oRelatedAccount, null); 
     }
     
     public static Zuora__CustomerAccount__c createSampleBillingAccount(Account oRelatedAccount, Contact oRelatedContact) {

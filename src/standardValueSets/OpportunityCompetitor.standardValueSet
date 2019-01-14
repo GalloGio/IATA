@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>ACI</fullName>
+        <default>false</default>
+        <label>ACI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Air4casts.com</fullName>
+        <default>false</default>
+        <label>Air4casts.com</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Airbus Forecast</fullName>
+        <default>false</default>
+        <label>Airbus Forecast</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Air France Consulting</fullName>
+        <default>false</default>
+        <label>Air France Consulting</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Air Shipper</fullName>
+        <default>false</default>
+        <label>Air Shipper</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ATI</fullName>
+        <default>false</default>
+        <label>ATI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Aviation Industry Group</fullName>
+        <default>false</default>
+        <label>Aviation Industry Group</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Back Aviation</fullName>
+        <default>false</default>
+        <label>Back Aviation</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Boeing Forecast</fullName>
+        <default>false</default>
+        <label>Boeing Forecast</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Competition Unkwon</fullName>
+        <default>false</default>
+        <label>Competition Unkwon</label>
+    </standardValue>
+    <standardValue>
+        <fullName>FAA</fullName>
+        <default>false</default>
+        <label>FAA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ICAO</fullName>
+        <default>false</default>
+        <label>ICAO</label>
+    </standardValue>
+    <standardValue>
+        <fullName>ICBI</fullName>
+        <default>false</default>
+        <label>ICBI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Individual BSP statistics</fullName>
+        <default>false</default>
+        <label>Individual BSP statistics</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Inst for Int Research</fullName>
+        <default>false</default>
+        <label>Inst for Int Research</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Internal Airline Training Departments</fullName>
+        <default>false</default>
+        <label>Internal Airline Training Departments</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IOS Partners</fullName>
+        <default>false</default>
+        <label>IOS Partners</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IQPC</fullName>
+        <default>false</default>
+        <label>IQPC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>JJ Keller</fullName>
+        <default>false</default>
+        <label>JJ Keller</label>
+    </standardValue>
+    <standardValue>
+        <fullName>LabelMaster</fullName>
+        <default>false</default>
+        <label>LabelMaster</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Local Agency</fullName>
+        <default>false</default>
+        <label>Local Agency</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Lufthansa Consulting Gmbh</fullName>
+        <default>false</default>
+        <label>Lufthansa Consulting Gmbh</label>
+    </standardValue>
+    <standardValue>
+        <fullName>MIDT</fullName>
+        <default>false</default>
+        <label>MIDT</label>
+    </standardValue>
+    <standardValue>
+        <fullName>National Cargo Association</fullName>
+        <default>false</default>
+        <label>National Cargo Association</label>
+    </standardValue>
+    <standardValue>
+        <fullName>National Cargo Security Council</fullName>
+        <default>false</default>
+        <label>National Cargo Security Council</label>
+    </standardValue>
+    <standardValue>
+        <fullName>OÁG Scheduling</fullName>
+        <default>false</default>
+        <label>OÁG Scheduling</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other Airline Association</fullName>
+        <default>false</default>
+        <label>Other Airline Association</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Prof.Career Dev. Inst</fullName>
+        <default>false</default>
+        <label>Prof.Career Dev. Inst</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sabre Airline Solutions</fullName>
+        <default>false</default>
+        <label>Sabre Airline Solutions</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SH&amp;E</fullName>
+        <default>false</default>
+        <label>SH&amp;E</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Simply Events</fullName>
+        <default>false</default>
+        <label>Simply Events</label>
+    </standardValue>
+    <standardValue>
+        <fullName>SNC Lavalin - Tecsult</fullName>
+        <default>false</default>
+        <label>SNC Lavalin - Tecsult</label>
+    </standardValue>
+    <standardValue>
+        <fullName>The Travel Institute - USA</fullName>
+        <default>false</default>
+        <label>The Travel Institute - USA</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TIACA-Cargo</fullName>
+        <default>false</default>
+        <label>TIACA-Cargo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>University/College</fullName>
+        <default>false</default>
+        <label>University/College</label>
+    </standardValue>
+    <standardValue>
+        <fullName>USDOT</fullName>
+        <default>false</default>
+        <label>USDOT</label>
+    </standardValue>
+</StandardValueSet>

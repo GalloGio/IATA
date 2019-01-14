@@ -3,6 +3,18 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - Colombia</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+            <publicGroup>IATAColombia</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+            <publicGroup>IDFSAmericasRS</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>MADHubCSManagerA</role>
+            <role>MADHubCSstaffA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

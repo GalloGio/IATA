@@ -3,7 +3,7 @@
 
     <html>
      
- <c:ISSP_Header ></c:ISSP_Header>
+ <c:ISSP_Header/>
  <body>
 
     <style>
@@ -66,7 +66,7 @@
                 </apex:column>
                 <apex:column value="{!MyIFAPCases.cse.Account.Name}" rendered="false"/>
                 <apex:column value="{!MyIFAPCases.cse.Subject}"/>
-                <apex:column value="{!MyIFAPCases.cse.Status}"/>
+                <apex:column value="{!MyIFAPCases.cse.Portal_Case_Status__c}"/>
                 <apex:column value="{!MyIFAPCases.cse.Priority}"/>
             </apex:pageBlockTable>
         </apex:pageBlock>
@@ -127,24 +127,60 @@
                             </apex:pageBlockButtons> -->
 
                             <apex:pageBlockSection title="{!$Label.ISSP_CaseInformation}" columns="1" id="section1" >
+                                <apex:outPutField value="{!IFAPCases[0].cse.Portal_Case_Status__c}"/>
                                 <apex:outPutField value="{!IFAPCases[0].cse.Subject}"/>
                                 <apex:outPutField value="{!IFAPCases[0].cse.Description}"/>
-                                <apex:outPutField value="{!IFAPCases[0].cse.Status}"/>
+                               
+                                <!--
                                 <apex:outPutField value="{!IFAPCases[0].cse.Origin}"/>
                                 <apex:outPutField value="{!IFAPCases[0].cse.Priority}"/>
+								-->
                             </apex:pageBlockSection>
 
                             <apex:pageBlockSection title="{!$Label.ISSP_IFAP_Review}" columns="1" >
-                                <apex:outPutField value="{!IFAPCases[0].cse.Financial_Review_Type__c}"/>
-                                <apex:outPutField value="{!IFAPCases[0].cse.Deadline_Date__c}"/>
+                                <apex:outPutField value="{!IFAPCases[0].cse.Financial_Review_Type__c}" rendered="{!IFAPCases[0].cse.Financial_Review_Type__c != null}"/>
+                                
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_IFAP_FA_Deadline}" rendered="{!IFAPCases[0].cse.Deadline_Date__c != null}" >
+                					<apex:param value="{!IFAPCases[0].cse.Deadline_Date__c}"/>
+                				</apex:outputText>
+                                
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_IFAP_FA_SECOND_DEADLINE}" rendered="{!IFAPCases[0].cse.FA_Second_Deadline_Date__c != null}">
+                					<apex:param value="{!IFAPCases[0].cse.FA_Second_Deadline_Date__c}"/>
+                				</apex:outputText>
+                                
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_IFAP_FA_Third_Deadline}" rendered="{!IFAPCases[0].cse.FA_Third_Deadline_Date__c != null}" >
+                					<apex:param value="{!IFAPCases[0].cse.FA_Third_Deadline_Date__c}"/>
+                				</apex:outputText>
+                                
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_IFAP_FA_Submitted}" rendered="{!IFAPCases[0].cse.Submitted_Date__c != null}">
+                					<apex:param value="{!IFAPCases[0].cse.Submitted_Date__c}"/>
+                				</apex:outputText>
+                                
+                                <apex:outputText value="{!IF(BEGINS(IFAPCases[0].cse.Financial_Review_Result__c, 'Satisfactory'), $Label.ISSP_Satisfactory, $Label.ISSP_Unsatisfactory)}" label="{!$ObjectType.Case.fields.Financial_Review_Result__c.Label}" rendered="{!IFAPCases[0].cse.Financial_Review_Result__c != null}"/>
+                                <apex:outputField value="{!IFAPCases[0].cse.Financial_Security_Amount__c}" rendered="{!IFAPCases[0].cse.Financial_Security_Amount__c != null}"/>
+                                <apex:outputField value="{!IFAPCases[0].cse.Financial_Security_Currency__c}" rendered="{!IFAPCases[0].cse.Financial_Security_Currency__c!=null}"/>
+                                
+                                 <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_IFAP_FSEC_Deadline}" rendered="{!IFAPCases[0].cse.FS_Deadline_Date__c != null}">
+                					<apex:param value="{!IFAPCases[0].cse.FS_Deadline_Date__c}"/>
+                				</apex:outputText>
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_IFAP_FSEC_Second_Deadline}" rendered="{!IFAPCases[0].cse.FS_Second_Deadline_Date__c != null}">
+                					<apex:param value="{!IFAPCases[0].cse.FS_Second_Deadline_Date__c}"/>
+                				</apex:outputText>
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_IFAP_FSEC_Third_Deadline}" rendered="{!IFAPCases[0].cse.FS_Third_Deadline_Date__c != null}">
+                					<apex:param value="{!IFAPCases[0].cse.FS_Third_Deadline_Date__c}"/>
+                				</apex:outputText>
+                                
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}" label="{!$Label.ISSP_IFAP_FSEC_Submitted}" rendered="{!IFAPCases[0].cse.FS_Submitted_Date__c != null}">
+                					<apex:param value="{!IFAPCases[0].cse.FS_Submitted_Date__c}"/>
+                				</apex:outputText>
                             </apex:pageBlockSection>
 
                             <apex:pageBlockSection title="{!$Label.ISSP_IFAP_Agent}" columns="1" >
-<!--                                 <apex:outPutField value="{!account.Name}"/> -->
-                                <apex:outPutField value="{!IFAPCases[0].cse.Contact.Name}"/>
+                                <apex:outPutField label="{!$Label.ISSP_Agency_name}" value="{!IFAPCases[0].cse.Account.Name}"/>
+                                <apex:outPutField label="{!$Label.ISSP_IFAP_Name}" value="{!IFAPCases[0].cse.Contact.Name}"/>
                                 <apex:outPutField value="{!IFAPCases[0].cse.Contact.Email}"/>
                                 <apex:outPutField value="{!IFAPCases[0].cse.SuppliedEmail}"/>
-                                <apex:outPutField value="{!IFAPCases[0].cse.IFAP_Agent_Code__c}"/>
+                                <apex:outPutField value="{!IFAPCases[0].cse.IFAP_Agent_Code__c}" rendered="{!AND(IFAPCases[0].cse.Account.Status__c != 'New application pending', IFAPCases[0].cse.IFAP_Agent_Code__c != null)}"/>
                                 <apex:outPutField value="{!IFAPCases[0].cse.IFAP_Agent_Type__c}"/>
                                 <apex:outPutField value="{!IFAPCases[0].cse.Account_Billing_Country__c}"/>
                             </apex:pageBlockSection>
@@ -205,10 +241,8 @@
     </Apex:pageblock>
 
   
-  </apex:outputPanel>
+  </apex:outputPanel>                             
 
- 
- 
   <apex:outputPanel rendered="{!not(Archived) && (techinicalProb)}">
   <apex:pageMessages ></apex:pageMessages>
  </apex:outputPanel>
@@ -673,10 +707,28 @@
 
     </apex:form>  
   </apex:outputPanel>
-                            </apex:pageBlockSection>
+		</apex:pageBlockSection>
+                                                     
+    </apex:pageBlock>
+
                         
-                  </apex:pageBlock>
-                    </apex:outputpanel>                                      
+     <apex:pageBlock rendered="false">
+         <apex:pageBlockSection title="{!$Label.ISSP_Registration_Comments}" columns="1">
+         	<apex:form >             
+     	
+            <apex:commandbutton action="{!AddComment}" value="{!$Label.ISSP_btn_AddComment}" style="padding:5px"/>
+       		<apex:pageblocktable id="CustomList" value="{!List_CaseComment}" var="o" styleclass="table-hover table table-condensed table-responsive">
+            	<apex:column headervalue="{!$Label.ISSP_Created_Date}" value="{!o.CreatedDate}" />
+             	<apex:column headervalue="{!$Label.ISSP_Email_Comment}" value="{!o.CommentBody}" />
+                <apex:column headervalue="{!$Label.ISSP_Created_By}" value="{!o.CreatedBy.Name}" />
+         	</apex:pageblocktable>
+  		    
+      		</apex:form>
+   		</apex:pageBlockSection>
+   	</apex:pageBlock>                
+    </apex:outputpanel>
+                         
+                        
                     </div><!-- end panel body-->
                 </div><!-- end  div class="panel panel-primary"-->
             </div><!--end main col -->

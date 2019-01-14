@@ -17,10 +17,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>New</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -36,6 +32,20 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>AccountId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>AssetLevel</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>AssetProvidedById</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>AssetServicedById</fullName>
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -58,6 +68,10 @@
     </fields>
     <fields>
         <fullName>IsCompetitorProduct</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>IsInternal</fullName>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
@@ -86,253 +100,6 @@
     </fields>
     <fields>
         <fullName>ProductFamily</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Accreditation</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Adjustments</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Advertising</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport IS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airsat</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Application Charges</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Approach</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Assessment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ATC/ATS Licence Fee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aviation Fuel</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BIITCO BSP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>BSP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo IS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CASS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CDA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Communication Charges</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Consulting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DDS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deposit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E&amp;F Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>En-Route</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Events</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Fees</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FF Miles</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Charges</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GAP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GDP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>GDS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ICCS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ID Cards/TIDS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Interest</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Legal</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Lighting</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Market IS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Meetings and Conferen</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Meteorology</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Misc</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No SIS compliant</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Oceanic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Over-flight</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Parking</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pax IS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Penalty</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Publication</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Publications – Cargo</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Publications - PAX</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Runway Charges</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Strategic Partnerships</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TACT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Taxes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TIESS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Timatic</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training: Classroom</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training: In Company</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training: RTC Partnerships</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Training: Self Study</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Weblink</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
         <type>Picklist</type>
     </fields>
     <fields>
@@ -354,31 +121,11 @@
     </fields>
     <fields>
         <fullName>Status</fullName>
-        <picklist>
-            <picklistValues>
-                <fullName>Purchased</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Shipped</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Installed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Registered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Obsolete</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>StockKeepingUnit</fullName>
     </fields>
     <fields>
         <fullName>UsageEndDate</fullName>

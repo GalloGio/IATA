@@ -9,17 +9,78 @@
     <![endif]-->
     <!--[if !IE]><!-->
     
+    <script type="text/javascript">
+        function setHeightForCustomImages() {
+
+            var imageDivs = document.getElementsByClassName('fileImage');
+            console.log(imageDivs);
+            for(i = 0; i<imageDivs.length; i++){
+                var img = imageDivs[i].childNodes[0];
+                console.log("here: " , img);
+                img.style = "height: 100%; width: 100%; object-fit: contain;";
+                
+            }
+        };
+
+    </script>
+
+
     <html lang="{!language}">
     <!--<![endif]-->
 
         <head>
+            <!-- Google Tag Manager -->
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
             <title>{!$Label.SiteTitle}</title>
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }
+
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "memberStatus": "{!userDetails.userMemberStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "breadcrumb": "Home", 
+                        "language": "{!language}"
+                    }
+                });
+            </script>
         </head>
 
-        <body data-media-size="">
+        <body data-media-size="" onload="setHeightForCustomImages();">
+            <!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
             <div id="js-breakpoint-finder">
                 <span class="device-xs screen-xsmall"/>
                 <span class="device-sm screen-small"/>
@@ -149,30 +210,45 @@
                                             <apex:repeat value="{!topSellers}" var="prod">
                                                 <li class="list-item">
                                                     <div class="item-wrapper">
-                                                        <figure class="item-image"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}"><img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" /></a></figure>
+                                                        <figure class="item-image">
+                                                            <a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">
+                                                            <!--<img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" />-->
+
+                                                            <apex:outputPanel layout="block" style="height: 180px;" rendered="{!prod.imageFile != '' }">
+
+                                                            <div class="fileImage" layout="block" style="height: 180px;">
+                                                                <apex:outputText value="{!prod.imageFile}" escape="false"/>
+                                                            </div>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!prod.imageFile == '' }">
+                                                                <img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" />
+                                                            </apex:outputPanel>
+
+                                                            </a>
+                                                        </figure>
                                                         <h3 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h3>
-                                                        <h4 class="item-description-title">{!prod.Media}</h4>
-                                                        <p class="item-description">
-                                                            Edition: {!prod.Edition} <br />
-                                                            Language: {!prod.Language}
-                                                        </p>
+                                                        <h4 class="item-description-title" style="{! IF(isBlank(prod.Media), 'display:none', 'display:inline')}">
+															{!prod.Media}
+														</h4>
+														<br/>
+	                                                    <p class="item-edition" style="{! IF(isBlank(prod.Edition), 'display:none', 'display:inline')}">
+															Edition: {!prod.Edition}<br />
+														</p>
+														<p class="item-language" style="{! IF(isBlank(prod.Language), 'display:none', 'display:inline')}">												
+															Language: {!prod.Language}
+														</p>
                                                         <p class="item-description">{!prod.ProductShortDesc}</p>
                                                         <!-- Scenario 1: In Stock -->
-                                                        <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock'}">
+                                                        <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!(prod.InventoryStatus == 'In stock' || prod.InventoryStatus == 'Available Now') && prod.ProductInfoId == null}">
                                                             {!prod.InventoryStatus}
                                                         </apex:outputPanel>
                                                         <!-- Scenario 2: Out of Stock -->
-                                                        <apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!AND(prod.InventoryStatus != 'In stock' , prod.AvailabilityDate !=null,prod.EffectiveFrom <=TODAY(),TODAY() <=prod.EffectiveTo)}">
+                                                        <apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!AND(prod.InventoryStatus != 'In stock', prod.InventoryStatus != 'Available Now', prod.AvailabilityDate !=null,prod.EffectiveFrom <=TODAY(),TODAY() <=prod.EffectiveTo, prod.ProductInfoId == null)}">
                                                             {!prod.InventoryStatus}
                                                         </apex:outputPanel>
 
-                                                        <!-- Scenario 3: Pre-order -->
-                                                        <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!TODAY() <=prod.EffectiveFrom}">
-                                                            <span class="text">{!$Label.Button_Pre_Order}</span>
-                                                        </apex:outputPanel>
-
                                                         <!-- Regular Price if exist -->
-                                                        <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0}">
+                                                        <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null}">
                                                             <apex:outputText styleClass="price-value" value="{0, number, currency}">
                                                                 <apex:param value="{!prod.RegularPrice}" />
                                                             </apex:outputText>
@@ -180,7 +256,7 @@
                                                         </apex:outputPanel>
 
                                                         <!-- Discounted price if exist -->
-                                                        <apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0}">
+                                                        <apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0 && prod.ProductInfoId == null}">
                                                             <apex:outputText styleClass="price-value" value="{0, number, currency}">
                                                                 <apex:param value="{!prod.CustomerPrice}" />
                                                             </apex:outputText>
@@ -188,11 +264,11 @@
                                                         </apex:outputPanel>
 
                                                         <!-- Price not exit: Direct Sales -->
-                                                        <apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null)}">
+                                                        <apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null, prod.ProductInfoId == null)}">
                                                             <span class="price-label">{!$Label.Direct_Sales}</span>
                                                         </apex:outputPanel>
                                                     
-                                                        <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!$Label.Button_Select}</a>
+                                                        <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!IF(OR(prod.InventoryStatus == 'Out of stock',prod.InventoryStatus == 'Coming Soon'), $Label.PreOrderAddToCart, $Label.Button_Select)}</a>
                                                     </div>
                                                 </li>
                                             </apex:repeat>

@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>AMS eBulletin Profile</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Agency_Info_Agency_Changes__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Agency Changes</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Agency Changes</inlineHelpText>
+        <label>Agency Changes</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agency_Info_Defaults__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defaults</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Defaults</inlineHelpText>
+        <label>Defaults</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agency_Info_Irregularities__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Irregularities</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Irregularities</inlineHelpText>
+        <label>Irregularities</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agency_Info_New_Aplication_Processes__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>New Application Processes</description>
+        <externalId>false</externalId>
+        <inlineHelpText>New Application Processes</inlineHelpText>
+        <label>New Application Processes</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agency_Info_Reinstatements__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Agency_Info_Reinstatements</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agency_Info_Reviews__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Reviews</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Reviews</inlineHelpText>
+        <label>Reviews</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Agency_Info_Termination_Closures__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Termination &amp; Closures</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Termination &amp; Closures</inlineHelpText>
+        <label>Termination &amp; Closures</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Area_1__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Geographic Area 1 - North, Central, South America &amp; Environs</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Geographic Area 1 - North, Central, South America &amp; Environs</inlineHelpText>
+        <label>Area 1</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Area_2__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Geographic Area 2 - Europe, Middle East, Africa</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Geographic Area 2 - Europe, Middle East, Africa</inlineHelpText>
+        <label>Area 2</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Area_3__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Geographic Area 3 -  Far East, Australia, New Zealand, Pacific Islands</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Geographic Area 3 -  Far East, Australia, New Zealand, Pacific Islands</inlineHelpText>
+        <label>Area 3</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CNS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>CNS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CountriesList__c</fullName>
+        <description>Countries List</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Countries List</inlineHelpText>
+        <label>Countries</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Countries__c</fullName>
+        <description>Countries</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Countries</inlineHelpText>
+        <label>Countries - Not Used</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>-- Select Countries --</fullName>
+                    <default>false</default>
+                    <label>-- Select Countries --</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Daily_Frequency__c</fullName>
+        <description>Daily Frequency</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Daily Frequency</inlineHelpText>
+        <label>Daily Frequency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Once a day</fullName>
+                    <default>true</default>
+                    <label>Once a day</label>
+                </value>
+                <value>
+                    <fullName>5 times a day</fullName>
+                    <default>false</default>
+                    <label>5 times a day</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Last_NotificationBatch_Run__c</fullName>
+        <defaultValue>now()</defaultValue>
+        <externalId>false</externalId>
+        <label>Last Notification Batch Run</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Last_Run__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Run</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Opt_in__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Opt in</description>
+        <externalId>false</externalId>
+        <label>Opt in</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Opt_out_Bulletin__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Opt out from Bulletin</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Opt out from Bulletin</inlineHelpText>
+        <label>Opt out from Bulletin</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Program_CASS_Associates__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>CASS Associates</description>
+        <externalId>false</externalId>
+        <inlineHelpText>CASS Associates</inlineHelpText>
+        <label>CASS Associates, Import, Courier Agents</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Program_Cargo__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Cargo</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Cargo</inlineHelpText>
+        <label>Cargo</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Program_Domestic__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Domestic (China, Indonesia)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Domestic (China, Indonesia)</inlineHelpText>
+        <label>Domestic (China, Indonesia)</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Program_Passage__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Passenger</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Passenger</inlineHelpText>
+        <label>Passenger</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>StatusDisplay__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Opt_in__c , 
+     &apos;Enabled&apos;, 
+     &apos;Disabled&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Suspend_Subscription__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Suspend Subscription</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Suspend Subscription</inlineHelpText>
+        <label>Suspend Subscription</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TimeZone__c</fullName>
+        <externalId>false</externalId>
+        <label>TimeZone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>User</description>
+        <externalId>false</externalId>
+        <inlineHelpText>User</inlineHelpText>
+        <label>User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>AMS_eBulletin_Profiles</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>AMS eBulletin Profile</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>User__c</columns>
+        <columns>Area_1__c</columns>
+        <columns>Area_2__c</columns>
+        <columns>Area_3__c</columns>
+        <columns>Daily_Frequency__c</columns>
+        <columns>Last_Run__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Opt_in__c</columns>
+        <columns>Opt_out_Bulletin__c</columns>
+        <columns>StatusDisplay__c</columns>
+        <columns>Suspend_Subscription__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Portal</fullName>
+        <columns>NAME</columns>
+        <columns>Agency_Info_Agency_Changes__c</columns>
+        <columns>Countries__c</columns>
+        <columns>User__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CountriesList__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Area_1__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Program_Passage__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Portal</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>AMS eBulletin Profile Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>AMS eBulletin Profiles</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Daily</fullName>
+        <active>true</active>
+        <description>Daily</description>
+        <label>Daily</label>
+        <picklistValues>
+            <picklist>Countries__c</picklist>
+            <values>
+                <fullName>-- Select Countries --</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Daily_Frequency__c</picklist>
+            <values>
+                <fullName>5 times a day</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Once a day</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TimeZone__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Weekly</fullName>
+        <active>true</active>
+        <description>Weekly</description>
+        <label>Weekly</label>
+        <picklistValues>
+            <picklist>Countries__c</picklist>
+            <values>
+                <fullName>-- Select Countries --</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Daily_Frequency__c</picklist>
+            <values>
+                <fullName>5 times a day</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Once a day</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TimeZone__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>DailyAgencyInfo</fullName>
+        <active>true</active>
+        <description>Validates Daily Agency Information</description>
+        <errorConditionFormula>if( and(RecordType.Name == &apos;Daily&apos;,
+      Opt_in__c == true,
+      Opt_out_Bulletin__c == false
+  ),       
+    and(
+     RecordType.Name == &apos;Daily&apos;,
+     Agency_Info_Irregularities__c == false, 
+     Agency_Info_Defaults__c == false, 
+     Agency_Info_Termination_Closures__c == false,
+     Agency_Info_Reviews__c == false, 
+    Agency_Info_Reinstatements__c == false 
+  ),false
+  )</errorConditionFormula>
+        <errorMessage>DAILY Bulletin - Please select at least the Agency Information of interest</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>DailyArea</fullName>
+        <active>true</active>
+        <description>Validates Daily Area</description>
+        <errorConditionFormula>if( and(RecordType.Name == &apos;Daily&apos;, 
+Opt_in__c == true, 
+Opt_out_Bulletin__c == false 
+), 
+and( RecordType.Name == &apos;Daily&apos;,
+ Opt_out_Bulletin__c == false, 
+ Opt_in__c == true, 
+ Area_1__c == false,
+ Area_2__c == false,
+ Area_3__c == false
+),false 
+)</errorConditionFormula>
+        <errorMessage>DAILY Bulletin - Please select at least one Area</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>DailyCountries</fullName>
+        <active>true</active>
+        <description>Validates Daily Countries</description>
+        <errorConditionFormula>if( and(RecordType.Name == &apos;Daily&apos;, 
+Opt_in__c == true, 
+Opt_out_Bulletin__c == false 
+), 
+and( RecordType.Name == &apos;Daily&apos;,
+ Opt_out_Bulletin__c == false, 
+ Opt_in__c == true,  
+  or(ISBLANK(CountriesList__c), ISNULL(CountriesList__c) )     
+),false 
+)</errorConditionFormula>
+        <errorMessage>DAILY Bulletin - Please select at least one Country</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>DailyProgram</fullName>
+        <active>true</active>
+        <description>Validates Daily Program</description>
+        <errorConditionFormula>if( and(RecordType.Name == &apos;Daily&apos;, 
+Opt_in__c == true, 
+Opt_out_Bulletin__c == false 
+), and( RecordType.Name == &apos;Daily&apos;, 
+Opt_out_Bulletin__c == false, 
+Opt_in__c == true, 
+Program_Cargo__c == false, 
+Program_CASS_Associates__c == false, 
+Program_Passage__c == false,
+Program_Domestic__c == false 
+),false 
+)</errorConditionFormula>
+        <errorMessage>DAILY Bulletin - Please select a Program</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>WeeklyAgencyInfo</fullName>
+        <active>true</active>
+        <description>Validates Weekly Agency Information</description>
+        <errorConditionFormula>if( and(RecordType.Name == &apos;Weekly&apos;, 
+Opt_in__c == true, 
+Opt_out_Bulletin__c == false 
+), 
+and( RecordType.Name == &apos;Weekly&apos;, 
+Opt_out_Bulletin__c == false, 
+Opt_in__c == true, 
+Agency_Info_Irregularities__c == false, 
+Agency_Info_Defaults__c == false, 
+Agency_Info_Termination_Closures__c == false, 
+Agency_Info_Reviews__c == false,
+Agency_Info_New_Aplication_Processes__c == false,
+Agency_Info_Agency_Changes__c == false, 
+Agency_Info_Reinstatements__c == false 
+),false 
+)</errorConditionFormula>
+        <errorMessage>WEEKLY Bulletin - Please select the Agency Information of interest</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>WeeklyArea</fullName>
+        <active>true</active>
+        <description>Validates Weekly Area</description>
+        <errorConditionFormula>if( and(RecordType.Name == &apos;Weekly&apos;, 
+Opt_in__c == true, 
+Opt_out_Bulletin__c == false 
+), and( RecordType.Name == &apos;Weekly&apos;,
+ Opt_out_Bulletin__c == false, 
+ Opt_in__c == true, 
+ Area_1__c == false,
+ Area_2__c == false,
+ Area_3__c == false
+),false 
+)</errorConditionFormula>
+        <errorMessage>WEEKLY Bulletin - Please select at least one Area</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>WeeklyCountries</fullName>
+        <active>true</active>
+        <description>Validates Weekly Countries</description>
+        <errorConditionFormula>if( and(RecordType.Name == &apos;Weekly&apos;, 
+Opt_in__c == true, 
+Opt_out_Bulletin__c == false 
+),and( RecordType.Name == &apos;Weekly&apos;, 
+ Opt_out_Bulletin__c == false, 
+ Opt_in__c == true, 
+ or(ISBLANK(CountriesList__c), ISNULL(CountriesList__c) )  
+),false 
+)</errorConditionFormula>
+        <errorMessage>WEEKLY Bulletin - Please select at least one Country</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>WeeklyProgram</fullName>
+        <active>true</active>
+        <description>Validates Weekly Program</description>
+        <errorConditionFormula>if( and(RecordType.Name == &apos;Weekly&apos;, 
+Opt_in__c == true, 
+Opt_out_Bulletin__c == false 
+),and( RecordType.Name == &apos;Weekly&apos;, 
+Opt_out_Bulletin__c == false, 
+Opt_in__c == true, 
+Program_Cargo__c == false, 
+Program_CASS_Associates__c == false, 
+Program_Passage__c == false,
+Program_Domestic__c == false 
+),false 
+)</errorConditionFormula>
+        <errorMessage>WEEKLY Bulletin - Please select a Program</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

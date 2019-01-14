@@ -23,17 +23,17 @@ public class AMS_AgencyChangesTest {
 	
 	public static void init2Hierarchies(boolean isPax){
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
-		customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
+		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
 														  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
 														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false, 
 														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false, 
 														  TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
-		customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination09', TC_Ownership_to_IATA_Agent__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership; ',
+		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination09', TC_Ownership_to_IATA_Agent__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership; ',
 														  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
 														  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Location_type__c = false, 
 														  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,  
 														  TCA_Sanity_check__c = 'CHI', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
-		customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination10', TC_Ownership_to_non_IATA_Agent__c = true, TCA_Sanity_check__c = 'CHO', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
+		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination10', TC_Ownership_to_non_IATA_Agent__c = true, TCA_Sanity_check__c = 'CHO', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
 		insert customsettings;
 
 		List<AMS_ChangeCodes__c> changeCodeCustomsettings = new List<AMS_ChangeCodes__c>();
@@ -44,7 +44,7 @@ public class AMS_AgencyChangesTest {
 		changeCodeCustomsettings.add(new AMS_ChangeCodes__c(Name = 'CHO', Change_Code__c = 'CHO', Reason_Code__c = '81', Reason_Code_Description__c = 'CHANGE IN PROCESS', Account_status_change__c = '8;9',Integration_RecId__c = 'C'));
 		insert changeCodeCustomsettings;
 
-		ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
 		insert italy;
 		
@@ -118,7 +118,7 @@ public class AMS_AgencyChangesTest {
 		insert conts;
 		
 		//Create the ownerships: owner1 and owner2 own the first hierarchy and owner 3 and 4 own the second one.
-		ID rtOwner = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+		ID rtOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
 		for(Account acc : new List<Account>{HO1, BR1, BR2, BR3}){
 			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id, Owner_Account__c = OwnersAccount.Id));
@@ -137,15 +137,24 @@ public class AMS_AgencyChangesTest {
 	static void createOSCAR(Account theAccount, Contact theContact, String typeOfChange, Map<Contact, Double> owners){
 		
 		// Create OSCAR and Communication Case
-		ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+		ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 		theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = theAccount.Id, Type_of_change__c = typeOfChange,Change_effective_as_of__c  = Date.today());
 		insert theOscar;
 
-		ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+		ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 		theCommunicationCase = new Case(RecordTypeId = rtCommCase, Subject = typeOfChange + ' - ' + theAccount.Name, OSCAR__c = theOscar.Id,
 											AccountId = (theAccount.ParentId == null ? theAccount.Id : theAccount.ParentId), ContactId = theContact.Id	);
 		insert theCommunicationCase;
 		
+		Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = theCommunicationCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
+        
 		// Create the Staging area for the Account
 		theStagingAcc = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = theAccount.Name, 
 															IATAcode__c = theAccount.IATAcode__c, 
@@ -177,7 +186,8 @@ public class AMS_AgencyChangesTest {
 	// I start having HO1 with 3 branches BR1, BR2, BR3
 	// I process a change of location type under BR1
 	// At the end I should have a the hierarchy updated: the new head office is BR1 and the branches are HO1, BR2, BR3
-	static TestMethod void testChangeOfLocationType(){
+	@isTest
+	static void testChangeOfLocationType(){
 		
 		// Initialize the hierarchy and create an OSCAR
 		init2Hierarchies(true);
@@ -185,10 +195,10 @@ public class AMS_AgencyChangesTest {
 		
 		Test.startTest();
 		
-		system.debug('theOscar: ' + theOscar);
 		system.debug('theOSCAR: ' + theOSCAR);
 		// If I pass the sanity check (STEP 6) a change code CAD should be generated for both HO1
 		theOSCAR.STEP6__c = AMS_Utils.PASSED;
+
 		update theOSCAR;
 		
 		List<Agency_Applied_Change_code__c> changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c 
@@ -200,7 +210,10 @@ public class AMS_AgencyChangesTest {
 		
 		
 		// If I finalize the change (STEP 2) no more change codes schould be generated
-		theOSCAR.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		theOscar.STEP12__c = AMS_Utils.PASSED;
+		theOSCAR.Validation_Status__c = AMS_Utils.PASSED;
+		theOSCAR.STEP15__c = AMS_Utils.PASSED;
+        theOSCAR.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update theOSCAR;
 		
 		changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c WHERE OSCAR__c = :theOscar.Id ORDER BY Account__r.IATAcode__c];
@@ -225,10 +238,6 @@ public class AMS_AgencyChangesTest {
 		//system.assertEquals('1111112',rels[0].Child_Account__r.IATAcode__c, 'Change of Location Type: after finalization there should be a hierarchy relationship to link BR2 to the new head office (BR1)');
 		//system.assertEquals('1111113',rels[0].Child_Account__r.IATAcode__c, 'Change of Location Type: after finalization there should be a hierarchy relationship to link BR3 to the new head office (BR1)');
 		
-		// If I pass the sanity check (STEP 6) a change code CAD should be generated for both HO1
-		theOSCAR.STEP4__c = 'Passed';
-		update theOSCAR;
-
 		Test.stopTest();
 	}
 	
@@ -236,8 +245,8 @@ public class AMS_AgencyChangesTest {
 	// I start having HO1 with 3 branches BR1, BR2, BR3
 	// I process a change of ownership under HO1. The OSCAR does not have any target HO.
 	// At the end the hierarchy is not changed, only the owners should be changed for everybody
-	
-	static TestMethod void testChangeOfOwnershipNonIATABuysAllHierarchy(){
+	@isTest
+	static void testChangeOfOwnershipNonIATABuysAllHierarchy(){
 		
 		// Initialize the hierarchy and create an OSCAR
 
@@ -247,7 +256,7 @@ public class AMS_AgencyChangesTest {
 		Test.startTest();
 		
 		// Add to the OSCAR the list of accounts involved in the change
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 		
 		/*List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = theOscar.Id, Account__c = BR1.Id));
@@ -275,7 +284,10 @@ public class AMS_AgencyChangesTest {
 		system.assertEquals('1111113',changecodes[3].Account__r.IATAcode__c, 'Change of Ownership S1: when sanity checks are passed a CHO change code should be created the Branch BR3');
 		
 		// If I finalize the change (STEP 2) a change code CHF should be generated for all the agencies involved (HO1, BR1, BR2, BR3)
-		theOSCAR.RPM_Approval__c = 'Authorize Approval';
+		theOscar.STEP12__c = AMS_Utils.PASSED;
+		theOSCAR.Validation_Status__c = AMS_Utils.PASSED;
+		theOSCAR.STEP15__c = 'Passed';
+        theOSCAR.RPM_Approval__c = 'Authorize Approval';
 		update theOSCAR;
 		
 		changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c 
@@ -295,7 +307,7 @@ public class AMS_AgencyChangesTest {
 		
 		// After finalization the old owners should be inactivated
 		// Each agency in the hierarcy was owned by OW1 and OW2
-		ID rtOwner = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+		ID rtOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		List<Account> H1 = new List<Account>{HO1, BR1, BR2, BR3};
 		List<Contact> oldowners = new List<Contact>{OW1,OW2};
 		List<Contact> newowners = new List<Contact>{OW5,OW6};
@@ -325,111 +337,12 @@ public class AMS_AgencyChangesTest {
 		Test.stopTest();
 	}
 	
-	/*TODO
-	static TestMethod void testChangeOfOwnershipNonIATABuysSomeBranches(){
-		init2Hierarchies(true);
-		createOSCAR(BR3, C1, CHANGEOWNERSHIPIATA, null);
-		
-		Test.startTest();
-		
-		// Add to the OSCAR the list of accounts involved in the change
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
-		
-		List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
-		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = theOscar.Id, Account__c = BR1.Id));
-		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = theOscar.Id, Account__c = BR2.Id));
-		
-		// If I pass the sanity check (STEP 6) a change code CHO should be generated all the agencies involved (HO1, BR1, BR2, BR3)
-		theOSCAR.STEP6__c = 'Passed';
-		update theOSCAR;
-		
-		List<Agency_Applied_Change_code__c> changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c 
-														   WHERE OSCAR__c = :theOscar.Id  ORDER BY Account__r.IATAcode__c];
-		system.assertEquals(4,changecodes.size(), 'Change of Ownership S1: when sanity checks are passed a CHO change code should be created for all the agencies involved');
-		
-		system.assertEquals('1111110',changecodes[0].Account__r.IATAcode__c, 'Change of Ownership S1: when sanity checks are passed a CHO change code should be created the Head Office HO1');
-		system.assertEquals('1111111',changecodes[1].Account__r.IATAcode__c, 'Change of Ownership S1: when sanity checks are passed a CHO change code should be created the Branch BR1');
-		system.assertEquals('1111112',changecodes[2].Account__r.IATAcode__c, 'Change of Ownership S1: when sanity checks are passed a CHO change code should be created the Branch BR2');
-		system.assertEquals('1111113',changecodes[3].Account__r.IATAcode__c, 'Change of Ownership S1: when sanity checks are passed a CHO change code should be created the Branch BR3');
-		
-		// If I finalize the change (STEP 2) a change code CHF should be generated for all the agencies involved (HO1, BR1, BR2, BR3)
-		theOSCAR.RPM_Approval__c = 'Authorize Approval';
-		update theOSCAR;
-		
-		changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c 
-					   WHERE OSCAR__c = :theOscar.Id AND Change_Code__c = 'CHF' ORDER BY Account__r.IATAcode__c];
-		system.assertEquals(4,changecodes.size(), 'Change of Ownership S1: when sanity checks are passed a CHF change code should be created for all the agencies involved');
-		
-		system.assertEquals('1111110',changecodes[0].Account__r.IATAcode__c, 'Change of Ownership S1: when manager approves a CHF change code should be created the Head Office HO1');
-		system.assertEquals('1111111',changecodes[1].Account__r.IATAcode__c, 'Change of Ownership S1: when manager approves a CHF change code should be created the Branch BR1');
-		system.assertEquals('1111112',changecodes[2].Account__r.IATAcode__c, 'Change of Ownership S1: when manager approves a CHF change code should be created the Branch BR2');
-		system.assertEquals('1111113',changecodes[3].Account__r.IATAcode__c, 'Change of Ownership S1: when manager approves a CHF change code should be created the Branch BR3');
-		
-		// The finalization should not change anything on the hierarchy relationships
-		List<AMS_Agencies_relationhip__c> rels = [SELECT Id FROM AMS_Agencies_relationhip__c WHERE Parent_Account__r.IATAcode__c = '1111110' ORDER BY Child_Account__r.IATAcode__c];
-		//REVIEW after R3 - commented to get code coverage
-		//system.assertEquals(3,rels.size(), 'Change of Ownership S1: after finalization hierarchy relationships shouldn\'t be changed');
-		
-		
-		// After finalization the old owners should be inactivated
-		// Each agency in the hierarcy was owned by OW1 and OW2
-		ID rtOwner = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
-		List<Account> H1 = new List<Account>{BR3, BR1, BR2};
-		List<Contact> oldowners = new List<Contact>{OW1,OW2};
-		List<Contact> newowners = new List<Contact>{OW5,OW6};
-		
-		List<AMS_Account_Role__c> roles = [SELECT Id FROM AMS_Account_Role__c 
-										   WHERE RecordTypeId = :rtOwner AND Termination_Date__c = :Date.today()
-										   AND Account__c IN :H1 AND Contact__c IN :oldowners 
-										   ORDER BY Account__r.IATAcode__c, Contact__r.Email];
-
-		//REVIEW after R3 - commented to get code coverage								   
-		//system.assertEquals(8,changecodes.size(), 'Change of Ownership S1: when the change is finalized owners OW1 and OW2 should be deactivated for all the hierarchy');
-		
-		for(Account acc : new List<Account>{BR3, BR1, BR2}){
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id));
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id));
-		}
-		
-		// After finalization the new owners should be applied to all the agencies involved
-		// Each agency in the hierarcy should be owned now by OW5 and OW6
-		roles = [SELECT Id FROM AMS_Account_Role__c 
-				 WHERE RecordTypeId = :rtOwner AND Termination_Date__c = null
-				 AND Account__c IN :H1 AND Contact__c IN :newowners 
-				 ORDER BY Account__r.IATAcode__c, Contact__r.Email];
-		//REVIEW after R3 - commented to get code coverage
-		//system.assertEquals(8,changecodes.size(), 'Change of Ownership S1: when the change is finalized owners OW5 and OW6 should be linked to all the hierarchy');
-
-		Test.stopTest();
-	}*/
-	
-	static TestMethod void testChangeOfOwnershipNonIATABuysHOandSomeBranches(){}
-	
-	static TestMethod void testChangeOfOwnershipIATABuysAllHierarchy(){}
-	
-	static TestMethod void testChangeOfOwnershipIATABuysSomeBranches(){}
-	
-	static TestMethod void testChangeOfOwnershipIATABuysHOandSomeBranches(){}
-
-	static TestMethod void individualCallings() {
-		AMS_OSCAR_TestDataFactory.createOSCARtestData();
-		AMS_OSCAR__c oscar = [SELECT Id, Account__c FROM AMS_OSCAR__c LIMIT 1];
-
-		AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig('Name', oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'false'}});
-		AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig('', oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'true'}});
-		AMS_AgencyChangesConfigHelper.getTypeOfChangeCombinationConfig('Name', oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'true'}});
-
-		AMS_AgencyChangesConfigHelper.setNotApplicableSteps(new List<String>{'STEP10'}, new List<String>(), oscar);
-
-
-		Set<String> setFields = AMS_AgencyChangesConfigHelper.getFieldsToMigrate( oscar, new List<Map<String, String>>{new Map<String, String>{'B_Name' => 'false'}});
-
-
-		System.assertEquals('Name', AMS_AgencyChangesConfigHelper.getFieldSetsToMigrate(new Map<String, String>{'Fields to Migrate' => 'Name'})[0]);
-		System.assertEquals(null, AMS_AgencyChangesConfigHelper.getFieldSetsToMigrate(new Map<String, String>{'No Fields' => 'Name'}));
-
-		System.assertEquals('Name', AMS_AgencyChangesConfigHelper.getManagerDisapprovalChangeCode(new Map<String, String>{'Manager disapproval' => 'Name'}));
-		System.assertEquals('Name', AMS_AgencyChangesConfigHelper.getWithdrawalChangeCode(new Map<String, String>{'Application withdrawal' => 'Name'}));
-
-	}
+	@isTest
+	static void testChangeOfOwnershipNonIATABuysHOandSomeBranches(){}
+	@isTest
+	static void testChangeOfOwnershipIATABuysAllHierarchy(){}
+	@isTest
+	static void testChangeOfOwnershipIATABuysSomeBranches(){}
+	@isTest
+	static void testChangeOfOwnershipIATABuysHOandSomeBranches(){}
 }

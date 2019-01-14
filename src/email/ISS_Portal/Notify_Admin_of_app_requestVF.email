@@ -1,0 +1,90 @@
+<messaging:emailTemplate subject="- {!$Label.ISSP_Email_AccessTo} {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_IATA_EasyPay, relatedTo.Portal_Application__r.Name)} {!$Label.ISSP_Email_ServiceRequested}" 
+language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Portal_Application_Right__c" >
+
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/>--><BR/>
+
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+
+<BR/>
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP, $Label.ISSP_Email_DearAdmin)}        
+<BR/>
+
+<BR/>
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_Email_AppReq_BeInformed, $Label.ISSP_Email_AppReq_BeInformed)}
+<BR/>
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), "", relatedTo.Portal_Application__r.Name)}
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')
+,$Label.ISSP_AMS_Name &" : "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName
+,$Label.ISSP_Email_AppReq_From &" "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName & " - IATA code of the requester location: "& relatedTo.Contact__r.IATA_Code__c
+)}
+<BR/>
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')
+,$Label.ANG_ISSP_e_mail_address &" : "& relatedTo.Contact__r.Email
+, ""    
+)}
+
+
+<BR/>
+
+{!IF(relatedTo.Portal_Application__r.Name = "Join BSP / CASS"
+, $Label.ISSP_APrequest_AdminEmail1 &" "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName &", "& $Label.ISSP_APrequest_AdminEmail2
+, IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')
+, ""
+, $Label.ISSP_Email_PleaseProcess 
+))}
+
+<apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">
+  <BR/>
+  <BR/>  
+  {!$Label.ANG_ISSP_Notify_Admin_app_req_1}
+  
+  <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_AccessToService?mid=M4S2&ListViewName=ISSP_Pending_Approval">{!$Label.ISSP_Email_Here}</a>  
+  
+  {!$Label.ANG_ISSP_Notify_Admin_app_req_2}
+</apex:outputPanel>
+
+<BR/>
+<BR/>
+
+<apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">
+  {!IF(relatedTo.Portal_Application__r.Name = "Join BSP / CASS", $Label.ISSP_Email_AppReq_AccessRequest2, $Label.ISSP_Email_AppReq_AccessRequest )}
+  <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_AccessToService?mid=M4S2&ListViewName=ISSP_Pending_Approval">{!$Label.ISSP_Email_Here}</a>.<BR/>
+  <BR/>
+  {!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
+  <BR/>
+  {!$Label.ISSP_Email_IataService}<BR/>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{! BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">
+  <BR/>
+  {!$Label.LAQ_Thankyou},<BR/>
+  <BR/>
+  {!$Label.ISSP_Email_IataService}<BR/>
+</apex:outputPanel>
+
+<p>
+
+<apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}" layout="block">
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/>
+</a>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}" layout="block">
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w00000056QFS&oid=00D2000000008TF "/>
+</apex:outputPanel>
+
+</p>
+
+<apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
+<BR/>
+
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

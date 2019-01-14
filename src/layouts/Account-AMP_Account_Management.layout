@@ -5,6 +5,7 @@
     <customButtons>Web_App_View</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
@@ -51,7 +52,7 @@
                 <field>TradeName__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Website</field>
             </layoutItems>
             <layoutItems>
@@ -85,7 +86,7 @@
                 <field>Airline_Prefix__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>IATATrainingUrl__c</field>
             </layoutItems>
             <layoutItems>
@@ -95,6 +96,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Region_formula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IFG_Member__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -232,10 +241,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SAP_BW_report_with_sales_figures__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SAP_BW_report_without_sales_figures__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -413,6 +418,17 @@
         <fields>ParentId</fields>
         <fields>IATA_ISO_Country__c</fields>
     </miniLayout>
+    <relatedLists>
+        <fields>FULL_NAME</fields>
+        <fields>CONTACT.TITLE</fields>
+        <fields>CONTACT.EMAIL</fields>
+        <fields>CONTACT.PHONE1</fields>
+        <relatedList>RelatedContactList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Account_Domain__c.Account__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>

@@ -8,7 +8,7 @@ public with sharing class clsMassCaseCreationController {
     List<SelectOption> options = new List<SelectOption>();
     //Fill based on regions
     //Americas       where Region__c=:'Americas'
-    for (IATA_ISO_Country__c iso : [select Id, AIMS_Area_Name__c, ISO_Code__c from IATA_ISO_Country__c  order by AIMS_Area_Name__c]) {
+    for (IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'AIMS_Area_Name__c')) {
       options.add(new SelectOption(iso.AIMS_Area_Name__c, iso.AIMS_Area_Name__c));
     }
 
@@ -391,7 +391,7 @@ public with sharing class clsMassCaseCreationController {
         soql += ' and Account.Fin_statements_submission_deadline__c LIKE \'' + String.escapeSingleQuotes(yearend) + '%\'';
 
       // Location Type AO/HO/BR filter
-      soql += ' and (Account.Location_Type__c LIKE \'AO%\' OR Account.Location_Type__c LIKE \'HO%\' OR Account.Location_Type__c LIKE \'BR%\')';
+      soql += ' and (Account.Location_Type__c LIKE \'AO%\' OR Account.Location_Type__c LIKE \'HO%\' OR Account.Location_Type__c LIKE \'BR%\' OR Account.Location_Type__c LIKE \'HE%\' OR Account.Location_Type__c LIKE \'AE%\')';
 
       // exclude opened cases
       if (exclOpenCases.equals('true'))
@@ -404,6 +404,8 @@ public with sharing class clsMassCaseCreationController {
       //openCasesReportURL = '/00OR0000000k0QE?';   //'/00OR0000000k06s?';  // ID of the report
 
       soql += ' and (((Account.Reinstated_Date__c = null or Account.Reinstated_Date__c < :sixMonthsAgo) and Account.Category__c = \'IATA Passenger Sales Agent\') or Account.Category__c != \'IATA Passenger Sales Agent\') ';
+      soql += ' and Account.ANG_Accreditation_Model__c <> \'Cashless\''; // NEWGEN-1079';
+
       system.debug(LoggingLevel.ERROR, 'QUERY: ' + soql);
 
       List<Report> r = [SELECT Id FROM Report where DeveloperName = 'IFAP_Agents_with_Open_Closed_cases' limit 1];
@@ -423,7 +425,7 @@ public with sharing class clsMassCaseCreationController {
       else if (email.equals('2'))
         openCasesReportURL += 'pn5=e';  // equals
       //openCasesReportURL += 'pv6=';     // Email equals/not equals null
-      List<IATA_ISO_Country__c> couutryName = [select Name from IATA_ISO_Country__c where Id = :country limit 1];
+      List<IATA_ISO_Country__c> couutryName = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{country});
       
       //openCasesReportURL += '&pv6=' + EncodingUtil.urlEncode(String.escapeSingleQuotes(country).trim(), 'UTF-8'); // provide the country
       openCasesReportURL += '&pv6=' + EncodingUtil.urlEncode(String.escapeSingleQuotes(couutryName[0].Name).trim(), 'UTF-8'); // provide the country
@@ -479,7 +481,7 @@ public with sharing class clsMassCaseCreationController {
     String yearend = Apexpages.currentPage().getParameters().get('yearend');  //phase 1 release 2
     String targetFinancialYear = Apexpages.currentPage().getParameters().get('targetFinancialYear');  // phase 4
 
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
     // search for agents that have closed cases for the same financial year
     String soql = 'select c.Contact.Account.Id, c.Contact.Account.Name from Case c where c.RecordTypeId=\'' + IFAPcaseRecordTypeID + '\' and c.Status = \'Closed\' and c.IFAP_Financial_Year__c = \'' + targetFinancialYear + '\' and c.Contact.Account.name != null and c.Contact.Account.IATACode__c != null and c.Contact.Financial_Assessment_Contact__c = true';
@@ -540,7 +542,10 @@ public with sharing class clsMassCaseCreationController {
       soql += ' and c.Contact.Account.Fin_statements_submission_deadline__c LIKE \'' + String.escapeSingleQuotes(yearend) + '%\'';
 
     // Location Type HO/ AO filter
-    soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\')';
+    soql += ' and (c.Contact.Account.Location_Type__c LIKE \'AO%\' OR c.Contact.Account.Location_Type__c LIKE \'HO%\' OR c.Contact.Account.Location_Type__c LIKE \'BR%\' OR c.Contact.Account.Location_Type__c LIKE \'HE%\' OR c.Contact.Account.Location_Type__c LIKE \'AE%\' )';
+
+    soql += 'and c.Contact.Account.ANG_Accreditation_Model__c <> \'Cashless\''; // NEWGEN-1079
+
     casesQuery = soql;
 
     for (Case c : Database.query(soql)) {
@@ -554,7 +559,7 @@ public with sharing class clsMassCaseCreationController {
 
   // Create case without sending Emails
   public PageReference MassCaseCreate() {
-    MassCaseCreation(false);
+    MassCaseCreation('no email');
     System.debug('**** MassCaseCreate');
 
     return null;
@@ -562,9 +567,16 @@ public with sharing class clsMassCaseCreationController {
 
   // Create cases (The case created by this function will be flagged as "Agent to be notified (Email)")
   public PageReference MassCaseCreateSendEmail() {
-    MassCaseCreation(true);
+    MassCaseCreation('email');
     System.debug('**** MassCaseCreateSendEmail');
 
+    return null;
+  }
+  
+  // Create cases (The case created by this function will be flagged as "Agent to be notified (Tracked Email)")
+  public PageReference MassCaseCreateSendTrackedEmail() {
+    MassCaseCreation('tracked email');
+        System.debug('**** MassCaseCreateSendTrackedEmail');
     return null;
   }
 
@@ -621,9 +633,9 @@ public with sharing class clsMassCaseCreationController {
     set{}
   }
 
-  private void MassCaseCreation(Boolean SendEmail) {
+  private void MassCaseCreation(String sendEmail) {
 
-    System.debug('**** Sendemail ' + SendEmail);
+    System.debug('**** Sendemail ' + sendEmail);
     refreshCheckMap();
     List<String> lstContactId = new List<String>();
     List<String> lstContactName = new List<String>();
@@ -649,25 +661,23 @@ public with sharing class clsMassCaseCreationController {
           EmailTemplate__c[] templates = [SELECT name, Id, IATA_ISO_Country__r.Id FROM EmailTemplate__c WHERE id = : caseParam.EmailTemplate__c and recordType.Name = 'IFAP' limit 1];
           if (templates.size() > 0 ) templateName = templates[0].name;
 
-          if (!SendEmail) {
-
+          if(sendEmail == 'email'){
+            IFAP_BusinessRules.massCreateCase(lstContactId, batch.Id, 'Agent Notified (Email)', CaseParameter.Subject, CaseParameter.Description,
+                                              CaseParameter.Financial_Review_Type__c, CaseParameter.Deadline_Date__c, CaseParameter.EmailTemplate__c, CaseParameter.IFAP_Financial_Year__c,
+                                              CaseParameter.IFAP_Financial_Month__c, templateName, openCasesReportURL, IFAP_CanCreateWhileClosedCase);
+          }
+          else if(sendEmail == 'tracked email'){
+            IFAP_BusinessRules.massCreateCase(lstContactId, batch.Id, 'Agent Notified (Tracked Email)', CaseParameter.Subject, CaseParameter.Description,
+                                              CaseParameter.Financial_Review_Type__c, CaseParameter.Deadline_Date__c, CaseParameter.EmailTemplate__c, CaseParameter.IFAP_Financial_Year__c,
+                                              CaseParameter.IFAP_Financial_Month__c, templateName, openCasesReportURL, IFAP_CanCreateWhileClosedCase);
+          }
+          else {
             IFAP_BusinessRules.massCreateCase(lstContactId, batch.Id, 'Agent to be Notified', CaseParameter.Subject,
                                               CaseParameter.Description, CaseParameter.Financial_Review_Type__c,
                                               CaseParameter.Deadline_Date__c, CaseParameter.EmailTemplate__c,
                                               CaseParameter.IFAP_Financial_Year__c, CaseParameter.IFAP_Financial_Month__c,
                                               templateName, openCasesReportURL, IFAP_CanCreateWhileClosedCase);
-
           }
-
-
-          else {
-
-            IFAP_BusinessRules.massCreateCase(lstContactId, batch.Id, 'Agent Notified (Email)', CaseParameter.Subject, CaseParameter.Description,
-                                              CaseParameter.Financial_Review_Type__c, CaseParameter.Deadline_Date__c, CaseParameter.EmailTemplate__c, CaseParameter.IFAP_Financial_Year__c,
-                                              CaseParameter.IFAP_Financial_Month__c, templateName, openCasesReportURL, IFAP_CanCreateWhileClosedCase);
-
-          }
-
 
           batch = [Select Name From BatchNumber__c Where id = : batch.Id limit 1];
           isCreateCasesIsDisabled = true;

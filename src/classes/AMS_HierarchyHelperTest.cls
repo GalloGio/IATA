@@ -1,5 +1,5 @@
 @isTest
-private class AMS_HierarchyHelperTest {
+public class AMS_HierarchyHelperTest {
 
 	public static Account HO;
 	public static List<Account> secondLevel;
@@ -15,7 +15,7 @@ private class AMS_HierarchyHelperTest {
 	// This method will create a 3 level hierarchy. NOTE: this is working correctly if howMany3rdLevelAgencies <= howManyBranches
 	public static void initHierarchy(Integer howManyBranches, Integer howMany3rdLevelAgencies){
 
-		ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
 		insert italy;
 		
@@ -236,7 +236,7 @@ static testMethod void migrateAccountsToExistingHierarchyTestScenario1() {
         initHierarchy(5, 0);
 
         //Create head office
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account HO2 = new Account(RecordTypeId = rtAgency, Name = 'My Target Travels', IATAcode__c = '5555550', 
                          Sector__c = SECTORPAX, Category__c = CATEGORYPAX, Location_Class__c = LOCCLASSPAX, Location_Type__c = 'HO',
                          Status__c = AMS_Utils.ACC_S9_APPROVED);
@@ -358,11 +358,12 @@ static testMethod void migrateAccountsToExistingHierarchyTestScenario1() {
 
     static testMethod void childrenSelection() {
         initHierarchy(1, 0);
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         AMS_OSCAR__c oscar = new AMS_Oscar__c(Process__c = AMS_Utils.VOLRELINQUISH, Account__c = HO.Id);
         insert oscar;
-
-        insert new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = secondLevel[0].Id);
+		//DTULLO: Added Record Type
+        insert new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = secondLevel[0].Id, RecordTypeId = rtAgencyInvolved);
 
         Test.startTest();
 
@@ -370,6 +371,23 @@ static testMethod void migrateAccountsToExistingHierarchyTestScenario1() {
 
         Test.stopTest();
 
+    }
+
+    static testMethod void createProcessDetailForAllHierarchy() {
+        initHierarchy(1,0);
+
+        AMS_OSCAR__c oscar = new AMS_Oscar__c(Process__c = AMS_Utils.VOLRELINQUISH, Account__c = HO.Id);
+        insert oscar;
+
+        Test.startTest();
+
+        AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, HO.Id);
+
+        Integer nrPD = Database.countQuery('SELECT count() FROM AMS_Process_Detail__c WHERE Oscar__c = \'' + oscar.Id + '\'');
+
+        System.assertEquals(1, nrPD);
+
+        Test.stopTest();
     }
 
 }

@@ -13,12 +13,40 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Accreditation_Model__c</fullName>
+        <description>Accreditation Model</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Accreditation Model</inlineHelpText>
+        <label>Accreditation Model</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Apply_to_hierarchy__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Apply to hierarchy</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Billable_Location_Class__c</fullName>
+        <description>Location Class To include if the Change code is Billable
+Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;
+Values must be Separated by &quot;;&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Location Class To include if the Change code is Billable
+Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;
+Values must be Separated by &quot;;&quot;</inlineHelpText>
+        <label>Billable Location Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Billable__c</fullName>
@@ -91,6 +119,44 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Calculate_BG_to_HO__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Defines if bank guarantee should be calculated and presented for this change code.</inlineHelpText>
+        <label>Calculate BG to HO</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Calculate_End_Grace_Period_Date__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked End of Grace Period will be displayed on eBulletin</inlineHelpText>
+        <label>Calculate End Grace Period Date</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Calculate_Outstanding_Amount__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked the Outstanding Amount column on eBulletin report will display a value</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked the Outstanding Amount column on eBulletin report will display a value</inlineHelpText>
+        <label>Calculate Outstanding Amount</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Calculate_Termination_Date__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, Termination Date field on Change Code will be populated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, Termination Date field on Change Code will be populated</inlineHelpText>
+        <label>Calculate Termination Date</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Change_Code__c</fullName>
         <externalId>false</externalId>
         <label>Change Code</label>
@@ -112,12 +178,32 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Clear_Expiry_Date__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Clear Expiry Date</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Clear_Irregularities__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Clear Irregularities</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Extra_memo_text_for_HO__c</fullName>
+        <description>Message to be added to memo text if Account is Parent and has active childs</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Message to be added to memo text if Account is Parent and has active childs</inlineHelpText>
+        <label>Extra memo text for HO</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Field1Values__c</fullName>
@@ -250,6 +336,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Generate_Irregularity_Sequence__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked the irregularity sequence will be displayed on eBulletin</inlineHelpText>
+        <label>Generate Irregularity Sequence</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Integration_RecId__c</fullName>
         <description>Value for RecId on the Integration process with SAP PI, 3 possible values: A (Addition), C (Change) and D (Termination)</description>
         <externalId>false</externalId>
@@ -319,8 +414,17 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Skip_Agency_Update__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines if the change code should or should not be picked by the DPC integration</description>
+        <externalId>false</externalId>
+        <label>Skip Agency Update</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Used_By_CNS__c</fullName>
-        <defaultValue>true</defaultValue>
+        <defaultValue>false</defaultValue>
         <description>If false, means the change code is not generated for CNS agencies</description>
         <externalId>false</externalId>
         <inlineHelpText>If false, means the change code is not generated for CNS agencies</inlineHelpText>
@@ -329,5 +433,241 @@
         <type>Checkbox</type>
     </fields>
     <label>AMS Change Codes</label>
+    <listViews>
+        <fullName>ALL</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Published_in_bulletin__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field2__c</columns>
+        <columns>Field3__c</columns>
+        <columns>Field4__c</columns>
+        <columns>Field5__c</columns>
+        <columns>Field6__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Clear_Irregularities__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>ALL</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Billable_CC</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Billable__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Integration_RecId__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Billable__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>AMS Billable CC</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_NOT</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Billable__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Integration_RecId__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Billable_Location_Class__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>RCR,RTR,RTE,REI</value>
+        </filters>
+        <label>AMS_NOT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_debug</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Billable__c</columns>
+        <columns>Billable_Location_Class__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Integration_RecId__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>SETUP_OWNER_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>RCR,CHO</value>
+        </filters>
+        <label>AMS_debug</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>CNS</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Calculate_Outstanding_Amount__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Used_By_CNS__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>CNS</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>CNS_JG</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Bulletin_Memo_Text2__c</columns>
+        <columns>Bulletin_Memo_Text3__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_status_change__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>CNS_JG</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>NG_RB</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>ANG</value>
+        </filters>
+        <label>NG_RB</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Not_Applicable_to_CNS</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Billable__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Integration_RecId__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Billable_Location_Class__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Used_By_CNS__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>Not Applicable to CNS</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Risk_Change_Code_R4</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Calculate_Outstanding_Amount__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <columns>Accreditation_Model__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Risk_ChangeCode__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Risk Change Code (R4)</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Risk_Change_Code_R4_NOT</fullName>
+        <columns>NAME</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Class_Type__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>Calculate_Outstanding_Amount__c</columns>
+        <columns>Field1__c</columns>
+        <columns>Field1Values__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Risk_ChangeCode__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>equals</operation>
+            <value>NOT</value>
+        </filters>
+        <label>Risk Change Code (R4) - NOT</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

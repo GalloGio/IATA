@@ -1,0 +1,194 @@
+<!--
+    This button uploads a file or a list of files to amazon (to the bucket defined in the amazon credential)
+    and, if success, creates an Amazonfile__c record per file
+    INSTRUCTIONS:
+    Add this component, only once, in a page, inside apex:form
+    From parent page call runClickAction(sobjectId, amazonCredentialName, amazonFileModel, multiple)
+        sobjectId: parent object Id
+        amazonCredentialName: name of the amazon credential
+        amazonFileModel: AmazonFile__c record used as a modle for the new record will be created after this upload
+        multiple: accept more than one file true/false
+    You can overwrite these methods:
+        onStart() to show a loading image
+        onStop() to hode loading image
+        onAfterUpload(amazonfileid) action called after the amazonfile was created, giving its id
+-->
+
+<apex:component controller="UploadFileToAmazonButtonCtrl" allowDML="true" >
+
+    <apex:includeScript value="/soap/ajax/33.0/connection.js"/>
+    <apex:includeScript value="/soap/ajax/33.0/apex.js"/>
+
+    <script>
+    if(typeof jQuery=="undefined") {
+        var headTag = document.getElementsByTagName("head")[0];
+        var jqueryScript = document.createElement("script");
+        jqueryScript.type = "text/javascript";
+        jqueryScript.src = "{!$Resource.jquery2_1_4}";
+        headTag.appendChild(jqTag);
+        var jqueryUIScript = document.createElement("script");
+        jqueryUIScript.type = "text/javascript";
+        jqueryUIScript.src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js";
+        headTag.appendChild(jqueryUIScript);
+    }
+    </script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
+
+    <script>
+        if (typeof window.onStart === 'undefined') {
+            window.onStart = function() {}
+        }
+        if (typeof window.onStop === 'undefined') {
+            window.onStop = function() {}
+        }
+        if (typeof window.onAfterUpload === 'undefined') {
+            window.onAfterUpload = function(amazonFileId) {
+                onStop();
+            }
+        }
+
+        var _amazonFileModel;
+        // adding onclick action to upload button
+        function runClickAction(sobjectId, amazonCredentialName, amazonFileModel, multiple) {
+            _amazonFileModel = amazonFileModel;
+            var fileInput;
+            if (multiple) {
+                fileInput = $("#file-field-multiple");
+            } else {
+                fileInput = $("#file-field-single");
+            }
+            fileInput.bind("change", function() {
+                onStart();
+                uploadFiles(this.files, sobjectId, amazonCredentialName);
+            });
+            fileInput.click();
+        }
+
+        // counter for uploaded files
+        var fileCounter = {
+            value: 0,
+            reset: function(val) {    value = val; },
+            refreshIfEmpty: function() {
+                value--;
+                if (value==0) onAfterUpload();
+            }
+        }
+
+        // onclick action, uploads a list of files
+        function uploadFiles(files, sobjectId, amazonCredentialName) {
+            try{
+                $( '#dialog' ).dialog('destroy');
+            }catch(err){}
+
+            fileCounter.reset(files.length);
+            $.each(files, function(i, file) {
+                uploadFile(file, sobjectId, amazonCredentialName);
+            });
+        }
+
+        // uploads a single file to Amazon
+        function uploadFile(file, sobjectId, amazonCredentialName) {
+            UploadFileToAmazonButtonCtrl.createUploadFile(sobjectId,file.name,file.type,file.size,amazonCredentialName, function(result, event){
+                if(event.type == "exception") {
+                    alert("Exception!!");
+                    onStop();
+                    fileCounter.refreshIfEmpty();
+                    return false;
+                }
+                if(!event.status) {
+                    alert("Bad status " + event.status);
+                    onStop();
+                    fileCounter.refreshIfEmpty();
+                    return false;
+                }
+                if( ! result["isSuccess"]){
+                    alert(result["errorMessage"].replace("&#39;","'").replace("&amp", "&").replace(";",""));
+                    onStop();
+                    fileCounter.refreshIfEmpty();
+                    return false;
+                }
+                var wrapperFileUpload = result;
+                var reader = new FileReader();
+                reader.readAsArrayBuffer(file);
+                reader.onload = function(e) {
+                    var arrayBuffer = reader.result;
+                    remoteFunctionPut(wrapperFileUpload, file, reader.result);
+                };
+            }, {buffer: true, escape: true, timeout: 120000} );
+        }
+
+        // actual call to PUT, where the file is being uploaded
+        function remoteFunctionPut(wrapperFileUpload, file, fileBody) {
+            sforce.connection.sessionId = "{!$Api.Session_ID}";
+            sforce.connection.init("{!$Api.Session_ID}", wrapperFileUpload.amazonFilePath);
+            var xhr = new XMLHttpRequest();
+            // salesforce overrides original XMLHttpRequest in IE
+            if (!xhr.upload && window.Sarissa && window.Sarissa.originalXMLHttpRequest) {
+                xhr = new Sarissa.originalXMLHttpRequest();
+            }
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    fileCounter.refreshIfEmpty();
+                    var status = this.status;
+                    if (status == 200) {
+                    } else {
+                        if (this.responseText) {
+                            alertResponse(this.responseText);
+                        } else {
+                            var message = '';
+                            if (this.statusText) {
+                                message = 'Status: '+this.status+'. Error: '+this.statusText;
+                            }
+                            else if (this.responseText) {
+                                message = 'Status: '+this.status+'. Error: '+this.responseText;
+                            }
+                            else {
+                                message = 'Status:'+this.status+'. Error: Unknown error.';
+                            }
+                        }
+                    }
+                }
+            };
+
+            xhr.open("PUT", wrapperFileUpload.amazonFilePath);
+            xhr.setRequestHeader("Cache-Control", "no-cache");
+            xhr.setRequestHeader("Authorization",wrapperFileUpload.authorization);
+            xhr.setRequestHeader("X-Amz-Date",wrapperFileUpload.timestamp);
+            xhr.setRequestHeader("Content-Type",file.type+';charset=UTF-8');
+            xhr.send(fileBody);
+
+            callToCreateAmazonFileObject(file, wrapperFileUpload.sobjectId, wrapperFileUpload.fullFileName);
+        }
+
+        // show response in an alert
+        function alertResponse(response) {
+            parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(response, "text/xml");
+            if (xmlDoc.getElementsByTagName("Message")[0].childNodes[0].nodeValue) {
+                alert('Amazon File couldn\'t be saved');
+                console.log('Error. Message from Amazon S3: '+xmlDoc.getElementsByTagName("Message")[0].childNodes[0].nodeValue);
+                onStop();
+            }
+        }
+
+        // After the file upload, call controller to create an amazonfile record
+        function callToCreateAmazonFileObject(file, sobjectId, path) {
+            onStart();
+            UploadFileToAmazonButtonCtrl.createAmazonFileObject(
+                path,
+                file.size,
+                sobjectId,
+                _amazonFileModel,
+                function(result, event){
+                    onAfterUpload(result);
+                }
+            );
+        }
+    </script>
+
+    <input id="file-field-single" name="file" style="display: none;" type="file" />
+    <input id="file-field-multiple" multiple="true" name="file" style="display: none;" type="file" />
+
+</apex:component>

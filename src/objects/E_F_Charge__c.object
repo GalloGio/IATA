@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Describes the charges collected in the framework of an E&amp;F Asset</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
@@ -82,25 +79,30 @@
         <fullName>Code__c</fullName>
         <externalId>false</externalId>
         <label>Code</label>
-        <picklist>
-            <picklistValues>
-                <fullName>XF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EF - Boarding Br</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>EF - Landing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>XF</fullName>
+                    <default>false</default>
+                    <label>XF</label>
+                </value>
+                <value>
+                    <fullName>EF - Boarding Br</fullName>
+                    <default>false</default>
+                    <label>EF - Boarding Br</label>
+                </value>
+                <value>
+                    <fullName>EF - Landing</fullName>
+                    <default>false</default>
+                    <label>EF - Landing</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Collected__c</fullName>
@@ -135,4 +137,5 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

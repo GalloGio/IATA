@@ -28,7 +28,7 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
         con.OwnerId = newUser.Id;
         update con;
 
-		String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
         Case c=new Case(Subject='test 1',Status='Open', AccountId=child.id, ContactId=con.id,Region__c = 'Europe', RecordTypeId = recordTypeId , Topic__c = 'Accreditation_Travel_Agent__c' ,subTopic__c = 'MITA Interline Agreements' , isComplaint__c = false ) ;
         insert c;
 
@@ -47,9 +47,7 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
 		insert cs_rt;
 		System.debug('SOS1 cs_rt ' + cs_rt);
         System.runAs(newUser)
-        {
-			
-
+        {		
 			ApexPages.StandardController sc = new ApexPages.StandardController(con);
 			ApexPages.currentPage().getParameters().put('Id',c.id);
 			ISSP_internal_Case_topic_subtopic ctrl = new ISSP_internal_Case_topic_subtopic(sc);
@@ -65,11 +63,18 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
 
 			ctrl.topic = '1';
 			ctrl.subtopic = 'TIESS Banking';
-			ctrl.SaveTopicSubtopic();
-			 
-			//ctrl.ChangemodeMethod();
-			
+			ctrl.SaveTopicSubtopic();			 
+            
+            ctrl.myTopic = '123';
+            ctrl.topic = '';
+            ctrl.subtopic = '';
+            ctrl.SaveTopicSubtopic();
+            ctrl.topic = '1';
+            ctrl.addDecsription();   
+            ctrl.isEditMode = true;         
+			ctrl.ChangemodeMethod();			
 		}
+
 		Test.stopTest();
 	}
 

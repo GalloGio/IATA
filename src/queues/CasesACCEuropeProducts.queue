@@ -3,6 +3,14 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>kruysm@iata.org</email>
     <name>Cases - ACC Europe Products</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>HUBMadrid</publicGroup>
+        </publicGroups>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>IDFSEuropeRegionalOfficeI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

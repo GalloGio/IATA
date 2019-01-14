@@ -5,7 +5,7 @@ public class AMS_GDP_Integration_Handler {
 
     private static String ERROR_MESSAGE = 'Error: ';
     private static String SUCCESS_MESSAGE = 'Success: ';
-    private static String DATE_FORMAT = 'YYYY-MM-DD';
+    @testVisible private static String DATE_FORMAT = 'YYYY-MM-DD';
 
     /** 
      *
@@ -194,7 +194,6 @@ public class AMS_GDP_Integration_Handler {
             updateField(aSF, 'WebStar_ID__c', a.EXTERNALID, fMap);
             updateField(aSF, 'Last_re_inspection_date__c', a.VERIFICATIONDATE, fMap);
             updateField(aSF, 'Original_approval_date__c', a.RC, fMap);
-            updateField(aSF, 'Endorsed_Accredited_By__c', getSfId('GDP_Reference_Table__c', 'Code__c', a.ORGABBR), fMap);
             updateField(aSF, 'Status__c', getSfId('GDP_Reference_Table__c', 'Code__c', a.STATUS), fMap);
             updateField(aSF, 'Date__c', a.EFFECTIVEDATE, fMap);
             updateField(aSF, 'Class__c', getSfId('GDP_Reference_Table__c', 'Code__c', a.ORGCLASS), fMap);
@@ -239,10 +238,7 @@ public class AMS_GDP_Integration_Handler {
         
             List<sObject> sObjs = Database.query('select Id from '+sObj+' where '+field+'= \''+param.trim().toUpperCase()+'\'');
             
-            if(sObjs.size() > 0) {
-            
-                return sObjs[0].Id;
-            }
+            if(sObjs.size() > 0) return sObjs[0].Id;
         }
         
         return null;
@@ -258,15 +254,11 @@ public class AMS_GDP_Integration_Handler {
         String fieldType = fMap.get(fieldName).getDescribe().getType().Name();
         String DATE_SEPARATOR = (DATE_FORMAT == null ? null : (DATE_FORMAT.contains('/') ? '/' : '-'));
 
-        if(fieldValueParam == null || fieldValueParam == ''){
-            
-            sObj.put(fieldName, null);
-        }else if(fieldType == 'DATE'){ 
+        if(fieldValueParam == null || fieldValueParam == '') sObj.put(fieldName, null);
+        else if(fieldType == 'DATE'){ 
                 
-            if(DATE_FORMAT == null){
-                
-                sObj.put(fieldName, (fieldValue == null ? null : Date.valueOf(fieldValue)));    
-            }else{
+            if(DATE_FORMAT == null) sObj.put(fieldName, (fieldValue == null ? null : Date.valueOf(fieldValue)));    
+            else{
                 
                 List<String> dtList = fieldValue.split(DATE_SEPARATOR);
                 List<String> dtFormatList = DATE_FORMAT.split(DATE_SEPARATOR);
@@ -288,27 +280,13 @@ public class AMS_GDP_Integration_Handler {
 
                 sObj.put(fieldName, Date.valueOf(dtOutputList[2]+'-'+dtOutputList[1]+'-'+dtOutputList[0])); 
             }
-        }else if(fieldType == 'DATETIME'){
-            
-            sObj.put(fieldName, (fieldValue == null ? null : Datetime.valueOf(fieldValue)));
-        }else if(fieldType == 'DECIMAL' || fieldType == 'CURRENCY'){
-            
-            sObj.put(fieldName, (fieldValue == null ? null : Decimal.valueOf(fieldValue)));
-        }else if(fieldType == 'INTEGER'){
-            
-            sObj.put(fieldName, (fieldValue == null ? null : Integer.valueOf(fieldValue)));
-        }else if(fieldType == 'LONG'){
-            
-            sObj.put(fieldName, (fieldValue == null ? null : Long.valueOf(fieldValue)));
-        }else if(fieldType == 'DOUBLE'){
-            
-            sObj.put(fieldName, (fieldValue == null ? null : Double.valueOf(fieldValue)));
-        }else if(fieldType == 'BOOLEAN'){
-            
-            sObj.put(fieldName, (fieldValue.toUpperCase() == 'TRUE'));
-        }else{// String
-            
-            sObj.put(fieldName, fieldValue);
         }
+        else if(fieldType == 'DATETIME') sObj.put(fieldName, (fieldValue == null ? null : Datetime.valueOf(fieldValue)));
+        else if(fieldType == 'DECIMAL' || fieldType == 'CURRENCY') sObj.put(fieldName, (fieldValue == null ? null : Decimal.valueOf(fieldValue)));
+        else if(fieldType == 'INTEGER') sObj.put(fieldName, (fieldValue == null ? null : Integer.valueOf(fieldValue)));
+        else if(fieldType == 'LONG') sObj.put(fieldName, (fieldValue == null ? null : Long.valueOf(fieldValue)));
+        else if(fieldType == 'DOUBLE') sObj.put(fieldName, (fieldValue == null ? null : Double.valueOf(fieldValue)));
+        else if(fieldType == 'BOOLEAN') sObj.put(fieldName, (fieldValue.toUpperCase() == 'TRUE'));
+        else sObj.put(fieldName, fieldValue);
     }
 }

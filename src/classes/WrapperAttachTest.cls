@@ -73,7 +73,29 @@ public class WrapperAttachTest {
 		aFile = [Select isPublic__c, SystemModstamp, Size_MB__c, OwnerId, Name, LastModifiedDate, LastModifiedById, IsDeleted, Id, 
                  		Full_Name_Unique__c, File_Identifier__c, Description__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId, 
                  		ConnectionReceivedId, Case__c, CreatedBy.Name, File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, 
-                 		RecordType.DeveloperName, Internal_Comments__c, Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c, EF_Private__c
+                 		RecordType.DeveloperName, Internal_Comments__c, Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c, EF_Private__c,
+                 		AMS_Updated_By__c, AMS_Updated_Date__c
+                 From AmazonFile__c where id = :aFile.Id];
+		
+		list<AmazonRest.S3File> s3Files = AmazonRest.getListFiles(filename,AmazonCredentials.getCredentials('GenericAttach') );
+		
+		return new AmazonFile(s3Files[0], aFile);
+	}
+
+	public static AmazonFile createAmazonFile(ISSP_External_Report__c er, String filename) {
+
+		AmazonFile__c aFile = new AmazonFile__c(
+			Full_Name_Unique__c = filename,
+			sObject_Id__c = er.Id,
+			isPublic__c = True
+		);
+		insert aFile;
+		
+		aFile = [Select isPublic__c, SystemModstamp, Size_MB__c, OwnerId, Name, LastModifiedDate, LastModifiedById, IsDeleted, Id, 
+                 		Full_Name_Unique__c, File_Identifier__c, Description__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId, 
+                 		ConnectionReceivedId, Case__c, CreatedBy.Name, File_Identifier_picklist__c, Review_Status__c, Source__c, RecordTypeId, 
+                 		RecordType.DeveloperName, Internal_Comments__c, Document_Date__c, Category__c, Subcategory__c, Expiry_Date__c, Expired__c, SAP_Number__c, Skip_Validation__c, EF_Private__c,
+                 		AMS_Updated_By__c, AMS_Updated_Date__c
                  From AmazonFile__c where id = :aFile.Id];
 		
 		list<AmazonRest.S3File> s3Files = AmazonRest.getListFiles(filename,AmazonCredentials.getCredentials('GenericAttach') );

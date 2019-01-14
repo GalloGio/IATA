@@ -4,8 +4,8 @@ private class TriggerIFAPAfterClassTEst {
     
      static testMethod void AssessmentPerformedTest() {
             
-            ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-            ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'); 
+            ID hqrt =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+            ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'); 
             
             IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
             insert isoCountry;
@@ -20,6 +20,7 @@ private class TriggerIFAPAfterClassTEst {
             insert a;
             
             Contact con =new contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = a.id,
                                      Financial_Assessment_Contact__c = true);
@@ -37,7 +38,7 @@ private class TriggerIFAPAfterClassTEst {
                               contactid = con.id,
                               AccountId = a.id,
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'very good'                                                    
+                              Financial_Review_Result__c = 'Satisfactory - No Action'                                                    
                               );
             
             insert c;

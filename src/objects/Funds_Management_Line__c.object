@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>This object is in a master-detail with the Airline Suspension object and will contain the information in the funds management overview table: amounts due by the airline and amounts held by IATA in favour of the airline.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -135,21 +132,25 @@
         <description>Use &quot;Held&quot; for amounts held by IATA in favour of the airline and &quot;Duet&quot; for amounts due by the airline.</description>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Held</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Due</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Held</fullName>
+                    <default>false</default>
+                    <label>Held</label>
+                </value>
+                <value>
+                    <fullName>Due</fullName>
+                    <default>false</default>
+                    <label>Due</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>Funds Management Line</label>
     <nameField>
@@ -170,4 +171,5 @@
 )</errorConditionFormula>
         <errorMessage>The due amount needs to be a negative value.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

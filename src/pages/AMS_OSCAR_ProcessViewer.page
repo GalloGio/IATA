@@ -12,7 +12,25 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
 <!-- tooltip resources -->
 <apex:stylesheet value="{!URLFOR($Resource.AMS_Tooltip,'jquery.qtip.css')}"/>
 <apex:includeScript value="{!URLFOR($Resource.AMS_Tooltip, 'jquery.qtip.min.js')}"/>
-<apex:includeScript value="/support/console/36.0/integration.js"/>
+<apex:includeScript value="/support/console/42.0/integration.js"/>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+
+<script type="text/javascript" language="javascript">
+    if(jQuery) {
+        //jQuery.noConflict();
+        j$ = jQuery.noConflict();
+
+    }
+</script>
+
+<script>
+  j$( function() {
+    j$( "#tabs" ).tabs();
+  } );
+  </script>
+
+
 <script type="text/javascript">           
         function refreshTab(){
             if (sforce.console.isInConsole()) {
@@ -166,7 +184,52 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
            };
            sforce.console.getEnclosingPrimaryTabId(openSubtab);
         }
+
+        function doRun(action,args) {
+
+
+            if(action == 'generateIataCode'){
+
+                var r = confirm("This process will do the following: \n\r IATA Code Generation \n\r Data migration to the Agency \n\r Generation of Change Code (NEW) \n\r Due Diligence Case (if conditions apply) \n\r\n\r Do you wish to proceed ?");
+
+                if (r != true){
+                    return 'false';
+                }
+
+                document.getElementById('loaderPageBlockSTEP10').style.display = 'block';
+
+            }   
+
+            setTimeout(function(){
+                
+                
+                if(action == 'aNG_RestrictFOP' ){
+
+                   var restictCC = document.getElementById("ANG_Restrict_Credit_Card__c").children[0].children[0].checked;
+                   var restictCA = document.getElementById("ANG_Restrict_Cash__c").children[0].children[0].checked;
+                   
+                   args += ', ' + restictCC; 
+                   args += ', ' + restictCA;
+
+                }   
+
+                if(action == 'aNG_RestoreFOP' ){
+
+                   var restictCC = document.getElementById("ANG_Restore_Credit_Card__c").children[0].children[0].checked;
+                   var restictCA = document.getElementById("ANG_Restore_Cash__c").children[0].children[0].checked;
+                   
+                   args += ', ' + restictCC; 
+                   args += ', ' + restictCA;
+
+                } 
+
+                 buildFunctionCall(action,args);
+            },10);
+        }
+
     </script>
+
+
 
 <style>
 
@@ -226,7 +289,7 @@ h1{
 }
 
 .overlay p, ul, li {
-    padding: 8px;
+    padding: 0 0 8px 0;
     text-decoration: none;
     font-size: 22px;
     color: #818181;
@@ -239,7 +302,6 @@ h1{
     color: #818181;
     text-align: left;
     display: block; /* Display block instead of inline */
-    line-height: 30%;
 }
 
 /* Start by setting display:none to make this hidden.
@@ -274,6 +336,67 @@ body.loading {
    modal element will be visible */
 body.loading .modal {
     display: block;
+}
+
+/*Blocks specific steps*/
+.sectionWrapper{ position: relative; }
+.sectionBlocker{
+    position: absolute;
+    top: 0; 
+    bottom: 0; 
+    right: 0; 
+    left: 0; 
+    opacity: 0.85;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.85);
+    z-index: 95;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+}
+
+.warningRed{
+    font-weight: bold;
+    color: red;
+}
+
+body .bPageBlock .pbBody .red .pbSubheader{
+    background-color:#c00000;
+}
+body .bPageBlock .pbBody .green .pbSubheader{
+    background-color:#008000;
+}
+body .bPageBlock .pbBody .blue .pbSubheader{
+    background-color:#01AAE8;
+}
+
+.loaderCircle {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  display: block;
+  margin: 0 auto;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.datePicker{
+    z-index: 999999 !important;
 }
 
 </style>
@@ -321,13 +444,19 @@ function buildFunctionCall(func, argList){
         argList = argList.replace('[','');
         argList = argList.replace(']','');
     }
+    if(argList.indexOf('accountNameFromOscar') > -1){
+        accountName = "{!oscar.Account__r.Name}";
+        argList = argList.replace('accountNameFromOscar', accountName);
+        argList = argList.replace('[','');
+        argList = argList.replace(']','');
+    }
     
     dyn_functions[func](argList);
 }
 </script>
     
 <script>
-    $( document ).ready(function() {
+    j$( document ).ready(function() {
         var imgs = document.getElementsByTagName('img');
         var arrayLength = imgs.length;
         for (var i = 0; i < arrayLength; i++) {
@@ -339,7 +468,17 @@ function buildFunctionCall(func, argList){
     });
 </script>
 
-<apex:pageBlock rendered="{!oscar == null}">
+<div id="tabs">
+<apex:outputPanel rendered="{!oscar.Process__c == 'ANG.ANNUAL.REVALIDATION'}">
+    <ul>
+        <li><a href="#tabs-1">Process</a></li>
+        <li><a href="#tabs-2">Hierarchy</a></li>
+      </ul>
+</apex:outputPanel>
+
+<div id="tabs-1">
+
+<apex:pageBlock rendered="{!oscar.Account__c == null}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">UNAVAILABLE</p>
@@ -353,16 +492,35 @@ function buildFunctionCall(func, argList){
     <div class="overlay-content">
         <p style="font-size: 36px;">LOCKED</p>
         <p>In order to proceed please fill the following fields in the Account Information section: 
-            <ul>
-                <li>Account Name</li>
-                <li>* Specify Legal Status (except for MSO process)</li>
-                <li>Location Class</li>
-                <li>Country</li>
-                <li>Street name and number</li>
-                <li>Location Type</li>
-                <li>City</li>
-                <li>Email (except for MSO process)</li>
-                <li>Phone (except for MSO process)</li>
+            <ul style="background: none; border: none;font-weight:normal;padding-left: 40px;">
+                <div>Account Name</div>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <div>* Specify Legal Status (except for MSO process)</div>
+                </apex:outputText>
+                <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
+                    <div>* Specify Legal Status</div>
+                </apex:outputText>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <div>Location Class</div>
+                </apex:outputText>
+                <div>Country</div>
+                <div>Street name and number</div>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <div>Location Type</div>
+                </apex:outputText>
+                <div>City</div>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <div>Office Email (except for MSO process)</div>
+                    <div>Office Phone (except for MSO process)</div>
+                </apex:outputText>
+                <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
+                    <div>Office Email</div>
+                    <div>Office Phone</div>
+                    <!--<li>Remittance Frequency</li>-->
+                </apex:outputText>
+                <apex:outputText rendered="{!OR(AND(NOT(isNotNewGenProcess),NOT(isNewGenHEProcess)), isAMSCheckRemittance)}">
+                    <li>Remittance Frequency</li>
+                </apex:outputText>
             </ul>
         </p>
       </div>
@@ -378,109 +536,190 @@ function buildFunctionCall(func, argList){
     </div>
 </apex:pageBlock>
 
-<apex:form id="oscarForm" rendered="{!IF(oscar != null && oscar.Process__c!=null ,true, false)}">
-    <apex:outputPanel id="theProcess">
-    <apex:pageBlock >
-        <apex:variable var="p" value="{!process[oscar.Process__c]}" />
-            <apex:repeat value="{!p.flows}" var="flow">
-                <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="true" columns="3">
-                    <apex:repeat value="{!flow.steps}" var="step">
-                        <apex:pageBlockSectionItem dataStyle="width: 40px;">
-                            <apex:outputPanel >
-                                <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
-                                    <apex:image value="{!IF((step.isDependent), URLFOR($Resource.AMS_Icons, 'dependent_wrench.jpg'), URLFOR($Resource.AMS_Icons, 'wrench.jpg'))}"/><br></br>
-                                </a>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                        <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;">
-                            <apex:outputPanel >
-                                <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
-                                    <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
-                                        <apex:outputText value="{!$Label[step.label]}"/>
-                                    </a>
-                                </div>
-                            </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                        <apex:pageBlockSectionItem >
-                            <apex:outputPanel >
-                                <apex:image value="{!URLFOR($Resource.AMS_Icons, statusIcons[step.name])}" styleClass="hasTooltip"/>
-                                <div class="hidden">
-                                    <p><b>{!statusLabel[step.name]}</b><br/>
-                                       <!--<i>Other info: TO BE DEFINED</i>!--></p> 
-                                </div>
-                        </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                    </apex:repeat>
-                </apex:pageBlockSection>
-            </apex:repeat>
-        </apex:pageBlock>
-    </apex:outputPanel>
-    
-    
-    <apex:variable var="p" value="{!process[oscar.Process__c]}" />
-    <apex:repeat value="{!p.flows}" var="flow">
-        <apex:repeat value="{!flow.steps}" var="step">
-            <div id="inline{!step.name}" style="display:none;">
-                <h1><apex:outputText value="{!$Label[step.label]}"/></h1><br/><br/>
-                <h2><apex:outputText value="Actions" rendered="{!IF(step.actions.size > 0, true, false)}"/></h2>
-                    
-                <apex:repeat value="{!step.actions}" var="action">
-                    <br/>
-                    <apex:commandButton onclick="buildFunctionCall('{!action.functionName}','{!action.args}');" value="{!$Label[action.actionLabel]}" onComplete="refreshTab();"/>
-                    <br/>
-                </apex:repeat>
-                
-                <apex:repeat value="{!step.displayFields}" var="sf">
-                    <br/><h2>{!stepFieldsData[sf].fieldLabel}</h2>
-                    <div id="{!sf}">                        
-                        <apex:outputPanel rendered="{!$ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable}">
-                            <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
-                            <apex:selectList size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
-                                <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
-                            </apex:selectList>
-                        </apex:outputPanel>
-                        
-                        <apex:outputPanel rendered="{!NOT($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable)}">
-                            <apex:outputField value="{!oscar[sf]}" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
-                            <apex:selectList disabled="true" size="1" rendered="{!stepFieldsData[sf].picklistvalues != null}" >
-                                <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
-                            </apex:selectList>
-                        </apex:outputPanel>
-                    </div>
-                </apex:repeat>
-                
-                <br/>
-                <apex:commandButton value="Save" onclick="invokeWS(this);" onComplete="refreshTab();"/>
-                <apex:commandButton value="Cancel" onClick="lightcase.lightcaseClose();"/>
-                <div class="modal"><br/><br/><br/><br/><br/><br/>Please Wait!<!-- Place at bottom of page --></div>
-            </div>
-        </apex:repeat>
-    </apex:repeat>
-    </apex:form>
+    <apex:form id="oscarForm" rendered="{!IF(oscar != null && oscar.Process__c!=null ,true, false)}">
+        <apex:outputPanel id="theProcess">
+            <apex:pageBlock >
+                <apex:variable var="p" value="{!process[oscar.Process__c]}" />
+                <apex:repeat value="{!p.flows}" var="flow">
+                    <apex:pageBlockSection ><!-- Fake section to force SF to inject the twistSection() JS code, which is not injected anymore because of the new outputpanel below, used for colors --></apex:pageBlockSection>
 
+                    <apex:outputPanel styleClass="{!flowColors[p.name + flow.name]}">
+                    <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="{!collapsibleMap[p.name + flow.name]}" columns="1">
+                        <apex:outputPanel layout="block" styleClass="sectionWrapper">
+                            <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name]}">
+                                <p>{!$Label.AMS_Due_Diligence_Lock}</p>
+                            </apex:outputPanel>
+                            <apex:pageBlockSection columns="3">
+                                <apex:repeat value="{!flow.steps}" var="step">
+                                    <apex:pageBlockSectionItem dataStyle="width: 40px;">
+                                        <apex:outputPanel >
+                                            <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
+                                                <apex:image value="{!IF((step.isDependent), URLFOR($Resource.AMS_Icons, 'dependent_wrench.jpg'), URLFOR($Resource.AMS_Icons, 'wrench.jpg'))}"/><br></br>
+                                            </a>
+                                        </apex:outputPanel>
+                                    </apex:pageBlockSectionItem>
+                                    <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;">
+                                        <apex:outputPanel >
+                                            <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
+                                                <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
+                                                    <apex:outputText value="{!$Label[step.label]}"/>
+                                                </a>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </apex:pageBlockSectionItem>
+                                    <apex:pageBlockSectionItem >
+                                        <apex:outputPanel >
+                                            <apex:image value="{!URLFOR($Resource.AMS_Icons, statusIcons[step.name])}" styleClass="hasTooltip"/>
+                                            <div class="hidden">
+                                                <p><b>{!statusLabel[step.name]}</b><br/>
+                                                   <!--<i>Other info: TO BE DEFINED</i>!--></p> 
+                                            </div>
+                                        </apex:outputPanel>
+                                    </apex:pageBlockSectionItem>
+                                </apex:repeat>
+                            </apex:pageBlockSection>
+                        </apex:outputPanel>
+                    </apex:pageBlockSection>
+                    </apex:outputPanel>
+                </apex:repeat>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        
+        <apex:variable var="p" value="{!process[oscar.Process__c]}" />
+        <apex:repeat value="{!p.flows}" var="flow">
+            <apex:repeat value="{!flow.steps}" var="step">
+                <div id="inline{!step.name}" style="display:none;">
+               
+
+                <div Id="loaderPageBlock{!step.name}" style="display:none;">
+                    <div class="overlay">
+                         <div class="overlay-content">
+                            <p style="font-size: 18px;color:#FFFFFF">Processing...</p>
+                        </div>
+                      <div class="loaderCircle"></div>
+                    </div>
+                </div>
+
+
+                    <h1><apex:outputText value="{!$Label[step.label]}"/></h1><br/><br/>
+
+                   <!-- <h2><apex:outputText rendered="{!step.name == 'STEP2' && isNewgenRT}" styleClass="warningRed" value="{!$Label['ANG_OSCAR_WARNING_RISK']}"> </apex:outputText></h2>
+                    <br />-->
+
+                    <h2><apex:outputText value="Actions" rendered="{!IF(step.actions.size > 0, true, false)}"/></h2>
+                        
+                    <apex:repeat value="{!step.actions}" var="action">
+                        <br/>
+                        <apex:commandButton onclick="doRun('{!action.functionName}','{!action.args}');" value="{!$Label[action.actionLabel]}" onComplete="refreshTab();"/>
+                        <br/>
+                    </apex:repeat>
+                    
+                    <apex:repeat value="{!step.displayFields}" var="sf">
+                        <br/><h2>{!IF(OR(stepFieldsData[sf].fieldLabel != 'Financial assessment opt-in / opt-out',NOT(hideFAoptOut)),stepFieldsData[sf].fieldLabel,'')}</h2>
+                        <div id="{!sf}">                        
+                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel != 'Comments', NOT(AND(stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', OR(blockFAoptOut, hideFAoptOut))))}">
+                                <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
+                                <apex:selectList disabled="{!NOT(isValidationCompleted) && step.name == 'STEP2'}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
+                                    <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
+                                </apex:selectList>
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel rendered="{!NOT($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable)}">
+                                <apex:outputField value="{!oscar[sf]}" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
+                                <apex:selectList disabled="true" size="1" rendered="{!stepFieldsData[sf].picklistvalues != null}" >
+                                    <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
+                                </apex:selectList>
+                            </apex:outputPanel>
+
+                            <!--NEWGEN-1989 workaround: Comments should be disabled for analysts -->
+                            <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Comments', NOT(isAnalystProfile))}">
+                                <apex:inputField value="{!oscar[sf]}" styleClass="inputElem"/>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Comments', isAnalystProfile)}">
+                                <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" html-disabled=""/>
+                            </apex:outputPanel>
+
+                            <!--NEWGEN-1088 -->                       
+                        <apex:outputPanel rendered="{!AND($ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable, stepFieldsData[sf].fieldLabel == 'Financial assessment opt-in / opt-out', blockFAoptOut, NOT(hideFAoptOut))}">
+                                <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" html-disabled=""/>
+                            </apex:outputPanel>
+
+                        </div>
+                    </apex:repeat>
+                    
+                    <br/>
+                    <apex:commandButton value="Save" onclick="invokeWS(this);" onComplete="refreshTab();"/>
+                    <apex:commandButton value="Cancel" onClick="lightcase.lightcaseClose();"/>
+                    <div class="modal"><br/><br/><br/><br/><br/><br/>Please Wait!<!-- Place at bottom of page --></div>
+                </div>
+            </apex:repeat>
+        </apex:repeat>
+        </apex:form>
+
+  </div>
+    <div id="tabs-2">
+        <apex:outputPanel rendered="{!oscar.Process__c == 'ANG.ANNUAL.REVALIDATION'}">
+            <c:ANG_OscarHierarchyViewer />  
+        </apex:outputPanel>
+    </div>
+</div>
 
 <script>
 
     var clickedId;
 
-    $(document).ready(function() {
-
-        /* This is basic - uses default settings */
-        $(".lightbox").lightcase();
+    /*** AMSU-113 Start ***/
+    function removePCIelements() {
+        if("{!isToRemoveFieldsUI}" == "true") {
+            var nodes = j$("#inlineSTEP6")[0].childNodes;
+            if(nodes) {
+                for(var i = 0; i<nodes.length; i++) {
+                    var node = nodes[i];
+                    if(node.id && node.id.indexOf("PCI") >= 0) {
+                        var node_1 = j$(nodes[i-1]);
+                        var node_2 = j$(nodes[i-2]);
+                        var node_3 = j$(nodes[i-3]);
+                        node_1.remove();
+                        node_2.remove();
+                        node_3.remove();
+                        j$(node).remove();
+                    }
+                }
+            }
+        }
         
-    });
+        if("{!isPCICompliant}" == "true") {
+            var picklist = $("select.inputElem option[value='Yes']").parent();
+            
+            $("#Is_PCI_compliant__c select.inputElem option[value='Not Applicable']").remove();
+                    
+        }
+        
+    }
+    /*** AMSU-113 End ***/
+
+    j$(document).ready(function() {
+        /* This is basic - uses default settings */
+        j$(".lightbox").lightcase();
+        
+    });    
     
     function clicked(item) {
-        clickedId = "inline" + $(item).attr("id");
+        clickedId = "inline" + j$(item).attr("id");
+
+        /*** AMSU-113 Start ***/
+        removePCIelements();
+        /*** AMSU-113 End ***/
     }
 
-    $('.hasTooltip').each(function() {
-        $(this).qtip({
+    j$('.hasTooltip').each(function() {
+        j$(this).qtip({
             content: {
-                text: $(this).next('div') // Use the "div" element next to this for the content
+                text: j$(this).next('div') // Use the "div" element next to this for the content
             },
             position: {
-                viewport: $(window),
+                viewport: j$(window),
                 my: 'top left',
                 at: 'bottom left',
             },

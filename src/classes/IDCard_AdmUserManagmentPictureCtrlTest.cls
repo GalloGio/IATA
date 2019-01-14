@@ -42,11 +42,10 @@ private class IDCard_AdmUserManagmentPictureCtrlTest {
         insert awsk_prd;
 
         
-        Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-            Map<string,Id> idcardAppRT =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'ID_Card_Application__c'}).get('ID_Card_Application__c');
-
-        Id rtidca = idcardAppRT.get('Single_ID_Card_Operation');
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        
+        Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c','Single_ID_Card_Operation');
 
       IATA_ISO_Country__c isoc = new IATA_ISO_Country__c( Name = 'Australia',
                     ISO_Code__c = '12',
@@ -124,12 +123,12 @@ private class IDCard_AdmUserManagmentPictureCtrlTest {
         idcards.add(new ID_Card__c (Related_Contact__c = cs[0].id,
                                 Valid_To_Date__c = date.today().addDays(40),
                                 Name_on_ID_Card__c = 'nameidcard',
-                                Card_status__c = 'Approved',
+                                Card_status__c = 'Sent ID Card',
                                 VER_Number__c = '111'));
         idcards.add(new ID_Card__c (Related_Contact__c = cs[2].id,
                                 Valid_To_Date__c = date.today().addDays(40),
                                 Name_on_ID_Card__c = 'nameidcard',
-                                Card_status__c = 'Approved',
+                                Card_status__c = 'Sent ID Card',
                                 VER_Number__c = '333'));
 
         insert idcards;
@@ -168,30 +167,30 @@ private class IDCard_AdmUserManagmentPictureCtrlTest {
         insert idcs;
 
 
-      	cont = new List<Contact>();
-		cont.add(new Contact(VER_number_2__c = '86667',FirstName = 'twelve', LastName = 'Contact',  BirthDate = date.today(), AccountId = a.id,   Phone = '+41 56767867678', Email = 'twelve@contact.com', Date_of_birth__c = date.today().addYears(-30),ID_Card_Holder__c = true,RecordTypeId = rtcon));
-		cont.add(new Contact(VER_number_2__c = '346457',FirstName = 'thirteen', LastName = 'Contact',  BirthDate = date.today(), AccountId = a.id,   Phone = '+41 56767867678', Email = 'twelve@contact.com', Date_of_birth__c = date.today().addYears(-30),ID_Card_Holder__c = true,RecordTypeId = rtcon));
-		cont.add(new Contact(VER_number_2__c = '34422',FirstName = 'fourteen', LastName = 'Contact',  BirthDate = date.today(), AccountId = a.id,   Phone = '+41 56767867678', Email = 'twelve@contact.com', Date_of_birth__c = date.today().addYears(-30),ID_Card_Holder__c = true,RecordTypeId = rtcon));
-		cont.add(new Contact(VER_number_2__c = '45642',FirstName = 'fifteen', LastName = 'Contact',  BirthDate = date.today(), AccountId = a.id,   Phone = '+41 56767867678', Email = 'twelve@contact.com', Date_of_birth__c = date.today().addYears(-30),ID_Card_Holder__c = true,RecordTypeId = rtcon));
-		insert cont;
+        cont = new List<Contact>();
+    cont.add(new Contact(VER_number_2__c = '86667',FirstName = 'twelve', LastName = 'Contact',  BirthDate = date.today(), AccountId = a.id,   Phone = '+41 56767867678', Email = 'twelve@contact.com', Date_of_birth__c = date.today().addYears(-30),ID_Card_Holder__c = true,RecordTypeId = rtcon));
+    cont.add(new Contact(VER_number_2__c = '346457',FirstName = 'thirteen', LastName = 'Contact',  BirthDate = date.today(), AccountId = a.id,   Phone = '+41 56767867678', Email = 'twelve@contact.com', Date_of_birth__c = date.today().addYears(-30),ID_Card_Holder__c = true,RecordTypeId = rtcon));
+    cont.add(new Contact(VER_number_2__c = '34422',FirstName = 'fourteen', LastName = 'Contact',  BirthDate = date.today(), AccountId = a.id,   Phone = '+41 56767867678', Email = 'twelve@contact.com', Date_of_birth__c = date.today().addYears(-30),ID_Card_Holder__c = true,RecordTypeId = rtcon));
+    cont.add(new Contact(VER_number_2__c = '45642',FirstName = 'fifteen', LastName = 'Contact',  BirthDate = date.today(), AccountId = a.id,   Phone = '+41 56767867678', Email = 'twelve@contact.com', Date_of_birth__c = date.today().addYears(-30),ID_Card_Holder__c = true,RecordTypeId = rtcon));
+    insert cont;
 
 
-		promo = new List<Promotion__c>();
-		Promotion__c promotion1 = new Promotion__c();
+    promo = new List<Promotion__c>();
+    Promotion__c promotion1 = new Promotion__c();
         promotion1.Promotion_Value__c = 50;
         promotion1.Promotion_Duration_Valid_From__c = Date.today().addDays(-365);
         promotion1.Promotion_Duration_Valid_Up_to__c = Date.today().addDays(365);
-       	promotion1.Promotion_Code__c = 'PROMOP';
-       	promotion1.Type_of_Application__c = 'New;Reissue';
+         promotion1.Promotion_Code__c = 'PROMOP';
+         promotion1.Type_of_Application__c = 'New;Reissue';
         promo.add(promotion1);
         insert promo;
 
 
-		List<ID_Card_Application__c> idCardApps = new List<ID_Card_Application__c>();
-		idCardApps.add(IDCardApplicationFactory.createIdCardApplicationForSpecificAccount(cs.get(0),a, 'New'));
-		idCardApps.add(IDCardApplicationFactory.createIdCardApplicationForSpecificAccount(cs.get(1),a, 'Replacement'));
-		idCardApps.add(IDCardApplicationFactory.createIdCardApplicationForSpecificAccount(cs.get(2),a, 'Reissue'));
-		idCardApps.add(IDCardApplicationFactory.createIdCardApplicationForSpecificAccount(cs.get(3),a, 'Reissue'));
+    List<ID_Card_Application__c> idCardApps = new List<ID_Card_Application__c>();
+    idCardApps.add(IDCardApplicationFactory.createIdCardApplicationForSpecificAccount(cs.get(0),a, 'New'));
+    idCardApps.add(IDCardApplicationFactory.createIdCardApplicationForSpecificAccount(cs.get(1),a, 'Replacement'));
+    idCardApps.add(IDCardApplicationFactory.createIdCardApplicationForSpecificAccount(cs.get(2),a, 'Reissue'));
+    idCardApps.add(IDCardApplicationFactory.createIdCardApplicationForSpecificAccount(cs.get(3),a, 'Reissue'));
         insert idCardApps;
 
         idCardApps[0].Promotion_Code__c = 'PROMOP';
@@ -248,18 +247,20 @@ private class IDCard_AdmUserManagmentPictureCtrlTest {
         }
         update idcards;
         ctrl = new IDCard_AdmUserManagmentPictureCtrl();
-        System.assertEquals(idCards[0].Photo__c, ctrl.PhotoFilename, 'value of idCardTemp.Photo__c should be set as PhotoFilename');
+        //System.assertEquals(idCards[0].Photo__c, ctrl.PhotoFilename, 'value of idCardTemp.Photo__c should be set as PhotoFilename');
+        // as of 14-12-2016, we're not using the existing photo name when updating the photo on an application, in order not to overwrite the historical image file (for situations where the application is not approved)
 
         // Neither the IDCardApplicationNR.id or the IDCardApplicationNR.Photo__c are null:
         ApexPages.currentPage().getParameters().put('VER',IDCardUtil.EncryptEncodeParameter('111'));
         ctrl = new IDCard_AdmUserManagmentPictureCtrl();
         idCardApps = [SELECT Id, Name, VER_Number__c, Photo__c, IATA_Code__c FROM ID_Card_Application__c WHERE VER_Number__c = '111'];
-        System.assertEquals(idCardApps[0].Photo__c, ctrl.PhotoFilename, 'value of IDCardApplicationNR.Photo__c should be set as PhotoFilename');
+        //System.assertEquals(idCardApps[0].Photo__c, ctrl.PhotoFilename, 'value of IDCardApplicationNR.Photo__c should be set as PhotoFilename');
+        // as of 14-12-2016, we're not using the existing photo name when updating the photo on an application, in order not to overwrite the historical image file (for situations where the application is not approved)
         System.assertEquals(idCardApps[0].IATA_Code__c, ctrl.IDCardApplicationNR.IATA_Code__c, 'The IATA Code on the application should be '+idCardApps[0].IATA_Code__c);
         System.assertEquals(a.IATACode__c, ctrl.IDCardApplicationNR.IATA_Code__c, 'The IATA Code on the application should be '+a.IATACode__c);
 
         //matches with idcard application promo code
-    	ctrl.IDCardApplicationNR.Promotion_Code__c = 'PROMOP';
+      ctrl.IDCardApplicationNR.Promotion_Code__c = 'PROMOP';
         List<String> itdiCourses = new List<String>();
         itdiCourses.add('Destination Geography - EN');
         itdiCourses.add('Geography in Travel Planning - EN');

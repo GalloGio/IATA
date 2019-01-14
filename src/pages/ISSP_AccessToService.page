@@ -1,38 +1,141 @@
 <apex:page controller="ISSP_AccessToService" tabStyle="Contact" action="{!initialization}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
  <div class="container">
- <c:ISSP_CustomNavigation />
+ <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!---------------------------------------------------------------------->
-    
+
+    <apex:stylesheet value="{!URLFOR($Resource.BootstrapCSS, 'css/bootstrap.min.css')}" />    
+
+    <!-- Load JS -->  
+    <script language="JavaScript1.2" src="/js/functions.js"></script>
+    <script src="/soap/ajax/9.0/connection.js" type="text/javascript"></script>
+    <script id="clientEventHandlersJS" language="javascript"></script>
+    <script src="{!URLFOR($Resource.BootstrapTable, 'bootstrap-table.min.js')}"></script>        
+
+    <script>
+
+      $contactStatus = '';
+      $contactId = '';
+      $serviceId = '';
+      //$accountId = '';
+      //$contactId = '';
+      //$contactName = '';
+      //$CannotBeManagedByPortalAdmin = '';
+      //$isEasyPayService = '';
+
+      function showReasonModalDeny(contactStatuslocal, contactIdLocal, serviceIdLocal) {
+        $contactStatus = contactStatuslocal;
+        $contactId = contactIdLocal;
+        $serviceId = serviceIdLocal;
+
+        $('[id$=serviceId]').val($serviceId);
+        $('[id$=contactId]').val($contactId);
+
+        $('#theReasonDeny').modal('show');
+      }
+
+      function showReasonModalGrant() {
+        //alert('2');
+        $('#theReasonGrant').modal('show');
+      }
+
+      function showConfirmModal(contactStatuslocal, contactIdLocal, serviceIdLocal) {
+
+        $contactStatus = contactStatuslocal;
+        $contactId = contactIdLocal;
+        $serviceId = serviceIdLocal;
+
+        $('[id$=serviceId]').val($serviceId);
+        $('[id$=contactId]').val($contactId);
+
+        if ($contactStatus == 'PA' || $contactStatus == 'NO' || $contactStatus == 'IN') {
+          $('#theConfirmModal').modal('show');
+          $("[id$=pendingApprovalMsg]").hide();
+          $("[id$=noUserMsg]").hide();
+          $("[id$=inactiveUserMsg]").hide();
+          $("[id$=confirmButton]").show();          
+
+          if($contactStatus == 'PA')
+            $("[id$=pendingApprovalMsg]").show();
+
+          if($contactStatus == 'NO')
+            $("[id$=noUserMsg]").show();
+
+          if($contactStatus == 'IN') {
+            $("[id$=inactiveUserMsg]").show();
+            $("[id$=confirmButton]").hide();
+          }
+
+        } else {
+          $('#theReasonGrant').modal('show');
+        }      
+      }      
+
+      function closeConfirmModal() {
+          $('#theConfirmModal').modal('hide');
+      }
+
+      function closeModalDeny(param) {
+        $('#theReasonDeny').modal('hide');
+        if(param != 'X') {
+          denyAccess();
+          startLoading();
+        }
+      }
+
+      function closeModalGrant(param) {
+        $('#theReasonGrant').modal('hide');
+        if(param != 'X' && $contactStatus != 'IN') {
+          grantAccess();
+          startLoading();
+        }
+      }
+
+      function onCompleteSave() {
+        endLoading();
+        refreshList();
+      }
+
+      function gotoIfap(accountId) {
+        window.location.href = "ISSP_AssignFinancialContact?id=" + accountId + "&MainNav=Services&mid=M4S2&subNav=Access";
+      }
+
+    </script>
+
+
     
     <style type="text/css">
-    a.alpha-link {
-       font-weight: normal;
-       font-size: 91%;
-       padding: 0 4px;
-       color: #015BA7 !important;
-    }
-     
-    a.alpha-link+a.alpha-link {
-       border-left: 1px solid #CFCECE;
-    }
-     
-    a.alpha-link:hover {
-       background-color: #e0f5fc !important;
-    }
-     
-    a.alpha-select {
-       font-weight: bold;
-       text-decoration: none;
-       background-color: #C6E1FF;
-       color: #000000 !important;
-    }
+      a.alpha-link {
+         font-weight: normal;
+         font-size: 91%;
+         padding: 0 4px;
+         color: #015BA7 !important;
+      }
+       
+      a.alpha-link+a.alpha-link {
+         border-left: 1px solid #CFCECE;
+      }
+       
+      a.alpha-link:hover {
+         background-color: #e0f5fc !important;
+      }
+       
+      a.alpha-select {
+         font-weight: bold;
+         text-decoration: none;
+         background-color: #C6E1FF;
+         color: #000000 !important;
+      }
     </style>
 
     <apex:form id="AccServiceListForm">
+
+    <apex:actionFunction name="denyAccess" action="{!denyAccess}" rerender="AccServices"/>
+    <apex:actionFunction name="grantAccess" action="{!grantAccess}" rerender="AccServices"/>
+    <apex:actionFunction name="refreshList" action="{!refreshList}" rerender="AccServices"/>
 
     <apex:actionFunction name="next" action="{!setCon.next}" rerender="AccServices" />
     <apex:actionFunction name="previous" action="{!setCon.previous}" rerender="AccServices" />
@@ -40,6 +143,12 @@
     <apex:actionFunction name="last" action="{!setCon.last}" rerender="AccServices" />
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="AccServiceListForm" />
     <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/> 
+
+<!--
+    <apex:actionPoller id="poller" action="{!permissionSetPoller}" reRender="bla" interval="5" enabled="{!pollerOn}" oncomplete="onCompleteSave();"/>
+    <apex:actionPoller id="poller" action="{!permissionSetPoller}" reRender="bla" interval="5" enabled="true" oncomplete="onCompleteSave();"/>    
+-->
+  
     <!-- <apex:pageMessages /> -->
     <h4>{!$Label.ISSP_Company_Administration} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
          {!$Label.ISSP_Access_to_services} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
@@ -60,21 +169,30 @@
         $('#testSelect').val( '{!selectedList}' );
     </script>
     
-    <apex:pageBlock id="AccServices" >    
-        <hr />
+    <apex:pageBlock id="AccServices" > 
+
+      <apex:actionPoller id="poller" action="{!permissionSetPoller}" reRender="bla" interval="5" enabled="{!pollerOn}" oncomplete="onCompleteSave();"/>
+
+        <!-- context menu -->
+
+        <div class="alert alert-danger" style="display:{!if(errorMessage.size==0 || errorMessage == null,'none','')}">
+          <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+            <p><apex:outputText value="{!er}" escape="false" /></p>
+          </apex:repeat>
+        </div>
+
+        <apex:inputHidden value="{!serviceId}" id="serviceId"/>
+        <apex:inputHidden value="{!contactId}" id="contactId"/>
+        <apex:inputHidden value="{!serviceName}" id="serviceName"/>
+        <apex:inputHidden value="{!contactStatus}" id="contactStatus"/>
+
+        <hr/>
         <apex:pageMessages escape="false"/>
-        <apex:pageBlockTable value="{!AccServiceList}" var="item" styleClass="table-hover  table table-condensed table-responsive">
-        
-            <apex:column > 
-                <apex:facet name="header" >
-                    {!$Label.ISSP_My_Contact_Action}
-                </apex:facet> 
-                <apex:outputLink value="/apex/ISSP_EditPortalServiceAccess?&mid=M4S2&Id={!item.recordAccService.Id}" target="_self" rendered="{!IF(item.recordAccService.Application_Name__c == 'IFAP',false,true)}">{!$Label.ISSP_Edit}</apex:outputLink> 
-                <apex:outputLink value="/apex/ISSP_EditPortalServiceAccess?&mid=M4S2&Id={!item.recordAccService.Id}" target="_self" rendered="{!IF(item.recordAccService.Application_Name__c == 'IFAP',true,false)}">{!$Label.ISSP_Edit}</apex:outputLink> 
-            </apex:column>
+
+        <apex:pageBlockTable value="{!AccServiceList}" var="item" styleClass="table-hover table table-condensed table-responsive" id="pbt_Services">
             
             <apex:repeat value="{!fields}" var="f">
-                  <apex:column >
+                  <apex:column>
                     <apex:facet name="header">
                        <apex:commandLink action="{!refresh}" >{!f.label}
                          <apex:outputPanel layout="none" rendered="{!AND(OR(sortExpression==f.FieldPath,AND(sortExpression=='Name',f.FieldPath=='Name')), sortDirection='ASC')}">&#9650;</apex:outputPanel>
@@ -88,21 +206,42 @@
                     </apex:outputpanel>
                     
                     <apex:outputpanel rendered="{!IF(f.label=='Portal Application Right Name',true,false)}"> 
-                     <apex:outputLink value="/apex/ISSP_PortalServiceAccess?Id={!item.recordAccService.Id}" target="_self">{!item.recordAccService.PortalServiceTranslatedName__c}</apex:outputLink>
+                     <apex:outputLink value="/apex/ISSP_PortalServiceAccess?Id={!item.recordAccService.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordAccService.PortalServiceTranslatedName__c}</apex:outputLink>
                     </apex:outputpanel>
                     
                     <apex:outputpanel rendered="{!IF(f.label=='Contact',true,false)}"> 
-                     <apex:outputLink value="/apex/ISSP_Contact?&mid=M4S1&Id={!item.recordAccService.Contact__c}" target="_self">{!item.recordAccService.Contact__r.name}</apex:outputLink>
+                     <apex:outputLink value="/apex/ISSP_Contact?&mid=M4S1&Id={!item.recordAccService.Contact__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordAccService.Contact__r.name}</apex:outputLink>
                     </apex:outputpanel>
                      
                     <apex:outputpanel rendered="{!IF(f.fieldPath=='Portal_Application__c',true,false)}">
-                    <apex:outputLink value="/apex/ISSP_PortalService?Id={!item.recordAccService.Portal_Application__c}" target="_self">{!item.recordAccService.PortalServiceTranslatedName__c}</apex:outputLink>
+                    <apex:outputLink value="/apex/ISSP_PortalService?Id={!item.recordAccService.Portal_Application__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordAccService.PortalServiceTranslatedName__c}</apex:outputLink>
                     </apex:outputpanel>
                   </apex:column>
             </apex:repeat>
-          
+
+            <apex:column headerValue="Actions" id="actionId" style="text-align: center;">
+              <apex:outputPanel rendered='{! NOT(item.hide)}'>
+                  <a href="#" class="btn btn-xs btn-success btn-block" style="margin-top: 3px; display:{!IF(item.showGrant,'','none')}"
+                    onclick="showConfirmModal('{!item.contactStatus}', '{!item.recordAccService.contact__c}', '{!item.recordAccService.Portal_Application__c}');">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Grant Access
+                  </a>
+                  <a href="#" class="btn btn-xs btn-danger btn-block" style="margin-top: 3px; display:{!IF(item.showDeny,'','none')}"
+                    onclick="showReasonModalDeny('{!item.contactStatus}', '{!item.recordAccService.contact__c}', '{!item.recordAccService.Portal_Application__c}');">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    Deny Access
+                  </a>
+                  <a href="#" class="btn btn-xs btn-primary btn-block" style="margin-top: 3px; display:{!IF(item.showIfap,'','none')}"
+                    onclick="gotoIfap('{!item.recordAccService.Account__c}');">
+                    <span class="glyphicon glyphicon-comment"></span>
+                    Assign IFAP Contact
+                  </a>
+              </apex:outputPanel>
+            </apex:column>
+
         </apex:pageBlockTable>
-   
+
+
         <div class="bottomNav" id="j_id0:YourListViewId_bottomNav">
            <div class="paginator">
               <span class="left">
@@ -150,12 +289,127 @@
            <div class="clearingBox"></div>
         </div>
         </apex:pageBlock> 
-       
+
+        <!-- Modal ask for reason Deny -->
+        <div class="modal fade" id="theReasonDeny">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">{!$Label.ISSP_Service_Approval_Rejection_Reason}</h4>
+              </div>
+              <div class="modal-body">
+                <apex:inputText value="{!denyReason}" StyleClass="form-control"   />
+              </div>
+              <div class="modal-footer">
+                <apex:commandButton onclick="closeModalDeny('A');" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                <apex:commandButton onclick="closeModalDeny('X');" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
+              </div>
+            </div>
+          </div>
+        </div>  
+
+        <div class="modal fade" id="theReasonGrant">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">{!$Label.ISSP_Service_Approval_Rejection_Reason}</h4>
+              </div>
+              <div class="modal-body">
+                <apex:inputText value="{!grantReason}"  StyleClass="form-control"/>
+              </div>
+              <div class="modal-footer">
+                <apex:commandButton onclick="closeModalGrant('A');" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                <apex:commandButton onclick="closeModalGrant('X');" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Modal confirm access grant -->
+        <div class="modal fade" id="theConfirmModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+
+                <apex:outputPanel id="pendingApprovalMsg">
+                  <h4 class="modal-title">
+                    <apex:outputText value="{!$Label.ISSP_GrantAccess_PendingApproval}"
+                      escape="false" />
+                  </h4>
+                </apex:outputPanel>
+
+
+                <apex:outputPanel id="noUserMsg">
+                  <h4 class="modal-title">
+                    <apex:outputText value="{!$Label.ISSP_GrantAccess_NoUser}"
+                      escape="false" />
+                  </h4>
+                </apex:outputPanel>
+
+                <apex:outputPanel id="inactiveUserMsg">
+                  <h4 class="modal-title">
+                    <apex:outputText value="{!$Label.ISSP_GrantAccess_InactiveUser}"
+                      escape="false" />
+                  </h4>
+                </apex:outputPanel>
+
+              </div>
+              <div class="modal-footer">
+                <apex:commandButton id='confirmButton' onclick="closeConfirmModal();showReasonModalGrant();" value="{!$Label.ISSP_Confirm}" rerender="pgBlock" StyleClass="btn btn_iata_success" />
+                <apex:commandButton onclick="closeConfirmModal();" value="{!$Label.ISSP_Cancel}"  rerender="pgBlock" StyleClass="btn btn-primary"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="load_scrl" class="loadingBox loader" style="display:none;"> </div>
+        <div class="loadingBox overlay"> </div>
+
+        <style>
+          .overlay {
+            display: none;
+            height: 100%;
+            left: 0;
+            position: fixed;
+            top: 0;
+            opacity: 0.3;
+            -moz-opacity: 0.3;
+            width: 100%;
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+            filter: alpha(opacity=30);
+            background: #000;
+            -khtml-opacity: 0.3;
+            z-index: 1000;
+          }
+          .loader {
+            background: url('/img/loading32.gif') scroll no-repeat 0 0;
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            left: 50%;
+            top: 150px;
+          }
+        </style>
+
+        <script type="text/javascript">
+          function startLoading() {
+            //$("html, body").animate({ scrollTop: 0 }, "slow");
+            //$('#load_scrl').css('top', $(document).scrollTop());
+            $('.loadingBox').show();
+          }
+          function endLoading() {
+            $('.loadingBox').hide();
+          }
+
+        </script>
+
+
      </apex:form>
     <!---------------------------------------------------------------------->
 
 
-    <c:ISSP_CustomFooter />
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
     </body>
     </html>

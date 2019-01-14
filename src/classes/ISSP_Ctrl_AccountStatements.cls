@@ -1,16 +1,90 @@
-public without sharing class ISSP_Ctrl_AccountStatements {
+@RestResource(urlMapping='/newgenapp/v1/iceGetBalances/*')
+global class ISSP_Ctrl_AccountStatements {
 
 	public static final String APP_NAME = 'ICE – IATA Customer E-Statement';
 
 	public ContentVersion faq {get;set;}
 	public ContentVersion document {get;set;}
-	public Account headofficeAccount {get; set;}
+	public Account account {get; set;}
+    public Account headofficeAccount {get; set;}
 	public DateTime lastUpdatedOn {get; set;}
 	public list<Account_Statement__c> listStatements {get; set;}
 	public list<WrapperStatement> listWrapper {get; set;}
     public list<String> listCurrency {get; set;}
 	public list<String> listMessages {get; set;}
 	private User currentUser;
+    public Portal_Application_Right__c appRight {get; set;}
+	public String accountSelectedId {get; set;}
+	public String accountStatementSelectedId {get; set;}
+	public String accountSelectedName {get; set;}
+	public String accountStatementPeriod {get; set;}
+	public String billingAmount {get; set;}
+	public String amazonFileName {get; set;}
+	public Boolean showPopUp {get; set;}
+	public List<AmazonFile__c> listAttachments
+	{
+		get
+		{
+			if(accountSelectedId!= null && amazonFileName != null && listAttachments == null)
+			{
+				listAttachments = AmazonFile.getAccountRelatedAmazonFiles(accountSelectedId, amazonFileName);
+				for(AmazonFile__c recordAux : listAttachments)
+					{
+						String fileName = recordAux.Full_Name_Unique__c;
+						fileName = fileName.split('/')[2];
+						recordAux.Full_Name_Unique__c = fileName;
+					}
+			}
+			return listAttachments;
+		}
+		set;
+	}
+	public Id amazonRecordTypeId
+	{
+		get{
+			Id RecordTypeId;
+			RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('File');
+			if (rtInfo != null) {
+				RecordTypeId = rtInfo .getRecordTypeId();
+			}
+			return RecordTypeId;
+		}
+	}
+	public static final String amazonFileStartName
+	{
+		get
+		{
+			return AmazonFile.ICE_proofOfPayment;
+			//return 'ICE POP';
+		}
+	}
+	public static final String amazonFileNameIdentifier
+	{
+		get
+		{
+			return amazonFileStartName.replace(' ','_');
+		}
+	}
+	public List<String> treePlacesCurrency{
+		get{
+			if (treePlacesCurrency == null) {
+				treePlacesCurrency = new List<String>();
+				Set<String> treePlacesCurrencySet = new Set<String>();
+				List<CurrencyType> treePlacesCurrList = new List<CurrencyType>();
+				treePlacesCurrList = [select id, IsoCode, DecimalPlaces from CurrencyType where DecimalPlaces = 3];
+				for (CurrencyType crrncTp : treePlacesCurrList) {
+					if(!treePlacesCurrencySet.contains(crrncTp.IsoCode)){
+						treePlacesCurrencySet.add(crrncTp.IsoCode);
+						treePlacesCurrency.add(crrncTp.IsoCode);
+					}
+				}
+				return treePlacesCurrency;
+			} else {
+				return treePlacesCurrency;
+			}
+		}
+		set;
+	}
 
 	/**
 		Start actions, check rights and terms and conditions
@@ -18,12 +92,17 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 	public PageReference initActions() {
 		try {
 			String strId = this.currentUser.ContactId;
-			Portal_Application_Right__c appRight = [
-				Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c, Right__c
+			this.appRight = [
+				Select Id, Terms_Acceptance__c, Terms_Acceptance_Date__c, Right__c, Enable_Notifications__c,
+				ICCS_Currency_Center_Current_Visit__c, ICCS_Currency_Center_Previous_Visit__c
 				From Portal_Application_Right__c
 				Where ContactId__c = :strId.left(15)
 				And Portal_Application__r.Name = :APP_NAME
 			];
+			// update visit Fields
+			this.appRight.ICCS_Currency_Center_Previous_Visit__c = this.appRight.ICCS_Currency_Center_Current_Visit__c;
+			this.appRight.ICCS_Currency_Center_Current_Visit__c = System.now();
+			update this.appRight;
 			// If user has no rights to access to Account statements app then is redirected to Home
 			if (appRight.Right__c!='Access Granted') {
 				Pagereference pageref = new PageReference('/ISSP_Homepage');
@@ -50,17 +129,24 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		return URL.getSalesforceBaseUrl().toExternalForm();
 	}
 
+    public Pagereference updateAppRight() {
+        update this.appRight;
+        return null;
+    }
+
 	/**
 		CONSTRUCTOR
 	**/
 	public ISSP_Ctrl_AccountStatements() {
 		this.faq = getContentDoc('IATA Customer E-Statement (ICE)');
 		this.document = getContentDoc('IATA Customer E-Statement (ICE) User Guide');
-
+		this.showPopUp = false;
 		this.listMessages = new list<String>();
 		// get current user
 		this.currentUser = [
-			Select Id, ContactId, Contact.AccountId, Contact.Account.Status__c
+			Select Id, ContactId, Contact.AccountId, Contact.Account.Status__c,
+				Contact.Account.Sector__c,Contact.Name,
+				Contact.Account.Country_ISO_Code__c
 			From User
 			Where id = :UserInfo.getUserId()];
 
@@ -73,20 +159,37 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		}
 
 		// get HQ account
-		Id parentAccountId = getMaxParentAccount(this.currentUser.Contact.AccountId);
+		this.account = this.currentUser.Contact.Account;
+		Id parentAccountId = getMaxParentAccount(this.account.Id);
 		this.headofficeAccount = [Select Id, IATACode__c from Account where id = :parentAccountId];
 		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
 
-
-
 		// get Account Statements related with all accounts in the hierarchy
 		this.listStatements = [
-			Select Id, Period__c, Operation__c, Name, Key__c, CurrencyIsoCode, Account__c, Amount_to_be_Paid__c, Balance__c, Billing_Amount__c, Paid__c, Remittance_Date__c, Status__c, Billing_Adjustment__c, Group__c, Account__r.Site, LastModifiedDate
-			From Account_Statement__c
-			Where Account__c in :listAccount
-			And Remittance_Date__c >= :getMinimumRemmitanceDateToSearch(listAccount)
-			Order By Remittance_Date__c desc, Operation__c asc];
-
+							Select Id,
+								   Period__c,
+								   Operation__c,
+								   Name,
+								   Key__c,
+								   CurrencyIsoCode,
+								   Account__c,
+								   Amount_to_be_Paid__c,
+								   Balance__c,
+								   Billing_Amount__c,
+								   Paid__c,
+								   Remittance_Date__c,
+								   Status__c,
+								   Billing_Adjustment__c,
+								   Group__c,
+								   Account__r.Site,
+								   Account__r.Name,
+								   LastModifiedDate
+								   From Account_Statement__c
+								   Where Account__c in :listAccount
+								   And Remittance_Date__c >= :getMinimumRemmitanceDateToSearch(listAccount)
+								   Order By Remittance_Date__c desc, Operation__c asc
+								   ];
+		system.debug('ISSP_Ctrl_AccountStatements AccountStatement' +this.listStatements);
 		// create a list of wrappers with collected Account Statements
 		map<String,WrapperStatement> mapWrapper = new map<String,WrapperStatement>();
 		this.lastUpdatedOn = Datetime.newInstance(1900, 1, 1);
@@ -113,6 +216,30 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		markLastUpdated();
 		markFirstOldPeriod();
         initListCurrency();
+	}
+
+	/**
+		Get method for NewGenAPP mobile
+	**/
+	@HttpGet
+	global static List <WrapperStatement> doGet(){
+		ISSP_Ctrl_AccountStatements acc = new ISSP_Ctrl_AccountStatements();
+
+		if(acc.listWrapper != null && !acc.listWrapper.isEmpty()){
+			String disclaimer = Label.ISSP_Account_Statements_Disclaimer;
+
+	        if(acc.account.Country_ISO_Code__c == 'CN' && acc.account.Sector__c == 'Travel Agent'){
+	        	disclaimer += Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent;
+	        }
+
+	        for(WrapperStatement wrapper : acc.listWrapper){
+	        	wrapper.disclaimer = disclaimer;
+	        	wrapper.listCurrency = acc.listCurrency;
+	        	wrapper.location = Label.ISSP_Account_Statement_Location;
+	        }
+	    }
+
+		return acc.listWrapper;
 	}
 
 	/**
@@ -245,25 +372,103 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 	}
 
 	/**
+	class to Show attachmenst Popup
+	**/
+
+	public void addAttachment()
+	{
+
+		//System.debug(accountSelectedId+' ###### '+ accountStatementSelectedId);
+		amazonFileName =amazonFileStartName+' '+accountStatementPeriod+' '+ billingAmount;
+		//listAttachments = AmazonFile.getAccountRelatedAmazonFiles(accountSelectedId, amazonFileName);
+		refreshList();
+
+		this.showPopUp = true ;
+
+
+	}
+
+
+	/**
+	class to close attachmenst Popup
+	**/
+
+	public void saveAttachment()
+	{
+        //System.debug('===============saveAttachment======== ');
+		this.showPopUp =false ;
+		//System.debug('===============saveAttachment======== '+this.showPopUp);
+
+	}
+
+	// UploadMultipleFileToAmazonButton compoenent attributes
+	// credentialName
+	public String credentialName  {
+		get { return WrapperAttach.CREDENTIAL_NAME; }
+	}
+
+	// amazonPath
+	public String amazonPath  {
+		get {
+			//String suffix = String.ValueOf(accountSelectedId).substring(0,3);
+			//return ''+ suffix + '/' + String.valueOf(accountSelectedId) + '/';}
+
+			return WrapperAttach.getAmazonFolder(this.accountSelectedId); }
+	}
+
+
+	/**
+		class to update attachmenst list
+	**/
+	public Pagereference refreshList() {
+
+		try {
+				this.listAttachments = AmazonFile.getAccountRelatedAmazonFiles(accountSelectedId, amazonFileName);
+				this.listAttachments.sort();
+				for(AmazonFile__c recordAux : this.listAttachments)
+					{
+						String fileName = recordAux.Full_Name_Unique__c;
+						fileName = fileName.split('/')[2];
+						recordAux.Full_Name_Unique__c = fileName;
+					}
+			} catch (Exception e ) {
+			System.debug('FATAL: ListController in function refreshList()  '  + e.getStackTraceString()  + '  '  + e.getMessage());
+		}
+		return null;
+	}
+
+
+
+	/**
 		class to store a list of Account Statements and the sumarized data
 	**/
-	public class WrapperStatement implements Comparable {
-		public Account_Statement__c parent {get;set;}
-		public list<Account_Statement__c> listStatements {get; set;}
-		public String accountSite {get;set;}
-		public Boolean showDetail {get;set;}
-		public DateTime lastUpdatedDate {get; set;}
-		public Boolean lastUpdatedMark {get; set;}
-        public Boolean showSeparation {get; set;}
+	global class WrapperStatement implements Comparable {
+		global Account_Statement__c parent {get;set;}
+		global list<Account_Statement__c> listStatements {get; set;}
+		global String accountSite {get;set;}
+		global Boolean showDetail {get;set;}
+		global DateTime lastUpdatedDate {get; set;}
+		global Boolean lastUpdatedMark {get; set;}
+        global Boolean showSeparation {get; set;}
+        global String disclaimer { get; set; }
+        global List <String> listCurrency {get; set;}
+        global String location { get; set;}
+		global String accountSatementId {get;set;}
+		global String accountName {get;set;}
 
-		public WrapperStatement(Account_Statement__c statement) {
+		global WrapperStatement(Account_Statement__c statement) {
 			this.parent = statement.clone();
+			this.accountSatementId =statement.Id;
 			this.listStatements = new list<Account_Statement__c>();
 			this.listStatements.add(statement);
 			this.showDetail = false;
 			this.accountSite = statement.Account__r.Site;
+			this.accountName = statement.Account__r.Name;
 			this.showSeparation = false;
 			this.lastUpdatedMark = false;
+			this.disclaimer = '';
+			this.listCurrency = new List <String>();
+			this.location = '';
 		}
 
 		/**
@@ -301,6 +506,20 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 			}
 			return Label.ISSP_Excess;
 		}
+
+		/** WMO358 2018/11/02
+			Get payment prove available
+		**/
+		public Boolean getParentPaymentProof() {
+			if (this.parent.Balance__c == 0 ) {
+				return false;
+			}
+			if (this.parent.Balance__c > 0 ) {
+				return true;
+			}
+			return false;
+		}
+
 
 		public Decimal getParentBillingAdjustment() {
 			return this.parent.Billing_Amount__c - this.parent.Amount_to_be_Paid__c;

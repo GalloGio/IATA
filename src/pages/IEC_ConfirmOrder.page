@@ -1,4 +1,4 @@
-<apex:page controller="IEC_ConfirmOrderController" action="{!onLoadAction}" language="{!language}" 
+<apex:page controller="IEC_ConfirmOrderController" action="{!onLoadAction}" language="{!language}" id="pgConfirmOrder"
 	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
 	
 	<!--[if lte IE 8]>
@@ -9,10 +9,79 @@
 	<![endif]-->
 	<!--[if !IE]><!-->
 	
+	<apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+
+    <script type="text/javascript">
+        j$ = jQuery.noConflict(); 
+       function blockme() {
+           j$.blockUI({
+           	   message: '<h1>Please wait and do not refresh this page...</h1>', 
+           	   css: {
+	               border: 'none',
+	               padding: '15px',
+	               backgroundColor: '#000',
+	               '-webkit-border-radius': '10px',
+	               '-moz-border-radius': '10px',
+	               opacity: .5,
+	               color: '#fff'
+               } 
+           	}); 
+         }
+
+       </script>
+
 	<html lang="{!language}">
 	<!--<![endif]-->
 
 		<head>
+			<!-- Google Tag Manager -->     
+	        <script>
+	            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	            })(window,document,'script','dataLayer','GTM-PWSNSM3');
+	        </script>
+	        <!-- End Google Tag Manager -->
+	        <script>
+	            function getDevice() {
+	                if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+	                    return "Tablet";
+	                } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+	                    return "Mobile";
+	                } else {
+	                    return "Desktop";
+	                }
+	            }
+
+	            window.dataLayer = window.dataLayer||[];
+	            dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}",
+                        "userMemberStatus": "{!userDetails.userMemberStatus}",
+                        "userGender": "{!userDetails.userGender}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "breadcrumb": "Home > {!$Label.PageTitleConfirmOrder}", 
+                        "language": "{!language}"
+                    },
+                    "ecommerce": {!productWrapper}
+                });
+
+	        </script>
+
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
@@ -22,7 +91,10 @@
 		</head>
 
 		<body data-media-size="" class="page-checkout" data-is-modal-open="false" id="page-top">
-
+	        <!-- Google Tag Manager (noscript) -->
+	        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+	        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	        <!-- End Google Tag Manager (noscript) -->
 			<div id="js-breakpoint-finder">
 				<span class="device-xs screen-xsmall"/>
 				<span class="device-sm screen-small"/>
@@ -51,6 +123,11 @@
 					        <apex:outputPanel layout="block" id="errorBloc">
 						        <!-- Error Messages -->
 	        					<apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
+						        	<apex:pageMessages escape="false"/>
+					        	</apex:outputPanel>
+
+								<!-- Warning Message -->
+	        					<apex:outputPanel styleClass="alert primary" rendered="{!hasWarning}" layout="block">
 						        	<apex:pageMessages escape="false"/>
 					        	</apex:outputPanel>
 
@@ -150,7 +227,7 @@
 						                </div>
 						                <div class="columns small-12 medium-6">
 						                    <section class="group-container shipping-address">
-											    <h2 class="group-title">Shipping address</h2>
+											    <h2 class="group-title">Delivery address</h2>
 
 											    <div class="shipping-address-container">
 
@@ -200,7 +277,7 @@
 											        </div> -->
 
 											        <div class="group-container shipping-instructions">
-											            <h3 class="group-title">Shipping instructions</h3>
+											            <h3 class="group-title">Delivery instructions</h3>
 
 											            <div class="field-group output inline">
 											                <span class="input-label">{!$Label.Company_name}</span>
@@ -295,10 +372,22 @@
 						                        		</td>
 						                        		<td class="price total-price">
 						                        			<apex:outputText value="{0, number, currency}">
-				                                                <apex:param value="{!item.subTotal}"/>
+				                                                <apex:param value="{!IF(AND(item.setupFee != null, item.setupFee > 0),item.subTotal - item.setupFee,item.subTotal)}"/>
 				                                            </apex:outputText>
 						                        		</td>
 							                        </tr>
+							                        <apex:variable value="0" var="setup" rendered="{!AND(item.setupFee != null, item.setupFee > 0)}"> 
+													<tr class="promotion">
+														<td class="product-name" colspan="3"><i>Flat fee</i></td>
+														<td class="quantity"></td>
+														<td class="price item-price"></td>
+														<td class="price total-price">
+															<apex:outputText value="{0, number, currency}">
+				                                                <apex:param value="{!item.setupFee}" />
+				                                            </apex:outputText>
+														</td>
+													</tr>
+								                	</apex:variable>
 							                        <apex:variable value="1" var="hasDiscounts" rendered="{!AND(item.charges!=null, item.charges.size>0)}">
 								                        <tr class="promotion">
 								                        	<td class="product-name">
@@ -427,8 +516,8 @@
 					                <ul class="list actions text-right">
 					                    <li><apex:outputLink value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink></li>
 					                    <li>
-											<apex:actionFunction name="submitOrder" reRender="errorBloc,frmConfirmOrder, stepBloc,ContinueShopping" action="{!submitOrder}" status="submitStatus" oncomplete="$(window).scrollTop(0);" />
-								        	<button class="button wide" type="button" onclick="submitOrder();">
+											<apex:actionFunction name="submitOrder" reRender="errorBloc,frmConfirmOrder, stepBloc,ContinueShopping" action="{!submitOrder}" status="submitStatus" oncomplete="$(window).scrollTop(0);j$.unblockUI();" />
+								        	<button class="button wide" type="button" onclick="submitOrder();blockme();" style="{!IF(stopProcess, 'display:none', '')}">
 						                		{!$Label.Submit_Order}
 												<apex:actionStatus id="submitStatus"> 
 					                                <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
@@ -473,4 +562,5 @@
 			</script>
 		</body>
 	</html>
+
 </apex:page>

@@ -9,13 +9,13 @@ private class FeedItemHelperTest {
                 insert country_qr;
                         
                 // Create an Airline HQ account
-                Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+                Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
                 Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', 
                                         RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'IATA member');
                 insert acct_hq;
 
-                Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
-                Contact con =new contact(lastname = 'pluto', phone = '123', accountid = acct_hq.id, email = 'asd.arg@wewt.et', RecordTypeId = ContactStd_RT_Id);
+                Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+                Contact con =new contact(firstname = 'Name', lastname = 'pluto', phone = '123', accountid = acct_hq.id, email = 'asd.arg@wewt.et', RecordTypeId = ContactStd_RT_Id);
                 insert con;
 
 

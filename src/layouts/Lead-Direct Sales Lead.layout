@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>ActOn__Acton_Activity_History</customButtons>
-    <customButtons>ActOn__Send_Act_On_Email</customButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -55,79 +54,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>What_sector_do_you_work_in__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Day_requested__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Time_requested__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Code__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Last_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Current_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Company_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Message__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Zip_code__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Country__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IATA_Code__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>UIR__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Ver_num__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Expiration__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DOB__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Positions__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Duties__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Price__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Hours_week__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -147,27 +74,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>industryfield__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Publications__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Order_number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>First_Name_A__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Last_Name_A__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Company_A__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -175,43 +82,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Confirm_Email_A__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>First_Name_B__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Company_B__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Last_Name_B__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Email_B__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Confirm_Email_B__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Course_Name__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Class_number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Discount_preference__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Method_of_payment__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -296,14 +167,6 @@
                 <behavior>Edit</behavior>
                 <field>Document_Name__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Interested_in__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Sector__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -312,15 +175,7 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Act-On Activity History</label>
-        <layoutColumns>
-            <layoutItems>
-                <height>200</height>
-                <page>ActOn__activityHistoryInlineLead</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
-                <width>100%</width>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
         <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
@@ -484,7 +339,11 @@
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedContent>
         <relatedContentItems>
             <layoutItem>

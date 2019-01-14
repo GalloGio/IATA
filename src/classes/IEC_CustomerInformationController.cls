@@ -2,16 +2,41 @@
  *  IEC_CustomerInformationController: IEC_CustomerInformation page Controller                                    *
  *  Author: David Daboué - CGI                                                                                    *        
  ******************************************************************************************************************/
-global class IEC_CustomerInformationController extends IEC_PageController
+global without sharing class IEC_CustomerInformationController extends IEC_PageController
 {
 	public String quoteNumberToConvert{get;set;}
+	
+	//TC map to know which countries don't have zip code
+	public Map<String, Boolean> zipCodeApplicableMap {
+		get{
+            if(zipCodeApplicableMap == null){
+                Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
+                zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
+            }
+
+			return zipCodeApplicableMap;
+		}
+		set;
+	}
 
 	public List<SelectOption> availableCountries{get{
 		if(availableCountries == null){
-			availableCountries = ISO_Country_State_Helper.getCountriesSelectOption();
+			//TC get options and fill map zipCodeApplicable
+			Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
+			availableCountries = (List<SelectOption>) countries.get('options');
+			zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
 		}
 		return availableCountries;
 	}set;}
+	
+	//TC 
+	public Boolean unlockZipCode {
+		get{
+			return vfOrder != null && vfOrder.billToAddress != null && !String.isBlank(vfOrder.billToAddress.countryCode) && 
+				zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode) != null && zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode);
+		}
+		set;
+	}
 
 	public List<SelectOption> billToAvailableStates{get;set;}
 
@@ -30,6 +55,51 @@ global class IEC_CustomerInformationController extends IEC_PageController
 	private Contact initialContact;
 
 	public Map<String, String> errors{get;set;} //FIELD => ERROR MESSAGE
+
+	public Boolean stopProcess { get; set; }
+
+	//Used for google analytics
+	public String productWrapper {
+		get {
+			Map<String,Object> ecommObj = new Map<String,Object>();
+			Map<String,Object> checkoutObj = new Map<String,Object>();
+			Map<String,Object> actionObj = new Map<String,Object>();
+			Map<String,Object> prodObj = new Map<String,Object>();
+
+			ecommObj.put('checkout', checkoutObj);
+			actionObj.put('step',1);
+			checkoutObj.put('actionField', actionObj);
+			checkoutObj.put('products', new List<Object> {prodObj});
+
+			List<OrderItem_DTO> lstOrderItemsAux = storeCart.getOrderItems();
+			if(lstOrderItemsAux != null && !lstOrderItemsAux.isEmpty()){
+	            List<Object> lstOrderItems = new List<Object>();
+            	for(OrderItem_DTO orderItemDtoAux : lstOrderItemsAux){
+            		Map<String,Object> orderItemsObjMap = new Map<String,Object>();
+
+            		orderItemsObjMap.put('id', orderItemDtoAux.productNumber);
+					orderItemsObjMap.put('name', orderItemDtoAux.productName);
+					orderItemsObjMap.put('category', orderItemDtoAux.productCategory);
+					orderItemsObjMap.put('price', orderItemDtoAux.unitPrice == null ? 0.00 : orderItemDtoAux.unitPrice);
+		            orderItemsObjMap.put('brand', orderItemDtoAux.productBrand);
+		            orderItemsObjMap.put('quantity', orderItemDtoAux.quantity);
+		            orderItemsObjMap.put('dimension1', orderItemDtoAux.productEdition);
+		            orderItemsObjMap.put('dimension2', orderItemDtoAux.productLanguage);
+		            orderItemsObjMap.put('dimension3', orderItemDtoAux.productInventoryStatus);
+		            orderItemsObjMap.put('dimension4', orderItemDtoAux.productAvailabilityDate);
+		            orderItemsObjMap.put('dimension5', orderItemDtoAux.productMedia);
+		            orderItemsObjMap.put('dimension6', orderItemDtoAux.productEffectiveTo);
+
+					lstOrderItems.add(orderItemsObjMap);
+            	}
+            
+            	checkoutObj.put('products', lstOrderItems);
+            }
+
+			return JSON.serialize(ecommObj);
+		}
+		set;
+	}
 
 	
 	/**************************************************************************************************************
@@ -56,7 +126,15 @@ global class IEC_CustomerInformationController extends IEC_PageController
 		}
 
 		//--Make sure Contact has BillTo Ship & SoldTo
-		Boolean init = Location_Svc.InitializeContactLocations(loggedCustomer.sfContact.Id);
+		//*** check/initialize default locations -> stop if error on sold to partner
+		stopProcess = false;
+		List<String> lstError = Location_Svc.initializeDefaultLocations(new List<Id>{loggedCustomer.sfContact.Id});
+		if (lstError[0] != null && lstError[0].startsWith('\nST'))
+		{
+			stopProcess = true;
+			addErrorMessage(Label.IEC_SAP_Customer_Issue);
+			return null;
+		}
 		Customer_DTO.setCustomerAddresses(loggedCustomer);
 		initialContact = loggedCustomer.sfContact.clone(true,true,true,true);
 
@@ -66,7 +144,7 @@ global class IEC_CustomerInformationController extends IEC_PageController
 			quoteNumberToConvert = System.currentPageReference().getParameters().get('id');
 
             //-- Validate quoteNumberToConvert is a valid belongs to the current User 
-            if(IECOrder_Svc.validateQuoteNumberToConvert(quoteNumberToConvert, loggedCustomer.sfUser.Id))
+            if(IECOrder_Svc.validateQuoteNumberToConvert(quoteNumberToConvert, loggedCustomer.sfUser.Id, loggedCustomer.sfContact.Id))
             {
             	List<Order> lstOrders = (List<Order>) new Order_Sel().selectSObjectByField('OrderNumber',new Set<String>{quoteNumberToConvert});
             	if(lstOrders.size() > 0)
@@ -74,7 +152,8 @@ global class IEC_CustomerInformationController extends IEC_PageController
             }		
 		}
 
-		sfOrder = IECOrder_Svc.getPenddingOrder();
+		sfOrder = IECOrder_Svc.getPenddingOrder(true);
+
 		vfOrder = new Order_DTO(sfOrder);
 		initialOrder = new Order_DTO(sfOrder);
 
@@ -162,6 +241,7 @@ global class IEC_CustomerInformationController extends IEC_PageController
 		}
 
 		billToAvailableStates = ISO_Country_State_Helper.getStatesSelectOption(vfOrder.billToAddress.countryCode);
+		vfOrder.billToAddress.postalCode = '';
 	}
 
 	public void regionChanged()
@@ -232,6 +312,9 @@ global class IEC_CustomerInformationController extends IEC_PageController
 		{
 			errors.put('street1',Label.InputRequiredMessage + ' ' + Label.Address_Line_1);
 			isValid = false;
+		} else if(isStreetAddressToLong(vfOrder.billToAddress.street1, 70)) {
+			errors.put('street1',Label.IEC_BillingAddressLimit);
+			isValid = false;
 		}
 	
 		if(vfOrder.billToAddress.isPostalCodeRequired != null && vfOrder.billToAddress.isPostalCodeRequired && (vfOrder.billToAddress.postalCode == null || vfOrder.billToAddress.postalCode == '')) //String.isBlank(vfOrder.billToAddress.postalCode)
@@ -259,8 +342,13 @@ global class IEC_CustomerInformationController extends IEC_PageController
 		}
 
 		return isValid;
+	}	
+	
+	/* TC 2017-05-17 */
+	public Boolean isStreetAddressToLong(String street, Integer maxSize) {
+		return !String.isBlank(street) && street.length() > maxSize;
 	}
-
+	/* end TC */
 
 	/**************************************************************************************************************
      *  saveCustomerInformation: method calls when customer clicks on "Continue" button to save customer Info     * 
@@ -277,7 +365,7 @@ global class IEC_CustomerInformationController extends IEC_PageController
 
 			return null;
 		}
-
+		
 		//-- Validate compliance 
 		validateCountryCompliance();
 
@@ -292,185 +380,174 @@ global class IEC_CustomerInformationController extends IEC_PageController
 			}			
 		}
 
+		//*** get all active bill/ship to locations attached to contact
+		Map<Id, Location__c> mapLocationId_Location = Location_Sel.getLocationToSyncSAP(null, null, new List<Id>{loggedCustomer.sfContact.Id}, null, true);
 
-
-		//-- Save Contact Information if changed
-		if(initialContact != loggedCustomer.sfContact)
+		//*** get bill to location and address
+		Location__c billingLocation, billingLocationOld = null;
+		IECAddress__c billingAddress;
+		if (mapLocationId_Location.containsKey(sfOrder.BillTo_Location__c))
 		{
-			try{update loggedCustomer.sfContact; }
-			catch(Exception ex){addErrorMessage(ex.getMessage());return null;}
+			billingLocation = mapLocationId_Location.get(sfOrder.BillTo_Location__c);
+			billingAddress = billingLocation.Address__r;
 		}
-			
-		Location__c billingLocation;
-		Boolean countryOrRegionChanged = false;
-		
-		//-- If Billing Address changed ... Link BillToLocation to the new IECAddress (created or existing)
-		if(IECAddress_Svc.isAddressChanged(vfOrder.billToAddress, initialOrder.billToAddress) || initialContact.Phone != vfOrder.billToAddress.phone || initialContact.Email != vfOrder.billToAddress.email)
-		{
-			IECAddress_Sel adrSelector = new IECAddress_Sel();
-			List<IECAddress__c> addresses = adrSelector.getAddress(vfOrder.billToAddress.street1,vfOrder.billToAddress.city,vfOrder.billToAddress.countryCode,vfOrder.billToAddress.stateCode,vfOrder.billToAddress.postalCode);
-
-			//-- If address found 
-			IECAddress__c billingAddress;
-			if(addresses != null & addresses.size() > 0) billingAddress = addresses[0];
-			else
-			{
-				//-- Create new IECAddress
-				billingAddress = IECAddress_Svc.newAddress(vfOrder.billToAddress.street1,vfOrder.billToAddress.city,vfOrder.billToAddress.countryCode,vfOrder.billToAddress.stateCode,vfOrder.billToAddress.postalCode);				
-			}
-			countryOrRegionChanged=((vfOrder.billToAddress.countryCode!=initialOrder.billToAddress.countryCode)||(vfOrder.billToAddress.stateCode!=initialOrder.billToAddress.stateCode));
-			
-			//-- Check if Customer has BillToLocation 
-			
-			List<Location__c> billingLocations = Location_Sel.getLocationByContact(loggedCustomer.sfContact.Id, IECConstants.BILLTO);
-			
-			if(billingLocations != null && billingLocations.size() > 0)
-			{
-				if(countryOrRegionChanged)
+		else
+			for (Location__c loc : mapLocationId_Location.values())
+				if (loc.Type__c == IECConstants.BILLTO)
 				{
-					//Deactivate older location and create a new one
-					billingLocations[0].Active__c = false; 
-					update billingLocations[0];
-
-					//Create Bill To Location 
-					billingLocation = Location_Svc.createLocation(billingAddress.Id, loggedCustomer.sfContact, vfOrder.billToAddress.vatNumber, IECConstants.BILLTO);
-
-					//update Contact Default BillTo & Order BillTo
-					if(billingLocation != null){
-            			loggedCustomer.sfContact.BillTo_Location__c = billingLocation.Id;
-            			update loggedCustomer.sfContact;
-
-            			sfOrder.BillTo_Location__c = billingLocation.Id;
-            			update sfOrder;            			
-					}
+					billingLocation = loc;
+					billingAddress = billingLocation.Address__r;
+					break;
 				}
-				else
+
+		//*** treatment for bill to
+		if (IECAddress_Svc.isAddressChanged(vfOrder.billToAddress, initialOrder.billToAddress))
+		{
+			//*** find new address -> if found then take the first one otherwise create new
+			List<IECAddress__c> addresses = new IECAddress_Sel().getAddress(vfOrder.billToAddress.street1,vfOrder.billToAddress.city,vfOrder.billToAddress.countryCode,vfOrder.billToAddress.stateCode,vfOrder.billToAddress.postalCode);
+			if (addresses != null & addresses.size() > 0)
+				billingAddress = addresses[0];
+			else
+				billingAddress = IECAddress_Svc.newAddressForSAPSync(vfOrder.billToAddress.street1, vfOrder.billToAddress.city, vfOrder.billToAddress.countryCode, vfOrder.billToAddress.stateCode, vfOrder.billToAddress.postalCode);
+			
+			//*** action to do on location
+			if (vfOrder.billToAddress.countryCode != initialOrder.billToAddress.countryCode || vfOrder.billToAddress.stateCode != initialOrder.billToAddress.stateCode || String.isBlank(billingLocation.SAP_Id__c))
+			{
+				//*** country/state change -> deactivate old location and create a new one
+					billingLocationOld = billingLocation; 
+					billingLocationOld.Active__c = false; 
+
+					//*** create new location -> cancel action on error
+					billingLocation = getNewLocation(billingLocation, billingAddress, vfOrder.billToAddress.email, vfOrder.billToAddress.phone, vfOrder.billToAddress.vatNumber);
+/*
+					billingLocation = new Location__c(Active__c = true, Type__c = IECConstants.BILLTO, Address__c = billingAddress.Id, Address__r = billingAddress
+					                                , Account__c = billingLocation.Account__c, Account__r = billingLocation.Account__r
+					                                , Contact__c = billingLocation.Contact__c, Contact__r = billingLocation.Contact__r
+					                                , Email__c = vfOrder.billToAddress.email, Phone__c = vfOrder.billToAddress.phone , VAT_Number__c = vfOrder.billToAddress.vatNumber);
+*/
+				List<IEC_Error_Log__c> lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{billingLocation}, null, false);
+				if (lstSyncResult[0] != null)
 				{
-					//Update location 
-					billingLocation = billingLocations[0];
-					billingLocation.Address__c = billingAddress.Id;
-					billingLocation.Email__c = vfOrder.billToAddress.email;
-					billingLocation.Phone__c = vfOrder.billToAddress.phone;
-					billingLocation.VAT_Number__c = vfOrder.billToAddress.vatNumber;
-					
-					update billingLocation;
-				}				
+					addErrorMessage(Label.IEC_SAP_Customer_Address_Issue);
+					return null;
+				}
 			}
 			else
 			{
-				//Create Bill To Location 
-				billingLocation = Location_Svc.createLocation(billingAddress.Id,loggedCustomer.sfContact,vfOrder.billToAddress.vatNumber,IECConstants.BILLTO);
-			}			
+				//*** update existing location since no change on country/state
+				billingLocationOld = billingLocation; 
+				billingLocation.Address__c = billingAddress.Id;
+				billingLocation.Address__r = billingAddress;
+				billingLocation.Email__c = vfOrder.billToAddress.email;
+				billingLocation.Phone__c = vfOrder.billToAddress.phone;
+				billingLocation.VAT_Number__c = vfOrder.billToAddress.vatNumber;
+			}
+		}
+		else if (billingLocation.Email__c != vfOrder.billToAddress.email || billingLocation.Phone__c != vfOrder.billToAddress.phone || billingLocation.VAT_Number__c != vfOrder.billToAddress.vatNumber)
+		{
+			//*** update change on non-key field
+			billingLocationOld = billingLocation; 
+			billingLocation.Email__c = vfOrder.billToAddress.email;
+			billingLocation.Phone__c = vfOrder.billToAddress.phone;
+			billingLocation.VAT_Number__c = vfOrder.billToAddress.vatNumber;
+		}
+		//*** last check on SAP Id
+		if (String.isBlank(billingLocation.SAP_Id__c))
+		{
+			addErrorMessage(Label.IEC_SAP_Customer_Issue);
+			return null;
 		}
 
-		//-- Update Order Billing Address + PO NUmber + Invoice text +   VAT Number
-		//get country & state names from code 
-		String billingCountry; 
-		String billingState; 
-
-		List<IATA_ISO_Country__c> countries = ISO_Country_State_Helper.getIsoCountryByIsoCode(vfOrder.billToAddress.countryCode);
-		if(countries != null && countries.size() > 0)
+		//*** treatment for ship to
+		Location__c shippingLocation = null;
+		if (vfOrder.shipToSameAsBilTo)
 		{
-			billingCountry = countries[0].Name;
-			if(String.isNotBlank(vfOrder.billToAddress.stateCode))
+			//*** get ship to location corresponding to billing address
+			for (Location__c loc : mapLocationId_Location.values())
+				if (loc.Type__c == IECConstants.SHIPTO && loc.Address__c == billingAddress.Id)
+				{
+					shippingLocation = loc;
+					break;
+				}
+			
+			//*** not found -> create new location
+			if (shippingLocation == null)
 			{
-				List<IATA_ISO_State__c> states = ISO_Country_State_Helper.getIsoStateByIsoCode(vfOrder.billToAddress.countryCode,vfOrder.billToAddress.stateCode);
-				
-				if(states != null && states.size() > 0) billingState = states[0].Name;
+				shippingLocation = new Location__c(Active__c = true, Type__c = IECConstants.SHIPTO, Address__c = billingAddress.Id, Address__r = billingAddress, Address_Name__c = 'New'
+				                                 , Account__c = billingLocation.Account__c, Account__r = billingLocation.Account__r
+				                                 , Contact__c = billingLocation.Contact__c, Contact__r = billingLocation.Contact__r, Attention__c = billingLocation.Contact__r.Name
+				                                 , Email__c = vfOrder.billToAddress.email, Phone__c = vfOrder.billToAddress.phone , VAT_Number__c = vfOrder.billToAddress.vatNumber);
+				IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{shippingLocation}, null, false);   //*** ignore error
+			}
+		}
+
+		//*** commit change
+		Savepoint sp = Database.setSavepoint();
+		try
+		{
+			if (billingAddress.Id == null)
+				insert billingAddress;
+			
+			if (billingLocationOld != null)
+			{
+				if (billingLocationOld.Address__c == null)
+					billingLocationOld.Address__c = billingLocationOld.Address__r.Id;
+				update billingLocationOld;
+			}
+			if (billingLocation.Id == null)
+			{
+				billingLocation.Address__c = billingLocation.Address__r.Id;
+				insert billingLocation;
 			}
 			
-			//List<IATA_ISO_State__c> getIsoStateByIsoCode(String countryCode, String isoCode)
+			if (shippingLocation != null && shippingLocation.Id == null)
+			{
+				shippingLocation.Address__c = shippingLocation.Address__r.Id;
+				insert shippingLocation;
+			}
+			
+			if (loggedCustomer.sfContact.BillTo_Location__c != billingLocation.Id)
+				loggedCustomer.sfContact.BillTo_Location__c = billingLocation.Id;
+			if (initialContact != loggedCustomer.sfContact)
+				update loggedCustomer.sfContact;
+			
+			sfOrder.BillToContact_Salutation__c = loggedCustomer.sfContact.Salutation;
+			sfOrder.BillToContact_First_Name__c = loggedCustomer.sfContact.FirstName;
+			sfOrder.BillToContact_Last_Name__c  = loggedCustomer.sfContact.LastName;
+			sfOrder.PoNumber                    = vfOrder.orderPONumber;
+			sfOrder.Invoice_Text__c             = vfOrder.billToInvoiceText;
+			sfOrder.BillingStreet               = vfOrder.billToAddress.street1;
+			sfOrder.BillingCity                 = vfOrder.billToAddress.city;
+			sfOrder.BillingPostalCode           = vfOrder.billToAddress.postalCode;
+			sfOrder.BillingCountry              = billingLocation.Address__r.ISO_Country__r.Name;
+			sfOrder.BillingCountryCode__c       = vfOrder.billToAddress.countryCode;
+			sfOrder.BillingState                = billingLocation.Address__r.ISO_State__r.Name;
+			sfOrder.BillingStateCode__c         = vfOrder.billToAddress.stateCode;
+			sfOrder.BillToContact_Email__c      = vfOrder.billToAddress.email;
+			sfOrder.BillToContact_Phone__c      = vfOrder.billToAddress.phone;
+			sfOrder.BillToContact_VAT_Number__c = vfOrder.billToAddress.vatNumber;
+			sfOrder.BillTo_Address__c           = billingLocation.Address__c;
+			sfOrder.BillTo_Location__c          = billingLocation.Id;
+			if (vfOrder.shipToSameAsBilTo)
+			{
+				sfOrder.ShippingStreet          = sfOrder.BillingStreet;
+				sfOrder.ShippingCity            = sfOrder.BillingCity;
+				sfOrder.ShippingPostalCode      = sfOrder.BillingPostalCode;
+				sfOrder.ShippingCountry         = sfOrder.BillingCountry;
+				sfOrder.ShippingCountryCode__c  = sfOrder.BillingCountryCode__c;
+				sfOrder.ShippingState           = sfOrder.BillingState;
+				sfOrder.ShippingStateCode__c    = sfOrder.BillingStateCode__c;
+				sfOrder.ShipTo_Address__c       = sfOrder.BillTo_Address__c;
+				sfOrder.ShipTo_Location__c      = shippingLocation.Id;
+			}
+			update sfOrder;
 		}
-
-		sfOrder.PoNumber				= 	vfOrder.orderPONumber;
-		sfOrder.BillingStreet 			=	vfOrder.billToAddress.street1;
-        sfOrder.BillingCity 			=	vfOrder.billToAddress.city;
-        sfOrder.BillingPostalCode 		=	vfOrder.billToAddress.postalCode;
-        sfOrder.BillingCountryCode__c 	=	vfOrder.billToAddress.countryCode;
-        sfOrder.BillingState 			=	billingState;
-        sfOrder.BillingStateCode__c 	=	vfOrder.billToAddress.stateCode;
-        sfOrder.BillingCountry 			=	billingCountry;
-        sfOrder.BillToContact_VAT_Number__c	= 	vfOrder.billToAddress.vatNumber;
-        sfOrder.Invoice_Text__c 	 		= 	vfOrder.billToInvoiceText;
-		
-		sfOrder.BillToContact_Email__c 		= 	vfOrder.billToAddress.email;
-		sfOrder.BillToContact_Phone__c 		=	vfOrder.billToAddress.phone;
-		sfOrder.BillToContact_Salutation__c =	loggedCustomer.sfContact.Salutation;
-		sfOrder.BillToContact_First_Name__c =	loggedCustomer.sfContact.FirstName;
-		sfOrder.BillToContact_Last_Name__c 	=	loggedCustomer.sfContact.LastName;
-		
-        //-- Update Shipto Address  if shipToSameAsBilTo
-        if(vfOrder.shipToSameAsBilTo)
-        {
-        	
-        	//billingLocation
-        	Location__c shipToLocation = new Location__c();
-        	
-        	if(billingLocation == null){
-        		//sfOrder.ShipTo_Location__c,
-	            Map<Id,Location__c> mapLocations = new Location_Sel().getLocationById(new Set<Id>{
-	                sfOrder.BillTo_Location__c
-	            });
-	            
-	            //billToLocation
-	            billingLocation 	= 	mapLocations.get(sfOrder.BillTo_Location__c);
-        	}
-        	
-        	//Verified if the shippTo location exist
-        	List<Location__c> LstExistingHipToLocation = [SELECT id, Address__c 
-        											from Location__c 
-        										where Address__c = :billingLocation.Address__c and Type__c = :IECConstants.SHIPTO and Active__c = true 
-        										and Contact__c = :loggedCustomer.sfContact.Id ];
-        										
-        	
-        	//If the Address don't exist create a new ShipTo location
-        	if(LstExistingHipToLocation == null || LstExistingHipToLocation.size() == 0){
-        		
-        		if(countryOrRegionChanged){
-        			shipToLocation = Location_Svc.createLocation(billingLocation.Address__c, loggedCustomer.sfContact.Id, billingLocation.Email__c, billingLocation.Phone__c, vfOrder.billToAddress.vatNumber, IECConstants.SHIPTO);
-	            }
-	           
-        	}else{
-        		//Update the existing location
-        		shipToLocation = LstExistingHipToLocation.get(0);
-        	}
-        	
-            //if(sfOrder.ShipTo_Location__c == null) sfOrder.ShipTo_Location__c = vfOrder.shipToAddress.locationId;
-            sfOrder.ShipTo_Location__c = shipToLocation.Id;
-            
-            
-            //Create a new ShipTo if Country or Region changed
-           
-            
-             
-            
-            
-            //Location__c shipToLocation 	= 	mapLocations.get(sfOrder.ShipTo_Location__c);
-            
-            /*if(billToLocation != null && billToLocation.Address__c != null){
-            	if(shipToLocation != null){
-	            	shipToLocation.Address__c 	= 	billToLocation.Address__c; 
-	            	update shipToLocation;
-	            }
-	            sfOrder.BillTo_Address__c = billToLocation.Address__c;
-            }*/
-            
-            //Map the shipping fields
-            sfOrder.ShippingCity 			= 	sfOrder.BillingCity;
-            sfOrder.ShippingPostalCode 		= 	sfOrder.BillingPostalCode;
-            sfOrder.ShippingState 			= 	sfOrder.BillingState;
-            sfOrder.ShippingStateCode__c 	= 	sfOrder.BillingStateCode__c;
-            sfOrder.ShippingStreet 			= 	sfOrder.BillingStreet;
-            //if(shipToLocation != null && shipToLocation.Address__c != null)
-           	sfOrder.ShipTo_Address__c 		= 	shipToLocation.Address__c;
-
-            	
-           
-           
-        }
-        
-		try{update sfOrder;}
-		catch(Exception ex){addErrorMessage(ex.getMessage());return null;}
+		catch(Exception ex)
+		{
+			addErrorMessage(ex.getMessage());
+			Database.rollback(sp);
+			return null;
+		}
 
 		//-- Goto Payment & Shipping 
 		PageReference ret = new PageReference('/IEC_Shipping');
@@ -494,5 +571,22 @@ global class IEC_CustomerInformationController extends IEC_PageController
 			WHERE Full_Address__c LIKE :str 
 			LIMIT 10
 		];
+	}
+
+	@testVisible					
+	private static Location__c getNewLocation(Location__c billingLocation, IECAddress__c billingAddress, String email, String phone, String vatNumber) {
+		return new Location__c (
+			Active__c = true,
+			Type__c = IECConstants.BILLTO,
+			Address__c = billingAddress.Id,
+			Address__r = billingAddress,
+			Account__c = billingLocation.Account__c,
+			Account__r = billingLocation.Account__r,
+			Contact__c = billingLocation.Contact__c,
+			Contact__r = billingLocation.Contact__r,
+			Email__c = email,
+			Phone__c = phone,
+			VAT_Number__c = vatNumber
+		);
 	}
 }

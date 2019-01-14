@@ -4,6 +4,18 @@
     <description>A collection of email addresses per Case Record Type to appear as the &quot;From&quot; address in emails sent from cases.</description>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Case_Group__c</fullName>
+        <defaultValue>&quot;Default&quot;</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Put the case group or &quot;Default&quot;</inlineHelpText>
+        <label>Case Group</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Country_Name__c</fullName>
         <defaultValue>&quot;Default&quot;</defaultValue>
         <externalId>false</externalId>
@@ -35,5 +47,18 @@
         <unique>false</unique>
     </fields>
     <label>RecordTypeEmail</label>
+    <listViews>
+        <fullName>All_Values</fullName>
+        <columns>NAME</columns>
+        <columns>Country_Name__c</columns>
+        <columns>Record_Type_Developer_Name__c</columns>
+        <columns>Email__c</columns>
+        <columns>Case_Group__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Values</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

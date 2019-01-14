@@ -24,13 +24,16 @@ private class GenerateLateRemittanceCSVControllerTest {
 
     static testMethod void myUnitTest() {
         TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-        ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
-        ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+        ID hqrt = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+        ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c( Name = 'France',ISO_Code__c = 'FR', AIMS_Area_Name__c = 'France', AIMS_Area_ID__c = '1', SAP_Sales_Org__c = 'SIN1', 
                                                                     Region__c = 'Europe');
         insert isoCountry;
+        
+        Late_Payment_Fees_CASS_ISO_Countries_Exc__c excludedCountry = new Late_Payment_Fees_CASS_ISO_Countries_Exc__c(Name='France');
+        insert excludedCountry;
         
         Account a = new Account( Name ='IFAP ACCT',
                                  Industry = 'pluto',
@@ -42,6 +45,7 @@ private class GenerateLateRemittanceCSVControllerTest {
         insert a;
         
         Contact con = new Contact( LastName = 'pluto' ,
+                                 FirstName = 'Name',
                                  Phone = '123',
                                  AccountId = a.id,
                                  Financial_Assessment_Contact__c = true,
@@ -58,7 +62,7 @@ private class GenerateLateRemittanceCSVControllerTest {
         List <Case> csList = new List <Case> ();        
         // create an IFAP case, will be selected by the 3rd report when generating the CSV
         Case cs = new Case(recordtypeID = IFAPcaseRecordTypeID,
-                          Status = 'Financial Security Requested',
+                          //Status = 'Financial Security Requested',
                           Financial_Review_Result__c = 'Satisfactory - New Financial Security',
                           Financial_Review_Type__c = 'Adhoc',
                           Type_of_customer__c = 'asfg',
@@ -130,6 +134,8 @@ private class GenerateLateRemittanceCSVControllerTest {
             csvCtrl.strStartDate = dToday.addDays(-1).addMonths(2).toStartOfMonth().format();
             csvCtrl.strEndDate = dToday.addDays(-1).addMonths(3).toStartOfMonth().addDays(-1).format();
             csvCtrl.GenerateCSV();
+
+            List <Case> csAux = [SELECT CaseNumber, Region__c FROM case];
             
             /*
             Case tcs = [SELECT RecordType.DeveloperName, SIDRA_Exclude_from_report_exceptions__c, DEF_Withdrawal_Reason__c, 
@@ -143,16 +149,16 @@ private class GenerateLateRemittanceCSVControllerTest {
             
             
             // build the expected result string
-            String strExpectedCSVcontent = 'DocType,SalesOrg,DistChan,Division,SalesOffice,CustName,AgentCode,ContractNo,Ponumber,Podate,Sodesc,DocCurr,PayMethod,BillingDate,TextPrint,InternalRemark,Material,MatDesc,Quantity,UnitPrice,UnitPriceCurr,DateFrom,DateTo';
+            String strExpectedCSVcontent = 'DocType,SalesOrg,DistChan,Division,SalesOffice,CustName,AgentCode,ContractNo,Ponumber,Podate,Sodesc,DocCurr,PayMethod,BillingDate,TextPrint,InternalRemark,Material,MatDesc,Quantity,UnitPrice,UnitPriceCurr,DateFrom,DateTo,CaseNumber,Region,IATACountry';
             // report 1 runs first
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800395,Late Remittance Recovery -,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.');
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800394,Late Remittance Interest -,2,,,' + dToday.format().replace('/','.') + ',' + dToday.addDays(2).format().replace('/','.');
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800395,Late Remittance Recovery -,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.')+','+ csAux[2].casenumber +','+ cs.Region__c +','+ 'France';
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800394,Late Remittance Interest -,2,,,' + dToday.format().replace('/','.') + ',' + dToday.addDays(2).format().replace('/','.')+','+ csAux[2].casenumber +','+ cs.Region__c +','+ 'France';
             // then runs report 2
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800395,Late Remittance Recovery --,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.');
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800394,Late Remittance Interest --,2,,,' + dToday.format().replace('/','.') + ',' + dToday.addDays(2).format().replace('/','.');
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800402,,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.');
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800395,Late Remittance Recovery --,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.')+','+ csAux[1].casenumber +','+ cs.Region__c +','+ 'France';
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800394,Late Remittance Interest --,2,,,' + dToday.format().replace('/','.') + ',' + dToday.addDays(2).format().replace('/','.')+','+ csAux[1].casenumber +','+ cs.Region__c +','+ 'France';
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,800402,,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.')+','+ csAux[1].casenumber +','+ cs.Region__c +','+ 'France';
             // report 3 at the end
-            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,752026,,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.');
+            strExpectedCSVcontent += '\nZO01,SIN1,01,51,,,1234567,,,,,,,,,,752026,,1,,,' + dToday.addMonths(2).toStartOfMonth().format().replace('/','.') + ',' + dToday.addMonths(3).toStartOfMonth().addDays(-1).format().replace('/','.')+','+ csAux[0].casenumber +','+ cs.Region__c +','+ 'France';
             
             system.assertEquals( strExpectedCSVcontent, csvCtrl.getCSVcontent() );
             

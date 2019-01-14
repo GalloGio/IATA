@@ -10,7 +10,7 @@ public with sharing class DAL_ISSP_Test {
 	}
 	
 	static testMethod void test_getContact() {
-		Contact contact = new Contact(LastName='test');
+		Contact contact = new Contact(FirstName='Name', LastName='test');
 		insert contact;
 		
 		Contact con = DAL_ISSP.getContact(contact.Id);
@@ -30,12 +30,6 @@ public with sharing class DAL_ISSP_Test {
 		//ISSP_PersonalInformationWithoutSharing.getPortalAdmins(emptyList);
 	}
 	
-	static testMethod void test_getRecordTypeId() {
-		DAL_ISSP.getRecordTypeId('');
-		DAL_ISSP.getRecordTypeId(null);
-		String RecordTypeName = [SELECT DeveloperName FROM RecordType LIMIT 1].DeveloperName;
-		DAL_ISSP.getRecordTypeId(RecordTypeName);
-	}
 	
 	static testMethod void test_getCase() {
 		Case cas = DAL_ISSP.getCase('');
@@ -48,7 +42,7 @@ public with sharing class DAL_ISSP_Test {
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
         insert contact;
-        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
         Case c = new Case(Subject='test 1',Status='Open', AccountId=account.id, ContactId=contact.id,Region__c = 'Europe', RecordTypeId = recordTypeId);
         insert c;
         DAL_ISSP.getCase(c.Id);

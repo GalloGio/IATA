@@ -1,0 +1,44 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="OneId_AddressDoctor">
+    
+    <aura:registerEvent name="addressSelected" type="c:OneId_AddressSelected_EVT"/>
+    
+    <!-- INTPUT -->
+    <aura:attribute type="String" name="inputValue"/>
+    <aura:attribute type="String" name="countryCode" access="public"/>
+    <aura:attribute type="String" name="type" access="public"/>
+    <aura:attribute type="Boolean" name="disabled" access="public" default="false"/>
+    
+    <!-- INTERNAL ATTRIBUTES -->
+    <aura:attribute type="Object[]" name="response" access="private"/>
+    <aura:attribute type="Boolean" name="searching" default="false" access="private" />
+    
+    <!-- BODY -->
+    <div class="slds-combobox_container">
+        <div class="slds-combobox  slds-dropdown-trigger_click" aura:id="results" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                <ui:inputText value="{!v.inputValue}" updateOn="keyup" class="slds-input" disabled="{!v.disabled}" blur="{!c.closeResults}" />
+                <!--<span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                    <aura:if isTrue="{!v.searching}">
+                        <lightning:spinner size="small"/>
+                        <aura:set attribute="else">
+                            <lightning:icon iconName="utility:search" size="x-small"/>
+                        </aura:set>
+                    </aura:if>
+                </span>-->
+            </div>
+
+            <div role="listbox">
+                <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid suggestionBox" role="presentation">
+                    <aura:iteration items="{!v.response}" var="address" indexVar="i">
+                        <li role="presentation" class="slds-listbox__item">
+                            <div class="slds-media slds-listbox__option slds-p-horizontal_small" role="option" >                                        
+                                <div class="slds-listbox__option-text slds-listbox__option-text_entity" onmousedown="{!c.suggestionSelected}" onkeydown="{!c.suggestionSelected}" data-value="{!i}" title="{!address.street+(empty(address.locality) ? '' : ','+address.locality)+(empty(address.province) ? '' : ','+address.province)+(empty(address.postalCode) ? '' : ','+address.postalCode)}">{!address.street+(empty(address.locality) ? '' : ','+address.locality)+(empty(address.province) ? '' : ','+address.province)+(empty(address.postalCode) ? '' : ','+address.postalCode)}</div>
+                            </div>                            
+                        </li>
+                    </aura:iteration>
+                </ul>
+            </div>
+        </div>
+    </div>   
+
+</aura:component>

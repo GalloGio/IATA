@@ -1,7 +1,8 @@
 @isTest(SeeAllData=true)
 public class EmailMessageViewConTest{
-	
-   	static testMethod void testEmailMessageViewCon()
+    
+    @isTest
+    static void testEmailMessageViewCon()
     {
         Account account1 = new Account();
         account1.Name = 'Test account';
@@ -26,6 +27,9 @@ public class EmailMessageViewConTest{
         ca.Status = 'Action Needed';
         ca.accountId = account1.Id;
         ca.contactId = contact1.Id;
+        ca.Region__c = 'Europe';
+        Id sMapRt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'sMAP_sales_Monitoring_Alert_Process');
+        ca.RecordTypeId = sMapRt;
         Insert ca;
         
         EmailMessage em = new EmailMessage();
@@ -35,8 +39,24 @@ public class EmailMessageViewConTest{
         em.TextBody = 'hello';
         em.Subject= 'Test';      
         em.MessageDate = datetime.now();
-        Insert em;
+    insert em;
         
+        Tracked_Email__c te = new Tracked_Email__c();
+        te.Case__c = ca.Id;
+        
+        insert te;
+        
+        EmailMessage am = new EmailMessage();
+        am.ParentId = ca.Id;
+        am.ToAddress = 'im.remon@gmail.com';
+        am.CcAddress = 'im.remon@gmail.com';
+        am.TextBody = 'hello';
+        am.Subject= 'Test';      
+        am.MessageDate = datetime.now();
+        insert am;
+        
+        Archived_Message__c archived = new Archived_Message__c(name = 'archived message 1', EmailMessage__c = am.Id, Case__c = ca.Id);
+        insert archived;
         
         Case ca1 = new Case();
         ca1.BounceEmailSubject__c = 'Test';
@@ -96,7 +116,18 @@ public class EmailMessageViewConTest{
         EmailMessagesViewCon controller = new EmailMessagesViewCon(sc);          
         controller.cse = ca;
         controller.getEmails();
-        controller.getCse(); 
+        controller.getCse();
+        
+        controller.getShowSendTrackedEmailButton();
+        
+        List<EmailMessagesViewCon.EmailWrapper> unifiedList = controller.unifiedList;
+        
+        System.assert(unifiedList.size() > 0);
+        EmailMessagesViewCon.EmailWrapper wrappedEmail = unifiedList.get(0);
+        String s = wrappedEmail.displayEmailActions;
+        s = wrappedEmail.displayArchivedActions;
+        s = wrappedEmail.displayTrackedActions;
+        s = wrappedEmail.displayEmailAddress;
         
         //Generate an exception
         PageReference pageRef1 = Page.EmailMessagesView;   

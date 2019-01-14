@@ -2,6 +2,17 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>SIS Help Desk</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATASISHelpDeskAgent</publicGroup>
+        </publicGroups>
+        <users>
+            <user>minculesca@iata.org</user>
+            <user>kordestana@iata.org</user>
+            <user>rousselb@iata.org</user>
+            <user>charkovad@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

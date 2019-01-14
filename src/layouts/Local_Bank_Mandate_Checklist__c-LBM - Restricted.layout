@@ -199,6 +199,9 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
@@ -223,7 +226,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hR0000000QDRp</masterLabel>
+        <masterLabel>00h2000000MXddc</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

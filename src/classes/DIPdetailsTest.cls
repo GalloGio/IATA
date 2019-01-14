@@ -30,7 +30,7 @@ private class DIPdetailsTest {
         insert country_qr;
         
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', 
                                 RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
         insert acct_hq;
@@ -41,7 +41,7 @@ private class DIPdetailsTest {
         test.startTest();
         
         // create a DIP review case
-        Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
+        Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DIP_Review_Process');
         Case cs = new Case(RecordTypeId = RT_DIP_Review_Id, Subject = 'test', Origin = 'Phone', CaseArea__c = 'Risk Management Process', Reason1__c = 'DIP Annual Review', 
         				Status = 'Open', AccountId = acct_hq.Id);  
         insert cs;
@@ -94,13 +94,13 @@ private class DIPdetailsTest {
         insert country_qr;
         
         // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', 
                                 RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
         insert acct_hq;
         
         // create a DIP review case
-        Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
+        Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DIP_Review_Process');
         Case cs = new Case(RecordTypeId = RT_DIP_Review_Id, Subject = 'test', Origin = 'Phone', CaseArea__c = 'Risk Management Process', Reason1__c = 'DIP Annual Review', 
         				Status = 'Open', AccountId = acct_hq.Id);  
         insert cs;
@@ -130,7 +130,9 @@ private class DIPdetailsTest {
         dip = [SELECT Id, GPO_Approver_Name__c, Legal_Approver_Name__c FROM DIP_Details__c WHERE Case__c =: cs.Id];
         system.assertEquals(UserInfo.getUserId(),dip.Legal_Approver_Name__c);
         
-        
+        delete dip;
+        undelete dip;
+
         test.stopTest();
         
     }

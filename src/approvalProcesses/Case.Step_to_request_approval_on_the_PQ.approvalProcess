@@ -14,7 +14,6 @@
         <field>Owner</field>
         <field>Estimated_Total_Development_Cost__c</field>
         <field>Estimated_Total_Person_days__c</field>
-        <field>Type_of_Budget__c</field>
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>

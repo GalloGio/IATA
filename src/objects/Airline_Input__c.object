@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Airline Input for sMAP case</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -351,6 +348,7 @@
     <pluralLabel>Airline Inputs</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>New_Airline_Input</fullName>
         <availability>online</availability>
@@ -392,11 +390,48 @@ j$.get(&quot;/&quot; + objectPrefix + &quot;/e&quot;, function( data ) {
         <fullName>Send_email_to_the_Airline</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
+        <linkType>javascript</linkType>
         <masterLabel>Send email to the Airline</masterLabel>
-        <openType>replace</openType>
+        <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>/_ui/core/email/author/EmailAuthor?retURL=%2F{!Airline_Input__c.Id}&amp;p3_lkid={!Airline_Input__c.Id }&amp;template_id=00Xw0000001yTGQ</url>
+        <url>{!REQUIRESCRIPT(&apos;/soap/ajax/42.0/connection.js&apos;)}
+{!REQUIRESCRIPT(&apos;/soap/ajax/42.0/apex.js&apos;)} 
+
+function getRelatedEmails() {
+  try {
+    var query = &quot;SELECT Id, Email&quot;
+     + &quot; FROM Contact&quot;
+     + &quot; WHERE Accountid IN (&quot;
+     + &quot;   SELECT Id&quot;
+     + &quot;   FROM Account&quot;
+     + &quot;   WHERE Id = &apos;{!Airline_Input__c.AirlineId__c}&apos; OR Top_parent__c = &apos;{!Airline_Input__c.AirlineId__c}&apos;&quot;
+     + &quot; )&quot;
+     + &quot; AND Status__c = &apos;Active&apos;&quot;
+     + &quot; AND Airline_Credit_Risk_Manager__c = True&quot;;
+    
+    var queryResult = sforce.connection.query(query);
+    var records = queryResult.getArray(&quot;records&quot;);
+  
+    var emails = [];
+    for (var i=0; i&lt;records.length; i++) {
+      emails.push(encodeURIComponent(records[i].Email));
+    }
+    return emails;
+
+  } catch (e) {
+    console.log(&apos;Error Retrieving emails&apos;);
+    return [];
+  }
+}
+
+
+// Creating url to send an email
+var params = [];
+params.push(&quot;retURL=%2F{!Airline_Input__c.Id}&quot;);
+params.push(&quot;p3_lkid={!Airline_Input__c.Id}&quot;);
+params.push(&quot;template_id=00Xw0000001yTGQ&quot;);
+params.push(&quot;p24=&quot; + getRelatedEmails().join(&quot;;&quot;));
+
+window.location.href = &quot;/_ui/core/email/author/EmailAuthor?&quot; + params.join(&quot;&amp;&quot;);</url>
     </webLinks>
 </CustomObject>

@@ -10,6 +10,8 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 	
 	public List<SelectOption> months {get;set;}
 
+	public List<SelectOption> title {get;set;}
+
 	public AgencyChangeWrapper theChosenOne {get;set;}
 	
 	public boolean moreThan1000Iatacodes {get;set;}
@@ -57,10 +59,15 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
         months.add(new SelectOption('','--None--'));          
         for(Schema.PicklistEntry ple : ID_Card_Application__c.Start_date_agency_month__c.getDescribe().getPicklistValues())
             months.add(new SelectOption(ple.getValue(),ple.getLabel()));
+
+        title = new List<SelectOption>();
+        title.add(new SelectOption('','--None--'));
+        for(Schema.PicklistEntry ple : ID_Card_Application__c.Title__c.getDescribe().getPicklistValues())
+            title.add(new SelectOption(ple.getValue(),ple.getLabel()));
             
         if(ApexPages.currentPage().getParameters().get('ImagedSaved')!=null){
         	Id idapp= ApexPages.currentPage().getParameters().get('ImagedSaved');
-        	List<ID_Card_Application__c> apps = database.query('select Id, Displayed_Name__c, IATA_Code__c, VER_number__c, First_Name__c, Last_name__c, Photo__c  '+
+        	List<ID_Card_Application__c> apps = database.query('select Id, Displayed_Name__c, IATA_Code__c, VER_number__c, First_Name__c, Last_name__c, Photo__c, Title__c, Email_admin__c '+
 				                                     			'from ID_card_application__c where  Id = :idapp LIMIT 1');
 		
 			if(apps.size()==1){
@@ -68,6 +75,8 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 				theChosenOne.newIataCode = apps[0].IATA_Code__c;
 				theChosenOne.verNum = apps[0].VER_number__c;
 				theChosenOne.photo = apps[0].Photo__c;
+				theChosenOne.title = apps[0].Title__c;
+                theChosenOne.email = apps[0].Email_admin__c;
 				theChosenOne.previousContact = new Contact(FirstName = apps[0].First_name__c, LastName = apps[0].Last_Name__c);
 			}			
         	
@@ -95,6 +104,10 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 			acg.previousContact = c;
 			acg.verNum = c.Ver_Number_2__c;
 			acg.oldIATACode = c.IATA_Code__c;
+			acg.title = c.Title;
+            acg.firstName = c.FirstName;
+            acg.lastName = c.LastName;
+            acg.email = c.Email;
 			currentRecords.put(acg.verNum, acg);
 		}if(findcontact.size()==0) {
 			//currentRecord.previousContact =NULL;
@@ -118,7 +131,13 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 			//return;
 		}
 		theChosenOne = currentRecords.get(addid);
-		system.debug('aqui theChosenOne ' + theChosenOne + ' addid ' + addid);
+
+		String fNameSize = theChosenOne.firstName;
+        String lNameSize = theChosenOne.lastName;
+        Integer totalSize = fNameSize.length() + lNameSize.length();
+
+		system.debug('theChosenOne ' + theChosenOne + ' addid ' + addid);
+
 		if(String.isBlank(theChosenOne.newIataCode) || !keyContactAndDelegateForAccountList.keyset().contains(theChosenOne.newIataCode)){
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'You have to select a valid IATA code for the applicant'));
 			//theChosenOne = null;
@@ -144,6 +163,21 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
         	//theChosenOne = null;
 			success = false;
 			//return;
+        }
+
+        if(String.isBlank(theChosenOne.email)){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Schema.SobjectType.Contact.fields.Email.label+' : please insert a Email Address.'));
+                success = false;
+        }
+
+        if(String.isBlank(theChosenOne.title)){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Schema.SobjectType.Contact.fields.Title.label+' : please select a Title.'));
+                success = false;
+        
+        }
+
+        if((fNameSize.length() + lNameSize.length()) > 22){
+                Apexpages.addMessage(new Apexpages.Message(Apexpages.Severity.ERROR,'The concatenation of First and Last Name should not pass 22 characters, you have now ' + totalSize + ' characters. Please reduce the Last Name.'));
         }
 		try{
 			Integer year = Integer.valueOf(theChosenOne.startyear);
@@ -206,6 +240,7 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
         idcapp.Photo__c = theChosenOne.photo;
         idcapp.Start_Date_Agency_Month__c = theChosenOne.startmonth;
         idcapp.Start_Date_Agency_Year__c = theChosenOne.startyear;
+        idcapp.Email_admin__c = theChosenOne.email;
         idcapp = IDCardApplicationFactory.applyApplicationFees(idcapp,keyContactAndDelegateForAccountList.get(theChosenOne.newIataCode).Account__r,null);
 		
 		database.Saveresult res = database.insert(idcapp,true);
@@ -288,6 +323,11 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 		public Contact previousContact {set;get;}
 		public String packageTravel1 {get;set;}
 		public String packageTravel2 {get;set;}
+		public String title {get;set;}
+        public String firstName {get;set;}
+        public String lastName {get;set;}
+        public String email {get;set;}
+        public String displayedName {get;set;}
 		//public boolean TerminatedIATACode {get;set;}
 		public string startmonth {get;set;}
 		public string startyear {get;set;}

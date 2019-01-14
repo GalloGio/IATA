@@ -98,16 +98,11 @@ public class AmazonFileTrgHelper {
                     AfterUndelete(listIdToProcessPerInt.get(num));
                 }
 
-                else throw new transformationException('Apex limits exceeded not possible to perform the operation \n trgNewMap '
-                                 + trgNewMap+ '\n listIdToProcessPerInt  '  + listIdToProcessPerInt  +  '\n num '+num   );
+                else throw new transformationException('Apex limits exceeded not possible to perform the operation \n trgNewMap ' + trgNewMap+ '\n listIdToProcessPerInt  '  + listIdToProcessPerInt  +  '\n num '+num   );
             }
 
 
-        }catch(Exception e){
-
-         TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete  ' , '\n MESSAGE: '  + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString()  );
-
-        }
+        }catch(Exception e){ TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete  ' , '\n MESSAGE: '  + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString()  ); }
 
 
     }
@@ -153,9 +148,9 @@ public class AmazonFileTrgHelper {
 
 
         }catch(Exception e){
-            if(test.isrunningTest())   throw new transformationException( e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS);
-         TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete @FUTURE ' , '\n MESSAGE: '
-                     + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS  );
+            if(test.isrunningTest())   throw new transformationException( e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS); 
+
+            TransformationHelper.sendEmailSupport('AmazonFileTrgHelper  AfterUndelete @FUTURE ' , '\n MESSAGE: ' + e.getMessage() +'\n STACKTRACE   ' + e.getStackTraceString() + '  \n filesIDS' + filesIDS  );
 
         }
 
@@ -205,7 +200,7 @@ public class AmazonFileTrgHelper {
 
             for (AmazonFile__c af : trgNewMap.values()) {
 
-                if (af.RecordTypeId == Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('E&F File').getRecordTypeId()) {
+                if (af.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'EF_File')) {
 
                     efFiles.add(af);
                 }
@@ -238,6 +233,149 @@ public class AmazonFileTrgHelper {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    //AMSU-28;AMSU-113
+    public static void setFileIdentifier(List<AmazonFile__c> attachments){
+        if (attachments != null && attachments.isEmpty() == false) {
+            System.debug('Attachment_Svc - setFileIdentifier');
+            System.debug('Attachment_Svc - attachments - ' + attachments);
+            List<Case> auxCases = new List<Case>();
+            List<AMS_OSCAR__c> updOscar = new List<AMS_OSCAR__c>();
+            Set<Id> caseIds = new Set<Id>();
+            Set<Id> oscarIds = new Set<Id>();
+            Map<ID, AmazonFile__c> mAuxAttach = new Map<ID, AmazonFile__c>();
+
+            System.debug('attachments: ' + attachments);
+
+            for(AmazonFile__c attach : attachments)
+            {
+                if(attach.Case__c != null)
+                {
+                    caseIds.add(attach.Case__c);
+                    mAuxAttach.put(attach.Case__c, attach);
+                }
+            }
+
+            if(caseIds != null && caseIds.size() > 0){
+                auxCases = [Select id, OSCAR__c, OSCAR__r.Process__c from Case where id in :caseIds and OSCAR__c <> null];
+            }
+
+            for(Case auxCase : auxCases)
+            {
+                AmazonFile__c auxAttach = mAuxAttach.get(auxCase.Id);
+                if(auxAttach != null){
+                    if(auxCase.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION){
+                        auxAttach.File_Identifier_picklist__c = 'DGR_CERT';
+                        auxAttach.File_Identifier__c = 'DGR_CERT';
+                        
+                    }else if(auxCase.OSCAR__r.Process__c == AMS_Utils.PCI_COMPLIANT){
+                        auxAttach.File_Identifier_picklist__c = 'PCI_COMPLIANCE';
+                        auxAttach.File_Identifier__c = 'PCI_COMPLIANCE';
+                    }
+                }
+            }
+
+            
+
+            
+        }
+    }
+
+        //FM 06-11-2017 - AMSU28 - add "submitted" state to OSCAR record when agents attach something to the case
+    //AMSU-113 - add validation to PCI compliance attach as well
+    public static void validateAttachmentIsCase_DGR_Certification(List<AmazonFile__c> attachments)
+    {
+        System.debug('Attachment_Svc - validateAttachmentIsCase_DGR_Certification');
+        List<Case> auxCases = new List<Case>();
+        List<AMS_OSCAR__c> updOscar = new List<AMS_OSCAR__c>();
+        Set<Id> caseIds = new Set<Id>();
+        Set<Id> oscarIds = new Set<Id>();
+
+        System.debug('attachments: ' + attachments);
+
+        for(AmazonFile__c attach : attachments)
+        {
+            if(attach.Case__c != null)
+            {
+                caseIds.add(attach.Case__c);
+            }
+        }
+
+        if(caseIds != null && caseIds.size() > 0){
+            auxCases = [Select OSCAR__c from Case where id in :caseIds and OSCAR__c <> null];
+        }
+
+        for(Case auxCase : auxCases)
+        {
+            if(auxCase.OSCAR__c.getSobjectType() == AMS_OSCAR__c.SobjectType)
+            {
+                oscarIds.add(auxCase.OSCAR__c);
+            }
+        }
+        System.debug('oscarIds: ' + oscarIds);
+        List<AMS_OSCAR__c> lOSCAR = [Select Id, Status__c from AMS_OSCAR__c 
+                                            where id in :oscarIds 
+                                            AND Process__c in (:AMS_Utils.CERTIFICATION , :AMS_Utils.PCI_COMPLIANT)
+                                            AND Status__c in ('Accepted_Future Date','Renewal not completed','Open')];
+
+        System.debug('lOSCAR: ' + lOSCAR);
+
+        List<AmazonFile__c> lAuxAttach = [SELECT case__r.OSCAR__c, case__r.OSCAR__r.Process__c ,Name,File_Identifier_picklist__c FROM AmazonFile__c WHERE Case__r.OSCAR__c in :oscarIds];
+        Map<ID, Integer> mAuxAttach = new Map<ID, Integer>();
+
+        //Populate Map with the number of attachments that exist in the OSCARs      
+        for(AmazonFile__c attch : lAuxAttach){
+            if(attch.Case__r.OSCAR__r.Process__c == AMS_Utils.PCI_COMPLIANT && attch.File_Identifier_picklist__c != 'PCI_COMPLIANCE'){
+                continue;
+            }
+
+            if(!mAuxAttach.containsKey(attch.Case__r.OSCAR__c)){
+                mAuxAttach.put(attch.Case__r.OSCAR__c, 1);
+            }else{
+                Integer i = mAuxAttach.get(attch.Case__r.OSCAR__c) + 1;
+                mAuxAttach.put(attch.Case__r.OSCAR__c, i);
+            }
+        }       
+
+        System.debug('mAuxAttach: ' + mAuxAttach);
+
+        for(AMS_OSCAR__c auxOscar : lOSCAR){
+            if(auxOscar != null){
+
+                //Check for other attachments
+                Integer attachSize = 0;
+                if(mAuxAttach.containsKey(auxOscar.Id)){
+                    attachSize = mAuxAttach.get(auxOscar.Id);
+                }
+                
+                System.debug('attachSize: ' + attachSize);
+                //only set the status on the 1st attachment loaded
+                if(attachSize == 1){
+                    
+                    auxOscar.Status__c = 'Submitted';
+                    
+                    updOscar.add(auxOscar);
+                }
+            }
+        }
+
+        System.debug('updOscar: ' + updOscar);
+        //if anny update the status of the cases
+        update updOscar;
+    }
+
+	/*** AMSU-139 ***/
+    public static void checkApprover(List<AmazonFile__c> records, Map<Id,AmazonFile__c> oldMap) {
+        String usrName = UserInfo.getName();
+        Set<String> statusToCheck = new Set<String> {AMS_Utils.REJECTED, AMS_Utils.REJECTED_CLOSED, AMS_Utils.ACCEPTED};
+        for(AmazonFile__c record : records) {
+            AmazonFile__c oldRecord = oldMap.get(record.Id);
+            if(statusToCheck.contains(record.Review_Status__c) && record.Review_Status__c <> oldRecord.Review_Status__c) {
+                record.AMS_Updated_Date__c = Datetime.now();
+                record.AMS_Updated_By__c = usrName;
             }
         }
     }

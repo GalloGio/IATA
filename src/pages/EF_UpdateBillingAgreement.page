@@ -10,7 +10,7 @@
             
             <apex:pageBlockTable value="{!selected}" var="ba">
                 <apex:column value="{!ba.Name}"/>
-                <apex:column value="{!ba.Billing_Agreement_Name__c}"/>
+                <apex:column value="{!ba.BillingAgreement_Name__c}"/>
                 <apex:column headerValue="Status">
                     <apex:inputField value="{!ba.Status__c}"/>
                 </apex:column>               

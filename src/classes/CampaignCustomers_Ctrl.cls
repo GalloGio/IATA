@@ -5,8 +5,8 @@ public class CampaignCustomers_Ctrl
     public Id campaignId{get;set;}
 
     //-- Available & Selected Products 
-    public List<Product2> availableProducts{get;set;}
-    public List<Product2> selectedProducts{get;set;}
+    public Map<Integer, Product2> availableProducts{get;set;}
+    public Map<Integer, Product2> selectedProducts{get;set;}
     
     //-- Order Date range 
     public Date startDate{get;set;}
@@ -41,7 +41,7 @@ public class CampaignCustomers_Ctrl
     {
 
         String strFilter;
-        
+      availableProducts = new Map<Integer, Product2>();
         //-- Init data 
 
         //Campaign
@@ -52,11 +52,12 @@ public class CampaignCustomers_Ctrl
             campaigns.add(new SelectOption(c.Id, c.Name));
         
         //Products
-        //Product_Sel pSelector = new Product_Sel();
         strFilter = Utility.getSeqTextSetting('Product Filter for Renewal', ' ');
-        availableProducts = Database.query('SELECT Id, Name, SAP_Material_Number__c, Product_Segment__c FROM Product2 WHERE (SAP_Material_Number__c != null) ' + strFilter);
-          //pSelector.selectAll();
-
+        List<Product2> availableProducts1 = Database.query('SELECT Id, Name, SAP_Material_Number__c, Product_Segment__c FROM Product2 WHERE (SAP_Material_Number__c != null) ' + strFilter + 'order By name');
+        for(Integer index = 0 ; index < availableProducts1.size() ; index++) {
+            availableProducts.put(index,availableProducts1[index]);
+       }
+       
         //CustomerTypes
         availableCustomerTypes =  new List<SelectOption>(); 
         availableCustomerTypes.add(new SelectOption('', '-'));
@@ -78,8 +79,11 @@ public class CampaignCustomers_Ctrl
 
         //Countries
         availableCountries = new List<SelectOption>();
-        for(IATA_ISO_Country__c c : [Select Id, Name FROM IATA_ISO_Country__c WHERE Name != 'All Countries' ORDER BY Name])
-            availableCountries.add(new SelectOption(c.Id, c.Name));
+        for(IATA_ISO_Country__c c : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+            if(c.Name != 'All Countries'){
+                availableCountries.add(new SelectOption(c.Id, c.Name));
+            }
+        }
     }
 
     //Method called when click on  Generate Campaign Members button 
@@ -90,7 +94,9 @@ public class CampaignCustomers_Ctrl
         //prodWithoutStdPrice = new List<String>();
 
         //-- Build SOQL to retrieve OrderItems 
-        String query = 'SELECT OrderId, Order.BillToContactId, Product__c, Quantity, Invoice_Date__c FROM OrderItem WHERE IsDeleted = false and Order.Type in (\'Order\', \'History\') AND Order.Status != \'New\' ';
+        String query = 'SELECT OrderId, Order.BillToContactId, Product__c, Quantity, Invoice_Date__c, Product_Number__c FROM OrderItem WHERE IsDeleted = false AND ' + 
+                        'Order.Type in (\'Order\', \'History\') AND Order.Status != \'New\' AND Order.Status != \'Cancelled\' AND ' + 
+                        'Order.BillToContact.Status__c NOT IN (\'Inactive\', \'Retired\', \'Left Company / Relocated\') ';
 
         //-- Products criteria
         if(selectedProducts != null && selectedProducts.size() > 0)
@@ -99,8 +105,8 @@ public class CampaignCustomers_Ctrl
             List<Campaign_Product__c> campaignProducts2Save = new List<Campaign_Product__c>();
 
             //Verified if the selectedProducts have standard price
-            for(Product2 p : selectedProducts){
-                selectedProductNumbers.add(p.SAP_Material_Number__c);
+            for(Integer id : selectedProducts.keySet()){
+                selectedProductNumbers.add(selectedProducts.get(id).SAP_Material_Number__c);
             }
 
             Boolean selectedProductWithStdPrice = true;
@@ -121,19 +127,18 @@ public class CampaignCustomers_Ctrl
             }*/
 
             //-- Find selected products last ersions 
-            Set<Id> productsOrdered = new Set<Id>(); 
-            for(Product2 p : selectedProducts)
-                productsOrdered.add(p.Id);
-
+            Set<Id> productsOrdered = new Set<Id>();             
+             for(Integer id : selectedProducts.keySet())
+                productsOrdered.add(selectedProducts.get(id).Id);
             Map<Id, Product2> productLastVersion = new Product_Sel().getProductLastVersions(productsOrdered);
 
-            for(Product2 p : selectedProducts)
-            {
-                //selectedProductNumbers.add(p.SAP_Material_Number__c);
-                Product2 lastVersion = productLastVersion.get(p.Id);
+            
+            for(Integer id : selectedProducts.keySet())
+            {                
+                Product2 lastVersion = productLastVersion.get(selectedProducts.get(id).Id);
                 campaignProducts2Save.add(new Campaign_Product__c(
                     Campaign__c = campaignId, 
-                    Product__c = p.Id,
+                    Product__c = selectedProducts.get(id).Id,
                     Product_Last_Version__c = lastVersion.Id
                 ));
             }
@@ -188,22 +193,17 @@ public class CampaignCustomers_Ctrl
         {
             Set<String> setProductsNumbers = new Set<String>(productsNumbers.split('_'));
 
-            if(selectedProducts == null) selectedProducts = new List<Product2>();
+            if(selectedProducts == null) selectedProducts = new Map<Integer, Product2>();
 
-            List<Product2> newAvailableProducts = new List<Product2>();
-          
-            for(Integer x = 0; x < availableProducts.size(); x++)
-            {
-              Product2 p = availableProducts[x];
+            Map<Integer,Product2> newAvailableProducts = new Map<Integer,Product2>();
+            List<Product2> listAux = new List<Product2>();
 
-            //-- Move p from available to selected products
-              if(setProductsNumbers.contains(p.SAP_Material_Number__c)) selectedProducts.add(p);
-              else newAvailableProducts.add(p);
+            for(Integer id: availableProducts.keySet()){
+                if(setProductsNumbers.contains(availableProducts.get(id).SAP_Material_Number__c)) selectedProducts.put(id, availableProducts.get(id)); // fazer map 
+                    else newAvailableProducts.put(id, availableProducts.get(id));
             }
-
             availableProducts = newAvailableProducts; 
         }
-
         return null;
     }
 
@@ -215,17 +215,16 @@ public class CampaignCustomers_Ctrl
         {
             Set<String> setProductsNumbers = new Set<String>(productsNumbers.split('_'));
 
-            if(availableProducts == null) availableProducts = new List<Product2>();
+            if(availableProducts == null) availableProducts = new Map<Integer, Product2>();
 
-            List<Product2> newSelectedProducts = new List<Product2>();
+        
+            Map<Integer, Product2> newSelectedProducts = new Map<Integer, Product2>();
             
-            for(Integer x = 0; x < selectedProducts.size(); x++)
-            {
-              Product2 p = selectedProducts[x];
-
-              //-- Move p from selected to available products                
-                if(setProductsNumbers.contains(p.SAP_Material_Number__c)) availableProducts.add(p);
-                else newSelectedProducts.add(p);                
+            
+            for(Integer id: selectedProducts.keySet())
+            {             
+                if(setProductsNumbers.contains(selectedProducts.get(id).SAP_Material_Number__c)) availableProducts.put(id,selectedProducts.get(id));
+                else newSelectedProducts.put(id, selectedProducts.get(id));               
             }
 
             selectedProducts = newSelectedProducts;
@@ -233,4 +232,4 @@ public class CampaignCustomers_Ctrl
 
         return null;
     }
-}
+} 

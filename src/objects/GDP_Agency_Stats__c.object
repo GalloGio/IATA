@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Keep track of global agency stats contained in the data base</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -204,32 +201,39 @@
         <fullName>Scope__c</fullName>
         <externalId>false</externalId>
         <label>Scope</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Country</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>AU Territories</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CA Provinces</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>US States</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sub Continent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Country</fullName>
+                    <default>false</default>
+                    <label>Country</label>
+                </value>
+                <value>
+                    <fullName>AU Territories</fullName>
+                    <default>false</default>
+                    <label>AU Territories</label>
+                </value>
+                <value>
+                    <fullName>CA Provinces</fullName>
+                    <default>false</default>
+                    <label>CA Provinces</label>
+                </value>
+                <value>
+                    <fullName>US States</fullName>
+                    <default>false</default>
+                    <label>US States</label>
+                </value>
+                <value>
+                    <fullName>Sub Continent</fullName>
+                    <default>false</default>
+                    <label>Sub Continent</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Stats_Date__c</fullName>
@@ -268,20 +272,24 @@
         <description>Inform the time-lapse for the snapshot: daily or monthly</description>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Daily</fullName>
+                    <default>false</default>
+                    <label>Daily</label>
+                </value>
+                <value>
+                    <fullName>Monthly</fullName>
+                    <default>false</default>
+                    <label>Monthly</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Unique_Emails__c</fullName>
@@ -441,4 +449,5 @@
     <pluralLabel>GDP Agency Stats</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

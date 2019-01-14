@@ -8,8 +8,8 @@ private class Ifap_ReminderBatchTestClass {
 		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
        
                      
-            ID hqrt =Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-            ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'); 
+            ID hqrt =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
+            ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'); 
             
             List<IATA_ISO_Country__c> isoCountries = new List<IATA_ISO_Country__c>();
             isoCountries.add(new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' ));
@@ -70,14 +70,17 @@ private class Ifap_ReminderBatchTestClass {
             
             List<Contact> conts = new List<Contact>();
             conts.add(new Contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = accs[0].id,
                                      Financial_Assessment_Contact__c = true));
             conts.add(new Contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = accs[1].id,
                                      Financial_Assessment_Contact__c = true));
             conts.add(new Contact(lastname = 'pluto' ,
+                                     firstname = 'Name',
                                      phone = '123',
                                      accountid = accs[2].id,
                                      Financial_Assessment_Contact__c = true));
@@ -100,7 +103,7 @@ private class Ifap_ReminderBatchTestClass {
                               contactid = conts[0].id,
                               AccountId = accs[0].id,
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'very good'  ,
+                              Financial_Review_Result__c = 'Satisfactory - No Action'  ,
                               //FS_Reminder_EmailTemplate__c   =   emailTemplates[0].id,
                               IFAP_Country_ISO__c = 'SS',
                               Subject = 'Test case Suisse'
@@ -118,7 +121,7 @@ private class Ifap_ReminderBatchTestClass {
                               contactid = conts[1].id,
                               AccountId = accs[1].id,
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'very good'  ,
+                              Financial_Review_Result__c = 'Satisfactory - No Action'  ,
                               //FS_Reminder_EmailTemplate__c   =   emailTemplates[1].id,
                               IFAP_Country_ISO__c = 'IT',
                               Subject = 'Test case Italia'
@@ -136,11 +139,16 @@ private class Ifap_ReminderBatchTestClass {
                               contactid = conts[2].id,
                               AccountId = accs[2].id,
                               Assessment_Performed_Date__c = date.today(),
-                              Financial_Review_Result__c = 'very good'  
+                              Financial_Review_Result__c = 'Satisfactory - No Action'  
                               //FS_Reminder_EmailTemplate__c   =   emailTemplates[2].id                                            
               ));
            
             insert cases;
+
+            Case c = [SELECT id, Financial_Review_Type__c FROM Case WHERE Subject = 'Test case Italia' LIMIT 1];
+            c.Financial_Review_Type__c = 'Annual';
+        
+            update c;
             
             TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
 			TransformationHelper.CalculateBusinessHoursAges = false;

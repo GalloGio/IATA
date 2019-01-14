@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <style>
+      body{
+	font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color:#004577;
+      }
+     
+      
+div.main{
+margin:auto;
+width:90%;
+}
+      hr{
+	color:#0A4279;
+      }
+    </style>
+    
+  </head>
+
+  <body>
+<div class="main">
+<table width="640px">
+<tr>
+<td colspan="3">
+  <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+  </td>
+  </tr>
+<tr>
+
+<tr>
+<td colspan="3">
+{!$Label.ISSP_Email_do_not_reply}
+</td>
+</tr>
+<tr>
+
+<td colspan="3" style="font-size:26px;color:#0A4279;text-align:center;">     
+
+</td>
+</tr>
+<tr>
+<td colspan="3">
+  <br />
+   <hr style="width:80%"/>
+   <p> {!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1} </p>
+    <p>{!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1} <a href={!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link}>{!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2}</a>
+       {!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3}</p>
+<p>{!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3}<br></p>
+  </td>
+  </tr>
+  <tr>
+  <td width="30%">
+  
+    </td>
+
+  <td width="30%">
+  </td>
+  </tr>
+<tr><td colspan="3">
+
+</td></tr>
+  <tr>
+  <td colspan="3">
+    <p>
+Thank you,
+    </p>
+    <p>
+IATA Customer Service
+    </p>
+  </td>
+    </tr>
+    
+        <tr>
+    <p>
+    <td style="text-align:left">
+<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w00000056QFS&oid=00D2000000008TF "/>
+    </p>
+      </td>
+    </tr>
+
+    <BR />
+
+
+    <tr>
+    <td colspan="3">
+    <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF&lastMod=1389346115000" />
+      </td>
+    </tr>
+
+    
+    
+
+</table>
+</div>
+  </body>
+</html>

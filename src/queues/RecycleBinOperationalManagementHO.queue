@@ -3,6 +3,14 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>liewf@iata.org</email>
     <name>Recycle Bin Operational Management HO</name>
+    <queueMembers>
+        <users>
+            <user>liewf@iata.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

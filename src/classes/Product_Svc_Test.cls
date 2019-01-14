@@ -5,25 +5,81 @@ private class Product_Svc_Test
     public static final Date DEFAULT_EFFECTIVE_START_DATE = Date.today(); 
     public static final Date DEFAULT_EFFECTIVE_END_DATE = Date.today().addYears(1);
 
+    static void setup() {
+      List<IATA_ISO_Country__c> countryList = new List<IATA_ISO_Country__c> {
+        new IATA_ISO_Country__c(
+          Name = 'Test Country 1',
+          ISO_Code__c = 'T1',
+          Tax_ID_Mandatory__c = TRUE,
+          VAT_Validation_Required__c = TRUE
+        ),
+        new IATA_ISO_Country__c(
+          Name = 'Test Country 1',
+          ISO_Code__c = 'T2',
+          Tax_ID_Mandatory__c = FALSE,
+          VAT_Validation_Required__c = FALSE
+        )
+      };
+
+      insert countryList;
+    }
+
     @isTest(seeAllData=true)
     static void test_saveZProducts() 
     {
+        List<Apex_Setting__c> l = [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+
+        if (l.isEmpty() == false) {
+            delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+        }
+        Product_Information__c oProdInfo;
+        for (Product_Information__c pi : [select Id
+                                               , (select Id, Name
+                                                  from Product_Rate_Plans_Information__r
+                                                  where Product_Rate_Plan__c in (select zqu__ProductRatePlan__c from zqu__ProductRatePlanCharge__c)
+                                                    and Is_Triable__c = false
+                                                  limit 1)
+                                          from Product_Information__c])
+            if (pi.Product_Rate_Plans_Information__r.size() > 0)
+            {
+                oProdInfo = pi;
+                break;
+            }
+
         Test.startTest();
         //-- Generate Test Data
         TestDataGenerator.generateUtilitySetting();
-        List<Product2> products = TestDataGenerator.generateProducts(2, false); 
+        List<Product2> products = TestDataGenerator.generateProducts(3, false); 
         
         //-- 1st Product has ho Zuora Id : zcreate must be called 
         products[0].Zuora_Id__c = null; //-- 
+        products[0].Status__c = 'New';
+        products[0].Product_Manager_lookup__c = UserInfo.getUserId();
 
         //-- 2nd Product has invalid date : api wil not be called for this product 
-        products[1].Effective_To__c = null;
+        products[1].SAP_Material_Number__c = null;
+
+        products[2].Zuora_Id__c = null;
+
+        if (oProdInfo != null) {
+            products[2].IEC_Product_Information__c = oProdInfo.Id;
+            products[2].IEC_Product_Rate_Plan_Information__c = oProdInfo.Product_Rate_Plans_Information__r[0].Id;
+        }
 
         insert products;
 
         Database.executeBatch(new Product_Batch('saveZProducts', products));
 
         Map<Id, Product2> productMap = new Map<Id, Product2>(products);
+
+        products[0].Zuora_Id__c = null;
+        products[0].Effective_From__c = system.today().addYears(2);
+        products[0].Effective_To__c = system.today().addYears(3);
+        products[0].Status__c = 'Active';
+        products[2].Effective_From__c = null;
+        products[2].Effective_To__c = null;
+        products.remove(1);
+        update products;
 
         Set<Id> productIds = productMap.keySet();
         
@@ -38,6 +94,8 @@ private class Product_Svc_Test
     @isTest(seeAllData=true)
     static void test_ProductStockStatus()
     {
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+
         Test.startTest();
          //-- Generate Test Data
         TestDataGenerator.generateUtilitySetting();
@@ -80,6 +138,8 @@ private class Product_Svc_Test
     @isTest(seeAllData=true)
     static void test_setIsNewVersion()
     {
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+
         Test.startTest();
         TestDataGenerator.generateUtilitySetting();
 
@@ -114,11 +174,12 @@ private class Product_Svc_Test
         Test.startTest();
         TestDataGenerator.generateUtilitySetting();
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
 
         List<Product2> listProd = new List<Product2>();
-        listProd.add(new Product2(Name='Test 1', Product_Section__c='tst111', Division__c='division 1',Sales_Channel__c='channel 1',SAP_Material_Number__c='1245-78',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1)));
-        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1)));
-        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1)));
+        listProd.add(new Product2(Name='Test 1', Product_Section__c='tst111', Division__c='division 1',Sales_Channel__c='channel 1',SAP_Material_Number__c='1245-78',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1), Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1), Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1), Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
         insert listProd;
         
         
@@ -212,6 +273,7 @@ private class Product_Svc_Test
         List<Product2> listProd = new List<Product2>();
         
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
         TestDataGenerator.generateUtilitySetting();
         
         //*** create relationships between Profit Center and Product Manager
@@ -219,9 +281,9 @@ private class Product_Svc_Test
         insert listPM;
         
         //*** invoking coverage for insert event
-        listProd.add(new Product2(Name='zzzTest 1', Product_Section__c='tst111'));
-        listProd.add(new Product2(Name='zzzTest 2', Product_Section__c='tst222'));
-        listProd.add(new Product2(Name='zzzTest 3'));
+        listProd.add(new Product2(Name='zzzTest 1', Product_Section__c='tst111',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='zzzTest 2', Product_Section__c='tst222',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='zzzTest 3',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
         insert listProd;
         listProd = [select Name, Product_Manager_lookup__c from Product2 where Name like 'zzzTest%' order by Name];
         system.assert(listProd[0].Product_Manager_lookup__c == UserInfo.getUserId(), 'Product manager wasn\'t set: ' + listProd[0].Product_Manager_lookup__c);
@@ -253,9 +315,9 @@ private class Product_Svc_Test
         Test.startTest();
         List<Product_Record_Type_Mapping__c> listRTM = new List<Product_Record_Type_Mapping__c>();
         List<Product2> listProd = new List<Product2>();
-        Map<String, Id> mapRecordType_Id = Utility.getRTmapName_Id('Product2', null);
         
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
         TestDataGenerator.generateUtilitySetting();
         
         //*** create setttings for record types
@@ -265,22 +327,21 @@ private class Product_Svc_Test
         insert listRTM;
         
         //*** invoking coverage for insert event
-        listProd.add(new Product2(Name='zzzTest 1', SAP_Division_Code__c='division 1', SAP_Sales_Channel_Code__c='channel 1'));
-        listProd.add(new Product2(Name='zzzTest 2', SAP_Division_Code__c='division 2'));
-        listProd.add(new Product2(Name='zzzTest 3', SAP_Division_Code__c='division 1', SAP_Sales_Channel_Code__c='channel 2'));
-        listProd.add(new Product2(Name='zzzTest 4', SAP_Sales_Channel_Code__c='channel 2'));
+        listProd.add(new Product2(Name='zzzTest 1', SAP_Division_Code__c='division 1', SAP_Sales_Channel_Code__c='channel 1',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='zzzTest 2', SAP_Division_Code__c='division 2',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='zzzTest 3', SAP_Division_Code__c='division 1', SAP_Sales_Channel_Code__c='channel 2',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='zzzTest 4', SAP_Sales_Channel_Code__c='channel 2',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
         insert listProd;
         listProd = [select RecordTypeId, Name from Product2 where Name like 'zzzTest%' order by Name];
-        system.assert(listProd[0].RecordTypeId == mapRecordType_Id.get('Publication'), 'Expected Publication RT ' + mapRecordType_Id.get('Publication') + ': ' + listProd[0].RecordTypeId);
-        system.assert(listProd[1].RecordTypeId == mapRecordType_Id.get('GDP'), 'Expected GDP RT ' + mapRecordType_Id.get('GDP') + ': ' + listProd[1].RecordTypeId);
-        system.assert(listProd[2].RecordTypeId == mapRecordType_Id.get('Unclassified'), 'Expected Unclassified RT ' + mapRecordType_Id.get('Unclassified') + ': ' + listProd[2].RecordTypeId);
-        system.assert(listProd[3].RecordTypeId == mapRecordType_Id.get('GDP'), 'Expected GDP RT ' + mapRecordType_Id.get('GDP') + ': ' + listProd[3].RecordTypeId);
+        system.assert(listProd[0].RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Publication'), 'Expected Publication RT ' + RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Publication') + ': ' + listProd[0].RecordTypeId);
+        system.assert(listProd[1].RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'GDP'), 'Expected GDP RT ' + RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'GDP') + ': ' + listProd[1].RecordTypeId);
+        system.assert(listProd[2].RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Unclassified'), 'Expected Unclassified RT ' + RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'Unclassified') + ': ' + listProd[2].RecordTypeId);
+        system.assert(listProd[3].RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'GDP'), 'Expected GDP RT ' + RecordTypeSingleton.getInstance().getRecordTypeId('Product2', 'GDP') + ': ' + listProd[3].RecordTypeId);
         
-        //*** invoking coverage for update event
+        //*** invoking coverage for update event -> cannot cover because this portion is deactivated
         listProd[0].SAP_Sales_Channel_Code__c = 'channel 2'; 
         update listProd;
         listProd = [select RecordTypeId, Name from Product2 where Name like 'zzzTest%' order by Name];
-        //system.assert(listProd[0].RecordTypeId == mapRecordType_Id.get('Unclassified'), 'Expected Unclassified RT ' + mapRecordType_Id.get('Unclassified') + ': ' + listProd[0].RecordTypeId);
         Test.stopTest();
     } //*** end of "test_setRecordType"
 
@@ -298,11 +359,12 @@ private class Product_Svc_Test
         List<Product2> listProd = new List<Product2>();
         
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
         TestDataGenerator.generateUtilitySetting();
         
         //*** invoking coverage for insert event
-        listProd.add(new Product2(Name='zzzTest 1', SAP_Material_Number__c='123456'));
-        listProd.add(new Product2(Name='zzzTest 2'));
+        listProd.add(new Product2(Name='zzzTest 1', SAP_Material_Number__c='123456',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='zzzTest 2',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
         insert listProd;
         listProd = [select Name, Activity_Code__c from Product2 where Name like 'zzzTest%' order by Name];
         system.assert(listProd[0].Activity_Code__c == '1234', 'Wrong default: ' + listProd[0].Activity_Code__c);
@@ -315,6 +377,7 @@ private class Product_Svc_Test
     {
         Test.startTest();
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
         TestDataGenerator.generateUtilitySetting();
 
         //-- Create product
@@ -325,6 +388,130 @@ private class Product_Svc_Test
         //-- Send it to Zuora by clicking the Send To Zuora button 
         Product_Soap.send2Zuora(products[0].Id);
 		Test.stopTest();
+    }
+
+	@isTest(seeAllData=true)
+	static void test_IsProductAndCountryCompliant()
+	{
+        setup();
+
+		Map<Id, Boolean> mapCheck;
+		List<Product2> lstProduct = [select Id from Product2 limit 2];
+		List<IATA_ISO_Country__c> lstCountry = [select Id, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c != null limit 2];
+		lstCountry[0].Is_Non_Compliant__c = false;
+		lstCountry[1].Is_Non_Compliant__c = true;
+		update lstCountry;
+		insert new Non_Compliant_Country__c(Product__c=lstProduct[1].Id, IATA_ISO_Country__c=lstCountry[0].Id);
+		
+		system.assertEquals(Product_Svc.IsProductAndCountryCompliant(lstProduct[0].Id, null), true);
+		
+		mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[0].ISO_Code__c});
+		system.assertEquals(mapCheck.get(lstProduct[0].Id), true);
+		system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
+		
+		mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[1].ISO_Code__c});
+		system.assertEquals(mapCheck.get(lstProduct[0].Id), false);
+		system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
+	} //*** end of "test_IsProductAndCountryCompliant"
+
+	@isTest(seeAllData=false)
+	static void test_Miscellaneous()
+	{
+		TestDataGenerator.generateProducts(1, true);
+		system.assert(Product_Svc.getAllProducts().size() > 0, 'Wrong count');
+    } //*** end of "test_Miscellaneous"
+
+    @isTest(seeAllData=true)
+    static void test_Miscellaneous2() {
+        Product2 topProduct = TestDataGenerator.generateProducts(1, true)[0];
+        Product2 childProduct = TestDataGenerator.generateProducts(1, true)[0];
+        Product2 thirdProduct = TestDataGenerator.generateProducts(1, true)[0];
+        Product2 oldThirdProduct;
+
+        childProduct.IEC_Parent_Product__c = topProduct.Id;
+
+        update childProduct;
+
+        topProduct.Accepted_Payment_Methods__c = 'Credit Card';
+        topProduct.Product_Set_Up_Notifications__c = true;
+
+        update topProduct;
+
+        update topProduct;
+
+        oldThirdProduct = new Product2(
+            Id = thirdProduct.Id,
+            SAP_Material_Number__c = '2222-99',
+            Effective_From__c = System.today() - 6,
+            Effective_To__c = System.today() - 5
+        );
+
+        thirdProduct.Product_Set_Up_Notifications__c = true;
+        thirdProduct.SAP_Material_Number__c = '1234-56';
+        thirdProduct.Status__c = 'Active';
+        thirdProduct.Effective_From__c = System.today() - 5;
+        thirdProduct.Effective_To__c = System.today() + 10;
+        update thirdProduct;
+
+        String templateId;
+
+        for (
+            EmailTemplate emailTemplate : [
+                SELECT
+                    Id,
+                    DeveloperName
+                FROM 
+                    EmailTemplate
+                WHERE
+                    DeveloperName = 'Product_Effective_to_Expiring'
+            ]
+        ) {
+            templateId = emailTemplate.Id;
+        }
+        
+        List<Apex_Setting__c> existingApexSettings = [SELECT Id FROM Apex_Setting__c WHERE Name='Product Effective to template Id'];
+
+        if (existingApexSettings.isEmpty() == false) {
+            delete existingApexSettings;
+        }
+
+        Apex_Setting__c apexSetting = new Apex_Setting__c(
+            Name='Product Effective to template Id',
+            Text_1__c = templateId
+        );
+        insert apexSetting;
+
+        try {
+            Product_Svc.emailNotification(new List<Product2> { thirdProduct }, new Map<Id,Product2> { oldThirdProduct.Id => oldThirdProduct }, true);
+        } catch (Exception e) {
+        }
+
+        Map<String,String> productApiNameMap = Product_Svc.productApiNames();
+
+        Product_Svc.setRecordType(new List<Product2> { thirdProduct }, new List<Product2> { oldThirdProduct }, false);
+        
+
+        try {
+            thirdProduct.Accepted_Payment_Methods__c = null;
+
+            update thirdProduct;
+        } catch (Exception e) {
+        }
+
+        try {
+            childProduct.Accepted_Payment_Methods__c = null;
+
+            update childProduct;
+        } catch (Exception e) {
+        }
+
+	} //*** end of "test_Miscellaneous2"
+
+    static void testOthers() {
+        System.assert(Product_Svc.isEqual(null, null));
+        System.assert(Product_Svc.isEqual('', null));
+        System.assert(Product_Svc.isEqual(null, ''));
+        System.assert(! Product_Svc.isEqual('X', ''));
     }
 
 }

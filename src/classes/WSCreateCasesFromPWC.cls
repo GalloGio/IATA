@@ -1,17 +1,17 @@
 @RestResource(urlMapping='/PWC/*')
 global with sharing class WSCreateCasesFromPWC {
-
+	
 	public static final String BATCH_SUBJECT = 'Create Cases From PWC';
 	public static final String FILE_NAME_REQUEST = 'webservice_request.txt';
 	public static final String FILE_NAME_RESPONSE = 'webservice_reponse.txt';
-
-
+	
+	
 	public static final String ERROR_CANNOT_CREATE = 'Cannot create batch';
 	public static final String ERROR_NO_RESOURCE = 'No resource available';
-
+	
 	public class customException extends Exception {}
-
-	@HttpPost
+	
+	@HttpPost	
 	Global Static String doPost(list<SecurityCase> cases) {
 		system.debug('DTULLO ' + cases);
 		try {
@@ -23,13 +23,13 @@ global with sharing class WSCreateCasesFromPWC {
 			//call batch in schedule method
 			ScheduleCreateCasesFromPWC.launchSchedule(batchNumber.Name);
 			return JSON.serialize( new ResponsePOST('SUCCESS', batchNumber.Name, '') );
-
+			
 		} catch ( Exception e ) {
 			return JSON.serialize( new ResponsePOST('ERROR', '', e.getMessage()) );
 		}
 	}
-
-	@HttpGet
+	
+	@HttpGet	
 	Global Static String doGet() {
 		try {
 			RestRequest request = RestContext.request;
@@ -38,14 +38,14 @@ global with sharing class WSCreateCasesFromPWC {
 			list<Attachment> listResponse = [ Select Id, Body from Attachment where parentId = :batchNumber.Id and Name = :FILE_NAME_RESPONSE];
 			if ( listResponse.isEmpty() ) {
 				return JSON.serialize( new BatchCreateCasesFromPWC.responsePWCError('IN_PROGRESS', '') );
-			}
+			} 
 			return listResponse[0].Body.toString();
-
+			
 		} catch (Exception e ) {
 			return JSON.serialize( new BatchCreateCasesFromPWC.responsePWCError('ERROR', ERROR_NO_RESOURCE) );
 		}
 	}
-
+	
 	@TestVisible
 	private static BatchNumber__c createBatchNumber( ) {
 		BatchNumber__c batch = new BatchNumber__c(
@@ -54,7 +54,7 @@ global with sharing class WSCreateCasesFromPWC {
 		);
 		return batch;
 	}
-
+	
 	@TestVisible
 	private static Attachment createAttachment( Id parentId, String data ) {
 		Attachment att = new Attachment(
@@ -64,28 +64,28 @@ global with sharing class WSCreateCasesFromPWC {
 		);
 		return att;
 	}
-
+	
 	public class ResponsePOST {
 		public String Status {get; set;}
 		public String UniqueId {get; set;}
 		public String ErrorMsg {get; set;}
-
+		
 		public ResponsePOST( String status, String UniqueId, String errorMsg) {
 			this.Status = status;
 			this.UniqueId = uniqueId;
 			this.ErrorMsg = errorMsg;
 		}
 	}
-
+	
 	global class SecurityCase {
-		public String IATA_code {get; set;}
+		public String AimsID {get; set;}
 		public Decimal Amount {get; set;}
 		public String CurrencyISO {get; set;}
 		public Integer Reason {get; set;}
 		public String ExpiryDate {get; set;}
-
-		public SecurityCase( String IATA_code, Decimal Amount, String curr, Integer reason, String ExpiryDate) {
-			this.IATA_code = IATA_code;
+		
+		public SecurityCase( String aimsid, Decimal Amount, String curr, Integer reason, String ExpiryDate) {
+			this.AIMSID = aimsid;
 			this.Amount = Amount;
 			this.CurrencyISO = curr;
 			this.Reason = reason;
@@ -95,7 +95,7 @@ global with sharing class WSCreateCasesFromPWC {
 		public Boolean extractReason() {
 			return this.reason == 1;
 		}
-
+		
 		public Date extractExpiryDate() {
 			try {
 				list<String> listDate = this.expiryDate.split('-');
@@ -103,7 +103,7 @@ global with sharing class WSCreateCasesFromPWC {
 			} catch ( Exception e) {
 				return null;
 			}
-		}
+		} 
 	}
-
+	
 }

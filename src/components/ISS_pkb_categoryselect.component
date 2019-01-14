@@ -1,28 +1,28 @@
-<apex:component allowDML="true" >
+<apex:component allowDML="true" controller="pkb_Controller">
 <apex:attribute name="pkbCon" type="pkb_Controller" required="false" description="handle to the pkb controller" />
-    
+
     <apex:attribute name="catNum" type="Integer" required="true" description="value that corresponds to the custom settings category group being displayed" />
     <apex:attribute name="catGroup" type="String" required="true" description="category group name" />
     <apex:attribute name="catGroupLabel" type="String" required="true" description="category group label" />
     <apex:attribute name="rootCat" type="String" required="true" description="root category name" />
-    
+
     <apex:variable value="0" var="prevCatDepth"/>
     <input type="text" id="pkbmenu_q" value="" class="input" style="margin:0em 1em 1em 1em; display:block; padding:4px; border-radius:4px; border:1px solid silver;" />
     <div style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-style:italic;margin-bottom:5px">{!$Label.PKB2_Narrow_Search_Help}</div>
     <div id="pkbmenu">
-        
+
             <knowledge:categoryList categoryVar="c" categoryGroup="{!catGroup}" rootCategory="{!rootCat}" level="-1">
-                <apex:outputText escape="false" value="{!IF (VALUE(prevCatDepth)==0, '</span><ul>', '')}" /> 
+                <apex:outputText escape="false" value="{!IF (VALUE(prevCatDepth)==0, '</span><ul>', '')}" />
                 <apex:outputText escape="false" value="{!
-                                                       IF (MOD(c.depth,2) != 0 && MOD(VALUE(prevCatDepth),2) == 0 && VALUE(prevCatDepth) == 0, '<li id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >', 
+                                                       IF (MOD(c.depth,2) != 0 && MOD(VALUE(prevCatDepth),2) == 0 && VALUE(prevCatDepth) == 0, '<li id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >',
                                                        	IF (MOD(c.depth,2) == 0 && MOD(VALUE(prevCatDepth),2) == 0, '<li id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >',
                                                        		IF (MOD(c.depth,2) == 0 && MOD(VALUE(prevCatDepth),2)!=0 , '<li id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >',
                                                        			IF (MOD(c.depth,2)!=0 && MOD(VALUE(prevCatDepth),2) == 0 && VALUE(prevCatDepth) > 0, '</ul></li><li id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >', ''
                                                        )
                                                        	)
-                                                       		) 
+                                                       		)
                                                        ) + HTMLENCODE(c.Label)}" />
-              	
+
                 <apex:outputText escape="false" value="{!
                                                        IF (MOD(c.depth,2) != 0 && MOD(VALUE(prevCatDepth),2) == 0 && VALUE(prevCatDepth) == 0, '<ul id=\"' + catGroup + ':' + c.Name + '##' + c.Label + '\" >',
                                                        IF (MOD(c.depth,2) == 0 && MOD(VALUE(prevCatDepth),2) == 0, '</li>',
@@ -33,13 +33,13 @@
                                                        		)
                                                 				)
                                  						}" />
-                
+
                 <apex:variable value="{!c.depth}" var="prevCatDepth"/>
-                
+
             </knowledge:categoryList>
            	<apex:outputText escape="false" value="</ul></li></ul>"/>
     </div>
-    
+
     <script type="text/javascript">
     	$('#pkbmenu')
   		// listen for event
@@ -53,7 +53,7 @@
                 buildSearchHref();
   				doSearch();
   		})
-    
+
     	$('#pkbmenu').jstree({
             "core" : {
                 "multiple" : false,
@@ -65,7 +65,7 @@
                     		"stripes" : false
     						},
   				},
-            "search" : {  
+            "search" : {
                  "case_insensitive" : true
                 },
             "plugins" : [ "search", "sort" ]
@@ -78,9 +78,24 @@
       		$('#pkbmenu').jstree(true).search(v);
     	}, 250);
   });
-    
+
     $.jstree.reference('#pkbmenu').select_node(currCategories);
-    
+
     </script>
-    
+    <script>
+    $(document).ready(function(){
+        var isCNS = {!isCNS};
+        var excludeTopics = JSON.parse('{!lsExcludeTopics}');
+        $('li.jstree-node').each(function(index, value) {
+            // the apiname is hidden in the id: FAQ:<apiname>##<label>
+            // so we need to parse it
+            var apiname = $(this).attr('id').split(':')[1].split('##')[0];
+            // console.log(apiname);
+            if(isCNS && excludeTopics.indexOf(apiname) !== -1) {
+                $(this).hide();
+            }
+        });
+    });
+    </script>
+
 </apex:component>

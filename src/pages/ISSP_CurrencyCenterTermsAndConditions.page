@@ -1,0 +1,222 @@
+<apex:page controller="ISSP_CurrencyCenterTandCController" showHeader="false" standardStylesheets="false" sidebar="false" >
+
+<c:ISSP_Header ></c:ISSP_Header>
+
+<style>
+  p {
+    font-size: small;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+</style>
+
+<div class="container">
+
+  <c:ISSP_CustomNavigation />
+
+  <div class="row">
+    <div class="col-md-1"></div>
+
+    <div class="col-md-10">
+      <div class="panel panel-primary">
+
+
+        <div class="panel-heading">
+          TERMS OF USE
+        </div>
+
+        <div class="panel-body">
+          <apex:form id="formLogin" >
+
+            <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
+              <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                <p><apex:outputText value="{!er}" escape="false" /></p>
+              </apex:repeat>
+            </div>
+
+            <div class="input-group ">
+              
+              <!-- START TERMS & CONDITIONS TEXT -->
+
+              <p><span>The following Terms of Use are entered into between yourself (the “<b>User</b>”) and the International Air Transport Association, an association created by a Special Act of the Parliament of Canada and having its head office at 800 Place Victoria, P.O. Box 113, Montreal, Quebec, Canada H4Z 1M1 (“<strong>IATA</strong>”).</span></p>
+
+              <p><span>PLEASE CAREFULLY READ THE FOLLOWING TERMS OF USE BEFORE COMPLETING YOUR REGISTRATION AND USING IATA CURRENCY CENTER THAT IS MADE AVAILABLE BY IATA TO DULY AUTHORIZED USERS USING THE SAME LOG-IN INFORMATION (each, the “<b>IATA Currency Center</b>”).</span></p>
+
+              <p><span>The User agrees that its access to and use of the IATA Currency Center shall be subject to the following terms and to applicable legislation, as the case may be.</span></p>
+
+              <p><b><span>IF YOU DO NOT AGREE TO THE FOLLOWING TERMS, PLEASE REFRAIN FROM COMPLETING YOUR REGISTRATION AND FROM USING IATA CURRENCY CENTER.</span></b></p>
+
+              <p><b><span>Otherwise, please confirm your agreement to these Terms of Use by clicking “I Agree”.</span></b></p>
+
+              <p><b ><span>RESTRICTIONS TO USE</span></b></p>
+
+              <p><span>The User agrees to use the IATA Currency Center strictly for the purpose of purchasing and accessing IATA information, products and services, as applicable, and shall not authorize any other person to use the IATA Currency Center in any manner whatsoever.</span></p>
+
+              <p ><b><span>REGISTRATION</span></b></p>
+
+              <p><span>During the registration process, the User shall provide all required information so as to create an account enabling the User to access and use the IATA Currency Center (the “<b >User Account</b>”). The User represents and warrants to IATA that the User: (i)&nbsp;shall provide truthful, accurate, current and complete information, as required for creating the User Account; and (ii)&nbsp;shall maintain and promptly update the information associated with its User Account. Every User accessing the IATA Currency Center is required to have its own User Account, which may under no circumstances be used by several Users. As part of the registration process, the User shall be allocated a username and password.</span></p>
+
+              <p><b><span>ACCESS CODE AND PASSWORD</span></b></p>
+
+              <p><span>The User agrees not to access the IATA Currency Center by any other means than its User Account. For such purpose, the User shall use the valid log-in information provided to it by IATA in accordance herewith. The User shall not attempt any unauthorized access to the IATA Currency Center, to the other computer systems or networks of IATA, by deriving a username or a password or by any other means. The User is responsible for maintaining the confidentiality of all information relating to the User Account, including the log-in information provided to them by IATA. The User shall be entirely liable for any activity that occurs in the User Account, including, but without limitation, activities related to any information or other content provided in connection with the IATA Currency Center through the User Account. If any unauthorized use of the User Account should occur, the User shall immediately notify IATA by E&#8209;mail to <a href="mailto:information.security@iata.org">information.security@iata.org</a> so that IATA may take appropriate action.</span></p>
+
+              <p><strong><span>TERM AND TERMINATION</span></strong></p>
+
+              <p><span>By clicking on “I Agree”, or as of the first use of the IATA Currency Center, as the case may be, the User agrees to be bound by the terms set out in these Terms of Use for the entire term during which the User shall continue to use the IATA Currency Center. The Terms of Use set out herein may be amended or rescinded by IATA at any time, without prior notice and without any specific reason, by posting a notice to such effect on the homepage of the IATA Currency Center. It is your responsibility to periodically check the IATA Currency Center for such changes.</span></p>
+
+              <p><span>The User may, at any time, cease to access and use the IATA Currency Center by mere request to IATA for deactivation of its User Account. For greater certainty, these Terms of Use shall not be considered terminated, and the User shall remain responsible for any and all activities in its User Account until such time as same shall be deactivated permanently. </span></p>
+
+              <p><b><span>PRODUCTS AND SERVICES</span></b></p>
+
+              <p><span>Where products or services are offered through the IATA Currency Center, online access will be supplied subject to the Terms of Use stated herein, and additional provisions regarding such product or service as are set out in the product or service-specific Terms of Use, where applicable. Where a provision in a product or service-specific Terms of Use contradicts a provision in the present Terms of Use, the provision in the product or service-specific Terms of Use shall prevail. </span></p>
+
+              <p><span>For products or services that are offered by subscription, no access or connection to the product or service in question shall be provided beyond (a) the term or (b) the product or service features that have been paid for, until appropriate payment has been received for, as applicable, any additional term and/or additional product or service features.</span></p>
+
+              <p><b><span>CODE OF CONDUCT</span></b></p>
+
+              <p><span>In connection with the User’s access to the IATA Currency Center, the User shall comply with the rules of conduct and standards prescribed hereunder (collectively, the “<b >Code of Conduct</b>”). The Code of Conduct shall be supplemented by the policies of IATA to be disclosed to the User from time to time. The User is responsible for communicating to its Authorized Agents the Code of Conduct as well as any other policies disclosed to the User subsequently.</span></p>
+
+              <p>(a) <span>Illegal Activities. The User shall not use the IATA Currency Center to partake in any illegal activities including, but without limitation, any breach of applicable legislation, and more specifically, copyright and trade&#8209;mark infringement, or criminal activities. </span></p>
+
+              <p>(b) <span>Systems Abuse. The User shall not commit any systems abuse including, but without limitation, any excessively intensive processor use, any excessive use of disk space, any excessive use of data storage space, computer hacking, error handling or masking or any domain name service unauthorized by IATA, installing permanently running programs such as IRC robots, or the resale of CGI scripts or databases. </span></p>
+
+              <p>(c) <span>Malware. The User shall not upload to IATA’s servers any form of destructive software such as viruses, worms, Trojan horses, time bombs, cancelbots, or any other harmful components or any other computer file, program or code designed to interrupt, destroy or limit the functionality of the IATA Currency Center, or of any other computer software, computer equipment, or telecommunications equipment. </span></p>
+
+              <p>(d) <span>Reverse Engineering. Disassembly, decompilation and reverse engineering of software and other components of the IATA Currency Center, or of any part of same, are strictly prohibited. The User shall not, directly or indirectly, attempt to derive any source code or other industrial secrets composing the IATA Currency Center.</span></p>
+
+              <p>(e) <span>Disruption. The User shall not interfere with or disrupt the IATA Currency Center, or the networks and servers of IATA, by any means whatsoever. </span></p>
+
+              <p>(f) <span>Facilitation. The User shall neither facilitate nor encourage or enable any third party to engage in any of the above conduct.</span></p>
+
+              <p><b><span>TECHNICAL SUPPORT</span></b></p>
+
+              <p><span>IATA shall provide the User with free technical support by telephone and e&#8209;mail. The technical support provided by IATA shall be limited to problems related to gaining access to and using the IATA Currency Center, and problems related to log-in information. The User shall be exclusively responsible for procuring (as well as exclusively responsible for all related costs and expenses) any necessary technical support for the User’s own computer equipment and software and any technical support necessary for maintaining its electrical and physical facilities and an appropriate Internet connection required to access and use the IATA Currency Center.</span></p>
+
+              <p><span>IATA shall use commercially reasonable efforts to respond to requests for technical support, but IATA does not guarantee any specific response time to resolve technical issues, as such response time may vary depending on the nature and extent of any given technical issue. The User agrees not to send spam or abusively resort to technical support provided by IATA hereunder.</span></p>
+
+              <p><b><span>SECURITY AND RELIABILITY</span></b></p>
+
+              <p><span>The reliability of access to the IATA Currency Center is a priority for IATA. However, IATA cannot guarantee reliable access to the IATA Currency Center at all times, in particular in the event of:</span></p>
+
+              <p>1. <span>Heavy Internet traffic;</span></p>
+
+              <p>2. <span>Automated maintenance and upgrades of the IATA Currency Center and relevant servers; and</span></p>
+
+              <p>3. <span>Events constituting <i >force majeure</i> (including, but without limitation, terrorist attacks, fortuitous events, computer viruses/worms/denial of service attacks and other causes reasonably beyond IATA’s control).</span></p>
+
+              <p><span>The User acknowledges and agrees that IATA shall undertake no liability (including, but without limitation, for direct and indirect damages) for any downtime that the IATA Currency Center may experience for any reason.</span></p>
+
+              <p><b><span>VIRUS POLICY</span></b></p>
+
+              <p><span>The User is exclusively responsible for protecting its own computer equipment, software, electrical equipment and other equipment against viruses and to ensure that same are free from any viruses. IATA maintains its own protection against viruses on its servers, but shall undertake no liability (including, but without limitation, for direct and indirect damages) for viruses that may affect the User’s systems and resulting from access to and use of the IATA Currency Center.</span></p>
+
+              <p><b
+              ><span>THIRD PARTY LINKS</span></b></p>
+
+              <p><span>The IATA Currency Center and associated microsites may provide links to other Internet sites or resources (&quot;third party links&quot;). IATA is providing these third party links to you only as a convenience, and the inclusion of any link to such sites does not imply endorsement by IATA of those sites.</span></p>
+
+              <p><span>Because IATA has no control over such external resources and sites, you acknowledge and agree that IATA is not responsible for the availability of such external resources and sites, and does not endorse and is not responsible or liable for any content, advertising, products, or other materials on or available from such external resources and sites. IATA may terminate the availability of such external resources and sites through links on the IATA Currency Center at any time. IATA will not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, products, goods or services available on or through these channels.</span></p>
+
+              <p><b ><span>OWNERSHIP OF CONTENT</span></b></p>
+
+              <p><span>IATA owns and operates the IATA Currency Center. As between IATA and the User, all content, data, graphics, photographs, images, audio, video, software (including source code and object code), products, trade&#8209;marks, service marks, trade names and all other components and information (collectively, the “<b>Content</b>”) accessible by means of the IATA Currency Center are the exclusive property of IATA and/or its licensors. All of the Content is protected by Canadian and international intellectual property laws.</span></p>
+
+              <p><span>Except as provided forth herein, the User is prohibited from modifying, copying, reproducing, publishing, transmitting, distributing, posting, executing or interpreting, transferring, assigning or selling any Content, or creating derivative works therefrom, without the specific prior written consent of IATA. </span></p>
+
+              <p><b><span>USER LICENSE</span></b></p>
+
+              <p><span>As long as a User Account remains active, and subject to the terms of these Terms of Use, IATA grants to the User, and the User accepts, a non&#8209;exclusive, personal, non&#8209;assignable, non&#8209;transferrable, non&#8209;sublicensable license to access (remotely, through an Internet connection to be provided by the User) and use the IATA Currency Center, exclusively for business purposes related to the business of the User with IATA. Except for the rights specifically granted hereinabove to the User, these Terms of Use do not transfer to the User any right (of ownership or other) in or to the IATA Currency Center or any of the products, services or information accessible on it. As between the User and IATA, IATA shall be considered the sole and xclusive owner of all components of the IATA Currency Center. Any improvements, developments, modifications, changes, supplements, augmentations or works that may be derived from, created or otherwise made by the User in connection with the IATA Currency Center shall be the exclusive property of IATA and the User hereby assigns to IATA all its rights, title and interest in and to same.</span></p>
+
+              <p><span>For greater certainty, the license granted to the User under the preceding paragraph shall not grant to the User any license to use names, trade names, words, titles, logos, slogans, graphics or designs that constitute trade&#8209;marks, service marks or trade names and made available in connection with the IATA Currency Center (collectively, the “<b >Marks</b>”), regardless of whether such Marks are the property of IATA or of third parties, without the prior written consent of IATA.</span></p>
+
+              <p><b><span>OWNERSHIP OF USER CONTENT </span></b></p>
+
+              <p><span>Without limiting the generality of the provisions of the preceding section, and for greater certainty, any and all information and related materials published, stored or uploaded by the User in connection with the IATA Currency Center (the “<b >User Content</b>”) shall become the entire property of IATA as of the time same are transmitted to IATA, and the User hereby assigns to IATA all its rights, title and interest in and to same.</span></p>
+
+              <p><span>IATA will have no obligations with respect to the User Content. IATA and its designees will be free to copy, disclose, distribute, incorporate and otherwise use the User Content and all data, images, sounds, text, and other things embodied therein for any and all commercial or non-commercial purposes. You are prohibited from posting or transmitting to or from the IATA Currency Center, as applicable, any unlawful, threatening, libelous, defamatory, obscene, pornographic, or other material that would violate any law.</span></p>
+
+              <p><b><span>NO WARRANTY</span></b></p>
+
+              <p><span>Unless otherwise stated in terms applicable specifically to a certain component, product or service offered through the IATA Currency Center, the IATA Currency Center and all components thereof are provided “as is” and “as available”, without any warranty, representation or condition whatsoever, express or implied.</span></p>
+
+              <p><span>To the maximum extent allowed under applicable legislation, IATA disclaims any warranty, representation or condition, express or implied, in respect of the IATA Currency Center and its components, including, without limitation, any warranties, representations, conditions and warranties of quality, merchantability, fitness for a particular purpose and non&#8209;infringement.</span></p> 
+
+              <p><span>Without limiting the generality of the foregoing, IATA does not represent, nor warrant, that the IATA Currency Center will be uninterrupted or error&#8209;free, that any deficiencies will be corrected, or that the server, the systems or the network underlying same are, or will be, free from viruses or other harmful components. IATA does not make any warranty or representation concerning the use of information, data, IATA Currency Center or other items offered by way of the IATA Currency Center with respect to their correctness, accuracy, compliance, usefulness, reliability or any other quality. IATA undertakes no obligation to continue to maintain the IATA Currency Center in operation or to produce new versions of or improvements to the IATA Currency Center.</span></p>
+
+              <p><span>The User expressly acknowledges that its use of the IATA Currency Center is at its own risk and that IATA shall not be liable for deficiencies or omissions in connection with the use of the IATA Currency Center. In particular, the User has sole responsibility for adequate protection and backup of data and equipment used in connection with the IATA Currency Center and will not make a claim against IATA for lost data, re-run time, inaccurate output, work delays or lost profits resulting from the use of the IATA Currency Center.</span></p>
+
+              <p><span>Any material downloaded or otherwise obtained through the use of the IATA Currency Center is done at the User’s own discretion and risk and the User is solely responsible for any damage to its computer system or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by the User from IATA or through the IATA Currency Center will create any warranty not expressly stated in the terms. IATA's employees are not authorized to vary these terms. </span></p>
+
+              <p><b><span>EXEMPTION/LIMITATION OF LIABILITY</span></b></p>
+
+              <p><span>To the maximum extent allowed under applicable legislation, and except for damages related to physical prejudice resulting from an intentional or gross fault, or damages resulting from bodily or moral prejudice, IATA does not undertake any liability towards the User or any other person with respect to direct, indirect, incidental, special, consequential, punitive, or exemplary damages, including but not limited to, damages for loss of profits, revenue, goodwill, use, data, electronically transmitted orders, or other economic advantage resulting or arising from access to, use of or inability to use the IATA Currency Center or its components, even if IATA is advised of the possibility of such damages or even if such damages are reasonably foreseeable.</span></p>
+
+              <p><span>Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to you.</span></p>
+
+              <p><b><span>INDEMNIFICATION</span></b></p>
+
+              <p><span>The User agrees and undertakes to fully indemnify and hold harmless against any liability IATA, its licensors, successors and assigns, as well as its and their directors, shareholders, parent companies, employees, agents and representatives, resulting from any action, claim, loss and any damages (direct, indirect or other) and judgments, all reasonable legal fees (including fees for outside legal counsel) and disbursements and any other liability or expense that they may incur in relation to: (i)&nbsp;any User Content or other item provided by the User to IATA; or (ii)&nbsp;any breach of the Code of Conduct by the User or any other breach of the warranties, representations, undertakings, duties or obligations set out in these Terms of Use; or (iii)&nbsp;any activity related to the User Account (including any negligent or faulty conduct) carried out by any other person having communicated with IATA or accessed the IATA Currency Center, by using log-in credentials associated with the User Account.</span></p>
+
+              <p><b ><span>PROTECTION OF PERSONAL INFORMATION </span></b></p>
+
+              <p><span>IATA collects and uses personal information in the context of the use of the IATA Currency Center in full compliance with applicable legislation and IATA’s Privacy Policy (the “<b >Policy</b>”). For more details, the User is encouraged to consult the Policy, available at <a href="http://www.iata.org/Pages/privacy.aspx">http://www.iata.org/Pages/privacy.aspx</a>.</span></p>
+
+              <p><b><span>COOKIES</span></b></p>
+
+              <p><span>In connection with the use of the IATA Currency Center, cookies and other technologies may be used in compliance with applicable laws so as to monitor the User’s use of the IATA Currency Center. Each User may configure its Web browser to warn them when a cookie is received or to block cookies. It is also possible to delete cookies at any time. However, by not accepting cookies, the User may not be able to fully benefit from all the features of the IATA Currency Center.</span></p>
+
+              <p><b><span>NOTICES</span></b><span></span></p>
+
+              <p><span>IATA may send to the User notices using the contact information that the User submits upon registering a User Account, or by posting a general notice on the homepage of the IATA Currency Center, or by any other reliable method. Any questions concerning these Terms of Use, and any other request, shall be sent to IATA using the contact information for IATA posted on the IATA Currency Center.</span></p>
+
+              <p><b><span>TRADE&#8209;MARKS</span></b></p>
+
+              <p><span>All brands, marks, logos, graphics and character styles appearing on the IATA Currency Center are trade&#8209;marks or trade dress of IATA or its licensors. </span></p>
+
+              <p><b><span>APPLICABLE LAW AND JURISDICTION</span></b></p>
+
+              <p><span>The validity, interpretation, construction and performance of these Terms of Use shall be governed by the laws of the Province of Québec and the federal laws of Canada applicable therein, without reference to choice of law provisions. The courts of Québec shall have exclusive jurisdiction over any judicial proceedings arising directly or indirectly from, or associated with, the use of the IATA Currency Center.</span></p>
+
+              <p><b><span>LANGUAGE</span></b></p>
+
+              <p><span>The User agrees that these Terms of Use shall solely be drafted in the English language. </span><span>L’Usager est en accord que ces termes d’usage soient rédigés en langue Anglaise. </span></p>
+
+              <p><b><span>ENTIRE AGREEMENT</span></b></p>
+
+              <p><span>These Terms of Use constitute the entire agreement binding the User to IATA with respect to the subject matter hereof. If any provision of these Terms of Use should be found invalid or unenforceable, such provision shall be amended only to the extent required to make same comply with applicable legislation.</span></p>
+
+              <p><b><span>WAIVER AND ASSIGNMENT</span></b><span></span></p>
+
+              <p><span>Any non&#8209;insistence by IATA on strict performance of any provision of these Terms of Use shall not be interpreted as a waiver to any right. Neither the conduct of relations between the User and IATA nor business practices shall act to amend any provision of these Terms of Use.</span></p>
+
+              <p><span>IATA may, at any time, assign its rights and obligations hereunder to any party, without prior notice.</span></p>
+
+              <!-- END TERMS & CONDITIONS TEXT -->
+
+              <p>&nbsp;</p>
+              <p>
+                <apex:inputCheckbox value="{!isAcceptChecked}"/> {!$Label.ISSP_Registration_acceptGeneralConditions}
+              </p>
+            </div>
+            <hr />
+            <div class="form-group">
+              <div class="row">
+                <div class="col-xs-6">
+                  <apex:commandButton styleclass="btn_iata btn-sm btn-block btn_iata_cancel" action="{!rejectTerms}" value="{!$Label.ISSP_Back}" id="back"/>
+                </div>
+                <div class="col-xs-6">
+                  <apex:commandButton styleclass="btn_iata btn-sm btn-block btn_iata_success" action="{!acceptTerms}" value="{!$Label.ISSP_Accept}" id="next"/>
+                </div>
+              </div>
+            </div>
+          </apex:form>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <c:ISSP_CustomFooter />
+</div>
+</apex:page>

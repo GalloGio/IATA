@@ -44,20 +44,44 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
     
     // ========================================================================
     // basic test: calling batch job, with test data
-    @isTest (SeeAllData=false)  
-    static void test03_BasicTestOnBatchJobWithTestData() {
+     @isTest (SeeAllData=false)  
+   static void test03_BasicTestOnBatchJobWithTestData() {
+
+        //Generate SAP Settings
+        TestDataGenerator.generateSAPSettings();
+
         IECEBC_TestUtility.createEbcSetupAndRelatedData();
         IECEBC_TestUtility.createTestUser();
         Date dSubscriptionEndDate = Date.today().addMonths(6);
         IECEBC_TestUtility.createEbcSubscription( IECEBC_TestUtility.lEbcProductRatePlanMember[0], IECEBC_TestUtility.oEbcProductMember, dSubscriptionEndDate);
-        
+        List<zqu__ProductRatePlan__c> subProdRatePlanId = [select Id, Name                       
+                    from zqu__ProductRatePlan__c
+                    ];
+       List<zqu__ProductRatePlanCharge__c> subProdRatePlanCId = [select Id, Name                       
+                    from zqu__ProductRatePlanCharge__c
+                    ];
+       
+       List<Zuora__SubscriptionProductCharge__c> subSubscriptionProductCharge = [select Id, Name
+                        , Product_Rate_Plan_Charge__c                       
+                    from Zuora__SubscriptionProductCharge__c];
+       integer count = 0;
+        List<Zuora__SubscriptionProductCharge__c> updateSPC = new  List<Zuora__SubscriptionProductCharge__c>();
+       for(Zuora__SubscriptionProductCharge__c spc: subSubscriptionProductCharge){
+         spc.Product_Rate_Plan_Charge__c= subProdRatePlanCId[count].id;
+         updateSPC.add(spc);
+         count ++;
+       }
+       update subSubscriptionProductCharge;
+        List<Id> memberRatePlanIdList = new List<Id>();
+        for(zqu__ProductRatePlan__c prp: subProdRatePlanId)
+         memberRatePlanIdList.add(prp.id);
+        IECEBC_Utility.ebcMemberProductRatePlanIdList = memberRatePlanIdList;
         createEbcCampaign();
+        
         Test.startTest();
-        
-        BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification();
-        
-        Test.stopTest();
-        
+        vfIECEBC_ReportList cont = new vfIECEBC_ReportList();
+        BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification();        
+        Test.stopTest();        
         System.debug('Unit Test: Finish: test03_BasicTestOnBatchJobWithTestData');
     } // test03_BasicTestOnBatchJobWithTestData
     
@@ -82,4 +106,5 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
         
         return camp;
     }
+
 } // SchdlEBCCreateNotificationOnStatus_tst

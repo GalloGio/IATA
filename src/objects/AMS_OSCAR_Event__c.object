@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -68,25 +65,30 @@
         <fullName>Action__c</fullName>
         <externalId>false</externalId>
         <label>Action</label>
-        <picklist>
-            <picklistValues>
-                <fullName>N/A</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Not Ok</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ok</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>true</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>Not Ok</fullName>
+                    <default>false</default>
+                    <label>Not Ok</label>
+                </value>
+                <value>
+                    <fullName>Ok</fullName>
+                    <default>false</default>
+                    <label>Ok</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>New_Value__c</fullName>
@@ -124,53 +126,65 @@
         <fullName>Related_Step__c</fullName>
         <externalId>false</externalId>
         <label>Related Step</label>
-        <picklist>
-            <picklistValues>
-                <fullName>B1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>B2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>B3.A</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>B3.B</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>B3.C</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>B3.D</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>B4</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>E2</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>G1</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>B1</fullName>
+                    <default>false</default>
+                    <label>B1</label>
+                </value>
+                <value>
+                    <fullName>B2</fullName>
+                    <default>false</default>
+                    <label>B2</label>
+                </value>
+                <value>
+                    <fullName>B3.A</fullName>
+                    <default>false</default>
+                    <label>B3.A</label>
+                </value>
+                <value>
+                    <fullName>B3.B</fullName>
+                    <default>false</default>
+                    <label>B3.B</label>
+                </value>
+                <value>
+                    <fullName>B3.C</fullName>
+                    <default>false</default>
+                    <label>B3.C</label>
+                </value>
+                <value>
+                    <fullName>B3.D</fullName>
+                    <default>false</default>
+                    <label>B3.D</label>
+                </value>
+                <value>
+                    <fullName>B4</fullName>
+                    <default>false</default>
+                    <label>B4</label>
+                </value>
+                <value>
+                    <fullName>E1</fullName>
+                    <default>false</default>
+                    <label>E1</label>
+                </value>
+                <value>
+                    <fullName>E2</fullName>
+                    <default>false</default>
+                    <label>E2</label>
+                </value>
+                <value>
+                    <fullName>G1</fullName>
+                    <default>false</default>
+                    <label>G1</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>AMS OSCAR Event</label>
     <nameField>
@@ -183,4 +197,5 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
 </CustomObject>

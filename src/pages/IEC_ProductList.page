@@ -1,440 +1,651 @@
 <apex:page controller="IEC_ProductListController" action="{!onLoadAction}" language="{!language}" 
-    docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
-    <!--[if lte IE 8]>
+	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+	<!--[if lte IE 8]>
     <html lang="{!language}" class="ie lte-ie8 no-svg">
-    <![endif]-->
-    <!--[if IE 9]>
+	<![endif]-->
+	<!--[if IE 9]>
     <html lang="{!language}" class="ie ie9">
-    <![endif]-->
-    <!--[if !IE]><!-->
+	<![endif]-->
+	<!--[if !IE]><!-->
+	
+    <script type="text/javascript">
+        function setHeightForCustomImages() {
+
+        var imageDivs = document.getElementsByClassName('fileImage');
+        console.log(imageDivs);
+        for(i = 0; i<imageDivs.length; i++){
+            var img = imageDivs[i].childNodes[0];
+            console.log("here: " , img);
+
+                img.style = "height: 100%;";
+
+        }
+
+        };
+    </script>
+
     
-    <html lang="{!language}">
-    <!--<![endif]-->
+	<html lang="{!language}">
+	<!--<![endif]-->
 
-        <head>
-            <meta charset="UTF-8"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
-            <title>{!$Label.PageTitleProductList} - {!$Label.SiteTitle}</title>
-        </head>
+		<head>
+			<!-- Google Tag Manager -->
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }      
 
-        <body data-media-size="">
-            <div id="js-breakpoint-finder">
-                <span class="device-xs screen-xsmall"/>
-                <span class="device-sm screen-small"/>
-                <span class="device-md screen-medium"/>
-                <span class="device-lg screen-large"/>
-                <span class="device-xl screen-xlarge"/>
-            </div>
-            
-            <div id="js-app-container" class="app-container">
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "memberStatus": "{!userDetails.userMemberStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "breadcrumb": "Home > {!selectedCategory.label}", 
+                        "language": "{!language}"
+                    },
+                    "ecommerce": {
+                    	"currencyCode": "USD",
+                    	"impressions": {!productListStr}
+                    }                    
+                });
 
-                <!-- Page Header -->
-                <c:IEC_PageHeader />
-
-                <div id="js-page-container" class="page-container">
-                    
-                    <!-- Page Main Content -->
-                    <main class="main-content publications">
-                        <div class="reader-only" id="reader-main-content">Main Content</div>
-
-                        <div class="section top-banner">
-                            <div class="inner-wrapper">
-                                <h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
-                            </div>
-                        </div>
-
-                        <div class="inner-wrapper">
-                            <ol class="list breadcrumb">
-                                <li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
-                                <li>{!selectedCategory.label}</li>
-                            </ol>
-                            <h1 class="page-title punctuations">{!selectedCategory.label}</h1>
-
-                            <div class="sub-container refine-container">
-                                <section class="group-container category">
-                                    <h2 class="group-title">Category</h2>
-                                    <div class="show-more-less-container">
-                                        <ul class="list show-more-less js-toggle-more-less" data-is-display-all="false">
-                                            <li class="{!IF(selectedTopic==null,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}">All</a></li>
-                                            
-                                            <apex:variable value="{!0}" var="counter" />
-                                            <apex:repeat var="cat" value="{!subCategories[selected_category]}">
-                                                <li class="{!IF(selectedTopic==cat.value,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}&topic={!cat.value}">{!cat.label}</a></li>
-                                                <apex:variable value="{!counter+1}" var="counter" />
-                                            </apex:repeat>
-                                            
-                                            <apex:variable var="showMoreLess" value="1" rendered="{!counter > 10}">
-                                                <li class="action">
-                                                    <a class="show-more js-more" href="#"><span class="reader-only">Show </span>more</a>
-                                                    <a class="show-less js-less" href="#"><span class="reader-only">Show </span>less</a>
-                                                </li>
-                                            </apex:variable>
-
-                                        </ul>
-                                    </div>
-                                </section>
-
-                                <section class="group-container refine-by">
-                                    <apex:form id="frmFilters" styleClass="frmFilters">
-                                        <h2 class="group-title">{!$Label.Refine_by}:</h2>
-                                        <div class="accordion-container js-select-deselect">
-                                            <dl class="list refine-by">
-                                                <apex:variable value="{!1}" var="index1" />
-                                                <apex:repeat value="{!filters}" var="filter">
-                                                    <dt>
-                                                        <div class="accordion-title js-toggle is-open" data-target="{!filter.field}" data-target-element=".accortion-panel">{!$Label.Select} {!filter.label}</div>
-                                                        <div class="list-title is-open">
-                                                            {!filter.label}
-                                                            
-                                                            <apex:variable var="picklistSelectAll" value="1" rendered="{!filter.type_x =='PICKLIST'}">
-                                                                <a class="select-all refine-select-all" data-is-visible="true" data-target="{!filter.field}" data-target-element=".js-checkbox-container" href="#">({!$Label.select_all})</a>
-                                                                <a class="deselect-all refine-deselect-all" data-is-visible="false" data-target="{!filter.field}" data-target-element=".js-checkbox-container" href="#">({!$Label.deselect_all})</a>
-                                                            </apex:variable>
-
-                                                        </div>
-                                                    </dt>
-                                                    <dd class="accortion-panel js-checkbox-container is-open" data-id="{!filter.field}">
-                                                        <ul class="list">
-                                                            <apex:variable value="{!1}" var="index2" />
-                                                            
-                                                            <!-- PickList or Yes/No filters -->
-                                                            <apex:variable var="picklistFilters" value="1" rendered="{!OR(filter.type_x =='PICKLIST', filter.type_x =='BOOLEAN')}">
-                                                                <apex:repeat value="{!filter.values}" var="item">
-                                                                    <li>
-                                                                        <div class="field-group checkbox inline">
-                                                                            <div class="checkbox-box">
-                                                                                <div class="custom-user-input checkbox">
-                                                                                    <input class="user-input checkbox" type="checkbox" id="refine-checkbox{!index1}-{!index2}" value="{!filter.field}|{!item.value}" />
-                                                                                    <label class="custom-checkbox" for="refine-checkbox{!index1}-{!index2}"><i class="icon"></i></label>
-                                                                                </div>
-                                                                                <label class="input-label" for="refine-checkbox{!index1}-{!index2}">{!item.label}</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>
-                                                                    <apex:variable value="{!index2 +1}" var="index2" />
-                                                                </apex:repeat>
-                                                            </apex:variable>
-                        
-                                                            <!-- Free text Filters -->
-                                                            <apex:variable var="freeTextFilters" value="1" rendered="{!filter.type_x =='STRING'}">
-                                                                <li>
-                                                                    <div class="field-group input inline">
-                                                                        <input type="text" id="refine-input{!index1}" data-field="{!filter.field}" />
-                                                                    </div>
-                                                                </li>
-                                                            </apex:variable>
-
-                                                        </ul>
-                                                    </dd>
-                                                    <apex:variable value="{!index1 +1}" var="index1" />
-                                                </apex:repeat>
-                                            </dl>
-                                            <div class="footer-actions">    
-                                                <apex:inputHidden id="selectedFilters" value="{!selectedFilters}" />
-
-                                                <apex:commandButton styleClass="button secondary" value="{!$Label.Refine}" action="{!refine}" reRender="main_container" status="sortByStatus" 
-                                                    oncomplete="javascript:matchHeight2();"/>
-                                            </div>
-                                        </div>
-
-                                        <apex:actionFunction name="backButonRefine" reRender="main_container" action="{!refine}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
-                                    </apex:form>
-                                </section>
-                            </div>
-
-                            <apex:outputPanel styleClass="main-container" id="main_container">
-                                <apex:outputPanel layout="block" styleClass="alert error" rendered="{!products.size == 0}">
-                                    NO PRODUCT FOUND
-                                </apex:outputPanel>
-
-                                <apex:outputPanel layout="block" styleClass="sort-by" rendered="{!products.size > 0}">
-                                    <label for="sort_by" class="input-label">{!$Label.SortBy}</label>
-                                    <div class="custom-user-input select">
-                                        <i class="icon chevron-down"></i>
-                                        <apex:form >
-                                            <apex:selectList id="sort_by" value="{!sortBy}" styleClass="user-input select" size="1">
-                                                <apex:selectOptions value="{!sortingFields}"/>
-                                                <apex:actionSupport event="onchange" oncomplete="javascript:matchHeight2();" 
-                                                    action="{!sortProducts}" status="sortByStatus" reRender="main_container" />
-                                            </apex:selectList>
-                                            <apex:actionStatus id="sortByStatus">
-                                                <apex:facet name="start">
-                                                    <div class="overlay"></div>
-                                                    <div class="modal-dialog" id="js-modal-dialog"><img src="{!$Resource.IEC_progress}" border="0" width="43" height="15" /></div>
-                                                </apex:facet>                                           
-                                            </apex:actionStatus>                                                
-                                        </apex:form>
-                                    </div>
-                                </apex:outputPanel>
-
-                                <apex:outputPanel layout="block" id="productList" rendered="{!products.size > 0}">
-                                    <ul class="list product-list">
-                                        <apex:repeat value="{!products}" var="prod">
-                                            <li class="list-item">
-                                                <div class="item-wrapper">
-                                                    <figure class="item-image">
-                                                        <a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">
-                                                            <img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" />
-                                                        </a>
-                                                    </figure>
-                                                    <h2 class="item-name">
-                                                        <a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a>
-                                                    </h2>
-                                                    <h3 class="item-description-title">{!prod.Media}</h3>
-                                                    <p class="item-description">
-                                                        Edition: {!prod.Edition} <br />
-                                                        Language: {!prod.Language}
-                                                    </p>
-                                                    <p class="item-description">{!prod.ProductShortDesc}</p>
-                                                    
-                                                    <!-- Scenario 1: In Stock -->
-                                                    <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock'}">
-                                                        {!prod.InventoryStatus}
-                                                    </apex:outputPanel>
-                                                    <!-- Scenario 2: Out of Stock -->
-                                                    <apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!prod.InventoryStatus != 'In stock'}">
-                                                        {!prod.InventoryStatus}
-                                                    </apex:outputPanel>
-
-                                                    <!-- Scenario 3: Pre-order -->
-                                                    <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!AND(prod.InventoryStatus != 'In stock', NOT(prod.Is_Electronic_Product))}">
-                                                        <span class="text">{!$Label.Button_Pre_Order}</span>
-                                                    </apex:outputPanel>
-
-                                                    <!-- Regular Price if exist -->
-                                                    <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0}">
-                                                        <apex:outputText styleClass="price-value" value="{0, number, currency}">
-                                                            <apex:param value="{!prod.RegularPrice}" />
-                                                        </apex:outputText>
-                                                        <span class="price-label">{!$Label.regular_price}</span>
-                                                    </apex:outputPanel>
-
-                                                    <!-- Discounted price if exist -->
-                                                    <apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0}">
-                                                        <apex:outputText styleClass="price-value" value="{0, number, currency}">
-                                                            <apex:param value="{!prod.CustomerPrice}" />
-                                                        </apex:outputText>
-                                                        <span class="label-value">{!$Label.discounted_price}</span>
-                                                    </apex:outputPanel>
-
-                                                    <!-- Price not exit: Direct Sales -->
-                                                    <apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null)}">
-                                                        <span class="price-label">{!$Label.Direct_Sales}</span>
-                                                    </apex:outputPanel>
-
-                                                    <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!$Label.Select}</a>
-                                                </div>
-                                            </li>
-                                        </apex:repeat>
-                                    </ul>
-                                </apex:outputPanel>
-
-                                <!-- Pagination AJAX functions -->
-                                <apex:form id="frmPagination">
-                                    <apex:actionFunction name="gotoPage" reRender="main_container" action="{!gotoPage}" status="sortByStatus" oncomplete="javascript:matchHeight2();">
-                                        <apex:param name="pageNum" value="" />
-                                    </apex:actionFunction>
-
-                                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!gotoNext}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
-
-                                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!gotoPrevious}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
-                                </apex:form>
-                                
-                                <!-- Pagination -->
-                                <div class="pagination tablet desktop">
-                                    <div class="page-number">
-                                        <ol class="list page-number">
-                                            <apex:variable var="btnPrevious" value="1" rendered="{!showPrevious}">
-                                                <li class="prev"><a href="javascript:gotoPrevious();"><span class="reader-only">Previous</span><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
-                                            </apex:variable>
-                                            <apex:variable var="max" value="{!7}" />
-                                            <apex:variable var="firstDot" value="{!0}" />
-                                            <apex:repeat value="{!pages}" var="page">
-                                                <apex:variable value="1" var="displayedPages" rendered="{!OR(page<=max, page>pages.size-max,page==currentPageNumber)}">
-                                                    <li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:jsGotoPage({!page});">{!page}</a></li>
-                                                </apex:variable>
-                                                <apex:variable value="1" var="dots" rendered="{!AND(page==max+1,page!=currentPageNumber, currentPageNumber<=pages.size-max)}">
-                                                    <apex:variable var="firstDot" value="{!page}" />
-                                                    <li class="page-number"><a href="#">...</a></li>
-                                                </apex:variable>
-                                                <apex:variable value="1" var="dots2" rendered="{!AND(page==pages.size-max,page!=currentPageNumber, currentPageNumber > max)}">
-                                                    <li class="page-number"><a href="#">...</a></li>
-                                                </apex:variable>
-                                            </apex:repeat>
-                                            <apex:variable var="btnNext" value="1" rendered="{!showNext}">
-                                                <li class="next"><a href="javascript:gotoNext();"><span class="reader-only">Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
-                                            </apex:variable>
-                                        </ol>
-                                    </div>
-                                </div>
-
-                                <div class="pagination mobile">
-                                    <apex:variable var="btnPreviousMobile" value="1" rendered="{!showPrevious}">
-                                        <div class="control prev">
-                                            <a href="javascript:gotoPrevious();">
-                                                <span class="reader-only">Previous</span>
-                                                <i class="fa fa-chevron-left" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </apex:variable>
-
-                                    <div class="page-number mobile">
-                                        <ol class="list page-number">
-                                            <apex:repeat value="{!pages}" var="page">
-                                                <apex:variable value="1" var="displayedPages" rendered="{!OR(page<=max, page>pages.size-max,page==currentPageNumber)}">
-                                                    <li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:jsGotoPage({!page});">{!page}</a></li>
-                                                </apex:variable>
-                                                <apex:variable value="1" var="dots" rendered="{!AND(page==max+1,page!=currentPageNumber, currentPageNumber<=pages.size-max)}">
-                                                    <apex:variable var="firstDot" value="{!page}" />
-                                                    <li class="page-number"><a href="#">...</a></li>
-                                                </apex:variable>
-                                                <apex:variable value="1" var="dots2" rendered="{!AND(page==pages.size-max,page!=currentPageNumber, currentPageNumber > max)}">
-                                                    <li class="page-number"><a href="#">...</a></li>
-                                                </apex:variable>
-                                            </apex:repeat>
-                                            
-                                        </ol>
-                                    </div>
-                                    <apex:variable var="btnNextMobile" value="1" rendered="{!showNext}">
-                                        <div class="control next">
-                                            <a href="javascript:gotoNext();">
-                                                <span class="reader-only">Next</span>
-                                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </apex:variable> 
-                                </div>
-
-                            </apex:outputPanel>
-
-                            <apex:form >
-                                <apex:inputHidden id="pageNumber" value="{!pageNumber}" />
-                            </apex:form>
-
-                        </div>
-                    </main>
-
-                    <!-- Page Footer  -->
-                    <c:Footer />
-                </div>
-
-            </div>
-
-            <div class="modal-container is-hidden" id="js-modal">
-                <div class="overlay"></div>
-                <div class="modal-dialog" id="js-modal-dialog"></div>
-            </div>
-
-            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
-            <script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
-
-            <script type="text/javascript">
-
-                var matchHeight2 = function(){
-                    var h = 0;
-                    $(".product-list .list-item").each(function(i){
-                        if($(this).height() > h)
-                            h = $(this).height();
-                    });
-
-                    $(".product-list .list-item").each(function(i){
-                        $(this).height(h);
-                    });
+                function sortByPush() {
+                	dataLayer.push({
+					    "event": "userAction",
+					    "eventCategory": "Category Pages",
+					    "eventAction": "Sort By",
+					    "eventLabel": $("[id$='sort_by'] option:selected").text()
+					});
                 }
 
+                function paginationPush(val) {
+                	dataLayer.push({
+					    "event": "userAction",
+					    "eventCategory": "Category Pages",
+					    "eventAction": "Pagination",
+					    "eventLabel": val
+					});
+                }
+
+                function productListPush() {
+                	 dataLayer[1].ecommerce = JSON.parse($('input[id$=\'ecommerce\']').val());
+                }
+
+                function refinePush() {
+                	var filtersStr = $("[id$='selectedFilters']").val();
+                	var p = '';
+
+                	if(filtersStr) {
+                		var x = filtersStr.split(':');						
+						for(var i=0; i< x.length; i++) {
+							var y = x[i].split('|');
+							p+= y[1] + ' - ';
+						}
+						p = p.substring(0,p.length-3);
+                	}
+
+                	dataLayer.push({
+					    "event": "userAction",
+					    "eventCategory": "Category Pages",
+					    "eventAction": "Refine by",
+					    "eventLabel": p
+					});
+
+					productListPush();
+                }
+
+                function clickProductPush(type, id, name) {
+                	if(type == 'In stock') {
+                		selectPush(id)
+                	} else {
+                		preOrderPush(name, id);
+                	}
+                }
+
+                function preOrderPush(name, id) {
+                	dataLayer.push({
+					    "event": "userAction",
+					    "eventCategory": "Category Pages",
+					    "eventAction": "Pre-Order",
+					    "eventLabel": name + " - " + id
+					});
+                }
+
+                function selectPush(productId) {
+                	var products = JSON.parse($('input[id$=\'ecommerce\']').val());
+                	var product;
+                	for(var i=0; i<products.length; i++) {
+                		if(products[i].id == productId) {
+                			product = products[i];
+                			break;
+                		}
+                	}
+
+                	if(product) {
+                		dataLayer.push({
+						    "event": "productClick",
+						    "ecommerce": {
+						        "actionField": {"list": "{!selectedCategory.label} > {! IF(selectedTopicLabel == null || selectedTopicLabel == '', 'All', selectedTopicLabel)}"},
+						        "click": {
+						            "products": [product]
+						        }
+						    }
+						});
+                	}
+                }
+            </script>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+			<title>{!$Label.PageTitleProductList} - {!$Label.SiteTitle}</title>
+		</head>
+
+        <body data-media-size="" onload="setHeightForCustomImages();">
+        	<!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
+			<div id="js-breakpoint-finder">
+				<span class="device-xs screen-xsmall"/>
+				<span class="device-sm screen-small"/>
+				<span class="device-md screen-medium"/>
+				<span class="device-lg screen-large"/>
+				<span class="device-xl screen-xlarge"/>
+			</div>
+			
+			<div id="js-app-container" class="app-container">
+
+				<!-- Page Header -->
+				<c:IEC_PageHeader />
+
+				<div id="js-page-container" class="page-container">
+					
+					<!-- Page Main Content -->
+					<main class="main-content publications">
+						<div class="reader-only" id="reader-main-content">Main Content</div>
+
+						<div class="section top-banner">
+							<div class="inner-wrapper">
+								<h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
+							</div>
+						</div>
+
+						<div class="inner-wrapper">
+							<ol class="list breadcrumb">
+								<li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
+								<li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a></li>
+								<li>
+									<apex:outputText value="{! IF(selectedTopicLabel == null || selectedTopicLabel == '', 'All', selectedTopicLabel)}" />
+									<!-- change page title -->
+									<script type="text/javascript">
+										if ("{!selectedTopicLabel}" == "")
+											document.title = "{!selectedCategory.label} - {!$Label.SiteTitle}";
+										else
+											document.title = "{!selectedTopicLabel} - {!$Label.SiteTitle}";
+									</script>
+								</li>
+							</ol>
+							<h1 class="page-title punctuations">{! IF(selectedTopicLabel == null || selectedTopicLabel == '', selectedCategory.label, selectedTopicLabel)}</h1>
+
+							<div class="sub-container refine-container">
+								<section class="group-container category">
+									<h2 class="group-title">Category</h2>
+									<div class="show-more-less-container">
+					                    <ul class="list show-more-less js-toggle-more-less" data-is-display-all="false">
+					                        
+					                        <li class="{!IF(selectedTopic==null,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}">All</a></li>
+					                        
+					                        <apex:variable value="{!0}" var="counter" />
+					                        <apex:repeat var="cat" value="{!subCategories[selected_category]}">
+					                        	<li class="{!IF(selectedTopic==cat.value,'is-selected', '')}"><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_category}&topic={!cat.value}">{!cat.label}</a></li>
+												<apex:variable value="{!counter+1}" var="counter" />
+					                        </apex:repeat>
+											
+											<apex:variable var="showMoreLess" value="1" rendered="{!counter > 10}">
+						                        <li class="action">
+						                            <a class="show-more js-more" href="#"><span class="reader-only">Show </span>more</a>
+						                            <a class="show-less js-less" href="#"><span class="reader-only">Show </span>less</a>
+						                        </li>
+					                        </apex:variable>
+
+					                    </ul>
+					                </div>
+								</section>
+
+								<section class="group-container refine-by">
+									<apex:form id="frmFilters" styleClass="frmFilters">
+										<h2 class="group-title">{!$Label.Refine_by}:</h2>
+										<div class="accordion-container js-select-deselect">
+	                    					<dl class="list refine-by">
+						                        <apex:variable value="{!1}" var="index1" />
+						                        <apex:repeat value="{!filters}" var="filter">
+						                            <dt>
+						                                <div class="accordion-title js-toggle is-open" data-target="{!filter.field}" data-target-element=".accortion-panel">
+						                                	{!$Label.Select} {!filter.label}
+						                                </div>
+						                                <div class="list-title is-open">
+						                                    {!filter.label}
+						                                    
+						                                    <apex:variable var="picklistSelectAll" value="1" rendered="{!filter.type_x =='PICKLIST'}">
+							                                    <a class="select-all refine-select-all" data-is-visible="true" data-target="{!filter.field}" data-target-element=".js-checkbox-container" href="#">({!$Label.select_all})</a>
+							                                    <a class="deselect-all refine-deselect-all" data-is-visible="false" data-target="{!filter.field}" data-target-element=".js-checkbox-container" href="#">({!$Label.deselect_all})</a>
+						                                    </apex:variable>
+
+						                                </div>
+						                            </dt>
+						                            <dd class="accortion-panel js-checkbox-container is-open" data-id="{!filter.field}">
+						                                <ul class="list">
+						                                	<apex:variable value="{!1}" var="index2" />
+						                                	
+						                                	<!-- PickList or Yes/No filters -->
+						                                	<apex:variable var="picklistFilters" value="1" rendered="{!OR(filter.type_x =='PICKLIST', filter.type_x =='BOOLEAN')}">
+							                                	<apex:repeat value="{!filter.values}" var="item">
+								                                    <li>
+								                                    	<apex:outputPanel layout="none" rendered="{!AND(item.label != 'In stock', item.label != 'Out of stock')}">
+									                                        <div class="field-group checkbox inline">
+									                                            <div class="checkbox-box">
+									                                                <div class="custom-user-input checkbox">
+									                                                    <input class="user-input checkbox" type="checkbox" id="refine-checkbox{!index1}-{!index2}" value="{!filter.field}|{!item.value}" />
+									                                                    <label class="custom-checkbox" for="refine-checkbox{!index1}-{!index2}"><i class="icon"></i></label>
+									                                                </div>
+									                                                <label class="input-label" for="refine-checkbox{!index1}-{!index2}">{!item.label}</label>
+									                                            </div>
+									                                        </div>
+								                                    	</apex:outputPanel>
+								                                    </li>
+																	<apex:variable value="{!index2 +1}" var="index2" />
+							                                    </apex:repeat>
+						                                    </apex:variable>
+						
+						                                    <!-- Free text Filters -->
+						                                    <apex:variable var="freeTextFilters" value="1" rendered="{!filter.type_x =='STRING'}">
+																<li>
+																	<div class="field-group input inline">
+																		<input type="text" id="refine-input{!index1}" data-field="{!filter.field}" />
+																	</div>
+																</li>
+						                                    </apex:variable>
+
+						                                </ul>
+						                            </dd>
+						                            <apex:variable value="{!index1 +1}" var="index1" />
+						                        </apex:repeat>
+						                    </dl>
+						                    <div class="footer-actions">	
+												<apex:inputHidden id="selectedFilters" value="{!selectedFilters}" />
+
+						                    	<apex:commandButton styleClass="button secondary" value="{!$Label.Refine}" action="{!refine}" reRender="main_container" status="sortByStatus" 
+						                    		oncomplete="javascript:matchHeight2();refinePush();"/>
+						                    </div>
+						                </div>
+
+						                <apex:actionFunction name="backButonRefine" reRender="main_container" action="{!refine}" status="sortByStatus" oncomplete="javascript:matchHeight2();" />
+					                </apex:form>
+								</section>
+							</div>
+
+							<apex:outputPanel styleClass="main-container" id="main_container">								
+								<apex:outputPanel layout="block" styleClass="alert error" rendered="{!ProductRecordsList.size == 0}">
+									NO PRODUCT FOUND
+								</apex:outputPanel>
+
+								<apex:outputPanel layout="block" styleClass="sort-by" rendered="{!ProductRecordsList.size > 0}">
+					                <label for="sort_by" class="input-label">{!$Label.SortBy}</label>
+					                <div class="custom-user-input select">
+					                    <i class="icon chevron-down"></i>
+					                    <apex:form >
+											<apex:selectList id="sort_by" value="{!sortBy}" styleClass="user-input select" size="1">
+	                                			<apex:selectOptions value="{!sortingFields}"/>
+	                                			<apex:actionSupport event="onchange" oncomplete="javascript:matchHeight2();sortByPush();" 
+	                                				action="{!sortProducts}" status="sortByStatus" reRender="main_container" />
+	                            			</apex:selectList>
+	                            			<apex:actionStatus id="sortByStatus">
+	                            				<apex:facet name="start">
+													<div class="overlay"></div>
+													<div class="modal-dialog" id="js-modal-dialog"><img src="{!$Resource.IEC_progress}" border="0" width="43" height="15" /></div>
+	                                        	</apex:facet>                                        	
+	                            			</apex:actionStatus>                                                
+                            			</apex:form>
+					                </div>
+					            </apex:outputPanel>
+
+
+					            <apex:outputPanel layout="block" id="productList" rendered="{!ProductRecordsList.size > 0}">
+									
+								<apex:pageBlock title="Products List">
+								  <apex:form id="theForm">
+								  	<apex:inputHidden id="ecommerce" value="{!productListStr}" />
+								    <ul class="list product-list">
+								      <apex:repeat var="prod" value="{!ProductRecordsList}">
+								        	<li class="list-item">
+												<div class="item-wrapper">
+													<figure class="item-image">
+														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
+                                                            <apex:outputPanel layout="block" style="height: 180px;" rendered="{!prod.imageFile != '' }">
+
+                                                            <div class="fileImage" layout="block" style="height: 180px;">
+                                                                <apex:outputText value="{!prod.imageFile}" escape="false"/>
+                                                            </div>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!prod.imageFile == '' }">
+                                                                <img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" />
+                                                            </apex:outputPanel>
+														</a>
+													</figure>
+													<h2 class="item-name">
+														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">{!prod.ProductName}</a>
+													</h2>
+													<h3 class="item-description-title" style="{! IF(isBlank(prod.Media), 'display:none', 'display:inline')}">
+														{!prod.Media}
+													</h3>
+													<br/>
+                                                    <p class="item-edition" style="{! IF(isBlank(prod.Edition), 'display:none', 'display:inline')}">
+														Edition: {!prod.Edition}<br />
+													</p>
+													<p class="item-language" style="{! IF(isBlank(prod.Language), 'display:none', 'display:inline')}">												
+														Language: {!prod.Language}
+													</p>
+													<p class="item-description">{!prod.ProductShortDesc}</p>
+
+													<!-- Scenario 1: In Stock -->
+													<apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!(prod.InventoryStatus == 'In stock' || prod.InventoryStatus == 'Available Now') && prod.ProductInfoId == null}">
+		                                                {!prod.InventoryStatus}
+		                                            </apex:outputPanel>
+		                                            <!-- Scenario 2: Out of Stock -->
+													<apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!(prod.InventoryStatus != 'In stock' && prod.InventoryStatus != 'Available Now') && prod.ProductInfoId == null}">
+		                                                {!prod.InventoryStatus}
+		                                            </apex:outputPanel>
+
+
+		                                            <!-- Regular Price if exist -->
+                                                    <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null && prod.Sell_Through_eCommerce}">
+														<apex:outputText styleClass="price-value" value="{0, number, currency}">
+		                                                    <apex:param value="{!prod.RegularPrice}" />
+		                                                </apex:outputText>
+														<span class="price-label">{!$Label.regular_price}</span>
+													</apex:outputPanel>
+
+													<!-- Discounted price if exist -->
+                                                    <apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0 && prod.ProductInfoId == null}">
+														<apex:outputText styleClass="price-value" value="{0, number, currency}">
+		                                                    <apex:param value="{!prod.CustomerPrice}" />
+		                                                </apex:outputText>
+														<span class="label-value">{!$Label.discounted_price}</span>
+													</apex:outputPanel>
+
+													<!-- Price not exit: Direct Sales -->
+                                                    <apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null, prod.ProductInfoId == null)}">
+														<span class="price-label">{!$Label.Direct_Sales}</span>
+													</apex:outputPanel>
+
+                                                    <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" 
+                                                    	onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
+                                                    	{! IF(OR(prod.InventoryStatus == 'Out of stock',prod.InventoryStatus == 'Coming Soon'), $Label.PreOrderAddToCart, $Label.Button_Select)}
+                                                	</a>
+												</div>
+											</li>
+								      </apex:repeat>
+								      </ul>
+								      </apex:form>
+								      <apex:pageBlockSection >
+								    </apex:pageBlockSection>
+								    <!--
+								    <apex:form id="thePages" >
+								    <apex:panelGrid columns="5" style="margin: 0 auto;">
+								    	  <apex:commandButton styleClass="button secondary" value="First" action="{!first}" disabled="{!NOT(hasPrevious)}" />
+								          <apex:commandButton styleClass="button secondary" value="Previous" action="{!previous}" disabled="{!NOT(hasPrevious)}"/>&nbsp;Page {!pageNumbers} of {!totalPages}&nbsp;
+								          <apex:commandButton styleClass="button secondary" value="Next" action="{!next}" disabled="{!NOT(hasNext)}"/>
+								          <apex:commandButton styleClass="button secondary" value="Last" action="{!last}" disabled="{!NOT(hasNext)}"/>
+								    </apex:panelGrid> 
+								    </apex:form>
+									-->
+								    <apex:pageBlockSection >
+								    </apex:pageBlockSection>
+								    
+								  
+								</apex:pageBlock>
+									
+								</apex:outputPanel>
+
+								<!-- Pagination AJAX functions -->
+								<apex:form id="frmPagination">
+									<apex:actionFunction name="gotoPage" reRender="main_container" action="{!gotoPage}" status="sortByStatus" 
+										oncomplete="javascript:matchHeight2(); productListPush(); paginationPush($('input[id$=\'pageNumber\']').val());">
+				                        <apex:param name="pageNum" value="" />
+				                    </apex:actionFunction>
+
+				                    <apex:actionFunction name="gotoNext" reRender="main_container" action="{!Next}" status="sortByStatus" 
+				                    	oncomplete="javascript:matchHeight2(); productListPush(); paginationPush('Next');" />
+ 
+				                    <apex:actionFunction name="gotoPrevious" reRender="main_container" action="{!Previous}" status="sortByStatus" 
+				                    	oncomplete="javascript:matchHeight2(); productListPush(); paginationPush('Previous');" />
+								</apex:form>
+								
+								<!-- Pagination -->
+								<div class="pagination tablet desktop">
+					                <div class="page-number">
+					                    <ol class="list page-number">
+					                        <apex:variable var="btnPrevious" value="1" rendered="{!showPrevious}">
+					                        	<li class="prev(currentPageNumber,' selected')"><a href="javascript:gotoPrevious();"><span class="reader-only">Previous</span><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+											</apex:variable>
+											<apex:variable var="max" value="{!7}" />
+											<apex:variable var="firstDot" value="{!0}" />
+					                        <apex:repeat value="{!pages}" var="page">
+					                        	<apex:variable value="1" var="displayedPages" rendered="{!OR(page<=max, page>pages.size-max,page==currentPageNumber)}">
+					                        		<li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:jsGotoPage({!page});">{!page}</a></li>
+				                        		</apex:variable>
+												<apex:variable value="1" var="dots" rendered="{!AND(page==max+1,page!=currentPageNumber, currentPageNumber<=pages.size-max)}">
+													<apex:variable var="firstDot" value="{!page}" />
+													<li class="page-number"><a href="#">...</a></li>
+												</apex:variable>
+												<apex:variable value="1" var="dots2" rendered="{!AND(page==pages.size-max,page!=currentPageNumber, currentPageNumber > max)}">
+													<li class="page-number"><a href="#">...</a></li>
+												</apex:variable>
+					                        </apex:repeat>
+					                        <apex:variable var="btnNext" value="1" rendered="{!showNext}">
+					                        	<li class="next(currentPageNumber,' selected')"><a href="javascript:gotoNext();"><span class="reader-only">Next</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+				                        	</apex:variable>
+					                    </ol>
+					                </div>
+					            </div>
+								
+								<div class="pagination mobile">
+					            	<apex:variable var="btnPreviousMobile" value="1" rendered="{!showPrevious}">
+						                <div class="control prev">
+						                    <a href="javascript:gotoPrevious();">
+						                        <span class="reader-only">Previous</span>
+						                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+						                    </a>
+						                </div>
+					                </apex:variable>
+
+					                <div class="page-number mobile">
+					                    <ol class="list page-number">
+					                    	<apex:repeat value="{!pages}" var="page">
+					                        	<apex:variable value="1" var="displayedPages" rendered="{!OR(page<=max, page>pages.size-max,page==currentPageNumber)}">
+					                        		<li class="page-number{!IF(currentPageNumber==page,' selected','')}"><a href="javascript:jsGotoPage({!page});">{!page}</a></li>
+				                        		</apex:variable>
+												<apex:variable value="1" var="dots" rendered="{!AND(page==max+1,page!=currentPageNumber, currentPageNumber<=pages.size-max)}">
+													<apex:variable var="firstDot" value="{!page}" />
+													<li class="page-number"><a href="#">...</a></li>
+												</apex:variable>
+												<apex:variable value="1" var="dots2" rendered="{!AND(page==pages.size-max,page!=currentPageNumber, currentPageNumber > max)}">
+													<li class="page-number"><a href="#">...</a></li>
+												</apex:variable>
+					                        </apex:repeat>
+					                        
+					                    </ol>
+					                </div>
+					                <apex:variable var="btnNextMobile" value="1" rendered="{!showNext}">
+						                <div class="control next">
+						                    <a href="javascript:gotoNext();">
+						                        <span class="reader-only">Next</span>
+						                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+						                    </a>
+						                </div>
+					                </apex:variable> 
+					            </div>
+
+
+
+
+
+
+							</apex:outputPanel>
+							
+							<apex:form >
+								<apex:inputHidden id="pageNumber" value="{!pageNumber}" />								
+							</apex:form>
+						</div>
+					</main>
+
+					<!-- Page Footer  -->
+					<c:Footer />
+				</div>
+
+			</div>
+
+			<div class="modal-container is-hidden" id="js-modal">
+        		<div class="overlay"></div>
+        		<div class="modal-dialog" id="js-modal-dialog"></div>
+    		</div>
+
+			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+
+			<script type="text/javascript">
+
+				var matchHeight2 = function(){
+                    setHeightForCustomImages();
+					var h = 0;
+		            $(".product-list .list-item").each(function(i){
+		                if($(this).height() > h)
+		                    h = $(this).height();
+		            });
+
+		            $(".product-list .list-item").each(function(i){
+		                $(this).height(h);
+		            });
+				}
+				
+
+				//Go to the giving page number
+                var jsGotoPage = function(page){
+                    $('input[id$=pageNumber]').val(page);
+                    gotoPage(page);
+                }
+ 
                 //Reload page with selected filters
                 var jsBackButonRefine = function(){
                     backButonRefine();
                 }
 
-                //Go to the giving page number
-                var jsGotoPage = function(page){
-                    $('input[id$=pageNumber]').val(page);
-                    gotoPage(page);
-                }
+				$(document).ready(function(){
 
-                $(document).ready(function(){
+					//If selected filters are not empty
+				    var selectedFieltersVal = $('input[id$=selectedFilters]').val();
+				    if(selectedFieltersVal != ''){
+				    	jsBackButonRefine();
+				    }
 
-                    //If selected filters are not empty
-                    var selectedFieltersVal = $('input[id$=selectedFilters]').val();
-                    if(selectedFieltersVal != ''){
-                        jsBackButonRefine();
-                    }
-
-                    //If the page number is not empty go the the page number
-                    var pageNumber = $('input[id$=pageNumber]').val();
-                    if(pageNumber != ''){
-                        gotoPage(pageNumber);
-                    }
-                    
-                    $('body').bind('change', function(eventObject){
-                        //console.log(eventObject);
-                    });
+				    //If the page number is not empty go the the page number
+				    // var pageNumber = $('input[id$=pageNumber]').val();
+                    //if(pageNumber != ''){
+                    //    gotoPage(pageNumber);
+                    //}
+				    
+				    $('body').bind('change', function(eventObject){
+				    	//console.log(eventObject);
+				    });
 
 
-                    var selected_filters;
+					var selected_filters;
 
-                    var updateSelectedFilters = function(){
-                        
-                        console.log('in updateSelectedFilters');
+					var updateSelectedFilters = function(){
+						
+						console.log('in updateSelectedFilters');
 
-                        selected_filters = [];
-                        $(".frmFilters input[type='checkbox']:checked").each(function(idx, item){
-                            selected_filters.push($(item).val());
-                        });
+						selected_filters = [];
+						$(".frmFilters input[type='checkbox']:checked").each(function(idx, item){
+							selected_filters.push($(item).val());
+						});
 
-                        // add free text filters 
-                        $(".frmFilters input[type='text']").each(function(idx, item){
-                            if($(item).val().trim() !='')
-                                selected_filters.push($(this).data('field') + '|' +$(item).val().trim());
-                        });
+						// add free text filters 
+						$(".frmFilters input[type='text']").each(function(idx, item){
+							if($(item).val().trim() !='')
+								selected_filters.push($(this).data('field') + '|' +$(item).val().trim());
+						});
 
-                        $('input[id$=selectedFilters]').val(selected_filters.join(':'));
+						$('input[id$=selectedFilters]').val(selected_filters.join(':'));
 
-                    }
+					}
 
-                    $(".frmFilters input[type='text']").on('change',function(event){
-                        updateSelectedFilters();
-                    });
+					$(".frmFilters input[type='text']").on('change',function(event){
+						updateSelectedFilters();
+					});
 
-                    $('.js-select-deselect')
-                        .on('click', '.refine-select-all', function(event) {
-                            
-                            event.preventDefault();
-                            var targetID = $(this).data('target'),
-                                targetElement = $(this).data('target-element'),
-                                targetCheckbox = targetElement+'[data-id="'+targetID+'"] .user-input';
+					$('.js-select-deselect')
+						.on('click', '.refine-select-all', function(event) {
 
-                            $(this).parents('.js-select-deselect').find(targetCheckbox).prop('checked', true);
-                            updateSelectedFilters();
+							event.preventDefault();
+							var targetID = $(this).data('target'),
+								targetElement = $(this).data('target-element'),
+								targetCheckbox = targetElement+'[data-id="'+targetID+'"] .user-input';
 
-                            $(this).attr('data-is-visible', 'false');
-                            $(this).siblings().attr('data-is-visible', 'true');
-                        })
-                        .on('click', '.refine-deselect-all', function(event) {
-                            event.preventDefault();
-                            var targetID = $(this).data('target'),
-                                targetElement = $(this).data('target-element'),
-                                // checkboxContainer = targetElement+'[data-id="'+targetID+'"]',
-                                targetCheckbox = targetElement+'[data-id="'+targetID+'"] .user-input';
+							$(this).parents('.js-select-deselect').find(targetCheckbox).prop('checked', true);
+							updateSelectedFilters();
 
-                            $(this).parents('.js-select-deselect').find(targetCheckbox).prop('checked', false);
-                            updateSelectedFilters();
+							$(this).attr('data-is-visible', 'false');
+							$(this).siblings().attr('data-is-visible', 'true');
+						})
+						.on('click', '.refine-deselect-all', function(event) {
+							event.preventDefault();
+							var targetID = $(this).data('target'),
+								targetElement = $(this).data('target-element'),
+								// checkboxContainer = targetElement+'[data-id="'+targetID+'"]',
+								targetCheckbox = targetElement+'[data-id="'+targetID+'"] .user-input';
 
-                            $(this).attr('data-is-visible', 'false');
-                            $(this).siblings().attr('data-is-visible', 'true');
-                        })
-                        .on('click', '.user-input', function() {
-                            updateSelectedFilters();
-                        }
-                    );
+							$(this).parents('.js-select-deselect').find(targetCheckbox).prop('checked', false);
+							updateSelectedFilters();
 
-                });
-            </script>
+							$(this).attr('data-is-visible', 'false');
+							$(this).siblings().attr('data-is-visible', 'true');
+						})
+						.on('click', '.user-input', function() {
+							updateSelectedFilters();
+						}
+					);
 
-        </body>
+				});
+			</script>
 
-    </html>
+		</body>
+
+	</html>
 
 </apex:page>

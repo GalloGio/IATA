@@ -4,9 +4,24 @@ public  class CaseChildHelper {
     // If case has status Assessment performed and the picklist __ is full then I have to create a child case. 
     
     public static boolean noValidationsOnTrgCAseIFAP = false;
+    public static List<CustomPermission> customPermissionsList {
+        get {
+            if(customPermissionsList == null) {
+                customPermissionsList = [SELECT Id, DeveloperName,
+                    (SELECT Id, Parent.Name, Parent.Profile.Id, Parent.Profile.Name 
+                        FROM SetupEntityAccessItems 
+                        WHERE Parent.Profile.Id = :UserInfo.getProfileId()
+                    )
+                FROM CustomPermission
+                WHERE DeveloperName = 'IFAP_Can_Bypass_Resubmission_Validation'];
+            }
+            return customPermissionsList;
+        }
+        set;
+    }
     
     public static boolean CreateChildCase(list<Case> olds, list<Case> news) {
-        Id IFAPrt =Schema.SObjectType.Case.RecordTypeInfosByName.get('IATA Financial Review').RecordTypeId ;
+        Id IFAPrt = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     
         system.debug('---------- DEBUG: CreateChildCase()');
         // If I have not values in news somthing's wrong
@@ -51,14 +66,16 @@ public  class CaseChildHelper {
     	//      case 2 = child case id -> father to be updated
         Map<Id,Case> parentIdToChild = new Map<Id,Case>(); //every parent should have max 1 child
 
-        List<CustomPermission> customPermissions = [SELECT Id, DeveloperName,
+        List<CustomPermission> customPermissions = customPermissionsList;
+/*
+        [SELECT Id, DeveloperName,
             (SELECT Id, Parent.Name, Parent.Profile.Id, Parent.Profile.Name 
                 FROM SetupEntityAccessItems 
                 WHERE Parent.Profile.Id = :UserInfo.getProfileId()
             )
         FROM CustomPermission
         WHERE DeveloperName = 'IFAP_Can_Bypass_Resubmission_Validation'];
-
+*/
         Boolean userProfileCanBypassValidation = false;
         if(customPermissions != null && customPermissions.size() > 0)
             userProfileCanBypassValidation = customPermissions[0].SetupEntityAccessItems == null || customPermissions[0].SetupEntityAccessItems.isEmpty() ? false : true;
@@ -172,37 +189,6 @@ public  class CaseChildHelper {
         }
         return true;
 
-    }
-    
-    
-    // Validation trigger checking that Customer Service Request cases are not linked to accounts with the “Agency”, “airline headquarters”, “Airline Branch” or “Standard”
-    // record types. 
-    // Called from the trgICCS_ASP_Case_Validation trigger
-    public static void ValidateCSRCases (list<Case> lstCases) {
-    	/* // TEMPORARILY DEACTIVATED 22.04.2015
-    	Id RT_ACCA_CSR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('External_Cases_ACCA');
-		Id RT_BSPLink_CSR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('BSPlink_Customer_Service_Requests_CSR');
-		Id RT_DPC_CSR_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DPC_Service_Request');
-		
-		// get a map with the cases with the RTs of interest
-		map<Id, Case> mapCasesOfInterestPerId = new map<Id, Case>();
-		for (Case c : lstCases) {
-			if (c.RecordTypeId == RT_ACCA_CSR_Id || c.RecordTypeId == RT_BSPLink_CSR_Id || c.RecordTypeId == RT_DPC_CSR_Id) {
-				mapCasesOfInterestPerId.put(c.Id, c);
-			}
-		}
-		
-		// if there are cases of interest, check their accounts and the accounts of their contacts
-		list<String> lstInvalidAccountRTs = new list<String>{'IATA_Airline','IATA_Airline_BR','IATA_Agency','Standard_Account'};
-		if (!mapCasesOfInterestPerId.values().isEmpty()) {
-			for (Case c : [SELECT Id FROM Case WHERE (Account.RecordType.DeveloperName IN :lstInvalidAccountRTs
-													  OR Contact.Account.RecordType.DeveloperName IN :lstInvalidAccountRTs)
-													 AND Id IN :mapCasesOfInterestPerId.keyset()]) {
-				
-				mapCasesOfInterestPerId.get(c.Id).addError('Invalid Account record type for this Case record type.');
-			}
-		}
-		*/
     }
     
 }

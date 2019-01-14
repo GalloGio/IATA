@@ -69,8 +69,16 @@
                 <field>IEC_SAP_ProfitCenter__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IEC_Override_Profit_Center__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IEC_Subscribe_to_Zuora__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Accepted_Payment_Methods__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -129,6 +137,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IEC_Parent_Product__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ImageFile__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -374,7 +386,7 @@
                 <field>SAP_Sales_Channel_Code__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Family</field>
             </layoutItems>
             <layoutItems>
@@ -548,6 +560,16 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Customer_Type__c</fields>
+        <fields>Swapped_Product__c</fields>
+        <fields>Released__c</fields>
+        <fields>Nb_Customer__c</fields>
+        <fields>Sales_Amout__c</fields>
+        <fields>Sales_Quantity__c</fields>
+        <relatedList>IEC_Event_Release__c.Product__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Customer_Type__c</fields>
         <fields>Product__c</fields>
         <fields>Swapped_Product__c</fields>
         <fields>Released__c</fields>
@@ -555,6 +577,16 @@
         <fields>Sales_Amout__c</fields>
         <fields>Sales_Quantity__c</fields>
         <relatedList>IEC_Event_Release__c.Last_Version__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Active__c</fields>
+        <fields>Customer_Type__c</fields>
+        <fields>OWNER.FIRST_NAME</fields>
+        <fields>OWNER.LAST_NAME</fields>
+        <fields>Start_Date__c</fields>
+        <fields>Subscriber__c</fields>
+        <relatedList>IEC_Event_Subscription__c.Product__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

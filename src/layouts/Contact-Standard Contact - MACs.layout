@@ -4,12 +4,12 @@
     <customButtons>Change_Owner</customButtons>
     <customButtons>Community</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
     <excludeButtons>EnableCustomerPortal</excludeButtons>
     <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -99,6 +99,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Kavi_User__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -602,7 +606,7 @@
         <fields>LAST_UPDATE</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>Notification__c.Contact__c</relatedList>
-        <sortField>NAME</sortField>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -713,6 +717,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Authorized_Signatories_Package__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Authorized_Signatory__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>

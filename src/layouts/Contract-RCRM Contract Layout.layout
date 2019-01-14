@@ -196,6 +196,13 @@
         <relatedList>RelatedOpportunityList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <relatedList>Opportunity.Expiring_contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>

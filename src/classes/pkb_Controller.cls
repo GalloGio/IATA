@@ -74,6 +74,34 @@ public without sharing class pkb_Controller {
   
   public Integer viewCount {get; set;}//TF
   public Integer satisfiedCount {get; set;}//TF
+  
+  //CNS
+  public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+  public Boolean isCNS{ get { return ISSP_Utilities.isCNS(); } set; }
+
+  public String lsExcludeTopics { get {
+        List <String> lsExcludeTopics = new List<String>();
+        //Select Custom Setting to set permissions
+        List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c
+                                                            FROM ISSP_FAQ2Case_Permissions__c
+                                                            Where Subtopic__c =: null
+                                                            AND Topic__c != null
+                                                            ];
+        for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
+        {
+            //Check if the topic has matched Custom setting record
+            if (per.topic__c != null )
+            {
+                if (per.Sector_Permission__c.startsWith('CNS'))
+                {
+                    lsExcludeTopics = per.Topic__c.split(',');
+                }
+            }
+        }
+
+        return JSON.serialize(lsExcludeTopics);
+    } set;
+  }
 
   public pkb_Controller() { }
 
@@ -109,7 +137,7 @@ public without sharing class pkb_Controller {
         if (categorySplit.size() == 2){
             selectedCategoryTranslated = categorySplit[1]; 
         }
-    }
+    } else if(communityName=='CNS' && selectedCategory == null) selectedCategory = 'FAQs:CNS_CASS_Operations_Cargo';
     if (!isBlank(fs)) feedbackSource = fs; // need to validate this value is in the picklist when inserting
 
     Cookie sessionCookie = ApexPages.currentPage().getCookies().get('PKB2SessionId');
@@ -623,7 +651,7 @@ system.debug('\n\n[DEBUG-PKB CONTROLLER] buildFeaturedKads \n===='+anums+'=====\
     if (caseOrigins.containsKey('Web')) theCase.Origin = 'Web';
     theCase.Description = d;
     /** fields for the mobile app **/
-    theCase.Customer_emoticon_value__c = theCud.User_Experience;
+    //theCase.Customer_emoticon_value__c = theCud.User_Experience;
     theCase.pkbgeolocalization__Latitude__s = theCud.location_Latitude;
     theCase.pkbgeolocalization__Longitude__s = theCud.location_Longitude;
 
@@ -716,8 +744,10 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     notifyAdmin(de, e, System.Label.PKB2_Error_Admin_Notification_Email);
 
     // flip the site settings to not create contact/account in future
-    kbSettings.Create_Contact_and_Account__c = false;
-    update kbSettings;
+    PKB__c kbSets = PKB__c.getValues(siteName);
+    kbSets.Create_Contact_and_Account__c = false;
+    update kbSets;
+	
   }
 
   public void notifyAdmin(System.DmlException de, Exception e, String introMessage) {
@@ -817,7 +847,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     set;
     get {
       if (currentSiteUrl == null) {
-        currentSiteUrl = Site.getCurrentSiteUrl();
+        currentSiteUrl = Site.getBaseUrl();
         if (!isSite) {
             if (Site.getTemplate().getUrl().endsWith('pkb_Template_fb'))
                currentSiteUrl = Page.pkb_Home_fb.getUrl();
@@ -825,7 +855,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
                currentSiteUrl = Page.pkb_Home.getUrl();
         }
       }
-      return currentSiteUrl;
+      return currentSiteUrl +'/';
     }
   }
 
@@ -1287,31 +1317,31 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     
     //TF
     public PageReference retrieveArticle() {
-    	
+      
         string myartid = ApexPages.currentPage().getParameters().get('artid');
         string myartType = ApexPages.currentPage().getParameters().get('artType');
         string myartURL = ApexPages.currentPage().getParameters().get('artURL');
         viewCount = 100;
         if (myartType == 'FAQ__kav'){
-			AggregateResult[] articleStatRecords = [SELECT URL_Name__c, Stat_Type__c, Count(Id) Counting 
+      AggregateResult[] articleStatRecords = [SELECT URL_Name__c, Stat_Type__c, Count(Id) Counting 
                                         FROM ArticleStatistics__c 
                                         WHERE URL_Name__c =: myartURL
                                         GROUP BY URL_Name__c, Stat_Type__c];
-			Integer artStatSize = Integer.valueOf(articleStatRecords.size());
+      Integer artStatSize = Integer.valueOf(articleStatRecords.size());
         
-			for (Integer i = 0; i < artStatSize; i++) {
-				String statType = String.valueOf(articleStatRecords[i].get('Stat_Type__c'));
-	            
-	            // If the satistic type of the group id 'View' --> will get the number of records in that group
-	            if (statType == ENV.ArticleStatType.View) {
-	                viewCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
-	            }
-	            
-	            // The satistic type of the group id 'Satisfied'
-	            if (statType == ENV.ArticleStatType.Satisfied) {
-	                satisfiedCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
-	            }
-			}
+      for (Integer i = 0; i < artStatSize; i++) {
+        String statType = String.valueOf(articleStatRecords[i].get('Stat_Type__c'));
+              
+              // If the satistic type of the group id 'View' --> will get the number of records in that group
+              if (statType == ENV.ArticleStatType.View) {
+                  viewCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
+              }
+              
+              // The satistic type of the group id 'Satisfied'
+              if (statType == ENV.ArticleStatType.Satisfied) {
+                  satisfiedCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
+              }
+      }
         }
         
         return null;

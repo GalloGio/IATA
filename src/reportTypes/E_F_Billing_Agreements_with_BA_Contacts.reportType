@@ -19,7 +19,7 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Allow_Billing_Agreements__c</field>
             <table>EF_Billing_Agreement__c</table>
-        </columns>
+        </columns> 
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Base_URL__c</field>
@@ -27,7 +27,7 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Billing_Agreement_Name__c</field>
+            <field>BillingAgreement_Name__c</field>
             <table>EF_Billing_Agreement__c</table>
         </columns>
         <columns>
@@ -318,74 +318,12 @@
             <field>Status__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.ISSP_Account_Name__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Account_HQ_BO__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Department</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Designated_Portal_Admin__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.EF_Account_Type__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
+        <masterLabel>Contact</masterLabel>
+    </sections>
+    <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Contact__c.EF_Role__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.EF_Services_Used__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.EF_Signatory__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.EF_Status__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Email</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.FirstName</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Name</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Function__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Functional_Interest__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
@@ -395,12 +333,17 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Global_Governance_Member__c</field>
+            <field>Contact__c.ICCS_Contact_Type__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.IATA_Code__c</field>
+            <field>Contact__c.Designated_Portal_Admin__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.EF_Services_Used__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
@@ -410,57 +353,12 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.ICCS_CWG__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.ICCS_Contact__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.ICCS_Contact_Type__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.IDCard_Batch_Status__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.IDcard_Email__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.ID_Card_Holder__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Contact__c.ID_Card_Preferred_Language__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Industry_Areas_of_Involvement__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.LeadSource</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Legacy_System__c</field>
-            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.LastName</field>
+            <field>Contact__c.EF_Signatory__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
@@ -470,42 +368,47 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.MailingAddress</field>
+            <field>Contact__c.Salutation</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.MailingCountry</field>
+            <field>Contact__c.Account.Airline_designator__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.MailingState</field>
+            <field>Contact__c.ID_Card_Holder__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.MailingStreet</field>
+            <field>Contact__c.ISSP_Account_Name__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.MailingPostalCode</field>
+            <field>Contact__c.Account.EF_Airline_ID__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Mail_Status__c</field>
+            <field>Contact__c.Title</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Membership_Main_Contact__c</field>
+            <field>Contact__c.Account.BillingCity</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Member_Code_Numeric__c</field>
+            <field>Contact__c.Account.Branch_Type__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_SubStatus__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
@@ -515,12 +418,37 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Phone</field>
+            <field>Contact__c.Account.Country_ISO_Code__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Salutation</field>
+            <field>Contact__c.Department</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.BillingPostalCode</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Client_Services_Specialist_Email__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account_HQ_BO__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.BillingAddress</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Services_Rendered_Country__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
@@ -530,7 +458,47 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.SIS_Contact_Type__c</field>
+            <field>Contact__c.Account.BillingCountry</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Account_Type__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Mail_Status__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.BillingStreet</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.MailingPostalCode</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Phone</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.ICCS_Contact__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.LeadSource</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.MailingState</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
         <columns>
@@ -540,9 +508,329 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Contact__c.Title</field>
+            <field>Contact__c.Account.Billing_Address_formated__c</field>
             <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
         </columns>
-        <masterLabel>E&amp;F Contact Airline Billing Agreements</masterLabel>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Member_Code_Numeric__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.SIS_Contact_Type__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.MailingCountry</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Membership_Main_Contact__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.IATA_Code__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.LastName</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.MailingStreet</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Function__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.ShippingCountry</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Functional_Interest__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.ICCS_CWG__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.FirstName</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Industry_Areas_of_Involvement__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.MailingAddress</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.EF_Status__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.IDCard_Batch_Status__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Legacy_System__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.IDcard_Email__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.EF_Account_Type__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Email</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Global_Governance_Member__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_SIS_Code__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.PAX_Cargo__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.ShippingCity</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Name</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Category__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Additional_SAP_Nr__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Legacy_Code__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Passenger_And_Cargo__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.DSE__DS_Country_ISO_Code__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Client_Services_Specialist__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Tax_ID_1__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Type__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Category_Other_Value__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Allow_Billing_Agreements__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.BillingState</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Email__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Parent</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Status__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Annual_Revenue_USD__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.ShippingState</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_SIS_Location_ID__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Remitter_details__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Fax</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_SIS_Designator__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Liquidator_Administrator__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Level__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Effective_Date__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Industry</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Sector__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.NumberOfEmployees</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_Status_Additional_Information__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.ShippingAddress</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Type</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Short_Name__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Tax_ID_2__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.SIS_Member_Code__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.ShippingPostalCode</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Legal_name__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.SAP_Number__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.ShippingStreet</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Website</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.Quality__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact__c.Account.EF_SIS_Code_Verified__c</field>
+            <table>EF_Billing_Agreement__c.EF_Contact_Relationships__r</table>
+        </columns>
+        <masterLabel>Account</masterLabel>
     </sections>
 </ReportType>

@@ -34,6 +34,23 @@
         <visibleLines>25</visibleLines>
     </fields>
     <fields>
+        <fullName>CNS_Article__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to define the articles that had been created for CNS, and be sent to approval to the CNS president</description>
+        <externalId>false</externalId>
+        <label>CNS Article</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Chat_Answer__c</fullName>
+        <description>Field used to set up chat answers from Knowledge Articles</description>
+        <externalId>false</externalId>
+        <label>Chat Answer</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>To_display_on_Homepage__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

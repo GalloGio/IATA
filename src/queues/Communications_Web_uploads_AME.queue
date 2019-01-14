@@ -3,6 +3,15 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>suwal@iata.org</email>
     <name>Communications &amp; Web uploads - AME</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IDFSAfricaMECSFirstLevel</publicGroup>
+            <publicGroup>IDFSAfricaMECSSecondLevel</publicGroup>
+            <publicGroup>IDFSAfricaMECustomerService</publicGroup>
+            <publicGroup>IDFSAfricaMEHUB</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

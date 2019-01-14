@@ -1,0 +1,84 @@
+<apex:page standardController="Account" extensions="AMP_Groups_ParticipationController"
+	showHeader="false" standardStylesheets="true" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" >
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+  <!-- <title>Account Plan</title> -->
+  <!-- <apex:stylesheet value="{!URLFOR($Resource.AMP_helper, 'css/general.css')}"/> -->
+  <style>
+	@page {
+		size: A4 landscape; /* A4 landscape (297mm×210mm) */
+		margin: 3%;
+	}
+
+	.maingroup {background-color: #f0f0f0;}
+	th { text-align: left;}
+	th.narrowColumn {width: 10%;}
+	th.headerRow {background-color: #bdbdbd !important;}
+	td { white-space: normal; word-wrap: break-word; max-width: 10em; vertical-align: top !important; border-width: 1px !important;}
+	/*tr.odd { background: #eee;}*/
+	table.milestones {width: 98%; margin-left: auto; margin-right: auto; border: 1px solid #aaa; margin-bottom: 2em;}
+  </style>
+</head>
+ <!-- onload="window.print()" -->
+<body onload="window.print()" >
+
+	<apex:pageBlock id="theBlock">
+		<table class="list"  border="0" cellpadding="0" cellspacing="0">
+			<thead class="rich-table-thead">
+				<tr class="" >
+					<th class="" scope="col" colspan="8" ><div>Participation to IATA industry Groups</div></th>
+				</tr>
+				<tr class="" >
+					<th class="" scope="col" colspan="8" ><div>Account: {!accountName} </div></th>
+				</tr>
+				<tr class="headerRow" >
+					<th class="headerRow" scope="col" colspan="3" ><div>Group Information</div></th>
+					<th class="headerRow" scope="col" colspan="5" ><div>Participant Information</div></th>
+
+				</tr>
+				<tr class="headerRow" >
+					<th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>Main Group</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>Group Name</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>Group Owner</div></th>
+					<!-- <th class="headerRow" scope="col" colspan="1" style="width: 30%;"><div>Mission of IATA Group</div></th> -->
+					<th class="headerRow" scope="col" colspan="1" style="width: 11%;"><div>Role</div></th>
+					<!-- <th class="headerRow" scope="col" colspan="1" style="width: 5%;"><div>Salutation</div></th> -->
+					<th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>First Name</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>Last Name</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 9%;"><div>Job Title</div></th>
+					<th class="headerRow" scope="col" colspan="1" style="width: 9%;"><div>Email</div></th>
+
+				</tr>
+			</thead>
+
+			<apex:repeat value="{!lstAllParticipants}" var="pWrapper">
+				<tr class="dataRow" >
+					<apex:outputPanel rendered="{! pWrapper.rowspan > 0}">
+						<td class="dataCell {!IF( pWrapper.mainGroupName != '', 'maingroup','') }" style="vertical-align: top; " rowspan="{! pWrapper.rowspan }">{! pWrapper.mainGroupName } </td>
+						<td class="dataCell {!IF( pWrapper.mainGroupName != '', 'maingroup','') }" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.groupName } </td>
+						<td class="dataCell {!IF( pWrapper.mainGroupName != '', 'maingroup','') }" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.gOwner}</td>
+					</apex:outputPanel>
+
+					<td class="dataCell {!IF( pWrapper.mainGroupName != '', 'maingroup','') }" >{! pWrapper.role }</td>
+					<td class="dataCell {!IF( pWrapper.mainGroupName != '', 'maingroup','') }" >{! pWrapper.FirstName }</td>
+					<td class="dataCell {!IF( pWrapper.mainGroupName != '', 'maingroup','') }" >{! pWrapper.LastName }</td>
+					<td class="dataCell {!IF( pWrapper.mainGroupName != '', 'maingroup','') }" >
+						{! pWrapper.Title }
+						<apex:outputPanel rendered="{! pWrapper.Representing != null }">
+							<apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>
+						</apex:outputPanel>
+					</td>
+					<td class="dataCell {!IF( pWrapper.mainGroupName != '', 'maingroup','') }" >{! pWrapper.Email }</td>
+
+				</tr>
+			</apex:repeat>
+			<apex:outputPanel rendered="{!representativesFound}">
+				<tr><td colspan="8"><apex:image value="{!URLFOR($Resource.AMP_Icons,'info.png')}" height="25px" title="This participant represents the account on that specific group."/>This participant represents the account on that specific group.</td></tr>
+			</apex:outputPanel>
+		</table>
+	</apex:pageBlock>
+</body>
+</html>
+</apex:page>

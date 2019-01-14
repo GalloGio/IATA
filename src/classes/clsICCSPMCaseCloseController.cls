@@ -53,6 +53,7 @@ public with sharing class clsICCSPMCaseCloseController {
     			CaseComment cc = new CaseComment(CommentBody = strCaseComments, ParentId = pmCase.Id);
     			insert cc;
                 
+                pmCase.ICCS_Case_Notification_Status__c = ' ';
                 update pmCase;
     		} catch (Exception e) {
     			ApexPages.addMessages(e);

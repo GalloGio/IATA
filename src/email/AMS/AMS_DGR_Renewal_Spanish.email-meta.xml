@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS DGR Renewal SP</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – DGR renewal</subject>
+    <textOnly>Estimado Agente,
+
+
+En acuerdo con las disposiciones de las Resoluciones IATA, todos los Agentes de Carga Aprobados o Intermediarios deben continuar cumpliendo en todo momento con los requisitos mnimos y criterios establecidos tal y como indicados en el Manual del Agente de Carga para asegurar su retención como un agente o intermediario de Carga Aprobado por IATA
+
+
+De acuerdo con las Resoluciones IATA, se requiere que su empresa tenga un mínimo de dos empleados a tiempo completo con certificados actualizados de Mercancías Peligrosas con validez de no mayor de 2 años y que puedan desempeñarse en los servicios y manejos de carga como descritos en el Manual del Agente de Carga.
+
+
+Nuestros registros indican que lo(s) Certificados de Mercancías Peligrosas de su empresa expiran de fecha el {!AMS_OSCAR__c.Change_effective_as_of__c}.  Por lo tanto, es necesario que nos envíen evidencia/copias de certificados en la Aceptación de Mercancías Peligrosas, juntamente con cualquier otra información que ustedes consideren conveniente y que indique que su empresa cumple con este requisito.
+
+
+Los certificados arriba-mencionados deben ser enviados a IATA a traves del Portal de Servicio al Client, pagina web: http://www.iata.org/customer-portal/Pages/index.aspx para recibirse antes del {!AMS_OSCAR__c.Change_effective_as_of__c}.
+
+
+El administrador de agencias procederá con la revisión de su agencia, y tomara una decisión basada en la evidencia recibida.   Por lo tanto, en su propio interés, les rogamos dar su inmediata atención a este asunto.
+
+
+Le rogamos acusar recibo de este mensaje,  confirmando que nos enviaran lo arriba solicitado sin mayor demora para poder actualizar su registro ante IATA.
+
+
+
+Muy atentamente,,
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+</EmailTemplate>

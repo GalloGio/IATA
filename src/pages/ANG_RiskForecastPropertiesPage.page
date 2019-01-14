@@ -1,0 +1,73 @@
+<apex:page showHeader="false" sidebar="false" standardController="Case" extensions="ANG_RiskForecastPropertiesController">
+
+    <style type="text/css">
+        .customPopup {
+            background-color: white;
+            border: 1px solid;
+            left: 20%;
+            padding: 5px;
+            position: absolute;
+            z-index: 9999;
+            /* These are the 3 css properties you will need to tweak so the pop 
+            up displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can also add 
+            the height property for a fixed size pop up.*/
+            width: 500px;
+            top: 0%;
+        }
+
+        .closeButton {
+            float: right;
+        }
+    </style>
+
+    <apex:form id="form">
+
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="2">
+
+                <apex:pageblockSectionItem >
+                    <apex:outputLabel value="Action to be forecasted"/>
+
+                    <apex:outputPanel layout="block">          
+                        <apex:selectList size="1" value="{!riskOpt}">
+                            <apex:selectoptions value="{!riskOption}"/>
+                            <apex:actionSupport event="onchange" reRender="actionButton"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:pageblockSectionItem>
+
+                <apex:commandButton value="Forecast" action="{!forecast}" id="actionButton" disabled="{!NOT(canExecuteForecast)}" rerender="popup" />
+
+            </apex:pageBlockSection>
+
+            <apex:outputPanel id="popup" layout="block">
+
+                <apex:outputPanel title="Risk Situation Forecast" id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!displayPopUp}">
+
+                    <apex:pageblockSection title="Current Situation" columns="2">
+                        <apex:outputField id="AccountCashCondId" value="{!myCase.Account.ANG_CashCondition__c}"/>
+
+                        <apex:outputField id="AccountRiskStatusId" value="{!myCase.Account.ANG_RiskStatus__c}"/>
+                    </apex:pageblockSection>
+
+                    <apex:pageblockSection title="Forecasted Situation">                         
+
+                        <apex:pageblockSectionItem >
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.ANG_CashCondition__c.label}" />
+                            <apex:inputCheckbox id="AccountCashCondId2" value="{!newCashCondition}" disabled="true"/>
+                        </apex:pageblockSectionItem>
+
+                        <apex:pageblockSectionItem >
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.ANG_RiskStatus__c.label}" />
+                            <apex:outputText id="AccountRiskStatusId2" value="{!newRiskStatus}" />
+                        </apex:pageblockSectionItem>
+
+                    </apex:pageblockSection>
+
+                    <apex:commandButton value="Close" action="{!closePopup}" styleClass="closeButton" rerender="popup"/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

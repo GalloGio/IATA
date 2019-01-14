@@ -2,17 +2,18 @@
 private class trgGDPContact_BeforeDeleteTest {  
     
     static testMethod void myUnitTest() {
+        ID standardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');  
         
-        ID gdpContactRecordTypeID = TestClass_SetupVariables.gdpContactRecordTypeID;        
         Contact con = new Contact();
+        con.FirstName = 'Name';
         con.LastName = 'TestContact';
-        con.RecordTypeId = gdpContactRecordTypeID;
+        con.RecordTypeId = standardContactRecordTypeID;
         insert con;
         List<Profile> profiles = [SELECT Id FROM Profile WHERE  Name = 'System Administrator' limit 1];       
         List<User> u = [SELECT Id FROM User WHERE ProfileId =: profiles[0].Id AND IsActive = true];
         
-        ID standardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');  
         Contact con1 = new Contact();
+        con1.FirstName = 'Name';
         con1.LastName = 'TestContact';
         con1.Email = 'email@email.org';
         con1.VER_Number__c = 123456;

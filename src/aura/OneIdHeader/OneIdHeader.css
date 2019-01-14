@@ -1,0 +1,11 @@
+.THIS .loginIcon{
+    position: absolute;
+    top: 0;
+    left: 0;
+    float: left;
+    z-index: 1;
+}
+
+.THIS .noLabel .slds-form-element__label{
+    display: none;
+}

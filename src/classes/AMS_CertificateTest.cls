@@ -2,8 +2,9 @@
 private class AMS_CertificateTest {
 
 	@testSetup static void createData() {
-		Account acc1 = new Account(Name = 'Test Account', IataCode__c = '1', Certificate_Generated_Current_Year__c = true);
-		Account acc2 = new Account(Name = 'Test Account', IataCode__c = '2', Certificate_Generated_Current_Year__c = false);
+		id Art =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Account acc1 = new Account(Name = 'Test Account', IataCode__c = '1', Certificate_Generated_Current_Year__c = true, recordtypeid = Art);
+		Account acc2 = new Account(Name = 'Test Account', IataCode__c = '2', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
 		insert new List<Account>{acc1, acc2};
 	}
 	

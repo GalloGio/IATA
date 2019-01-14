@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>AMS DGR Renewal IT</name>
+    <style>freeForm</style>
+    <subject>Ref nr {!AMS_OSCAR__c.Name} – DGR renewal</subject>
+    <textOnly>Gentile Agente,
+
+
+Secondo quanto previsto dalle Risoluzioni della IATA, tutti gli Agenti Accreditati sia Cargo che Intermediari devono soddisfare i requisiti ed i criteri di Accreditamento contenuti nel “Program Handbook” al fine di poter mantenere l’operatività come Agente IATA.
+
+
+In particolare, secondo le Risoluzioni della IATA, la sua Compagnia deve avere almeno due addetti  a tempo completo in possesso  di  certificato valido di gestione Merci Pericolose ( DGR ) emesso negli ultimi due anni per poter erogare servizi di accettazione, stoccaggio e movimentazione di Merci Pericolose in base a quanto descritto nell´Handbook.
+
+
+Dalle informazioni in nostro possesso, i certificati DGR di Merci Pericolose forniti dalla sua Compagnia scadranno il {!AMS_OSCAR__c.Change_effective_as_of__c}.
+
+Per quanto su esposto, La invitiamo pertanto a volerci inviare copia dei nuovi certificati ottenuti o aggiornati di Merci Pericolose o qualsiasi altro documento equipollente e/o informazione che possa dimostrare che la Sua Compagnia é in regola con quanto sopra esposto.
+
+
+Tale certificato dovrá essere inviato alla IATA attraverso il nostro Portale di Servizio alla Clientela alla pagina web: : http://www.iata.org/cs  entro il{!AMS_OSCAR__c.Change_effective_as_of__c}.La preghiamo di allegare una copia scannerizzata al caso {!AMS_OSCAR__c.Name} visibile nella portata principale del portale alla sezione “I miei casi aperti”.
+
+
+La IATA esaminerá quanto presentato per validarne il contenuto.
+
+Certi dell’attenzione che vorrete porre alla presente ed in attesa di ricevere quanto suindicato la invitiamo a volerci dare conferma dell’avvenuta recezione di questo messaggio
+
+
+
+RingraziandoLa per l’attenzione la salutiamo cordialmente
+
+Agency Management
+International Air Transport Association
+-----------------------------------------------------------------------------
+In order to obtain information or assistance from IATA, do not hesitate to access at any time our Customer Portal
+
+{!AMS_OSCAR__c.Emails_reference_Id__c}</textOnly>
+    <type>html</type>
+</EmailTemplate>

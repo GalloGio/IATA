@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -51,6 +47,7 @@
 Object used to store objectives that can be independent, related to other objectives or related to an account</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -80,6 +77,19 @@ Object used to store objectives that can be independent, related to other object
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>AM_Global_Yes_No__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
+        <externalId>false</externalId>
+        <formula>IF(AM_Global__c,&apos;Yes&apos;,&apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Global Yes/No</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>AM_Global__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Checkbox to be used for Account Issues and Priorities RT, to represent the level at which the issue / priority is present.</description>
@@ -89,6 +99,19 @@ Object used to store objectives that can be independent, related to other object
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>AM_Issue_with_IATA_Yes_No__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
+        <externalId>false</externalId>
+        <formula>IF(AM_Issue_with_IATA__c,&apos;Yes&apos;,&apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Issue with IATA Yes/No</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>AM_Issue_with_IATA__c</fullName>
@@ -106,26 +129,44 @@ Object used to store objectives that can be independent, related to other object
         <description>Field to be used for Account Issues and Priorities RT, to represent the level of importance of the item, from the accounts point of view.</description>
         <externalId>false</externalId>
         <label>Level of Importance</label>
-        <picklist>
-            <picklistValues>
-                <fullName>High</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AM_Local_Yes_No__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
+        <externalId>false</externalId>
+        <formula>IF(AM_Local__c,&apos;Yes&apos;, &apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Local Yes/No</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>AM_Local__c</fullName>
@@ -139,6 +180,19 @@ Object used to store objectives that can be independent, related to other object
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>AM_Public_Yes_No__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
+        <externalId>false</externalId>
+        <formula>IF(AM_Public__c, &apos;Yes&apos;,&apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Public Yes/No</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>AM_Public__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Checkbox to be used for Account Issues and Priorities RT, to mark the items that are of public interest and that will be visible to all internal users.</description>
@@ -149,6 +203,19 @@ Object used to store objectives that can be independent, related to other object
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>AM_Regional_Yes_no__c</fullName>
+        <description>&apos;Yes&apos; or &apos;No&apos; to reflect the corresponding checkbox value in a report export</description>
+        <externalId>false</externalId>
+        <formula>IF(AM_Regional__c, &apos;Yes&apos;, &apos;No&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Regional Yes/no</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>AM_Regional__c</fullName>
@@ -165,7 +232,6 @@ Object used to store objectives that can be independent, related to other object
         <fullName>AM_Related_to_Categories__c</fullName>
         <description>This field is used for the Account Management project to indicate to which sector and category the divisional-level activities are related.</description>
         <externalId>false</externalId>
-        <globalPicklist>Category</globalPicklist>
         <inlineHelpText>Use this field to indicate to which Category this activity relates</inlineHelpText>
         <label>Related to Categories</label>
         <required>false</required>
@@ -173,13 +239,16 @@ Object used to store objectives that can be independent, related to other object
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Category</valueSetName>
+        </valueSet>
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>AM_Related_to_Sector__c</fullName>
         <description>This field is used for the Account Management project to indicate to which sector and category the divisional-level activities are related.</description>
         <externalId>false</externalId>
-        <globalPicklist>Sector</globalPicklist>
         <inlineHelpText>Use this field to indicate to which sector this activity relates.</inlineHelpText>
         <label>Related to Sector</label>
         <required>false</required>
@@ -187,6 +256,10 @@ Object used to store objectives that can be independent, related to other object
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Sector</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>AM_Source_Text__c</fullName>
@@ -226,6 +299,11 @@ Object used to store objectives that can be independent, related to other object
                 <field>Objective__c.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>Account Issues and Priorities</value>
+            </filterItems>
+            <filterItems>
+                <field>Objective__c.Account__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
@@ -293,260 +371,454 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>Are/Sub-region this objective is related to.</inlineHelpText>
         <label>Area</label>
-        <picklist>
-            <controllingField>Region__c</controllingField>
-            <picklistValues>
-                <fullName>Eastern Africa</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Gulf Area</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Levant</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>North Africa</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Saudi &amp; Yemen</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>South Western Africa</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Southern Africa</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central West Africa</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Arg-Par-Uru</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Brazil</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Can-Ber</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Caribbean</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central America</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chile</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Colombia-Ecuador</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mexico</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Peru-Bolivia</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>USA</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Venezuela-Cuba</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>India</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Indonesia</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Japan</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pakistan</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Philippines</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Republic of Korea</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Southwest Pacific</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Thailand</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Vietnam</fullName>
-                <default>false</default>
-                <controllingFieldValues>ASPAC</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China-Mongolia-North Korea</fullName>
-                <default>false</default>
-                <controllingFieldValues>Nth. Asia</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chinese Taipei</fullName>
-                <default>false</default>
-                <controllingFieldValues>Nth. Asia</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HK_MO</fullName>
-                <default>false</default>
-                <controllingFieldValues>Nth. Asia</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central Asia</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central Europe</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Eastern Europe</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FR+BE+NL</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FR-NL</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Greece &amp; Cyprus</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Iberian Peninsula</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Israel</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Italy_Malta</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Nordic Baltic</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Russia and Belarus</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Southern Eastern Europe</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Turkey</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>UK &amp; Ireland</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ukraine and Caucasus</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Western Balkans</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>Region__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Eastern Africa</fullName>
+                    <default>false</default>
+                    <label>Eastern Africa</label>
+                </value>
+                <value>
+                    <fullName>Gulf Area</fullName>
+                    <default>false</default>
+                    <label>Gulf Area</label>
+                </value>
+                <value>
+                    <fullName>Levant</fullName>
+                    <default>false</default>
+                    <label>Levant</label>
+                </value>
+                <value>
+                    <fullName>North Africa</fullName>
+                    <default>false</default>
+                    <label>North Africa</label>
+                </value>
+                <value>
+                    <fullName>Saudi &amp; Yemen</fullName>
+                    <default>false</default>
+                    <label>Saudi &amp; Yemen</label>
+                </value>
+                <value>
+                    <fullName>South Western Africa</fullName>
+                    <default>false</default>
+                    <label>South Western Africa</label>
+                </value>
+                <value>
+                    <fullName>Southern Africa</fullName>
+                    <default>false</default>
+                    <label>Southern Africa</label>
+                </value>
+                <value>
+                    <fullName>Central West Africa</fullName>
+                    <default>false</default>
+                    <label>Central West Africa</label>
+                </value>
+                <value>
+                    <fullName>Arg-Par-Uru</fullName>
+                    <default>false</default>
+                    <label>Arg-Par-Uru</label>
+                </value>
+                <value>
+                    <fullName>Brazil</fullName>
+                    <default>false</default>
+                    <label>Brazil</label>
+                </value>
+                <value>
+                    <fullName>Can-Ber</fullName>
+                    <default>false</default>
+                    <label>Can-Ber</label>
+                </value>
+                <value>
+                    <fullName>Caribbean</fullName>
+                    <default>false</default>
+                    <label>Caribbean</label>
+                </value>
+                <value>
+                    <fullName>Central America</fullName>
+                    <default>false</default>
+                    <label>Central America</label>
+                </value>
+                <value>
+                    <fullName>Chile</fullName>
+                    <default>false</default>
+                    <label>Chile</label>
+                </value>
+                <value>
+                    <fullName>Colombia-Ecuador</fullName>
+                    <default>false</default>
+                    <label>Colombia-Ecuador</label>
+                </value>
+                <value>
+                    <fullName>Mexico</fullName>
+                    <default>false</default>
+                    <label>Mexico</label>
+                </value>
+                <value>
+                    <fullName>Peru-Bolivia</fullName>
+                    <default>false</default>
+                    <label>Peru-Bolivia</label>
+                </value>
+                <value>
+                    <fullName>USA</fullName>
+                    <default>false</default>
+                    <label>USA</label>
+                </value>
+                <value>
+                    <fullName>Venezuela-Cuba</fullName>
+                    <default>false</default>
+                    <label>Venezuela-Cuba</label>
+                </value>
+                <value>
+                    <fullName>India</fullName>
+                    <default>false</default>
+                    <label>India</label>
+                </value>
+                <value>
+                    <fullName>Indonesia</fullName>
+                    <default>false</default>
+                    <label>Indonesia</label>
+                </value>
+                <value>
+                    <fullName>Japan</fullName>
+                    <default>false</default>
+                    <label>Japan</label>
+                </value>
+                <value>
+                    <fullName>Pakistan</fullName>
+                    <default>false</default>
+                    <label>Pakistan</label>
+                </value>
+                <value>
+                    <fullName>Philippines</fullName>
+                    <default>false</default>
+                    <label>Philippines</label>
+                </value>
+                <value>
+                    <fullName>Republic of Korea</fullName>
+                    <default>false</default>
+                    <label>Republic of Korea</label>
+                </value>
+                <value>
+                    <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                    <default>false</default>
+                    <label>SG_LK_MY_BD_MV_BN</label>
+                </value>
+                <value>
+                    <fullName>Southwest Pacific</fullName>
+                    <default>false</default>
+                    <label>Southwest Pacific</label>
+                </value>
+                <value>
+                    <fullName>Thailand</fullName>
+                    <default>false</default>
+                    <label>Thailand</label>
+                </value>
+                <value>
+                    <fullName>Vietnam</fullName>
+                    <default>false</default>
+                    <label>Vietnam</label>
+                </value>
+                <value>
+                    <fullName>China-Mongolia-North Korea</fullName>
+                    <default>false</default>
+                    <label>China-Mongolia-North Korea</label>
+                </value>
+                <value>
+                    <fullName>Chinese Taipei</fullName>
+                    <default>false</default>
+                    <label>Chinese Taipei</label>
+                </value>
+                <value>
+                    <fullName>HK_MO</fullName>
+                    <default>false</default>
+                    <label>HK_MO</label>
+                </value>
+                <value>
+                    <fullName>Central Asia</fullName>
+                    <default>false</default>
+                    <label>Central Asia</label>
+                </value>
+                <value>
+                    <fullName>Central Europe</fullName>
+                    <default>false</default>
+                    <label>Central Europe</label>
+                </value>
+                <value>
+                    <fullName>Eastern Europe</fullName>
+                    <default>false</default>
+                    <label>Eastern Europe</label>
+                </value>
+                <value>
+                    <fullName>FR+BE+NL</fullName>
+                    <default>false</default>
+                    <label>FR+BE+NL</label>
+                </value>
+                <value>
+                    <fullName>FR-NL</fullName>
+                    <default>false</default>
+                    <label>FR-NL</label>
+                </value>
+                <value>
+                    <fullName>Greece &amp; Cyprus</fullName>
+                    <default>false</default>
+                    <label>Greece &amp; Cyprus</label>
+                </value>
+                <value>
+                    <fullName>Iberian Peninsula</fullName>
+                    <default>false</default>
+                    <label>Iberian Peninsula</label>
+                </value>
+                <value>
+                    <fullName>Israel</fullName>
+                    <default>false</default>
+                    <label>Israel</label>
+                </value>
+                <value>
+                    <fullName>Italy_Malta</fullName>
+                    <default>false</default>
+                    <label>Italy_Malta</label>
+                </value>
+                <value>
+                    <fullName>Nordic Baltic</fullName>
+                    <default>false</default>
+                    <label>Nordic Baltic</label>
+                </value>
+                <value>
+                    <fullName>Russia and Belarus</fullName>
+                    <default>false</default>
+                    <label>Russia and Belarus</label>
+                </value>
+                <value>
+                    <fullName>Southern Eastern Europe</fullName>
+                    <default>false</default>
+                    <label>Southern Eastern Europe</label>
+                </value>
+                <value>
+                    <fullName>Turkey</fullName>
+                    <default>false</default>
+                    <label>Turkey</label>
+                </value>
+                <value>
+                    <fullName>UK &amp; Ireland</fullName>
+                    <default>false</default>
+                    <label>UK &amp; Ireland</label>
+                </value>
+                <value>
+                    <fullName>Ukraine and Caucasus</fullName>
+                    <default>false</default>
+                    <label>Ukraine and Caucasus</label>
+                </value>
+                <value>
+                    <fullName>Western Balkans</fullName>
+                    <default>false</default>
+                    <label>Western Balkans</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Arg-Par-Uru</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Brazil</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Can-Ber</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Caribbean</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Central America</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Chile</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Colombia-Ecuador</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Mexico</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Peru-Bolivia</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>USA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Venezuela-Cuba</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Central Asia</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Central Europe</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Eastern Europe</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>FR+BE+NL</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>FR-NL</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Greece &amp; Cyprus</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Iberian Peninsula</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Israel</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Italy_Malta</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Nordic Baltic</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Russia and Belarus</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Southern Eastern Europe</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Turkey</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>UK &amp; Ireland</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Ukraine and Caucasus</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Western Balkans</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>Eastern Africa</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>Gulf Area</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>Levant</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>North Africa</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>Saudi &amp; Yemen</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>South Western Africa</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>Southern Africa</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>Central West Africa</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>India</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>Indonesia</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>Japan</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>Pakistan</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>Philippines</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>Republic of Korea</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>SG_LK_MY_BD_MV_BN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>Southwest Pacific</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>Thailand</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ASPAC</controllingFieldValue>
+                <valueName>Vietnam</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Nth. Asia</controllingFieldValue>
+                <valueName>China-Mongolia-North Korea</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Nth. Asia</controllingFieldValue>
+                <valueName>Chinese Taipei</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Nth. Asia</controllingFieldValue>
+                <valueName>HK_MO</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Benefits_to_Account__c</fullName>
         <externalId>false</externalId>
-        <label>Benefits to Account</label>
+        <label>Comment</label>
         <length>1024</length>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -560,234 +832,365 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>Please select the areas/sub-regions that should have sub-objectives contributing with this objective at the regional level</inlineHelpText>
         <label>Cascade To Area</label>
-        <picklist>
-            <controllingField>Region__c</controllingField>
-            <picklistValues>
-                <fullName>Eastern Africa</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Gulf Area</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Levant</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>North Africa</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SA-YE</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>South Western Africa</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Southern Africa</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central West Africa</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Arg-Par-Uru</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Brazil</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Can-Ber</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Caribbean</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central America</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chile</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Colombia-Ecuador</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Mexico</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Peru-Bolivia</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>USA</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Venezuela-Cuba</fullName>
-                <default>false</default>
-                <controllingFieldValues>Americas</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>India</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Indonesia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Japan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Pakistan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Philippines</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Republic of Korea</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SG_LK_MY_BD_MV_BN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Southwest Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Thailand</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Vietnam</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China-Mongolia-North Korea</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Chinese Taipei</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>HK_MO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central Asia</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Central Europe</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Eastern Europe</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FR+BE+NL</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FR-NL</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Greece &amp; Cyprus</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Iberian Peninsula</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Israel</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Italy_Malta</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Nordic Baltic</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Russia and Belarus</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Southern Eastern Europe</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Turkey</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>UK &amp; Ireland</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ukraine and Caucasus</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Western Balkans</fullName>
-                <default>false</default>
-                <controllingFieldValues>Europe</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <controllingField>Region__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Eastern Africa</fullName>
+                    <default>false</default>
+                    <label>Eastern Africa</label>
+                </value>
+                <value>
+                    <fullName>Gulf Area</fullName>
+                    <default>false</default>
+                    <label>Gulf Area</label>
+                </value>
+                <value>
+                    <fullName>Levant</fullName>
+                    <default>false</default>
+                    <label>Levant</label>
+                </value>
+                <value>
+                    <fullName>North Africa</fullName>
+                    <default>false</default>
+                    <label>North Africa</label>
+                </value>
+                <value>
+                    <fullName>SA-YE</fullName>
+                    <default>false</default>
+                    <label>SA-YE</label>
+                </value>
+                <value>
+                    <fullName>South Western Africa</fullName>
+                    <default>false</default>
+                    <label>South Western Africa</label>
+                </value>
+                <value>
+                    <fullName>Southern Africa</fullName>
+                    <default>false</default>
+                    <label>Southern Africa</label>
+                </value>
+                <value>
+                    <fullName>Central West Africa</fullName>
+                    <default>false</default>
+                    <label>Central West Africa</label>
+                </value>
+                <value>
+                    <fullName>Arg-Par-Uru</fullName>
+                    <default>false</default>
+                    <label>Arg-Par-Uru</label>
+                </value>
+                <value>
+                    <fullName>Brazil</fullName>
+                    <default>false</default>
+                    <label>Brazil</label>
+                </value>
+                <value>
+                    <fullName>Can-Ber</fullName>
+                    <default>false</default>
+                    <label>Can-Ber</label>
+                </value>
+                <value>
+                    <fullName>Caribbean</fullName>
+                    <default>false</default>
+                    <label>Caribbean</label>
+                </value>
+                <value>
+                    <fullName>Central America</fullName>
+                    <default>false</default>
+                    <label>Central America</label>
+                </value>
+                <value>
+                    <fullName>Chile</fullName>
+                    <default>false</default>
+                    <label>Chile</label>
+                </value>
+                <value>
+                    <fullName>Colombia-Ecuador</fullName>
+                    <default>false</default>
+                    <label>Colombia-Ecuador</label>
+                </value>
+                <value>
+                    <fullName>Mexico</fullName>
+                    <default>false</default>
+                    <label>Mexico</label>
+                </value>
+                <value>
+                    <fullName>Peru-Bolivia</fullName>
+                    <default>false</default>
+                    <label>Peru-Bolivia</label>
+                </value>
+                <value>
+                    <fullName>USA</fullName>
+                    <default>false</default>
+                    <label>USA</label>
+                </value>
+                <value>
+                    <fullName>Venezuela-Cuba</fullName>
+                    <default>false</default>
+                    <label>Venezuela-Cuba</label>
+                </value>
+                <value>
+                    <fullName>India</fullName>
+                    <default>false</default>
+                    <label>India</label>
+                </value>
+                <value>
+                    <fullName>Indonesia</fullName>
+                    <default>false</default>
+                    <label>Indonesia</label>
+                </value>
+                <value>
+                    <fullName>Japan</fullName>
+                    <default>false</default>
+                    <label>Japan</label>
+                </value>
+                <value>
+                    <fullName>Pakistan</fullName>
+                    <default>false</default>
+                    <label>Pakistan</label>
+                </value>
+                <value>
+                    <fullName>Philippines</fullName>
+                    <default>false</default>
+                    <label>Philippines</label>
+                </value>
+                <value>
+                    <fullName>Republic of Korea</fullName>
+                    <default>false</default>
+                    <label>Republic of Korea</label>
+                </value>
+                <value>
+                    <fullName>SG_LK_MY_BD_MV_BN</fullName>
+                    <default>false</default>
+                    <label>SG_LK_MY_BD_MV_BN</label>
+                </value>
+                <value>
+                    <fullName>Southwest Pacific</fullName>
+                    <default>false</default>
+                    <label>Southwest Pacific</label>
+                </value>
+                <value>
+                    <fullName>Thailand</fullName>
+                    <default>false</default>
+                    <label>Thailand</label>
+                </value>
+                <value>
+                    <fullName>Vietnam</fullName>
+                    <default>false</default>
+                    <label>Vietnam</label>
+                </value>
+                <value>
+                    <fullName>China-Mongolia-North Korea</fullName>
+                    <default>false</default>
+                    <label>China-Mongolia-North Korea</label>
+                </value>
+                <value>
+                    <fullName>Chinese Taipei</fullName>
+                    <default>false</default>
+                    <label>Chinese Taipei</label>
+                </value>
+                <value>
+                    <fullName>HK_MO</fullName>
+                    <default>false</default>
+                    <label>HK_MO</label>
+                </value>
+                <value>
+                    <fullName>Central Asia</fullName>
+                    <default>false</default>
+                    <label>Central Asia</label>
+                </value>
+                <value>
+                    <fullName>Central Europe</fullName>
+                    <default>false</default>
+                    <label>Central Europe</label>
+                </value>
+                <value>
+                    <fullName>Eastern Europe</fullName>
+                    <default>false</default>
+                    <label>Eastern Europe</label>
+                </value>
+                <value>
+                    <fullName>FR+BE+NL</fullName>
+                    <default>false</default>
+                    <label>FR+BE+NL</label>
+                </value>
+                <value>
+                    <fullName>FR-NL</fullName>
+                    <default>false</default>
+                    <label>FR-NL</label>
+                </value>
+                <value>
+                    <fullName>Greece &amp; Cyprus</fullName>
+                    <default>false</default>
+                    <label>Greece &amp; Cyprus</label>
+                </value>
+                <value>
+                    <fullName>Iberian Peninsula</fullName>
+                    <default>false</default>
+                    <label>Iberian Peninsula</label>
+                </value>
+                <value>
+                    <fullName>Israel</fullName>
+                    <default>false</default>
+                    <label>Israel</label>
+                </value>
+                <value>
+                    <fullName>Italy_Malta</fullName>
+                    <default>false</default>
+                    <label>Italy_Malta</label>
+                </value>
+                <value>
+                    <fullName>Nordic Baltic</fullName>
+                    <default>false</default>
+                    <label>Nordic Baltic</label>
+                </value>
+                <value>
+                    <fullName>Russia and Belarus</fullName>
+                    <default>false</default>
+                    <label>Russia and Belarus</label>
+                </value>
+                <value>
+                    <fullName>Southern Eastern Europe</fullName>
+                    <default>false</default>
+                    <label>Southern Eastern Europe</label>
+                </value>
+                <value>
+                    <fullName>Turkey</fullName>
+                    <default>false</default>
+                    <label>Turkey</label>
+                </value>
+                <value>
+                    <fullName>UK &amp; Ireland</fullName>
+                    <default>false</default>
+                    <label>UK &amp; Ireland</label>
+                </value>
+                <value>
+                    <fullName>Ukraine and Caucasus</fullName>
+                    <default>false</default>
+                    <label>Ukraine and Caucasus</label>
+                </value>
+                <value>
+                    <fullName>Western Balkans</fullName>
+                    <default>false</default>
+                    <label>Western Balkans</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Arg-Par-Uru</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Brazil</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Can-Ber</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Caribbean</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Central America</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Chile</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Colombia-Ecuador</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Mexico</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Peru-Bolivia</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>USA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Americas</controllingFieldValue>
+                <valueName>Venezuela-Cuba</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Central Asia</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Central Europe</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Eastern Europe</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>FR+BE+NL</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>FR-NL</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Greece &amp; Cyprus</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Iberian Peninsula</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Israel</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Italy_Malta</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Nordic Baltic</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Russia and Belarus</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Southern Eastern Europe</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Turkey</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>UK &amp; Ireland</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Ukraine and Caucasus</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Europe</controllingFieldValue>
+                <valueName>Western Balkans</valueName>
+            </valueSettings>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -796,34 +1199,41 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>Please select the Regions that should have sub-objectives contributing with this objective at the divisional level</inlineHelpText>
         <label>Cascade To Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia &amp; Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -888,6 +1298,16 @@ Object used to store objectives that can be independent, related to other object
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Decreasing_Target__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Decreasing Target</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Description__c</fullName>
         <description>Not visible for the end user, but a temp field needed by the Objective naming convention</description>
         <externalId>false</externalId>
@@ -919,50 +1339,66 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>Division this objective is related to.</inlineHelpText>
         <label>Division</label>
-        <picklist>
-            <picklistValues>
-                <fullName>APCS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FDS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MACS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>SFO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>PPD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RVPO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cross-Divisional</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>APCS</fullName>
+                    <default>false</default>
+                    <label>APCS</label>
+                </value>
+                <value>
+                    <fullName>CS</fullName>
+                    <default>false</default>
+                    <label>CS</label>
+                </value>
+                <value>
+                    <fullName>DG</fullName>
+                    <default>false</default>
+                    <label>DG</label>
+                </value>
+                <value>
+                    <fullName>FDS</fullName>
+                    <default>false</default>
+                    <label>FDS</label>
+                </value>
+                <value>
+                    <fullName>MACS</fullName>
+                    <default>false</default>
+                    <label>MACS</label>
+                </value>
+                <value>
+                    <fullName>MER</fullName>
+                    <default>false</default>
+                    <label>MER</label>
+                </value>
+                <value>
+                    <fullName>SFO</fullName>
+                    <default>false</default>
+                    <label>SFO</label>
+                </value>
+                <value>
+                    <fullName>PPD</fullName>
+                    <default>false</default>
+                    <label>PPD</label>
+                </value>
+                <value>
+                    <fullName>RVPO</fullName>
+                    <default>false</default>
+                    <label>RVPO</label>
+                </value>
+                <value>
+                    <fullName>Cross-Divisional</fullName>
+                    <default>false</default>
+                    <label>Cross-Divisional</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Forecast_Deadline__c</fullName>
@@ -980,7 +1416,7 @@ Object used to store objectives that can be independent, related to other object
     <fields>
         <fullName>Forecast_Progress__c</fullName>
         <externalId>false</externalId>
-        <formula>if ( Target__c == 0, 0, (Forecast__c) / Target__c )</formula>
+        <formula>if ( Target__c == 0, 0, if (Decreasing_Target__c = True, (-1*(Target__c/Forecast__c)) ,Forecast__c / Target__c) )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Forecast Progress</label>
         <precision>18</precision>
@@ -1011,81 +1447,252 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>Functional groups (as per the selected division) this objective is related to</inlineHelpText>
         <label>Functional Group</label>
-        <picklist>
-            <controllingField>Division__c</controllingField>
-            <picklistValues>
-                <fullName>Safety</fullName>
-                <default>false</default>
-                <controllingFieldValues>SFO</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Operations</fullName>
-                <default>false</default>
-                <controllingFieldValues>FDS</controllingFieldValues>
-                <controllingFieldValues>SFO</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Infraestructure</fullName>
-                <default>false</default>
-                <controllingFieldValues>SFO</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>User Charges</fullName>
-                <default>false</default>
-                <controllingFieldValues>SFO</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Passenger Experience</fullName>
-                <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo</fullName>
-                <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Security &amp; Facilitation</fullName>
-                <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Ground Operations</fullName>
-                <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airport Development &amp; Charges</fullName>
-                <default>false</default>
-                <controllingFieldValues>APCS</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Transformation</fullName>
-                <default>false</default>
-                <controllingFieldValues>FDS</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Products</fullName>
-                <default>false</default>
-                <controllingFieldValues>FDS</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Environment</fullName>
-                <default>false</default>
-                <controllingFieldValues>MER</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>External Affairs</fullName>
-                <default>false</default>
-                <controllingFieldValues>MER</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>Division__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Safety</fullName>
+                    <default>false</default>
+                    <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Operations</fullName>
+                    <default>false</default>
+                    <label>Operations</label>
+                </value>
+                <value>
+                    <fullName>Infrastructure</fullName>
+                    <default>false</default>
+                    <label>Infrastructure</label>
+                </value>
+                <value>
+                    <fullName>User Charges</fullName>
+                    <default>false</default>
+                    <label>User Charges</label>
+                </value>
+                <value>
+                    <fullName>Passenger Experience</fullName>
+                    <default>false</default>
+                    <label>Passenger Experience</label>
+                </value>
+                <value>
+                    <fullName>Cargo</fullName>
+                    <default>false</default>
+                    <label>Cargo</label>
+                </value>
+                <value>
+                    <fullName>Security &amp; Facilitation</fullName>
+                    <default>false</default>
+                    <label>Security &amp; Facilitation</label>
+                </value>
+                <value>
+                    <fullName>Ground Operations</fullName>
+                    <default>false</default>
+                    <label>Ground Operations</label>
+                </value>
+                <value>
+                    <fullName>Airport Development &amp; Charges</fullName>
+                    <default>false</default>
+                    <label>Airport Development &amp; Charges</label>
+                </value>
+                <value>
+                    <fullName>Transformation</fullName>
+                    <default>false</default>
+                    <label>Transformation</label>
+                </value>
+                <value>
+                    <fullName>Products</fullName>
+                    <default>false</default>
+                    <label>Products</label>
+                </value>
+                <value>
+                    <fullName>Environment</fullName>
+                    <default>false</default>
+                    <label>Environment</label>
+                </value>
+                <value>
+                    <fullName>External Affairs</fullName>
+                    <default>false</default>
+                    <label>External Affairs</label>
+                </value>
+                <value>
+                    <fullName>Finance</fullName>
+                    <default>false</default>
+                    <label>Finance</label>
+                </value>
+                <value>
+                    <fullName>CPS</fullName>
+                    <default>false</default>
+                    <label>CPS</label>
+                </value>
+                <value>
+                    <fullName>CAP</fullName>
+                    <default>false</default>
+                    <label>CAP</label>
+                </value>
+                <value>
+                    <fullName>ITS</fullName>
+                    <default>false</default>
+                    <label>ITS</label>
+                </value>
+                <value>
+                    <fullName>BIS</fullName>
+                    <default>false</default>
+                    <label>BIS</label>
+                </value>
+                <value>
+                    <fullName>Publishing</fullName>
+                    <default>false</default>
+                    <label>Publishing</label>
+                </value>
+                <value>
+                    <fullName>Training</fullName>
+                    <default>false</default>
+                    <label>Training</label>
+                </value>
+                <value>
+                    <fullName>Consulting</fullName>
+                    <default>false</default>
+                    <label>Consulting</label>
+                </value>
+                <value>
+                    <fullName>SPP</fullName>
+                    <default>false</default>
+                    <label>SPP</label>
+                </value>
+                <value>
+                    <fullName>Events</fullName>
+                    <default>false</default>
+                    <label>Events</label>
+                </value>
+                <value>
+                    <fullName>FSS</fullName>
+                    <default>false</default>
+                    <label>FSS</label>
+                </value>
+                <value>
+                    <fullName>T&amp;T</fullName>
+                    <default>false</default>
+                    <label>T&amp;T</label>
+                </value>
+                <value>
+                    <fullName>Support</fullName>
+                    <default>false</default>
+                    <label>Support</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>APCS</controllingFieldValue>
+                <valueName>Passenger Experience</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>APCS</controllingFieldValue>
+                <valueName>Cargo</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>APCS</controllingFieldValue>
+                <valueName>Security &amp; Facilitation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>APCS</controllingFieldValue>
+                <valueName>Ground Operations</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>APCS</controllingFieldValue>
+                <valueName>Airport Development &amp; Charges</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CS</controllingFieldValue>
+                <valueName>Finance</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CS</controllingFieldValue>
+                <valueName>CPS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CS</controllingFieldValue>
+                <valueName>CAP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CS</controllingFieldValue>
+                <valueName>ITS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>FDS</controllingFieldValue>
+                <controllingFieldValue>SFO</controllingFieldValue>
+                <valueName>Operations</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>FDS</controllingFieldValue>
+                <valueName>Transformation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>FDS</controllingFieldValue>
+                <valueName>Products</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MACS</controllingFieldValue>
+                <valueName>BIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MACS</controllingFieldValue>
+                <valueName>Publishing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MACS</controllingFieldValue>
+                <valueName>Training</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MACS</controllingFieldValue>
+                <valueName>Consulting</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MACS</controllingFieldValue>
+                <valueName>SPP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MACS</controllingFieldValue>
+                <valueName>Events</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MACS</controllingFieldValue>
+                <valueName>FSS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MACS</controllingFieldValue>
+                <valueName>T&amp;T</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MACS</controllingFieldValue>
+                <valueName>Support</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MER</controllingFieldValue>
+                <valueName>Environment</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MER</controllingFieldValue>
+                <valueName>External Affairs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SFO</controllingFieldValue>
+                <valueName>Safety</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SFO</controllingFieldValue>
+                <valueName>Infrastructure</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SFO</controllingFieldValue>
+                <valueName>User Charges</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Initial__c</fullName>
@@ -1125,34 +1732,41 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>Region this objective is related to</inlineHelpText>
         <label>Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>AME</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ASPAC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Nth. Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AME</fullName>
+                    <default>false</default>
+                    <label>AME</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>ASPAC</fullName>
+                    <default>false</default>
+                    <label>ASPAC</label>
+                </value>
+                <value>
+                    <fullName>Nth. Asia</fullName>
+                    <default>false</default>
+                    <label>Nth. Asia</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
@@ -1160,82 +1774,106 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>There is no automation between the Status and the Progress value. You should manually set a status if you want to flag the objective somehow for filtering or reporting purposes.</inlineHelpText>
         <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Not Started</fullName>
-                <default>true</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Completed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>On track</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>On hold</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deferred</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Aborted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Open</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Resolved</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed without intervention</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Out of scope</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Delayed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Delivered</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cancelled</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>At risk</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>true</default>
+                    <label>Not Started</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>On Track</fullName>
+                    <default>false</default>
+                    <label>On Track</label>
+                </value>
+                <value>
+                    <fullName>On Hold</fullName>
+                    <default>false</default>
+                    <label>On Hold</label>
+                </value>
+                <value>
+                    <fullName>Deferred</fullName>
+                    <default>false</default>
+                    <label>Deferred</label>
+                </value>
+                <value>
+                    <fullName>Aborted</fullName>
+                    <default>false</default>
+                    <label>Aborted</label>
+                </value>
+                <value>
+                    <fullName>Open</fullName>
+                    <default>false</default>
+                    <label>Open</label>
+                </value>
+                <value>
+                    <fullName>Resolved</fullName>
+                    <default>false</default>
+                    <label>Resolved</label>
+                </value>
+                <value>
+                    <fullName>Closed without intervention</fullName>
+                    <default>false</default>
+                    <label>Closed without intervention</label>
+                </value>
+                <value>
+                    <fullName>Closed</fullName>
+                    <default>false</default>
+                    <label>Closed</label>
+                </value>
+                <value>
+                    <fullName>Out of scope</fullName>
+                    <default>false</default>
+                    <label>Out of scope</label>
+                </value>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Delayed</fullName>
+                    <default>false</default>
+                    <label>Delayed</label>
+                </value>
+                <value>
+                    <fullName>Delivered</fullName>
+                    <default>false</default>
+                    <label>Delivered</label>
+                </value>
+                <value>
+                    <fullName>Cancelled</fullName>
+                    <default>false</default>
+                    <label>Cancelled</label>
+                </value>
+                <value>
+                    <fullName>At risk</fullName>
+                    <default>false</default>
+                    <label>At risk</label>
+                </value>
+                <value>
+                    <fullName>Not Delivered</fullName>
+                    <default>false</default>
+                    <label>Not Delivered</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Sub_region__c</fullName>
@@ -1243,31 +1881,41 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>Some divisions may need to report at a sub-region level instead of regional</inlineHelpText>
         <label>Sub-region</label>
-        <picklist>
-            <controllingField>Region__c</controllingField>
-            <picklistValues>
-                <fullName>AFI</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MENA</fullName>
-                <default>false</default>
-                <controllingFieldValues>AME</controllingFieldValues>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <controllingField>Region__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AFI</fullName>
+                    <default>false</default>
+                    <label>AFI</label>
+                </value>
+                <value>
+                    <fullName>MENA</fullName>
+                    <default>false</default>
+                    <label>MENA</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>AFI</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AME</controllingFieldValue>
+                <valueName>MENA</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Target_Progress__c</fullName>
         <description>Percentage of progress</description>
         <externalId>false</externalId>
-        <formula>if ( Target__c == 0, 0, (Current__c) / Target__c )</formula>
+        <formula>if ( Target__c == 0, 0, if (Decreasing_Target__c = True, (-1*(Target__c/Current__c)) ,Current__c / Target__c) )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Percentage of progress. Relationship between the target and the current value.</inlineHelpText>
         <label>Target Progress</label>
@@ -1299,30 +1947,36 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>Board Monitored Activity, Other Strategic Activity, or other generic objective</inlineHelpText>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>BMA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OSA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RSA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>BMA</fullName>
+                    <default>false</default>
+                    <label>BMA</label>
+                </value>
+                <value>
+                    <fullName>OSA</fullName>
+                    <default>false</default>
+                    <label>OSA</label>
+                </value>
+                <value>
+                    <fullName>RSA</fullName>
+                    <default>false</default>
+                    <label>RSA</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Unit_Type__c</fullName>
@@ -1330,22 +1984,26 @@ Object used to store objectives that can be independent, related to other object
         <externalId>false</externalId>
         <inlineHelpText>The unit used for target and its related values in this opportunity</inlineHelpText>
         <label>Unit Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Percentage</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Number</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Percentage</fullName>
+                    <default>false</default>
+                    <label>Percentage</label>
+                </value>
+                <value>
+                    <fullName>Number</fullName>
+                    <default>false</default>
+                    <label>Number</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>is_Incomplete__c</fullName>
@@ -1365,30 +2023,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <type>Checkbox</type>
     </fields>
     <label>Objective</label>
-    <listViews>
-        <fullName>AME_regional_objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
-        <columns>Current__c</columns>
-        <columns>Target__c</columns>
-        <columns>Target_Progress__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Region__c</field>
-            <operation>equals</operation>
-            <value>Africa &amp; Middle East</value>
-        </filters>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>Objective__c.Region</value>
-        </filters>
-        <label>AME regional objectives</label>
-        <language>en_US</language>
-    </listViews>
     <listViews>
         <fullName>Account_Issues_Priorities</fullName>
         <columns>NAME</columns>
@@ -1415,104 +2049,172 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <columns>Target_Progress__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Objective__c.Account,Objective__c.Area,Objective__c.Division,Objective__c.Region</value>
+        </filters>
         <label>All objectives</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Incomplete_Objectives</fullName>
+        <fullName>Field_Office_BMAs_20172</fullName>
         <columns>NAME</columns>
+        <columns>Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>is_Incomplete__c</field>
+            <field>Type__c</field>
             <operation>equals</operation>
-            <value>1</value>
+            <value>BMA</value>
         </filters>
-        <label>Incomplete Objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Levant_Area_Objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Target__c</columns>
-        <columns>Current__c</columns>
-        <columns>Deadline__c</columns>
-        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>AME</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
         <filters>
             <field>RECORDTYPE</field>
             <operation>equals</operation>
             <value>Objective__c.Area</value>
         </filters>
-        <filters>
-            <field>Area__c</field>
-            <operation>equals</operation>
-            <value>Levant</value>
-        </filters>
-        <label>Levant Area Objectives</label>
+        <label>AME Field Office BMAs 2017</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Objectives_with_missing_Area_Objectives</fullName>
+        <fullName>Field_Office_OSAs_20172</fullName>
         <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>RECORDTYPE</columns>
         <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
-        <columns>Deadline__c</columns>
-        <columns>Target_Progress__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>All_Areas_Created__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Objectives with missing Area Objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Objectives_with_missing_RegionObjectives</fullName>
-        <columns>NAME</columns>
         <columns>Description__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
         <columns>Deadline__c</columns>
-        <columns>Target_Progress__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>All_Regions_Created__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Objectives with missing RegionObjectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>VP_Divisional_Objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>Type__c</columns>
-        <columns>Cascade_To_Region__c</columns>
         <columns>Target__c</columns>
-        <columns>Current__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>OSA</value>
+        </filters>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>AME</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
         <filters>
             <field>RECORDTYPE</field>
             <operation>equals</operation>
-            <value>Objective__c.Division</value>
+            <value>Objective__c.Area</value>
+        </filters>
+        <label>AME Field Office OSAs 2017</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Global_BMAs_2017</fullName>
+        <columns>NAME</columns>
+        <columns>Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>BMA</value>
         </filters>
         <filters>
-            <field>Division__c</field>
-            <operation>equals</operation>
-            <value>VP</value>
+            <field>Region__c</field>
+            <operation>notEqual</operation>
+            <value>AME,Americas,ASPAC,Nth. Asia,Europe</value>
         </filters>
-        <label>VP Divisional Objectives</label>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
+        <label>Global BMAs 2017</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Global_BMAs_20171</fullName>
+        <columns>NAME</columns>
+        <columns>Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>BMA</value>
+        </filters>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>AME</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Objective__c.Region</value>
+        </filters>
+        <label>AME Regional BMAs 2017</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Regional_OSAs_20171</fullName>
+        <columns>NAME</columns>
+        <columns>Division__c</columns>
+        <columns>Description__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Target__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>OSA</value>
+        </filters>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>AME</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Objective__c.Region</value>
+        </filters>
+        <label>AME Regional OSAs 2017</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -1999,7 +2701,23 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2007,7 +2725,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2015,7 +2745,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2031,11 +2765,31 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2097,7 +2851,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>true</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2159,6 +2913,332 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AM_Related_to_Categories__c</picklist>
+            <values>
+                <fullName>ANSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic%2FResearch Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Global Card Acquirer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Point of Sale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Concessionaire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Apartment %26 Villa Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bus Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Associate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Card Brand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agency Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Casino</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caterer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultancy Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Courier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cruise Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERSP Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSSA Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Regional Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IBCS consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Government</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inter-Governmental Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landmark</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Large Component OEM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lessor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSO Member Sales Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance%2C Repair%2C Overhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Museum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non Governmental Organization</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Private Sector Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Park</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger and Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Solutions Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tour Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training Centre</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AM_Related_to_Sector__c</picklist>
+            <values>
+                <fullName>Accommodation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equipment Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governmental Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Airline Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agent</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2572,269 +3652,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Category</picklist>
-            <values>
-                <fullName>ANSP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Academic%2FResearch Body</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Aircraft Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Global Card Acquirer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Point of Sale</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport Authority</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport Concessionaire</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Apartment %26 Villa Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Banking Service</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Bus Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Car Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Card Brand</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo only</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Casino</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Caterer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consultancy Firm</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Courier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cruise Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Domestic Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ERSP Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Engine Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fuel Supplier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GSA General Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GSSA Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Global Distribution System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Handler</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Handling Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Head Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Local office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Passenger Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Regional Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IBCS consolidator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Individual Government</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inter-Governmental Body</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Landmark</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Large Component OEM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Lessor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MSO Member Sales Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Maintenance%2C Repair%2C Overhaul</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Museum</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non Governmental Organization</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Passenger Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Travel Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Private Sector Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Park</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger and Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger only</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Processor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publishing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resort</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>System Solutions Provider</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TIDS Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour Operator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training Centre</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agency Association</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Division__c</picklist>
             <values>
                 <fullName>APCS</fullName>
@@ -2842,6 +3659,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DG</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2854,14 +3675,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>MER</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PPD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RVPO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2892,7 +3705,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2932,73 +3745,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Europe</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Sector</picklist>
-            <values>
-                <fullName>Accommodation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Supplier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Financial Institution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Governmental Institution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-Airline Transportation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recreational</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agent</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3530,7 +4276,23 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3538,7 +4300,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3546,7 +4320,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3562,11 +4340,31 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3628,7 +4426,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>true</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3683,6 +4481,332 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AM_Related_to_Categories__c</picklist>
+            <values>
+                <fullName>ANSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic%2FResearch Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Global Card Acquirer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Point of Sale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Concessionaire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Apartment %26 Villa Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bus Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Associate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Card Brand</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agency Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Casino</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caterer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultancy Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Courier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cruise Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERSP Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSSA Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Distribution System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Handler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Regional Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IBCS consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Government</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inter-Governmental Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landmark</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Large Component OEM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lessor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSO Member Sales Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance%2C Repair%2C Overhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Museum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non Governmental Organization</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Private Sector Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Park</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger and Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Solutions Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tour Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training Centre</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AM_Related_to_Sector__c</picklist>
+            <values>
+                <fullName>Accommodation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equipment Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governmental Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Airline Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agent</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4100,7 +5224,260 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Category</picklist>
+            <picklist>Division__c</picklist>
+            <values>
+                <fullName>APCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross-Divisional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PPD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RVPO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SFO</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Area__c</picklist>
+            <values>
+                <fullName>Airport Development %26 Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transformation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>User Charges</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>AME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ASPAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nth%2E Asia</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>At risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sub_region__c</picklist>
+            <values>
+                <fullName>AFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MENA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>BMA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OSA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Unit_Type__c</picklist>
+            <values>
+                <fullName>Number</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Percentage</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Key_Account_Plan</fullName>
+        <active>true</active>
+        <label>Key Account Plan</label>
+        <picklistValues>
+            <picklist>AM_Level_of_importance__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AM_Related_to_Categories__c</picklist>
             <values>
                 <fullName>ANSP</fullName>
                 <default>false</default>
@@ -4302,10 +5679,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -4363,120 +5736,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Division__c</picklist>
-            <values>
-                <fullName>APCS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cross-Divisional</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FDS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MACS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MER</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PPD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RVPO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>SFO</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Functional_Area__c</picklist>
-            <values>
-                <fullName>Airport Development %26 Charges</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Environment</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>External Affairs</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infraestructure</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Experience</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Products</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Safety</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security %26 Facilitation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Transformation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>User Charges</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Region__c</picklist>
-            <values>
-                <fullName>AME</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ASPAC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Nth%2E Asia</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Sector</picklist>
+            <picklist>AM_Related_to_Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
                 <default>false</default>
@@ -4539,94 +5799,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Status__c</picklist>
-            <values>
-                <fullName>Aborted</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>At risk</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Completed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Deferred</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Started</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>On hold</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Sub_region__c</picklist>
-            <values>
-                <fullName>AFI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MENA</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Type__c</picklist>
-            <values>
-                <fullName>BMA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OSA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Unit_Type__c</picklist>
-            <values>
-                <fullName>Number</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Percentage</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Key_Account_Plan</fullName>
-        <active>true</active>
-        <label>Key Account Plan</label>
-        <picklistValues>
-            <picklist>AM_Level_of_importance__c</picklist>
-            <values>
-                <fullName>High</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medium</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5040,269 +6212,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Category</picklist>
-            <values>
-                <fullName>ANSP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Academic%2FResearch Body</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Aircraft Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Global Card Acquirer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Point of Sale</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport Authority</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport Concessionaire</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Apartment %26 Villa Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Banking Service</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Bus Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associate</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Car Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Card Brand</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo only</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Casino</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Caterer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consultancy Firm</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Courier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cruise Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Domestic Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ERSP Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Engine Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fuel Supplier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GSA General Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GSSA Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Global Distribution System</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Handler</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Handling Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Head Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Local office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Passenger Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Regional Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IBCS consolidator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Import Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Individual Government</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inter-Governmental Body</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Landmark</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Large Component OEM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Lessor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MSO Member Sales Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Maintenance%2C Repair%2C Overhaul</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Museum</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non Governmental Organization</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Passenger Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Travel Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Private Sector Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Park</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger and Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger only</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Processor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Publishing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Railway Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resort</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>System Solutions Provider</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TIDS Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour Operator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training Centre</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agency Association</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Division__c</picklist>
             <values>
                 <fullName>APCS</fullName>
@@ -5310,6 +6219,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DG</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5322,14 +6235,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>MER</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PPD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RVPO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5360,7 +6265,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5404,73 +6309,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Sector</picklist>
-            <values>
-                <fullName>Accommodation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Supplier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Financial Institution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Governmental Institution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Infrastructure Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-Airline Transportation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recreational</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Cancelled</fullName>
@@ -5485,11 +6323,15 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>Not Delivered</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>On track</fullName>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>On Track</fullName>
                 <default>true</default>
             </values>
         </picklistValues>
@@ -6010,7 +6852,23 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6018,7 +6876,19 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>External Affairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6026,7 +6896,11 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>ITS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6042,11 +6916,31 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6108,7 +7002,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>true</default>
             </values>
             <values>
-                <fullName>On hold</fullName>
+                <fullName>On Hold</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6116,6 +7010,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             <picklist>Sub_region__c</picklist>
             <values>
                 <fullName>AFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MENA</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6209,6 +7107,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
 )</errorConditionFormula>
         <errorMessage>Please fill in the Activity and the Description fields</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>New_Account_Objective</fullName>
         <availability>online</availability>

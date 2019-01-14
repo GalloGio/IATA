@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Will hold the CAC WebService Subscription Details</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -62,33 +59,40 @@
         <externalId>false</externalId>
         <inlineHelpText>Technical use to perform actions against the RDS Database directly in order to update service or suspend it</inlineHelpText>
         <label>Actions</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Recover Usage</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Suspend All the Web Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Suspend this Web Service</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Update Subscription, Limit and Token</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Apply Credit</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Recover Usage</fullName>
+                    <default>false</default>
+                    <label>Recover Usage</label>
+                </value>
+                <value>
+                    <fullName>Suspend All the Web Services</fullName>
+                    <default>false</default>
+                    <label>Suspend All the Web Services</label>
+                </value>
+                <value>
+                    <fullName>Suspend this Web Service</fullName>
+                    <default>false</default>
+                    <label>Suspend this Web Service</label>
+                </value>
+                <value>
+                    <fullName>Update Subscription, Limit and Token</fullName>
+                    <default>false</default>
+                    <label>Update Subscription, Limit and Token</label>
+                </value>
+                <value>
+                    <fullName>Apply Credit</fullName>
+                    <default>false</default>
+                    <label>Apply Credit</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Credit__c</fullName>
@@ -140,7 +144,7 @@
         <relationshipLabel>CAC Subscription Details</relationshipLabel>
         <relationshipName>CAC_Subscription_Details</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -163,7 +167,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Is the Service Authorized Usage shared among the different web service of the same subscription</inlineHelpText>
         <label>Share Authorized Usage</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -184,25 +188,30 @@
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Service Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Suspended</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Suspended</fullName>
+                    <default>false</default>
+                    <label>Suspended</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Subscription__c</fullName>
@@ -215,19 +224,43 @@
         <relationshipLabel>CAC Subscription Details</relationshipLabel>
         <relationshipName>CAC_Subscription_Details</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <label>CAC Subscription Detail</label>
+    <listViews>
+        <fullName>CAC_Web</fullName>
+        <columns>NAME</columns>
+        <columns>Max_API_Call_Per_Month__c</columns>
+        <columns>Service_Activation_Date__c</columns>
+        <columns>Service_Specification__c</columns>
+        <columns>Status__c</columns>
+        <columns>Share_Authorized_Usage__c</columns>
+        <columns>Subscription__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Service_Specification__c</field>
+            <operation>startsWith</operation>
+            <value>CAC Web</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <label>CAC Web - Active</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Subscription Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>CAC Subscription Details</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Manage_Sync</fullName>
         <availability>online</availability>

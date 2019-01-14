@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Contains the questions, question order, and passing score information</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
@@ -61,32 +58,39 @@
         <fullName>Available_With__c</fullName>
         <externalId>false</externalId>
         <label>Available With</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Leads</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Contacts</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cases</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Opportunities</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accounts</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Leads</fullName>
+                    <default>false</default>
+                    <label>Leads</label>
+                </value>
+                <value>
+                    <fullName>Contacts</fullName>
+                    <default>false</default>
+                    <label>Contacts</label>
+                </value>
+                <value>
+                    <fullName>Cases</fullName>
+                    <default>false</default>
+                    <label>Cases</label>
+                </value>
+                <value>
+                    <fullName>Opportunities</fullName>
+                    <default>false</default>
+                    <label>Opportunities</label>
+                </value>
+                <value>
+                    <fullName>Accounts</fullName>
+                    <default>false</default>
+                    <label>Accounts</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
         <visibleLines>6</visibleLines>
     </fields>
     <fields>
@@ -150,6 +154,7 @@
         <searchResultsAdditionalFields>Passing_Score__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>ScriptWizard</fullName>
         <availability>online</availability>

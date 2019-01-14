@@ -76,6 +76,16 @@ public class IDCardAgencyDetailsControllerTest{
         // Test selectedLanguage()           
         iDCardAgencyDetailsController.setSelectedLanguage('en_US');
         string t = iDCardAgencyDetailsController.getSelectedLanguage(); 
+
+         Account acc = new Account(Name ='testAccount',
+            IATACode__c = testData.IDCards_IDCardApplications[0].IATA_Code__c,
+            ID_Card_KeyAccount_features__c = 'Prohibit Applicant to Apply',
+            RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+            Status__c = 'Listed',
+            IDCard_Key_Account__c = true);
+        insert acc;
+
+        iDCardAgencyDetailsController.theAccount = acc;
          
         // Next page
         nextPage = iDCardAgencyDetailsController.next();      
@@ -90,9 +100,28 @@ public class IDCardAgencyDetailsControllerTest{
     
     public static TestMethod void TestPopUp(){
         InitIDCardAgencyDetailsControllerTest();      
-         
+        
+        Account acc = new Account(Name ='testAccount',
+            IATACode__c = testData.IDCards_IDCardApplications[0].IATA_Code__c,
+            ID_Card_KeyAccount_features__c = 'Prohibit Applicant to Apply',
+            RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+            Status__c = 'Listed');
+        insert acc;
+        Contact con = new Contact(FirstName = 'test',
+            LastName = 'test',
+            Email = 'ISSP_test@test.test',
+            AccountId = acc.Id,
+            VER_Number_2__c = '546');
+        insert con;
+        Managed_agency__c ma = new Managed_agency__c(Account__c = acc.Id,
+            Contact__c = con.Id,
+            Delegate__c = false);
+        insert ma;
+
+        iDCardAgencyDetailsController.theAccount = acc;
         iDCardAgencyDetailsController.showPopup();
-        iDCardAgencyDetailsController.closePopup();    
+        iDCardAgencyDetailsController.closePopup();
+        nextPage = iDCardAgencyDetailsController.next();     
     }
     
     public static TestMethod void TestAccountAddress(){
@@ -105,6 +134,27 @@ public class IDCardAgencyDetailsControllerTest{
          
          acc.ShippingCity = 'Lisbon';
          sAddr = new iDCardAgencyDetailsController.ShippingAddress(acc);
+    }
+
+    public static TestMethod void TestKeyAccount(){
+        InitIDCardAgencyDetailsControllerTest();
+
+        Boolean keyAccount = iDCardAgencyDetailsController.isKeyAccount_override('159', '546');
+
+        Test.startTest();
+        Account acc = new Account(Name ='testAccount', IATACode__c = '159');
+        insert acc;
+        Contact con = new Contact(FirstName = 'test', LastName = 'test', Email = 'ISSP_test@test.test', AccountId = acc.Id, VER_Number_2__c = '546');
+        insert con;
+        Test.stopTest();
+
+        keyAccount = iDCardAgencyDetailsController.isKeyAccount_override('159', '546');
+    }
+
+    public static TestMethod void TestRefresh(){
+        InitIDCardAgencyDetailsControllerTest();      
+        
+        nextPage = iDCardAgencyDetailsController.refresh();      
     }
 
 }

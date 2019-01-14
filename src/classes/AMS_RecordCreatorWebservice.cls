@@ -1,7 +1,5 @@
 global without sharing class AMS_RecordCreatorWebservice {
 
-    private Static Map<string, Id> oscarRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c');
-
     private static String NEWBR_PV = 'NEW.BR';
     private static String NEWHO_PV = 'NEW.HO.1.0';
     private static String BANK_ACCOUNT_CHANGES_PV = 'BANK.ACCOUNT.CHANGES';
@@ -11,6 +9,28 @@ global without sharing class AMS_RecordCreatorWebservice {
     private static String NEWTIDS_PV= 'NEW.TIDS.1.0';
     private static String NEWCORRECTION_PV = 'CORRECTION.1.0';
     private static String NEWDGR_PV = 'CERTIFICATION.1.0';
+    public static String NEWVR_PV = 'VR.1.0';
+    public static String NEWVRCA_PV = 'VR.1.0.CA';
+    public static String NEWCER_PV = 'CER.1.0';
+    public static String NEWGSA_PV = 'NEW.GSA.1.0';
+    public static String NEWAHA_PV = 'NEW.AHA.1.0';
+    public static String NEWMSO_PV = 'NEW.MSO.1.0';
+    public static String NEWSA_PV = 'NEW.SA.1.0';
+    public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
+    public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
+    public static String NEWNAE = 'ANG.NEW.AE.1.0';
+    public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
+    public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
+    public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static String IEP_MODEL_A_ACCOUNT_SETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
+    public static String IEP_MODEL_B_ACCOUNT_SETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
+    public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
+    public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
+
+
+    public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP, NEWVR_PV};
+
+    public static String EMPTYACCREDITATIONID = 'EMPTY';
 
     /**
         Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
@@ -22,7 +42,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         String oscarId = null;
 
         try{
-            
+
             List<String> fieldsToValidate = new List<String>();
 
             fieldsToValidate.add(accountId);
@@ -45,21 +65,31 @@ global without sharing class AMS_RecordCreatorWebservice {
                 realAccountId = accountId;
             }
 
-            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
+            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
 
             Id ownerId = null;
 
-            if(!cases.isEmpty()){
+            if(!cases.isEmpty() && !Test.isRunningTest()){
                 ownerId = cases.get(0).OwnerId;
             }
 
-            oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId);
+
+            if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
+
+                String selectedAccount = cases.get(0).Account_Concerned__c;
+                oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId,accountId );
+
+            } else {
+
+                oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId, accountId);
+
+            }
 
             if(String.isBlank(oscarId))
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
                 //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
 
-            if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) ){
+            if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE)){
                 if(!createHierarchy(realAccountId, typeOfProcess)){
                     Database.rollback(sp);
                     throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
@@ -67,15 +97,15 @@ global without sharing class AMS_RecordCreatorWebservice {
                 }
             }
 
-            
+
 
             if(!cases.isEmpty()){
 
                 Case oscarCase = cases.get(0);
-           
+
                 oscarCase.OSCAR__c = oscarId;
 
-                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV))
+                if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV))
                     if(oscarCase.AccountId != realAccountId)
                         oscarCase.AccountId = realAccountId;
 
@@ -104,13 +134,18 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String fetchRealAccountId(String typeOfProcess,String accountId,String caseId){
 
-        if(!(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV)))
+        if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase())))
             return accountId;
 
         List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];
 
-        if(!cases.isEmpty())
-            return cases.get(0).Account_Concerned__c;
+        if(!cases.isEmpty()){
+                System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
+                return cases.get(0).Account_Concerned__c;
+
+        }else{
+            System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess);
+        }
 
         return null;
     }
@@ -144,23 +179,51 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         AMS_Agencies_Hierarchy__c hierarchy = null;
 
-        if(existingRelations.isEmpty()){ // create a new hierarchy
+        if(existingRelations.isEmpty()){ // create a new hierarchy if not SA. If so we need to check something first ...
 
-            System.debug('Did not find any hierarchy, creating new one.');
+            // we need to check if the parent is a BR, in that case, he is not parent in any relationship but a child.
+            if(typeOfProcess.equalsIgnoreCase(NEWSA_PV)){
 
-            hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
-            
-            insert hierarchy;
+               existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c =:parentAccount.Id LIMIT 1];
+
+               if(existingRelations.isEmpty()){
+
+                    System.debug('Did not find any hierarchy, creating new one.');
+
+                    hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+
+                    insert hierarchy;
+
+               }else{
+
+                System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
+
+                hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c);
+
+               }
+
+
+            }else{
+
+                    System.debug('Did not find any hierarchy, creating new one.');
+
+                    hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+
+                    insert hierarchy;
+            }
 
         }else{
+
             System.debug('Already has an hierarchy with id:' + existingRelations.get(0).Id );
 
-            hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c); 
+            hierarchy = new AMS_Agencies_Hierarchy__c(Id = existingRelations.get(0).Hierarchy__c);
         }
 
         System.debug('Creating relationship with parent ' + parentAccount.Id + ' and child ' + account.Id);
 
-        AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = account.Id, Parent_Account__c = parentAccount.Id, Hierarchy__c = hierarchy.Id);
+        Boolean isNewgenRelation = typeOfProcess.equalsIgnoreCase(NEWNAE);
+
+        AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = account.Id, Parent_Account__c = parentAccount.Id, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = isNewgenRelation);
 
         insert relationship;
 
@@ -170,20 +233,47 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     private static String fetchOscarRecordType(String typeOfProcess){
 
-        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV))
-            return oscarRT.get('NEW');
+        if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWGSA_PV) || typeOfProcess.equalsIgnoreCase(NEWAHA_PV) || typeOfProcess.equalsIgnoreCase(NEWMSO_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
         if(typeOfProcess.equalsIgnoreCase(BANK_ACCOUNT_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(DGR_DGA_PV))
-            return oscarRT.get('CHANGE');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         if(typeOfProcess.equalsIgnoreCase(NEWCORRECTION_PV))
-            return oscarRT.get('CORRECTION');
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
 
-        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV))
-            return oscarRT.get('CERTIFICATION');
+        if(typeOfProcess.equalsIgnoreCase(NEWDGR_PV) || typeOfProcess.equalsIgnoreCase(PCI_COMPLIANT))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
 
+        if(typeOfProcess.equalsIgnoreCase(NEWVR_PV) || typeOfProcess.equalsIgnoreCase(NEWVRCA_PV))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWCER_PV))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWNGLITE))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWNSTANDARD))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWNAE))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
+
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
+ 
+         if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
+
+         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
+            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
+            
         return null;
-    
+
     }
 
     private static boolean isSomethingEmpyOrNull(List<String> fieldsToValidate){
@@ -200,19 +290,38 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         return false;
 
-    } 
+    }
 
-    private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner){
+    private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner, Id caseId, Id parentAccount){
 
         AMS_OSCAR__c oscar;
         AMS_Pax_Accreditation_Form__c accreditationObj;
- 
-        if(owner == null)
-            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId );
-        else
-            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, AMS_Online_Accreditation__c = accreditationId, OwnerId = owner );
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
+        if(owner == null)
+            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus);
+        else
+            oscar = new AMS_OSCAR__c(Account__c = accountId, Process__c = processType, RecordTypeId =recordTypeId, Status__c = oscarStatus, OwnerId = owner );
+
+        if(processType != NEWVR_PV && processType != NEWVRCA_PV && processType != NEWCER_PV && processType != NGFOP_PV && processType != OPTINOPTOUT){
+            oscar.AMS_Online_Accreditation__c = accreditationId;
+        }
+
+        if(processType.equalsIgnoreCase(AMS_Utils.NEWAE)){
+            fillNewAEFieldsFromParent(parentAccount,accountId,accreditationId);
+        }
+
+        //Need to check if is a newgen process, cant use the process because voluntary relinquishment shares the same process and record type as AMS
+        Account acc = [SELECT ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c FROM Account WHERE Id =:accountId];
+
+        if(processType.equalsIgnoreCase(NEWVR_PV)){
+            accreditationObj = fetchAccreditationObject(accreditationId);
+            oscar.Form_Effective_Date__c = accreditationObj.Effective_Date_Of_Change__c;
+            oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
+        }
+
+        //AMSU-140
+        //if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP)){
+        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(AMS_Utils.NGFOP) || processType.equalsIgnoreCase(AMS_Utils.COR)){
 
             accreditationObj = fetchAccreditationObject(accreditationId);
 
@@ -220,17 +329,84 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             String typeOfChange = getFormatedTypeOfChange(processType,accreditationObj);
 
-            oscar.Type_of_change__c = typeOfChange;
+            if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV))
+                oscar.Type_of_change__c = typeOfChange;
 
+            if(processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV)){
+
+                oscar.Change_effective_as_of__c = accreditationObj.Effective_Date_Of_Change__c;
+            }
+        }
+
+        Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT};
+        if(processesToUpdateCaseOnOscar.contains(processType)){
+            oscar.Oscar_Communication_Case_Id__c = caseId;
+        }
+
+        // this needs to be fetched from Accreditation Object. For now just use this.
+        if(processType == NEWNGLITE){
+            oscar.Is_using_credit_card__c = true;
+        }
+
+        if(processType.equalsIgnoreCase(NEWCER_PV)){
+            List<Case> caseList = [SELECT Id, QuantityProduct__c FROM Case WHERE Id = :caseId LIMIT 1];
+            if(!caseList.isEmpty()){
+                oscar.Certificate_Quantity__c = Integer.valueOf(caseList.get(0).QuantityProduct__c);
+            }
+
+        }
+
+        if(processType.equalsIgnoreCase(NGFOP_PV)){
+            oscar.STEP38__c = AMS_Utils.NOT_APPLICABLE;
+            oscar.STEP39__c = AMS_Utils.NOT_APPLICABLE;
+        }
+
+        if(processType.equalsIgnoreCase(OPTINOPTOUT)){
+
+            oscar.ANG_FA_Opt_out__c = acc.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
         }
         
         insert oscar;
 
-        if(processType.equalsIgnoreCase(MAJOR_CHANGES_PV)){
+        //AMSU-140
+        //if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
+        if(( processType.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || processType.equalsIgnoreCase(MAJOR_CHANGES_PV) || processType.equalsIgnoreCase(NGFOP_PV) || (processType.equalsIgnoreCase(NEWVR_PV) || processType.equalsIgnoreCase(AMS_Utils.COR) && acc.ANG_IsNewGenAgency__c)) && processType != NEWVRCA_PV && processType != NEWCER_PV){
+
             processOscarProcessDetail(oscar,accreditationObj,accountId);
         }
 
+        //commented as per NEWGEN-3265
+        /*if(processType.equalsIgnoreCase(OPTINOPTOUT)){
+        
+            Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
+            stagingToAccount.put(accreditationId, new Set<Id>{accountId});
+            AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount);
+
+        }*/
+        
         return oscar.id;
+    }
+
+    public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
+
+        //Let's get the parent account
+        Account acct = [Select Id, ANG_Accreditation_Model__c, Location_type__c, Remittance_frequency__c, Parent.Remittance_frequency__c from Account where Id = :parentId];
+
+        AMS_Pax_Accreditation_Form__c accredObject = new AMS_Pax_Accreditation_Form__c(Id =accreditationId);
+
+        if(parentId == accountId && acct.Location_Type__c == 'AE'){
+            accredObject.Remittance_frequency__c = acct.Parent.Remittance_frequency__c;
+        }
+        else
+            accredObject.Remittance_frequency__c = acct.Remittance_frequency__c;
+
+        update accredObject;
+
+        Account acctChild = new Account(Id = accountId);
+        acctChild.ANG_Accreditation_Model__c = acct.ANG_Accreditation_Model__c;
+
+        update acctChild;
+
     }
 
     private static void handleOwners(AMS_Pax_Accreditation_Form__c accreditationObj){
@@ -243,9 +419,9 @@ global without sharing class AMS_RecordCreatorWebservice {
         Map<String,String> previousContactTypes = new Map<String,String>();
 
 
-        previousContactTypes.put('Previous_Company_Owner','Current Company Owner');
-        previousContactTypes.put('Previous_Owner','Current Owner');
-      
+        previousContactTypes.put('Previous_Company_Owner','Current_Company_Owner');
+        previousContactTypes.put('Previous_Owner','Current_Owner');
+
         List<AMS_Accreditation_Contact__c> idsToClone = new List<AMS_Accreditation_Contact__c>();
 
         List<AMS_Accreditation_Contact__c> accContacts = [SELECT Id, RecordType.DeveloperName, Last_name__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id];
@@ -268,34 +444,32 @@ global without sharing class AMS_RecordCreatorWebservice {
        // public sObject clone(Boolean preserveId, Boolean isDeepClone, Boolean preserveReadonlyTimestamps, Boolean preserveAutonumber)
         List<AMS_Accreditation_Contact__c> toInsert = new List<AMS_Accreditation_Contact__c>();
 
-        Map<String,Schema.RecordTypeInfo> rtMapByName = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName();
-
        for(AMS_Accreditation_Contact__c contact: contacts){
 
             AMS_Accreditation_Contact__c contactCloned = contact.clone(false,false,false,false);
 
             String newRecordTypeDevName = previousContactTypes.get(contact.RecordType.DeveloperName);
 
-            ID newRecordType = rtMapByName.get(newRecordTypeDevName).getRecordTypeId();
+            ID newRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', newRecordTypeDevName);
 
             contactCloned.recordTypeId = newRecordType;
 
             toInsert.add(contactCloned);
 
        }
-       
+
        if(!toInsert.isEmpty())
         insert toInsert;
-    
+
     }
 
     private static AMS_Pax_Accreditation_Form__c fetchAccreditationObject(String accreditationId){
 
-        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
+        return [select Id, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c, Scope_of_Change__c, Agency_Codes_Concerned__c, Effective_Date_Of_Change__c, Remittance_frequency__c, SAAM_Case__r.Reason1__c from AMS_Pax_Accreditation_Form__c where Id = :accreditationId LIMIT 1];
 
     }
 
-    private static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
+    public static void processOscarProcessDetail(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationObj, String accountFromOscar){
 
         if(accreditationObj.Scope_of_Change__c == null || accreditationObj.Scope_of_Change__c == 'HO Only')
             return;
@@ -306,21 +480,21 @@ global without sharing class AMS_RecordCreatorWebservice {
         }
 
         if(accreditationObj.Scope_of_Change__c == 'HO - Selected Branches' || accreditationObj.Scope_of_Change__c == 'Selected Branches Only'){
-            
+
             List<String> iataCodes = accreditationObj.Agency_Codes_Concerned__c.split(',');
 
             List<Account> accountsToCreate = [SELECT Id from Account where IATACode__c in :iataCodes];
 
             List<AMS_Process_Detail__c> detailsToInsert = new List<AMS_Process_Detail__c>();
 
-            ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+            ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
             for(Account acct: accountsToCreate){
 
                 if(acct.Id <> accountFromOscar){
 
                     System.debug('Oscar Account Id is ' + oscar.Account__r.Id + ' and account Id is ' + acct.Id);
-                    
+
                     AMS_Process_Detail__c  detail = new AMS_Process_Detail__c(Account__c = acct.Id , OSCAR__c = oscar.Id, RecordTypeId = rtAgencyInvolved);
 
                     detailsToInsert.add(detail);
@@ -351,7 +525,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             typeOfChange = typeOfChange.removeEnd(';');
         else
             return null;
-            
+
         return typeOfChange;
 
     }
@@ -371,8 +545,8 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         // get the Account and creates a change code (Agency_Applied_Change_code__c)
         // Notify the Agent via email using predefined email template
-        
-        Boolean processedTN = false;
+
+        Boolean hasTN = containsTradeName(accountChanges);
 
         List<Account> accountsToProcess = new List<Account>();
         List<AMS_OSCAR_JSON.ChangeCode> changeCodesToProcess = new List<AMS_OSCAR_JSON.ChangeCode>();
@@ -385,32 +559,49 @@ global without sharing class AMS_RecordCreatorWebservice {
             throw new CalloutException('Account Id must be filled.');
 
         Account account = new Account(Id = accountId);
+        Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
 
-        if(account == null)
+        if(a == null)
             throw new CalloutException('Account could not be found.');
 
-        if(containsTradeName(accountChanges)){
+        if(hasTN){
                   
-            changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
+            if(!a.CNS_Agency__c) {
+                changeCodeTN = generateChangeCodeTN(accountChanges, account.Status__c == 'Approved');
 
-            accountsToProcess.add(account);
-            changeCodesToProcess.add(changeCodeTN);
-            oscarsToProcess.add(null);
+                if(a.Agencies_Applied_Change_codes__r.size() > 0){
+                        changeCodeTN.reasonCode = a.Agencies_Applied_Change_codes__r[0].Reason_Code__c;
+                        changeCodeTN.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
+                }
 
-            processedTN = true;
+                //2080607 DT: switched to A
+	            //accountsToProcess.add(account);
+	            accountsToProcess.add(a);
+                changeCodesToProcess.add(changeCodeTN);
+                oscarsToProcess.add(null);
+            }
         }
 
-        if(accountChanges.size() > 1 ||  ( accountChanges.size() == 1 && !processedTN)){
+        if(accountChanges.size() > 1 ||  ( accountChanges.size() == 1 && !hasTN )){
 
             changeCode = generateChangeCode(accountChanges);
-            
-            accountsToProcess.add(account);
+            changeCode.publishedOnEBulletin = a.CNS_Agency__c && a.Location_Class__c == 'C'; //CAD change codes for CNS C agencies is published on the ebulletin
+
+            if(a.Agencies_Applied_Change_codes__r.size() > 0){
+                    changeCode.reasonCode = a.Agencies_Applied_Change_codes__r[0].Reason_Code__c;
+                    changeCode.reasonDesc = a.Agencies_Applied_Change_codes__r[0].Reason_Description__c;
+            }
+
+            //2080607 DT: switched to A
+            //accountsToProcess.add(account);
+            accountsToProcess.add(a);
             changeCodesToProcess.add(changeCode);
             oscarsToProcess.add(null);
         }
 
-        AMS_Utils.createAAChangeCodes(changeCodesToProcess, oscarsToProcess, accountsToProcess, false);
+        List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
 
+        AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
         // for now we shouldn't sent any notification.
         //sendNotification(accountId,accountChanges);
 
@@ -437,7 +628,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             name = usrLst.get(0).FirstName + ' ' + usrLst.get(0).LastName;
             userEmail = usrLst.get(0).Email;
         }
-       
+
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
         EmailTemplate et = [Select Id, Subject, Body, HtmlValue from EmailTemplate where Name = 'AMS Minor Changes Notification'];
@@ -448,7 +639,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         String memoText = createMemoText(accountChanges);
 
         String accountURL = System.URL.getSalesforceBaseURL().toExternalForm() + '/' + acct.Id;
-        
+
         plainBody = plainBody.replace('#USERFULLNAME',name);
         plainBody = plainBody.replace('#ACCOUNTNAME',acct.Name);
         plainBody = plainBody.replace('#ACCOUNTCHANGES', memoText);
@@ -463,7 +654,7 @@ global without sharing class AMS_RecordCreatorWebservice {
         mail.setHtmlBody(htmlBody);
         mail.setPlainTextBody(plainBody);
         mail.subject = ' IATA - AMS Minor Changes Notification';
-        
+
         // set users
         List<String> emails = new List<String>{userEmail};
         mail.setToAddresses(emails);
@@ -478,12 +669,10 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static AMS_OSCAR_JSON.ChangeCode generateChangeCode(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
 
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
+        AMS_ChangeCodes__c cad = AMS_ChangeCodes__c.getInstance('CADM');
 
-        toReturn.name = 'CAD';
-        toReturn.reasonCode = 'Change data';
-        toReturn.memoText = 'Minor Changes';//createMemoText(accountChanges);
-        toReturn.reasonDesc  = 'Accredited-Meets Criteria.';
-        toReturn.status  = null;
+        toReturn.name = cad.Change_Code__c;
+        toReturn.memoText = cad.Bulletin_Memo_Text__c;
 
         return toReturn;
     }
@@ -491,14 +680,10 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static AMS_OSCAR_JSON.ChangeCode generateChangeCodeTN(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges,Boolean isToChangeStatus){
 
         AMS_OSCAR_JSON.ChangeCode toReturn = new AMS_OSCAR_JSON.ChangeCode();
+        AMS_ChangeCodes__c cta = AMS_ChangeCodes__c.getInstance('CTA');
 
-        toReturn.name = 'CTA';
-        toReturn.reasonCode = 'Change data';
-        toReturn.memoText = 'Change of trade name';//createMemoText(accountChanges);
-        toReturn.reasonDesc  = 'Accredited-Meets Criteria.';
-        
-        if(isToChangeStatus)
-            toReturn.status  = '8'; // Accredited
+        toReturn.name = cta.Change_Code__c;
+        toReturn.memoText = cta.Bulletin_Memo_Text__c;//createMemoText(accountChanges);
 
         return toReturn;
     }
@@ -524,6 +709,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     }
 
 
+
     global class AccountChanges {
 
         webservice String accountFieldAPI{get;set;}
@@ -539,534 +725,168 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     }
 
+    /**
+        Creates an Oscar (AMS_OSCAR__c) given an Account Id, an Accreditation Id and the Type of Process
+    **/
+    webservice static String createAccreditationForSA(String caseId){
 
-
-
-    /*AMSFTS
-    webservice static String createAgency(String countryName, String accountId, String recordType, String typeOfLocation, String companyType, String legalName, String tradingName, String licenseNumber, List<String> GDS, String language, String site, String numberVAT, Boolean atAirport, String cargoIATACode){
-        AMS_Agency__c newAgency = null;
-
-        //|| accountId == null || licenseNumber == null || tradingName == null 
-        if(countryName == null || recordType == null || typeOfLocation == null || companyType == null || legalName == null || GDS == null || language == null || numberVAT == null)
-            return 'Arguments cannot be null.';
-        
-        if(atAirport == null)
-            atAirport = false;
-
-        String locClass = '';
-
-        if(recordType == 'Travel Agent - Branch' || recordType == 'Travel Agent - HO'){
-            recordType = 'PASSENGER';
-            locClass = 'P';
-        }else if(recordType == 'Cargo Agent - Branch' || recordType == 'Cargo Agent - HO'){
-            recordType = 'CARGO';
-            locClass = 'C';
-        }else{
-            return 'Invalid record type of agency.';
-        }
-
-        List<IATA_ISO_Country__c> country = [select id from IATA_ISO_Country__c where ISO_Code__c =: countryName];
-        if(country.size() == 0)
-            return 'No Country was found.';
-
-        if(companyType == 'Association')
-            companyType = 'A';
-        else if(companyType == 'Corporation')
-            companyType = 'C';
-        else if(companyType == 'State Owned Enterprise') //Government Owned Enterprise
-            companyType = 'E';
-        else if(companyType == 'Other' || companyType == 'Joint Venture' || companyType == 'Limited Company')
-            companyType = 'O';
-        else if(companyType == 'Partnership')
-            companyType = 'P';
-        else if(companyType == 'Limited Partnership')
-            companyType = 'R';
-        else if(companyType == 'Sole Proprietorship')
-            companyType = 'S';
-        else if(companyType == 'Trust Company')
-            companyType = 'T';
-        else if(companyType == 'Co-operative')
-            companyType = 'V';
-        else
-            return 'Company Type does not exist.';
-
-        Map<string, Id> agencyRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-
-        String listOfGDS = String.join(GDS, ';');
-
-        List<AMS_Agency__c> cargoAgency = [select id from AMS_Agency__c where IATACode__c =: cargoIATACode];
-        String cargoAgencyId = cargoAgency.size()==0?null:cargoAgency.get(0).id;
-        
-        String theAccountID = null;
-        List<Account> acc = new List<Account>();
-        if(accountId != null){
-        acc = [select id, Location_Type__c, Preferred_Language__c from Account where id =: accountId];
-            if(acc.size() == 0)
-                return 'No account was found.';
-            else{
-                theAccountID = acc.get(0).id;
-                acc.get(0).Location_Type__c = typeOfLocation;
-                acc.get(0).Preferred_Language__c = language;
-            }
-        }
-
-        newAgency = new AMS_Agency__c(recordTypeId=agencyRT.get(recordType),
-                                        Company_Type__c=companyType,
-                                        Name=legalName,
-                                        Legal_Name_1__c=legalName,
-                                        Trading_Name_1__c=tradingName,
-                                        License_Number__c=licenseNumber,
-                                        GDS__c=listOfGDS,
-                                        Agency_Site__c=site,
-                                        Tax_Reference_Number__c=numberVAT,
-                                        In_a_Airport__c=atAirport,
-                                        Cargo_Agency__c=cargoAgencyId,
-                                        Account__c=theAccountID,
-                                        Country__c=country.get(0).id,
-                                        Site_Type__c=typeOfLocation,
-                                        Location_Class__c=locClass);
+        // Create a savepoint
+        Savepoint sp = Database.setSavepoint();
+        String oscarId = null;
 
         try{
-            insert newAgency;
-            if(acc.size() == 0)
-                update acc;
-        }catch(Exception e){
-            return 'DML exception: ' + e;
+
+            Id oscarRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
+
+            Case caseObj = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
+
+            Id ownerId = null;
+
+            if(!Test.isRunningTest())
+                ownerId = caseObj.OwnerId;
+
+            //Create a new Account for the SA, with the values reported in the below table
+
+            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,IATA_ISO_Shipping_Country__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c,Top_Parent__c from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
+
+            Account newSAAccount = createSAAccount(parentAccount);
+
+            String typeOfProcess = 'NEW.SA.1.0';
+
+            AMS_Pax_Accreditation_Form__c accreditationObj = createAccreditationObjectForSA(newSAAccount,caseObj);
+
+            AMS_MigrationToolHelper.createAccreditationContacts(accreditationObj, parentAccount.Id, typeOfProcess);
+
+            oscarId = createOscar(newSAAccount.Id,  typeOfProcess, oscarRecordType ,  'Open',  accreditationObj.ID, ownerId, null, null);
+
+            if(String.isBlank(oscarId))
+                throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
+                //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
+
+            if(!createHierarchy(newSAAccount.Id, typeOfProcess)){
+                Database.rollback(sp);
+                throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
+            }
+
+
+            ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+
+            caseObj.OSCAR__c = oscarId;
+            caseObj.AccountId = newSAAccount.Id;
+            caseObj.RecordTypeId = rtCommCase;
+            caseObj.Account_Concerned__c = null;
+
+            String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(caseObj.Account.Location_Type__c,caseObj.Account.Category__c);
+
+            if(typeOfCustomer != null)
+                caseObj.Type_of_Customer__c = typeOfCustomer;
+
+            update caseObj;
+
+
+        }
+        catch(Exception e){
+            System.debug('DML exception: ' + e);
+            Database.rollback(sp);
+            throw e;
+            //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
         }
 
-        return newAgency.Id;
-    }*/
+        return oscarId;
 
-    /*
-        #AMSFTS This method helps to create an AMS_OSCAR__c object, based on its Account Id 
-    
-    webservice static String createLifecycleRequest(String agencyId){
-        AMS_OSCAR__c newOscar = null;
-
-        if(agencyId == null)
-            return 'Arguments cannot be null.';
-
-        List<Account> agency = [select id from Account where id = :agencyId];
-        if(agency.size() == 0)
-            return 'No agency was found.';
-
-        Map<string, Id> oscarRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c');
-
-        //String queueid = [select Id from Group where Name = 'Accreditation - Lifecycle Request' and Type = 'Queue'].id;
-
-        newOscar = new AMS_OSCAR__c(recordTypeId = oscarRT.get('NEW'),Account__c=agencyId,Status__c='Open');//, OwnerId=queueid
-
-        try{
-            insert newOscar;
-        }catch(Exception e){
-            return 'DML exception.';
-        }
-        
-        return newOscar.id;
-    }
-    */
-
-    /*AMSFTS
-    webservice static String createEmployee(String agencyId, String fName, String lName, String phone, String fax, String email, String address, String mobile, String position, Date dateJoined, String contactId){
-        AMS_Person__c newPerson = null;
-        AMS_Employee__c newEmployee = null;
-        AMS_Address__c newAddress = null;
-        AMS_Agent_Locations_crossobject__c newRelation = null;
-        List<Contact> theContact = null;
-
-        if(agencyId == null || fName == null || lName == null)
-            return 'Agency, First Name and Last Name cannot be null.';
-
-        List<AMS_Agency__c> agency = [select id, Primary_address__r.Country__c from AMS_Agency__c where id = :agencyId];
-        if(agency.size() == 0)
-            return 'No Agency was found.';
-
-        if(contactId == null){
-            List<AMS_Person__c> person = [select id from AMS_Person__c where Lastname__c =:lName AND First_Name__c =:fName AND Phone__c =: phone AND Email__c =: email];
-            if(person.size() == 0){
-                newPerson = new AMS_Person__c(Name=fName + ' ' + lName,
-                                                First_Name__c=fName,
-                                                Lastname__c=lName,
-                                                Email__c=email,
-                                                Phone__c=phone);
-
-                try{
-                    insert newPerson;
-                }catch(Exception e){
-                    return 'DML exception: ' + e;
-                }
-
-                newAddress = new AMS_Address__c(Address_1__c=address,
-                                                Email__c=email,
-                                                Fax__c=fax,
-                                                Mobile__c=mobile,
-                                                Telephone__c=phone,
-                                                Address_Type__c = 'Personal',
-                                                Country__c=agency.get(0).Primary_address__r.Country__c);
-
-                try{
-                    insert newAddress;
-                }catch(Exception e){
-                    return 'DML exception: ' + e;
-                }
-
-                newRelation = new AMS_Agent_Locations_crossobject__c(Address__c=newAddress.id,Agent__c=newPerson.id);
-
-                try{
-                    insert newRelation;
-                }catch(Exception e){
-                    return 'DML exception: ' + e;
-                }
-            }else{
-                newPerson = person.get(0);
-            }
-
-            List<AMS_Employee__c> existingEmployee = [select id from AMS_Employee__c where Agency__c = :agencyId AND Person__c =:newPerson.id];
-
-            if(existingEmployee.size() > 0)
-                return 'Employee already existing in this agency';
+        // Rollback to the previous null value
 
 
-            newEmployee = new AMS_Employee__c(Name=fName + ' ' + lName,
-                                              Agency__c=agencyId,
-                                                Person__c=newPerson.id,
-                                                Position__c=position,
-                                                Registration_Date__c=dateJoined);
-
-            try{
-                insert newEmployee;
-            }catch(Exception e){
-                return 'DML exception: ' + e;
-            }
-            
-            newEmployee = [select id, Contact__c from AMS_Employee__c where id =:newEmployee.id];
-            theContact = [select id, MobilePhone, Phone, Fax from Contact where id =: newEmployee.Contact__c];
-            theContact.get(0).Phone = phone;
-            theContact.get(0).MobilePhone = mobile;
-            theContact.get(0).Fax = fax;
-            
-            try{
-                update theContact;
-            }catch(Exception e){
-                return 'DML exception: ' + e;
-            }
-        }else{//new requirement on the portal side; the records can be updated
-            theContact = [select id, MobilePhone, Phone, Fax, Person__c from Contact where id =: contactId];
-            if(theContact.size() == 0)
-                return 'No Contact was found.';
-
-            if(theContact.get(0).Person__c == null)
-                return 'The contact does not have a Person associated.';
-
-            theContact.get(0).Phone = phone;
-            theContact.get(0).MobilePhone = mobile;
-            theContact.get(0).Fax = fax;
-
-            newPerson = [select id, Name, First_Name__c, Lastname__c, Email__c, Phone__c from AMS_Person__c where id =: theContact.get(0).Person__c];
-            newPerson.Name=fName + ' ' + lName;
-            newPerson.First_Name__c=fName;
-            newPerson.Lastname__c=lName;
-            newPerson.Email__c=email;
-            newPerson.Phone__c=phone;
-
-            newAddress = [select id,Address_1__c,Email__c,Fax__c,Mobile__c,Telephone__c from AMS_Address__c where id IN (select Address__c from AMS_Agent_Locations_crossobject__c where Agent__c =: theContact.get(0).Person__c)];
-            newAddress.Address_1__c=address;
-            newAddress.Email__c=email;
-            newAddress.Fax__c=fax;
-            newAddress.Mobile__c=mobile;
-            newAddress.Telephone__c=phone;
-            
-            try{
-                newEmployee = [select id, Name, Position__c, Registration_Date__c from AMS_Employee__c where Agency__c =:agencyId and Person__c=:theContact.get(0).Person__c];
-            }catch(Exception e){
-                return 'The agency as no employees with the provided contact.';
-            }
-            newEmployee.Name = fName + ' ' + lName;
-            newEmployee.Position__c=position;
-            newEmployee.Registration_Date__c=dateJoined;
-
-            try{
-                update theContact;
-                update newPerson;
-                update newAddress;
-                update newEmployee;
-            }catch(Exception e){
-                return 'DML exception: ' + e;
-            }
-        }
-        
-        return theContact.get(0).id;
-    }*/
-
-    /*
-        #AMSFTS This method helps to create an AMS_Address__c object, based on its Account Id (agencyId)
-   
-    webservice static String createAddress(String address, String phone, String fax, String email, String website, String countryName, String agencyId){
-        AMS_Address__c newAddress = null;
-
-        if(agencyId == null || address == null || countryName == null)
-            return 'Agency, address and Country cannot be null.';
-
-        List<Account> agency = [select id from Account where id = :agencyId];
-        if(agency.size() == 0)
-            return 'No Agency was found.';
-
-        List<IATA_ISO_Country__c> country = [select id from IATA_ISO_Country__c where ISO_Code__c =: countryName];
-        if(country.size() == 0)
-            return 'No Country was found.';
-
-        newAddress = new AMS_Address__c(Address_1__c=address,
-                                        Account__c=agencyId,
-                                        Country__c=country.get(0).id,
-                                        Telephone__c=phone,
-                                        Fax__c=fax,
-                                        Email__c=email,
-                                        Website__c=website);
-
-        try{
-            insert newAddress;
-        }catch(Exception e){
-            return 'DML exception.';
-        }
-
-        return newAddress.id;
-    }
- **/
-    /*
-        #AMSFTS This method helps to create an Account Owner 
-    
-    webservice static String createOwnerCompany(String legalName, String iataCode, String agencyId, Decimal finInterest, String ownershipId){
-        AMS_Owner__c newOwner = null;
-        AMS_Agency_Ownership__c newOwnership = null;
-        List<AMS_Agency_Ownership__c> theOwnership = null;
-        List<Account> account = new List<Account>();
-        Account acc = null;
-
-        if(legalName == null || agencyId == null) // || iataCode == null
-            return 'Account Name and Agency cannot be null.'; 
-
-        List<Account> agency = [select id from Account where id = :agencyId];
-        if(agency.size() == 0)
-            return 'No Agency was found.';
-        
-        if(ownershipId == null){
-            
-            if(iataCode != null){
-                account = [select id, Name from Account where Name = :legalName AND IATACode__c = :iataCode];
-            }
-            
-            if(account.size() == 0){
-                acc = new Account(Name = legalName, IATACode__c = iataCode);
-                try{
-                    insert acc;
-                }catch(Exception e){
-                    return 'DML Exception.';
-                }
-            }else
-                acc = account.get(0);
-
-            List<AMS_Owner__c> owner = [select id from AMS_Owner__c where Name =: acc.Name and Account__c =: acc.Id];
-            if(owner.size() == 0){
-                newOwner = new AMS_Owner__c(Name=acc.Name,Account__c=acc.Id);
-                try{
-                    insert newOwner;
-                }catch(Exception e){
-                    return 'DML exception.';
-                }
-            }else{
-                newOwner = owner.get(0);
-            }
-
-            newOwnership = new AMS_Agency_Ownership__c(Agency__c=agencyId,Percentage__c=finInterest,AMS_Agency_Owner__c=newOwner.id);
-
-            try{
-                insert newOwnership;
-            }catch(Exception e){
-                return 'DML exception.';
-            }
-        }else{
-            theOwnership = [select id,Percentage__c,AMS_Agency_Owner__c,Agency__c from AMS_Agency_Ownership__c where id =:ownershipId];
-
-            if(theOwnership.size() == 0)
-                return 'No Ownership was found.';
-
-            newOwnership = theOwnership.get(0);
-            newOwnership.Percentage__c=finInterest;
-            newOwnership.Agency__c=agencyId;
-            //TODO update the rest of the related records
-            if(iataCode != null){
-                account = [select id, Name from Account where Name = :legalName AND IATACode__c = :iataCode];
-            }
-            
-            if(account.size() == 0){
-                acc = new Account(Name = legalName, IATACode__c = iataCode);
-                try{
-                    insert acc;
-                }catch(Exception e){
-                    return 'DML Exception.';
-                }
-            }else
-                acc = account.get(0);
-
-            List<AMS_Owner__c> owner = [select id,Name,Account__c from AMS_Owner__c where id =: newOwnership.AMS_Agency_Owner__c];
-            newOwner = owner.get(0);
-            newOwner.Account__c=acc.id;
-            newOwner.Name=legalName;
-
-            try{
-                update newOwnership;
-                update newOwner;
-            }catch(Exception e){
-                return 'DML exception: ' + e;
-            }
-        }
-
-        return newOwnership.id;
-    }
-**/
-
-/* #AMSFTS 
-    webservice static String createOwnerPerson(String agencyId, String fName, String lName, String phone, String fax, String email, String address, String mobile, String position, Date dateJoined, Decimal finInterest, String ownershipId){
-        AMS_Person__c newPerson = null;
-        AMS_Address__c newAddress = null;
-        AMS_Agent_Locations_crossobject__c newRelation = null;
-        AMS_Owner__c newOwner = null;
-        AMS_Agency_Ownership__c newOwnership = null;
-        List<AMS_Agency_Ownership__c> theOwnership = null;
-
-        if(agencyId == null || fName == null || lName == null)
-            return 'Agency, First Name and Last Name cannot be null.';
-
-        List<AMS_Agency__c> agency = [select id from AMS_Agency__c where id = :agencyId];
-        if(agency.size() == 0)
-            return 'No Agency was found.';
-
-        if(ownershipId == null){
-            List<AMS_Person__c> person = [select id from AMS_Person__c where Lastname__c =:lName AND First_Name__c =:fName AND Phone__c =: phone AND Email__c =: email];
-            if(person.size() == 0){
-                newPerson = new AMS_Person__c(Name=fName + ' ' + lName,
-                                                Lastname__c=lName,
-                                                First_Name__c=fName,
-                                                Email__c=email,
-                                                Phone__c=phone);
-
-                try{
-                    insert newPerson;
-                }catch(Exception e){
-                    return 'DML exception.';
-                }
-
-                newAddress = new AMS_Address__c(Address_1__c=address,
-                                                Email__c=email,
-                                                Fax__c=fax,
-                                                Mobile__c=mobile,
-                                                Telephone__c=phone,
-                                                Address_Type__c = 'Personal');
-
-                try{
-                    insert newAddress;
-                }catch(Exception e){
-                    return 'DML exception.';
-                }
-
-                newRelation = new AMS_Agent_Locations_crossobject__c(Address__c=newAddress.id,Agent__c=newPerson.id);
-
-                try{
-                    insert newRelation;
-                }catch(Exception e){
-                    return 'DML exception.';
-                }
-            }else{
-                newPerson = person.get(0);
-            }
-
-            newOwner = new AMS_Owner__c(Name=lName,Person__c=newPerson.id);
-
-            try{
-                insert newOwner;
-            }catch(Exception e){
-                return 'DML exception.';
-            }
-
-            newOwnership = new AMS_Agency_Ownership__c(Agency__c=agencyId,Percentage__c=finInterest,AMS_Agency_Owner__c=newOwner.id);
-
-            try{
-                insert newOwnership;
-            }catch(Exception e){
-                return 'DML exception.';
-            }
-        }else{
-            theOwnership = [select id,Percentage__c,AMS_Agency_Owner__c from AMS_Agency_Ownership__c where id =:ownershipId];
-
-            if(theOwnership.size() == 0)
-                return 'No Ownership was found.';
-
-            newOwnership = theOwnership.get(0);
-            newOwnership.Percentage__c=finInterest;
-
-            newOwner = [select id, Name, Person__c from AMS_Owner__c where id =: newOwnership.AMS_Agency_Owner__c];
-            newOwner.Name=lName;
-
-            newPerson = [select id,Name, First_Name__c,Email__c,Phone__c,Lastname__c from AMS_Person__c where id =: newOwner.Person__c];
-            newPerson.Name = fName + ' ' + lName;
-            newPerson.First_Name__c=fName;
-            newPerson.Lastname__c=lName;
-            newPerson.Email__c=email;
-            newPerson.Phone__c=phone;
-
-            newAddress = [select id,Address_1__c,Email__c,Fax__c,Mobile__c,Telephone__c from AMS_Address__c where id IN (select Address__c from AMS_Agent_Locations_crossobject__c where Agent__c =: newPerson.id)];
-            newAddress.Address_1__c=address;
-            newAddress.Email__c=email;
-            newAddress.Fax__c=fax;
-            newAddress.Mobile__c=mobile;
-            newAddress.Telephone__c=phone;
-
-            try{
-                update newOwnership;
-                update newPerson;
-                update newAddress;
-                update newOwner;
-            }catch(Exception e){
-                return 'DML exception: ' + e;
-            }
-        }
-
-        return newOwnership.id;
     }
 
-    */
+    public static AMS_Pax_Accreditation_Form__c createAccreditationObjectForSA(Account accountSA, Case caseObj){
 
-    /*webservice static Boolean attachDocToLifecycle(String attachId, String requestId){
-        List<Attachment> attachmentsToInsert = new List<Attachment>();
-        List<Attachment> attachmentsToDelete = new List<Attachment>();
-        Attachment tempAtt;
-        Boolean result = false;
-        if(attachId == null || requestId == null)
-            return result;
+        AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
 
-        List<Attachment> attachment = [Select SystemModstamp, ParentId, OwnerId, Name, LastModifiedDate, LastModifiedById, 
-                                        IsPrivate, IsDeleted, Id, Description, CreatedDate, CreatedById, ContentType, 
-                                        BodyLength, Body From Attachment where Id=:attachId];
-        if(attachment.size() == 0)
-            return result;
+        accreditationObj.SAAM_Case__c = caseObj.Id;
+        accreditationObj.Account_Name__c = accountSA.Name;
+        accreditationObj.Short_Name__c = accountSA.Short_Name__c;
+        accreditationObj.Abbreviated_name__c = accountSA.Abbreviated_name__c;
+        accreditationObj.Trade_Name__c = accountSA.TradeName__c;
+        accreditationObj.ISSP_AMS_Legal_Status__c = AMS_MigrationToolHelper.decode(accountSA.Company_Type__c);
 
-        List<AMS_SALM__c> request = [select id from AMS_SALM__c where id =: requestId];
-        if(request.size() == 0)
-            return result;
+        accreditationObj.Shipping_City__c = accountSA.ShippingCity;
+        accreditationObj.Shipping_Country__c = accountSA.ShippingCountry;
+        accreditationObj.Shipping_ISO_Country__c = accountSA.IATA_ISO_Shipping_Country__c;
+        accreditationObj.Shipping_ISO_State__c = accountSA.IATA_ISO_Shipping_State__c;
+        accreditationObj.Shipping_Postal_Code__c = accountSA.ShippingPostalCode;
+        accreditationObj.Shipping_State__c = accountSA.ShippingState;
+        accreditationObj.Shipping_Street__c = accountSA.ShippingStreet;
 
-        tempAtt=attachment.get(0).clone(false,false);
-        tempAtt.ParentId = requestId;
-        attachmentstoInsert.add(tempAtt);
-        attachmentsToDelete.add(attachment.get(0));
+        accreditationObj.Branch_Office_Country__c = accountSA.IATA_ISO_Country__c;
+        accreditationObj.ISO_Country__c = accountSA.IATA_ISO_Country__c;
+        accreditationObj.IATA_ISO_State__c = accountSA.Iso_State__c;
+        accreditationObj.Billing_State__c = accountSA.BillingState;
+        accreditationObj.Abbreviated_Address__c = accountSA.Abbreviated_Address__c;
+        accreditationObj.Website__c = accountSA.Website;
+        accreditationObj.Branch_Office_Phone__c = accountSA.Phone;
+        accreditationObj.Branch_Office_Email__c = accountSA.Email__c;
+        accreditationObj.Branch_Office_FAX__c = accountSA.Fax;
+        accreditationObj.Location_Type__c = 'SA';
+        accreditationObj.Location_Class__c = 'P';
+        accreditationObj.Branch_Office_Street_name_number__c = accountSA.BillingStreet;
+        accreditationObj.Branch_Office_Postal_code__c = accountSA.BillingPostalCode;
+        accreditationObj.Branch_Office_City__c = accountSA.BillingCity;
+        accreditationObj.Operation_Type__c = accountSA.Sector__c.replace(' ','_');
 
-        try{
-            insert attachmentstoInsert;
-            delete attachmentsToDelete;
-        }catch(Exception e){
-            return result;
+
+        insert accreditationObj;
+
+        return accreditationObj;
+    }
+
+
+    public static Account createSAAccount(Account parentAccount){
+
+        Account acctSA = new Account();
+
+        acctSA.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        acctSA.Name = parentAccount.Name;
+        acctSA.Short_Name__c = parentAccount.Short_Name__c;
+        acctSA.Abbreviated_name__c = parentAccount.Abbreviated_name__c;
+        acctSA.TradeName__c = parentAccount.TradeName__c;
+        acctSA.Company_Type__c = parentAccount.Company_Type__c;
+
+        acctSA.ShippingCity = parentAccount.ShippingCity;
+        acctSA.ShippingCountry = parentAccount.ShippingCountry;
+        acctSA.ShippingPostalCode = parentAccount.ShippingPostalCode;
+        acctSA.ShippingState = parentAccount.ShippingState;
+        acctSA.ShippingStreet = parentAccount.ShippingStreet;
+
+        acctSA.BillingCity = parentAccount.BillingCity;
+        acctSA.BillingCountry = parentAccount.BillingCountry;
+        acctSA.BillingPostalCode = parentAccount.BillingPostalCode;
+        acctSA.BillingState = parentAccount.BillingState;
+        acctSA.BillingStreet = parentAccount.BillingStreet;
+
+        acctSA.IATA_ISO_Country__c = parentAccount.IATA_ISO_Country__c;
+        acctSA.Iso_State__c = parentAccount.Iso_State__c;
+        acctSA.Abbreviated_address__c = parentAccount.Abbreviated_address__c;
+        acctSA.Website = parentAccount.Website;
+        acctSA.Phone = parentAccount.Phone;
+        acctSA.Fax = parentAccount.Fax;
+        acctSA.Email__c = parentAccount.Email__c;
+        acctSA.Location_Type__c ='SA';
+        acctSA.Location_Class__c = 'P';
+        acctSA.Sector__c = 'Travel Agent';
+        acctSA.Category__c = 'Non-IATA Travel Agent';
+        acctSA.ParentId = parentAccount.Id;
+        acctSA.REASON_FOR_CREATION__C = 'Created by customer';
+
+        if (parentAccount.Top_Parent__c == null) {
+            acctSA.Top_Parent__c = parentAccount.Id;
+        } else {
+                acctSA.Top_Parent__c = parentAccount.Top_Parent__c;
         }
 
-        result = true;
-        return result;
-    }*/
+        insert acctSA;
+
+        return acctSA;
+
+    }
 }

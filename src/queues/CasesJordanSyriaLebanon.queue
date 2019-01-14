@@ -3,6 +3,23 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>csnotificationsame@iata.org</email>
     <name>Cases - Jordan, Syria &amp; Lebanon</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATALevant</publicGroup>
+            <publicGroup>IDFS_Africa_ME_Business_Delivery</publicGroup>
+            <publicGroup>IDFSAfricaMECSFirstLevel</publicGroup>
+            <publicGroup>IDFSAfricaMECSSecondLevel</publicGroup>
+            <publicGroup>IDFSAfricaMEHUB</publicGroup>
+            <publicGroup>IDFSAfricaMEServiceCentre</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <users>
+            <user>chellyk@iata.org</user>
+            <user>agouzoulm@iata.org</user>
+            <user>martinsp@iata.org</user>
+            <user>alostar@iata.org.inactive</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

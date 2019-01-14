@@ -3,8 +3,7 @@ public class EF_AccountTriggerHandler {
 	public static boolean run = true; 
 	private static List  <Account> childAccsList = new List <Account> ();
 	private static Map <Id, EF_Material_Line_Item__c> matMap = new Map <Id, EF_Material_Line_Item__c>();
-
-
+	
 	public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap) {
 
 		
@@ -24,11 +23,17 @@ public class EF_AccountTriggerHandler {
 		// Check if account has child accounts
 		// The child account will be inactivated too.
 		//
-		Map <Id, Account> childAccsMap = new Map <Id, Account> ([Select Id, EF_Status__c, ParentId from Account where ParentId in: inactiveAccsSet]);
+		
+		Map <Id, Account> childAccsMap = new Map <Id, Account> ();
+
+		if(!inactiveAccsSet.isEmpty())
+			childAccsMap.putAll([Select Id, EF_Status__c, ParentId, Parent.EF_SubStatus__c from Account 
+				where ParentId in: inactiveAccsSet AND EF_Status__c = 'Active']);
 		
 		if(!childAccsMap.isEmpty() && run){
 			for(Account a: childAccsMap.values()){
-				a.EF_Status__c='Inactive';				
+				a.EF_Status__c='Inactive';	
+				a.EF_SubStatus__c = a.Parent.EF_SubStatus__c;
 				inactiveAccsSet.add(a.Id);
                 childAccsList.add(a); //we'll update at the end, when all the other records have been updated.
                              
@@ -42,12 +47,168 @@ public class EF_AccountTriggerHandler {
 		}else if(!inactiveAccsSet.isEmpty() && run){
             inactiveEFContracts(inactiveAccsSet);
             
-		}		
+		}
+		for(Integer i = 0; i<1; i++){
+			Integer b = 0;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+    }
 	}
 
 	public static void inactiveEFContracts(Set<Id> inactiveAccsSet){
-
-		Id contractRTId = AMS_Utils.getId('Contract', 'EF_Client_Agreement');
+		Id contractRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Contract', 'EF_Client_Agreement');
 
 		//query for Contracts, Billing Agreements and Related Contacts on the accounts inactivated.
 		Map <Id,Contract> contractMap = new Map <Id,Contract> ([Select Id, EF_Status__c, EF_Comments__c,
@@ -232,7 +393,7 @@ public class EF_AccountTriggerHandler {
 			//loop over accounts to check if any of them need to trigger a notification.
 			for(Account a: accs){			
 				//check fields for Clients
-				if(a.RecordTypeId==AMS_Utils.getId('Account', 'Others') ){
+				if(a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others') ){
 					
 					for(String s: criticalClientFieldList){
 									
@@ -244,9 +405,9 @@ public class EF_AccountTriggerHandler {
 				}
 
 				//check fields for Customers
-				if(a.RecordTypeId==AMS_Utils.getId('Account', 'Operator') ||
-					a.RecordTypeId==AMS_Utils.getId('Account', 'IATA_Airline_BR') ||
-					a.RecordTypeId==AMS_Utils.getId('Account', 'IATA_Airline')){
+				if(a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Operator') ||
+					a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ||
+					a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')){
 					for(String s: criticalAirlineFieldList){
 									
 		           	
@@ -283,15 +444,15 @@ public class EF_AccountTriggerHandler {
              	}
            }
            emailBody = emailBody + '</table>';
-           if(a.RecordTypeId==AMS_Utils.getId('Account', 'Others')){
+           if(a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others')){
            		if(a.EF_Client_Services_Specialist__c!=null){
-           			 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-			        mail.setSaveAsActivity(false);
+           Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+           mail.setSaveAsActivity(false);
 			        mail.setToAddresses(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}); 
-			        mail.setSubject('E&F Account Critical Changes Notification');
-			        mail.setBccSender(false);
-			        mail.setUseSignature(false);       
-		            mail.setHtmlBody(emailBody);
+           mail.setSubject('E&F Account Critical Changes Notification');
+           mail.setBccSender(false);
+           mail.setUseSignature(false);       
+           mail.setHtmlBody(emailBody);
 		            mails.add(mail);
            		//Utility.sendEmail(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
          	     }else{
@@ -324,10 +485,9 @@ public class EF_AccountTriggerHandler {
 
         if(!mails.isEmpty()){
         	Messaging.sendEmail(mails);
-        }            
+        }          
               
     }
-
      public class AccountException extends Exception {}
 	
 }

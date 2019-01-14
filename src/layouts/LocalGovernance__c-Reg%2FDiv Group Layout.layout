@@ -54,7 +54,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Group_Owner_Text__c</field>
+                <field>Group_Owner__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Group_Administrator__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -115,6 +119,10 @@
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Managed_in_SSW__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -162,7 +170,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000JSZb</masterLabel>
+        <masterLabel>00hw000000hpq0M</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

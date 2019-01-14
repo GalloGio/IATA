@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
@@ -115,24 +112,29 @@
         <fullName>Type__c</fullName>
         <externalId>false</externalId>
         <label>Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Check For Errors Without Making Changes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Roll Back All Changes If There Is An Error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change Everything Possible And Ignore Errors</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Check For Errors Without Making Changes</fullName>
+                    <default>false</default>
+                    <label>Check For Errors Without Making Changes</label>
+                </value>
+                <value>
+                    <fullName>Roll Back All Changes If There Is An Error</fullName>
+                    <default>false</default>
+                    <label>Roll Back All Changes If There Is An Error</label>
+                </value>
+                <value>
+                    <fullName>Change Everything Possible And Ignore Errors</fullName>
+                    <default>false</default>
+                    <label>Change Everything Possible And Ignore Errors</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Version__c</fullName>
@@ -296,4 +298,5 @@
     <pluralLabel>SnapShot Pushes</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

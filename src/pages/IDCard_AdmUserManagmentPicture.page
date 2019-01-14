@@ -1,6 +1,6 @@
 <apex:page title="IATA/IATAN ID Card Online Platform"
     sidebar="false" showHeader="false" 
-    controller="IDCard_AdmUserManagmentPictureCtrl" cache="true" expires="600">
+    controller="IDCard_AdmUserManagmentPictureCtrl" cache="false"> 
     <html xmlns="http://www.w3.org/1999/xhtml">
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" />
     
@@ -479,8 +479,8 @@
                 }
                 var popupStatus = 0;
             
-                $("#GeographyinTravelPlanning,#DestinationGeography,#ServingtheTravelTourismCustomer,#IntroductiontoBSPLink,#Leserviceauclientvoyageur,#SellingInternationalRailTransportation").click(function() {
-                    
+                    $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN,#AssistTravelersSpecialNeeds-EN,#Notionsessent\\'lentarifetbillet-FR,#Adv\\.SkillsJourneyPriceTicket-EN,#ServingtheTravelCustomer-EN,#SocialMediaforTravelIndustry-EN,#Acc\\.Fin\\.Mgmtforagencies-EN").click(function() {
+    
                     //Aligning our box in the middle
                     var windowWidth = document.documentElement.clientWidth;
                     var windowHeight = document.documentElement.clientHeight;
@@ -488,24 +488,64 @@
                     var popupWidth = $("#popupLogin").width();
                         
                     // change the popupLogin content
-                    if ($(this).is("#GeographyinTravelPlanning")) {
-                        $("#popup_Content").html("{!geographyinTravelPlanning_Description}");
-                    }
-                    if ($(this).is("#DestinationGeography")) {
+                    if ($(this).is("#DestinationGeography-EN")) {
                         $("#popup_Content").html("{!destinationGeography_Description}");
                     }
-                    if ($(this).is("#ServingtheTravelTourismCustomer")) {
-                        $("#popup_Content").html("{!servingtheTravelTourismCustomer_Description}");
+                    if ($(this).is("#GeographyinTravelPlanning-EN")) {
+                        $("#popup_Content").html("{!geographyinTravelPlanning_Description}");
                     }
-                    if ($(this).is("#IntroductiontoBSPLink")) {
+                    if ($(this).is("#InformesyprocedimientosdefacturacionBSP-ES")) {
+                        $("#popup_Content").html("{!losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description}");
+                    }
+                    if ($(this).is("#IntroalBSPlink-ES")) {
+                        $("#popup_Content").html("{!introduccionAlBSPlink_Description}");
+                    }
+                    if ($(this).is("#IntroalSistemayLenguajeBSP-ES")) {
+                        $("#popup_Content").html("{!introduccionAlSistemaBSPyLenguajeBSP_Description}");
+                    }
+                    if ($(this).is("#IntrotoBSPLink-EN")) {
                         $("#popup_Content").html("{!introductiontoBSPLink_Description}");
                     }
-                    if ($(this).is("#Leserviceauclientvoyageur")) {
+                    if ($(this).is("#Leserviceauclientvoyageur-FR")) {
                         $("#popup_Content").html("{!leserviceauclientvoyageur_Description}");
-                    }
-                    if ($(this).is("#SellingInternationalRailTransportation")) {
+                    }  
+                    if ($(this).is("#SellingIntlRailTransportation-EN")) {
                         $("#popup_Content").html("{!sellingInternationalRailTransportation_Description}");
-                    }                       
+                    }                     
+                    if ($(this).is("#ServingtheTandTCustomer-EN")) {
+                        $("#popup_Content").html("{!servingtheTravelTourismCustomer_Description}");
+                    }    
+                    if ($(this).is("#SocialMediaforTandTIndustry-EN")) {
+                        $("#popup_Content").html("{!socialMediaForTheTravelIndustry_Description}");     
+                    }
+                    if ($(this).is("#FundamentalsJourneyPricing-EN")) {
+                        $("#popup_Content").html("{!fundamentalsJourneyPricing_Description}");
+                    }
+                    if ($(this).is("#Repricing\\,ExchangeandReissue-EN")) {
+                        $("#popup_Content").html("{!repricingExchangeReissue_Description}"); 
+                    } 
+                    if ($(this).is("#TravelAgencyFees-EN")) {
+                        $("#popup_Content").html("{!travelAgencyFees_Description}");
+                    }
+                    //RN-INC419676
+                    if ($(this).is("#AssistTravelersSpecialNeeds-EN")) {
+                        $("#popup_Content").html("{!assisttravelersspecialneeds_Description}");
+                    }       
+                    if ($(this).is("#Notionsessent\\'lentarifetbillet-FR")) {
+                        $("#popup_Content").html("{!notionsessentlentarifetbillet_Description}");
+                    } 
+                    if ($(this).is("#Adv\\.SkillsJourneyPriceTicket-EN")) {
+                        $("#popup_Content").html("{!advskillsjourneypriceticket_Description}");
+                    }
+                    if ($(this).is("#ServingtheTravelCustomer-EN")) {
+                        $("#popup_Content").html("{!servingthetravelcustomer_Description}");
+                    }
+                    if ($(this).is("#SocialMediaforTravelIndustry-EN")) {
+                        $("#popup_Content").html("{!socialmediafortravelindustry_Description}");
+                    }
+                    if ($(this).is("#Acc\\.Fin\\.Mgmtforagencies-EN")) {
+                        $("#popup_Content").html("{!accfinmgmtforagencies_Description}");
+                    }                         
                      
                     //centering
                     $("#popupLogin").css({
@@ -555,8 +595,7 @@
 
 
 <body onload="calculateDisplayedName();">
-
-    
+	<c:IDCardToolsComponent />    
     <div id="page_wrapper">
         <apex:form forceSSL="true" id="idcardForm" enctype="multipart/form-data">
             <apex:actionFunction name="ShowHideIFrames" action="{!ShowHideIFrames}"></apex:actionFunction>

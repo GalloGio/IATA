@@ -1,5 +1,5 @@
 <apex:page controller="ISSP_Ctrl_Country_Requirements" standardstylesheets="false" showheader="false" sidebar="false" applybodytag="false" applyhtmltag="false" action="{!checkAccess}">
-    <html>
+  <html>
     <c:ISSP_Header ></c:ISSP_Header>
 
     <script>
@@ -22,188 +22,262 @@
       });
     </script>
 
-    <body>
-			<div class="container">
-			    <c:ISSP_CustomNavigation />
+    <body>      
+      <div class="container">
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+			  <apex:form id="mainFrm">	
+          <apex:pagemessages id="errors" />
 
-			    <apex:form id="mainFrm">
-			        <apex:pagemessages id="errors" />
-			        <div class="row">
-			            <div class="col-md-12">
-			                <h4>
-			                    {!$Label.ISSP_Resources} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
-			                    {!$Label.ISSP_Country_Requirements} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
-			                    <small>{!$Label.ISSP_PageDescription_Country_Requirements}</small>
-			                </h4>
-			            </div>
-			        </div><!-- end row-->
+          <apex:outputpanel layout="block" rendered="{! not newLayout}">        		          
+            <div class="row">
+              <div class="col-md-12">
+                <h4>
+                  {!$Label.ISSP_Resources} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                  {!$Label.ISSP_Country_Requirements} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                  <small>{!$Label.ISSP_PageDescription_Country_Requirements}</small>
+                </h4>
+              </div>
+            </div><!-- end row-->
 
 			        <!-- results-->
-			<div class="col-md-12" id="results1">
+			      <div class="col-md-12" id="results1">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">{!$Label.LAQ_Search}</h3>
+                </div>
+                <div class="panel-body" id="body-results">
+                  <div class="row">
+                    <br /><br /><br />
+                    <div class="col-sm-4" id="filtcol">
+                      <!--------------------------------- ACTION FUNCTION SECTION ---------------------------------->
+                      <apex:actionfunction name="searchServer" action="{!runSearch}" rerender="results,debug,errors,Tags" status="loadStatusSpinner" oncomplete="hideTags();">
+                          <apex:param name="title" value="" />
+                      </apex:actionfunction>
+                      <!---------------------------------------------------------------------------------------------->
 
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{!$Label.LAQ_Search}</h3>
-                    </div>
-                    <div class="panel-body" id="body-results">
-                        <div class="row">
-                            <br /><br /><br />
-                            <div class="col-sm-4" id="filtcol">
+                      <div id="filtercriteria" class="" role="tabpanel">
+                        <div class="panel-body" id="body-filter">
+                          <apex:pageblock mode="edit" id="Filter">
+                            <div class="row">
 
-                                <!--------------------------------- ACTION FUNCTION SECTION ---------------------------------->
-                                <apex:actionfunction name="searchServer" action="{!runSearch}" rerender="results,debug,errors,Tags" status="loadStatusSpinner" oncomplete="hideTags();">
-                                    <apex:param name="title" value="" />
-                                </apex:actionfunction>
-                                <!---------------------------------------------------------------------------------------------->
+                              <div class="col-sm-12">
+                                {!$Label.ISSP_Filter_by_Type_Of_Participation}
+                                <apex:selectlist styleclass="form-control" value="{!typeFilter}" required="false" size="1">
+	                                <apex:selectoptions value="{!participationTypes}" />
+                                  <apex:actionSupport event="onchange" rerender="results,debug,errors,Tags" action="{!runSearch}" status="loadStatusSpinner" oncomplete="hideTags();" />
+                                </apex:selectlist>
+                              </div>
+                              <div class="col-sm-12">
+                                {!$Label.ISSP_Filter_by_Country}
+                                <apex:outputpanel layout="block" >
+                                  <apex:selectlist styleclass="form-control" value="{!countryFilter}" required="false" size="1">
+                                    <apex:selectoptions value="{!countries}" />
+                                    <apex:actionSupport event="onchange" rerender="results,debug,errors,Tags" action="{!runSearch}" status="loadStatusSpinner" oncomplete="hideTags();" />
+                                  </apex:selectlist>
+                                </apex:outputPanel>
+                              </div>
+                            </div><!-- end row -->
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <apex:commandbutton id="ss" action="{!ClearFilters}" 
+                                  value="{!$Label.PKB2_Reset_Search}" 
+                                  styleclass="btn btn-block btn_iata_cancel" 
+                                  rerender="criteria,Filter,results,debug,errors,Tags,tagsheader" 
+                                  status="loadStatusSpinner" oncomplete="hideTags();"/>
 
-                                <div id="filtercriteria" class="" role="tabpanel">
-                                    <div class="panel-body" id="body-filter">
+                              </div>
+                            </div>
+                            <div id="contactUs">
+                              Can't find what you need?<br /><a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1">
+                              Contact Us
+                              </a>
+                              <br /><br />
+                              Located in the United States?<br />
+                              Please Contact Us <a href="http://www.iatan.org/Pages/default.aspx">here</a>
+                              <p />
+                            </div>
+                          </apex:pageblock>
+                        </div>
+                      </div>
+                    </div><!-- end side menu-->
 
-                                        <apex:pageblock mode="edit" id="Filter">
-                                            <div class="row">
-
-                                                <div class="col-sm-12">
-                                                    {!$Label.ISSP_Filter_by_Type_Of_Participation}
-	                                                  <apex:selectlist styleclass="form-control" value="{!typeFilter}" required="false" size="1">
-	                                                     <apex:selectoptions value="{!participationTypes}" />
-                                                       <apex:actionSupport event="onchange" rerender="results,debug,errors,Tags" action="{!runSearch}" status="loadStatusSpinner" oncomplete="hideTags();" />
-	                                                  </apex:selectlist>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    {!$Label.ISSP_Filter_by_Country}
-                                                    <apex:outputpanel layout="block" >
-                                                        <apex:selectlist styleclass="form-control" value="{!countryFilter}" required="false" size="1">
-                                                          <apex:selectoptions value="{!countries}" />
-                                                          <apex:actionSupport event="onchange" rerender="results,debug,errors,Tags" action="{!runSearch}" status="loadStatusSpinner" oncomplete="hideTags();" />
-                                                        </apex:selectlist>
-                                                    </apex:outputPanel>
-                                                </div>
-                                            </div><!-- end row -->
-                                            <div class="row">
-                                                <div class="col-sm-12">
-<apex:commandbutton id="ss" action="{!ClearFilters}" value="{!$Label.PKB2_Reset_Search}" styleclass="btn btn-block btn_iata_cancel" rerender="criteria,Filter,results,debug,errors,Tags,tagsheader" status="loadStatusSpinner" oncomplete="hideTags();" />
-
-                                                </div>
-                                            </div>
-                                            <div id="contactUs">
-                                                Can't find what you need?<br /><a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1">
-                                                    Contact Us
-                                                </a>
-                                                <br /><br />
-                                                Located in the United States?<br />
-                                                Please Contact Us <a href="http://www.iatan.org/Pages/default.aspx">here</a>
-                                                <p />
-
-                                            </div>
-                                        </apex:pageblock>
-                                    </div>
-                                </div>
-                            </div><!-- end side menu-->
-
-                            <apex:outputpanel id="opp_results">
-															<div class="col-sm-8" id="resulttable">
-																<div class="panel panel-default">
-																	<div class="panel-heading" role="tab" id="hh">
-																		<h4 class="panel-title">
-																			<a href="#" id="hidefilter">{!$Label.PKB2_Filter_Options}</a>
-																		</h4>
-																	</div>
-                                  <apex:outputPanel id="results" >
-                                    <apex:outputPanel rendered="{!countryRequirement!=null}" >
-                                      <table class="table table-striped">
-                                        <tbody>
-                                          <tr><td scope="row"><strong>Local representation mandatory:</strong></td><td>{!countryRequirement.Local_Representation_Mandatory__c}</td><td><apex:outputField value="{!countryRequirement.Local_Representation_Mandatory_com__c}"/></td></tr>
-                                          <tr><td scope="row"><strong>Local accountant mandatory:</strong></td><td>{!countryRequirement.Local_accountant_mandatory__c}</td><td><apex:outputField value="{!countryRequirement.Local_accountant_mandatory_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Local VAT (or equivalent such as GST, RUC, RUT, NIT) mandatory:</strong></td><td>{!countryRequirement.Local_VAT_Mandatory__c}</td><td><apex:outputField value="{!countryRequirement.Local_VAT_Mandatory_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Foreign VAT accepted:</strong></td><td>{!countryRequirement.Foreign_VAT_accepted__c}</td><td><apex:outputField value="{!countryRequirement.Foreign_VAT_accepted_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Airline can have a special VAT status</strong></td><td>{!countryRequirement.Special_VAT_status_allowed__c}</td><td><apex:outputField value="{!countryRequirement.Special_VAT_status_allowed_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Airline needs Local Representation for Fiscal requirements:</strong></td><td>{!countryRequirement.Local_Representation_for_Fiscal_requirem__c}</td><td><apex:outputField value="{!countryRequirement.Local_Representation_for_Fiscal_req_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Currency of the Settlement must be the same as the bank account in case airline selects settlement mode:</strong></td><td>{!countryRequirement.Currency_of_the_Settlement__c}</td><td><apex:outputField value="{!countryRequirement.Currency_of_the_Settlement_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Operation has dual currencies:</strong></td><td>{!countryRequirement.Dual_currencies__c}</td><td><apex:outputField value="{!countryRequirement.Dual_currencies_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Airline can (regardless of local representation or not) open a local bank account in the settlement currency:</strong></td>
-                                            <td>{!countryRequirement.bank_account_in_of_the_settlement__c}</td>
-                                            <td><apex:outputField value="{!countryRequirement.bank_account_in_of_the_settlement_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Legally mandatory for airlines to give commission to agencies:</strong></td>
-                                            <td>{!countryRequirement.Mandatory_to_give_commission_to_agencies__c}</td>
-                                            <td><apex:outputField value="{!countryRequirement.Mandatory_to_give_commission_to_agen_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Government requirements are included in the joining package:</strong></td>
-                                            <td>{!countryRequirement.Government_requirements__c}</td>
-                                            <td><apex:outputField value="{!countryRequirement.Government_requirements_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Which type of address is accepted, inserted into ISS systems (BSPLink, CASSLink etc..):</strong></td>
-                                            <td>{!countryRequirement.Type_of_address_accepted__c}</td>
-                                            <td><apex:outputField value="{!countryRequirement.Type_of_address_accepted_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>VAT no. is always inserted into ISS systems (BSPLink, Casslink etc..:</strong></td>
-                                            <td>{!countryRequirement.VAT_no_always_inserted_into_ISS_systems__c}</td>
-                                            <td><apex:outputField value="{!countryRequirement.VAT_no_always_ins_into_ISS_systems_com__c}" /></td></tr>
-                                          <tr><td scope="row"><strong>Comment regarding Bank Account Changes for: {!countryRequirement.Line_of_business__c} {!countryRequirement.Country__r.Name}</strong></td>
-                                               <td>-</td>
-                                               <td><apex:outputField value="{!countryRequirement.Bank_Account_Change_Comment__c}"/></td>
-                                          </tr>
-                                          <tr><td scope="row"><strong>General Comment - {!countryRequirement.Line_of_business__c} {!countryRequirement.Country__r.Name}</strong></td>
-                                          <td>-</td>
-                                          <td><apex:outputField value="{!countryRequirement.Comments__c}"/></td></tr>
-
-                                        </tbody>
-                                      </table>
-                                    </apex:outputPanel>
-                                  </apex:outputPanel>
-
-                                </div>
-                              </div> <!--end row -->
-														</apex:outputpanel>
-                        </div><!-- end body tags-->
-                    </div><!-- end panel-->
-                </div><!-- end results-->
+                    <apex:outputpanel id="opp_results">
+											<div class="col-sm-8" id="resulttable">
+												<div class="panel panel-default">
+													<div class="panel-heading" role="tab" id="hh">
+														<h4 class="panel-title">
+															<a href="#" id="hidefilter">{!$Label.PKB2_Filter_Options}</a>
+														</h4>
+													</div>
+                          <apex:outputPanel id="results" >
+                            <apex:outputPanel rendered="{!countryRequirement!=null}" >
+                              <table class="table table-striped">
+                                <tbody>
+                                  <tr><td scope="row"><strong>Local representation mandatory:</strong></td><td>{!countryRequirement.Local_Representation_Mandatory__c}</td><td><apex:outputField value="{!countryRequirement.Local_Representation_Mandatory_com__c}"/></td></tr>
+                                  <tr><td scope="row"><strong>Local accountant mandatory:</strong></td><td>{!countryRequirement.Local_accountant_mandatory__c}</td><td><apex:outputField value="{!countryRequirement.Local_accountant_mandatory_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Local VAT (or equivalent such as GST, RUC, RUT, NIT) mandatory:</strong></td><td>{!countryRequirement.Local_VAT_Mandatory__c}</td><td><apex:outputField value="{!countryRequirement.Local_VAT_Mandatory_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Foreign VAT accepted:</strong></td><td>{!countryRequirement.Foreign_VAT_accepted__c}</td><td><apex:outputField value="{!countryRequirement.Foreign_VAT_accepted_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Airline can have a special VAT status</strong></td><td>{!countryRequirement.Special_VAT_status_allowed__c}</td><td><apex:outputField value="{!countryRequirement.Special_VAT_status_allowed_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Airline needs Local Representation for Fiscal requirements:</strong></td><td>{!countryRequirement.Local_Representation_for_Fiscal_requirem__c}</td><td><apex:outputField value="{!countryRequirement.Local_Representation_for_Fiscal_req_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Currency of the Settlement must be the same as the bank account in case airline selects settlement mode:</strong></td><td>{!countryRequirement.Currency_of_the_Settlement__c}</td><td><apex:outputField value="{!countryRequirement.Currency_of_the_Settlement_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Operation has dual currencies:</strong></td><td>{!countryRequirement.Dual_currencies__c}</td><td><apex:outputField value="{!countryRequirement.Dual_currencies_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Airline can (regardless of local representation or not) open a local bank account in the settlement currency:</strong></td>
+                                      <td>{!countryRequirement.bank_account_in_of_the_settlement__c}</td>
+                                      <td><apex:outputField value="{!countryRequirement.bank_account_in_of_the_settlement_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Legally mandatory for airlines to give commission to agencies:</strong></td>
+                                      <td>{!countryRequirement.Mandatory_to_give_commission_to_agencies__c}</td>
+                                      <td><apex:outputField value="{!countryRequirement.Mandatory_to_give_commission_to_agen_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Government requirements are included in the joining package:</strong></td>
+                                      <td>{!countryRequirement.Government_requirements__c}</td>
+                                      <td><apex:outputField value="{!countryRequirement.Government_requirements_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Which type of address is accepted, inserted into ISS systems (BSPLink, CASSLink etc..):</strong></td>
+                                      <td>{!countryRequirement.Type_of_address_accepted__c}</td>
+                                      <td><apex:outputField value="{!countryRequirement.Type_of_address_accepted_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>VAT no. is always inserted into ISS systems (BSPLink, Casslink etc..:</strong></td>
+                                      <td>{!countryRequirement.VAT_no_always_inserted_into_ISS_systems__c}</td>
+                                      <td><apex:outputField value="{!countryRequirement.VAT_no_always_ins_into_ISS_systems_com__c}" /></td></tr>
+                                  <tr><td scope="row"><strong>Comment regarding Bank Account Changes for: {!countryRequirement.Line_of_business__c} {!countryRequirement.Country__r.Name}</strong></td>
+                                      <td>-</td>
+                                      <td><apex:outputField value="{!countryRequirement.Bank_Account_Change_Comment__c}"/></td>
+                                  </tr>
+                                  <tr><td scope="row"><strong>General Comment - {!countryRequirement.Line_of_business__c} {!countryRequirement.Country__r.Name}</strong></td>
+                                      <td>-</td>
+                                      <td><apex:outputField value="{!countryRequirement.Comments__c}"/></td></tr>
+                                </tbody>
+                              </table>
+                            </apex:outputPanel>
+                          </apex:outputPanel>
+                        </div>
+                      </div> <!--end row -->
+  									</apex:outputpanel>
+                  </div><!-- end body tags-->
+                </div><!-- end panel-->
+              </div><!-- end results-->
             </div><!-- end row-->
 
 
-                        <!------------------------------------------------------------------------------------>
-                        <!--------------------------- Lock Screen while Processing  ---------------------------->
-                        <!------------------------------------------------------------------------------------>
-                        <apex:actionstatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner" />
-                        <style>
-                                .overlay {
-                                        display: none;
-                                        height: 100%;
-                                        left: 0;
-                                        position: fixed;
-                                        top: 0;
-                                        opacity: 0.3;
-                                        -moz-opacity: 0.3;
-                                        width: 100%;
-                                        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-                                        filter: alpha(opacity=30);
-                                        background: #000;
-                                        -khtml-opacity: 0.3;
-                                        z-index: 1000;
-                                }
+            <!------------------------------------------------------------------------------------>
+            <!--------------------------- Lock Screen while Processing  ---------------------------->
+            <!------------------------------------------------------------------------------------>
+            <apex:actionstatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner" />
+            <style>
+              .overlay {
+                      display: none;
+                      height: 100%;
+                      left: 0;
+                      position: fixed;
+                      top: 0;
+                      opacity: 0.3;
+                      -moz-opacity: 0.3;
+                      width: 100%;
+                      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                      filter: alpha(opacity=30);
+                      background: #000;
+                      -khtml-opacity: 0.3;
+                      z-index: 1000;
+              }
 
-                                .loader {
-                                        background: url('/img/loading32.gif') scroll no-repeat 0 0;
-                                        width: 32px;
-                                        height: 32px;
-                                        position: absolute;
-                                        left: 50%;
-                                }
-                        </style>
+              .loader {
+                      background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                      width: 32px;
+                      height: 32px;
+                      position: absolute;
+                      left: 50%;
 
-                        <div id="load_scrl" class="loadingBox loader" style="display:none"> </div>
-                        <div class="loadingBox overlay"> </div>
+              ul + li + span {
+                font-weight: normal !important;
+                color: black;
+              }
+            </style>
 
-                        <script type="text/javascript">
-                            function startLoading(){
-                                    $('#load_scrl').css('top', $(document).scrollTop() + 200);
-                                    $('.loadingBox').show();
-                            }
-                            function endLoading(){
-                                     $('.loadingBox').hide();
-                            }
-                        </script>
+            <div id="load_scrl" class="loadingBox loader" style="display:none"> </div>
+            <div class="loadingBox overlay"> </div>
+
+            <script type="text/javascript">
+                function startLoading(){
+                        $('#load_scrl').css('top', $(document).scrollTop() + 200);
+                        $('.loadingBox').show();
+                }
+                function endLoading(){
+                         $('.loadingBox').hide();
+                }
+            </script>
                         <!--------------------------------------------------------------------------------- -->
-          </apex:form>
-                    <c:ISSP_CustomFooter />
-            </div><!-- end container-->
-    </body>
 
-</html>
+          </apex:outputpanel> <!-- OLD LAYOUT -->
+          <apex:outputpanel layout="block" rendered="{!newLayout}">
+            <div class="col-md-12" id="results2">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3>{!$Label.ANG_ISSP_CountryRequirementsTitle}</h3>
+                </div>              
+                <div class="panel-body" id="body-results">
+                  <div class="row">                  
+                    <div class="col-md-12" style="display: {!IF(returnpage == true,'none','')}">                
+                      <h4>
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                        <a href="/ISSP_ANG_ProductComparison">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
+                      </h4>
+                    </div>
+                    <div class="col-md-12" style="display: {!IF(returnpage != true,'none','')}">                
+                      <h4>
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                        <a href="/ISSP_AMSCases">{!$Label.ANG_ISSP_CountryRequirementsGoBackToOnlineAcc}</a>
+                      </h4>
+                    </div>                           
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <apex:outputLabel value="{!$Label.ANG_ISSP_CountryConcerned} : "/>
+                    </div>
+                    <div class="col-md-2">
+                      <apex:outputText value="{!countryName}"/>
+                    </div>              
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType} : "/>
+                    </div>
+                    <div class="col-md-2">
+                      <apex:selectList title="something" id="operationType" size="1" value="{!accreditationType}" onchange="operationTypeChanged()">
+                        <apex:selectOptions value="{!accreditationTypes}"/>
+                      </apex:selectList>
+                    </div>              
+                  </div>
+                  <apex:actionFunction action="{!refreshRequirementsList}" name="operationTypeChanged" rerender="countryRequirementsListId">
+                  </apex:actionFunction>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <apex:outputPanel id="countryRequirementsListId">
+                        <apex:pageBlock >
+                          <apex:dataTable value="{!countryRequirementsList}" var="reqs" style="background-color:white" styleClass="table table-condensed"> 
+                            <apex:column headerClass="info">
+                              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </apex:column>
+                            <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA cargo Agent'),agentType)),
+                                                                         $Label.ISSP_AMS_NoC_Request_for_Change)}">
+                              <apex:outputText >
+                                <strong>{!reqs.Name}</strong><br/>
+                                <div style="font-weight: normal !important">
+                                  <span>
+                                    <apex:outputField value="{!reqs.Requirement_text__c}"/>
+                                  </span>
+                                </div>
+                              </apex:outputText>
+                            </apex:column>
+                          </apex:dataTable>
+                        </apex:pageBlock>
+                      </apex:outputPanel>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>            
+          </apex:outputpanel>
+        </apex:form>
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
+      </div><!-- end container-->    
+    </body>
+  </html>
 </apex:page>

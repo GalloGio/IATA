@@ -22,6 +22,8 @@ public class GenericAttachmentListControllerTest {
 		System.assert(controller.isAdminUser);
 		System.assert(controller.getTransferAttachmentsUrl() != null);
 		controller.cancelPopupAttach();
+		controller.getCanAttachFilesToCase();
+		controller.goToAttachmentPage();
 		Test.stopTest();
 		
 	}
@@ -33,6 +35,7 @@ public class GenericAttachmentListControllerTest {
 	}
 	
 	static testMethod void testDeleteAttachment() {
+
 		Case cse = new Case();
 		insert cse;
 		
@@ -125,5 +128,148 @@ public class GenericAttachmentListControllerTest {
 		controller.cancelPopupAttach();
 		Test.stopTest();
 	}
+
+	static testMethod void testGetAllExpiringLink1() {
+		Case cse = new Case();
+		insert cse;
+
+		Attachment attachment = WrapperAttachTest.createAttachment(cse);
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		WrapperAttach att = new WrapperAttach(attachment, null);
+
+		Test.startTest();
+		GenericAttachmentListController.getAllExpiringLink(cse.Id);
+		Test.stopTest();
+	}
+
+	static testMethod void testGetAllExpiringLink2() {
+		Case cse = new Case();
+		insert cse;
+
+		Attachment attachment = WrapperAttachTest.createAttachment(cse);
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = true;
+		controller.id = cse.Id;
+		WrapperAttach att = new WrapperAttach(attachment, null);
+
+		Test.startTest();
+		GenericAttachmentListController.getAllExpiringLink(cse.Id);
+		Test.stopTest();
+	}
+
+	static testMethod void testIsOscarParent() {
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		insert cse;
+		
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		controller.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller.getParentIsOscar();
+		Test.stopTest();
+	}
+
+	static testMethod void testIsOscarParent2() {
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		insert cse;
+
+		GenericAttachmentListController controller2 = new GenericAttachmentListController();
+		controller2.isForPortal = false;
+		controller2.id = cse.Id;
+		controller2.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller2.getParentIsOscar();
+		Test.stopTest();
+	}
+
+	static testMethod void testGetCanAttachFilesToCase() {
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		cse.Status = 'Draft';
+		cse.Reason1__c = 'CLO - Closure';
+		insert cse;
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		controller.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller.getCanAttachFilesToCase();
+		Test.stopTest();
+	}
+
+	static testMethod void testGetCanAttachFilesToCase2() {
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		cse.Status = 'Draft';
+		insert cse;
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		controller.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller.getCanAttachFilesToCase();
+		Test.stopTest();
+	}
+
+	static testMethod void testgoToAttachmentPage() {
+		ID rtOSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		cse.Status = 'In Progress';
+		cse.Reason1__c = 'CLO - Closure';
+		insert cse;
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		controller.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller.goToAttachmentPage();
+		Test.stopTest();
+	}
+
 
 }

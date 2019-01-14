@@ -12,5 +12,13 @@
         <members>*</members>
         <name>Layout</name>
     </types>
-    <version>37.0</version>
+    <types>
+        <members>*</members>
+        <name>ApprovalProcess</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomMetadata</name>
+    </types>
+    <version>43.0</version>
 </Package>

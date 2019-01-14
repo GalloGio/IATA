@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Facility custom object to accompany the cargo form, ISSP_AMS_Cargo_Form</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
@@ -74,20 +71,24 @@
         <description>A sprinkler system</description>
         <externalId>false</externalId>
         <label>A sprinkler system</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Accessibility_to_vehicles__c</fullName>
@@ -105,40 +106,48 @@
         <description>* Alarm system</description>
         <externalId>false</externalId>
         <label>* Alarm system</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>An_alarm_system__c</fullName>
         <description>An alarm system</description>
         <externalId>false</externalId>
         <label>An alarm system</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Any_functions_involved_in_preperations__c</fullName>
@@ -154,20 +163,24 @@
         <description>* Are consignments made ready for carriage at this service point?</description>
         <externalId>false</externalId>
         <label>Are consignments made ready</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Area_used_for_Air_freight__c</fullName>
@@ -185,40 +198,48 @@
         <description>* Automated export accounting</description>
         <externalId>false</externalId>
         <label>* Automated export accounting</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Automated_export_documentation__c</fullName>
         <description>* Automated export documentation</description>
         <externalId>false</externalId>
         <label>* Automated export documentation</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Ceiling_height__c</fullName>
@@ -374,80 +395,96 @@
         <description>Is the office open to the general public ?</description>
         <externalId>false</externalId>
         <label>Is the office open to the general public</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Is_the_office_warehouse_leased__c</fullName>
         <description>Is the office / warehouse leased?</description>
         <externalId>false</externalId>
         <label>Is the office / warehouse leased?</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Is_the_warehouse_sub_contracted__c</fullName>
         <description>Is the warehouse sub-contracted?</description>
         <externalId>false</externalId>
         <label>Is the warehouse sub-contracted?</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Is_warehouse_open_to_general_public__c</fullName>
         <description>Is the warehouse open to the general public?</description>
         <externalId>false</externalId>
         <label>Is warehouse open to general public?</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>No</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>List_airports_serviced_by_this_facility__c</fullName>
@@ -613,28 +650,34 @@
         <fullName>Type_of_Premises__c</fullName>
         <externalId>false</externalId>
         <label>Type of Premises</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Office to be Investigated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Additional Office</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Warehouse to be Investigated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Additional Warehouse</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Office to be Investigated</fullName>
+                    <default>false</default>
+                    <label>Office to be Investigated</label>
+                </value>
+                <value>
+                    <fullName>Additional Office</fullName>
+                    <default>false</default>
+                    <label>Additional Office</label>
+                </value>
+                <value>
+                    <fullName>Warehouse to be Investigated</fullName>
+                    <default>false</default>
+                    <label>Warehouse to be Investigated</label>
+                </value>
+                <value>
+                    <fullName>Additional Warehouse</fullName>
+                    <default>false</default>
+                    <label>Additional Warehouse</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Website__c</fullName>
@@ -907,4 +950,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

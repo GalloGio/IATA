@@ -5,7 +5,7 @@
            standardStylesheets="true"
            applyBodyTag="false"
            applyHtmlTag="false"
-           >
+           action="{!securityCheck}">
     
     <html> 
         <c:ISSP_Header ></c:ISSP_Header>
@@ -66,13 +66,9 @@
                        
                        $(document).ready(function() {
                            $(".cass-airlines-select").select2({width : "resolve"});
-                       });
                        
-                       $(document).ready(function() {
                            $(".country-select").select2({width : "resolve"});
-                       });
                        
-                       $(document).ready(function() {
                            $(".join-type-select").select2({width : "15%"});
                        });
                        
@@ -114,7 +110,7 @@
                                 
                                 <apex:form styleClass="form-horizontal">
                                     <apex:actionFunction action="{!null}" name="refreshCountryList" reRender="countryList" oncomplete="$('.country-select').select2({width : 'resolve'});">
-                                        <apex:param value="" assignTo="{!strLoB}" name="strLoB"/>
+                                        <apex:param value="" assignTo="{!strOT}" name="strOT"/>
                                     </apex:actionFunction>
                                     <apex:actionFunction action="{!null}" name="refreshCASSAirlineList" reRender="cassAirlineList" oncomplete="$('.cass-airlines-select').select2({width : 'resolve'});">
                                         <apex:param value="" assignTo="{!gssaCountryISOCode}" name="gssaCountryISOCode"/>
@@ -132,7 +128,7 @@
                                         <div class="form-group">
                                             <label for="jointype" class="col-sm-2 control-label">* Type of Participation</label>
                                             <div class="col-sm-10">
-                                                <apex:selectList id="jointype" Label="Type of Participation" styleClass="join-type-select" value="{!strOperationType}" onchange="if(this.value.indexOf('BSP') > -1) {refreshCountryList('BSP');} else {refreshCountryList('CASS');}" required="true" size="1">
+                                                <apex:selectList id="jointype" Label="Type of Participation" styleClass="join-type-select" value="{!strOperationType}" onchange="refreshCountryList(this.value);" required="true" size="1">
                                                     <apex:selectOptions value="{!APTypes}"/>
                                                 </apex:selectList>
                                             </div>
@@ -210,8 +206,8 @@
                             </center>
                         </apex:form>
                     </apex:pageBlock>
-				----------------->
-			
+        ----------------->
+      
                     <!------------------------------------------->
                     <!--STEP 2 Display the country requirements-->
                     <!------------------------------------------->
@@ -293,8 +289,8 @@
                             <div class="col-md-12 row">Your case number is <a href="/ISSP_Case?caseId={!newCase.Id}" target="_blank">{!newCase.CaseNumber}</a>.</div>
                             <br/><br/>
                             <apex:outputPanel rendered="{!(strAreaType=='Airline Joining')}">
-                            	<img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-                            	You can also <a href="/ISSP_PDF_Form{!IF(isCASS,'_CASS','')}?caseId={!newCase.Id}&step=3" target="_new">download a PDF version</a> of the application you just submitted.
+                                <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+                                You can also <a href="/ISSP_PDF_Form{!IF(isCASS,'_CASS','')}?caseId={!newCase.Id}&step=3" target="_new">download a PDF version</a> of the application you just submitted.
                             </apex:outputPanel>
                             <br/><br/>
                             

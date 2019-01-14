@@ -32,6 +32,34 @@
         <template>SARA/Automatic_Security_Renewal_Process</template>
     </alerts>
     <fieldUpdates>
+        <fullName>Change_two_month_flag_to_false</fullName>
+        <field>Two_months_passed_expiry__c</field>
+        <literalValue>0</literalValue>
+        <name>Change two month flag to false</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>First_call_letter_required_update</fullName>
+        <field>First_Call_Letter_required1__c</field>
+        <formula>Text(Financial_Institution__r.First_Call_Letter_required__c)</formula>
+        <name>First call letter required update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Flag_FS_with_first_call_letter_required</fullName>
+        <description>Flag FS with first call letter required two months after expiry</description>
+        <field>Two_months_passed_expiry__c</field>
+        <literalValue>1</literalValue>
+        <name>Flag FS with first call letter required</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>SARA_Financial_Security_Status_Close_t</fullName>
         <field>Security_Status__c</field>
         <literalValue>Close to Expiry Date</literalValue>
@@ -69,6 +97,47 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <rules>
+        <fullName>2 months expired</fullName>
+        <active>true</active>
+        <criteriaItems>
+            <field>Financial_Security__c.Security_Status__c</field>
+            <operation>equals</operation>
+            <value>Expired</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Financial_Security__c.Two_months_passed_expiry__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Financial_Security__c.First_Call_Letter_required1__c</field>
+            <operation>equals</operation>
+            <value>Yes</value>
+        </criteriaItems>
+        <description>Flag financial security with First call letter required 2 months after expiry to be able to show this info in the case.</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Flag_FS_with_first_call_letter_required</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Financial_Security__c.Expiry_Date__c</offsetFromField>
+            <timeLength>60</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>First call letter required</fullName>
+        <actions>
+            <name>First_call_letter_required_update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>This rule populates the field &apos;First Call Letter required&apos; from parent Financial Institution</description>
+        <formula>true</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
     <rules>
         <fullName>SARA Automatic Case renewal A1</fullName>
         <actions>
@@ -479,7 +548,7 @@
     </rules>
     <rules>
         <fullName>SARA Security Status %3D Expired2 and Region %3C%3E ASPAC</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Financial_Security__c.Unlimited_Security__c</field>
             <operation>equals</operation>
@@ -512,7 +581,7 @@
     </rules>
     <rules>
         <fullName>SARA Security Status %3D Expired2 and Region %3D ASPAC</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Financial_Security__c.Unlimited_Security__c</field>
             <operation>equals</operation>
@@ -575,5 +644,25 @@
             <timeLength>19</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Uncheck two month flag for FS with first call letter</fullName>
+        <actions>
+            <name>Change_two_month_flag_to_false</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Financial_Security__c.Expiry_Date__c</field>
+            <operation>greaterThan</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Financial_Security__c.Two_months_passed_expiry__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Used to update two month expiry check when FS is renewed</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

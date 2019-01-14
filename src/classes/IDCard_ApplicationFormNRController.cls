@@ -13,6 +13,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public Boolean DocUploaded {get; set;}
   public decimal expediteFees {get; private set;}
 
+  public Boolean IsExpediteDelivery;
   private String accountType;
   private Boolean newContactRequired;
   private String part;
@@ -48,6 +49,14 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String repricingExchangeReissue_Description {get; set;}
   public String travelAgencyFees_Description {get; set;}
 
+  //RN-INC419676
+  public String assisttravelersspecialneeds_Description {get; set;}
+  public String notionsessentlentarifetbillet_Description {get; set;}
+  public String advskillsjourneypriceticket_Description {get; set;}
+  public String servingthetravelcustomer_Description {get; set;}
+  public String socialmediafortravelindustry_Description {get; set;}
+  public String accfinmgmtforagencies_Description {get; set;}
+
   private ID_Card__c[] idCardTemp;
   private Contact associatedContact {get; set;}
   private ID_Card__c associatedIDCard {get; set;}
@@ -71,6 +80,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     IsCroppingToolDisplayed = false;
     IsViewerDisplayed = false;
     lastNameHasChanged = false;
+    IsExpediteDelivery = false;
     isContractor = false;
     isEmployee = false;
     detailledFees = new Map<String, decimal>();
@@ -85,11 +95,19 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     introduccionAlBSPlink_Description = Label.IDCard_IntroduccionAlBSPlink_Description;
     introduccionAlSistemaBSPyLenguajeBSP_Description = Label.IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description;
     losInformesyLosProcedimientosDeFacturacionAgenteBSP_Description = Label.IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description;
-    socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description;
+    socialMediaForTheTravelIndustry_Description = Label.IDCard_SocialMediaForTheTravelIndustry_Description; 
 
     fundamentalsJourneyPricing_Description = Label.IDCard_FundamentalsJourneyPricing_Description;
     repricingExchangeReissue_Description = Label.IDCard_RepricingExchangeReissue_Description;
     travelAgencyFees_Description = Label.IDCard_Travel_Agency_Fees_Description;
+
+    //RN-INC419676
+    assisttravelersspecialneeds_Description = Label.Assist_Travelers_Special_Needs_Description; 
+    notionsessentlentarifetbillet_Description = Label.Notions_Essentl_Tarif_Billet_Description;
+    advskillsjourneypriceticket_Description = Label.Adv_Skills_Journey_Price_Ticket_Description;
+    servingthetravelcustomer_Description = Label.Serving_The_Travel_Customer_Description;
+    socialmediafortravelindustry_Description = Label.Social_Media_Travel_Industry_Description;
+    accfinmgmtforagencies_Description = Label.Acc_Fin_Mgmt_Agencies_Description;
 
     initialize();
 
@@ -108,7 +126,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
                              i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c,
                              i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c,
                              i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c,
-                             i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c,
+                             i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c,
                              i.Applicable_Fee__c, i.Regional_Office__c, i.AgencyShare_Confirmation__c  From ID_Card_Application__c i
                              where i.Id = :applicationId limit 1];
       //Block Page if payment is done and case is created
@@ -166,7 +184,8 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
             idCardTemp = [Select i.Photo__c, i.ID_Card_Application__r.Displayed_Name__c From ID_Card__c i where i.Related_Contact__c = :associatedContact.Id order by i.Valid_To_Date__c desc];
             //System.debug('** idCardTemp'+idCardTemp);
             if (idCardTemp.size() > 0) {
-              PhotoFilename = idCardTemp[0].Photo__c;
+              //PhotoFilename = idCardTemp[0].Photo__c; 14-12-2016
+              PhotoFilename = IDCardUtil.NewGuid();
               hiddenFilename = idCardTemp[0].Photo__c;
               if (!IsCroppingToolDisplayed) { IsViewerDisplayed = true; }
             } else {
@@ -178,7 +197,8 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
           } else {
             if (IDCardApplicationNR.Photo__c != null) {
-              PhotoFilename = IDCardApplicationNR.Photo__c;
+              //PhotoFilename = IDCardApplicationNR.Photo__c;
+              PhotoFilename = IDCardUtil.NewGuid();
               hiddenFilename = IDCardApplicationNR.Photo__c;
               IsCroppingToolDisplayed = false;
               IsViewerDisplayed = true;
@@ -249,7 +269,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
       } else
       {
-        if (listPriceTables[0].Expedite__c != null )
+        if (listPriceTables[0].Expedite__c != null )         
           return true;
         return false;
       }
@@ -264,9 +284,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
       where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
       if (listPriceTables == null || listPriceTables.size() == 0) {
         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
-      } else
+      }else  if(listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c == true){
+          IsExpediteDelivery = true;
+      }
         return listPriceTables[0].Expedite_Delivery_added_to_IDCard_Price__c;
-
     }
   }
 
@@ -404,7 +425,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
                           i.Sent_to_AIMS_on__c, i.Renewal_From_Replace__c, i.Related_Contact__c, i.Position__c, i.Photo__c, i.Photo_Flag__c, i.Phone__c, i.Payment_Type__c, i.Paid__c, i.OwnerId, i.Nature_of_ID_Card__c,
                           i.Name_on_ID_Card__c, i.Name, i.MustSyncWithAIMS__c, i.Middle_Initial__c, i.LastName__c, i.LastModifiedDate, i.LastModifiedById, i.Is_Active_Card__c, i.IsDeleted, i.Id,
                           i.ID_Card_Application__c, i.Hours_per_week__c, i.Gender__c, i.FirstName__c, i.Fee_Applicable__c, i.Email__c, i.Duties__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate,
-                          i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId, i.Card_Variation__c, i.Card_Variation_Code__c, i.Card_Status__c, i.Card_Code__c,
+                          i.CreatedById, i.Card_Variation__c, i.Card_Variation_Code__c, i.Card_Status__c, i.Card_Code__c,
                           i.Cancellation_Date__c, i.Blacklisted__c, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Agency_Name__c, i.Agency_IATA_Code__c From ID_Card__c i
                           where i.VER_Number__c = : VER  ORDER BY i.Valid_To_Date__c DESC limit 1];
 
@@ -566,7 +587,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
                                    i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c, i.Last_Name__c, i.LastModifiedDate, i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c,
                                    i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c, i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c,
                                    i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c,
-                                   i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId,
+                                   i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById,
                                    i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c, i.AgencyShare_Confirmation__c From ID_Card_Application__c i where i.Id = : IDCardApplicationNR.Id limit 1];
 
             //Go to next part
@@ -650,7 +671,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
-          String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+          String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
           
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
@@ -704,10 +725,13 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
         if (isValid) {
           IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
+          if(IsExpediteDelivery){
+            IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
+          }
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
-          String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+          String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
             Pagereference checkoutPage = Page.IDCard_CheckoutSingleApplication;
             checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.Id));
@@ -1081,7 +1105,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
     Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(iataCode);
 
-    IATA_ISO_Country__c[] listCountries = [Select i.Name, i.AIMS_Area_Name__c, i.Id, i.ISO_Code__c, IATA_Regional_Office__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+    List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
     if (listCountries == null || listCountries.size() == 0) {
       throw new IDCardApplicationException(string.format(Label.ID_Card_Invalid_ISO_Country, new string[] { theAccount.BillingCountry }));
     }
@@ -1337,9 +1361,9 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     docDesc1 = 'desc';
     docDesc2 = 'desc';
     docDesc3 = 'desc';
-    this.document1 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
-    this.document2 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
-    this.document3 = new Attachment(Name = 'abc', Body = Blob.valueOf('abc'));
+    this.document1 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
+    this.document2 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
+    this.document3 = new Attachment(Name = 'abc.pdf', Body = Blob.valueOf('abc'));
     this.upload();
     this.back();
     this.GetAssociatedContact('aaa');

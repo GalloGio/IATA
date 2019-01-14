@@ -14,6 +14,8 @@ public with sharing class vfIECHistPayments_tst {
 	private static Zuora__ZInvoice__c oInvoice1;
 	private static Zuora__ZInvoice__c oInvoice2;	// ICH invoice with no payment
 	private static Zuora__Payment__c oPayment1;
+	private static vfIECHistPayments.PaymentWrapper pw1;
+
 	private static Zuora__PaymentInvoice__c oPaymentInvoice1;
 	
 	static void setupInvoicesAndPayments() {
@@ -34,6 +36,8 @@ public with sharing class vfIECHistPayments_tst {
 		
 		oPayment1 = IECTestUtil.createSamplePayment(oBillingAccount, 213.45, oInvoice1, 'Processed');
 		insert oPayment1;
+
+		pw1 = new vfIECHistPayments.PaymentWrapper(oPayment1);
 		
 		oPaymentInvoice1 = new Zuora__PaymentInvoice__c();
 		oPaymentInvoice1.Zuora__Invoice__c = oInvoice1.Id;
@@ -50,25 +54,25 @@ public with sharing class vfIECHistPayments_tst {
     	System.runAs(usr) {
     		
     		PageReference pgRef = Page.IECHistPayments;
-    		pgRef.getParameters().put(IECConstants.PARAM_PAYMENT_ID, IECUtil.EncryptEncodeParameter(oPayment1.Id));
+    		pgRef.getParameters().put(IECConstants.PARAM_PAYMENT_ID, IECUtil.EncryptEncodeParameter(pw1.Id));
     		Test.setCurrentPage(pgRef);
 	    	
 	    	//Instantiate Controller
 	    	vfIECHistPayments pageController = new vfIECHistPayments();
 	    	
-	    	system.assert(pageController.sSelectedPaymentID == oPayment1.Id, 'The selected payment passed in GET parameter should be valid');
+	    	system.assert(pageController.sSelectedPaymentID == pw1.Id, 'The selected payment passed in GET parameter should be valid');
 	    	
 	    	PageReference pr = pageController.pageLoad();
-	    	
+				    	
 	    	system.assert(pageController.lstPaymentsToDisplay != null && pageController.lstPaymentsToDisplay.size() == 1, 'The Payment1 should be found');
 	    	system.assert(pageController.iNbrRowsDisplayed == 1, 'The number of rows displayed should be 1');
 	    	
-	    	system.assert(pageController.oSelectedPayment != null && pageController.oSelectedPayment.Id == oPayment1.Id, 'The Payment1 should be selected');
+	    	system.assert(pageController.oSelectedPayment != null && pageController.oSelectedPayment.Id == pw1.Id, 'The Payment1 should be selected');
 	    	
 	    	pr = pageController.showAll();
 	    	pageController.sSelectedPaymentID = null;
 	    	pr = pageController.selectPayment();
-	    	pageController.sSelectedPaymentID = oPayment1.Id;
+	    	pageController.sSelectedPaymentID = pw1.Id;
 	    	pr = pageController.selectPayment();
 	    	pr = pageController.sortPayments();
 	    	pageController.sSortDirection = 'ASC';

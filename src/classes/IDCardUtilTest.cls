@@ -231,6 +231,14 @@ private class IDCardUtilTest {
     
     TestMethod static void CreateIDCardObjectFromApplicationTest(){
         
+         IATA_ISO_Country__c country =  new IATA_ISO_Country__c();
+        country.Name = 'Canada';
+        country.AIMS_Area_Name__c = 'CANADA';
+        country.ISO_Code_Numeric__c = 990;
+        country.AIMS_Area_ID__c = '1';
+        country.ISO_Code__c = 'CA';
+        insert country; 
+
         Account theAccount = new Account();
         theAccount.RecordTypeId = '012w0000000QBMW';
         theAccount.Name = 'UnitTest Account';
@@ -260,6 +268,24 @@ private class IDCardUtilTest {
         update theAccount;
         
         ID_Card__c newCard2 = IDCardUtil.CreateIDCardObjectFromApplication(application);
+
+        application.Type_of_application__c = IDCardUtil.APPLICATIONTYPE_RENEWAL;
+        update application;
+        Test.startTest();
+        long VER = IDCardUtil.generateVERforMultipleAccounts(new List<Account>{theAccount}).get('Canada');
+        Contact c = new Contact(LastName = 'Contact', Email = 'ase@asd.asd', AccountId = theAccount.id, UIR__c = IDCardUtil.generateUIR(theAccount), VER_Number_2__c = String.valueOf(VER));
+        insert c;
+
+        ID_Card__c newCard3 = IDCardUtil.CreateIDCardObjectFromApplication(application, c);
+
+        application.Type_of_application__c = IDCardUtil.APPLICATIONTYPE_REISSUE;        
+        update application;
+
+         ID_Card__c newCard4 = IDCardUtil.CreateIDCardObjectFromApplication(application, c);
+
+        Test.stopTest();
+
+
         
     }
     
@@ -307,6 +333,7 @@ private class IDCardUtilTest {
         
         insert application;
         Test.startTest();
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
         ID contactID = IDCardUtil.CreateContactWhenNewCardIsApproved(application);
         Test.stopTest();
     }
@@ -429,6 +456,7 @@ private class IDCardUtilTest {
         Test.startTest();   
         IDCardUtil.renameIDCardPhotoOfContact(application.ID, '',Userinfo.getSessionId());
         IDCardUtil.renameIDCardPhotoOfContact(application.ID, 'CA039011.jpg',Userinfo.getSessionId());
+        IDCardUtil.AWSImageAuthorizationLink('CA039011.jpg');
         
         
         IDCardCroppingToolWebService.RenameImageResponse_element rep = new IDCardCroppingToolWebService.RenameImageResponse_element ();
@@ -489,14 +517,14 @@ private class IDCardUtilTest {
         ID_Card__c newCard = IDCardUtil.CreateIDCardObjectFromApplication(application);     
         
         newCard.Valid_To_Date__c = date.today().addDays(10);
-        newCard.Card_Status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED;       
+        newCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;       
         ID_Card__c[] card1 = IDCardUtil.getRenewableIDCard (contactId);
         
         insert newCard;
         
         newCard.Related_Contact__c = contactId;     
         newCard.Valid_To_Date__c = date.today().addDays(150);
-        newCard.Card_Status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED;
+        newCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
         
         update newCard;
         System.debug('***************************************** contact IDDDDDDDd ' +contactId);
@@ -548,7 +576,7 @@ private class IDCardUtilTest {
         */
         IDCardTestData testData = new IDCardTestData();
         
-        insert testData.IDCards_IDCardApplications[2];
+        upsert testData.IDCards_IDCardApplications[2];
         //insert testData.IDCard_Accounts[0];
             
         IDCardUtil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[2], testData.IDCard_Accounts[0]);
@@ -576,7 +604,7 @@ private class IDCardUtilTest {
         idCard.Approving_Manager_s_Name__c = 'IAM the manager'; 
         idCard.Approving_Manager_s_Email__c = 'me@me.com';
         idCard.Blacklisted__c = false;
-        idCard.Card_Status__c = IDCardUtil.CARDSTATUS_PRINTED_DELIVERED; 
+        idCard.Card_Status__c = IDCardUtil.CARDSTATUS_VALID; 
         idCard.CurrencyIsoCode = 'CAD';
         idCard.Date_of_Birth__c = date.newInstance(1980, 1, 1); //('01-01-1980')           
         idCard.Duties__c = 'Director';
@@ -623,22 +651,55 @@ private class IDCardUtilTest {
     }
     
     TestMethod static void ConfirmChequePaymentTest(){
-        Case aCase = new Case();
+        list<Case> listc = new list<Case>();
+        listc.add(new Case(RecordTypeId = IDCardUtil.IDCardcaseRecordTypeID));
+        insert listc;
         
         IDCardTestData testd = new IDCardTestData();
-        aCase.Related_ID_Card_Application__c = testd.IDCards_IDCardApplications[0].id;
-        
-        insert acase;
-        
-        IDCardUtil.ConfirmChequePayment(aCase.casenumber);
+        insert testd.IDCards_IDCardApplications[0];
+        listc[0].Related_ID_Card_Application__c = testd.IDCards_IDCardApplications[0].id;        
+        Case c1 = [Select c.ContactId , c.ID_Card_Status__c, c.OwnerId, c.Related_ID_Card_Application__c, c.ID, c.CaseNumber From Case c where c.id = :listc[0].id];
+        IDCardUtil.ConfirmChequePayment(c1.casenumber);
     }
     
     TestMethod static void UpdateCaseToApproved_RejectedTest(){
-        Case aCase = new Case(RecordTypeId = IDCardUtil.IDCardcaseRecordTypeID);
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', AIMS_Area_Name__c = 'test', Enable_Minor_Changes_from_Portal__c = true,
+                                    Local_language_Agency_details_required__c = true, ISO_Code__c = 'tq');
+        insert country;
+        Account acc= new Account(Name = 'AccountTest', IATACode__c = '12312312',IDCard_Key_Account__c = true,RecordTypeId = rtacc, BillingCountry= 'test');
+        insert acc;
+        IDCardUtil.generateTMPUIR(acc);
+        IDCardUtil.generateTMPVER(acc);
+        Contact cont = new Contact(lastName='MARWA', VER_Number__c= decimal.valueOf('5990024202'), email='test@test.test', Account=acc, RecordTypeId = rtcon, ID_Card_Holder__c = true, Date_of_birth__c = date.today().addYears(-30),BirthDate = date.today().addYears(-30),    Phone = '+41 7777777777');
+        insert cont;
+
+        list<Case> listc = new list<Case>();
+        listc.add(new Case(RecordTypeId = IDCardUtil.IDCardcaseRecordTypeID, ContactId=cont.Id));
+        insert listc;
+
+        IDCardTestData testd = new IDCardTestData();
+        testd.IDCards_IDCardApplications[3].RecordTypeId = massAppRT;
+        listc[0].Related_ID_Card_Application__c = testd.IDCards_IDCardApplications[3].id;
+        insert testd.IDCards_IDCardApplications[3];
+        update listc;
+
+       ID_Card__c idc = new ID_Card__c(Related_Contact__c = cont.id,
+                                    Valid_To_Date__c = date.today().addMonths(5),
+                                    Name_on_ID_Card__c = 'MARWA',
+                                    Card_status__c = 'Sent ID Card',
+                                    VER_Number__c = String.valueOf(cont.VER_Number__c),
+                                    Agency_IATA_Code__c = acc.IATACode__c,
+                                    Photo__c = 'useless string',
+                                    ID_Card_Application__c = testd.IDCards_IDCardApplications[3].id);
+        insert idc;
+        Case c1 = [Select c.ContactId , c.ID_Card_Status__c, c.OwnerId, c.Related_ID_Card_Application__c, c.ID, c.CaseNumber From Case c where c.id = :listc[0].id];
         
-        insert acase;
-        
-        IDCardUtil.UpdateCaseToApproved_Rejected(aCase.casenumber,true);
+        IDCardUtil.UpdateCaseToApproved_Rejected(c1.casenumber,true);
+        Case[] c = [ Select c.ContactId , c.ID_Card_Status__c, c.OwnerId, c.Related_ID_Card_Application__c, c.ID From Case c where c.CaseNumber = :c1.casenumber and c.RecordTypeId = :IDCardUtil.IDCardcaseRecordTypeID Order by id Limit 1];
+
     }
     
     TestMethod static void getIDCardApplicationTest(){
@@ -680,6 +741,53 @@ private class IDCardUtilTest {
         // Existing country
         IDCardUtil.GetIATAISOCountryOfContact('67504242');
     }
+
+    TestMethod static void GetIATAISOCountryFromAccounts(){
+        List<Account> acc = new List<Account>();
+        IATA_ISO_Country__c aCountry = new IATA_ISO_Country__c();
+                
+        // Existing country
+        IATA_ISO_Country__c country =  new IATA_ISO_Country__c();
+        country.Name = 'Canada';
+        country.AIMS_Area_Name__c = 'CANADA';
+        country.ISO_Code_Numeric__c = 990;
+        country.AIMS_Area_ID__c = '1';
+        country.ISO_Code__c = 'CA';
+        insert country; 
+        
+        Account a = new Account(Name = 'TestAccount', BillingCountry = 'Canada');
+        acc.add(a);
+        insert acc;
+
+        IDCardUtil.GetIATAISOCountryFromAccounts(acc);
+    }
+
+    TestMethod static void GetAccountListFromIATACodes(){
+        Set<String> iataCodes = new Set<String>();
+        iataCodes.add('67504242');
+        IDCardUtil.GetAccountListFromIATACodes(iataCodes);
+    }
+
+    TestMethod static void calculateDisplayedName(){
+        IDCardUtil.calculateDisplayedName('firstName', 'middleInitial', 'lastName');
+    }
+
+    TestMethod static void setTobeapproved(){
+         ID_Card_Application__c application = new ID_Card_Application__c();
+        
+        insert application;
+        
+        IDCardUtil.setTobeapproved(application.id);
+    }
+
+    TestMethod static void GetMonthStringValue(){
+        Set<String> iataCodes = new Set<String>();
+        IDCardUtil.GetMonthStringValue(12);
+    }
+
+     TestMethod static void formatNumbersWithSeparators(){
+        IDCardUtil.formatNumbersWithSeparators(Decimal.valueof(String.valueof('67504242')),'');
+    }
     
     TestMethod static void generateVERsAndUIRs(){
         IATA_ISO_Country__c country =  new IATA_ISO_Country__c();
@@ -697,7 +805,7 @@ private class IDCardUtilTest {
         long VER = IDCardUtil.generateVERforMultipleAccounts(new List<Account>{a}).get('Canada');
         IDCardUtil.generateUIRforMultipleAccounts(new List<Account>{a});
         
-        Contact c = new Contact(LastName = 'Contact', Email = 'ase@asd.asd', AccountId = a.id, UIR__c = IDCardUtil.generateUIR(a), VER_Number_2__c = String.valueOf(VER));
+        Contact c = new Contact(FirstName = 'Name', LastName = 'Contact', Email = 'ase@asd.asd', AccountId = a.id, UIR__c = IDCardUtil.generateUIR(a), VER_Number_2__c = String.valueOf(VER));
         insert c;
         
         IDCardUtil.generateVERforMultipleAccounts(new List<Account>{a}).get('Canada');

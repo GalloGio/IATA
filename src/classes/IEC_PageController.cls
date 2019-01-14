@@ -1,5 +1,24 @@
 public virtual class IEC_PageController 
 {
+	// Ecommerce Enhancements
+	public IEC_Cart storeCart {
+		get {
+			IEC_Cart cartInstance = IEC_Cart.getInstance();
+
+			return cartInstance;
+		}
+	}
+
+	public Boolean newShoppingCart {
+		get {
+			return functionality.isActive('New Shopping Cart');
+		}
+	}
+
+	private static IEC_Functionality functionality = IEC_Functionality.getInstance();
+
+	// Ecommerce Enhancements end
+
 	public class CartWrapper
 	{
 		public String productCode{get;set;}
@@ -14,8 +33,11 @@ public virtual class IEC_PageController
 		}
 	}
 
+	public IEC_User_Utils userDetails {get;set;}
+
 	public Boolean hasError { get; protected set; }
 	public Boolean hasConfirm { get; protected set; } 
+	public Boolean hasWarning { get; protected set; }
 	public String paramReturnURL {get; set;}
 	public String currentPageName{get{
 		String pageName = ApexPages.CurrentPage().getUrl();  
@@ -39,8 +61,16 @@ public virtual class IEC_PageController
 
 	private void cleanupCookies()
     {
+		System.debug('cleanupCookies');
+
         //-- If products in cookie Sync with SFDC & ensure that they can be paid by current user 
         Map<String, Decimal> cookieContent =  IECOrder_Svc.getItemsInCookie();
+
+		System.debug('cookieContent:');
+		for (String key : cookieContent.keySet()) {
+			System.debug('###    ' + key + ': ' + cookieContent.get(key));
+		}
+
         if(!cookieContent.isEmpty())
         {
             //-- Available products
@@ -63,8 +93,12 @@ public virtual class IEC_PageController
 
             for(String productCode : cookieContent.keySet())
             {
+				System.debug('checking productCode: ' + productCode);
+
                 if(!availableProducts.containsKey(productCode))
                 {
+					System.debug('availableProducts doesnt contains productCode: ' + productCode + ', removing from cookie');
+
                     //-- remove product from cookie 
                     IECOrder_Svc.deleteProductToCookie(productCode);
                 }
@@ -88,6 +122,9 @@ public virtual class IEC_PageController
 		
 		//-- If customer is logged-in sync cookie with pendding order if not syncked yet
 		String cookie_Sync = IECOrder_Svc.readCookie('Cookie_Sync');
+
+		System.debug('cookie_Sync: ' + cookie_Sync);
+
 		if(loggedCustomer !=null /*&& cookie_Sync != 'true'*/)
 		{
 			cleanupCookies();
@@ -95,30 +132,41 @@ public virtual class IEC_PageController
 
 			System.debug('User Logged IN');
 			OrderItem_Sel oiSelector = new OrderItem_Sel();
-			Order pendingOrder = IECOrder_Svc.getPenddingOrder(); 
+			Order pendingOrder = IECOrder_Svc.getPenddingOrder(false); 
 			List<OrderItem> pendingOrderItems = oiSelector.getOrderItems(pendingOrder.Id);
 			
 			for(OrderItem oi : pendingOrderItems)
 			{
 				//-- Product already in cookie (Cookie win)
-				if(cookieContent.containsKey(oi.Product_Number__c)) IECOrder_Svc.modifiedProductToCookie(oi.Product_Number__c, cookieContent.get(oi.Product_Number__c));
-				
+				if(cookieContent.containsKey(oi.Product_Number__c)) {
+					System.debug('Product ' + oi.Product_Number__c + ' already in cookie: modify');
+
+					IECOrder_Svc.modifiedProductToCookie(oi.Product_Number__c, cookieContent.get(oi.Product_Number__c));
 				//-- New product 
-				else IECOrder_Svc.addProductToCookie(oi.Product_Number__c, oi.Quantity, true); 
+				} else {
+					System.debug('Product: ' + oi.Product_Number__c + ' is new: add');
+
+					IECOrder_Svc.addProductToCookie(oi.Product_Number__c, oi.Quantity, true); 
+				}
 			}
 
 			cookieContent = Order_Svc.getItemsInCookie();
 
-			
+			System.debug('cookieContent: ' + cookieContent);
 			
 			//-- Create Cookie_Sync entry
 			Cookie c = new Cookie('Cookie_Sync','true', null, Utility.getIntegerSetting('IEC Order Cookie maxAge'), false);
 			ApexPages.currentPage().setCookies(new Cookie[]{c});
 		}
 		
-		for(Product2 p : [SELECT Name, SAP_Material_Number__c FROM Product2 WHERE SAP_Material_Number__c != null AND Display_to_ECommerce__c = true AND SAP_Material_Number__c IN :cookieContent.keySet()])
+		for(Product2 p : [SELECT Name, SAP_Material_Number__c FROM Product2 WHERE SAP_Material_Number__c != null AND Display_to_ECommerce__c = true AND SAP_Material_Number__c IN :cookieContent.keySet()]) {
+			System.debug('Adding Product ' + p.SAP_Material_Number__c + ' to Cart Content');
+
 			cartContent.add(new CartWrapper(p.SAP_Material_Number__c, p.Name, cookieContent.get(p.SAP_Material_Number__c)));
+		}
 		
+		System.debug('cartContent: ' + cartContent);
+
 		return cartContent;
 	} set; }
 
@@ -206,6 +254,8 @@ public virtual class IEC_PageController
 		loggedCustomer = Customer_DTO.getLoggedCustomer();	
 		String url = Site.getBaseUrl();	
 
+		userDetails = IEC_User_Utils.getInstance();
+
 		Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=10');
 	}
 
@@ -214,6 +264,23 @@ public virtual class IEC_PageController
 		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, message));
 		hasError = true;
 		hasConfirm = false;
+		hasWarning = false;
+	}
+
+	public void addErrorMessage(String message, String additionalDebugMessage) {
+		addErrorMessage(message);
+
+		if (IEC_Trace.isDebugActive) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, additionalDebugMessage));
+		}
+	}
+
+	public void addErrorMessage(String message, Exception e) {
+		addErrorMessage(message);
+
+		if (IEC_Trace.isDebugActive) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, e.getStackTraceString()));
+		}
 	}
 
 	public void addConfirmMessage(String message) 
@@ -221,7 +288,31 @@ public virtual class IEC_PageController
     	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, message));
     	hasConfirm = true;
     	hasError = false;
+		hasWarning = false;
   	}
+
+	public void addWarningMessage(String message) {
+		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, message));
+		hasError = false;
+		hasConfirm = false;
+		hasWarning = true;
+	}
+
+	public void addWarningMessage(String message, String additionalDebugMessage) {
+		addWarningMessage(message);
+
+		if (IEC_Trace.isDebugActive) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, additionalDebugMessage));
+		}
+	}
+
+	public void addWarningMessage(String message, Exception e) {
+		addWarningMessage(message);
+
+		if (IEC_Trace.isDebugActive) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, e.getStackTraceString()));
+		}
+	}
 
 	public Pagereference logout() 
     {
@@ -233,13 +324,23 @@ public virtual class IEC_PageController
             ApexPages.currentPage().setCookies(new Cookie[]{Cookie_Sync});
             cartContent = new List<CartWrapper>();
 
+			if (newShoppingCart) {
+				storeCart.clearCart();
+			}
+
             //pr = Page.IECLogout; 
             pr = Page.IEC_Logout;
             pr.setRedirect(true);
         }
-        catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));}
+        catch (Exception ex) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+		}
 
-        return pr;
+		// Ecommerce Enhancements - do not redirect too fast, do it by Javascript so that
+		// cookies get erased.
+
+		return null;
+        //return pr;
     }
 
     /** 
@@ -267,9 +368,36 @@ public virtual class IEC_PageController
             //}
             
             pr.setRedirect(true);
+
             return pr;
         }
-        catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return null; }
+        catch (Exception ex) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+
+			return null;
+		}
+    }
+
+
+    public PageReference redirectToPage(String initialUrl){
+
+    	//get params from page and include
+    	Map<String,String> mapPageParameters = System.currentPageReference().getParameters();
+        String extraParamsStr = '';
+        if(mapPageParameters != null && mapPageParameters.keySet() != null && !mapPageParameters.keySet().isEmpty()){
+	        for(String pageParam : mapPageParameters.keySet()){
+	            if(pageParam.startsWith(IECConstants.PARAM_UTM)){
+	                extraParamsStr += '&' + pageParam + '=' + mapPageParameters.get(pageParam);
+	            }
+	        }
+	    }
+
+	    String finalURL = initialUrl + EncodingUtil.urlEncode(extraParamsStr, 'UTF-8');
+		PageReference pgRef = new PageReference(finalURL);
+		pgRef.setRedirect(true);
+    	return pgRef;
+
+
     }
 
 }

@@ -13,18 +13,35 @@ public  class ISSP_TC_Accept {
     public String SurveyLink {get; set;}
     public String SurveyName {get; set;}
     public Boolean ShowModal {get; set;}
+
+    //AMSU-142 (AMSU-26)
+    public Boolean isCargoDGR {get; set;}
+    //AMSU-201
+    public Boolean showFinancialSec {get;set;}
+
+     //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
     
     //Language picklist
     public String selectedLanguage {get;set;}
     
     public List<SelectOption> languages {
     get {
-      List<SelectOption> options = new List<selectOption>();
+        List<SelectOption> options = new List<selectOption>();
 
-      for (Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values())
-        options.add(new SelectOption(l.languageLocalKey__c, l.Language__c));
-      return options;
+        Map<String,String> langMap = new Map<String,String>();
 
+        for(Preferred_Language_on_ISS_Portal__c l : Preferred_Language_on_ISS_Portal__c.getAll().values())
+            langMap.put(l.Language__c,l.languageLocalKey__c);
+
+        List<String> auxList = new List<String>(langMap.keySet());
+        auxList.sort();
+
+        for(String key :auxList)
+            options.add(new SelectOption(langMap.get(key), key));
+
+        return options; 
     }
     set;
     }
@@ -37,8 +54,10 @@ public  class ISSP_TC_Accept {
         ShowModal = true ;
         toAcceptTC = false;
         integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
-        userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
-                                //X2FA_Session__c, TD_User__c
+        //AMSU-142 (AMSU-26) - added accountId      
+        //AMSU-201 - added Portal Status and Financial Assessment
+        userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId, AccountId,
+                        Contact.Financial_Assessment_Contact__c, Contact.User_Portal_Status__c
                                 FROM User WHERE Id =:UserInfo.getUserId()];
         if (!userList.isEmpty()){
             if (userList[0].LastPasswordChangeDate != null){
@@ -71,6 +90,18 @@ public  class ISSP_TC_Accept {
                     isBSP = true;
                 }
             }
+            //AMSU-142 (AMSU-26)
+            isCargoDGR = false;
+            if (userList[0].AccountId != null){
+                Account acc = [Select Location_Class__c from Account where Id = :userList[0].AccountId];
+                if( AMS_Utils.LocationClassDGR.contains(acc.Location_Class__c) ) {
+                    isCargoDGR = true;
+                }
+            }
+
+            //AMSU-201
+            User u = userList[0];
+            showFinancialSec = u.Contact.Financial_Assessment_Contact__c || u.Contact.User_Portal_Status__c == 'Approved Admin';
         }
         
         selectedLanguage = UserInfo.getLanguage();
@@ -81,7 +112,7 @@ public  class ISSP_TC_Accept {
         if (!userList.isEmpty()){
             integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
             if (userList[0].UID__c != '' && userList[0].UID__c != null){
-                PageReference pr = new PageReference('/ISSP_ChangePassword');
+                PageReference pr = new PageReference('/ISSP_ChangePassword'+commParam);
                 system.debug('REDIRECTING TO CHANGE PASSWORD');
                 pr.setRedirect(true);
                 return pr;
@@ -89,7 +120,7 @@ public  class ISSP_TC_Accept {
             else if (userList[0].LastPasswordChangeDate != null){
                 //if (userList[0].LastPasswordChangeDate.addMinutes(10) < system.now() && userList[0].Email == 'tiago.ferreira+newportal_01_01@kerensen.com'){
                 if (userList[0].LastPasswordChangeDate.addDays(passwordDays) < system.now()){
-                    PageReference pr2 = new PageReference('/ISSP_ChangePassword');
+                    PageReference pr2 = new PageReference('/ISSP_ChangePassword'+commParam);
                     system.debug('REDIRECTING TO CHANGE PASSWORD');
                     pr2.setRedirect(true);
                     return pr2;
@@ -103,6 +134,7 @@ public  class ISSP_TC_Accept {
         if (!userList.isEmpty()){
             if (!userList[0].ToU_Accepted__c){
                 PageReference pr = new PageReference('/ISSP_TC_Accept');
+                if(communityName=='CNS') pr = new PageReference('/ISSP_TC_Accept?CommunityName=CNS');
                 system.debug('REDIRECTING TO TC ACCEPT');
                 pr.setRedirect(true);
                 return pr;
@@ -135,7 +167,7 @@ public  class ISSP_TC_Accept {
                 }
                 else if (userList[0].UID__c != '' && userList[0].UID__c != null){
                     //PageReference pr = new PageReference('/ISSP_ChangePasswordRedirect');
-                    PageReference pr = new PageReference('/ISSP_ChangePassword');
+                    PageReference pr = new PageReference('/ISSP_ChangePassword' + commParam);
                     system.debug('REDIRECTING TO CHANGE PASSWORD');
                     pr.setRedirect(true);
                     return pr;
@@ -159,7 +191,7 @@ public  class ISSP_TC_Accept {
                 userList[0].Date_ToU_accepted__c = system.now();
                 update userList;
             }
-            PageReference pr = new PageReference('/ISSP_Homepage');
+            PageReference pr = new PageReference('/ISSP_Homepage' + commParam);
             pr.setRedirect(true);
             return pr;
         }
@@ -206,7 +238,10 @@ public  class ISSP_TC_Accept {
             }
         }else{
             ShowModal = false ;
-            Pagereference p =  new PageReference('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage');
+            String BaseURL = URL.getSalesforceBaseUrl().toExternalForm();
+            String redirectURL = '/secur/logout.jsp?retUrl=' + BaseURL + '/ISSP_Login';
+            if(CommunityName != null && CommunityName != '') redirectURL +='?CommunityName='+CommunityName;
+            Pagereference p =  new PageReference(redirectURL);
             p.setRedirect(true);
             return p;
         }
@@ -216,6 +251,8 @@ public  class ISSP_TC_Accept {
     public Boolean getCountryRequirementPermission() {
         return ISSP_Ctrl_Country_Requirements.isAllowedAccess();
     }
-
+    public Boolean getOperationalCalendarPermission() {
+        return ISSP_OperationalCalendarController.isAllowedAccess();
+    }
 
 }

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Batch_Name__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Batch Name</label>
+        <length>100</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Failed_Records__c</fullName>
+        <externalId>false</externalId>
+        <label>Failed Records</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Is_Manual_Replication__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if the batch was runned manually</description>
+        <externalId>false</externalId>
+        <label>Is Manual Replication</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Job_1_Original_Start_Date__c</fullName>
+        <description>Copy of Job 1 Last Sync Start Date taken on Job 1 first execution. This date is used by the Replication Job 1 Second Pass for population of formula fields and relationship</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Last Sync Start Date taken on First Execution of Job 1. Date used by Job 1 Second Pass for population of formulas</inlineHelpText>
+        <label>Job 1 Original Start Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Last_Sync_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Sync End Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Last_Sync_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Sync Start Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Total_Failed_Records__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Failed Records</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Records_Processed__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Records Processed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>AMS =&gt; GDP Batch</label>
+    <listViews>
+        <fullName>All_Batches_with_Details</fullName>
+        <columns>NAME</columns>
+        <columns>Batch_Name__c</columns>
+        <columns>Total_Records_Processed__c</columns>
+        <columns>Total_Failed_Records__c</columns>
+        <columns>Last_Sync_Start_Date__c</columns>
+        <columns>Last_Sync_End_Date__c</columns>
+        <columns>Job_1_Original_Start_Date__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Batches with Details</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>BATCH-{0000}</displayFormat>
+        <label>AMS =&gt; GDP Batch Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>AMS =&gt; GDP Batches</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Batch_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Last_Sync_Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Last_Sync_End_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Records_Processed__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Failed_Records__c</customTabListAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

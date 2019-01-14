@@ -6,16 +6,19 @@ public with sharing class clsInternalCaseDML {
 
         //Declaration
         Id RecordTypeId;
+        
         String[] Recordtypes = new String[]
-        {'Internal Cases (IDFS ISS)',
-        'Cases - Africa & Middle East',
-        'Cases - Americas',
-        'Cases - Asia & Pacific',
-        'Cases - Europe',
-        'Cases - China & North Asia', //Oct-27-2011 AP
-        'FDS Ad-hoc Calendar Change (R&S) Locked', // Jul-27-2015 SA INC193042
-        'Complaint (IDFS ISS)',
-        'ID Card Application' // Jan-25-2016
+        {
+        	'InternalCasesEuropeSCE', //'Internal Cases (IDFS ISS)'
+        	'CasesMENA', //'Cases - Africa & Middle East'
+        	'CasesAmericas',
+        	'ExternalCasesIDFSglobal', //'Cases - Asia & Pacific'
+        	'CasesEurope',
+        	'Cases_China_North_Asia', //Oct-27-2011 AP
+        	'FDS_Ad_hoc_Calendar_Change_R_S_Locked', // FDS Ad-hoc Calendar Change (R&S) Locked	 // Jul-27-2015 SA INC193042
+        	'ComplaintIDFS', //Complaint (IDFS ISS)	
+        	'ID_Card_Application', // Jan-25-2016
+			'Cases_Global'
         };
 
 
@@ -34,15 +37,9 @@ public with sharing class clsInternalCaseDML {
             if(CaseIds.Size()>0){
 
                 lstObjCase = [SELECT Id, ParentId, RecordTypeId ,Status, ContactId, CaseArea__c, Subject, Reason1__c, Parent.RecordTypeId FROM Case Where ParentId != null And Id IN: CaseIds];
-                //Retriving the Record types ID from SF
-                for(List<RecordType> lstRecordType : [SELECT Id, Name FROM RecordType WHERE Name IN : Recordtypes and SobjectType = 'Case']){
-                    for(RecordType RT : lstRecordType){
-                        mapRecordType.put(RT.Name,RT.Id);
-                    }
-                }
 
                 if(event == 'Insert'){
-                    RecordTypeId = mapRecordType.get(Recordtypes[0]);
+                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[0]);
                     for(Case ObjCase : lstObjCase){
                         if( ObjCase.RecordTypeId == RecordTypeId &&
                             ObjCase.ParentId != null &&
@@ -55,21 +52,20 @@ public with sharing class clsInternalCaseDML {
                     if(ParentId.Size()>0){
                         for(List<Case> lstCases : [SELECT Id, RecordTypeId FROM Case Where Id IN: ParentId]){
                             for(Case ObjCase : lstCases){
-                                if((ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[1])) ||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[2])) ||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[3]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[4]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[5]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[6]))|| // Jul-27-2015 SA INC193042
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[7]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[8]))){ // Jan-25-2016
+                                if((ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[1])) ||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[2])) ||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[3]))||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[4]))||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[5]))||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[6]))|| // Jul-27-2015 SA INC193042
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[7]))||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[8]))||
+								(ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[9]))){ // Jan-25-2016
                                     //ObjCase.Status = 'Escalated';
                                     ObjCase.Status = 'Escalated Internally'; //Oct-27-2011 AP
 
                                 }
-                                /*else if((ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[4]))){
-                                    ObjCase.Status = 'In progress';
-                                }*/
+                              
                                 lstDMLCases.add(ObjCase);
                             }
                         }
@@ -79,11 +75,11 @@ public with sharing class clsInternalCaseDML {
                 }
                 else if(event == 'Update'){
 
-                    RecordTypeId = mapRecordType.get(Recordtypes[0]);
+                    RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[0]);
                     System.debug('--------------************ clsInternalCaseDML Recordtypes[0] - RecordTypeId ' + Recordtypes[0] + ' - ' + RecordTypeId);
                     for(Case ObjCase : lstObjCase){
                         System.debug('--------------************ RecordTypeId - Status - ParentI - ContactId ' + ObjCase.RecordTypeId + ' - ' + ObjCase.Status + ' - ' + ObjCase.ParentId + ' - ' + ObjCase.ContactId);
-                        if (ObjCase.Parent.RecordTypeId == mapRecordType.get(Recordtypes[8])) {
+                        if (ObjCase.Parent.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[8])) {
                             if(ObjCase.RecordTypeId == RecordTypeId && ObjCase.Status == 'Closed' && ObjCase.ParentId != null ){
                                 ParentId.add(ObjCase.ParentId);
                             }
@@ -99,21 +95,20 @@ public with sharing class clsInternalCaseDML {
                             for(Case ObjCase : lstCases){
                                 System.Debug('Parent Cse : ------ ' + ObjCase);
                                 ParentUserIds.add(ObjCase.OwnerId);  //(ObjCase.Status != 'Closed') &&
-                                if((ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[1])) ||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[2])) ||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[3]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[4]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[5]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[6]))|| // Jul-27-2015 SA INC193042
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[7]))||
-                                (ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[8]))){
+                                if((ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[1])) ||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[2])) ||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[3]))||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[4]))||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[5]))||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[6]))|| // Jul-27-2015 SA INC193042
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[7]))||
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[8]))||
+								(ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[9]))){
 
                                     ObjCase.Status = 'Action Needed'; //Oct-27-2011 AP
                                     //ObjCase.Status = 'In progress';
                                 } //(ObjCase.Status != 'Closed') &&
-                                /*else if((ObjCase.RecordTypeId == mapRecordType.get(Recordtypes[4]))){
-                                    ObjCase.Status = 'Open';
-                                }*/
+
                                 lstDMLCases.add(ObjCase);
                             }
                         }
@@ -129,19 +124,7 @@ public with sharing class clsInternalCaseDML {
                       for(Database.SaveResult sr:lsr){
 
                             if(sr.isSuccess()){
-                             /*   Account a = new Account(name = 'Test Account',BillingCity='Montreal', BillingCountry='Canada');
-                                insert a;
-                                for(List<User> lstUser : [Select Id, Name, Email FROM User Where Id IN: ParentUserIds and IsActive = True]){
-                                    for(User ObjUser : lstUser){
-                                        userIds.add(ObjUser);
-                                        toAddress.add(ObjUser.email); //Oct-27-2011 AP
-                                        Contact con = new Contact();
-                                        con.accountId = a.Id;
-                                        con.lastname = ObjUser.Name;
-                                        con.email = ObjUser.Email;
-                                        lstObjCon.add(con);
-                                    }
-                                } */
+                            	
                                 Database.SaveResult[] lsr1 = Database.insert(lstObjCon);
                                 System.debug('--------------************ isTriggerAlreadyInvoked ' + isTriggerAlreadyInvoked);
 
@@ -170,8 +153,6 @@ public with sharing class clsInternalCaseDML {
                                         System.Debug('The email failed to send: ' + result[0].getErrors());
 
                                     }
-                                  /*  Database.DeleteResult[] DR1 = Database.delete(lstObjCon);
-                                    Database.DeleteResult DR2 = Database.delete(a);             */
 
                                 }
                                 System.debug('--------------************ Setting isTriggerAlreadyInvoked To True');

@@ -3,6 +3,12 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>zanarinim@iata.org</email>
     <name>Local Office - Guam</name>
+    <queueMembers>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>CountryManagerAustralia</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffAustralia</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

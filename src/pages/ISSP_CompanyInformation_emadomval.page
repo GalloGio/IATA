@@ -1,0 +1,313 @@
+<apex:page controller="ISSP_CompanyInformationEmaDomVal"
+    standardStylesheets="false"
+    showHeader="false"
+    sidebar="false"
+    applyBodyTag="false"
+    applyHtmlTag="false"
+    doctype="html-5.0"
+    action="{!checkPermission}">
+<html>
+<c:ISSP_Header ></c:ISSP_Header>
+<body>
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" />
+    <apex:includeScript value="{! $Resource.notify }" />
+    <script type="text/javascript">
+
+        // This function is anonymous, is executed immediately
+        // and the return value is assigned to QueryString
+        // Source : http://stackoverflow.com/questions/979975/how-to-get-the-value-from-the-get-parameters
+        var QueryString = function () {
+            var query_string = {};
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i=0;i<vars.length;i++) {
+                var pair = vars[i].split("=");
+                // If first entry with this name
+                if (typeof query_string[pair[0]] === "undefined") {
+                    query_string[pair[0]] = decodeURIComponent(pair[1]);
+                    // If second entry with this name
+                } else if (typeof query_string[pair[0]] === "string") {
+                    var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+                    query_string[pair[0]] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[pair[0]].push(decodeURIComponent(pair[1]));
+                }
+            }
+            return query_string;
+        }();
+
+        // To have no conflict with SFDC
+        j$ = jQuery.noConflict();
+
+        // When document is ready
+        j$(document).ready(function() {
+
+            // Into our j$ prototype
+            j$(function() {
+
+                // Print successful creation message if right HTTP parameter is present
+                if(QueryString.hasOwnProperty('successfulInsert')) {
+                    if(QueryString.successfulInsert === 'true') {
+                        $.notify("Success :\n Your record has been created.", {
+                            clickToHide: false,
+                            autoHide: true,
+                            autoHideDelay: 7000,
+                            globalPosition: 'top left',
+                            className: 'success',
+                        });
+                    }
+                }
+
+                // Print successful deletion message if right HTTP parameter is present
+                if(QueryString.hasOwnProperty('successfulDelete')) {
+                    if(QueryString.successfulDelete === 'true') {
+                        $.notify("Success :\n This record has been deleted.", {
+                            clickToHide: false,
+                            autoHide: true,
+                            autoHideDelay: 7000,
+                            globalPosition: 'top left',
+                            className: 'success',
+                        });
+                    }
+                }
+
+                // Dialog modal for add + linked button actions
+                j$("#dialognew").dialog({
+                    autoOpen: false,
+                    modal: true,
+                    width: "400px",
+                    resizable: false,
+                    draggable: false,
+                    open: function (event, ui) {
+                        $(this).parent().children().children(".ui-dialog-titlebar-close").hide();
+                    }
+                });
+                j$("#btnemadomvalnew").on("click", function() {
+                    j$("#dialognew").dialog("open");
+                });
+                j$("#newclosemodal").on("click", function() {
+                    j$("#dialognew").dialog("close");
+                });
+
+            });
+        });
+
+    </script>
+
+    <!-- To have a jQuery remove pop-up by account domain -->
+    <!-- Main source : http://stackoverflow.com/questions/3273350/jquerys-click-pass-parameters-to-user-function -->
+    <apex:repeat value="{! validEmailDomains }" var="ved">
+        <script type="text/javascript">
+
+            // To have no conflict with SFDC
+            j$ = jQuery.noConflict();
+
+            // When document is ready
+            j$(document).ready(function() {
+
+                // Into our j$ prototype
+                j$(function() {
+
+                    // Dialog modal for remove + linked button actions
+                    j$("#dialogrem-{! ved.Id }").dialog({
+                        autoOpen: false,
+                        modal: true,
+                        width: "400px",
+                        resizable: false,
+                        draggable: false,
+                        open: function (event, ui) {
+                            $(this).parent().children().children(".ui-dialog-titlebar-close").hide();
+                        }
+                    });
+                    j$("#linkemadomvalrem-{! ved.Id }").on("click", function() {
+                        j$("#dialogrem-{! ved.Id }").dialog("open");
+                    });
+                    j$("#remclosemodal-{! ved.Id }").on("click", function() {
+                        j$("#dialogrem-{! ved.Id }").dialog("close");
+                    });
+
+                    // jQuery listener to pass account domain ID
+                    j$("#domainremsubmit-{! ved.Id }").click({accoutDomainId: '{! ved.Id }'}, deleteAccountDomain);
+                    // Improvement : find a way to extract the function from this loop
+                    function deleteAccountDomain(event) {
+
+                        Visualforce.remoting.Manager.invokeAction(
+                            '{! $RemoteAction.ISSP_CompanyInformationEmaDomVal.deleteAccountDomain }',
+                            event.data.accoutDomainId,
+                            function(result, event) {
+                                if (event.status) {
+                                    // Redirect user with a success message
+                                    window.location.href = '{! emaDomValUrlDel }';
+                                } else {
+                                    // Get the custom error without closing the dialog
+                                    var messageWithEnd = event.message.split(", ");
+                                    var correctMessage = messageWithEnd[1].substr(0, messageWithEnd[1].length -4);
+                                    $.notify('Error :\n' + correctMessage, {
+                                        clickToHide: false,
+                                        autoHide: true,
+                                        autoHideDelay: 7000,
+                                        globalPosition: 'top left'
+                                    });
+                                }
+                            },
+                            {escape: true}
+                        );
+
+                    }
+
+                });
+            });
+
+        </script>
+    </apex:repeat>
+
+    <script type="text/javascript">
+        function insertAccountDomain() {
+
+            // Variables to interact properly with SFDC
+            var accountDomainName = document.getElementById('domainname').value;
+            var accountId = document.getElementById('accountid').value;
+            var redirectUrl = document.getElementById('redirecturl').value;
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{! $RemoteAction.ISSP_CompanyInformationEmaDomVal.setAccountDomain }',
+                accountDomainName, accountId,
+                function(result, event) {
+                    if (event.status) {
+                        // Redirect user with a success message
+                        window.location.href = redirectUrl;
+                        // Note : It's also possible to do "j$("#dialog").dialog("close");" + retrieve
+                        // the new element, but only if there's a integrity check by company (duplicates)
+                    } else {
+                        // Get the custom error without closing the dialog
+                        var messageWithEnd = event.message.split(", ");
+                        var correctMessage = messageWithEnd[1].substr(0, messageWithEnd[1].length -4);
+                        $.notify('Error :\n' + correctMessage, {
+                            clickToHide: false,
+                            autoHide: true,
+                            autoHideDelay: 7000,
+                            globalPosition: 'top left'
+                        });
+                    }
+                },
+                {escape: true}
+            );
+
+        }
+    </script>
+    <style>
+        .ui-dialog-title {font-size:14px; color:white;}
+        .domainnamelabel {font-size:14px;}
+    </style>
+    <c:ISSP_CustomNavigation />
+    <div class="container">
+        <div id="contentWrapper">
+        <apex:form >
+            <div class="panel panel-primary">
+                <div class="panel-heading head_panel_green">
+                    <h3 class="panel-title">{! $Label.ISSP_EMADOMVAL_Title }</h3>
+                </div>
+                <div class="panel-body"><!-- end My Company panel  -->
+                    <div class="row">
+                        <div class="col-lg-12" style="font-size:16px; font-weight:bold;">{! $Label.ISSP_EMADOMVAL_ImportantInformation }</div>
+                    </div>
+                    <div class="row">
+                        <br />
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-1">&nbsp;</div>
+                        <div class="col-lg-10">
+                            <table class="list table-hover table table-condensed table-responsive">
+                                <thead>
+                                    <tr class="headerRow">
+                                        <th class="headerRow" scope="col" colspan="1">{! $Label.ISSP_EMADOMVAL_TableTitle_EmailDomain }</th>
+                                        <th class="headerRow" scope="col" colspan="1">{! $Label.ISSP_EMADOMVAL_TableTitle_AddedOn }</th>
+                                        <th class="headerRow" scope="col" colspan="1">{! $Label.ISSP_EMADOMVAL_TableTitle_Action }</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{! validEmailDomains }" var="ved">
+                                        <tr class="dataRow">
+                                            <td class="dataCell">
+                                                <apex:outputText value="{! ved.Name }" />
+                                            </td>
+                                            <td class="dataCell">
+                                                <apex:outputText value="{0, date, dd/MM/YYYY}">
+                                                    <apex:param value="{! ved.CreatedDate }" />
+                                                </apex:outputText>
+                                            </td>
+                                            <td class="dataCell">
+                                                <p><a id="linkemadomvalrem-{! ved.Id }">{! $Label.IDCard_KA_ChangeAgency_Remove }</a></p>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-1">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">&nbsp;</div>
+                        <div class="col-lg-3">
+                            <input id="btnemadomvalnew" value="{! $Label.ISSP_EMADOMVAL_AddBtn }" class="btn btn-block btn_iata_primary" />
+                        </div>
+                        <div class="col-lg-3" style="padding-right:25px">
+                            <apex:commandbutton value="{! $Label.ISSP_EMADOMVAL_BackBtn }" styleclass="btn btn-block btn_iata_primary" action="{! goBackToCompanyInformation }" immediate="true" />
+                        </div>
+                        <div class="col-lg-3">&nbsp;</div>
+                    </div>
+
+                    <!-- Linked jQuery dialogs -->
+                    <div id="dialognew" title="New email domain" hidden="hidden">
+                        <div class="row form-group" style="padding-top:20px;">
+                            <div class="col-lg-3" style="padding-left:15px; padding-top:7px;">
+                                <apex:outputLabel id="domainnamelabel" for="domainname" value="{! $ObjectType.Account_Domain__c.fields.Name.label }" styleClass="domainnamelabel" />
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="input-container" style="position: relative;">
+                                    <input id="domainname" required="required" style="width: 100%;padding-left: 35px;" class="form-control rec mandatory" type="text" />
+                                    <span class="form-control rec unit" style="position: absolute; display: block; top: 0px; left: 1px; margin: 0px; width: auto; color: black; opacity: 0.3; border: 0px;">@</span>
+                                </div>
+                                <input id="accountid" type="hidden" value="{! con.Account.Id }" />
+                                <input id="redirecturl" type="hidden" value="{! emaDomValUrlNew }" />
+                            </div>
+                            <p style="text-align:center; padding-top:50px;">
+                            <div class="col-lg-6">
+                                <input id="domainnewsubmit" value="{! $Label.ISSP_Submit }" class="btn btn-block btn_iata_success" onclick="insertAccountDomain()" />
+                            </div>
+                            <div class="col-lg-6" style="padding-right:25px">
+                                <input id="newclosemodal" value="{! $Label.ISSP_Cancel }" class="btn btn_iata_cancel btn-block" />
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                    <apex:repeat value="{! validEmailDomains }" var="ved">
+                        <div id="dialogrem-{! ved.Id }" title="{! $Label.Confirmation }" hidden="hidden">
+                            <div class="row form-group" style="padding-top:10px;">
+                                <div class="col-lg-12">
+                                    {! $Label.ISSP_EMADOMVAL_RemoveConfirmMsg }
+                                </div>
+                                <p style="text-align:center; padding-top:45px;">
+                                <div class="col-lg-6">
+                                    <input id="domainremsubmit-{! ved.Id }" value="{! $Label.ISSP_Yes }" class="btn btn-block btn_iata_success" />
+                                </div>
+                                <div class="col-lg-6" style="padding-right:25px">
+                                    <input id="remclosemodal-{! ved.Id }" value="{! $Label.ISSP_No }" class="btn btn_iata_cancel btn-block" />
+                                </div>
+                                </p>
+                            </div>
+                        </div>
+                    </apex:repeat>
+
+                </div>
+            </div><!-- end panel body -->
+
+        </apex:form>
+    </div>
+    </div>
+    <c:ISSP_CustomFooter/>
+</body>
+</html>
+</apex:page>

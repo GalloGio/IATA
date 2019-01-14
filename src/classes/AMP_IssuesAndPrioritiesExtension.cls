@@ -13,15 +13,25 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
     private List<String> lsIssueFields;
 
+    public String accountId {get;set;}
+    public String accountName {get;set;}
     // The extension constructor initializes the private member
     // variable myAccount by using the getRecord method from the standard
     // controller.
     public AMP_IssuesAndPrioritiesExtension(ApexPages.StandardController stdController) {
         this.myAccount = (Account)stdController.getRecord();
-        this.objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
+        this.objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
         showAllItems = false;
         isEditMode = false;
         isNewLine = false;
+        if(this.myAccount.Id != null) {
+            accountId = this.myAccount.Id;
+            // accountName = this.myAccount.Name;
+        } else {
+            accountId =  ApexPages.currentPage().getParameters().get('accountId');
+            accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
+            if(ApexPages.currentPage().getParameters().get('showClosed') == '1') showAllItems=true;
+        }
         lsIssueFields = getIssueFields();
         canEdit = getCanEdit();
         lsIssuesAndPriorities = new List<Objective__c>();
@@ -41,6 +51,13 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         else this.sortOrder = ' Name DESC';
         lsIssuesAndPriorities = getIssuesAndPriorities();
     }
+
+    public void sortByDivision() {
+        if(this.sortOrder == ' Division__c DESC') this.sortOrder = ' Division__c ASC';
+        else this.sortOrder = ' Division__c DESC';
+        lsIssuesAndPriorities = getIssuesAndPriorities();
+    }
+
     public void sortBySource() {
         if(this.sortOrder == ' AM_Source_Text__c DESC') this.sortOrder = ' AM_Source_Text__c ASC';
         else this.sortOrder = ' AM_Source_Text__c DESC';
@@ -99,6 +116,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         List<String> issueAccessFields = new String [] {
             // 'Id',
             'Name',
+            'Division__c',
             'Description__c',
             'AM_Can_IATA_support_the_airline__c',
             'AM_Global__c',
@@ -116,7 +134,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         }
 
     public  List<Objective__c> getIssuesAndPriorities() {
-        List<Objective__c> tmpList = getIssuesAndPriorities(this.myAccount.Id);
+        List<Objective__c> tmpList = getIssuesAndPriorities(accountId, SortOrder);
         List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
         for(Objective__c i : tmpList) {
             if(i.Status__c == 'Open' || showAllItems) {
@@ -151,8 +169,8 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
 
   @AuraEnabled
-  public static List<Objective__c> getIssuesAndPriorities(Id accountId) {
-      Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
+  public static List<Objective__c> getIssuesAndPriorities(Id accountId, String SortOrder) {
+      Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
       List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
         List<String> lsIssueFields = getIssueFields();
 
@@ -163,7 +181,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         queryString += ' FROM Objective__c WHERE Account__c =\'' + accountId + '\'' +
         ' AND RecordTypeId = \'' + objectiveRecordTypeId+ '\'';
         // if(!showAllItems) queryString += ' AND Status__c =  \'Active\'';
-        // if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' ';
+        if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' ';
         System.debug(queryString);
         List<SObject> lsSObjects = Database.query(queryString);
         for(SObject s : lsSObjects) {
@@ -176,7 +194,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
     @AuraEnabled
     public static Objective__c upsertIssue(Objective__c issue) {
         if(issue.RecordTypeId == null ) {
-            Id objectiveRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName ='Account_Issues_and_Priorities'].Id;
+            Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
             issue.RecordTypeId = objectiveRecordTypeId;
         }
         System.debug(issue);
@@ -193,7 +211,7 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
     public void newLine() {
       try {
           newIssue = new Objective__c();
-          newIssue.Account__c = this.myAccount.Id;
+          newIssue.Account__c = accountId;
           newIssue.RecordTypeId = this.objectiveRecordTypeId;
           //newIssue.Name = 'new issue or priority';
           //insert newIssue;
@@ -286,6 +304,11 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
         public String getRecordId() {
             return this.myAccount.Id;
+        }
+
+        @AuraEnabled
+        public static String  getReportId() {
+            return [SELECT Id FROM Report WHERE DeveloperName = 'AMP_IssuesAndPriorities' LIMIT 1].Id;
         }
 
 

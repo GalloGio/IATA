@@ -1,0 +1,181 @@
+.THIS .launcher {
+    /*position: absolute;
+    top: 150px;
+    left: 10px;
+    z-index: 100;*/
+}
+.THIS .fadein {
+    z-index: 1;
+}
+.THIS .popup {
+    /*border: 2px solid;*/
+    border-radius: .25rem;
+
+    background: #fff;
+    position: absolute !important;
+    top: 150px;
+    left: 25%;
+    padding: 1em;
+    /*
+    width: 50%;*/
+    /*min-height: 50%;*/
+    /*padding-left: 2em;*/
+    min-height: 50%;
+    z-index: 1000;
+}
+/* for narrow screens make full width and don't force 25% from left */
+.THIS .verticalMiddle {
+    height: 300px;
+}
+.THIS .odd {
+    background: #f3f3f3;
+    width: 100%;
+    display: block;
+}
+.THIS .odd div, .THIS .even div {
+    display: inline-block;
+}
+.THIS .even {
+    width: 100%;
+    display: block;
+}
+.THIS .appRoles {
+    position: absolute;
+    top: 130px;
+    left: 25%;
+    border: 2px solid;
+    background: #fff;
+    width: 50%;
+    height: 60%;
+    padding: 2em;
+}
+.THIS .closebutton .slds-button__icon{
+    fill: white;
+}
+.THIS .closebutton {
+    position: absolute;
+    top: -30px;
+    right: 0;
+}
+.THIS .leftarrow {
+    position: absolute;
+    top: 50%;
+    left: 0;
+}
+.THIS .rightarrow {
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+.THIS .bottomnavigation {
+    position: absolute;
+    text-align: center;
+    bottom: 1.2em;
+    width: 100%;
+    left: 0;
+}
+/*.THIS .pageDot {
+    font-size: 120%;
+}*/
+.THIS .dotWrapper {
+    display: inline;
+    margin: 0.2em;
+
+}
+.THIS .pageDot {
+    font-size: 0;
+    line-height: 0;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid black;
+    outline: none;
+    border-radius: 15px;
+}
+.THIS .pageDot.active{
+    color: #f00;
+    background: black;
+}
+.THIS .pageDot.inactive{
+    color: #00f;
+    background: transparent;
+}
+.THIS .dot {
+    list-style: none;
+    display: inline-block;
+}
+.THIS .sdot {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 10px;
+    height: 10px;
+    padding: 5px;
+    cursor: pointer;
+    border: 0;
+    outline: none;
+    border-radius: 15px;
+}
+.THIS .appcard{
+    border: 1px solid;
+    border-radius: 5px;
+    height: 6em;
+
+    /*left: 25%;
+    top: 37%;
+    position: absolute;
+    width: 50%;
+    min-width: 300px;*/
+    display: inline-block;
+    background-color: #f0f1f2;
+    cursor: pointer;
+    border: 1px solid rgb(216, 221, 230);
+    border-radius: .25rem;
+    text-decoration: none;
+    height: 96px;
+    line-height: 96px;
+    text-align: center;
+}
+
+.THIS .activeApp{
+    line-height:28px;
+}
+.THIS .appImage {
+    max-width: 96px;
+    /*float: left;*/
+}
+.THIS .narrow {
+    width: 7%;
+}
+.THIS .medium {
+    width: 20%;
+}
+.THIS .wide {
+    width: 73%;
+    white-space: normal !important;
+}
+.THIS input[type="radio"] {
+    /*display: none;*/
+}
+.THIS input:checked + label {
+    background: blue;
+    color: red
+}
+
+.THIS .inlinewithlabel{
+    display:inline-block;
+    margin-left:6px;
+    vertical-align:middle;
+}
+
+.THIS .floatleft{
+    display:block;
+    position:relative;
+    left:1em;
+}
+
+.THIS .terms{
+    min-width:390px;
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>CC</fullName>
+        <default>false</default>
+        <label>CC</label>
+    </customValue>
+    <customValue>
+        <fullName>CC VA</fullName>
+        <default>false</default>
+        <label>CC VA</label>
+    </customValue>
+    <customValue>
+        <fullName>CA</fullName>
+        <default>false</default>
+        <label>CA</label>
+    </customValue>
+    <customValue>
+        <fullName>EP</fullName>
+        <default>false</default>
+        <label>EP</label>
+    </customValue>
+    <masterLabel>Form Of Payment Options</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

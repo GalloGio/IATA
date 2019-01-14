@@ -25,5 +25,28 @@
         <unique>false</unique>
     </fields>
     <label>Apex Settings</label>
+    <listViews>
+        <fullName>all_values</fullName>
+        <columns>NAME</columns>
+        <columns>Number_1__c</columns>
+        <columns>Text_1__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>all values</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>iec_values</fullName>
+        <columns>NAME</columns>
+        <columns>Number_1__c</columns>
+        <columns>Text_1__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>IEC</value>
+        </filters>
+        <label>IEC</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

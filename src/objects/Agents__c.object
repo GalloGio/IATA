@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,6 +46,7 @@
     <description>Used for the automatic assignment of cases in SCE. Developed by Salesforce Professional Services.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -57,6 +54,16 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Exact_Log_Off_Time__c</fullName>
+        <description>Exact time when the agent issued log off</description>
+        <externalId>false</externalId>
+        <label>Exact Log Off Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
     <fields>
         <fullName>Last_Case_Assigned_Date_Time__c</fullName>
         <externalId>false</externalId>
@@ -67,24 +74,39 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Log_Off_Time_After_Timeout__c</fullName>
+        <description>A timestamp denoting when the user will be treated as logged off. After this point in time the cases of the agent get re-assigned to the respective GCS queue.
+No value set denotes that the agent is logged in.</description>
+        <externalId>false</externalId>
+        <label>Reassignment Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Log_on_picklist__c</fullName>
         <externalId>false</externalId>
         <label>Log on picklist</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Log on</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Log off</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Log on</fullName>
+                    <default>false</default>
+                    <label>Log on</label>
+                </value>
+                <value>
+                    <fullName>Log off</fullName>
+                    <default>false</default>
+                    <label>Log off</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Logged_on__c</fullName>
@@ -138,33 +160,40 @@
         <externalId>false</externalId>
         <inlineHelpText>Select the region to which the Agent belongs to.</inlineHelpText>
         <label>Region</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Africa &amp; Middle East</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Americas</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Asia &amp; Pacific</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>China &amp; North Asia</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Europe</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Africa &amp; Middle East</fullName>
+                    <default>false</default>
+                    <label>Africa &amp; Middle East</label>
+                </value>
+                <value>
+                    <fullName>Americas</fullName>
+                    <default>false</default>
+                    <label>Americas</label>
+                </value>
+                <value>
+                    <fullName>Asia &amp; Pacific</fullName>
+                    <default>false</default>
+                    <label>Asia &amp; Pacific</label>
+                </value>
+                <value>
+                    <fullName>China &amp; North Asia</fullName>
+                    <default>false</default>
+                    <label>China &amp; North Asia</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Request_next_case__c</fullName>
@@ -191,12 +220,13 @@
     <label>Agent</label>
     <listViews>
         <fullName>AME_Agents</fullName>
-        <columns>NAME</columns>
-        <columns>Last_Case_Assigned_Date_Time__c</columns>
-        <columns>Logged_on__c</columns>
-        <columns>Maximum_case_workload__c</columns>
         <columns>Region__c</columns>
         <columns>User__c</columns>
+        <columns>Logged_on__c</columns>
+        <columns>Maximum_case_workload__c</columns>
+        <columns>Last_Case_Assigned_Date_Time__c</columns>
+        <columns>NAME</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Region__c</field>
@@ -211,6 +241,8 @@
         <columns>NAME</columns>
         <columns>Last_Case_Assigned_Date_Time__c</columns>
         <columns>Logged_on__c</columns>
+        <columns>Exact_Log_Off_Time__c</columns>
+        <columns>Log_Off_Time_After_Timeout__c</columns>
         <columns>Request_next_case__c</columns>
         <columns>User__c</columns>
         <columns>Maximum_case_workload__c</columns>
@@ -234,6 +266,7 @@
         <label>Americas - All</label>
         <language>en_US</language>
         <sharedTo>
+            <group>HUBMadrid</group>
             <group>IDFSAmericasCustomerService</group>
             <group>IDFSAmericasRegionalOffice</group>
             <group>IDFS_Americas_AM_RPM</group>
@@ -320,6 +353,7 @@
     <pluralLabel>Agents</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <webLinks>
         <fullName>Skill_Assignments_for_this_Agent</fullName>
         <availability>online</availability>

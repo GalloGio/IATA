@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body{
+     font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+     color:#004577;
+     margin:0px;
+   }
+   #ft {
+    clear: both;
+    padding: 0;
+    color: #fff;
+  }
+  #ft .header {
+    background-color: #0a4279;
+    width: 100%;
+    height: 60px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: inline-table;
+  }
+
+  #ft .header .icon-logo {
+    font-size: 48px;
+  }
+  h2{
+    color: white;
+    font-weight: bold;
+    font-family: "Arial";
+  }   
+  .icon {
+    font-family: 'iataIcons'!important;
+  }       
+
+  div.main{
+    margin:auto;
+    width:100%;
+  }
+  hr{
+   color:#0A4279;
+ }
+ .oiHeader .homeIcon {
+  display:inline-table;
+  margin-left:0px;
+  border:0;
+  background-color:#fff;
+  position:relative;
+  text-align:center;
+  z-index:10;
+  height:106px;
+  font-size:71px;
+  padding-top:11px;
+  color:#0A4278 !important;
+  text-decoration:none;
+  overflow:hidden;
+  margin-bottom:30px;
+}
+.oiHeader .homeIcon {
+  padding-bottom:16px;
+  background-color:#fff;
+  display:block
+}
+#suiteBar {
+  height:140px
+}
+#headerBar {
+  background-color:#00305b;
+  color:#fff;
+  height:38px;
+  position:absolute;
+  width:100%;
+  /*margin-top:50px;*/
+  top:50px;
+}
+
+.centerAll {
+  text-align:center
+}
+
+
+.icon-logo{
+  float:none;
+  height:48px;
+  width:76px;
+}
+
+.widthlimiter{
+  width:100%;
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+  overflow:hidden
+  background-color: #0A4278;
+}
+.forceinline{
+  display:inline !important;
+  background-color: #0A4278;
+}
+.container{
+  width:600px;
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+    img .homeIcon{
+        display: block;
+        max-width:600px;
+        width: 100%;
+        height: auto;
+      }
+
+</style>
+
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="oiHeader">
+      <table border="0" cellpadding="0" cellspacing="0">
+      <tr>
+      <td>
+      <img class="homeIcon" src="{!Community_Header}">
+      </td>
+      </tr>
+      </table>
+    </div>
+    <br>
+    <div class="main">
+
+      <table width="600px">
+        <tr>
+          <td colspan="3">
+            {!$Label.ISSP_Email_do_not_reply}
+          </td>
+        </tr>
+        <tr>
+
+          <td colspan="3" style="font-size:26px;color:#0A4279;text-align:center;">     
+            <b>{!Community_Name}</b>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <br />
+    <!--        <hr style="width:80%"/> -->
+            <p> 
+             Dear {!Contact.Salutation} {!Receiving_User.FirstName} {!Receiving_User.LastName},
+           </p>
+           <p>
+            Welcome to {!Community_Name}.<br />Your e-mail address is
+            {!Receiving_User.Email} <br />
+Your temporary password is
+           <span>{!Contact.Password}</span><br />
+          </p>
+          <p>Please click on the button below to finalize your registration process:<br>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%">
+
+        </td>
+        <td >
+          <center>
+            <a style="font-size:20px;
+            text-align:center;
+            font-weight:bold;
+            background-color:#0A4279;
+            color:white;
+            padding:5px;
+            text-decoration:none;
+            border-collapse: separate!important;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;" href="{!Community_Url}">Complete your registration</a>
+        </center>
+      </td>
+      <td width="15%">
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>
+          Thank you for signing up,
+        </p>
+        <p>
+          IATA Customer Service
+        </p>
+      </td>
+    </tr>
+
+  </table>
+</div>
+<br>
+<div id="ft" style="width:600px !important">
+  <div class="header" style="padding:10px; background-color:#0A4278;">
+    <div style="text-align:center"  class="widthlimiter centerAll">
+
+
+        <img style="margin-top:10px;background-color:#0A4278;" class="icon-logo" src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w00000057bD2&oid=00D2000000008TF&lastMod=1491942665000">
+
+      <h2 style="margin-bottom:10px;color:#fff;;" class="" style="text-align:center">{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}</h2>
+
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

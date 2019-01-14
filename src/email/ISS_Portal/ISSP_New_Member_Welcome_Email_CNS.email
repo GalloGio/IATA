@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <style>
+      body{
+	font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color:#004577;
+      }
+     
+      
+div.main{
+margin:auto;
+width:90%;
+}
+      hr{
+	color:#0A4279;
+      }
+    </style>
+    
+  </head>
+
+  <body>
+<div class="main">
+<table width="640px">
+<tr>
+<td colspan="3">
+  <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF"/> 
+  </td>
+  </tr>
+<tr>
+
+<tr>
+<td colspan="3"> 
+{!$Label.ISSP_Email_do_not_reply}
+</td>
+</tr>
+<tr>
+
+<td colspan="3" style="font-size:26px;color:#0A4279;text-align:center;">     
+  <b>{!Community_Name}</b>
+</td>
+</tr>
+<tr>
+<td colspan="3">
+  <br />
+   <hr style="width:80%"/>
+   <p> 
+   Dear {!Receiving_User.FirstName} {!Receiving_User.LastName},
+    </p>
+    <p>
+      Welcome to CNS Customer Portal.<br />Your e-mail adress is
+{!Receiving_User.Email}
+<br />Temporary password: {!Contact.Password}
+    </p>
+<p>Please click on the button below to finalize your registration process:<br>
+</p>
+  </td>
+  </tr>
+  <tr>
+  <td width="30%">
+  
+    </td>
+    <td >
+      <center>
+<a style="font-size:20px;
+	text-align:center;
+	font-weight:bold;
+	background-color:#0A4279;
+	color:white;
+	padding:5px;
+	text-decoration:none;
+	
+	
+border-collapse: separate!important;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px;" href="{!Community_Url}">Click here to log in</a>
+  </center>
+  </td>
+  <td width="30%">
+  </td>
+  </tr>
+
+  <tr>
+  <td colspan="3">
+    <p>
+Thank you for signing up,
+    </p>
+    <p>
+CNS Customer Service
+    </p>
+  </td>
+    </tr>
+    <tr>
+    <td colspan="3">
+  <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF" /> 
+      </td>
+    </tr>    
+    
+
+</table>
+</div>
+  </body>
+</html>

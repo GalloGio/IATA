@@ -15,7 +15,7 @@ global class SIDRARnSIntegrationWS {
             String theCurrency, String ShortPaymentAmount, String BillingAmount, String CollectedAmount,
             String OutstandingAmount, String IATACharges, String DisputedAmount, String ExternalID,
             String ProposeIrregularity, String ApproveIrregularity, String IrregularityType, String Reason
-            , String LatePaymentDate) {
+            , String LatePaymentDate, String GDIPremium, String AgencyFees) {
 
         try {
             if (ValidateMandatoryFields(IATACountry, BSPCass, IATACode, GroupSingleAgent, Subject,
@@ -40,7 +40,7 @@ global class SIDRARnSIntegrationWS {
                                         if (!ValidateDateField(LatePaymentDate))
                                             return GetXmlResponse(STATUSFAIL, '', 'Invalid Late Payment date', '');
 
-                                ID caseRecordtypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(CaseType);
+                                ID caseRecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', CaseType);
 
                                 // Instanciate a new case object and set the Record Type
                                 Case theCase = new Case();
@@ -78,6 +78,8 @@ global class SIDRARnSIntegrationWS {
                                 theCase.Collected_amount__c = Double.valueOf(CollectedAmount);
                                 theCase.Outstanding_Amount__c = Double.valueOf(OutstandingAmount);
                                 theCase.IATA_Charges__c = Double.valueOf(IATACharges);
+                                theCase.GDI_Premium__c = Double.valueOf(GDIPremium);
+                                theCase.Agency_Fees__c = Double.valueOf(AgencyFees);
 
                                 // Request from the business: SF "External ID" field should contain the same thing than the subject
                                 // The field called External ID created by: Michael Herrero in 2007 is not designed to contains the IRIS Case number another field was created to contains the IRIS Case ID
@@ -160,7 +162,8 @@ global class SIDRARnSIntegrationWS {
     }
 
     webservice static string UpdateCase(string CaseNumber, string ShortPaymentAmount, string BillingAmount, string CollectedAmount,
-                                        string OutstandingAmount, string IATACharges, string DisputedAmount, string LatePaymentDate) {
+                                        string OutstandingAmount, string IATACharges, string DisputedAmount, string LatePaymentDate,
+                                        String GDIPremium, String AgencyFees) {
 
         try {
             // Find the case and update it
@@ -181,6 +184,12 @@ global class SIDRARnSIntegrationWS {
 
                     if (IATACharges <> '') theCase.IATA_Charges__c = double.valueOf(IATACharges);
                     else return GetXmlResponse(STATUSFAIL, '', 'IATA Charges cannot be null', '');
+
+                    if (GDIPremium <> '') theCase.GDI_Premium__c = double.valueOf(GDIPremium);
+                    else return GetXmlResponse(STATUSFAIL, '', 'GDI Premium cannot be null', '');
+
+                    if (AgencyFees <> '') theCase.Agency_Fees__c = double.valueOf(AgencyFees);
+                    else return GetXmlResponse(STATUSFAIL, '', 'Agency Fees cannot be null', '');
 
                     if (LatePaymentDate<>null)
                         if (LatePaymentDate<>'')
@@ -330,14 +339,16 @@ global class SIDRARnSIntegrationWS {
             }
             Account account = listAccount.get(0);
 
-            String statementName = account.Site + Period.trim() + Operation.trim();
+            String statementName = Client.trim() + Period.trim() + Operation.trim();
             list<Account_Statement__c> listStatement = [
-                Select Id, Name, Key__c, Account__c, Operation__c, Group__c, Period__c, Remittance_Date__c, Billing_Amount__c, Amount_to_be_Paid__c, Paid__c, Balance__c, CurrencyISOCode
-                from Account_Statement__c
-                Where Name = :statementName
-            ];
+                        Select Id, Name, Key__c, Account__c, Operation__c, Group__c, Period__c, Remittance_Date__c, Billing_Amount__c, Amount_to_be_Paid__c, Paid__c, Balance__c, CurrencyISOCode
+                        from Account_Statement__c
+                        Where Account__c = :account.Id
+                                           And Period__c = :Period
+                                                   And Operation__c = :Operation
+                    ];
 
-            Account_Statement__c statement = listStatement.isEmpty()? null: listStatement.get(0);
+            Account_Statement__c statement = listStatement.isEmpty() ? null : listStatement.get(0);
 
             if  ( statement == null) {
                 statement = new Account_Statement__c();
@@ -369,13 +380,9 @@ global class SIDRARnSIntegrationWS {
     //date format: YYYY-MM-DD
     public SIDRA_eDefault__c CreateDefaultRow(Case theCase, date dateMovement, double sAmount, string sType) {
         SIDRA_eDefault__c oReturn;// = new SIDRA_eDefault__c();
-        string sRecordTypeId = '';
+        Id sRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('SIDRA_eDefault__c', sType);
 
-        for (RecordType rt : [Select r.Id, r.DeveloperName From RecordType r Where SobjectType  = 'SIDRA_eDefault__c'])
-            if (rt.DeveloperName == sType)
-                sRecordTypeId = rt.Id;
-
-        if (sRecordTypeId != '') {
+        if (sRecordTypeId != null) {
             if (sType != '') {
                 if (sAmount != 0) {
                     oReturn = new SIDRA_eDefault__c(Account__c = theCase.AccountId, Currency__c = theCase.Currency__c, Currency_Exchange_Rate__c = theCase.CurrencyExchangeRateUSD__c
@@ -433,7 +440,7 @@ global class SIDRARnSIntegrationWS {
             if (theCurrency == '')
                 return GetXmlResponse(STATUSFAIL, '', 'theCurrency cannot be empty', '');
 
-            ID caseRecordtypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(CaseType);
+            ID caseRecordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', CaseType);
 
             string sQuery = 'Select Id, BSPCountry__c, Remittance_Period__c, RecordTypeId, BSP_CASS__c, Currency__c from case ';
             sQuery +=       ' where RecordTypeId=\'' + caseRecordtypeId + '\'';
@@ -558,7 +565,7 @@ global class SIDRARnSIntegrationWS {
         writer.writeCharacters(Status);
         writer.writeEndElement();
         writer.writeStartElement(null, 'ErrorMsg', null);
-        writer.writeCharacters(errorMsg.length() > 2000? errorMsg.substring(0, 1999): errorMsg);
+        writer.writeCharacters(errorMsg.length() > 2000 ? errorMsg.substring(0, 1999) : errorMsg);
         writer.writeEndElement();
         writer.writeEndElement();
         writer.writeEndDocument();

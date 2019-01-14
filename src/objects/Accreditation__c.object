@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -68,6 +65,17 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_GDP_Key__c</fullName>
+        <externalId>true</externalId>
+        <label>AMS_GDP_Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Accreditation_ID__c</fullName>
         <externalId>false</externalId>
         <label>Accreditation ID</label>
@@ -78,6 +86,35 @@
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Accreditation_Model__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Indicates the model of Accreditation the agency is a part of. 
+Mapped to &quot;ANG_Accreditation_Model__c&quot; on AMS Account for Replication.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Mapped to &quot;ANG_Accreditation_Model__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <label>Accreditation Model</label>
+        <referenceTo>GDP_Reference_Table__c</referenceTo>
+        <relationshipLabel>Accreditation (Accreditation Model)</relationshipLabel>
+        <relationshipName>Accreditation3</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Cash_Conditions_Override__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If Checked, RHC equals Financial Security Amount Provided.
+Mapped to &quot;ANG_CashCondition__c&quot; on AMS Account for Replication.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If Checked, RHC equals Financial Security Amount Provided.
+Mapped to &quot;ANG_CashCondition__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <label>Cash Conditions Override</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Class__c</fullName>
@@ -102,6 +139,32 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Endorsed_Accredited_By_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Endorsed_Accredited_By__r.Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Endorsed/Accredited By Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Endorsed_Accredited_By_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Related_GDP_Products_Account_View__r.CNS_Agency__c,&quot;CNS&quot;,
+IF(ISPICKVAL( Related_Account__r.Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Related_Account__r.Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISBLANK(Related_Account__r.WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;)))
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Endorsed/Accredited By</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Endorsed_Accredited_By__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -113,6 +176,18 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Is_NewGen_Agency__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if Agency falls under Reso 812 (NewGen ISS) or not.
+Mapped to &quot;ANG_IsNewGenAgency__c&quot; on AMS Account for Replication.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Mapped to &quot;ANG_IsNewGenAgency__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <label>Is NewGen Agency</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Last_change_date__c</fullName>
@@ -128,7 +203,7 @@
         <externalId>false</externalId>
         <label>Last re-inspection date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -150,7 +225,7 @@
         <relationshipLabel>Accreditation</relationshipLabel>
         <relationshipName>Accreditation</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -166,6 +241,43 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Risk_Status__c</fullName>
+        <description>Current Risk Status of the Agent.
+Mapped to &quot;ANG_RiskStatus__c&quot; on AMS Account for Replication.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Mapped to &quot;ANG_RiskStatus__c&quot; on AMS Account for Replication.</inlineHelpText>
+        <label>Risk Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A</label>
+                </value>
+                <value>
+                    <fullName>B</fullName>
+                    <default>false</default>
+                    <label>B</label>
+                </value>
+                <value>
+                    <fullName>C</fullName>
+                    <default>false</default>
+                    <label>C</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
@@ -200,7 +312,21 @@
         <columns>Date__c</columns>
         <columns>Status__c</columns>
         <columns>Related_GDP_Products_Account_View__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>AMS_GDP_Key__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Accreditation__c.Live</value>
+        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>
@@ -216,12 +342,51 @@
         <fullName>GDP</fullName>
         <active>true</active>
         <label>GDP</label>
+        <picklistValues>
+            <picklist>Risk_Status__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Live</fullName>
         <active>true</active>
         <label>Live</label>
+        <picklistValues>
+            <picklist>Risk_Status__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

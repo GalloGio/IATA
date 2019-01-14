@@ -72,6 +72,10 @@
                 <behavior>Edit</behavior>
                 <field>Reasons_for_High_Satisfaction__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Additional_comments_optional__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -140,30 +144,27 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>2014 CX Instant Survey</label>
+        <label>Chat survey questions</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CX_Overall_Satisfaction__c</field>
+                <field>Chat_Agent__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CX_Clear_Communication__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CX_Quality_of_CSR__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CX_Easy_Resolution_CES__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Additional_comments_optional__c</field>
+                <field>Chat_Agent_Experience__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Chat_Channel__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Chat_comment__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>

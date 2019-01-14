@@ -251,6 +251,10 @@
                 <behavior>Edit</behavior>
                 <field>Approval_disapproval_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Disapproval_date__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -523,13 +527,30 @@
         <fields>UPDATEDBY_USER</fields>
         <relatedList>AMS_Inspection__c.OSCAR__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <relatedList>AMS_Agency_Regulation__c.OSCAR__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>TASK.SUBJECT</fields>
+        <fields>TASK.WHO_NAME</fields>
+        <fields>ACTIVITY.TASK</fields>
+        <fields>TASK.DUE_DATE</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>TASK.LAST_UPDATE</fields>
+        <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hw000000i1Enp</masterLabel>
+        <masterLabel>00hw000000hfVQu</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

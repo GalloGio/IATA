@@ -42,7 +42,7 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
                                  i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c,
                                  i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c,
                                  i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById,
-                                 i.ConnectionSentId, i.ConnectionReceivedId, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
+                                 i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
                                  i.Tax_2_Name__c,  i.Tax_1_Name__c,  i.Tax_1_Value__c,  i.Tax_2_Value__c
                                  From ID_Card_Application__c i
                                  where i.Id = :applicationId
@@ -64,42 +64,41 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 
     private void alertKeyContactForNewApplication() {
         //keyContact = [select ID, Name, Email from Contact where AccountId = :account.Id and IDCardContactType__c like   '%Key Contact %'];
-        List<Managed_agency__c> managedAccountList = [select m.Id, m.Account__c, m.Contact__r.Email, m.Contact__r.IDcard_Email__c, m.Contact__r.Id,  m.Account__r.IATACode__c , m.delegate__c from Managed_agency__c m where m.Account__c = :account.Id ];
+        List<Managed_agency__c> managedAccountList = [select m.Id, m.Account__c, m.Contact__r.Email, m.Contact__r.IDcard_Email__c,
+                                m.Contact__r.Id,  m.Account__r.IATACode__c , m.delegate__c from Managed_agency__c m where m.Account__c = :account.Id ];
         if (managedAccountList.size() == 0) {
             DevsTools.sendSFDevsAlertMessage('ID Card purchase alert', 'No Key contact for account ' + account.Id + ' Id card application womn t be process: ' + idCardApplication.Id);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'We failed to contact your manager. Please contact IATA or your manager to validate your application1 '));
             return ;
         }
         List<String> toRecipients = new List<String>();
+        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         system.debug('[IDCard_CheckoutSingleApplication]Emailing');
         /*for(Contact c :keyContact)
             toRecipients.add(c.Email);*/
         for (Managed_agency__c c : managedAccountList ) {
-            if (!c.Delegate__c && !String.isBlank(c.Contact__r.Email))
-                keyContactEmail = c.Contact__r.Email;
-            if (!c.Delegate__c && !String.isBlank(c.Contact__r.IDCard_Email__c))
+            if (!c.Delegate__c && !String.isBlank(c.Contact__r.IDCard_Email__c)) {
                 keyContactEmail = c.Contact__r.IDCard_Email__c;
-            if (!String.isBlank(c.Contact__r.Email))
-                toRecipients.add(c.Contact__r.Email);
-            if (!String.isBlank(c.Contact__r.IDCard_Email__c) && (String.isBlank(c.Contact__r.Email) || c.Contact__r.Email != c.Contact__r.IDCard_Email__c))
-                toRecipients.add(c.Contact__r.IDCard_Email__c);
+                email.setTargetObjectId(c.Contact__r.Id);
+            }
+
+            toRecipients.add(c.Contact__r.IDCard_Email__c);
         }
 
         String language = getSelectedLanguage();
         List<EmailTemplate> ets = new List<EmailTemplate>();
 
-        if(language == 'fr') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationFR'];
-        if(language == 'es') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationES'];
-        if(language == 'en_US') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_Application'];
+        if (language == 'fr') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationFR'];
+        if (language == 'es') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_ApplicationES'];
+        if (language == 'en_US') ets = [select ID from EmailTemplate where DeveloperName = 'KeyAccount_New_Application'];
 
         if ( ets.size() > 0 && toRecipients.size() > 0) {
             EmailTemplate et = ets.get(0);
             system.debug('[IDCard_CheckoutSingleApplication]Email find recipeint and template');
-            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email.setToAddresses(toRecipients);
             email.setWhatId(idCardApplication.Id);
-            //email.setWhatId(whatId);
-            email.setTargetObjectId(managedAccountList.get(0).Contact__r.Id);
+            email.setTreatTargetObjectAsRecipient(false);
+
             email.setTemplateId(et.Id);
             try {
                 Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});

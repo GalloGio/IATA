@@ -1,7 +1,7 @@
 <apex:page showHeader="false" sidebar="false" standardController="AMS_OSCAR__c" extensions="AMS_AccountHierarchySelectionController" tabStyle="AMS_OSCAR__c">
 
 	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
-	<apex:includeScript value="/support/console/20.0/integration.js"/>
+	<apex:includeScript value="/support/console/34.0/integration.js"/>
     <script type="text/javascript">
     	function logCLose(closetab) {
     		console.info(closetab);
@@ -15,7 +15,14 @@
 			if (pageLoad) {
 				pageLoad();
             }
+            //AMSU-1
+            if({!isCorrection} == true){
+            	
+            	checkCorrectionProcess();
+            	
+            }else{
 			testSetTabTitle();
+		}
 		}
 
 		function closeTab(){
@@ -26,6 +33,24 @@
 		    var tabId = result.id;
 		    sforce.console.closeTab(tabId);
 		};
+
+		function refreshTab(){
+
+				if (sforce.console.isInConsole()) {
+						sforce.console.getEnclosingTabId(function(enclosingResult){
+								sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+										sforce.console.refreshPrimaryTabById(primaryResult.id,true,null);
+										closeTab();
+								});
+						});
+				} else {
+						// for inline Vf
+						window.top.location.href = '/'+redirectUrl
+						// for normal vf
+						// window.location.href = '/'+redirectUrl
+				}
+		}
+
 
 		function bindCheckboxes() {
 			$('[data-group="main"]').on("change", function () {
@@ -106,7 +131,15 @@
 
 				<apex:pageMessages id="pageMessages"/>
 
-				<apex:pageBlockTable value="{!hierarchyValues}" var="hi"> 
+                <apex:outputPanel id="buttonPanel">
+                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
+                    <apex:outputText>Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                </apex:outputPanel>
+					
+                <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
 					
 					<apex:column headerValue="Main">
 						<apex:inputCheckbox html-data-group="main" html-data-controls="{!hi.acc.Id}" value="{!hi.main}"/>
@@ -122,9 +155,12 @@
 						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"/>
 					</apex:column>
 
-					<apex:repeat value="{!accountFieldList}" var="field">
-						<apex:column value="{!hi.acc[field]}"/>
-					</apex:repeat>
+					<apex:column value="{!hi.acc['Name']}"/>
+					<apex:column value="{!hi.acc['Location_Type__c']}"/>
+					<apex:column value="{!hi.acc['IATACode__c']}"/>
+					<apex:column value="{!hi.acc['Status__c']}"/>
+					<apex:column value="{!hi.acc['BillingCity']}"/>
+					<apex:column value="{!hi.acc['Category__c']}"/>
 				</apex:pageBlockTable>
 
 				<script>
@@ -132,6 +168,8 @@
 				</script>
 
 				<apex:actionFunction name="selectMain" action="{!selectMain}" status="blockEditing" reRender="table, dependentFields"/>
+				<apex:actionFunction name="checkCorrectionProcess" action="{!checkCorrectionProcess}" status="blockEditing" oncomplete="{!IF(closeTab, 'refreshTab();', '')}"/>
+
 
 				<apex:actionStatus id="blockEditing">
 					<apex:facet name="start">
@@ -144,7 +182,7 @@
 			</apex:pageBlockSection>
 
 			<apex:pageBlockButtons location="bottom">
-				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'closeTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages"/>
+				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'refreshTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages"/>
 				<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.site.cancel}" immediate="true"/>
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
@@ -159,7 +197,15 @@
 
 			<apex:pageBlockSection id="table" columns="1" title="Accounts Selected" rendered="{!hierarchyValues.size > 0}">
 
-				<apex:pageBlockTable value="{!hierarchyValues}" var="hi"> 
+                <apex:outputPanel id="buttonPanel">
+                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
+                    <apex:outputText>Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+                </apex:outputPanel>
+					
+                <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
 					
 					<apex:column headerValue="Main">
 						<apex:inputCheckbox value="{!hi.main}" disabled="true"/>
@@ -169,9 +215,12 @@
 						<apex:inputCheckbox value="{!hi.selected}" disabled="true"/>
 					</apex:column>
 
-					<apex:repeat value="{!accountFieldList}" var="field">
-						<apex:column value="{!hi.acc[field]}"/>
-					</apex:repeat>
+					<apex:column value="{!hi.acc['Name']}"/>
+					<apex:column value="{!hi.acc['Location_Type__c']}"/>
+					<apex:column value="{!hi.acc['IATACode__c']}"/>
+					<apex:column value="{!hi.acc['Status__c']}"/>
+					<apex:column value="{!hi.acc['BillingCity']}"/>
+					<apex:column value="{!hi.acc['Category__c']}"/>
 				</apex:pageBlockTable>
 			</apex:pageBlockSection>
 

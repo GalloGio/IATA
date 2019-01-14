@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -50,8 +46,9 @@
     <description>This object represents all the Id Cards and GDP Accounts that should be exclude from eBroadcast Mailing</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -67,6 +64,7 @@
         <relationshipLabel>EBC Email Exclusion Relations</relationshipLabel>
         <relationshipName>EBC_Email_Exclusion_Relations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -81,9 +79,22 @@
         <relationshipName>EBC_Email_Exclusion_Relations</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Exclusion_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(EBC_Email_Exclusion__r.Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Exclusion Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>External_Id__c</fullName>
@@ -94,6 +105,7 @@
         <label>External Id</label>
         <length>255</length>
         <required>true</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -109,6 +121,7 @@
         <relationshipLabel>EBC Email Exclusion Relations</relationshipLabel>
         <relationshipName>EBC_Email_Exclusion_Relations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -123,6 +136,7 @@
         <relationshipLabel>EBC Email Exclusion Relations</relationshipLabel>
         <relationshipName>EBC_Email_Exclusion_Relations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -133,6 +147,7 @@
         <formula>LOWER(EBC_Email_Exclusion__r.Email__c) != LOWER(IF(!ISBLANK(GDP_Products_Account_View__c),  GDP_Products_Account_View__r.Email_Address__c,  ID_Card__r.Email__c))</formula>
         <inlineHelpText>Is GDP Account or ID Card email address changed since the exclusion</inlineHelpText>
         <label>Is Email Changed</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -141,29 +156,112 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Is Global</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <label>EBC Email Exclusion Relation</label>
     <listViews>
-        <fullName>Exclusion_Emails</fullName>
+        <fullName>Email_Excl_Relations_Email_Is_Changed</fullName>
         <columns>NAME</columns>
-        <columns>ID_Card__c</columns>
-        <columns>GDP_Products_Account_View__c</columns>
-        <columns>Billing_Account__c</columns>
-        <columns>Is_Global__c</columns>
         <columns>EBC_Email_Exclusion__c</columns>
+        <columns>GDP_Products_Account_View__c</columns>
+        <columns>ID_Card__c</columns>
+        <columns>Is_Global__c</columns>
+        <columns>Billing_Account__c</columns>
         <columns>External_Id__c</columns>
         <columns>Is_Email_Changed__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>Exclusion Emails</label>
+        <filters>
+            <field>Is_Email_Changed__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Email Excl. Relations - Email Is Changed</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Email_Excl_Relations_No_EBC_Exclusion</fullName>
+        <columns>NAME</columns>
+        <columns>EBC_Email_Exclusion__c</columns>
+        <columns>GDP_Products_Account_View__c</columns>
+        <columns>ID_Card__c</columns>
+        <columns>Is_Global__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>External_Id__c</columns>
+        <columns>Is_Email_Changed__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EBC_Email_Exclusion__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Email Excl. Relations - No EBC Exclusion</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Exclusion_Emails</fullName>
+        <columns>NAME</columns>
+        <columns>EBC_Email_Exclusion__c</columns>
+        <columns>GDP_Products_Account_View__c</columns>
+        <columns>ID_Card__c</columns>
+        <columns>Is_Global__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>External_Id__c</columns>
+        <columns>Is_Email_Changed__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Email Exclusion Relations</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>IDC_Email_Exclusion_Relations</fullName>
+        <columns>NAME</columns>
+        <columns>EBC_Email_Exclusion__c</columns>
+        <columns>GDP_Products_Account_View__c</columns>
+        <columns>ID_Card__c</columns>
+        <columns>Is_Global__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>External_Id__c</columns>
+        <columns>Is_Email_Changed__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ID_Card__c</field>
+            <operation>contains</operation>
+            <value>IDC</value>
+        </filters>
+        <label>IDC - Email Exclusion Relations</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_Email_Excl_Relations_By_Email</fullName>
+        <columns>NAME</columns>
+        <columns>EBC_Email_Exclusion__c</columns>
+        <columns>GDP_Products_Account_View__c</columns>
+        <columns>ID_Card__c</columns>
+        <columns>Is_Global__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>External_Id__c</columns>
+        <columns>Is_Email_Changed__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>External_Id__c</field>
+            <operation>contains</operation>
+            <value>mary@alltravelmesquite.com</value>
+        </filters>
+        <label>ZZ - Email Excl. Relations - By Email</label>
         <language>en_US</language>
     </listViews>
     <nameField>
         <label>EBC Email Exclusion Relation Name</label>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Email Exclusion Relations</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

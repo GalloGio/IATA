@@ -9,6 +9,56 @@
 	<![endif]-->
 	<!--[if !IE]><!-->
 	
+
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+   <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+
+    <script type="text/javascript">
+
+		if (!String.prototype.startsWith) {
+  			String.prototype.startsWith = function(searchString, position) {
+    		position = position || 0;
+    		return this.indexOf(searchString, position) === position;
+  			};
+		}    	
+		
+		var redirectUrl = '{!redirectUrl}';
+		var current = window.self.location.href;
+		var prefix = current.substr(0, current.lastIndexOf("/"));
+
+		if (redirectUrl != null && redirectUrl.length != 0) {
+			if (redirectUrl.startsWith("http://") || redirectUrl.startsWith("https://")) {
+				window.location.href = redirectUrl;
+			} else {
+				if (redirectUrl.substr(0, 1) != "/") {
+					prefix += "/";
+				}
+
+				window.location.href = prefix + redirectUrl;
+			}
+		}
+
+		function redirectAfterLogin(redirectUrl) {
+			var current = window.self.location.href;
+			var prefix = current.substr(0, current.lastIndexOf("/"));
+
+			if (redirectUrl != null && redirectUrl.length != 0) {
+				if (redirectUrl.startsWith("http://") || redirectUrl.startsWith("https://")) {
+					window.location.href = redirectUrl;
+				} else {
+					if (redirectUrl.substr(0, 1) != "/") {
+						prefix += "/";
+					}
+
+					window.location.href = prefix + redirectUrl;
+				}
+			}
+		}
+    </script>
+
+
 	<html lang="{!language}">
 	<!--<![endif]-->
 
@@ -48,7 +98,8 @@
 
 					    <div class="inner-wrapper">
 
-					        <h1 class="page-title">{!$Label.Login}</h1>
+					        <h1 class="page-title" style="margin-bottom: 0;">{!$Label.Login}</h1>
+					         <p style="margin-top: 10px;">{!$label.IE_Warning} {!$label.ThankYou}</p>   
                             <apex:outputPanel id="errorMessage">
 					        
 						        <apex:outputPanel rendered="{!!hasConfirm}" layout="block">
@@ -93,7 +144,7 @@
 	                                </apex:actionStatus>
 					                <apex:commandButton action="{!login}" value="Login" styleClass="button" reRender="errorMessage" status="runStatus" /> -->
 
-					                <apex:actionFunction name="doLogin" reRender="errorMessage" action="{!login}" status="loginStatus" />
+					                <apex:actionFunction name="doLogin" reRender="errorMessage" action="{!login}" status="loginStatus" oncomplete="redirectAfterLogin('{!redirectUrl}');" />
 					                <button class="button" type="button" onclick="doLogin();">
 				                		{!$Label.Login}
 										<apex:actionStatus id="loginStatus">

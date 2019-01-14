@@ -27,11 +27,20 @@ trigger EF_MaterialLineItemTrigger on EF_Material_Line_Item__c (after delete, af
 		EF_MaterialLineItemHandler.validateNoInactiveMaterialsFromContract(Trigger.newMap);
 
     	// EF_MaterialLineItemHandler.emailIfMaterialChanges(Trigger.new, Trigger.oldMap);
-    	if(Trigger.isInsert)
+    	if(Trigger.isInsert){
     		EF_MaterialLineItemHandler.checkBillingAgreementContractItems(Trigger.new);
+    	}
+    	else{
+    		EF_MaterialLineItemHandler.checkIfBillingAgreementDeactivationRequired(Trigger.oldMap);
+    	}
+    		
 		if(EF_MaterialLineItemHandler.runOnce() && EF_ContractHandler.isUserCsSpecialist())
         {
 			EF_MaterialLineItemHandler.startApprovalProcesses(Trigger.new);
         }
+	}
+	else if (Trigger.isAfter && (Trigger.isDelete))
+	{
+		EF_MaterialLineItemHandler.checkIfBillingAgreementDeactivationRequired(Trigger.oldMap);
 	}
 }

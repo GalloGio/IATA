@@ -2,24 +2,15 @@ global class AMS_2_MDM_Webservice {
 
     global class AMSException extends Exception {}
 
-    //webservice static List<String> getUpdatedHierarchiesList(String dpc,String operation){
-    //    List<String> result = new List<String>();
-
-    //    List<AMS_Agencies_relationhip__c> agenciesRel = [select Hierarchy__c from AMS_Agencies_relationhip__c where id in (select RelationShip__c from AMS_Agency_Updates__c where Update_Type__c = 'Update' AND RelationShip__c != null)];
-    //    for(AMS_Agencies_relationhip__c ar :agenciesRel){
-    //        result.add(ar.Hierarchy__c);
-    //    }
-    //    return result;
-    //}
 
     webservice static List<String> getUpdatedAgenciesList(String dpc,String operation){
         List<String> result = new List<String>();
 
         //List<AMS_Agency_Updates__c> agencyUpdates = [select Agency__c from AMS_Agency_Updates__c where Update_Type__c = 'Update' AND Agency__c != null]; - #AMSFTS
-        List<AMS_Agency_Updates__c> agencyUpdates = [select Account__c from AMS_Agency_Updates__c where Update_Type__c in ('Update','Create','Delete') AND Account__c != null];
+        List<AMS_Agency_Updates__c> agencyUpdates = [select Account__c from AMS_Agency_Updates__c where Update_Type__c in ('Update','Create','Delete') AND Account__c != null AND Integration_System__c = 'SAP PI'];
         
         for(AMS_Agency_Updates__c au :agencyUpdates){
-            result.add(au.Agency__c);
+            result.add(au.Account__c);
         }
 
         return result;
@@ -45,6 +36,8 @@ global class AMS_2_MDM_Webservice {
     
     @future(callout=true)
     static void sendAgenciesContent(String GroupID, String ChunkSize , String ChunkKey, String ChunkTotal, List<String> ids){
+        /*** AMSU-158 ***/
+        List<String> listOfErrors = new List<String>();
         
         //Initiate Log
         Technical_Logs__c tlog = new Technical_Logs__c();
@@ -74,22 +67,7 @@ global class AMS_2_MDM_Webservice {
             
             
             System.debug('Requested Agencies from MDM PI - ' + ids);
-            
-            //Begin - #AMSFTS
-            //List<AMS_Agency__c> ag = [SELECT Account__c,Administrator__c,Airline_Code__c,
-            //            A_Code__c,BSP_Code__c,CASS_Number__c,Chk_Dgt__c,GDS__c,
-            //            Company_Type__c,C_Code__c,DPC_Operation__c,IATACode__c,Id,
-            //            Last_Inspection_Date__c,Last_synchronization__c,Legacy_External_ID__c,
-            //            Legacy_System__c,Legal_Name_2__c,Legal_Name_3__c,License_Number__c,
-            //            Location_Category__c,Location_Class__c,Name,Solicitation_Flag__c,
-            //            N_Code__c,Organization_Last_Change_Date__c,
-            //            Original_Approval_DAte__c,Other_Tax_Reference_Number__c,OwnerId,
-            //            Parent_Reference_Number__c,Phone_Number__c,Primary_address__c,
-            //            Qualified_ticketing_agent__c,Recert_Expiry_Date__c,RecordTypeId,RecordType.name,
-            //            Reference_Number__c,STD_Code__c,SystemModstamp,Tax_Reference_Number__c,
-            //            Trading_Name_1__c,Trading_Name_2__c,Unique_ID__c,Verification_Date__c,
-            //            Site_Type__c,Country__c, Abbreviated_name__c
-            //            FROM AMS_Agency__c where id in :ids];
+/*
             List<Account> ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
                     BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
@@ -104,13 +82,38 @@ global class AMS_2_MDM_Webservice {
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
-                    Email__c,TTY__c,Website,
+                    Email__c,TTY__c,Website,Accreditation_date__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
-                    Top_Parent__c, Top_Parent__r.IATACode__c
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id in :ids
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
-            //END - #AMSFTS
 
+*/
+/**  NEWGEN-801 **/
+            List<Account> ag = [SELECT Airline_Code__c,A_Code__c,
+                    CASS_Number__c,Check_Digit__c,GDS__c,
+                    BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
+                    ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
+                    Company_Type__c,C_Code__c,IATACode__c,Id,Location_Type__c,
+                    Last_Inspection_Date__c,Last_synchronization__c,
+                    License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
+                    N_Code__c,Organization_Last_Change_Date__c,
+                    Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
+                    Phone_Number__c, Phone, Fax, Primary_address__c,
+                    RecordTypeId,RecordType.name,
+                    STD_Code__c,VAT_Number__c,
+                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
+                    Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
+                    Email__c,TTY__c,Website,Accreditation_date__c,
+                    Abbreviated_name__c, Abbreviated_address__c,Status__c,
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c, ANG_Accreditation_Model__c, Remittance_frequency__c,
+                    ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c, 
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c //AMSU-158
+                    FROM Account where id in :ids
+                    ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
+
+                    
+ /* EOF NEWGEN-801 */
             AMS_XML_Generator xmlGen = new AMS_XML_Generator();
             Integer inicioCPU = Limits.getCpuTime();
             Integer inicioCPUx = Limits.getLimitCpuTime();
@@ -138,20 +141,6 @@ global class AMS_2_MDM_Webservice {
                 sLogRecord = sLogRecord.removeEnd(',');
                 System.debug(loggingLevel.Debug, '____ [cls AMS_2_MDM_Webservice - sendAgenciesContent] accErrors - ' + accErrors);
                 if(String.isNotEmpty(accErrors)) throw new AMSException('The following accounts have no Billing/Primary Address:'+accErrors);
-
-
-                //for(Account a : ag){
-                //    //if(String.isNotEmpty(a.ShippingState) && AMS_Utils.iataIsoStates.get(a.ShippingState) == null){
-                //    if(String.isNotEmpty(a.ShippingState) && !AMS_Utils.isValidState(a.ShippingState) ){
-                //        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping State is invalid';
-                //    }
-                //    //if(String.isNotEmpty(a.ShippingCountry) && AMS_Utils.iataIsoCountries.get(a.ShippingCountry) == null){
-                //    if(String.isNotEmpty(a.ShippingCountry) && !AMS_Utils.isValidCountry(a.ShippingCountry) ){
-                //        accErrors += '\n- '+a.Name+' ('+a.Id+'): Shipping Country is invalid';
-                //    }
-                //}
-                //System.debug(loggingLevel.Debug, '____ [cls AMS_2_MDM_Webservice - sendAgenciesContent] accErrors (after Shipping) - ' + accErrors);
-                //if(String.isNotEmpty(accErrors)) throw new AMSException('Error on the following accounts:'+accErrors);
 
 
                 //s = xmlGen.getAgencyDetail(ag, r); - #AMSFTS
@@ -183,28 +172,39 @@ global class AMS_2_MDM_Webservice {
             r[5] = s;
 
             //Call WebService
-        // instantiate the web service proxy
-        AMS_2_MDM_WS_AgencyDetails.HTTP_Port ws = new AMS_2_MDM_WS_AgencyDetails.HTTP_Port();
-        
-        // set the credentials
-        String sPwd = '';
-        sPwd = Test.isRunningTest() ? '3ZNLPwqIDRC7auxG/fUWZ3VY5tdS7e+WUMECjAy4L54=' : AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Password__c;
-        
-        Blob headerValue = Blob.valueOf(AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Username__c + ':' + AMS_Utils.DecryptParameter(sPwd));
-        String authorizationHeader = 'Basic '+ EncodingUtil.base64Encode(headerValue);
+            // instantiate the web service proxy
+            AMS_2_MDM_WS_AgencyDetails.HTTP_Port ws = new AMS_2_MDM_WS_AgencyDetails.HTTP_Port();
+            
+            // set the credentials
+            String sPwd = '';
+            sPwd = Test.isRunningTest() ? '3ZNLPwqIDRC7auxG/fUWZ3VY5tdS7e+WUMECjAy4L54=' : AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Password__c;
+            
+            Blob headerValue = Blob.valueOf(AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Username__c + ':' + AMS_Utils.DecryptParameter(sPwd));
+            String authorizationHeader = 'Basic '+ EncodingUtil.base64Encode(headerValue);
 
-        
-        // set the timeout to maximum value (60 seconds)
-        ws.timeout_x = 60000;        
+            
+            // set the timeout to maximum value (60 seconds)
+            ws.timeout_x = 60000;        
 
-        if(!Test.isRunningTest()) {
-                    
+            
+                        
             try {
                 
                 String sRespStatusCode = '';
 
-                // Call SAP web service
-                sRespStatusCode = ws.SI_SFDC_AgenciesData_OB_Http(s,authorizationHeader);
+                if(!Test.isRunningTest()) {
+                    // Call SAP web service
+                    sRespStatusCode = ws.SI_SFDC_AgenciesData_OB_Http(s,authorizationHeader);
+                }else{
+                    if(GroupID.equalsIgnoreCase('exception')){
+                        String a;
+                        String b = a;
+                    }else if(GroupID.equalsIgnoreCase('error')){
+                        sRespStatusCode = '503';
+                    }else{
+                        sRespStatusCode = '200';    
+                    }
+                }
                 
                 sLog += 'Response Status Code: '+sRespStatusCode+'\n';
                 
@@ -225,7 +225,7 @@ global class AMS_2_MDM_Webservice {
                 //TODO implement error handling
                
             }
-        }
+        
 
         }catch(Exception e){
             sLog += 'Exception: general error:'+e.getMessage()+'\n';
@@ -244,24 +244,47 @@ global class AMS_2_MDM_Webservice {
         }catch (Exception ex) {
                 system.debug('Log writing error: ' + ex.getMessage());
         }    
+
+        /*** AMSU-158 ***/
+        try {
+            if(listOfErrors != null && !listOfErrors.isEmpty()) {
+            	sendCSVReport(listOfErrors);
+            }
+        } catch(Exception ex) {
+            System.debug('Error sending report: ' + ex.getMessage());
+        }
+    }
+
+    /*** AMSU-158 ***/
+    public static void sendCSVReport(List<String> listOfErrors) {
+        String body = 'Account Id, Reason';
+        
+        for(String error : listOfErrors) {
+            body += error + '\n';
+        }
+
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.subject = 'XML Generator report - ' + listOfErrors.size() + ' errors';
+        message.setPlainTextBody('XML Generator errors - Check attachment with execution results - ' + DateTime.now());
+
+        if(!listOfErrors.isEmpty()) {
+            Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
+            Blob csvReport = Blob.valueOf(body);
+            csvAttc.setFileName('XML Generator errors report.csv');
+            csvAttc.setBody(csvReport);
+            message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
+        }        
+        
+        Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
+
+        if(!Test.isRunningTest() && !String.isBlank(Label.AMS_XML_GEN_ERROR_RECEIVER)) {
+            List<String> emailAddresses = Label.AMS_XML_GEN_ERROR_RECEIVER.split(';');
+            message.setToaddresses(emailAddresses);
+            Messaging.sendEmail(messages);
+        }
     }
     
-        
-    //webservice static Boolean sendAgencyECC(Id agencyId, Id oscarId){
-
-    //    Boolean bRes = false;
-
-    //    String sRes = AMS_2_MDM_Webservice.sendAgencyECC(agencyId, oscarId);
-
-    //    if(!sRes.equalsIgnoreCase('')){
-    //        bRes = true;
-    //    }
-
-    //    return bRes;
-    //}
-
-
-    
+   
     webservice static String sendAgencyECC(Id agencyId, Id oscarId){    
 
         //Check's if the Integration Channel to SAP is active or inactive, in case of inactive there's no attempt of communication and an error is return informing that the channel is inactive!
@@ -291,24 +314,7 @@ global class AMS_2_MDM_Webservice {
         r[5]=agencyId;
         
         try{
-            
-
-
-            //Begin - #AMSFTS
-            //AMS_Agency__c ag = [SELECT Account__c,Administrator__c,Airline_Code__c,
-            //            A_Code__c,BSP_Code__c,CASS_Number__c,Chk_Dgt__c,GDS__c,
-            //            Company_Type__c,C_Code__c,DPC_Operation__c,IATACode__c,Id,
-            //            Last_Inspection_Date__c,Last_synchronization__c,Legacy_External_ID__c,
-            //            Legacy_System__c,Legal_Name_2__c,Legal_Name_3__c,License_Number__c,
-            //            Location_Category__c,Location_Class__c,Name,Solicitation_Flag__c,
-            //            N_Code__c,Organization_Last_Change_Date__c,
-            //            Original_Approval_DAte__c,Other_Tax_Reference_Number__c,OwnerId,
-            //            Parent_Reference_Number__c,Phone_Number__c,Primary_address__c,
-            //            Qualified_ticketing_agent__c,Recert_Expiry_Date__c,RecordTypeId,RecordType.name,
-            //            Reference_Number__c,STD_Code__c,SystemModstamp,Tax_Reference_Number__c,
-            //            Trading_Name_1__c,Trading_Name_2__c,Unique_ID__c,Verification_Date__c,
-            //            Site_Type__c, Country__r.Region__c, Country__c, Abbreviated_name__c
-            //            FROM AMS_Agency__c where id = :agencyId];
+/*            
             Account ag = [SELECT Airline_Code__c,A_Code__c,
                     CASS_Number__c,Check_Digit__c,GDS__c,
                     BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
@@ -323,13 +329,39 @@ global class AMS_2_MDM_Webservice {
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
-                    Email__c,TTY__c,Website,
+                    Email__c,TTY__c,Website,Accreditation_date__c,
                     IATA_ISO_Country__r.Region__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
-                    Top_Parent__c, Top_Parent__r.IATACode__c
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id = :agencyId];
-            //End - #AMSFTS
- 
+         */   
+ /* NEWGEN-801 */
+
+             Account ag = [SELECT Airline_Code__c,A_Code__c,
+                    CASS_Number__c,Check_Digit__c,GDS__c,
+                    BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c, 
+                    ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
+                    Company_Type__c,C_Code__c,IATACode__c,Id,Location_Type__c,
+                    Last_Inspection_Date__c,Last_synchronization__c,
+                    License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
+                    N_Code__c,Organization_Last_Change_Date__c,
+                    Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
+                    Phone_Number__c, Phone, Fax, Primary_address__c,
+                    RecordTypeId,RecordType.name,
+                    STD_Code__c,VAT_Number__c,
+                    TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
+                    Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
+                    Email__c,TTY__c,Website,Accreditation_date__c,
+                    IATA_ISO_Country__r.Region__c,
+                    Abbreviated_name__c, Abbreviated_address__c,Status__c,
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c,
+                    ANG_Accreditation_Model__c, Remittance_frequency__c,
+                    ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c,
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c //AMSU-158
+                    FROM Account where id = :agencyId];
+
+/* EOF NEWGEN-801 */
+
             sLogRecord += ' - IATACodes: ' + ag.IATACode__c;
                 
             //Check if IATACODE exists! if not end with error
@@ -341,16 +373,7 @@ global class AMS_2_MDM_Webservice {
                 sError = (sError == 'OK' ? '' : sError+'\n')+'Agency needs to have a Billing Address';
             }
 
-            ////if(String.isNotEmpty(ag.ShippingState) && AMS_Utils.iataIsoStates.get(ag.ShippingState) == null){
-            //if( !AMS_Utils.isValidState(ag.ShippingState) ){
-            //    sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping State is invalid';
-            //}
-
-            ////if(String.isNotEmpty(ag.ShippingCountry) && AMS_Utils.iataIsoCountries.get(ag.ShippingCountry) == null){
-            //if( !AMS_Utils.isValidCountry(ag.ShippingCountry) ){
-            //    sError = (sError == 'OK' ? '' : sError+'\n')+'Shipping Country is invalid';
-            //}
-
+            
             if(sError != 'OK') return sError;
 
             AMS_XML_Generator xmlGen = new AMS_XML_Generator();
@@ -394,40 +417,49 @@ global class AMS_2_MDM_Webservice {
                 // set the timeout to maximum value (60 seconds)
                 ws.timeout_x = 60000;        
 
-                if(!Test.isRunningTest()) {
-                            
-                    try {
-                        
-                        String sRespStatusCode = '';
-        
+                try {
+                    
+                    String sRespStatusCode = '';
+    
+                    
+                    if(!Test.isRunningTest()) {
                         // Call SAP web service
                         sRespStatusCode = ws.SI_SFDC_AgenciesData_OB_Http(s,authorizationHeader);
-                        
-                        sLog += 'Response Status Code: '+sRespStatusCode+'\n';
-
-                        if(!sRespStatusCode.equalsIgnoreCase('200')){
-        
-                            system.debug('SAP Web Service - SI_SFDC_AgenciesData_OB_OB - callout ERROR! ');
-                            bError = True;
-                            sError = 'SAP Web Service - SI_SFDC_AgenciesData_OB_OB - callout ERROR! ';
-
-                            tlog.Status__c = 'Error';
-        
+                    }else{
+                        if(ag.IATACode__c.equalsIgnoreCase('1000503')){
+                            String a;
+                            String b = a;
+                        }else if(ag.IATACode__c.equalsIgnoreCase('1000404')){
+                            sRespStatusCode = '404';
                         }else{
-                            system.debug('sendAgencyECC - SAP Web Service callout Resp Status Code: ' + sRespStatusCode);
+                            sRespStatusCode = '200';    
                         }
                     }
-                    catch (Exception ex) {
-                        system.debug('sendAgencyECC - SAP Web Service callout error: ' + ex.getMessage());
+                    
+                    sLog += 'Response Status Code: '+sRespStatusCode+'\n';
+
+                    if(!sRespStatusCode.equalsIgnoreCase('200')){
+    
+                        system.debug('SAP Web Service - SI_SFDC_AgenciesData_OB_OB - callout ERROR! ');
                         bError = True;
-                        sError = 'SAP Web Service callout error: ' + ex.getMessage();
+                        sError = 'SAP Web Service - SI_SFDC_AgenciesData_OB_OB - callout ERROR! ';
 
-
-                        sLog += 'Exception: general error:'+ex.getMessage()+'\n';
-                        sLog += 'Exception StackTrace: '+ex.getStackTraceString() +'\n';
-                            
                         tlog.Status__c = 'Error';
+    
+                    }else{
+                        system.debug('sendAgencyECC - SAP Web Service callout Resp Status Code: ' + sRespStatusCode);
                     }
+                }
+                catch (Exception ex) {
+                    system.debug('sendAgencyECC - SAP Web Service callout error: ' + ex.getMessage());
+                    bError = True;
+                    sError = 'SAP Web Service callout error: ' + ex.getMessage();
+
+
+                    sLog += 'Exception: general error:'+ex.getMessage()+'\n';
+                    sLog += 'Exception StackTrace: '+ex.getStackTraceString() +'\n';
+                        
+                    tlog.Status__c = 'Error';
                 }
             }
         }catch(Exception e){
@@ -455,168 +487,5 @@ global class AMS_2_MDM_Webservice {
         return sError;
     }
  
-    
-    //webservice static String sendAgencySalesOrder(Id agencyId){
-
-    //    //Check's if the Integration Channel to SAP is active or inactive, in case of inactive there's no attempt of communication and an error is return informing that the channel is inactive!
-    //    if(AMS_SAP_Settings__c.getOrgDefaults().Active__c == False){
-    //        return 'Integration Channel to SAP is inactive!';
-    //    }
-
-    //    //Initiate Log
-    //    Technical_Logs__c tlog = new Technical_Logs__c();
-    //    tlog.Status__c = 'Success';
-    //    tlog.Operation__c = 'AMS 2 MDM - SalesOrder';
-    //    DateTime dtStart = system.now();
-    //    tlog.start_date__c = dtStart;
-    //    String sLog = '';
-    //    String sLogRecord = agencyId;
-        
-    //    Boolean bError = False;
-    //    String sError = 'OK';
-        
-    //    String[] r = new String[6];
-    //    r[0]='SAP';
-    //    r[1]='1';
-    //    r[2]='1';
-    //    r[3]='1';
-    //    r[4]='true';
-        
-    //    try{
-            
-            
-    //        //Begin - #AMSFTS
-    //        //AMS_Agency__c ag = [SELECT Account__c,Administrator__c,Airline_Code__c,
-    //        //            A_Code__c,BSP_Code__c,CASS_Number__c,Chk_Dgt__c,GDS__c,
-    //        //            Company_Type__c,C_Code__c,DPC_Operation__c,IATACode__c,Id,
-    //        //            Last_Inspection_Date__c,Last_synchronization__c,Legacy_External_ID__c,
-    //        //            Legacy_System__c,Legal_Name_2__c,Legal_Name_3__c,License_Number__c,
-    //        //            Location_Category__c,Location_Class__c,Name,Solicitation_Flag__c,
-    //        //            N_Code__c,Organization_Last_Change_Date__c,
-    //        //            Original_Approval_DAte__c,Other_Tax_Reference_Number__c,OwnerId,
-    //        //            Parent_Reference_Number__c,Phone_Number__c,Primary_address__c,
-    //        //            Qualified_ticketing_agent__c,Recert_Expiry_Date__c,RecordTypeId,RecordType.name,
-    //        //            Reference_Number__c,STD_Code__c,SystemModstamp,Tax_Reference_Number__c,
-    //        //            Trading_Name_1__c,Trading_Name_2__c,Unique_ID__c,Verification_Date__c,
-    //        //            Site_Type__c, Country__c, Abbreviated_name__c,Full_IATA_Code__c,
-    //        //            Country__r.IATA_Regional_Office__c
-    //        //            FROM AMS_Agency__c where id = :agencyId];
-    //        Account ag = [SELECT Airline_Code__c,A_Code__c,
-    //                CASS_Number__c,Check_Digit__c,GDS__c,
-    //                Company_Type__c,C_Code__c,IATACode__c,Id,Location_Type__c,
-    //                Last_Inspection_Date__c,Last_synchronization__c,
-    //                License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
-    //                N_Code__c,Organization_Last_Change_Date__c,
-    //                Original_Approval_DAte__c,VAT_Number_2__c,OwnerId,
-    //                Phone_Number__c,Primary_address__c,
-    //                RecordTypeId,RecordType.name,
-    //                STD_Code__c,VAT_Number__c,
-    //                TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c,
-    //                Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
-    //                IATA_ISO_Country__r.IATA_Regional_Office__c
-    //                FROM Account where id = :agencyId];
-    //        //End - #AMSFTS
- 
-
-    //        AMS_XML_Generator xmlGen = new AMS_XML_Generator();
-            
-    //        String s = '';
-    //        try{
-            
-    //            s = xmlGen.getAgencySalesOrder(ag);
-
-    //            sLog += 'XML Sent: '+s+'\n';
-                
-    //        }catch (Exception ex) {
-    //            system.debug('sendAgencySalesOrder - XML Generator error: ' + ex.getMessage());
-                
-    //            sError = 'XML Generator error: ' + ex.getMessage();
-    //            bError = True;
-
-    //            sLog += 'XML Generator error: ' + ex.getMessage() +'\n';
-    //            sLog += 'Exception StackTrace: '+ex.getStackTraceString() +'\n';
-
-    //            tlog.Status__c = 'Error';
-    //        }
-            
-    //        r[5] = s;
-            
-    //        if(!bError){
-            
-    //            //Call WebService
-    //            // instantiate the web service proxy
-    //            AMS_2_MDM_WS_SalesOrder.HTTP_Port ws = new AMS_2_MDM_WS_SalesOrder.HTTP_Port();
-                
-    //            // set the credentials
-    //            String sPwd = '';
-    //            sPwd = Test.isRunningTest() ? '3ZNLPwqIDRC7auxG/fUWZ3VY5tdS7e+WUMECjAy4L54=' : AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Password__c;
-        
-    //            Blob headerValue = Blob.valueOf(AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Username__c + ':' + AMS_Utils.DecryptParameter(sPwd));
-    //            String authorizationHeader = 'Basic '+ EncodingUtil.base64Encode(headerValue);
-        
-                
-    //            // set the timeout to maximum value (60 seconds)
-    //            ws.timeout_x = 60000;        
-
-    //            if(!Test.isRunningTest()) {
-                            
-    //                try {
-                        
-    //                    String sRespStatusCode = '';
-        
-    //                    // Call SAP web service
-    //                    sRespStatusCode = ws.SI_SFDC_SalesOrder_OB_Http(s,authorizationHeader);
-                        
-    //                    sLog += 'Response Status Code: '+sRespStatusCode+'\n';
-
-    //                    if(!sRespStatusCode.equalsIgnoreCase('200')){
-        
-    //                        system.debug('SAP Web Service - SI_SFDC_SalesOrder_OB - callout ERROR! ');
-
-    //                        bError = True;
-    //                        sError = 'SAP Web Service - SI_SFDC_SalesOrder_OB - callout ERROR! ';
-
-    //                        tlog.Status__c = 'Error';
-        
-    //                    }else{
-    //                        system.debug('sendAgencySalesOrder - SAP Web Service callout Resp Status Code: ' + sRespStatusCode);
-    //                    }
-    //                }
-    //                catch (Exception ex) {
-    //                    system.debug('sendAgencySalesOrder - SAP Web Service callout error: ' + ex.getMessage());
-    //                    bError = True;
-    //                    sError = 'SAP Web Service callout error: ' + ex.getMessage();
-
-    //                    sLog += 'Exception: general error:'+ex.getMessage()+'\n';
-    //                    sLog += 'Exception StackTrace: '+ex.getStackTraceString() +'\n';
-                            
-    //                    tlog.Status__c = 'Error';
-    //                }
-    //            }
-    //        }
-    //    }catch(Exception e){
-    //        system.debug('sendAgencySalesOrder - Exception error: ' + e.getMessage());
-    //        bError = True;
-    //        sError = 'Exception error: ' + e.getMessage();
-
-    //        sLog += 'Exception: general error:'+e.getMessage()+'\n';
-    //        sLog += 'Exception StackTrace: '+e.getStackTraceString() +'\n';
-                
-    //        tlog.Status__c = 'Error';
-    //    }
-
-    //    //write Log
-    //    DateTime dtEnd = system.now();
-    //    tlog.End_Date__c = dtEnd;
-    //    tlog.Log__c = sLog;
-    //    tlog.Record__c = sLogRecord;
-    //    try {
-    //        insert tlog;
-    //    }catch (Exception ex) {
-    //            system.debug('Log writing error: ' + ex.getMessage());
-    //    }    
-
-    //    return sError;
-    //}
 
 }

@@ -2,6 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Alert_admins_that_a_contact_has_registered</fullName>
+        <ccEmails>noreply@iata.org</ccEmails>
         <description>Alert admins that a contact has registered</description>
         <protected>false</protected>
         <recipients>
@@ -11,6 +12,19 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_Admin_of_user_creationVF</template>
+    </alerts>
+    <alerts>
+        <fullName>Alert_admins_that_a_contact_has_registered_cns</fullName>
+        <ccEmails>noreply@iata.org</ccEmails>
+        <description>Alert admins that a contact has registered - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Portal Administrator</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Notify_Admin_of_user_creationVF_cns</template>
     </alerts>
     <alerts>
         <fullName>EF_Email_Notification_On_Client_EF_Contact_Deactivation</fullName>
@@ -23,7 +37,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
+        <template>All/EF_Contact_Deactivation_Notification</template>
     </alerts>
     <alerts>
         <fullName>EF_Email_Notification_On_Operator_EF_Contact_Deactivation</fullName>
@@ -36,7 +50,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
+        <template>All/EF_Contact_Deactivation_Notification</template>
     </alerts>
     <alerts>
         <fullName>ISSP_BSPCASS_Payment_contact</fullName>
@@ -47,6 +61,18 @@
             <type>accountTeam</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISSP_BSP_CASS_Payment_contact</template>
+    </alerts>
+    <alerts>
+        <fullName>ISSP_BSPCASS_Payment_contact_cns</fullName>
+        <description>ISSP_BSPCASS Payment contact - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Portal Administrator</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_BSP_CASS_Payment_contact</template>
     </alerts>
@@ -99,6 +125,18 @@
         <template>ISS_Portal/ISS_Portal_User_Status_Change_Inac_VF</template>
     </alerts>
     <alerts>
+        <fullName>ISSP_Notify_Portal_User_Status_Change_UnknownContact_cns</fullName>
+        <description>ISSP Notify Portal User Status Change_UnknownContact - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact_Old_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_Portal_User_Status_Change_VF_CNS</template>
+    </alerts>
+    <alerts>
         <fullName>ISSP_Send_alert_to_Contact_User_if_someone_is_modifying_his_info</fullName>
         <description>ISSP Send alert to Contact User if someone is modifying his info</description>
         <protected>false</protected>
@@ -123,6 +161,18 @@
         <template>ISS_Portal/ISS_Portal_User_Status_Change_VF</template>
     </alerts>
     <alerts>
+        <fullName>ISS_Send_Change_Of_Portal_User_Status_Notification_cns</fullName>
+        <description>ISS Send Change Of Portal User Status Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_Portal_User_Status_Change_VF_CNS</template>
+    </alerts>
+    <alerts>
         <fullName>Renewal_Email_alert</fullName>
         <ccEmails>emailtosalesforce@63lv520ssbnqnqm4j9qg25k5r.2-8tfeay.eu3.le.salesforce.com</ccEmails>
         <description>Renewal Email alert</description>
@@ -135,6 +185,16 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>ID_Card_templates/IDCard_RenewalEmail</template>
     </alerts>
+    <fieldUpdates>
+        <fullName>Contact_Owner</fullName>
+        <field>OwnerId</field>
+        <lookupValue>administrator@iata.org</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Contact Owner</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <fieldUpdates>
         <fullName>Deleting_IS_date_post_30</fullName>
         <description>This rule will delete the IS received date on Contact object after 30 days</description>
@@ -210,26 +270,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIS_Assign_contact_recordtype</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IATA_SIS_Contact</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>SIS - Assign contact recordtype</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Update_Contact_Owner</fullName>
-        <field>OwnerId</field>
-        <lookupValue>smitha@iata.org</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>SIS Update Contact Owner</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>STD_Opt_out</fullName>
         <description>STD Opt out</description>
         <field>HasOptedOutOfEmail</field>
@@ -258,6 +298,19 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Record</fullName>
+        <description>This field is updated with Record Sharing Criteria values</description>
+        <field>Record_Sharing_Criteria_AUX__c</field>
+        <formula>IF(INCLUDES(Record_Sharing_Criteria__c, &quot;IFG Active Users&quot;),&quot;IFG Active Users;&quot;,&quot;&quot;)
+&amp;
+IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&quot;,&quot;&quot;)</formula>
+        <name>Update Record Sharing Criteria AUX</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <rules>
         <fullName>E%26F %3A Notification On Client Contact Deactivation</fullName>
@@ -325,6 +378,16 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>Field update with values of field Record Sharing Criteria</fullName>
+        <actions>
+            <name>Update_Record</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>IDCard_RenewalNotice</fullName>
         <actions>
             <name>Renewal_Email_alert</name>
@@ -358,23 +421,22 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP - Notification to new Portal user</fullName>
-        <actions>
-            <name>New_user_portal</name>
-            <type>FieldUpdate</type>
-        </actions>
+        <fullName>ISSP - Change Owner to IATA System</fullName>
         <active>true</active>
         <criteriaItems>
-            <field>Contact.RecordTypeId</field>
-            <operation>equals</operation>
+            <field>User.UserType</field>
+            <operation>notEqual</operation>
             <value>Standard</value>
         </criteriaItems>
-        <criteriaItems>
-            <field>Contact.User_Portal_Status__c</field>
-            <operation>equals</operation>
-            <value>Approved User,Approved Admin,Pending Approval</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onCreateOnly</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>Contact_Owner</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>ISSP Notify Contact TD Granted</fullName>
@@ -432,57 +494,6 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP Notify Portal User Status Change</fullName>
-        <actions>
-            <name>ISS_Send_Change_Of_Portal_User_Status_Notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <description>Notify Portal User on change of their Portal Status. New users get the Welcome email message so we don&apos;t want to send this out to them, nor to Rejected or Inactivated users.</description>
-        <formula>ISCHANGED( User_Portal_Status__c ) &amp;&amp;  (PRIORVALUE(User_Portal_Status__c)  &lt;&gt;  &quot;&quot;) &amp;&amp;  ( NOT(ISPICKVAL(User_Portal_Status__c, &apos;Rejected&apos;))  || NOT(ISPICKVAL(User_Portal_Status__c, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL(User_Portal_Status__c, &apos;Approved User&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Approved Admin&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Regional Administrator&apos;) )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP Notify Portal User Status Change_UnknownContact</fullName>
-        <actions>
-            <name>ISSP_Notify_Portal_User_Status_Change_UnknownContact</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <description>Notify Portal User on change of their Portal User, when Status = Rejected AND Reason for Inactivation = Unknown Contact</description>
-        <formula>ISCHANGED(Portal_Inactivation_Reason__c)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP deactivate inactive contact</fullName>
-        <actions>
-            <name>ISS_Portal_deactivate_inactive_contact</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.Status__c</field>
-            <operation>notEqual</operation>
-            <value>Active</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP new portal user</fullName>
-        <actions>
-            <name>Alert_admins_that_a_contact_has_registered</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contact.User_Portal_Status__c</field>
-            <operation>equals</operation>
-            <value>Pending Approval</value>
-        </criteriaItems>
-        <description>If a contact is created as a &quot;pending approval&quot; contact the administrators should now it.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP switch to Standard Contact RT</fullName>
         <actions>
             <name>Switch_to_standard_contact_RT</name>
@@ -503,10 +514,36 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 AND NOT( 2)</booleanFilter>
         <criteriaItems>
             <field>Contact.BSP_CASS_Payment_contact__c</field>
             <operation>equals</operation>
             <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Community__c</field>
+            <operation>startsWith</operation>
+            <value>CNS</value>
+        </criteriaItems>
+        <description>Send email to Portal Admins when &quot;BSP/CASS Payment contact&quot; checkbox is checked on the Contact (in Portal the user can do it in the My Profile page)</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ISSP_BSPCASS Payment contact - CNS</fullName>
+        <actions>
+            <name>ISSP_BSPCASS_Payment_contact_cns</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.BSP_CASS_Payment_contact__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Community__c</field>
+            <operation>startsWith</operation>
+            <value>CNS</value>
         </criteriaItems>
         <description>Send email to Portal Admins when &quot;BSP/CASS Payment contact&quot; checkbox is checked on the Contact (in Portal the user can do it in the My Profile page)</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -544,24 +581,6 @@
         </criteriaItems>
         <description>Automatically Opt out all Key contact</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS HelpDesk - Assign SIS recordtype when new contact source system is SIS</fullName>
-        <actions>
-            <name>SIS_Assign_contact_recordtype</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Update_Contact_Owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contact.Source_System__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Update ID card contact checkbox</fullName>

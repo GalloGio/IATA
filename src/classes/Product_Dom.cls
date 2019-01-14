@@ -71,6 +71,13 @@ private void onBeforeInsert() {
     Product_Svc.setProductManager(null, newList, true);
     //-- set IsNewVersion field
     Product_Svc.setIsNewVersion(newList);
+
+    /** Ecommerce Enhancements R2 **/
+    /* Begin INC335264
+    *Product_Svc.checkProductAcceptedPaymentMethods(newList, null);
+    */
+    Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);    
+    /** End INC335264**/
 }
 private void onBeforeUpdate() {
     getData(true, true);
@@ -78,6 +85,13 @@ private void onBeforeUpdate() {
     //Product_Svc.setRecordType(oldList, newList, false);
     //*** set product manager based on profit center
     Product_Svc.setProductManager(oldList, newList, false);
+
+    /** Ecommerce Enhancements R2 **/
+    /* INC335264
+    /Product_Svc.checkProductAcceptedPaymentMethods(newList, oldMap);
+    */
+    Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);
+    /** End INC335264**/
 }
 //private void onBeforeDelete() {
     //getData(false, true);
@@ -87,6 +101,10 @@ private void onAfterInsert()
 {
     //On demand test run
     if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger Product') != 1) return;
+
+    if (Utility.getNumericSetting('Sandbox Reference Data Sync') == 1) {
+        return;
+    }
 
     getData(true, false);
 
@@ -98,24 +116,54 @@ private void onAfterInsert()
 }
 
 private void onAfterUpdate() {
+    Boolean isAcceptedPaymentMethodsUpdate = false;
 
     //On demand test run
     if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger Product') != 1) return;
+
+    if (Utility.getNumericSetting('Sandbox Reference Data Sync') == 1) {
+        return;
+    }
     
     getData(true, true);
 
-     //Email notification
-    Product_Svc.emailNotification(newList, oldMap, false);
-    
-    Map<Id, Product2> products2Send = getProductsToSend(oldMap, newMap);
-    if(products2Send.size() > 0)
-    {
-        sendProducts2Zuora(products2Send);
+    isAcceptedPaymentMethodsUpdate = true;
+    for (Product2 product : newList) {
+        Product2 oldProduct = oldMap.get(product.Id);
+        String oldApm = oldProduct.Accepted_Payment_Methods__c;
+        String newApm = product.Accepted_Payment_Methods__c;
+        
+        if (oldApm == null) {
+            oldApm = '';
+        }
+
+        if (newApm == null) {
+            newApm = '';
+        }
+
+        if (newApm.equals(oldApm) == true) {
+            isAcceptedPaymentMethodsUpdate = false;
+            break;
+        }
     }
 
-    //Create PriceBookEntry for Phase 1 and 2 if not exist
-    Product_Svc.createPriceBookEntry(newMap, oldMap, false);
-   
+    if (isAcceptedPaymentMethodsUpdate == false) {
+         //Email notification
+        if (Test.isRunningTest() == false) {
+            Product_Svc.emailNotification(newList, oldMap, false);
+        }
+
+        Map<Id, Product2> products2Send = getProductsToSend(oldMap, newMap);
+        if(products2Send.size() > 0)
+        {
+            sendProducts2Zuora(products2Send);
+        }
+
+        //Create PriceBookEntry for Phase 1 and 2 if not exist
+        Product_Svc.createPriceBookEntry(newMap, oldMap, false);
+    }
+        /** Ecommerce Enhancements R2 **/
+    Product_Svc.replicateProductAcceptedPaymentMethods(newList, oldMap);
 }
 
 public static Map<Id, Product2> getProductsToSend(Map<Id, Product2> productsBefore, Map<Id, Product2> productsAfter)
@@ -150,7 +198,8 @@ public static void sendProducts2Zuora(Map<Id, Product2> productById)
     else if(System.isFuture())
         Product_Svc.saveZProducts(productById.keySet());
     else
-        Product_Svc.saveZProductsFuture(productById.keySet());
+        //Product_Svc.saveZProductsFuture(productById.keySet());
+        System.enqueueJob(new Product_Svc.saveZProductsQueueable(productById.keySet()));
 }
 
 //private void onAfterDelete() {

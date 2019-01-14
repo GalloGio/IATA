@@ -3,6 +3,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
 
 
     public Account theAccount {get; set;}
+    public Account newAccount {get; set;}
     public Contact myContact {get; set;}
     public String PageTitle {get; set;}
 
@@ -47,14 +48,12 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             myContact = [Select  c.Id, c.Middle_Initial__c, c.VER_Number__c, c.VER_Number_2__c , c.LastName, c.FirstName, c.Email, c.Gender__c, c.UIR__c, c.Date_of_Birth__c From Contact c where c.VER_Number_2__c = :ver limit 1];
             Account[] accounts = [Select a.TradeName__c, a.IDCard_Key_Account__c, a.ID_Card_KeyAccount_features__c,  a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity From Account a where a.RecordType.Name = 'Agency' AND IATACode__c = : oldIataCode limit 1];
             if (accounts.size() > 0) {
-                theAccount = accounts[0];
+                theAccount = accounts[0];               
                 //selectedContact = accounts[0];
             } else {
                 AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + oldIataCode + '</i>'}));
                 return;
-            }
-
-
+            }            
             PageTitle = Label.ID_Card_AgencyDetails_Form_Title;
         } catch (Exception ex) {
             AddError(ex.getMessage());
@@ -72,7 +71,13 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
     }
     */
     public Pagereference Verify() {
-        
+        Account[] newAccounts = [Select a.TradeName__c, a.IDCard_Key_Account__c, a.ID_Card_KeyAccount_features__c,  a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity From Account a where a.RecordType.Name = 'Agency' AND IATACode__c = : NewAgencyCode limit 1];
+        if(newAccounts.size() > 0){
+                newAccount = newAccounts[0];                
+             } else {
+                AddError(String.Format(Label.ID_Card_Account_Not_Found, new String[] {'<i>' + NewAgencyCode + '</i>'}));
+                return null;
+            }
         if (NewAgencyCode == null || NewAgencyCode == '') {
             AddError(Label.IDCard_EnterNewAgencyCode);
             return null;
@@ -80,6 +85,16 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
         if (NewAgencyCode == oldIataCode) {
             AddError(Label.IDCard_EnterNewDifferentIATACode);
             return null;
+        }
+        if(newAccount != null){
+        String feature = newAccount.ID_Card_KeyAccount_features__c;
+            if (feature == null)feature = '';
+            if (newAccount.IDCard_Key_Account__c != null && feature.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
+                Managed_Agency__c ma = [SELECT Contact__r.Name, Contact__r.Email, Contact__r.IDcard_Email__c FROM Managed_Agency__c WHERE Account__r.IATAcode__c = :newAccount.IATACode__c AND Delegate__c = false];
+                errMsg = 'Your account has specific rule for ID card purchase. Please contact your key contact for more details (' + ma.Contact__r.Name + ': ' + ma.Contact__r.IDcard_Email__c + ').';
+                AddError(errMsg);
+                return null;
+            }
         }
         try {
             theAccount = [Select a.ShippingStreet, a.ShippingState, a.ShippingPostalCode, a.ShippingCountry, a.ShippingCity, a.Name, a.Short_Name__c, a.IDCard_Key_Account__c, a.ID_Card_KeyAccount_features__c,  a.Is_AIMS_Account__c, a.Legal_name__c, a.IATACode__c, a.BillingStreet, a.BillingState, a.BillingPostalCode, a.BillingCountry, a.BillingCity From Account a where RecordType.Name = 'Agency' AND IATACode__c = : NewAgencyCode AND  (Status__c in : IDCardUtil.ALLOWED_ACCOUNT_STATUS ) AND Is_AIMS_Account__c = true AND  (a.type in :IDCardUtil.ALLOWED_ACCOUNT_TYPES) limit 1];
@@ -117,17 +132,12 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
         try {
             ID_Card_Application__c idCardApp = [Select i.Id, i.RecordTypeId, i.IATA_Code__c, i.VER_Number__c From ID_Card_Application__c i where i.Id = :idCardAppID limit 1];
             idCardApp.IATA_Code__c = NewAgencyCode;
-            String singleKAIDCAppId =  IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
-            String defaultIDCApp =  IDCardWebService.getIdCardAppRT('Standard');
+            String singleKAIDCAppId =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
+            String defaultIDCApp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
             String feature = theAccount.ID_Card_KeyAccount_features__c;
             system.debug('[REPLACEMENT] original Application Record type:' + idCardApp.RecordTypeId);
             if (feature == null)feature = '';
-            if (theAccount.IDCard_Key_Account__c != null && feature.contains(IDCardUtil.Key_Account_Feature_Only_KC_Purchase)) {
-                Managed_Agency__c ma = [SELECT Contact__r.Name, Contact__r.Email, Contact__r.IDcard_Email__c FROM Managed_Agency__c WHERE Account__r.IATAcode__c = :theAccount.IATACode__c AND Delegate__c = false];
-                errMsg = 'Your account has specific rule for ID card purchase. Please contact your key contact for more details (' + ma.Contact__r.Name + ': ' + ma.Contact__r.IDcard_Email__c + ').';
-                AddError(errMsg);
-                return null;
-            } else if (theAccount != null && theAccount.IDCard_Key_Account__c && !feature.contains(IDCardUtil.Key_Account_Feature_Allow_Personnal_Purchase)) {
+            if (theAccount != null && theAccount.IDCard_Key_Account__c && !feature.contains(IDCardUtil.Key_Account_Feature_Allow_Personnal_Purchase)) {
                 idCardApp.RecordTypeId = singleKAIDCAppId;
                 idCardApp.Application_Status__c = 'Temp' ;
             } else
@@ -201,7 +211,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
             confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter('1'));
             confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(idCardAppID));
             // INC199297
-            confPage.getParameters().put(IDCardUtil.ACCOUNT_STATUS_TERMINATED, IDCardUtil.EncryptEncodeParameter('Terminated'));
+            //confPage.getParameters().put(IDCardUtil.ACCOUNT_STATUS_TERMINATED, IDCardUtil.EncryptEncodeParameter('Terminated'));
             confPage.setRedirect(true);
             return confPage;
         }
@@ -209,6 +219,17 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
 
      public void showPopup() {
         displayPopup = true;
+    }
+
+    public void closePopup() {
+        displayPopup = false;
     } 
+
+
+    public pagereference refresh() {
+        initialize();
+        displayPopup = false;
+        return null;
+    }
 
 }

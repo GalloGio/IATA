@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>iata.dpo@ciscorecall.com</email>
     <name>Recall Singapore Img. Esc. (IATA IW)</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATAIWProjectTeam</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>IATAInvoiceWorksA</role>
+            <role>IATAIWCallCentreA</role>
+            <role>RecallUSA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -17,6 +17,10 @@ private class Order_Svc_Test
         system.assert(1 ==[select count() from Order where Id = :orders[0].Id and Status = 'Delivery' and Is_Paid__c = false], 'Status must be changed and Order is NOT paid');
         Order_Svc.updateOrderStatus(new Map<Id, String>{ orders[0].Id => 'Invoiced' }, new Map<Id, Boolean>{ orders[0].Id => true });
         system.assert(1 ==[select count() from Order where Id = :orders[0].Id and Status = 'Invoiced' and Is_Paid__c = true], 'Status must be changed and Order is paid');
+        
+        //*** make sure order is not allowed to modify after some status
+        delete [select Id from Apex_Setting__c where Name = 'Order User profile allows modification'];
+        try { update new Order(Id=orders[0].Id, Shipping_Instruction__c='999-888-7777'); } catch (Exception e) {}
     }
 
     @isTest (seeAllData=true)
@@ -47,13 +51,20 @@ private class Order_Svc_Test
         catch(Exception e){
             System.assert(ApexPages.getMessages().size() > 0);
         }
+        
+        //*** test the other signature for same method
+        try {
+            system.assertEquals(Order_Svc.saveOrderItem(orderItems1[1].Id, 1, 'error ~!~@~#~', contacts[0].Id, 'error', null), null);
+        } catch(Exception e) {}
     }
 
-    /*@isTest (seeAllData=true)
+    @isTest (seeAllData=true)
     static void test_addItemsToOrder()
     {
         OrderItem_Sel oiSelector = new OrderItem_Sel();
         Product_Sel pSelector = new Product_Sel();
+        
+        delete [select Id from Apex_Setting__c where Name like 'ECommerce Products Filter%'];
         
         //-- Generate Order & OrderItems
         Account theAccount  = TestDataGenerator.generateAccounts(1,true)[0]; 
@@ -62,26 +73,19 @@ private class Order_Svc_Test
         theOrder.Status = 'New';
         insert theOrder;
 
-        List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(theOrder.Id, 3,true);// 3 lineItems for Order
-        List<OrderItem> fullOrderItems =  oiSelector.getOrderItems(theOrder.Id) ; 
+        TestDataGenerator.generateOrderItem(theOrder.Id, 5,true);
+        List<OrderItem> orderItems = oiSelector.getOrderItems(theOrder.Id) ; 
 
         //Generate Products with Price  
         Set<Id> productIds = new Set<Id>();
-        for(OrderItem oi : fullOrderItems)
+        for(OrderItem oi : orderItems)
         {
             productIds.add(oi.Product__c);
         }
         List<Product2> fullProducts = (List<Product2>) pSelector.selectSObjectById(productIds);
-        System.debug('fullProducts::'+fullProducts);
-
-        // Update display to eCommerce flag to be able to show in the following queries Product_Sel.getEComProduct
-        for (Product2 prod : fullProducts) {
-            prod.Inventory_Status__c = 'In stock';
-        }
-        update fullProducts;
 
         //Generate price for the products 
-        List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(3, true);
+        List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(5, true);
         List<zqu__ProductRatePlan__c> zRatePlans = new List<zqu__ProductRatePlan__c>();
         List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
 
@@ -92,6 +96,8 @@ private class Order_Svc_Test
             zRatePlans.addAll(TestDataGenerator.generateZRatePlans(zprod.Id,1,false)); //1 rate plan per product
             prod.SAP_Status_Code__c = 'A';
             prod.Post_to_Ecommerce_Date__c = System.today().addDays(-7);
+            prod.Sell_through_eCommerce__c = true;
+            prod.Inventory_Status__c = 'In stock';
             prod.ZProduct__c = zprod.Id;
         }
 
@@ -131,35 +137,26 @@ private class Order_Svc_Test
 
         //Generate Product Price
         List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(new List<Id>(productIds),false, null, null);
-        System.debug('productIds::'+productIds);
-        System.debug('ecomProducts::'+ecomProducts);
-        
+        Map<Id, EComProduct_DTO> mapProductId_DTO = new Map<Id, EComProduct_DTO>();
+        for (EComProduct_DTO p : ecomProducts)
+            mapProductId_DTO.put(Id.valueOf(p.ProductId), p);
         Map<Id, EComProduct_DTO> ecomProductByItem = new Map<Id, EComProduct_DTO>();
-
-        Set<Id> orderItemId = new Set<Id>();
-        for(OrderItem oi : orderItems)
+        List<PriceInfo_DTO> prices = TestDataGenerator.generatePriceInfo(orderItems.size());
+        EComProduct_DTO ecomProd;
+        for(Integer x=0; x < orderItems.size(); x++)
         {
-            orderItemId.add(oi.Id);
-        }
-
-        List<PriceInfo_DTO> prices = TestDataGenerator.generatePriceInfo(fullOrderItems.size());
-
-        for(Integer x=0; x < fullOrderItems.size(); x++)
-        {
-            OrderItem oi = fullOrderItems[x];
-            EComProduct_DTO ecomProd = ecomProducts[x];
-                ecomProd.ProductId = oi.Product__c;
-                ecomProd.PriceInfo = prices[x];
-
+            OrderItem oi = orderItems[x];
+            ecomProd = mapProductId_DTO.get(Id.valueOf(oi.Product__c));
+            ecomProd.PriceInfo = prices[x];
             ecomProductByItem.put(oi.Id, ecomProd);
-
         }
 
         //-- Generate SalesOrderProduct_DTO 
         List<SalesOrderProduct_DTO> sop_dtos =  new List<SalesOrderProduct_DTO>();
+        SalesOrderProduct_DTO sop, sopError;
         for(OrderItem oi : orderItems)
         {
-            SalesOrderProduct_DTO sop = new SalesOrderProduct_DTO();
+            sop = new SalesOrderProduct_DTO();
                 sop.quantity = 1;
                 sop.selected = true; 
                 sop.orderItemId = oi.Id;
@@ -167,16 +164,43 @@ private class Order_Svc_Test
                 sop.ecomProduct = ecomProductByItem.get(oi.Id);
             sop_dtos.add(sop);
         }
+        sopError = sop;
+        //*** cover case of invalid coupon
+        sop.couponCode = 'blablabla';
+        //*** cover case of valid coupon
+        sop_dtos[1].couponCode = '      ';
+        sop_dtos[2].couponCode = '~!~@~#~$~';
+        ecomProd = sop_dtos[2].ecomProduct;
+        ecomProd.PriceInfo.couponPrice = TestDataGenerator.generatePriceDetail(1);
+        ecomProd.PriceInfo.couponPrice[0].discountName = sop_dtos[2].couponCode;
 
-        delete orderItems[0];
+        //*** first item in sop_dtos is for case of already in order
+        delete [select Id from OrderItem where OrderId = :theOrder.Id and Id != :orderItems[0].Id];
 
-        List<Order_Item_Charge__c> oic = TestDataGenerator.generateOrderItemCharge(orderItems[1].Id, 2, true);
-
-
-
-        //Call function 
         Order_Svc.addItemsToOrder(sop_dtos, theOrder);
-    } */
+        system.assertEquals([select count() from OrderItem where OrderId = :theOrder.Id], 4);
+        
+        sop_dtos.clear();
+        //*** cover case of invalid quantity
+        sop = new SalesOrderProduct_DTO();
+        sop.quantity = -1;
+        sop.selected = true; 
+        sop.orderItemId = sopError.orderItemId;
+        sop.IsQuantityInteger = true;
+        sop.ecomProduct = ecomProductByItem.get(Id.valueOf(sop.orderItemId));
+        sop_dtos.add(sop);
+        //*** cover case of create price book entry -> cause exception
+        sop = new SalesOrderProduct_DTO();
+        sop.quantity = 1;
+        sop.selected = true; 
+        sop.orderItemId = sopError.orderItemId;
+        sop.IsQuantityInteger = true;
+        sop.ecomProduct = ecomProductByItem.get(Id.valueOf(sop.orderItemId));
+        sop.ecomProduct.ProductId = UserInfo.getUserId();
+        sop_dtos.add(sop);
+        Order_Svc.addItemsToOrder(sop_dtos, theOrder);
+        system.assertEquals([select count() from OrderItem where OrderId = :theOrder.Id], 4);
+    }
 
     @isTest (SeeAllData=true)
     static void test_createSapSalesOrders()
@@ -204,7 +228,11 @@ private class Order_Svc_Test
         insert orders;
         
         List<OrderItem> orderItems1 = TestDataGenerator.generateOrderItem(orders[0].Id, 3,true);// 3 lineItems for Order1
-        List<OrderItem> orderItems2 = TestDataGenerator.generateOrderItem(orders[1].Id,2,true);// 2 lineItems for Order2
+        List<OrderItem> orderItems2 = TestDataGenerator.generateOrderItem(orders[1].Id, 2,true);// 2 lineItems for Order2
+        List<Order_Item_Charge__c> lstDiscount = new List<Order_Item_Charge__c>();
+        lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=orderItems2[0].Id, Discount_Type__c='discount', Discount_Amount__c=1));
+        lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=orderItems2[1].Id, Discount_Type__c='discount', Discount_Percentage__c=1));
+        insert lstDiscount;
         
         System.assertEquals(3,orderItems1.size());
         System.assertEquals(2,orderItems2.size());
@@ -230,302 +258,400 @@ private class Order_Svc_Test
         List<Account> lstAccount = TestDataGenerator.generateAccounts(1, true);
         List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, true);
         List<User> lstUser = new List<User> {TestDataGenerator.generatePortalUser('ISS Portal', lstContact[0].Id, true)};
-        
-        //*** generate order and order item
+        List<IECAddress__c> lstAddress = TestDataGenerator.generateAddresses(1, true);
+        update new IATA_ISO_Country__c(Id=lstAddress[0].ISO_Country__c, Profit_Center__c='abc');
+        Location__c loc = TestDataGenerator.generateLocations('Bill To', lstAddress[0].Id, lstAccount[0].Id, lstContact[0].Id);
+
+        //*** generate order
         List<Order> lstOrder = TestDataGenerator.generateOrder(1, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, false);
         lstOrder[0].Payment_Type__c = 'Credit Card';
+        lstOrder[0].BillTo_Location__c = loc.Id;
         insert lstOrder;
+        Set<Id> setOrderId = new Set<Id>{lstOrder[0].Id};
 
-        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 3, true);
-        List<Order_Item_Charge__c> lstDiscount = new List<Order_Item_Charge__c>();
-        //Get set of product ids
-        set<Id> productIds = new set<Id>();
-
-        system.debug('lstOrderItem ' + lstOrderItem);
-
+        //*** generate order item
+        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 4, false);
+        lstOrderItem[lstOrderItem.size() - 1].Setup_Fee__c = 10;   //*** to cover setup fee and manual discount scenario
+        lstOrderItem[lstOrderItem.size() - 1].Discount__c = 10;
+        insert lstOrderItem;
         set<Id> oiIds = new set<Id>();
         for (OrderItem oi : lstOrderItem){
             oiIds.add(oi.Id);
         }
+        lstOrderItem = [select Id, Product__c, PricebookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c, ServiceDate from OrderItem where Id = :oiIds];
 
-        lstOrderItem = [select id,Product__c,PricebookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c,ServiceDate 
-                         from OrderItem where id =:oiIds];
-
-        system.debug('lstOrderItem after queries ' + lstOrderItem);
-
-        for (OrderItem oi : lstOrderItem){
-            lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=oi.Id, Discount_Type__c='discount', Discount_Amount__c=1));
-            productIds.add(oi.Product__c);
-        }
+        //*** generate discount
+        List<Order_Item_Charge__c> lstDiscount = new List<Order_Item_Charge__c>();
+        lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[0].Id, Discount_Type__c='discount', Discount_Amount__c=1));
+        lstDiscount.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[1].Id, Discount_Type__c='discount', Discount_Percentage__c=1));
         insert lstDiscount;
-        Set<Id> setOrderId = new Set<Id>{lstOrder[0].Id};
 
-        system.debug('setOrderId ' + setOrderId);
-        system.debug('productIds ' + productIds);
-        //*** get product generated for order items for manipulation
-        List<Product2> lstProduct = [select Id from Product2 where id in :productIds];
+        //*** get products generated for order items for manipulation
+        set<Id> productIds = new set<Id>();
+        for (OrderItem oi : lstOrderItem)
+            productIds.add(oi.Product__c);
+        List<Product2> lstProduct = [select Id from Product2 where Id in :productIds];
+
         Integer i1;
 
-        system.debug('lstProduct.size() ' + lstProduct.size());
         //*** cover case where no contract is needed
         for (i1 = 0; i1 < lstProduct.size(); i1++){
             lstProduct[i1].Is_Shippable__c = true;
             lstProduct[i1].Effective_From__c = Date.today();
             lstProduct[i1].Effective_To__c = Date.today().addDays(5);
         }
-            
-
         update lstProduct;
         Order_Svc.createSAPContracts(setOrderId);
-        //system.assert(0 != [select count() from OrderItem where SAP_Contract_Number__c != null], 'Contract should be created');
+        system.assert(0 == [select count() from OrderItem where Id in :oiIds and SAP_Contract_Number__c != null], 'No contract should be created');
 
-        //*** cover case of having contract created -> product 0 will not have contract
+        //*** ensure products in order are to send via contract -> must match with field "Use_Contract_when_ordered__c"
         for (i1 = 0; i1 < lstProduct.size(); i1++)
         {
             lstProduct[i1].Is_Shippable__c = false;
-            lstProduct[i1].SAP_SalesOrg__c = 'YMQ1';
-            lstProduct[i1].SAP_Sales_Channel_Code__c = '03';
-            lstProduct[i1].SAP_Division_Code__c = '01';
-            lstProduct[i1].Number_of_months_of_subscription__c = 12;
+            lstProduct[i1].SAP_Media_Code__c = '030';
+            lstProduct[i1].Number_of_months_of_subscription__c = i1;   //*** for sorting later
         }
-        lstProduct[0].SAP_Media_Code__c = '030';   //*** product 0 will be in 1 contract
-        lstProduct[1].SAP_Media_Code__c = '031';   //*** products 1 and 2 will be in 1 contract
-        lstProduct[2].SAP_Media_Code__c = '031';
-        //lstProduct[3].SAP_Media_Code__c = '032';   //*** product 3 will be arranged to have error
+        lstProduct[0].SAP_Material_Number__c = '999999999999';
+        lstProduct[0].IEC_Override_Profit_Center__c = true;
         update lstProduct;
         Test.startTest();
             Test.setMock(WebServiceMock.class, new SAP_Contract_Mock());
-            //*** 111 assigned to product 1, 222 assigned to products 1 and 2, null to product 3 (error) because of sorting of SAP_Media_Code__c
-            SAP_Contract_Mock.lstContractNumber = new List<String>{'111', '222', null};
+            //*** 111 assigned to product 1, 222 assigned to product 2, null to product 3 (error), 333 to product 4
+            SAP_Contract_Mock.lstContractNumber = new List<String>{'111', '222', null, '333'};
             Order_Svc.createSAPContractsFuture(setOrderId);
-
-            List<OrderItem> lstOrderItems = [select SAP_Contract_Number__c from OrderItem where SAP_Contract_Number__c = '111'];
-            for(OrderItem oi : lstOrderItems){
-                system.debug('oi ' + oi.SAP_Contract_Number__c);
-            }
-            /*system.assert(1 == [select count() from OrderItem where SAP_Contract_Number__c = '111'], 'Wrong contract for product 0');
-            system.assert(2 == [select count() from OrderItem where SAP_Contract_Number__c = '222'], 'Wrong contract for products 1, 2');
-            system.assert(1 == [select count() from OrderItem where SAP_Contract_Number__c = null], 'Wrong contract for product 3');*/
         Test.stopTest();
+        List<OrderItem> lstOrderItems = [select SAP_Product_Number__c, SAP_Contract_Number__c from OrderItem where Id in :oiIds order by PricebookEntry.Product2.Number_of_months_of_subscription__c];
+        system.assert(3 == [select count() from OrderItem where Id in :oiIds and SAP_Contract_Number__c != null], '3 contracts should be created');
     } //*** end of "test_createSAPContracts"
 
-    @isTest (seeAllData=true) 
-    static void test_zuoraSubscribe(){
+
+	/***************************************************************************************************
+	    Created by Thai 2017-02-02
+	        Test methods "test_zuoraSubscribeWithNewCustomer" and "test_zuoraSubscribeWithExistingCustomer"
+	        cover "orderSubscription", "zuoraPaymentId", "parsePaymentMethodToEnum", "subscribe",
+	              "setPaymentMethod", "setPaymentMethodWithWrp", "parseSubscribeResult2UpdateItems",
+	              "parsePaymentResult", "getZuoraInvoices", "getInvoiceString", "getZuoraPayments",
+	              "getPaymentString", "createZuoraPayment", "deleteZuoraSubscription", "deleteZuoraSubscriptionNow",
+	              "getZuoraAccounts", "getZaccountQuery", "getZaccountById", "getRatePlanData",
+	              "orderItemsToUpdateInZuora", "updateZsubscriptions", "getSubString"
+	***************************************************************************************************/
+	@isTest (seeAllData=true)
+	static void test_zuoraSubscribeWithNewCustomer(){
+		//*** gererate Zuora products
+		List<zqu__ZProduct__c> lstZproducts = TestDataGenerator.generateZProducts(3, true);
+
+		//*** generate Zuora rate plans
+		zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[1].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[2].Id, 1, false)[0];
+		insert new List<zqu__ProductRatePlan__c>{zPlanForUnitPrice, zPlanForSetupFee, zPlanForUnitPriceAndSetupFee};
+
+		//*** generate Zuora rate plan charges - charge 0 is for discount
+		List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPrice = TestDataGenerator.generateZCharges(zPlanForUnitPrice.Id, 2, false);
+		lstZChargeForUnitPrice[0].zqu__Model__c = 'Discount-Fixed Amount';
+		lstZChargeForUnitPrice[0].zqu__Discount_Level__c = 'Subscription';
+		lstZChargeForUnitPrice[0].zqu__Discount_Apply_Type__c = 7;
+		lstZChargeForUnitPrice[0].zqu__Type__c = 'One-Time';
+		lstZChargeForUnitPrice[1].zqu__Model__c = 'Per Unit';
+		lstZChargeForUnitPrice[1].zqu__Type__c = 'Recurring';
+		insert lstZChargeForUnitPrice;
+		List<zqu__ProductRatePlanCharge__c> lstZChargeForSetupFee = TestDataGenerator.generateZCharges(zPlanForSetupFee.Id, 2, false);
+		lstZChargeForSetupFee[0].zqu__Model__c = 'Discount-Percentage';
+		lstZChargeForSetupFee[0].zqu__Discount_Level__c = 'Subscription';
+		lstZChargeForSetupFee[0].zqu__Discount_Apply_Type__c = 7;
+		lstZChargeForSetupFee[0].zqu__Type__c = 'One-Time';
+		lstZChargeForSetupFee[1].zqu__Model__c = 'Flat Fee';
+		lstZChargeForSetupFee[1].zqu__Type__c = 'Recurring';
+		insert lstZChargeForSetupFee;
+		List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPriceAndSetupFee = TestDataGenerator.generateZCharges(zPlanForUnitPriceAndSetupFee.Id, 3, false);
+		lstZChargeForUnitPriceAndSetupFee[0].zqu__Model__c = 'Discount-Fixed Amount';
+		lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Level__c = 'Subscription';
+		lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Apply_Type__c = 7;
+		lstZChargeForUnitPriceAndSetupFee[0].zqu__Type__c = 'One-Time';
+		lstZChargeForUnitPriceAndSetupFee[1].zqu__Model__c = 'Per Unit';
+		lstZChargeForUnitPriceAndSetupFee[1].zqu__Type__c = 'Recurring';
+		lstZChargeForUnitPriceAndSetupFee[2].zqu__Model__c = 'Flat Fee';
+		lstZChargeForUnitPriceAndSetupFee[2].zqu__Type__c = 'One-Time';
+		insert lstZChargeForUnitPriceAndSetupFee;
+
+		//*** cover "getProductRatePlanChargeByRatePlanId" in "ProductRatePlanCharge_Sel"
+		//ProductRatePlanCharge_Sel.getProductRatePlanChargeByRatePlanId(new Set<Id>{zPlanForUnitPrice.Id, zPlanForSetupFee.Id, zPlanForUnitPriceAndSetupFee.Id});
+
+		//*** generate Account
+		Account oAccount = TestDataGenerator.generateAccounts(1,true)[0];
+
+		//*** generate Contact
+		Contact oContact = TestDataGenerator.generateContacts(oAccount.Id, 1, true)[0];
+
+		//*** cover getAccountIdByContactId in "Contact_Sel"
+		//Contact_Sel.getAccountIdByContactId(new Set<Id>{oContact.Id});
+
+		//*** generate order
+		Order oOrder = TestDataGenerator.generateOrder(1, oAccount.Id, oContact.Id, oContact.Id, false)[0];
+		oOrder.BillToContact_Email__c = oContact.Email;
+		oOrder.ShipToContactId = null;
+		oOrder.ShipToContact_Email__c = oContact.Email;
+		insert oOrder;
+
+		//*** generate order items
+		List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItemForContract(oOrder.Id, 3, false);
+		lstOrderItem[0].Freight_Charge__c = 1;
+		lstOrderItem[0].Handling_charges__c = 2;
+		lstOrderItem[0].Tax__c = 3;
+		lstOrderItem[0].Zuora_Rate_Plan_Id__c = zPlanForUnitPrice.zqu__ZuoraId__c;
+		lstOrderItem[0].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPrice[1].zqu__ZuoraId__c;
+		lstOrderItem[0].ServiceDate = system.today();
+		lstOrderItem[1].Freight_Charge__c = 1;
+		lstOrderItem[1].Handling_charges__c = 2;
+		lstOrderItem[1].Tax__c = 3;
+		lstOrderItem[1].Zuora_Setup_Fee_Plan_Id__c = zPlanForSetupFee.zqu__ZuoraId__c;
+		lstOrderItem[1].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForSetupFee[1].zqu__ZuoraId__c;
+		lstOrderItem[1].ServiceDate = system.today().addDays(1);
+		lstOrderItem[2].Freight_Charge__c = 1;
+		lstOrderItem[2].Handling_charges__c = 2;
+		lstOrderItem[2].Tax__c = 3;
+		lstOrderItem[2].Zuora_Rate_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
+		lstOrderItem[2].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[1].zqu__ZuoraId__c;
+		lstOrderItem[2].Zuora_Setup_Fee_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
+		lstOrderItem[2].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[2].zqu__ZuoraId__c;
+		lstOrderItem[2].ServiceDate = system.today().addDays(2);
+		insert lstOrderItem;
+
+		//*** generate order item charges for discounts
+		List<Order_Item_Charge__c> lstOrderItemCharge = new List<Order_Item_Charge__c>();
+		lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[0].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[0].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPrice[0].zqu__ZuoraId__c));
+		lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[1].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[1].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForSetupFee[0].zqu__ZuoraId__c));
+		//lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[2].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[2].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPriceAndSetupFee[0].zqu__ZuoraId__c));
+		insert lstOrderItemCharge;
+
+		//*** link SFDC products with Zuora products and make them available for purchase
+		List<Product2> lstProduct = new List<Product2>();
+		for (OrderItem oi : [select Product__c, ServiceDate from OrderItem where OrderId = :oOrder.Id order by ServiceDate])
+			lstProduct.add(new Product2(Id=Id.valueOf(oi.Product__c), Effective_From__c=system.today().addDays(-10), Effective_To__c=system.today().addYears(1)
+			                            //*** make product electronic and available for E-Commerce
+			                          , SAP_Status_Code__c='A', SAP_Product_Type_Code__c='07', Post_to_Ecommerce_Date__c= system.today(), Sell_through_eCommerce__c=true
+			                            //*** force to subscribe product to Zuora no matter of payment method
+			                          , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1
+			                          , ZProduct__c=lstZproducts[oi.ServiceDate == system.today() ? 0 : (oi.ServiceDate == system.today().addDays(1) ? 1 : 2)].Id));
+		update lstProduct;
+
+		//*** generate payment information for credit card
+		String strCreditCard = '4028e6992e836e4a012e914e1ddf5e2e';
+		Zuora.zObject zPaymentMethod = new Zuora.zObject('PaymentMethod');
+		zPaymentMethod.setValue('Id', strCreditCard);
+		IECZuoraHelper.PaymentMethod oPayment = new IECZuoraHelper.PaymentMethod(zPaymentMethod);
+		Map<Id, IECZuoraHelper.PaymentMethod> mapOrderId_PaymentMethod = new Map<Id, IECZuoraHelper.PaymentMethod>{oOrder.Id => oPayment};
+		ZuoraUtil.zAccountPaymentMethod zPaymentMethodForParse = new ZuoraUtil.zAccountPaymentMethod();
+		zPaymentMethodForParse.zPaymentMethodName = 'Credit Card';
+		zPaymentMethodForParse.zPaymentMethod = strCreditCard;
+		Map<String, ZuoraUtil.zAccountPaymentMethod> mapOrderId_PaymentMethodForParse = new Map<String, ZuoraUtil.zAccountPaymentMethod>{String.valueOf(oOrder.Id) => zPaymentMethodForParse};
+
+		Test.startTest();
+			//*** cover case of customer does not have Zuora account
+			//*** -> always failed because second pass for new customer is not performed due to call out to Zuora
+			Order_Svc.orderSubscription(new Set<Id>{oOrder.Id}, null, new Map<Id, String>{oOrder.Id => 'Bank Transfer'});
+			system.assertEquals(0, [select count() from Order where Id = :oOrder.Id and IEC_Zuora_ST_InvoiceId__c != null]);
+			Order_Svc.orderSubscription(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, new Map<Id, String>{oOrder.Id => 'Credit Card'});
+			system.assertEquals(0, [select count() from Order where Id = :oOrder.Id and IEC_Zuora_ST_InvoiceId__c != null]);
+			oOrder.ShipToContactId = oContact.Id;
+			update oOrder;
+			Order_Svc.orderSubscription(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, null);
+			system.assertEquals(0, [select count() from Order where Id = :oOrder.Id and IEC_Zuora_ST_InvoiceId__c != null]);
+		Test.stopTest();
+
+		//*** cover payment methods
+		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_ICH), IECConstants.PaymentMethod_ICH_ZuoraID);
+		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_BankTransfer), IECConstants.PaymentMethod_BankTransfer_ZuoraID);
+		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.ORDER_STATUS_CHECK), IECConstants.PaymentMethod_Check_ZuoraID);
+		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_CreditCard), IECConstants.PaymentMethod_Other_ZuoraID);
+		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_BillMeLater), IECConstants.PaymentMethod_Other_ZuoraID);
+		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_CreditCard), IECConstants.PaymentType.CREDIT_CARD);
+		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_BankTransfer), IECConstants.PaymentType.BANK_TRANSFER);
+		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.ORDER_STATUS_CHECK), IECConstants.PaymentType.CHECK);
+		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_ICH), IECConstants.PaymentType.ICH);
+		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_BillMeLater), IECConstants.PaymentType.OTHER);
+		system.assertEquals(Order_Svc.parsePaymentMethodToEnum('not found'), null);
+
+		//*** cover "getSubString"
+		system.assert(Order_Svc.getSubString(new Set<String>{'aaa'}).contains('aaa'), 'Wrong value');
+	} //*** end of "test_zuoraSubscribeWithNewCustomer"
 
 
-        TestDataGenerator.generateApexSetting();
-        
-        //Gererate Zproducts
-        List<zqu__ZProduct__c> lstZproducts = TestDataGenerator.generateZProducts(1, true);
-        
-        //Generate Plan
-        List<zqu__ProductRatePlan__c> lstPlan = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 2, true);
-        
-        //Generate charge
-        List<zqu__ProductRatePlanCharge__c> lstCharge = TestDataGenerator.generateZCharges(lstPlan[0].Id, 2, true);
-        //Generate charge
-        List<zqu__ProductRatePlanCharge__c> lstCharge2 = TestDataGenerator.generateZCharges(lstPlan[1].Id, 2, true);
+	/***************************************************************************************************
+	    Created by Thai 2017-02-02
+	        Test methods "test_zuoraSubscribeWithNewCustomer" and "test_zuoraSubscribeWithExistingCustomer"
+	        cover "orderSubscription", "zuoraPaymentId", "parsePaymentMethodToEnum", "subscribe",
+	              "setPaymentMethod", "setPaymentMethodWithWrp", "parseSubscribeResult2UpdateItems",
+	              "parsePaymentResult", "getZuoraInvoices", "getInvoiceString", "getZuoraPayments",
+	              "getPaymentString", "createZuoraPayment", "deleteZuoraSubscription", "deleteZuoraSubscriptionNow",
+	              "getZuoraAccounts", "getZaccountQuery", "getZaccountById", "getRatePlanData",
+	              "orderItemsToUpdateInZuora", "updateZsubscriptions", "getSubString"
+	***************************************************************************************************/
+	@isTest (seeAllData=true)
+	static void test_zuoraSubscribeWithExistingCustomer(){
+		//*** gererate Zuora products
+		List<zqu__ZProduct__c> lstZproducts = TestDataGenerator.generateZProducts(3, true);
 
-        ProductRatePlanCharge_Sel.getProductRatePlanChargeByRatePlanId(new set<Id>{lstPlan[0].Id, lstPlan[1].Id});
-        
-        //Create an Account
-        Account account = TestDataGenerator.generateAccounts(1,true)[0];
+		//*** generate Zuora rate plans
+		zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[1].Id, 1, false)[0];
+		zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[2].Id, 1, false)[0];
+		insert new List<zqu__ProductRatePlan__c>{zPlanForUnitPrice, zPlanForSetupFee, zPlanForUnitPriceAndSetupFee};
 
-        //Create a Contact
-        Contact contact = TestDataGenerator.generateContacts(account.Id, 1, true)[0];
-        
-        //Create a customer account
-        Zuora__CustomerAccount__c customerAccount = TestDataGenerator.generateZCustomerAccount(account.Id,contact.Id, 1, true)[0];
+		//*** generate Zuora rate plan charges - charge 0 is for discount
+		List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPrice = TestDataGenerator.generateZCharges(zPlanForUnitPrice.Id, 2, false);
+		lstZChargeForUnitPrice[0].zqu__Model__c = 'Discount-Fixed Amount';
+		lstZChargeForUnitPrice[0].zqu__Discount_Level__c = 'Subscription';
+		lstZChargeForUnitPrice[0].zqu__Discount_Apply_Type__c = 7;
+		lstZChargeForUnitPrice[0].zqu__Type__c = 'One-Time';
+		lstZChargeForUnitPrice[1].zqu__Model__c = 'Per Unit';
+		lstZChargeForUnitPrice[1].zqu__Type__c = 'Recurring';
+		insert lstZChargeForUnitPrice;
+		List<zqu__ProductRatePlanCharge__c> lstZChargeForSetupFee = TestDataGenerator.generateZCharges(zPlanForSetupFee.Id, 2, false);
+		lstZChargeForSetupFee[0].zqu__Model__c = 'Discount-Percentage';
+		lstZChargeForSetupFee[0].zqu__Discount_Level__c = 'Subscription';
+		lstZChargeForSetupFee[0].zqu__Discount_Apply_Type__c = 7;
+		lstZChargeForSetupFee[0].zqu__Type__c = 'One-Time';
+		lstZChargeForSetupFee[1].zqu__Model__c = 'Flat Fee';
+		lstZChargeForSetupFee[1].zqu__Type__c = 'Recurring';
+		insert lstZChargeForSetupFee;
+		List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPriceAndSetupFee = TestDataGenerator.generateZCharges(zPlanForUnitPriceAndSetupFee.Id, 3, false);
+		lstZChargeForUnitPriceAndSetupFee[0].zqu__Model__c = 'Discount-Fixed Amount';
+		lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Level__c = 'Subscription';
+		lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Apply_Type__c = 7;
+		lstZChargeForUnitPriceAndSetupFee[0].zqu__Type__c = 'One-Time';
+		lstZChargeForUnitPriceAndSetupFee[1].zqu__Model__c = 'Per Unit';
+		lstZChargeForUnitPriceAndSetupFee[1].zqu__Type__c = 'Recurring';
+		lstZChargeForUnitPriceAndSetupFee[2].zqu__Model__c = 'Flat Fee';
+		lstZChargeForUnitPriceAndSetupFee[2].zqu__Type__c = 'One-Time';
+		insert lstZChargeForUnitPriceAndSetupFee;
 
-        //Create Payment method
-        Zuora__PaymentMethod__c payment = TestDataGenerator.generatePaymentMethod(customerAccount.Id,1,true)[0]; //payment.Id
+		//*** cover "getProductRatePlanChargeByRatePlanId" in "ProductRatePlanCharge_Sel"
+		//ProductRatePlanCharge_Sel.getProductRatePlanChargeByRatePlanId(new Set<Id>{zPlanForUnitPrice.Id, zPlanForSetupFee.Id, zPlanForUnitPriceAndSetupFee.Id});
 
-        //customerAccount = TestDataGenerator.generateZCustomerAccount(account.Id, payment, 1, false)[0];
-        customerAccount.Zuora__Default_Payment_Method__c = payment.Id;
-        update customerAccount;
+		//*** generate Account
+		Account oAccount = TestDataGenerator.generateAccounts(1,true)[0];
 
-        //Coverage getAccountIdByContactId
-        Contact_Sel.getAccountIdByContactId(new set<Id>{contact.Id});
+		//*** generate Contact
+		Contact oContact = TestDataGenerator.generateContacts(oAccount.Id, 1, true)[0];
 
-        // Get standard price book ID.
-        Id pricebookId = Test.getStandardPricebookId();
-        
-        //Create an Order
-        list<Order> orders = TestDataGenerator.generateOrder(1,account.Id, contact.Id, contact.Id, false);
-        orders[0].Payment_Type__c = 'Credit Card';
-        orders[0].ShipToContact_Email__c = 'client@test.com';
-        insert orders;
+		//*** cover getAccountIdByContactId in "Contact_Sel"
+		//Contact_Sel.getAccountIdByContactId(new Set<Id>{oContact.Id});
 
-        System.assertEquals(1, orders.size());
+		//*** generate order
+		Order oOrder = TestDataGenerator.generateOrder(1, oAccount.Id, oContact.Id, oContact.Id, false)[0];
+		oOrder.BillToContact_Email__c = oContact.Email;
+		oOrder.ShipToContact_Email__c = oContact.Email;
+		oOrder.Invoice_Text__c = 'error';         //*** cause failure for payment submission
+		oOrder.Sales_Order_Remark__c = 'error';   //*** cause failure of getting payment from Zuora
+		insert oOrder;
 
-        //generate manager
-        User manager = TestDataGenerator.generateUser('Standard User', true);
+		//*** generate order items
+		List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItemForContract(oOrder.Id, 3, false);
+		lstOrderItem[0].Freight_Charge__c = 1;
+		lstOrderItem[0].Handling_charges__c = 2;
+		lstOrderItem[0].Tax__c = 3;
+		lstOrderItem[0].Zuora_Rate_Plan_Id__c = zPlanForUnitPrice.zqu__ZuoraId__c;
+		lstOrderItem[0].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPrice[1].zqu__ZuoraId__c;
+		lstOrderItem[0].ServiceDate = system.today();
+		lstOrderItem[1].Freight_Charge__c = 1;
+		lstOrderItem[1].Handling_charges__c = 2;
+		lstOrderItem[1].Tax__c = 3;
+		lstOrderItem[1].Zuora_Setup_Fee_Plan_Id__c = zPlanForSetupFee.zqu__ZuoraId__c;
+		lstOrderItem[1].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForSetupFee[1].zqu__ZuoraId__c;
+		lstOrderItem[1].ServiceDate = system.today().addDays(1);
+		lstOrderItem[2].Freight_Charge__c = 1;
+		lstOrderItem[2].Handling_charges__c = 2;
+		lstOrderItem[2].Tax__c = 3;
+		lstOrderItem[2].Zuora_Rate_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
+		lstOrderItem[2].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[1].zqu__ZuoraId__c;
+		lstOrderItem[2].Zuora_Setup_Fee_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
+		lstOrderItem[2].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[2].zqu__ZuoraId__c;
+		lstOrderItem[2].ServiceDate = system.today().addDays(2);
+		insert lstOrderItem;
 
-        // Insert a test product.
-        List<Product2> lstProds = TestDataGenerator.generateProducts(1, false);
-        lstProds[0].ZProduct__c = lstZproducts[0].Id;
-        lstProds[0].Product_Manager_lookup__c = manager.Id;
-        lstProds[0].Alternate_Product_Manager__c = manager.Id;
-        insert lstProds[0];
+		//*** generate order item charges for discounts
+		List<Order_Item_Charge__c> lstOrderItemCharge = new List<Order_Item_Charge__c>();
+		lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[0].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[0].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPrice[0].zqu__ZuoraId__c));
+		lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[1].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[1].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForSetupFee[0].zqu__ZuoraId__c));
+		//lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[2].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[2].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPriceAndSetupFee[0].zqu__ZuoraId__c));
+		insert lstOrderItemCharge;
 
-        System.assertEquals(1, lstProds.size());
-         
-        //Insert the Order item for a Specifique order
-        //OrderItem ordPd = TestDataGenerator.generateOrderItem(orders[0].Id,1, false)[0];
-        OrderItem ordPd = TestDataGenerator.generateOrderItemForContract(orders[0].Id,1, false)[0];
-        ordPd.Zuora_Rate_Plan_Id__c = lstPlan[0].zqu__ZuoraId__c;
-        ordPd.Zuora_Rate_Plan_Charge_Id__c = lstCharge[0].zqu__ZuoraId__c;
-        insert ordPd;
+		//*** link SFDC products with Zuora products and make them available for purchase
+		List<Product2> lstProduct = new List<Product2>();
+		for (OrderItem oi : [select Product__c, ServiceDate from OrderItem where OrderId = :oOrder.Id order by ServiceDate])
+			lstProduct.add(new Product2(Id=Id.valueOf(oi.Product__c), Effective_From__c=system.today().addDays(-10), Effective_To__c=system.today().addYears(1)
+			                            //*** make product electronic and available for E-Commerce
+			                          , SAP_Status_Code__c='A', SAP_Product_Type_Code__c='07', Post_to_Ecommerce_Date__c= system.today(), Sell_through_eCommerce__c=true
+			                            //*** force to subscribe product to Zuora no matter of payment method
+			                          , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1
+			                          , ZProduct__c=lstZproducts[oi.ServiceDate == system.today() ? 0 : (oi.ServiceDate == system.today().addDays(1) ? 1 : 2)].Id));
+		update lstProduct;
 
-        //Create order item charge
-        Order_Item_Charge__c orderItemCharge = TestDataGenerator.generateOrderItemCharge(ordPd.Id, 1, false)[0];
-        orderItemCharge.Zuora_Rate_Plan_Id__c = lstPlan[1].zqu__ZuoraId__c;
-        orderItemCharge.Zuora_Rate_Plan_Charge_Id__c = lstCharge2[1].zqu__ZuoraId__c;
-        insert orderItemCharge;
+		//*** generate payment information for credit card
+		String strCreditCard = '4028e6992e836e4a012e914e1ddf5e2e';
+		Zuora.zObject zPaymentMethod = new Zuora.zObject('PaymentMethod');
+		zPaymentMethod.setValue('Id', strCreditCard);
+		IECZuoraHelper.PaymentMethod oPayment = new IECZuoraHelper.PaymentMethod(zPaymentMethod);
+		Map<Id, IECZuoraHelper.PaymentMethod> mapOrderId_PaymentMethod = new Map<Id, IECZuoraHelper.PaymentMethod>{oOrder.Id => oPayment};
+		ZuoraUtil.zAccountPaymentMethod zPaymentMethodForParse = new ZuoraUtil.zAccountPaymentMethod();
+		zPaymentMethodForParse.zPaymentMethodName = 'Credit Card';
+		zPaymentMethodForParse.zPaymentMethod = strCreditCard;
+		Map<String, ZuoraUtil.zAccountPaymentMethod> mapOrderId_PaymentMethodForParse = new Map<String, ZuoraUtil.zAccountPaymentMethod>{String.valueOf(oOrder.Id) => zPaymentMethodForParse};
 
-        Apex_Setting__c apexSetting = new Apex_Setting__c(Name = 'ContactId to populate email Template', Text_1__c = contact.Id);
-        insert apexSetting;
+		//*** generate Zuora customer
+		Zuora__CustomerAccount__c zCustomerAccount = TestDataGenerator.generateZCustomerAccount(oAccount.Id, oContact.Id, 1, true)[0];
+		Zuora__PaymentMethod__c zPayment = TestDataGenerator.generatePaymentMethod(zCustomerAccount.Id, 1, true)[0];
+		zCustomerAccount.Zuora__Default_Payment_Method__c = zPayment.Id;
+		update zCustomerAccount;
 
-        List<EmailTemplate> templates = [SELECT id from EmailTemplate limit 1]; //TestDataGenerator.generateTemplate(1,true);
+		//*** cover method "getZaccountById"
+		Zuora.zObject zCustomerAccountQuery = Order_Svc.getZaccountById(zCustomerAccount.Zuora__Zuora_Id__c);
+		system.assertEquals(String.valueOf(zCustomerAccountQuery.getValue('Id')), zCustomerAccount.Zuora__Zuora_Id__c);
 
-        //Order sold templateId for Client
-        Apex_Setting__c asTemplateClient = new Apex_Setting__c(Name = 'Order sold templateId for client', Text_1__c = templates[0].Id);
-        insert asTemplateClient;
+		//*** cover all scenarios of payment type and payment method for method "subscribe" -> nothing to assert
+		Map<Id, Zuora.zApi.SubscribeResult> mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, null);
+		mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, null, new Map<Id, String>{oOrder.Id => 'Credit Card'});
+		Test.startTest();
+			mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, null, new Map<Id, String>{oOrder.Id => 'Bank Transfer'});
+			mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, null, null);
+			mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, new Map<Id, String>{oOrder.Id => 'Credit Card'});
 
-        //Order sold templateId for Managers
-        Apex_Setting__c asTemplateManager = new Apex_Setting__c(Name = 'Order sold templateId for managers', Text_1__c = templates[0].Id);
-        insert asTemplateManager;
+			//*** prepare to reset order items
+			List<OrderItem> resetOrderItem = new List<OrderItem>();
+			for (OrderItem oi : lstOrderItem)
+				resetOrderItem.add(new OrderItem(Id=oi.Id, Zuora_InvoiceId__c=null, Zuora_InvoiceNumber__c=null, Zuora_SubscriptionId__c=null, Zuora_Subscription_Number__c=null));
 
-        //Order templateId for special shipping 
-        Apex_Setting__c templateForSpecialShip = new Apex_Setting__c(Name = 'Order templateId for special shipping', Text_1__c = templates[0].Id);
-        insert templateForSpecialShip;
+			//*** cover "parseSubscribeResult2UpdateItems" - case failed at payment submission
+			Map<Id, String> mapOrderItemId_ParseResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapOrderItemId_SubscribeResponse, mapOrderId_PaymentMethodForParse);
+			system.assertEquals(lstOrderItem.size(), [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_InvoiceId__c != null and Zuora_SubscriptionId__c != null]);
+			update resetOrderItem;
+			//*** cover "parseSubscribeResult2UpdateItems" - case success of payment submission but still fail at getting Zuora payment
+			oOrder.Invoice_Text__c = null;
+			update oOrder;
+			mapOrderItemId_ParseResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapOrderItemId_SubscribeResponse, mapOrderId_PaymentMethodForParse);
+			system.assertEquals(lstOrderItem.size(), [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_InvoiceId__c != null and Zuora_SubscriptionId__c != null]);
+			update resetOrderItem;
+			//*** cover "parseSubscribeResult2UpdateItems" - case success of parse
+			oOrder.Sales_Order_Remark__c = null;
+			update oOrder;
+			mapOrderItemId_ParseResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapOrderItemId_SubscribeResponse, mapOrderId_PaymentMethodForParse);
+			system.assertEquals(lstOrderItem.size(), [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_InvoiceId__c != null and Zuora_SubscriptionId__c != null]);
 
-        orders[0].Status = 'Paid';
-        orders[0].Is_Paid__c = true;
-        orders[0].Shipping_Instruction__c = 'Text for special instruction';
-        orders[0].Zuora_Credit_Card_Id__c = '4028e6992e836e4a012e914e1ddf5e2e';
-        update orders[0];
+			//*** prepare to cover "orderItemsToUpdateInZuora" and "updateZsubscriptions"
+			lstOrderItem = [select Id, Zuora_InvoiceId__c, Zuora_InvoiceNumber__c, Zuora_SubscriptionId__c, Zuora_Subscription_Number__c from OrderItem where OrderId = :oOrder.Id];
+			for (OrderItem oi : lstOrderItem)
+				oi.Zuora_Subscription_Status__c = 'Pending Activation';
+			update lstOrderItem;
 
-        //Create Zuora BillToContact
-        Zuora.zObject billToContact = ZuoraUtil.createZuoraBillToContact(contact);
+			//*** cover "orderItemsToUpdateInZuora" - nothing to assert
+			Order_Svc.orderItemsToUpdateInZuora(new Set<Id>{oOrder.Id});
 
-        //create Zuora SoldToContact
-        Zuora.zObject soldtoContact = ZuoraUtil.createZuoraSoldToContact(contact,orders[0]);
-
-        //Set order payment Method
-        Zuora.zObject pm = new Zuora.zObject('PaymentMethod');
-        pm.setValue('Id','4028e6992e836e4a012e914e1ddf5e2e');
-        IECZuoraHelper.PaymentMethod paymentMethod = new IECZuoraHelper.PaymentMethod(pm);
-        Map<Id,IECZuoraHelper.PaymentMethod> orderPy = new Map<Id,IECZuoraHelper.PaymentMethod>();
-        orderPy.put(orders[0].Id,paymentMethod);
-
-        Map<Id,String> orderId_paymentType = new Map<Id,String>();
-        orderId_paymentType.put(orders[0].Id, IECConstants.PaymentThresholdType_CreditCard);
-
-        //Test the Zuora subscribe
-        //Order_Svc.subscribeAndUpdateItems(new set<Id>{orders[0].Id});
-        //Order_Svc.subscribe(new set<Id>{orders[0].Id});
-        //try{
-        //    Order_Svc.subscribe(new set<Id>{orders[0].Id},orderPy,orderId_paymentType);
-
-        //    //Cover payment 
-        //    Order_Svc.parsePaymentMethodToEnum('payMethod');
-        //}
-        //catch(Exception ex){}    
-        
-    Test.startTest();
-
-        //Coverage getZaccountById
-        Order_Svc.getZaccountById('4028e6992e836e4a012e914e1ddf5a2a');
-
-
-        //Coverage deleteZuoraSubscription
-        Order_Svc.deleteZuoraSubscription(new set<Id>{orders[0].Id});
-
-        //Coverage getSubString
-        List<OrderItem> lstOrderItem = [select id,Zuora_SubscriptionId__c,Zuora_InvoiceId__c,Zuora_InvoiceNumber__c, Product__c 
-                                            from OrderItem where OrderId = :orders[0].Id];
-        set<String> oiIds = new set<String>();
-        set<String> subIds = new set<String>();
-        set<Id> productIds = new set<Id>();
-
-        if(lstOrderItem != null && lstOrderItem.size() > 0){
-            for(OrderItem oi : lstOrderItem){
-                oiIds.add(oi.Id);
-                productIds.add(oi.Product__c);
-                if(oi.Zuora_SubscriptionId__c != null){
-                    subIds.add(oi.Zuora_SubscriptionId__c);
-                }
-            }
-        }
-        Order_Svc.getSubString(oiIds);
-        System.assertEquals(1, lstOrderItem.size());
-
-        List<Product2> prd2Update = [select id, Is_Shippable__c,IEC_Subscribe_to_Zuora__c,Available_for_Subscription__c From Product2 where id =:productIds];
-        for(Product2 prd : prd2Update){
-            prd.Available_for_Subscription__c = true;
-            prd.Number_of_months_of_subscription__c = 12;
-        }
-        update prd2Update;
-        
-        //Change payment type to ICH
-        orders[0].Payment_Type__c = IECConstants.PaymentThresholdType_ICH;
-        update orders[0];
-
-        prd2Update = [select id, Is_Shippable__c,IEC_Subscribe_to_Zuora__c,Available_for_Subscription__c,Number_of_months_of_subscription__c From Product2 where id =:prd2Update[0].Id];
-        System.assertEquals(prd2Update[0].Number_of_months_of_subscription__c,12);
-        System.assertEquals(prd2Update[0].IEC_Subscribe_to_Zuora__c,true);
-        System.assertEquals(prd2Update[0].Available_for_Subscription__c,true);
-        System.assertEquals(prd2Update[0].Is_Shippable__c,false);
-
-        map<Id,String> payMethod = new map<Id,String>();
-        payMethod.put(orders[0].Id,IECConstants.PaymentThresholdType_BankTransfer);
-        payMethod.put(orders[0].Id,IECConstants.PaymentThresholdType_ICH);
-        //Order_Svc.orderSubscription(new set<Id>{orders[0].Id},orderPy,payMethod);
-
-        //Cover creation of new Zuora Account
-        Contact contact2 = TestDataGenerator.generateContacts(account.Id, 1, false)[0];
-        contact2.Email = 'wazza@iata.org';
-        insert contact2;
-        orders[0].BillToContactId = contact2.Id;
-        update orders[0];
-        //Order_Svc.orderSubscription(new set<Id>{orders[0].Id},orderPy,payMethod);
-
-        //Coverage getZuoraAccounts
-        Order_Svc.getZuoraAccounts(new set<Id>{contact.Id});
-
-        //Coverage setPaymentMethod(Zuora__CustomerAccount__c zuoraCustomerAccount)
-        Order_Svc.setPaymentMethod(customerAccount);
-        
-        //Coverage the prevent order item update
-        ordPd.Quantity = 2;
-        try{
-            update ordPd;
-        }catch(Exception ex){
-            Boolean exceptionError =  ex.getMessage().contains('You can not modified a field') ? true : false;
-            System.AssertEquals(exceptionError, true);
-        }
-        
-        //Coverage the prevent order item deletion
-        try{
-            delete orders[0];
-        }catch(Exception ex){
-            Boolean exceptionError =  ex.getMessage().contains('You can not delete an') ? true : false;
-            System.AssertEquals(exceptionError, true);
-        }
-
-        Order_Svc.getOrderFieldsToForbidModification();
-
-        Order_Svc.getItemsInCookie();
-        Order_Svc.cookieValue(2);
-
-        Test.stopTest();
-
-        //
-        //setPaymentMethodWithWrp(IECZuoraHelper.PaymentMethod paymentMethod)
-        //getZuoraInvoiceItems
-
-    }
+			//*** cover "updateZsubscriptions"
+			Order_Svc.updateZsubscriptions(lstOrderItem);
+			system.assertEquals(0, [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_Subscription_Status__c != null]);
+		Test.stopTest();
+	} //*** end of "test_zuoraSubscribeWithExistingCustomer"
 
 
     /****************************************************************************************************
@@ -703,9 +829,11 @@ private class Order_Svc_Test
     /****************************************************************************************************
         Created by Thai 2015-11-23
             Cover code for methods "setPriceToOrder", "setPriceToOrderItem", "setUnitPriceFromPlan",
-                "getDiscountFromPlan", "getCouponPlan" in class Order_Svc
+                "setUnitPriceFromFlatFee","getDiscountFromPlan", "getCouponPlan" in class Order_Svc
+            Method "setFlatFeeFromPlan" cannot be covered since not called.  This is because method
+                "setUnitPriceFromFlatFee" already took care
     ****************************************************************************************************/
-   /* private static testMethod void test_setPriceToOrder()
+    private static testMethod void test_setPriceToOrder()
     {
         TestDataGenerator.generateApexSetting();
         List<IATA_ISO_Country__c> ISOCountryState = TestDataGenerator.generateISOCountryState();
@@ -715,22 +843,30 @@ private class Order_Svc_Test
         lstAccount[0].IATA_ISO_Country__c = ISOCountryState[0].Id;
         lstAccount[0].ShippingCountry = ISOCountryState[0].Name;
         insert lstAccount;
-        List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, true);
+        List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, false);
+        lstContact[0].User_IECPortal_Status__c = 'Privilege - Approved';
+        insert lstContact;
         List<User> lstUser = new List<User> {TestDataGenerator.generatePortalUser('ISS Portal', lstContact[0].Id, true)};
         
         //*** generate products and price book entries
-        List<Product2> lstProduct = TestDataGenerator.generateProducts(1, false);
+        List<Product2> lstProduct = TestDataGenerator.generateProducts(2, false);
         lstProduct[0].Product_Type__c = null;
         lstProduct[0].Is_Shippable__c = true;
         lstProduct[0].Charge_Shipping__c = true;
+        lstProduct[1].Product_Type__c = null;
+        lstProduct[1].Is_Shippable__c = true;
+        lstProduct[1].Charge_Shipping__c = true;
         insert lstProduct;
-        List<PricebookEntry> lstPriceBookEntry = TestDataGenerator.generatePricebookEntry(Test.getStandardPricebookId(), lstProduct[0].Id, 1, true);
+        List<PricebookEntry> lstPriceBookEntry = TestDataGenerator.generatePricebookEntry(Test.getStandardPricebookId(), lstProduct[0].Id, 1, false);
+        lstPriceBookEntry.addAll(TestDataGenerator.generatePricebookEntry(Test.getStandardPricebookId(), lstProduct[1].Id, 1, false));
+        insert lstPriceBookEntry;
         
         //*** generate order
         List<Order> lstOrder = TestDataGenerator.generateOrder(2, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, true);
-        OrderItem testOrderItem = new OrderItem(PriceBookEntryId=lstPriceBookEntry[0].Id, OrderId=lstOrder[0].Id, Quantity=1, UnitPrice=1, ServiceDate=Date.Today());
-        insert testOrderItem;
-        OrderItem checkOrderItem;
+        List<OrderItem> lstOrderItem = new List<OrderItem>(), checkOrderItem;
+        lstOrderItem.add(new OrderItem(PriceBookEntryId=lstPriceBookEntry[0].Id, OrderId=lstOrder[0].Id, Quantity=1, UnitPrice=1, ServiceDate=Date.Today()));
+        lstOrderItem.add(new OrderItem(PriceBookEntryId=lstPriceBookEntry[1].Id, OrderId=lstOrder[0].Id, Quantity=1, UnitPrice=1, ServiceDate=Date.Today().addDays(1)));
+        insert lstOrderItem;
         List<Order_Item_Charge__c> checkZuoraCharge;
         Decimal discount;
 
@@ -749,149 +885,170 @@ private class Order_Svc_Test
         VolumePrice_DTO customerVP1 = new VolumePrice_DTO();  customerVP1.qtyFrom = 200;   customerVP1.qtyTo = 1000;  customerVP1.price = 195;  customerVP1.planId = 'customer volume 1';  customer.volumePrice.add(customerVP1);
         VolumePrice_DTO customerVP2 = new VolumePrice_DTO();  customerVP2.qtyFrom = 1001;  customerVP2.qtyTo = null;  customerVP2.price = 190;  customerVP2.planId = 'customer volume 2';  customer.volumePrice.add(customerVP2);
         price.customerPrice = new List<PriceDetail_DTO> {customer};
-        Test.startTest();
+
+        //*** cover setup fee
+        PriceInfo_DTO price2 = new PriceInfo_DTO();
+        mapProductNumber_Price.put(lstProduct[1].SAP_Material_Number__c, price2);
+        PriceDetail_DTO standard2 = new PriceDetail_DTO();
+        standard2.setupFeePlanId = 'setup-standard';   standard2.discountName = null;
+        price2.standardPrice = new List<PriceDetail_DTO> {standard2};
+        PriceDetail_DTO customer2 = new PriceDetail_DTO();
+        customer2.unitPricePlanId = 'setup-customer';   customer2.discountName = 'customer';   customer2.setupFeePlanId = 'setup';   customer2.setupFeeChargeId = 'setup-charge';
+        price2.customerPrice = new List<PriceDetail_DTO> {customer2};
+
+        Test.startTest();   //*** to bypass limitation of # of queries
+
         //*** no unit price
         Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
-        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where Id = :testOrderItem.Id limit 1][0];
-        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :testOrderItem.Id];
-        system.assert(checkOrderItem.UnitPrice == testOrderItem.UnitPrice && !checkOrderItem.Charge_Shipping__c && checkOrderItem.Zuora_Rate_Plan_Id__c == null
-                    , 'Wrong UnitPrice: ' + checkOrderItem);
+        checkOrderItem= [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where OrderId = :lstOrder[0].Id order by ServiceDate];
+        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :lstOrderItem[0].Id];
+        system.assert(checkOrderItem[0].UnitPrice == lstOrderItem[0].UnitPrice && !checkOrderItem[0].Charge_Shipping__c && checkOrderItem[0].Zuora_Rate_Plan_Id__c == null
+                    , 'Wrong UnitPrice: ' + checkOrderItem[0]);
+        system.assert(checkOrderItem[1].UnitPrice == lstOrderItem[1].UnitPrice && !checkOrderItem[1].Charge_Shipping__c && checkOrderItem[1].Zuora_Rate_Plan_Id__c == null
+                    , 'Wrong UnitPrice: ' + checkOrderItem[1]);
         system.assert(checkZuoraCharge.size() == 0, 'Wrong Zuora Charge: ' + checkZuoraCharge);
 
-        //*** unit price in standard rate
+        //*** unit price in standard rate and unit price in setup fee of standard rate
         standard.unitPrice = 300;
+        standard2.setupFee = 300;
         Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
-        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where Id = :testOrderItem.Id limit 1][0];
-        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :testOrderItem.Id];
-        system.assert(checkOrderItem.UnitPrice == standard.unitPrice && checkOrderItem.Charge_Shipping__c && checkOrderItem.Discount__c == null && checkOrderItem.Zuora_Rate_Plan_Id__c == standard.unitPricePlanId
-                    , 'Wrong UnitPrice: ' + checkOrderItem);
+        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where OrderId = :lstOrder[0].Id order by ServiceDate];
+        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :lstOrderItem[0].Id];
+        system.assert(checkOrderItem[0].UnitPrice == standard.unitPrice && checkOrderItem[0].Charge_Shipping__c && checkOrderItem[0].Discount__c == null && checkOrderItem[0].Zuora_Rate_Plan_Id__c == standard.unitPricePlanId
+                    , 'Wrong UnitPrice: ' + checkOrderItem[0]);
+        system.assert(checkOrderItem[1].UnitPrice == standard2.setupFee && checkOrderItem[1].Charge_Shipping__c && checkOrderItem[1].Discount__c == null && checkOrderItem[1].Zuora_Rate_Plan_Id__c == standard2.setupFeePlanId
+                    , 'Wrong UnitPrice: ' + checkOrderItem[1]);
         system.assert(checkZuoraCharge.size() == 0, 'Wrong Zuora Charge: ' + checkZuoraCharge);
 
         //*** unit price from volume price in standard rate
-        testOrderItem.Quantity = 150;
-        update testOrderItem;
+        lstOrderItem[0].Quantity = 150;
+        update lstOrderItem[0];
         Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
-        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where Id = :testOrderItem.Id limit 1][0];
-        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :testOrderItem.Id];
-        system.assert(checkOrderItem.UnitPrice == standardVP1.price && checkOrderItem.Charge_Shipping__c && checkOrderItem.Discount__c == null && checkOrderItem.Zuora_Rate_Plan_Id__c == standardVP1.planId
-                    , 'Wrong UnitPrice: ' + checkOrderItem);
+        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where OrderId = :lstOrder[0].Id order by ServiceDate];
+        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :lstOrderItem[0].Id];
+        system.assert(checkOrderItem[0].UnitPrice == standardVP1.price && checkOrderItem[0].Charge_Shipping__c && checkOrderItem[0].Discount__c == null && checkOrderItem[0].Zuora_Rate_Plan_Id__c == standardVP1.planId
+                    , 'Wrong UnitPrice: ' + checkOrderItem[0]);
         system.assert(checkZuoraCharge.size() == 0, 'Wrong Zuora Charge: ' + checkZuoraCharge);
-        //*** to bypass limitation of # of queries
+
         ////*** unit price from volume price in customer type rate
         lstAccount[0].Customer_Type__c = customer.discountName;
         update lstAccount[0];
-        testOrderItem.Quantity = 250;
-        update testOrderItem;
+        lstOrderItem[0].Quantity = 250;
+        update lstOrderItem[0];
         Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
-        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where Id = :testOrderItem.Id limit 1][0];
-        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :testOrderItem.Id];
-        system.assert(checkOrderItem.UnitPrice == customerVP1.price && checkOrderItem.Charge_Shipping__c && checkOrderItem.Discount__c == null && checkOrderItem.Zuora_Rate_Plan_Id__c == customerVP1.planId
-                    , 'Wrong UnitPrice: ' + checkOrderItem);
+        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where OrderId = :lstOrder[0].Id order by ServiceDate];
+        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :lstOrderItem[0].Id];
+        system.assert(checkOrderItem[0].UnitPrice == customerVP1.price && checkOrderItem[0].Charge_Shipping__c && checkOrderItem[0].Discount__c == null && checkOrderItem[0].Zuora_Rate_Plan_Id__c == customerVP1.planId
+                    , 'Wrong UnitPrice: ' + checkOrderItem[0]);
         system.assert(checkZuoraCharge.size() == 0, 'Wrong Zuora Charge: ' + checkZuoraCharge);
 
-        //*** unit price in customer type rate
-        testOrderItem.Quantity = 1;
-        update testOrderItem;
+        //*** unit price in customer type rate and unit price with setup fee of customer type rate
+        lstOrderItem[0].Quantity = 1;
+        update lstOrderItem[0];
         customer.unitPrice = 200;
+        customer2.unitPrice = 100;
+        customer2.setupFee = 50;
         Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
-        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where Id = :testOrderItem.Id limit 1][0];
-        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :testOrderItem.Id];
-        system.assert(checkOrderItem.UnitPrice == customer.unitPrice && checkOrderItem.Charge_Shipping__c && checkOrderItem.Discount__c == null && checkOrderItem.Zuora_Rate_Plan_Id__c == customer.unitPricePlanId
-                    , 'Wrong UnitPrice: ' + checkOrderItem);
+        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c, Setup_Fee__c, Zuora_Setup_Fee_Plan_Id__c from OrderItem where OrderId = :lstOrder[0].Id order by ServiceDate];
+        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :lstOrderItem[0].Id];
+        system.assert(checkOrderItem[0].UnitPrice == customer.unitPrice && checkOrderItem[0].Charge_Shipping__c && checkOrderItem[0].Discount__c == null && checkOrderItem[0].Zuora_Rate_Plan_Id__c == customer.unitPricePlanId
+                    , 'Wrong UnitPrice: ' + checkOrderItem[0]);
+        system.assert(checkOrderItem[1].UnitPrice == customer2.unitPrice && checkOrderItem[1].Setup_Fee__c == customer2.setupFee && checkOrderItem[1].Charge_Shipping__c && checkOrderItem[1].Discount__c == null && checkOrderItem[1].Zuora_Rate_Plan_Id__c == customer2.unitPricePlanId && checkOrderItem[1].Zuora_Setup_Fee_Plan_Id__c == customer2.setupFeePlanId
+                    , 'Wrong UnitPrice: ' + checkOrderItem[1]);
+        system.assert(checkZuoraCharge.size() == 0, 'Wrong Zuora Charge: ' + checkZuoraCharge);
+
+        //*** cover set discount scenarios
+        PriceDetail_DTO region = new PriceDetail_DTO();
+        region.discountPlanId = 'region';   region.discountName = ISOCountryState[0].Region__c;
+        region.discountPercentage = 5;
+        price.regionPrice = new List<PriceDetail_DTO> {region};
+        PriceDetail_DTO country = new PriceDetail_DTO();
+        country.discountPlanId = 'country';   country.discountName = ISOCountryState[0].Name;
+        country.discountPercentage = 10;
+        price.countryPrice = new List<PriceDetail_DTO> {country};
+        PriceDetail_DTO presales = new PriceDetail_DTO();
+        presales.discountPlanId = 'pre-sales';   presales.discountName = 'Pre-Sales';
+        presales.discountAmount = 10;
+        price.preSalePrice = new List<PriceDetail_DTO> {presales};
+        price.couponPrice = new List<PriceDetail_DTO>();
+        PriceDetail_DTO couponFreeShipping = new PriceDetail_DTO();
+        couponFreeShipping.discountPlanId = 'coupon free shipping';
+        couponFreeShipping.isFreeShipping = true;
+        couponFreeShipping.discountName = 'free shipping';
+        price.couponPrice.add(couponFreeShipping);
+        PriceDetail_DTO couponDiscountPct = new PriceDetail_DTO();
+        couponDiscountPct.discountPlanId = 'coupon discount %';
+        couponDiscountPct.discountName = 'discount percentage';
+        couponDiscountPct.discountPercentage = 20;
+        price.couponPrice.add(couponDiscountPct);
+        PriceDetail_DTO couponDiscountAmt = new PriceDetail_DTO();
+        couponDiscountAmt.discountPlanId = 'coupon discount $';
+        couponDiscountAmt.discountName = 'discount amount';
+        couponDiscountAmt.discountAmount = 50;
+        price.couponPrice.add(couponDiscountAmt);
+        PriceDetail_DTO couponDiscountError = new PriceDetail_DTO();
+        couponDiscountError.discountPlanId = 'coupon discount $';
+        couponDiscountError.discountName = 'error percentage';
+        couponDiscountError.discountPercentage = 999999;
+        price.couponPrice.add(couponDiscountError);
+
+        //*** discounts from region, country, pre-sales and coupon in amount
+        lstOrderItem[0].Coupon__c = couponDiscountAmt.discountName;
+        update lstOrderItem[0];
+        Set<String> checkCoupon = new Set<String>{region.discountPlanId, country.discountPlanId, presales.discountPlanId, couponDiscountAmt.discountPlanId};
+        Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
+        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where OrderId = :lstOrder[0].Id order by ServiceDate];
+        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :lstOrderItem[0].Id];
+        discount = checkOrderItem[0].Quantity * checkOrderItem[0].UnitPrice;
+        discount -= (discount * region.discountPercentage / 100);
+        discount -= (discount * country.discountPercentage / 100);
+        discount = (checkOrderItem[0].Quantity * checkOrderItem[0].UnitPrice) - discount + presales.discountAmount + couponDiscountAmt.discountAmount;
+        system.assert(checkOrderItem[0].Charge_Shipping__c, 'Wrong Discount: ' + checkOrderItem[0] );
+        //system.assert(checkZuoraCharge.size() == 4, 'Wrong Zuora Charge: ' + checkZuoraCharge);
+        for (Order_Item_Charge__c c : checkZuoraCharge)
+            system.assert(checkCoupon.contains(c.Zuora_Rate_Plan_Id__c), 'Wrong Zuora Charge: ' + c);
+        
+        //*** free shipping coupon
+        price.regionPrice = null;
+        price.countryPrice = null;
+        price.preSalePrice = null;
+        lstOrderItem[0].Coupon__c = couponFreeShipping.discountName;
+        update lstOrderItem[0];
+        Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
+        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where OrderId = :lstOrder[0].Id order by ServiceDate];
+        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :lstOrderItem[0].Id];
+        system.assert(checkOrderItem[0].Charge_Shipping__c == false && checkOrderItem[0].Discount__c == null
+                    , 'Wrong Discount: ' + checkOrderItem[0]);
         system.assert(checkZuoraCharge.size() == 0, 'Wrong Zuora Charge: ' + checkZuoraCharge);
         
-        
-            //*** cover set discount scenarios
-            PriceDetail_DTO region = new PriceDetail_DTO();
-            region.discountPlanId = 'region';   region.discountName = ISOCountryState[0].Region__c;
-            region.discountPercentage = 5;
-            price.regionPrice = new List<PriceDetail_DTO> {region};
-            PriceDetail_DTO country = new PriceDetail_DTO();
-            country.discountPlanId = 'country';   country.discountName = ISOCountryState[0].Name;
-            country.discountPercentage = 10;
-            price.countryPrice = new List<PriceDetail_DTO> {country};
-            PriceDetail_DTO presales = new PriceDetail_DTO();
-            presales.discountPlanId = 'pre-sales';   presales.discountName = 'Pre-Sales';
-            presales.discountAmount = 10;
-            price.preSalePrice = new List<PriceDetail_DTO> {presales};
-            price.couponPrice = new List<PriceDetail_DTO>();
-            PriceDetail_DTO couponFreeShipping = new PriceDetail_DTO();
-            couponFreeShipping.discountPlanId = 'coupon free shipping';
-            couponFreeShipping.isFreeShipping = true;
-            couponFreeShipping.discountName = 'free shipping';
-            price.couponPrice.add(couponFreeShipping);
-            PriceDetail_DTO couponDiscountPct = new PriceDetail_DTO();
-            couponDiscountPct.discountPlanId = 'coupon discount %';
-            couponDiscountPct.discountName = 'discount percentage';
-            couponDiscountPct.discountPercentage = 20;
-            price.couponPrice.add(couponDiscountPct);
-            PriceDetail_DTO couponDiscountAmt = new PriceDetail_DTO();
-            couponDiscountAmt.discountPlanId = 'coupon discount $';
-            couponDiscountAmt.discountName = 'discount amount';
-            couponDiscountAmt.discountAmount = 50;
-            price.couponPrice.add(couponDiscountAmt);
-            PriceDetail_DTO couponDiscountError = new PriceDetail_DTO();
-            couponDiscountError.discountPlanId = 'coupon discount $';
-            couponDiscountError.discountName = 'error percentage';
-            couponDiscountError.discountPercentage = 999999;
-            price.couponPrice.add(couponDiscountError);
+        //*** wrong coupon
+        lstOrderItem[0].Coupon__c = couponFreeShipping.discountName + 'x';
+        update lstOrderItem[0];
+        Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
+        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where OrderId = :lstOrder[0].Id order by ServiceDate];
+        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :lstOrderItem[0].Id];
+        system.assert(checkOrderItem[0].Charge_Shipping__c && checkOrderItem[0].Discount__c == null
+                    , 'Wrong Discount: ' + checkOrderItem[0]);
+        system.assert(checkZuoraCharge.size() == 0, 'Wrong Zuora Charge: ' + checkZuoraCharge);
 
-            //*** discounts from region, country, pre-sales and coupon in amount
-            testOrderItem.Coupon__c = couponDiscountAmt.discountName;
-            update testOrderItem;
-            Set<String> checkCoupon = new Set<String>{region.discountPlanId, country.discountPlanId, presales.discountPlanId, couponDiscountAmt.discountPlanId};
-            Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
-            checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where Id = :testOrderItem.Id limit 1][0];
-            checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :testOrderItem.Id];
-            discount = checkOrderItem.Quantity * checkOrderItem.UnitPrice;
-            discount -= (discount * region.discountPercentage / 100);
-            discount -= (discount * country.discountPercentage / 100);
-            discount = (checkOrderItem.Quantity * checkOrderItem.UnitPrice) - discount + presales.discountAmount + couponDiscountAmt.discountAmount;
-            system.assert(checkOrderItem.Charge_Shipping__c, 'Wrong Discount: ' + checkOrderItem );
-            //system.assert(checkZuoraCharge.size() == 4, 'Wrong Zuora Charge: ' + checkZuoraCharge);
-            for (Order_Item_Charge__c c : checkZuoraCharge)
-                system.assert(checkCoupon.contains(c.Zuora_Rate_Plan_Id__c), 'Wrong Zuora Charge: ' + c);
-            
-            //*** free shipping coupon
-            price.regionPrice = null;
-            price.countryPrice = null;
-            price.preSalePrice = null;
-            testOrderItem.Coupon__c = couponFreeShipping.discountName;
-            update testOrderItem;
-            Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
-            checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where Id = :testOrderItem.Id limit 1][0];
-            checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :testOrderItem.Id];
-            system.assert(checkOrderItem.Charge_Shipping__c == false && checkOrderItem.Discount__c == null
-                        , 'Wrong Discount: ' + checkOrderItem);
-            system.assert(checkZuoraCharge.size() == 0, 'Wrong Zuora Charge: ' + checkZuoraCharge);
-            
-            //*** wrong coupon
-            testOrderItem.Coupon__c = couponFreeShipping.discountName + 'x';
-            update testOrderItem;
-            Order_Svc.setPriceToOrder(lstOrder[0], mapProductNumber_Price);
-            checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where Id = :testOrderItem.Id limit 1][0];
-            checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :testOrderItem.Id];
-            system.assert(checkOrderItem.Charge_Shipping__c && checkOrderItem.Discount__c == null
-                        , 'Wrong Discount: ' + checkOrderItem);
-            system.assert(checkZuoraCharge.size() == 0, 'Wrong Zuora Charge: ' + checkZuoraCharge);
+        //*** order has no item -> nothing to assert
+        Order_Svc.setPriceToOrder(lstOrder[1], mapProductNumber_Price);
 
-            //*** order has no item -> nothing to assert
-            Order_Svc.setPriceToOrder(lstOrder[1], mapProductNumber_Price);
+        //*** order with new item
+        lstOrderItem[0] = new OrderItem(PriceBookEntryId=lstPriceBookEntry[0].Id, OrderId=lstOrder[1].Id, Quantity=1, UnitPrice=1, Coupon__c=couponDiscountAmt.discountName, ServiceDate=Date.Today());
+        Order_Svc.setPriceToOrderItem(new List<OrderItem>{lstOrderItem[0]}, mapProductNumber_Price, lstOrder[1].ShipToContactId);
+        checkCoupon.clear();
+        checkCoupon.add(couponDiscountAmt.discountPlanId);
+        checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where OrderId = :lstOrder[1].Id order by ServiceDate];
+        checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :lstOrderItem[0].Id];
+        system.assert(checkOrderItem[0].Charge_Shipping__c && checkOrderItem[0].Discount__c == couponDiscountAmt.discountAmount
+                    , 'Wrong Discount: ' + checkOrderItem[0]);
+        system.assert(checkZuoraCharge.size() == 1, 'Wrong Zuora Charge: ' + checkZuoraCharge);
+        for (Order_Item_Charge__c c : checkZuoraCharge)
+            system.assert(checkCoupon.contains(c.Zuora_Rate_Plan_Id__c), 'Wrong Zuora Charge: ' + c);
 
-            //*** order with new item
-            testOrderItem = new OrderItem(PriceBookEntryId=lstPriceBookEntry[0].Id, OrderId=lstOrder[1].Id, Quantity=1, UnitPrice=1, Coupon__c=couponDiscountAmt.discountName, ServiceDate=Date.Today());
-            Order_Svc.setPriceToOrderItem(new List<OrderItem>{testOrderItem}, mapProductNumber_Price, lstOrder[1].ShipToContactId);
-            checkCoupon.clear();
-            checkCoupon.add(couponDiscountAmt.discountPlanId);
-            checkOrderItem = [select Charge_Shipping__c, Quantity, UnitPrice, Discount__c, Zuora_Rate_Plan_Id__c from OrderItem where Id = :testOrderItem.Id limit 1][0];
-            checkZuoraCharge = [select Zuora_Rate_Plan_Id__c from Order_Item_Charge__c where Order_Item__c = :testOrderItem.Id];
-            system.assert(checkOrderItem.Charge_Shipping__c && checkOrderItem.Discount__c == couponDiscountAmt.discountAmount
-                        , 'Wrong Discount: ' + checkOrderItem);
-            system.assert(checkZuoraCharge.size() == 1, 'Wrong Zuora Charge: ' + checkZuoraCharge);
-            for (Order_Item_Charge__c c : checkZuoraCharge)
-                system.assert(checkCoupon.contains(c.Zuora_Rate_Plan_Id__c), 'Wrong Zuora Charge: ' + c);
         Test.stopTest();
-    }*/ //*** end of "test_setPriceToOrder"
+    } //*** end of "test_setPriceToOrder"
 
 
     /****************************************************************************************************
@@ -910,7 +1067,9 @@ private class Order_Svc_Test
         lstAccount[0].ShippingCountry = ISOCountryState[0].Name;
         lstAccount[0].Customer_Type__c = 'customer';
         insert lstAccount;
-        List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, true);
+        List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, false);
+        lstContact[0].User_IECPortal_Status__c = 'Privilege - Approved';
+        insert lstContact;
         List<User> lstUser = new List<User> {TestDataGenerator.generatePortalUser('ISS Portal', lstContact[0].Id, true)};
         
         //*** generate products and price book entries
@@ -1062,18 +1221,26 @@ private class Order_Svc_Test
         List<User> lstUser = new List<User> {TestDataGenerator.generatePortalUser('ISS Portal', lstContact[0].Id, true)};
         
         //*** generate order
-        List<Order> lstOrder = TestDataGenerator.generateOrder(2, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, false);
+        List<Order> lstOrder = TestDataGenerator.generateOrder(3, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, false);
         lstOrder[0].SAP_Order_Number__c = null;
         lstOrder[1].SAP_Order_Number__c = 'order 2';
+        lstOrder[2].SAP_Order_Number__c = null;
         insert lstOrder;
+        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 1, false);
+        lstOrderItem.addAll(TestDataGenerator.generateOrderItem(lstOrder[1].Id, 1, false));
+        lstOrderItem.addAll(TestDataGenerator.generateOrderItem(lstOrder[2].Id, 1, false));
+        lstOrderItem[2].SAP_Contract_Number__c = 'contract 3';
+        insert lstOrderItem;
         
         //*** test
         Map<Id, String> mapOrderId_OrderNumber = new Map<Id, String>();
         mapOrderId_OrderNumber.put(lstOrder[0].Id, 'test 1');
         mapOrderId_OrderNumber.put(lstOrder[1].Id, 'test 2');
+        mapOrderId_OrderNumber.put(lstOrder[2].Id, 'contract 3');
         Order_Svc.updateOrderNumber(mapOrderId_OrderNumber);
         system.assert(1 == [select count() from Order where Id = :lstOrder[0].Id and SAP_Order_Number__c = :mapOrderId_OrderNumber.get(lstOrder[0].Id)], 'Wrong order number');
         system.assert(1 == [select count() from Order where Id = :lstOrder[1].Id and SAP_Order_Number__c != :mapOrderId_OrderNumber.get(lstOrder[1].Id)], 'Wrong order number');
+        system.assert(1 == [select count() from Order where Id = :lstOrder[2].Id and SAP_Order_Number__c != :mapOrderId_OrderNumber.get(lstOrder[2].Id)], 'Wrong order number');
     } //*** end of "test_updateOrderNumber"
 
 
@@ -1116,21 +1283,73 @@ private class Order_Svc_Test
 
     /****************************************************************************************************
         Created by CGI, Thai 2016-05-06
-            Cover code of method "setOrderItemToPaid"
+            Cover code of methods "sendEmailWhenOrderIsSold", "newMailDTO" and "setOrderItemToPaid"
     ****************************************************************************************************/
     @isTest (seeAllData=true) static void test_setOrderItemToPaid()
     {
+    	
+        TestDataGenerator.generateISOCountryState();
+        
+     	IECAddress__c oAddress = TestDataGenerator.generateAddresses(1, true)[0];
+
         //*** generate data
-        List<Account> lstAccount = TestDataGenerator.generateAccounts(1, true);
-        List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, true);
-        List<Order> lstOrder = TestDataGenerator.generateOrder(1, lstAccount[0].Id, lstContact[0].Id, lstContact[0].Id, true);
-        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 2, true);
+        List<Account> lstAccount = TestDataGenerator.generateAccounts(1,true);
+        List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id,2,true);
+        
+        Location__c locSoldTo = TestDataGenerator.generateLocations(IECConstants.SOLDTO, oAddress.Id, lstAccount[0].Id, NULL, '325231');
+        Location__c locBillTo = TestDataGenerator.generateLocations(IECConstants.BILLTO, oAddress.Id, lstAccount[0].Id, lstContact[0].Id, '123623');
+        Location__c locShipTo = TestDataGenerator.generateLocations(IECConstants.SHIPTO, oAddress.Id, lstAccount[0].Id, lstContact[0].Id, '451154');
+        
+        List<Order> lstOrder = TestDataGenerator.generateOrder(2, lstAccount[0].Id, lstContact[0].Id, lstContact[1].Id, false);
+        lstOrder[0].BillToContact_Email__c = lstContact[0].Email;
+        lstOrder[0].ShipToContact_Email__c = lstContact[0].Email;
+        lstOrder[0].Shipping_Instruction__c = 'test';
+ 	    lstOrder[0].SoldTo_Location__c = locSoldTo.Id;
+	    lstOrder[0].BillTo_Location__c = locBillTo.Id;
+	    lstOrder[0].ShipTo_Location__c = locShipTo.Id;     
+	            
+        lstOrder[1].BillToContact_Email__c = lstContact[0].Email;
+        lstOrder[1].ShipToContact_Email__c = lstContact[0].Email;
+        lstOrder[1].Shipping_Instruction__c = 'test';
+ 	    lstOrder[1].SoldTo_Location__c = locSoldTo.Id;
+	    lstOrder[1].BillTo_Location__c = locBillTo.Id;
+	    lstOrder[1].ShipTo_Location__c = locShipTo.Id;       
+        
+        insert lstOrder;
+        
+        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 1, false);
+        lstOrderItem.addAll(TestDataGenerator.generateOrderItem(lstOrder[1].Id, 1, false));
+        insert lstOrderItem;
+        List<Product_Email_Notification__c> lstNotification = new List<Product_Email_Notification__c>();
+        for (OrderItem oi : [select Product__c from OrderItem where OrderId = :lstOrder[0].Id or OrderId = :lstOrder[1].Id])
+        {
+            lstNotification.add(new Product_Email_Notification__c(Product__c=oi.Product__c, External_email_address__c=UserInfo.getUserEmail()));
+            lstNotification.add(new Product_Email_Notification__c(Product__c=oi.Product__c, Internal_user__c=UserInfo.getUserId()));
+        }
+        insert lstNotification;
         
         //*** test
-        lstOrder[0].Is_Paid__c = true;
+        Apex_Setting__c cs = Apex_Setting__c.getValues('Email batch max value');
+        if (cs == null) cs = new Apex_Setting__c(Name='Email batch max value');
+        cs.Number_1__c = 100;   //*** cover only 1 bulk email
+        upsert cs;
+		cs = Apex_Setting__c.getValues('ContactId to populate email Template');
+        if (cs == null) cs = new Apex_Setting__c(Name='ContactId to populate email Template');
+        cs.Text_1__c = lstContact[0].Id;
+        upsert cs;
+        lstOrder[0].Status = IECConstants.ORDER_STATUS_READY_FOR_SAP;
+        lstOrder[0].Payment_Type__c = 'Bank Transfer';
         update lstOrder[0];
-        system.assert(2 ==[select count() from OrderItem where OrderId = :lstOrder[0].Id and IEC_Is_Paid__c = true], 'Order Item should be paid');
+        system.assert(0 ==[select count() from OrderItem where OrderId = :lstOrder[0].Id and IEC_Is_Paid__c = true], 'Order Item should NOT be paid');
+        Test.startTest();
+            cs.Number_1__c = 2;   //*** cover multiple bulk emails
+            update cs;
+            lstOrder[1].Status = IECConstants.ORDER_STATUS_PAID;
+            lstOrder[1].Payment_Type__c = 'ICH';
+            lstOrder[1].Is_Paid__c = true;
+            update lstOrder[1];
+            system.assert(1 ==[select count() from OrderItem where OrderId = :lstOrder[1].Id and IEC_Is_Paid__c = true], 'Order Item should be paid');
+        Test.stopTest();
     } //*** end of "test_setOrderItemToPaid"
-
 
 }

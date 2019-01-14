@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,12 +45,47 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ANG_Description_Label__c</fullName>
+        <description>API name of the label to be used as the product name in the product comparisson page.</description>
+        <externalId>false</externalId>
+        <formula>Related_Product__r.ANG_Description_Label__c</formula>
+        <label>Description Label</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Description__c</fullName>
+        <description>Product description</description>
+        <externalId>false</externalId>
+        <formula>Related_Product__r.Description</formula>
+        <label>Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Tooltip__c</fullName>
+        <description>API name of the label to be used as a product tooltip in the product comparisson page.</description>
+        <externalId>false</externalId>
+        <formula>Related_Product__r.ANG_Tooltip__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tooltip</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Component_Number__c</fullName>
         <externalId>false</externalId>
@@ -65,6 +96,17 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>Product__c</fullName>
@@ -102,6 +144,16 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Product Components</pluralLabel>
+    <recordTypes>
+        <fullName>NewGen_Accreditation</fullName>
+        <active>true</active>
+        <label>NewGen Accreditation</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>NewGen_Accreditation2</fullName>
+        <active>true</active>
+        <label>NewGen Accreditation2</label>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>Read</sharingModel>
     <validationRules>
@@ -111,4 +163,5 @@
         <errorDisplayField>Related_Product__c</errorDisplayField>
         <errorMessage>You cannot select the same product</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

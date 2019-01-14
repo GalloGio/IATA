@@ -19,7 +19,6 @@ private class GDP_REST_FilePayloadIdCardTest {
 	private static Boolean testDataCreated = false; // this is to allow parallel test run
 	
 	private static Set<String> sObjectTypeSet = new set<String> { 'Account', 'Contact' };
-	private static Map<String,RecordType> recTypeDevNameToObjectMap; // map from SObjectType-RecordTypeDevName to RecordType 
 	
 	// -----------------------------------------------------------------------
 	private static final String accountRecTypeDevName = 'Standard_Account'; // 
@@ -199,8 +198,6 @@ private class GDP_REST_FilePayloadIdCardTest {
 	private static void insertTestData()
 	{
 		testDataCreated = true; 
-		// read record types, will be used to create test data
-		initRecordTypeDevToObjectMap();
 		
 		// insert accounts and contacts
 		accountList = new List<Account>();
@@ -248,32 +245,14 @@ private class GDP_REST_FilePayloadIdCardTest {
 		
 	} // insertTestData
 	
-	
-	
-	
-	// ------------------------------------------------------------------------
-	// we only care about record type of some objects here.
-	private static void initRecordTypeDevToObjectMap()
-	{
-		Map<Id,RecordType> recTypeIdToObjectMap = new Map<Id, RecordType> ([select Id, DeveloperName, Name, SobjectType
-				from RecordType 
-			where IsActive = true and SObjectType in : sObjectTypeSet
-			order by SobjectType, DeveloperName]);
-		recTypeDevNameToObjectMap = new Map<String, RecordType>();
-		for (RecordType rt : recTypeIdToObjectMap.values()) {
-			recTypeDevNameToObjectMap.put( rt.SObjectType+'-'+rt.DeveloperName, rt);
-		}
-	} // initRecordTypeDevToObjectMap
-	
-	
-	
 	// ========================================================================
 	// create account (not inserting)
 	// the goal of this method is to populate most (required) fields
 	private static Account createAccount( Integer acctNumber
 										, String recTypeDevName) 
 	{ 
-		RecordType accountRecType = recTypeDevNameToObjectMap.get( 'Account-'+recTypeDevName);
+		Id accountRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', recTypeDevName);
+		
 		Account newAccount = new Account ( 
 					Name = 'testAccount-' + String.valueOf( acctNumber).trim() 
 					, Type='IATA Passenger Sales Agent'
@@ -285,8 +264,8 @@ private class GDP_REST_FilePayloadIdCardTest {
 					, BillingCountry = 'Canada'
 					, BillingPostalCode = 'H3G 1T4'
 					);
-		if (accountRecType!=null) {
-			newAccount.RecordTypeId = accountRecType.Id;
+		if (accountRecTypeId!=null) {
+			newAccount.RecordTypeId = accountRecTypeId;
 		}
 		return newAccount;
 	} // createAccount
@@ -298,7 +277,8 @@ private class GDP_REST_FilePayloadIdCardTest {
 				, String recTypeDevName
 				) 
 	{ 
-		RecordType contactRecType = recTypeDevNameToObjectMap.get('Contact-'+recTypeDevName);
+		Id contactRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', recTypeDevName);
+		
 		Contact newContact = new Contact ( 
 					FirstName = 'testContact' + String.valueOf( ctcNumber)
 					, LastName = 'Test'
@@ -313,8 +293,8 @@ private class GDP_REST_FilePayloadIdCardTest {
 		{ // only set AccountId if it exists
 			newContact.AccountId = accountId; 
 		}
-		if (contactRecType!=null) {
-			newContact.RecordTypeId = contactRecType.Id;
+		if (contactRecTypeId!=null) {
+			newContact.RecordTypeId = contactRecTypeId;
 		}
 		return newContact;
 	}
@@ -331,6 +311,7 @@ private class GDP_REST_FilePayloadIdCardTest {
 					First_Name__c = relatedContact.FirstName
 					, Last_Name__c = relatedContact.LastName
 					, AgencyShare_Confirmation__c = true
+					, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application')
 					//, Agency_IATA_Code__c = '00000001' 
 					);
 		return newIdApplicationCard;
@@ -350,7 +331,7 @@ private class GDP_REST_FilePayloadIdCardTest {
 					, Name_on_ID_Card__c = 'Test ' + String.valueOf(idx).trim()
 					//, Agency_IATA_Code__c = '00000001' 
 					, Related_Contact__c = relatedContact.Id
-					, Card_Status__c = 'Approved'
+					, Card_Status__c = 'Sent ID Card'
 					, Blacklisted__c = false
 					, Valid_To_Date__c = Date.today().addMonths(5).addDays(idx)
 					);
@@ -409,21 +390,6 @@ private class GDP_REST_FilePayloadIdCardTest {
 			, Visible__c=true
 			));
 		
-        /*
-        // Agency_IATA_Code__c is already part of the query in GSS_RestPayloadIdCard, should not be added here
-		fileFieldDescriptionList.add(new GDP_File_Fields_Description__c(API_Name__c='Agency_IATA_Code__c', API_Object_Name__c='ID_Card__c'
-			, Name__c='Agency IATA Code'
-			, Position__c=2
-			, Size__c=8
-			, Target__c='Agency'
-			, Type__c='String'
-			, GDP_File_Description__c=fileDescriptionReference.Id
-			, Filter_Field_API_Name__c='', Filter_Field_Value__c=''
-			, Hidden_Column__c=false, TXT_Hidden_Column__c=false, XML_Hidden_Column__c=false
-			, Visible__c=true
-			));
-		*/
-        
 		fileFieldDescriptionList.add(new GDP_File_Fields_Description__c(API_Name__c='Agency_Name__c', API_Object_Name__c='ID_Card__c'
 			, Name__c='Agency Name'
 			, Position__c=3

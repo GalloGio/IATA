@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>meefuengsv@iata.org</email>
     <name>Local Office - Thailand</name>
+    <queueMembers>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>CountryManagerThailandI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffThailandI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+        <roles>
+            <role>APCustomerServiceManagerA</role>
+            <role>APCustomerServiceStaffA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Accommodation</fullName>
+        <default>false</default>
+        <label>Accommodation</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline</fullName>
+        <default>false</default>
+        <label>Airline</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline Supplier</fullName>
+        <default>false</default>
+        <label>Airline Supplier</label>
+    </customValue>
+    <customValue>
+        <fullName>Association</fullName>
+        <default>false</default>
+        <label>Association</label>
+    </customValue>
+    <customValue>
+        <fullName>Cargo Agent</fullName>
+        <default>false</default>
+        <label>Cargo Agent</label>
+    </customValue>
+    <customValue>
+        <fullName>Education</fullName>
+        <default>false</default>
+        <label>Education</label>
+    </customValue>
+    <customValue>
+        <fullName>Equipment Manufacturer</fullName>
+        <default>false</default>
+        <label>Equipment Manufacturer</label>
+    </customValue>
+    <customValue>
+        <fullName>Financial Institution</fullName>
+        <default>false</default>
+        <label>Financial Institution</label>
+    </customValue>
+    <customValue>
+        <fullName>General Sales Agent</fullName>
+        <default>false</default>
+        <label>General Sales Agent</label>
+    </customValue>
+    <customValue>
+        <fullName>Governmental Institution</fullName>
+        <default>false</default>
+        <label>Governmental Institution</label>
+    </customValue>
+    <customValue>
+        <fullName>Holding Company</fullName>
+        <default>false</default>
+        <label>Holding Company</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA</fullName>
+        <default>false</default>
+        <label>IATA</label>
+    </customValue>
+    <customValue>
+        <fullName>Infrastructure Partner</fullName>
+        <default>false</default>
+        <label>Infrastructure Partner</label>
+    </customValue>
+    <customValue>
+        <fullName>Media</fullName>
+        <default>false</default>
+        <label>Media</label>
+    </customValue>
+    <customValue>
+        <fullName>Non-Airline Transportation</fullName>
+        <default>false</default>
+        <label>Non-Airline Transportation</label>
+    </customValue>
+    <customValue>
+        <fullName>Recreational</fullName>
+        <default>false</default>
+        <label>Recreational</label>
+    </customValue>
+    <customValue>
+        <fullName>Travel Agent</fullName>
+        <default>false</default>
+        <label>Travel Agent</label>
+    </customValue>
+    <masterLabel>Sector</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

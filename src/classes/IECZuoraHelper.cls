@@ -82,15 +82,15 @@ public with sharing class IECZuoraHelper {
     
     public static Zuora.zObject createZuoraAccount(Account theAccount, Contact theContact, IECConstants.PaymentType ePaymentType, String sPaymentMethodId) {
         Zuora.zObject acc = new Zuora.zObject('Account');
-        acc.setValue('Name', theAccount.Name);
+        acc.setValue('Name', theContact.Account.Name);   //*** (Thai 2016-11-17) replace "theAccount"
         
-        String trimmedAccountId = (String)theAccount.Id;
+        String trimmedAccountId = (String)theContact.Account.Id;   //*** (Thai 2016-11-17) replace "theAccount"
         if (trimmedAccountId.length() > 15)
             trimmedAccountId = trimmedAccountId.substring(0, 15);
             
         acc.setValue('CrmId', trimmedAccountId);
         acc.setValue('CRMContactID__c', theContact.Id);
-        acc.setValue('Currency', theAccount.CurrencyIsoCode);
+        acc.setValue('Currency', theContact.Account.CurrencyIsoCode);   //*** (Thai 2016-11-17) replace "theAccount"
         
         // TODO: check these required fields after the registration process is completed
         //acc.setValue('IATA_Area__c', 'Area 1' /*theAccount.IATA_Area__c*/);
@@ -169,8 +169,9 @@ public with sharing class IECZuoraHelper {
 		IECAddress__c oBillingAddress = (lstAddresses.size() > 0 ? lstAddresses.get(0) : null);
 		
         if (oBillingAddress != null) {
-	        billToContact.setValue('Country', oBillingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
-	        billToContact.setValue('State', oBillingAddress.ISO_State_Name__c); // Changed by Samy (2016-02-29) from State__c
+            //*** Thai (2016-11-11) use ISO country code and ISO state code instead of name to mitigate the reject from Zuora
+	        billToContact.setValue('Country', (oBillingAddress.ISO_Country_Code__c == null ? oBillingAddress.ISO_Country_Name__c : oBillingAddress.ISO_Country_Code__c));
+	        billToContact.setValue('State', (oBillingAddress.ISO_State_Code_SAP__c == null ? oBillingAddress.ISO_State_Name__c : oBillingAddress.ISO_State_Code_SAP__c));
 	        billToContact.setValue('City', oBillingAddress.City__c);
 	        billToContact.setValue('PostalCode', oBillingAddress.ZipCode__c);
 	        billToContact.setValue('Address1', oBillingAddress.Street__c);
@@ -191,8 +192,9 @@ public with sharing class IECZuoraHelper {
 		IECAddress__c oShippingAddress = (lstAddresses.size() > 0 ? lstAddresses.get(0) : null);
 		
         if (oShippingAddress != null) {
-	        soldToContact.setValue('Country', oShippingAddress.ISO_Country_Name__c); // Changed by Samy (2016-02-29) from Country__c
-	        soldToContact.setValue('State', oShippingAddress.ISO_State_Name__c); // Changed by Samy (2016-02-29) from State__c
+            //*** Thai (2016-11-11) use ISO country code and ISO state code instead of name to mitigate the reject from Zuora
+	        soldToContact.setValue('Country', (oShippingAddress.ISO_Country_Code__c == null ? oShippingAddress.ISO_Country_Name__c : oShippingAddress.ISO_Country_Code__c));
+	        soldToContact.setValue('State', (oShippingAddress.ISO_State_Code_SAP__c == null ? oShippingAddress.ISO_State_Name__c : oShippingAddress.ISO_State_Code_SAP__c));
 	        soldToContact.setValue('City', oShippingAddress.City__c);
 	        soldToContact.setValue('PostalCode', oShippingAddress.ZipCode__c);
 	        soldToContact.setValue('Address1', oShippingAddress.Street__c);
@@ -1167,10 +1169,15 @@ public with sharing class IECZuoraHelper {
     public static Map<Id, Zuora__CustomerAccount__c> getBillingAccountByContactId(Set<Id> setContactId) {
     	Map<Id, Zuora__CustomerAccount__c> mapContactIdToBillingAccount = new Map<Id, Zuora__CustomerAccount__c>();
     	for (Zuora__CustomerAccount__c zAcc :
-    		[SELECT CRMContactID__c, Contact__c, Zuora__BillToId__c, Zuora__SoldToId__c, eBroadcast_Product_Access__c
-    			, Zuora__Zuora_Id__c, Id
-    		FROM Zuora__CustomerAccount__c
-    		WHERE CRMContactID__c IN :setContactId]) {
+    		[SELECT CRMContactID__c
+                , Contact__c
+                , Zuora__BillToId__c
+                , Zuora__SoldToId__c
+                , eBroadcast_Product_Access__c
+    			, Zuora__Zuora_Id__c
+                , Id
+     		FROM Zuora__CustomerAccount__c
+     		WHERE CRMContactID__c IN :setContactId]) {
 			
 			mapContactIdToBillingAccount.put(zAcc.Contact__c, zAcc);
 		}

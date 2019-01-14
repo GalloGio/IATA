@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>31.0</apiVersion>
+    <available>true</available>
+    <description>Sends auto-response on draft AMS or AP portal case creation</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP Draft Process Case VF</name>
+    <style>none</style>
+    <subject>Agency Accreditation Head Office Draft Application in IATA Customer Portal - case n°</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

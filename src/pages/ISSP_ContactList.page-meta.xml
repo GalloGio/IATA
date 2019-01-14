@@ -4,4 +4,9 @@
     <availableInTouch>true</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>ISSP_ContactList</label>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>9</minorNumber>
+        <namespace>IntelliMail</namespace>
+    </packageVersions>
 </ApexPage>

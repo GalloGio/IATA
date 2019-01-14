@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -77,9 +74,147 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>AccountNewStatus__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Cash basis/no commission</fullName>
+                    <default>false</default>
+                    <label>Cash basis/no commission</label>
+                </value>
+                <value>
+                    <fullName>Cash basis/with commission</fullName>
+                    <default>false</default>
+                    <label>Cash basis/with commission</label>
+                </value>
+                <value>
+                    <fullName>Changes processed</fullName>
+                    <default>false</default>
+                    <label>Changes processed</label>
+                </value>
+                <value>
+                    <fullName>Listed</fullName>
+                    <default>false</default>
+                    <label>Listed</label>
+                </value>
+                <value>
+                    <fullName>New application pending</fullName>
+                    <default>false</default>
+                    <label>New application pending</label>
+                </value>
+                <value>
+                    <fullName>No longer a customer</fullName>
+                    <default>false</default>
+                    <label>No longer a customer</label>
+                </value>
+                <value>
+                    <fullName>Not accreditated</fullName>
+                    <default>false</default>
+                    <label>Not accreditated</label>
+                </value>
+                <value>
+                    <fullName>Not in operation</fullName>
+                    <default>false</default>
+                    <label>Not in operation</label>
+                </value>
+                <value>
+                    <fullName>Terminated</fullName>
+                    <default>false</default>
+                    <label>Terminated</label>
+                </value>
+                <value>
+                    <fullName>Under review</fullName>
+                    <default>false</default>
+                    <label>Under review</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AccountPreviousStatus__c</fullName>
+        <externalId>false</externalId>
+        <label>AccountPreviousStatus</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Cash basis/no commission</fullName>
+                    <default>false</default>
+                    <label>Cash basis/no commission</label>
+                </value>
+                <value>
+                    <fullName>Cash basis/with commission</fullName>
+                    <default>false</default>
+                    <label>Cash basis/with commission</label>
+                </value>
+                <value>
+                    <fullName>Changes processed</fullName>
+                    <default>false</default>
+                    <label>Changes processed</label>
+                </value>
+                <value>
+                    <fullName>Listed</fullName>
+                    <default>false</default>
+                    <label>Listed</label>
+                </value>
+                <value>
+                    <fullName>New application pending</fullName>
+                    <default>false</default>
+                    <label>New application pending</label>
+                </value>
+                <value>
+                    <fullName>No longer a customer</fullName>
+                    <default>false</default>
+                    <label>No longer a customer</label>
+                </value>
+                <value>
+                    <fullName>Not accreditated</fullName>
+                    <default>false</default>
+                    <label>Not accreditated</label>
+                </value>
+                <value>
+                    <fullName>Not in operation</fullName>
+                    <default>false</default>
+                    <label>Not in operation</label>
+                </value>
+                <value>
+                    <fullName>Terminated</fullName>
+                    <default>false</default>
+                    <label>Terminated</label>
+                </value>
+                <value>
+                    <fullName>Under review</fullName>
+                    <default>false</default>
+                    <label>Under review</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Account__c</fullName>
@@ -101,7 +236,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Checked if this code is Active. Agency can only have one Active code in same time.</inlineHelpText>
         <label>Active</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -146,7 +281,7 @@
         <externalId>false</externalId>
         <label>Bulletin Information</label>
         <length>131072</length>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>10</visibleLines>
@@ -155,185 +290,451 @@
         <fullName>Change_Code__c</fullName>
         <externalId>false</externalId>
         <label>Change Code</label>
-        <picklist>
-            <picklistValues>
-                <fullName>CAD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CAS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CCF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHG</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHJ</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHL</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHM</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CHS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CLF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CLI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CLO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CMF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CNF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>COR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CSF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>CWD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DEF</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DIS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>DWD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FIN</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FPY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IRR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IRS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IRW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>MCH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NAC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NCA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NEP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NEW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NOT</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>NWD</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RCR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>REC</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RPY</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>RVW</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TAP</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TCH</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>TER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>true</sorted>
-        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>AFN</fullName>
+                    <default>false</default>
+                    <label>AFN</label>
+                </value>
+                <value>
+                    <fullName>BSF</fullName>
+                    <default>false</default>
+                    <label>BSF</label>
+                </value>
+                <value>
+                    <fullName>BSP</fullName>
+                    <default>false</default>
+                    <label>BSP</label>
+                </value>
+                <value>
+                    <fullName>CAD</fullName>
+                    <default>false</default>
+                    <label>CAD</label>
+                </value>
+                <value>
+                    <fullName>CAS</fullName>
+                    <default>false</default>
+                    <label>CAS</label>
+                </value>
+                <value>
+                    <fullName>CCA</fullName>
+                    <default>false</default>
+                    <label>CCA</label>
+                </value>
+                <value>
+                    <fullName>CCF</fullName>
+                    <default>false</default>
+                    <label>CCF</label>
+                </value>
+                <value>
+                    <fullName>CCR</fullName>
+                    <default>false</default>
+                    <label>CCR</label>
+                </value>
+                <value>
+                    <fullName>CHC</fullName>
+                    <default>false</default>
+                    <label>CHC</label>
+                </value>
+                <value>
+                    <fullName>CHF</fullName>
+                    <default>false</default>
+                    <label>CHF</label>
+                </value>
+                <value>
+                    <fullName>CHG</fullName>
+                    <default>false</default>
+                    <label>CHG</label>
+                </value>
+                <value>
+                    <fullName>CHI</fullName>
+                    <default>false</default>
+                    <label>CHI</label>
+                </value>
+                <value>
+                    <fullName>CHJ</fullName>
+                    <default>false</default>
+                    <label>CHJ</label>
+                </value>
+                <value>
+                    <fullName>CHL</fullName>
+                    <default>false</default>
+                    <label>CHL</label>
+                </value>
+                <value>
+                    <fullName>CHM</fullName>
+                    <default>false</default>
+                    <label>CHM</label>
+                </value>
+                <value>
+                    <fullName>CHN</fullName>
+                    <default>false</default>
+                    <label>CHN</label>
+                </value>
+                <value>
+                    <fullName>CHO</fullName>
+                    <default>false</default>
+                    <label>CHO</label>
+                </value>
+                <value>
+                    <fullName>CHS</fullName>
+                    <default>false</default>
+                    <label>CHS</label>
+                </value>
+                <value>
+                    <fullName>CHV</fullName>
+                    <default>false</default>
+                    <label>CHV</label>
+                </value>
+                <value>
+                    <fullName>CLF</fullName>
+                    <default>false</default>
+                    <label>CLF</label>
+                </value>
+                <value>
+                    <fullName>CLI</fullName>
+                    <default>false</default>
+                    <label>CLI</label>
+                </value>
+                <value>
+                    <fullName>CLO</fullName>
+                    <default>false</default>
+                    <label>CLO</label>
+                </value>
+                <value>
+                    <fullName>CLR</fullName>
+                    <default>false</default>
+                    <label>CLR</label>
+                </value>
+                <value>
+                    <fullName>CMF</fullName>
+                    <default>false</default>
+                    <label>CMF</label>
+                </value>
+                <value>
+                    <fullName>CNF</fullName>
+                    <default>false</default>
+                    <label>CNF</label>
+                </value>
+                <value>
+                    <fullName>COR</fullName>
+                    <default>false</default>
+                    <label>COR</label>
+                </value>
+                <value>
+                    <fullName>CSF</fullName>
+                    <default>false</default>
+                    <label>CSF</label>
+                </value>
+                <value>
+                    <fullName>CWD</fullName>
+                    <default>false</default>
+                    <label>CWD</label>
+                </value>
+                <value>
+                    <fullName>DEF</fullName>
+                    <default>false</default>
+                    <label>DEF</label>
+                </value>
+                <value>
+                    <fullName>DFE</fullName>
+                    <default>false</default>
+                    <label>DFE</label>
+                </value>
+                <value>
+                    <fullName>DFW</fullName>
+                    <default>false</default>
+                    <label>DFW</label>
+                </value>
+                <value>
+                    <fullName>DIS</fullName>
+                    <default>false</default>
+                    <label>DIS</label>
+                </value>
+                <value>
+                    <fullName>DOM</fullName>
+                    <default>false</default>
+                    <label>DOM</label>
+                </value>
+                <value>
+                    <fullName>DWD</fullName>
+                    <default>false</default>
+                    <label>DWD</label>
+                </value>
+                <value>
+                    <fullName>FIN</fullName>
+                    <default>false</default>
+                    <label>FIN</label>
+                </value>
+                <value>
+                    <fullName>FOP</fullName>
+                    <default>false</default>
+                    <label>FOP</label>
+                </value>
+                <value>
+                    <fullName>FPR</fullName>
+                    <default>false</default>
+                    <label>FPR</label>
+                </value>
+                <value>
+                    <fullName>FPY</fullName>
+                    <default>false</default>
+                    <label>FPY</label>
+                </value>
+                <value>
+                    <fullName>IAF</fullName>
+                    <default>false</default>
+                    <label>IAF</label>
+                </value>
+                <value>
+                    <fullName>IRR</fullName>
+                    <default>false</default>
+                    <label>IRR</label>
+                </value>
+                <value>
+                    <fullName>IRS</fullName>
+                    <default>false</default>
+                    <label>IRS</label>
+                </value>
+                <value>
+                    <fullName>IRW</fullName>
+                    <default>false</default>
+                    <label>IRW</label>
+                </value>
+                <value>
+                    <fullName>LRA</fullName>
+                    <default>false</default>
+                    <label>LRA</label>
+                </value>
+                <value>
+                    <fullName>LRD</fullName>
+                    <default>false</default>
+                    <label>LRD</label>
+                </value>
+                <value>
+                    <fullName>LRR</fullName>
+                    <default>false</default>
+                    <label>LRR</label>
+                </value>
+                <value>
+                    <fullName>LSP</fullName>
+                    <default>false</default>
+                    <label>LSP</label>
+                </value>
+                <value>
+                    <fullName>LSW</fullName>
+                    <default>false</default>
+                    <label>LSW</label>
+                </value>
+                <value>
+                    <fullName>MCH</fullName>
+                    <default>false</default>
+                    <label>MCH</label>
+                </value>
+                <value>
+                    <fullName>MEP</fullName>
+                    <default>false</default>
+                    <label>MEP</label>
+                </value>
+                <value>
+                    <fullName>NAC</fullName>
+                    <default>false</default>
+                    <label>NAC</label>
+                </value>
+                <value>
+                    <fullName>NCA</fullName>
+                    <default>false</default>
+                    <label>NCA</label>
+                </value>
+                <value>
+                    <fullName>NCW</fullName>
+                    <default>false</default>
+                    <label>NCW</label>
+                </value>
+                <value>
+                    <fullName>NEP</fullName>
+                    <default>false</default>
+                    <label>NEP</label>
+                </value>
+                <value>
+                    <fullName>NEW</fullName>
+                    <default>false</default>
+                    <label>NEW</label>
+                </value>
+                <value>
+                    <fullName>NFS</fullName>
+                    <default>false</default>
+                    <label>NFS</label>
+                </value>
+                <value>
+                    <fullName>NOT</fullName>
+                    <default>false</default>
+                    <label>NOT</label>
+                </value>
+                <value>
+                    <fullName>NTW</fullName>
+                    <default>false</default>
+                    <label>NTW</label>
+                </value>
+                <value>
+                    <fullName>NWD</fullName>
+                    <default>false</default>
+                    <label>NWD</label>
+                </value>
+                <value>
+                    <fullName>OIN</fullName>
+                    <default>false</default>
+                    <label>OIN</label>
+                </value>
+                <value>
+                    <fullName>OOT</fullName>
+                    <default>false</default>
+                    <label>OOT</label>
+                </value>
+                <value>
+                    <fullName>PCA</fullName>
+                    <default>false</default>
+                    <label>PCA</label>
+                </value>
+                <value>
+                    <fullName>PCN</fullName>
+                    <default>false</default>
+                    <label>PCN</label>
+                </value>
+                <value>
+                    <fullName>PCR</fullName>
+                    <default>false</default>
+                    <label>PCR</label>
+                </value>
+                <value>
+                    <fullName>RCM</fullName>
+                    <default>false</default>
+                    <label>RCM</label>
+                </value>
+                <value>
+                    <fullName>RCR</fullName>
+                    <default>false</default>
+                    <label>RCR</label>
+                </value>
+                <value>
+                    <fullName>REC</fullName>
+                    <default>false</default>
+                    <label>REC</label>
+                </value>
+                <value>
+                    <fullName>REI</fullName>
+                    <default>false</default>
+                    <label>REI</label>
+                </value>
+                <value>
+                    <fullName>REW</fullName>
+                    <default>false</default>
+                    <label>REW</label>
+                </value>
+                <value>
+                    <fullName>RNC</fullName>
+                    <default>false</default>
+                    <label>RNC</label>
+                </value>
+                <value>
+                    <fullName>RPY</fullName>
+                    <default>false</default>
+                    <label>RPY</label>
+                </value>
+                <value>
+                    <fullName>RRC</fullName>
+                    <default>false</default>
+                    <label>RRC</label>
+                </value>
+                <value>
+                    <fullName>RTE</fullName>
+                    <default>false</default>
+                    <label>RTE</label>
+                </value>
+                <value>
+                    <fullName>RTR</fullName>
+                    <default>false</default>
+                    <label>RTR</label>
+                </value>
+                <value>
+                    <fullName>RVW</fullName>
+                    <default>false</default>
+                    <label>RVW</label>
+                </value>
+                <value>
+                    <fullName>RWD</fullName>
+                    <default>false</default>
+                    <label>RWD</label>
+                </value>
+                <value>
+                    <fullName>SDR</fullName>
+                    <default>false</default>
+                    <label>SDR</label>
+                </value>
+                <value>
+                    <fullName>SRM</fullName>
+                    <default>false</default>
+                    <label>SRM</label>
+                </value>
+                <value>
+                    <fullName>STR</fullName>
+                    <default>false</default>
+                    <label>STR</label>
+                </value>
+                <value>
+                    <fullName>TAP</fullName>
+                    <default>false</default>
+                    <label>TAP</label>
+                </value>
+                <value>
+                    <fullName>TCH</fullName>
+                    <default>false</default>
+                    <label>TCH</label>
+                </value>
+                <value>
+                    <fullName>TER</fullName>
+                    <default>false</default>
+                    <label>TER</label>
+                </value>
+                <value>
+                    <fullName>TRW</fullName>
+                    <default>false</default>
+                    <label>TRW</label>
+                </value>
+                <value>
+                    <fullName>VRR</fullName>
+                    <default>false</default>
+                    <label>VRR</label>
+                </value>
+                <value>
+                    <fullName>VRW</fullName>
+                    <default>false</default>
+                    <label>VRW</label>
+                </value>
+                <value>
+                    <fullName>WCP</fullName>
+                    <default>false</default>
+                    <label>WCP</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Change_effective_as_of__c</fullName>
+        <externalId>false</externalId>
+        <formula>OSCAR__r.Change_effective_as_of__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Change effective as of</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>CreatedDate_User__c</fullName>
@@ -357,6 +758,59 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Created_Date_eBulletin__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+    OR( OSCAR__c == null,
+        AND( OSCAR__c != null, 
+            OR( ISPICKVAL(Change_Code__c, &apos;CAD&apos;), 
+                ISPICKVAL(Change_Code__c, &apos;COR&apos;), 
+                ISPICKVAL(Change_Code__c, &apos;CTA&apos;), 
+                ISPICKVAL(Change_Code__c, &apos;CWD&apos;), 
+                ISPICKVAL(Change_Code__c, &apos;DIS&apos;), 
+                ISPICKVAL(Change_Code__c, &apos;NEW&apos;), 
+                ISPICKVAL(Change_Code__c, &apos;NWD&apos;), 
+                ISPICKVAL(Change_Code__c, &apos;REC&apos;)
+            )
+        )
+    ), 
+    DATEVALUE( Created_Date_To_Show__c),
+    OSCAR__r.Change_effective_as_of__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Created Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>DEF_Non_Payment2__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+AND(
+ OR(TEXT(Change_Code__c) =&apos;DEF&apos;, TEXT(Change_Code__c) =&apos;DFE&apos;),
+ OR(TEXT(Reason_Description__c) = &apos;DEFAULT - IMM. REMITTANCE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT - OVERDUE REMITTANCE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT MONIES DUE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT NON SETTLEMENT&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT NON-SETTLEMENT&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT-MONIES DUE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT-OVERDUE REMITTANCE&apos;,
+    TEXT(Reason_Description__c) = &apos;NON-PAYMENT ANNUAL FEE&apos;,
+    TEXT(Reason_Description__c) = &apos;DEFAULT-NON PAYMENT&apos;,
+    TEXT(Reason_Description__c) = &apos;CROSS DEFAULT ACTION&apos;
+    )
+)
+,true
+,false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>DEF Non-Payment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>DEF_Non_Payment__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -364,6 +818,17 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>DateTime_GMT__c</fullName>
+        <externalId>false</externalId>
+        <label>DateTime GMT</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Date_Memo_Sent__c</fullName>
@@ -388,7 +853,7 @@
         <externalId>false</externalId>
         <label>Effective Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -398,16 +863,38 @@
         <externalId>false</externalId>
         <label>End Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>End_of_Grace_Period_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End of Grace Period Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Financial_Security__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Security</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>For_Integration__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
-    true, 
-    IF( CreatedDate &gt; Account__r.Last_Integration_Date__c,
+        <formula>IF( ISNULL(Account__r.Last_Integration_Date__c),
+    true,
+    IF( Created_Date_To_Show__c &gt; Account__r.Last_Integration_Date__c,
         true,
         false
     )
@@ -419,10 +906,75 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Forms_of_Payment__c</fullName>
+        <description>FOPs to show on eBulletin</description>
+        <externalId>false</externalId>
+        <inlineHelpText>FOPs to show on eBulletin</inlineHelpText>
+        <label>Forms of Payment</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Code_Top_Parent__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Account__r.Top_Parent__c &lt;&gt; null , Account__r.Top_Parent__r.IATACode__c,Account__r.IATACode__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IATA Code Top Parent</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Code__c</fullName>
+        <description>Show the IATA Code from the related Account</description>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c</formula>
+        <inlineHelpText>Show the IATA Code from the related Account</inlineHelpText>
+        <label>IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEPPayload__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(Account__r.ANG_IEP_Status_FF__c = &apos;No IEP Account&apos;, ISBLANK(Account__r.ANG_IEP_Status_FF__c)) , null, 
+IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Location_Type__c,&apos;HO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;AO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;))),Account__r.IATACode__c,IF(AND(ISPICKVAL(Change_Code__c,&apos;FIN&apos;),NOT(OR(ISPICKVAL(Account__r.Location_Type__c,&apos;HO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;AO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;)))),Account__r.IATACode__c,IF(NOT(OR(ISPICKVAL(Change_Code__c,&apos;FIN&apos;),ISPICKVAL(Change_Code__c , &apos;IEP&apos;))),Account__r.IATACode__c,null))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IEPPayload</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IRR_Acumulated_irregularities__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Accumulated_Irregularities__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IRR: Accumulated irregularities</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IRR_Expiration_Date__c</fullName>
         <externalId>false</externalId>
         <formula>DATETIMEVALUE(
-  TEXT(YEAR(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate)) )+1)+ &quot;-&quot; + 
+  TEXT(YEAR(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate)) )+1)+ &quot;-&quot; +
   IF(
     AND(MONTH(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))) = 2,DAY( NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))) = 29)
     ,&quot;3-1&quot;
@@ -436,12 +988,36 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>IRR_Period__c</fullName>
+        <externalId>false</externalId>
+        <formula>SIDRA_Case__r.Remittance_Period__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IRR Period</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IRR_Reason__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(SIDRA_Case__r.IRR_Withdrawal_Reason__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IRR Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Irregularities_Expired__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If true, irregularities points are not summed in the account. It expires 12 months after the Effective_Date__c</description>
         <externalId>false</externalId>
         <label>Irregularities_Expired</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -453,21 +1029,115 @@
         <precision>5</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Irregularity_Sequence__c</fullName>
+        <externalId>false</externalId>
+        <label>Irregularity Sequence</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Irregularity_Type_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(TEXT(Irregularity_Type__c) ), &quot;&quot;,
+      CASE( TEXT(Irregularity_Type__c) ,
+        &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
+        &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
+        &quot;FC1&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+        &quot;FC2&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
+        &quot;NPA&quot;,&quot;NON-PAYMENT OF ANNUAL FEE&quot;,
+        &quot;OV1&quot;,&quot;OVERDUE REMITTANCE&quot;,
+        &quot;OV2&quot;,&quot;OVERDUE REMITTANCE&quot;,
+        &quot;SC1&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+        &quot;SC2&quot;,&quot;INCOMPLETE DOCS-FIN. RVW&quot;,
+        &quot;WD1&quot;,&quot;WITHDRAWN&quot;,
+        &quot;WD2&quot;,&quot;WITHDRAWN&quot;,
+      &quot;&quot;)
+    )</formula>
+        <label>Irregularity Type Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
         <fullName>Irregularity_Type__c</fullName>
         <externalId>false</externalId>
         <label>Irregularity Type</label>
-        <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>1PT</fullName>
+                    <default>false</default>
+                    <label>1PT</label>
+                </value>
+                <value>
+                    <fullName>2PT</fullName>
+                    <default>false</default>
+                    <label>2PT</label>
+                </value>
+                <value>
+                    <fullName>FC1</fullName>
+                    <default>false</default>
+                    <label>FC1</label>
+                </value>
+                <value>
+                    <fullName>FC2</fullName>
+                    <default>false</default>
+                    <label>FC2</label>
+                </value>
+                <value>
+                    <fullName>NPA</fullName>
+                    <default>false</default>
+                    <label>NPA</label>
+                </value>
+                <value>
+                    <fullName>OV1</fullName>
+                    <default>false</default>
+                    <label>OV1</label>
+                </value>
+                <value>
+                    <fullName>OV2</fullName>
+                    <default>false</default>
+                    <label>OV2</label>
+                </value>
+                <value>
+                    <fullName>SC1</fullName>
+                    <default>false</default>
+                    <label>SC1</label>
+                </value>
+                <value>
+                    <fullName>SC2</fullName>
+                    <default>false</default>
+                    <label>SC2</label>
+                </value>
+                <value>
+                    <fullName>WD1</fullName>
+                    <default>false</default>
+                    <label>WD1</label>
+                </value>
+                <value>
+                    <fullName>WD2</fullName>
+                    <default>false</default>
+                    <label>WD2</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>OSCAR__c</fullName>
@@ -479,7 +1149,7 @@
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -487,10 +1157,35 @@
         <fullName>Operation__c</fullName>
         <description>A = ADD, W = WITHDRAWN, D = ??</description>
         <externalId>false</externalId>
+        <inlineHelpText>A = Add Irregularity. W = Withdraw Irregularity</inlineHelpText>
         <label>Operation</label>
         <length>5</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Outstanding_Amount__c</fullName>
+        <description>Value to be displayed at Outstanding Amount column on eBulletin report</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Value to be displayed at Outstanding Amount column on eBulletin report</inlineHelpText>
+        <label>Outstanding Amount</label>
+        <length>255</length>
+        <required>false</required>
         <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PreviousReason__c</fullName>
+        <externalId>false</externalId>
+        <label>PreviousReason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -509,251 +1204,428 @@
         <fullName>Reason_Code__c</fullName>
         <externalId>false</externalId>
         <label>Reason Code</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Communication</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Minor change of shareholding</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non compliance due to Change of name</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non compliance due to change of name and location</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non compliance due to change of ownership</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non compliance due to Change of Shareholding</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Administrative Change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change data</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change of Legal Status</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change of Location</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change of Name</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change of name and location</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change of Ownership</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change of Shareholding</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Correction</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Miscellaneous Change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change of Location with Invest.</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change of Ownership of Branches</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change of Ownership to IATA Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Voluntary Relinquishment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accumulated Irregularities - Non Payment of Annual fee</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accumulated Irregularities - Non Payment Related</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accumulated Irregularities - Payment Related</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non compliance due to Change of Location</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non compliance to Credit Card Rules</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non Payment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Partial Payment</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Administrative Error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Billing Dispute</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Bona fide bank error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Commissioner Decision</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Accounting Irregularities</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Late/absence of Change of Location</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non payment of annual fees</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non submission of financial security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non submission of financial statement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sanity Check failure of financial statement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Application - BR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New application - HO</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Application Change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Application Initiated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Code Assigned</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Territory Change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agent under Bankrupt/Liquidation/Administration</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Disapproval of Major Change</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Non submission of additional financial security</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Certificate</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Annual Fee payment received</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Compliance to Agency Res</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Security submitted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Financial Statement submitted</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Reinstatement after Default</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Repayment Plan Agreed</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Prejudiced Collection of Funds</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Termination</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>VMFR Request</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>00</fullName>
+                    <default>false</default>
+                    <label>00</label>
+                </value>
+                <value>
+                    <fullName>01</fullName>
+                    <default>false</default>
+                    <label>01</label>
+                </value>
+                <value>
+                    <fullName>02</fullName>
+                    <default>false</default>
+                    <label>02</label>
+                </value>
+                <value>
+                    <fullName>03</fullName>
+                    <default>false</default>
+                    <label>03</label>
+                </value>
+                <value>
+                    <fullName>11</fullName>
+                    <default>false</default>
+                    <label>11</label>
+                </value>
+                <value>
+                    <fullName>12</fullName>
+                    <default>false</default>
+                    <label>12</label>
+                </value>
+                <value>
+                    <fullName>21</fullName>
+                    <default>false</default>
+                    <label>21</label>
+                </value>
+                <value>
+                    <fullName>31</fullName>
+                    <default>false</default>
+                    <label>31</label>
+                </value>
+                <value>
+                    <fullName>32</fullName>
+                    <default>false</default>
+                    <label>32</label>
+                </value>
+                <value>
+                    <fullName>43</fullName>
+                    <default>false</default>
+                    <label>43</label>
+                </value>
+                <value>
+                    <fullName>40</fullName>
+                    <default>false</default>
+                    <label>40</label>
+                </value>
+                <value>
+                    <fullName>50</fullName>
+                    <default>false</default>
+                    <label>50</label>
+                </value>
+                <value>
+                    <fullName>51</fullName>
+                    <default>false</default>
+                    <label>51</label>
+                </value>
+                <value>
+                    <fullName>52</fullName>
+                    <default>false</default>
+                    <label>52</label>
+                </value>
+                <value>
+                    <fullName>53</fullName>
+                    <default>false</default>
+                    <label>53</label>
+                </value>
+                <value>
+                    <fullName>54</fullName>
+                    <default>false</default>
+                    <label>54</label>
+                </value>
+                <value>
+                    <fullName>60</fullName>
+                    <default>false</default>
+                    <label>60</label>
+                </value>
+                <value>
+                    <fullName>61</fullName>
+                    <default>false</default>
+                    <label>61</label>
+                </value>
+                <value>
+                    <fullName>62</fullName>
+                    <default>false</default>
+                    <label>62</label>
+                </value>
+                <value>
+                    <fullName>63</fullName>
+                    <default>false</default>
+                    <label>63</label>
+                </value>
+                <value>
+                    <fullName>64</fullName>
+                    <default>false</default>
+                    <label>64</label>
+                </value>
+                <value>
+                    <fullName>65</fullName>
+                    <default>false</default>
+                    <label>65</label>
+                </value>
+                <value>
+                    <fullName>66</fullName>
+                    <default>false</default>
+                    <label>66</label>
+                </value>
+                <value>
+                    <fullName>67</fullName>
+                    <default>false</default>
+                    <label>67</label>
+                </value>
+                <value>
+                    <fullName>71</fullName>
+                    <default>false</default>
+                    <label>71</label>
+                </value>
+                <value>
+                    <fullName>72</fullName>
+                    <default>false</default>
+                    <label>72</label>
+                </value>
+                <value>
+                    <fullName>81</fullName>
+                    <default>false</default>
+                    <label>81</label>
+                </value>
+                <value>
+                    <fullName>91</fullName>
+                    <default>false</default>
+                    <label>91</label>
+                </value>
+                <value>
+                    <fullName>93</fullName>
+                    <default>false</default>
+                    <label>93</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Reason_Description__c</fullName>
         <externalId>false</externalId>
         <label>Reason Description</label>
-        <length>500</length>
-        <trackHistory>false</trackHistory>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>AccountNewStatus__c</controllingField>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>ACCREDITED - MEETS CRITERIA</fullName>
+                    <default>false</default>
+                    <label>ACCREDITED - MEETS CRITERIA</label>
+                </value>
+                <value>
+                    <fullName>ACCREDITED-MEET-STANDARDS</fullName>
+                    <default>false</default>
+                    <label>ACCREDITED-MEET-STANDARDS</label>
+                </value>
+                <value>
+                    <fullName>ADMINISTRATIVE OFFICES</fullName>
+                    <default>false</default>
+                    <label>ADMINISTRATIVE OFFICES</label>
+                </value>
+                <value>
+                    <fullName>APPLICATION DISAPPROVED</fullName>
+                    <default>false</default>
+                    <label>APPLICATION DISAPPROVED</label>
+                </value>
+                <value>
+                    <fullName>APPLICATION WITHDRAWN</fullName>
+                    <default>false</default>
+                    <label>APPLICATION WITHDRAWN</label>
+                </value>
+                <value>
+                    <fullName>BANKRUPTCY/LIQUIDATION</fullName>
+                    <default>false</default>
+                    <label>BANKRUPTCY/LIQUIDATION</label>
+                </value>
+                <value>
+                    <fullName>BSP PARTICIPATIION - REVIEW IN PROGRESS</fullName>
+                    <default>false</default>
+                    <label>BSP PARTICIPATIION - REVIEW IN PROGRESS</label>
+                </value>
+                <value>
+                    <fullName>BSP PARTICIPATION - REVIEW IN PROGRESS</fullName>
+                    <default>false</default>
+                    <label>BSP PARTICIPATION - REVIEW IN PROGRESS</label>
+                </value>
+                <value>
+                    <fullName>BY AGENCY ADMINISTRATOR</fullName>
+                    <default>false</default>
+                    <label>BY AGENCY ADMINISTRATOR</label>
+                </value>
+                <value>
+                    <fullName>BY COMMISSIONER</fullName>
+                    <default>false</default>
+                    <label>BY COMMISSIONER</label>
+                </value>
+                <value>
+                    <fullName>CASS PARTICIPATION - REVIEW IN PROGRESS</fullName>
+                    <default>false</default>
+                    <label>CASS PARTICIPATION - REVIEW IN PROGRESS</label>
+                </value>
+                <value>
+                    <fullName>CHANGE IN PROCESS</fullName>
+                    <default>false</default>
+                    <label>CHANGE IN PROCESS</label>
+                </value>
+                <value>
+                    <fullName>CODE ASSIGNED</fullName>
+                    <default>false</default>
+                    <label>CODE ASSIGNED</label>
+                </value>
+                <value>
+                    <fullName>CODE ASSIGNMENT ONLY</fullName>
+                    <default>false</default>
+                    <label>CODE ASSIGNMENT ONLY</label>
+                </value>
+                <value>
+                    <fullName>CROSS DEFAULT ACTION</fullName>
+                    <default>false</default>
+                    <label>CROSS DEFAULT ACTION</label>
+                </value>
+                <value>
+                    <fullName>DEFAULT ACCUM. IRR. - NON COMPLIANCE</fullName>
+                    <default>false</default>
+                    <label>DEFAULT ACCUM. IRR. - NON COMPLIANCE</label>
+                </value>
+                <value>
+                    <fullName>DEFAULT ACCUM. IRR. - PAYMENT RELATED</fullName>
+                    <default>false</default>
+                    <label>DEFAULT ACCUM. IRR. - PAYMENT RELATED</label>
+                </value>
+                <value>
+                    <fullName>DEFAULT - NON PAYMENT</fullName>
+                    <default>false</default>
+                    <label>DEFAULT - NON PAYMENT</label>
+                </value>
+                <value>
+                    <fullName>DEFAULT NON-SETTLEMENT</fullName>
+                    <default>false</default>
+                    <label>DEFAULT NON-SETTLEMENT</label>
+                </value>
+                <value>
+                    <fullName>DEFAULT - UNDER REPAYMENT PLAN</fullName>
+                    <default>false</default>
+                    <label>DEFAULT - UNDER REPAYMENT PLAN</label>
+                </value>
+                <value>
+                    <fullName>NEW APPLICATION</fullName>
+                    <default>false</default>
+                    <label>NEW APPLICATION</label>
+                </value>
+                <value>
+                    <fullName>NON COMPLIANCE TO ACCREDITATION CRITERIA</fullName>
+                    <default>false</default>
+                    <label>NON COMPLIANCE TO ACCREDITATION CRITERIA</label>
+                </value>
+                <value>
+                    <fullName>NON COMPLIANCE TO CRITERIA</fullName>
+                    <default>false</default>
+                    <label>NON COMPLIANCE TO CRITERIA</label>
+                </value>
+                <value>
+                    <fullName>NON COMPLIANCE TO FINANCIAL CRITERIA</fullName>
+                    <default>false</default>
+                    <label>NON COMPLIANCE TO FINANCIAL CRITERIA</label>
+                </value>
+                <value>
+                    <fullName>NOTICE OF TERMINATION DUE TO NON PAYMENT</fullName>
+                    <default>false</default>
+                    <label>NOTICE OF TERMINATION DUE TO NON PAYMENT</label>
+                </value>
+                <value>
+                    <fullName>PREJUDICED COLLECTION OF FUNDS</fullName>
+                    <default>false</default>
+                    <label>PREJUDICED COLLECTION OF FUNDS</label>
+                </value>
+                <value>
+                    <fullName>RELINQUISHMENT IN PROCESS</fullName>
+                    <default>false</default>
+                    <label>RELINQUISHMENT IN PROCESS</label>
+                </value>
+                <value>
+                    <fullName>VOLUNTARY RELINQUISHMENT</fullName>
+                    <default>false</default>
+                    <label>VOLUNTARY RELINQUISHMENT</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Under review</controllingFieldValue>
+                <valueName>BY AGENCY ADMINISTRATOR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Under review</controllingFieldValue>
+                <valueName>BY COMMISSIONER</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Approved</controllingFieldValue>
+                <valueName>ACCREDITED - MEETS CRITERIA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Approved</controllingFieldValue>
+                <valueName>ACCREDITED-MEET-STANDARDS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Approved</controllingFieldValue>
+                <valueName>CODE ASSIGNED</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/no commission</controllingFieldValue>
+                <valueName>CROSS DEFAULT ACTION</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/no commission</controllingFieldValue>
+                <valueName>DEFAULT ACCUM. IRR. - NON COMPLIANCE</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/no commission</controllingFieldValue>
+                <valueName>DEFAULT ACCUM. IRR. - PAYMENT RELATED</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/no commission</controllingFieldValue>
+                <valueName>DEFAULT - NON PAYMENT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/no commission</controllingFieldValue>
+                <valueName>DEFAULT - UNDER REPAYMENT PLAN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/with commission</controllingFieldValue>
+                <valueName>BANKRUPTCY/LIQUIDATION</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/with commission</controllingFieldValue>
+                <controllingFieldValue>No longer a customer</controllingFieldValue>
+                <controllingFieldValue>Not in operation</controllingFieldValue>
+                <valueName>BSP PARTICIPATION - REVIEW IN PROGRESS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/with commission</controllingFieldValue>
+                <valueName>CASS PARTICIPATION - REVIEW IN PROGRESS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/with commission</controllingFieldValue>
+                <valueName>NON COMPLIANCE TO ACCREDITATION CRITERIA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/with commission</controllingFieldValue>
+                <valueName>NON COMPLIANCE TO FINANCIAL CRITERIA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/with commission</controllingFieldValue>
+                <valueName>NOTICE OF TERMINATION DUE TO NON PAYMENT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/with commission</controllingFieldValue>
+                <valueName>PREJUDICED COLLECTION OF FUNDS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cash basis/with commission</controllingFieldValue>
+                <valueName>RELINQUISHMENT IN PROCESS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Changes processed</controllingFieldValue>
+                <valueName>CHANGE IN PROCESS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Listed</controllingFieldValue>
+                <valueName>ADMINISTRATIVE OFFICES</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Listed</controllingFieldValue>
+                <controllingFieldValue>Terminated</controllingFieldValue>
+                <valueName>VOLUNTARY RELINQUISHMENT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>New application pending</controllingFieldValue>
+                <valueName>NEW APPLICATION</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>No longer a customer</controllingFieldValue>
+                <controllingFieldValue>Not in operation</controllingFieldValue>
+                <valueName>CODE ASSIGNMENT ONLY</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Not accreditated</controllingFieldValue>
+                <valueName>APPLICATION DISAPPROVED</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Not accreditated</controllingFieldValue>
+                <controllingFieldValue>Terminated</controllingFieldValue>
+                <valueName>APPLICATION WITHDRAWN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Terminated</controllingFieldValue>
+                <valueName>DEFAULT NON-SETTLEMENT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Terminated</controllingFieldValue>
+                <valueName>NON COMPLIANCE TO CRITERIA</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Related_Irregularity__c</fullName>
@@ -815,7 +1687,7 @@
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -825,7 +1697,7 @@
         <description>Sent to external system</description>
         <externalId>false</externalId>
         <label>Sent to external system</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -847,9 +1719,20 @@
         <externalId>false</externalId>
         <label>Start Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Termination_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Termination Date</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>To_Publish_in_e_Bulletin__c</fullName>
@@ -857,7 +1740,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Uncheck if the change code should not appear in the e-bulletin</inlineHelpText>
         <label>To Publish in e-Bulletin</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -868,130 +1751,120 @@
         <externalId>false</externalId>
         <inlineHelpText>Flag for Analyst to check if the Minor Change has been carried out to AIMS</inlineHelpText>
         <label>Updated AIMS</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
     <label>Agency Applied Change code</label>
     <nameField>
         <displayFormat>AACC-{000000}</displayFormat>
-        <label>Agency Applied Change code Name</label>
-        <trackHistory>false</trackHistory>
+        <label>Change code details</label>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Agencies Applied Change codes</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Irregularities</fullName>
         <active>true</active>
         <description>Applied for irregularities only</description>
         <label>Irregularities</label>
         <picklistValues>
+            <picklist>AccountNewStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AccountPreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_Code__c</picklist>
-            <values>
-                <fullName>CAD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CCF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHJ</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHL</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHN</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CHS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CLF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CLI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CLO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CMF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CNF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>COR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CSF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CWD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DEF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DIS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DWD</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FIN</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FPY</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>IRR</fullName>
                 <default>false</default>
@@ -1004,291 +1877,277 @@
                 <fullName>IRW</fullName>
                 <default>false</default>
             </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Irregularity_Type__c</picklist>
             <values>
-                <fullName>MCH</fullName>
+                <fullName>1PT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NAC</fullName>
+                <fullName>2PT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NCA</fullName>
+                <fullName>FC1</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NEP</fullName>
+                <fullName>FC2</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NEW</fullName>
+                <fullName>NPA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NOT</fullName>
+                <fullName>OV1</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>NWD</fullName>
+                <fullName>OV2</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>RCR</fullName>
+                <fullName>SC1</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>REC</fullName>
+                <fullName>SC2</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>RPY</fullName>
+                <fullName>WD1</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>RVW</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TAP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TCH</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TER</fullName>
+                <fullName>WD2</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Reason_Code__c</picklist>
             <values>
-                <fullName>Accounting Irregularities</fullName>
+                <fullName>00</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Non Payment Related</fullName>
+                <fullName>01</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Non Payment of Annual fee</fullName>
+                <fullName>02</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Payment Related</fullName>
+                <fullName>03</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Administrative Change</fullName>
+                <fullName>11</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Administrative Error</fullName>
+                <fullName>21</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Agent under Bankrupt%2FLiquidation%2FAdministration</fullName>
+                <fullName>31</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Annual Fee payment received</fullName>
+                <fullName>32</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Billing Dispute</fullName>
+                <fullName>40</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Bona fide bank error</fullName>
+                <fullName>43</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Certificate</fullName>
+                <fullName>50</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change data</fullName>
+                <fullName>51</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Legal Status</fullName>
+                <fullName>52</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Location</fullName>
+                <fullName>53</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Location with Invest%2E</fullName>
+                <fullName>54</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Name</fullName>
+                <fullName>60</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership</fullName>
+                <fullName>61</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership of Branches</fullName>
+                <fullName>62</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership to IATA Agent</fullName>
+                <fullName>63</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Shareholding</fullName>
+                <fullName>64</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of name and location</fullName>
+                <fullName>65</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Commissioner Decision</fullName>
+                <fullName>66</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Communication</fullName>
+                <fullName>67</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Compliance to Agency Res</fullName>
+                <fullName>71</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Correction</fullName>
+                <fullName>72</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Disapproval of Major Change</fullName>
+                <fullName>81</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Financial Security submitted</fullName>
+                <fullName>91</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Financial Statement submitted</fullName>
+                <fullName>93</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_Description__c</picklist>
+            <values>
+                <fullName>ACCREDITED - MEETS CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Late%2Fabsence of Change of Location</fullName>
+                <fullName>ACCREDITED-MEET-STANDARDS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Minor change of shareholding</fullName>
+                <fullName>ADMINISTRATIVE OFFICES</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Miscellaneous Change</fullName>
+                <fullName>APPLICATION WITHDRAWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application - BR</fullName>
+                <fullName>BANKRUPTCY%2FLIQUIDATION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application Change</fullName>
+                <fullName>BSP PARTICIPATIION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application Initiated</fullName>
+                <fullName>BSP PARTICIPATION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Code Assigned</fullName>
+                <fullName>BY AGENCY ADMINISTRATOR</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Request</fullName>
+                <fullName>BY COMMISSIONER</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New application - HO</fullName>
+                <fullName>CASS PARTICIPATION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non Payment</fullName>
+                <fullName>CHANGE IN PROCESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of Location</fullName>
+                <fullName>CODE ASSIGNED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of Shareholding</fullName>
+                <fullName>CODE ASSIGNMENT ONLY</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of name</fullName>
+                <fullName>CROSS DEFAULT ACTION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to change of name and location</fullName>
+                <fullName>DEFAULT - NON PAYMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to change of ownership</fullName>
+                <fullName>DEFAULT - UNDER REPAYMENT PLAN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance to Credit Card Rules</fullName>
+                <fullName>DEFAULT ACCUM%2E IRR%2E - NON COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non payment of annual fees</fullName>
+                <fullName>DEFAULT ACCUM%2E IRR%2E - PAYMENT RELATED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of additional financial security</fullName>
+                <fullName>DEFAULT NON-SETTLEMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of financial security</fullName>
+                <fullName>NEW APPLICATION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of financial statement</fullName>
+                <fullName>NON COMPLIANCE TO ACCREDITATION CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Partial Payment</fullName>
+                <fullName>NON COMPLIANCE TO CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Prejudiced Collection of Funds</fullName>
+                <fullName>NON COMPLIANCE TO FINANCIAL CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reinstatement after Default</fullName>
+                <fullName>NOTICE OF TERMINATION DUE TO NON PAYMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Repayment Plan Agreed</fullName>
+                <fullName>PREJUDICED COLLECTION OF FUNDS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sanity Check failure of financial statement</fullName>
+                <fullName>RELINQUISHMENT IN PROCESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Termination</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Territory Change</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>VMFR Request</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Voluntary Relinquishment</fullName>
+                <fullName>VOLUNTARY RELINQUISHMENT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1299,7 +2158,113 @@
         <description>Used for non-irregularities</description>
         <label>Standard</label>
         <picklistValues>
+            <picklist>AccountNewStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AccountPreviousStatus__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fno commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Changes processed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Listed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New application pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No longer a customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not accreditated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not in operation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under review</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Change_Code__c</picklist>
+            <values>
+                <fullName>AFN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>CAD</fullName>
                 <default>false</default>
@@ -1309,7 +2274,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>CCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CCF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCR</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1353,6 +2326,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>CHV</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>CLF</fullName>
                 <default>false</default>
             </values>
@@ -1362,6 +2339,10 @@
             </values>
             <values>
                 <fullName>CLO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLR</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1389,7 +2370,19 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>DFE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DFW</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>DIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DOM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1401,23 +2394,47 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>FOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FPR</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>FPY</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>IRR</fullName>
+                <fullName>IAF</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>IRS</fullName>
+                <fullName>LRA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>IRW</fullName>
+                <fullName>LRD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LSW</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>MCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MEP</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1429,6 +2446,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>NCW</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NEP</fullName>
                 <default>false</default>
             </values>
@@ -1437,11 +2458,43 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>NFS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NOT</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>NTW</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>NWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OIN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RCM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1453,11 +2506,51 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>REI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RNC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>RPY</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>RRC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RTR</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>RVW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SRM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STR</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1472,235 +2565,301 @@
                 <fullName>TER</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>TRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WCP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Irregularity_Type__c</picklist>
+            <values>
+                <fullName>1PT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2PT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OV1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OV2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WD1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WD2</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Reason_Code__c</picklist>
             <values>
-                <fullName>Accounting Irregularities</fullName>
+                <fullName>00</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Non Payment Related</fullName>
+                <fullName>01</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Non Payment of Annual fee</fullName>
+                <fullName>02</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Accumulated Irregularities - Payment Related</fullName>
+                <fullName>03</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Administrative Change</fullName>
+                <fullName>11</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Administrative Error</fullName>
+                <fullName>12</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Agent under Bankrupt%2FLiquidation%2FAdministration</fullName>
+                <fullName>21</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Annual Fee payment received</fullName>
+                <fullName>31</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Billing Dispute</fullName>
+                <fullName>32</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Bona fide bank error</fullName>
+                <fullName>40</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Certificate</fullName>
+                <fullName>43</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change data</fullName>
+                <fullName>50</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Legal Status</fullName>
+                <fullName>51</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Location</fullName>
+                <fullName>52</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Location with Invest%2E</fullName>
+                <fullName>53</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Name</fullName>
+                <fullName>54</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership</fullName>
+                <fullName>60</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership of Branches</fullName>
+                <fullName>61</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Ownership to IATA Agent</fullName>
+                <fullName>62</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of Shareholding</fullName>
+                <fullName>63</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Change of name and location</fullName>
+                <fullName>64</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Commissioner Decision</fullName>
+                <fullName>65</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Communication</fullName>
+                <fullName>66</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Compliance to Agency Res</fullName>
+                <fullName>67</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Correction</fullName>
+                <fullName>71</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Disapproval of Major Change</fullName>
+                <fullName>72</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Financial Security submitted</fullName>
+                <fullName>81</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Financial Statement submitted</fullName>
+                <fullName>91</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Late%2Fabsence of Change of Location</fullName>
+                <fullName>93</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason_Description__c</picklist>
+            <values>
+                <fullName>ACCREDITED - MEETS CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Minor change of shareholding</fullName>
+                <fullName>ACCREDITED-MEET-STANDARDS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Miscellaneous Change</fullName>
+                <fullName>ADMINISTRATIVE OFFICES</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application - BR</fullName>
+                <fullName>APPLICATION DISAPPROVED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application Change</fullName>
+                <fullName>APPLICATION WITHDRAWN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Application Initiated</fullName>
+                <fullName>BANKRUPTCY%2FLIQUIDATION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Code Assigned</fullName>
+                <fullName>BSP PARTICIPATIION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New Request</fullName>
+                <fullName>BSP PARTICIPATION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>New application - HO</fullName>
+                <fullName>BY AGENCY ADMINISTRATOR</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non Payment</fullName>
+                <fullName>BY COMMISSIONER</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of Location</fullName>
+                <fullName>CASS PARTICIPATION - REVIEW IN PROGRESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of Shareholding</fullName>
+                <fullName>CHANGE IN PROCESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to Change of name</fullName>
+                <fullName>CODE ASSIGNED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to change of name and location</fullName>
+                <fullName>CODE ASSIGNMENT ONLY</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance due to change of ownership</fullName>
+                <fullName>CROSS DEFAULT ACTION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non compliance to Credit Card Rules</fullName>
+                <fullName>DEFAULT - NON PAYMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non payment of annual fees</fullName>
+                <fullName>DEFAULT - UNDER REPAYMENT PLAN</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of additional financial security</fullName>
+                <fullName>DEFAULT ACCUM%2E IRR%2E - NON COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of financial security</fullName>
+                <fullName>DEFAULT ACCUM%2E IRR%2E - PAYMENT RELATED</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Non submission of financial statement</fullName>
+                <fullName>DEFAULT NON-SETTLEMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Partial Payment</fullName>
+                <fullName>NEW APPLICATION</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Prejudiced Collection of Funds</fullName>
+                <fullName>NON COMPLIANCE TO ACCREDITATION CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Reinstatement after Default</fullName>
+                <fullName>NON COMPLIANCE TO CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Repayment Plan Agreed</fullName>
+                <fullName>NON COMPLIANCE TO FINANCIAL CRITERIA</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sanity Check failure of financial statement</fullName>
+                <fullName>NOTICE OF TERMINATION DUE TO NON PAYMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Termination</fullName>
+                <fullName>PREJUDICED COLLECTION OF FUNDS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Territory Change</fullName>
+                <fullName>RELINQUISHMENT IN PROCESS</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>VMFR Request</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Voluntary Relinquishment</fullName>
+                <fullName>VOLUNTARY RELINQUISHMENT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1708,4 +2867,12 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>ANG_Block_Irregularity_Change_Codes</fullName>
+        <active>true</active>
+        <description>blocks the creation of irregularity change codes on newgen agencies</description>
+        <errorConditionFormula>AND( RecordType.Name = &apos;Irregularities&apos;,  Account__r.ANG_IsNewGenAgency__c,  ISNEW()  )</errorConditionFormula>
+        <errorMessage>Irregularity change codes cannot be created on newgen agencies.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>

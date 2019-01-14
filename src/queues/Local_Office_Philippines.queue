@@ -3,6 +3,16 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>limr@iata.org</email>
     <name>Local Office - Philippines</name>
+    <queueMembers>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>CountryManagerPhilippinesI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffPhilippinesI</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+        <roles>
+            <role>APCustomerServiceManagerA</role>
+            <role>APCustomerServiceStaffA</role>
+        </roles>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

@@ -9,7 +9,7 @@ private class vfIECAppHeaderComponent_tst {
 	private static Datetime dtNow;
 	
 	static void Init() {
-		dtNow = System.now();
+		dtNow = DateTime.newInstance(1999, 1, 1);
         IECUtil.SetBatchReplication('GDP Replicate: Account Update', dtNow);
     }
     
@@ -32,6 +32,10 @@ private class vfIECAppHeaderComponent_tst {
 	        pgCont.switchToSubscriptionInfo();
 	        pgCont.switchToSearchOptions();
 	        pgCont.switchToSavedFilters();
+	        pgCont.sApplicationTitle = 'IECProductCode';
+	        pgCont.subscriptionInfoCtr = New vfIECSubscriptionInfo();
+	        pgCont.savedFiltersCtr = new vfIECSavedFilters();
+	        String sProductCode = pgCont.sProductCode;
     	}
     	
     	System.debug('Unit Test: Finish: TestAppHeader');

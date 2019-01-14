@@ -1,0 +1,25 @@
+<apex:page standardController="User" extensions="UserInlineHistoryController" showHeader="true" sidebar="true">
+
+<apex:pageBlock >
+<apex:pageBlockTable value="{!historiesList}" var="row" >
+    <apex:column >
+        <apex:facet name="header">Date</apex:facet>
+        <apex:outputText value=" {!row.createdDate}" />
+    </apex:column>
+                
+    <apex:column >
+        <apex:facet name="header">User</apex:facet>
+        <apex:outputText value="{!row.createdByName}"/>
+    </apex:column>
+
+    <apex:column >
+        <apex:facet name="header">Action</apex:facet>
+        <apex:outputPanel >
+            <b>{!row.What}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>
+        </apex:outputPanel>
+    </apex:column>
+                
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+</apex:page>

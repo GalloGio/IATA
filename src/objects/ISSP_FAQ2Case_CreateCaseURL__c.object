@@ -3,6 +3,15 @@
     <customSettingsType>List</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag to specify that redirection is active or not.</description>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Subtopic__c</fullName>
         <externalId>false</externalId>
         <label>Subtopic</label>
@@ -33,5 +42,18 @@
         <unique>false</unique>
     </fields>
     <label>ISSP FAQ2Case Create Case URL</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Topic__c</columns>
+        <columns>Subtopic__c</columns>
+        <columns>URL__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

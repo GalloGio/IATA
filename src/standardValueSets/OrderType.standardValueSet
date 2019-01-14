@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Order</fullName>
+        <default>true</default>
+        <label>Order</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bulk Order</fullName>
+        <default>false</default>
+        <label>Bulk Order</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Subscription</fullName>
+        <default>false</default>
+        <label>Subscription</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Renewal Notification</fullName>
+        <default>false</default>
+        <label>Renewal Notification</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Quote</fullName>
+        <default>false</default>
+        <label>Quote</label>
+    </standardValue>
+</StandardValueSet>

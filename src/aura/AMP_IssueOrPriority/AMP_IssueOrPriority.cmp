@@ -1,12 +1,14 @@
 <aura:component controller="AMP_IssuesAndPrioritiesExtension">
 
     <aura:attribute name="issue" type="Objective__c" />
+    <aura:attribute name="divisionValues" type="String[]" />
     <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute name="relatedContact" type="Contact" default="{ 'sobjectType': 'Contact'}" />
     <aura:attribute name="index" type="Integer" />
 
     <aura:registerEvent name="updateIssue" type="c:AMP_UpdateIssueOrPriority"/>
     <aura:registerEvent name="deleteIssue" type="c:AMP_DeleteIssueOrPriority"/>
+    <aura:registerEvent name="cancelAddIssue" type="c:AMP_DeleteIssueOrPriority"/>
 
     <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleSourceIdUpdate}"/>
     <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleSourceIdClear}"/>
@@ -67,17 +69,22 @@
         </aura:renderIf>
     </td>
     <aura:renderIf isTrue="{!v.isEditMode }">
-        <td><ui:inputText value="{!v.issue.Name}" class="slds-input required" /></td>
+        <td><ui:inputText value="{!v.issue.Name}" class="slds-input required" maxlength="80"/></td>
+        <td class="allignTop">
+            <ui:inputSelect aura:id="divisionList" class="slds-select" >
+                
+            </ui:inputSelect>
+        </td>
         <td>
             <!--<c:LookupSObject preselectedSearchString="Source"
             label="Contact" pluralLabel="Contacts" sObjectAPIName="contact"
             listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#contact"
             listIconClass="slds-icon-standard-contact" />-->
-            <ui:inputText value="{!v.issue.AM_Source_Text__c}" class="slds-input" />
+            <ui:inputText value="{!v.issue.AM_Source_Text__c}" class="slds-input" maxlength="128"/>
         </td>
-        <td class="allignTop"><ui:inputTextArea value="{!v.issue.Details__c}" class="slds-textarea" rows="3" /></td>
+        <td class="allignTop"><ui:inputTextArea value="{!v.issue.Details__c}" class="slds-textarea" rows="3" maxlength="2048"/></td>
         <td>
-            <ui:inputSelect aura:id="levelOfImportance" class="slds-select" >
+            <ui:inputSelect aura:id="levelOfImportance" class="slds-select required" >
                 <aura:iteration items="{!v.importanceValues}" var="sv">
                   <aura:if isTrue="{!v.importance == sv}">
                       <ui:inputSelectOption text="{!sv}" value="true" label="{!sv}"/>
@@ -96,7 +103,7 @@
 
         <!-- <td><ui:inputCheckbox value="{!v.issue.AM_Can_IATA_support_the_airline__c}" /></td> -->
         <td>
-            <ui:inputSelect aura:id="statusList" class="slds-select" >
+            <ui:inputSelect aura:id="statusList" class="slds-select required">
 
                 <aura:iteration items="{!v.statusValues}" var="sv">
                   <aura:if isTrue="{!v.status == sv}">
@@ -173,8 +180,9 @@
     </aura:renderIf>
 
     <aura:renderIf isTrue="{!!v.isEditMode}">
-        <td><ui:outputText value="{!v.issue.Name}"/></td>
-        <td><ui:outputText value="{!v.issue.AM_Source_Text__c}"/></td>
+        <td><c:AMP_LongText text="{!v.issue.Name}"/></td>
+        <td><ui:outputText value="{!v.issue.Division__c}"/></td>
+        <td><c:AMP_LongText text="{!v.issue.AM_Source_Text__c}"/></td>
         <td><c:AMP_LongText text="{!v.issue.Details__c}" /></td>
         <td><ui:outputText value="{!v.issue.AM_Level_of_importance__c}"/></td>
         <!-- <td><ui:outputCheckbox value="{!v.issue.AM_Can_IATA_support_the_airline__c}" /></td> -->

@@ -6,12 +6,9 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SAP_Airline_Request</customButtons>
     <customButtons>SIS_Airline_Request</customButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
-    <excludeButtons>EnableCustomerPortal</excludeButtons>
-    <excludeButtons>EnablePartnerPortalUser</excludeButtons>
-    <excludeButtons>EnableSelfService</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -70,6 +67,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Available_Services__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Available_Services_Images__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Allow_Contact_LastName_Change__c</field>
             </layoutItems>
         </layoutColumns>
@@ -104,7 +109,27 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Primary_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SIS_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ICH_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BIS_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>iiNet_User__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -143,11 +168,27 @@
                 <behavior>Edit</behavior>
                 <field>Birthdate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_isManager__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Shipping_State__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Billing_State__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Email</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ValidContactDomainImage__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -267,6 +308,10 @@
                 <behavior>Edit</behavior>
                 <field>CNS_Contact__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Authorized_Signatory__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -323,6 +368,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Financial_Assessment_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MITA_Contact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -387,11 +436,11 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>APJC_Participant__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>LCAG_Member__c</field>
             </layoutItems>
             <layoutItems>
@@ -514,11 +563,12 @@
         <fields>Title</fields>
         <fields>AccountId</fields>
         <fields>Phone</fields>
-        <fields>Fax</fields>
         <fields>Email</fields>
         <fields>User_Portal_Status__c</fields>
         <relatedLists>
             <fields>CASES.CASE_NUMBER</fields>
+            <fields>CASES.SUBJECT</fields>
+            <fields>CASES.STATUS</fields>
             <relatedList>RelatedCaseList</relatedList>
         </relatedLists>
     </miniLayout>
@@ -566,11 +616,14 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedGroupsListOnRecord</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Application_Name__c</fields>
         <fields>Application_icon_del__c</fields>
         <fields>Right__c</fields>
-        <fields>Application_Start_Icon__c</fields>
+        <fields>ANG_Portal_Service_Role__c</fields>
         <relatedList>Portal_Application_Right__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -666,7 +719,7 @@
         <fields>LAST_UPDATE</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>Notification__c.Contact__c</relatedList>
-        <sortField>NAME</sortField>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -777,6 +830,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Authorized_Signatories_Package__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Authorized_Signatory__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -801,6 +856,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Billing_Agreement_Name__c</fields>
         <fields>EF_Airline_Billing_Agreement__c</fields>
         <fields>Status__c</fields>
         <fields>EF_Role__c</fields>
@@ -808,6 +864,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contract_Name__c</fields>
         <fields>EF_Contract__c</fields>
         <fields>EF_Status__c</fields>
         <fields>Role__c</fields>

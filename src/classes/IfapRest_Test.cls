@@ -67,6 +67,9 @@ static testMethod void test_I() {
         AmazonFile__C amzFile = new AmazonFile__C(Name = 'file', Full_Name_Unique__c = 'test name', Case__c = aCase.id);
         insert amzFile;
 
+        List<Id> amzId = new List<Id>();
+        amzId.add(amzFile.Id);
+
         List<Case> testCase = [SELECT id, CaseNumber FROM Case where id =:aCase.Id];
         
         String Case_Number;
@@ -82,6 +85,7 @@ static testMethod void test_I() {
         Test.startTest();
 
             IfapRest.changeStatus(Case_Number, FileName,FileSize);
+            IfapRest.deleteRemainingFiles(amzId);
 
         Test.stopTest();
 

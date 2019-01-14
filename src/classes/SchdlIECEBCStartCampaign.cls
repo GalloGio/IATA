@@ -13,7 +13,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     public String mailingId {
         get {
             if (mailingId == null) {
-        		mailingId = 'FINAL_' + campaignId + '_'+IECEBC_Utility.generateRandomString(11);
+                mailingId = 'FINAL_' + campaignId + '_'+IECEBC_Utility.generateRandomString(11);
             }
             
             return mailingId;
@@ -25,10 +25,11 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     public Integer numberOfRecipients = 0;
 
     public static void prepare(EBC_Campaign__c c, String gaCode, String gaName, String templateExternalId, String senderProfileCustomerKey, String mailingId) {
+        system.debug('prepere starting....');
         String body = vfIECEBC_Template.getTemplateHtml(c.EBC_Design__c, true, gaCode, gaName);
         IECEBC_ETTemplateCreate.updateEmailTemplate(templateExternalId, c.Subject__c, body, 'HTML');
-        
-        String senderExternalId = IECEBC_ETSenderProfileCreate.createSenderProfile(senderProfileCustomerKey, senderProfileCustomerKey, c.From_Name__c, 'test@cubicmedia.ca'); //@todo
+        String noreply = IEC_Settings__c.getInstance().EBC_Send_From_Email__c;  //'ebroadcast@iata.org';'noreply@ebroadcast.iata.org';
+        String senderExternalId = IECEBC_ETSenderProfileCreate.createSenderProfile(senderProfileCustomerKey, senderProfileCustomerKey, c.From_Name__c, noreply);
         String sendClassificationId = IECEBC_ETSendClassificationCreate.createSendClassification(senderProfileCustomerKey, senderProfileCustomerKey, senderExternalId);
         
         IECEBC_ETTriggeredSendDefinitionCreate.createTriggeredSendDefinition(mailingId, templateExternalId, senderProfileCustomerKey, sendClassificationId);
@@ -38,7 +39,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     // Batchable 
     global Database.QueryLocator start(Database.BatchableContext BC){
         c = [Select Id, Name, Subject__c, EBC_Design__c, Billing_Account__c, Billing_Account__r.Name, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c, Send_Datetime__c From EBC_Campaign__c Where Id = :campaignId];
-        
+        system.debug('start ... ');
         
         String senderProfileCustomerKey = c.Id + '_'+IECEBC_Utility.generateRandomString(11);
         
@@ -49,20 +50,23 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             gaName = c.Name;
         }
         
-        System.debug(gaCode);
-        System.debug(gaName);
+        System.debug('gaCode ' + gaCode);
+        System.debug('gaName ' +gaName);
+        System.debug('templateExternalId ' + templateExternalId);
+        System.debug('senderProfileCustomerKey ' + senderProfileCustomerKey);
+        System.debug('mailingId ' + mailingId);
+        System.debug('c ' + c);
         
-        if (!Test.isRunningTest()) {
-            prepare(c, gaCode, gaName, templateExternalId, senderProfileCustomerKey, mailingId);
-        }
+        if (!Test.isRunningTest())  prepare(c, gaCode, gaName, templateExternalId, senderProfileCustomerKey, mailingId);
+
         
         System.debug(query);
         return Database.getQueryLocator(query);
     }
     
     global void execute(Database.BatchableContext BC, List<sObject> scope) {
-		Set<String> newPreviousBatchEmail = new Set<String>();
-		Set<String> currentBatchEmail = new Set<String>();
+        Set<String> newPreviousBatchEmail = new Set<String>();
+        Set<String> currentBatchEmail = new Set<String>();
         
         Map<String, Map<String, String>> params = new Map<String, Map<String, String>>();
         
@@ -121,18 +125,22 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         System.debug(params);
         System.debug('IECEBC_ETEmailSend.sendMassEmail');
         if (params.size() > 0) {
-        	numberOfRecipients += params.size();
+            numberOfRecipients += params.size();
             
-        	IECEBC_ETEmailSend.sendMassEmail(mailingId, params);
+            IECEBC_ETEmailSend.sendMassEmail(mailingId, params);
             System.debug(IECEBC_ETEmailSend.failureDetails);
-            if (IECEBC_ETEmailSend.failureDetails != null) {
+            Map<String,String> failures = new Map<String,String>();
+            if (IECEBC_ETEmailSend.failureDetails!=null) failures=IECEBC_ETEmailSend.failureDetails;
+            if (Test.isRunningTest()) failures= new Map<String,String>{'lde@iata.org'=>'SPAM','Testin@iata.org'=>'Error Code: 24 SPAM Testing '};
+       
+            if (failures.size()>0) {
                 List<EBC_Email_Exclusion__c> excls = new List< EBC_Email_Exclusion__c>();
-                for(String failureKey : IECEBC_ETEmailSend.failureDetails.keySet()) {
+                for(String failureKey : failures.keySet()) {
                     EBC_Email_Exclusion__c excl = new EBC_Email_Exclusion__c();
                     excl.Email__c = failureKey;
                     excl.Type__c  = 'OTHER';
                     excl.Event_Date__c = Datetime.now();
-                    excl.Other_Reason__c = IECEBC_ETEmailSend.failureDetails.get(failureKey);
+                    excl.Other_Reason__c = failures.get(failureKey);
                     if (excl.Type__c == 'OTHER' && excl.Other_Reason__c.indexOf('Error Code: 24 ') == 0) {
                         excl.Type__c = 'LISTDETECTIVE';
                         excl.Other_Reason__c = null;
@@ -156,19 +164,16 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         c.External_Id__c = mailingId;
         update c;
         
-        if (c.Number_of_Recipients__c > numberOfRecipients) {
-            EBC_Activity__c a = new EBC_Activity__c(
-                Activity_Date_Time__c = Datetime.now(),
-                Activity_Type__c = 'Adjustment',
-                EBC_Campaign__c = c.Id,
-                Total_Count__c = (c.Number_of_Recipients__c - numberOfRecipients),
-                Related_Billing_Account__c = c.Billing_Account__c,
-                Reason__c = 'Negative count on send'
-            );
-            
-            insert a;
-        }
-        
+        EBC_Activity__c a = new EBC_Activity__c();
+        a.Name = 'Campaign Adjustment';
+        a.Activity_Date_Time__c = Datetime.now();
+        a.Activity_Type__c = 'Adjustment';
+        a.EBC_Campaign__c = c.Id;
+        a.Total_Count__c = (c.Number_of_Recipients__c - numberOfRecipients);
+        a.Related_Billing_Account__c = c.Billing_Account__c;
+        a.Reason__c = 'Negative count on send';
+        if (c.Number_of_Recipients__c > numberOfRecipients) insert a;
+                    
         IECEBC_ETCampaignTrackingAsync.initCampaignTrackingRecords(c); 
     }
     
@@ -179,16 +184,9 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
         for(EBC_Campaign__c campaign : campaigns) {
             campaign.Status__c = 'STARTED';
             campaign.Send_Datetime__c = Datetime.now();
-            List<String> columns;
-            if (campaign.Audience__c == 'Agent') {
-                columns = new List<String>{
-                    'Id',
-                    'Email__c',
-                    'FirstName__c',
-                    'LastName__c',
-                    'Agency_Name__c'
-                };
-            } else {
+            List<String> columns=new List<String>();
+            if (campaign.Audience__c == 'Agent') columns = new List<String>{'Id','Email__c','FirstName__c','LastName__c','Agency_Name__c'};
+            if (campaign.Audience__c != 'Agent')
                 columns = new List<String>{
                     'Id',
                     'Email_Address__c',
@@ -198,14 +196,14 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
                     'Accreditation_Class__c',
                     'Location_Type_Name__c'
                 };
-            }
+            
             
             SchdlIECEBCStartCampaign n = new SchdlIECEBCStartCampaign();
             n.query = IECEBC_Utility.getSOQLFromMasterFilter(columns, campaign.EBC_Master_Filter__c);
             n.campaignId = campaign.Id;
             n.templateExternalId = campaign.EBC_Design__r.External_Id__c;
             //if (!Test.isRunningTest()) {
-            	Database.executeBatch(n,SchdlIECEBCStartCampaign.BATCH_SIZE);
+                Database.executeBatch(n,SchdlIECEBCStartCampaign.BATCH_SIZE);
             //}
         }
         

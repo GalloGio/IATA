@@ -84,7 +84,7 @@
         }
 
         function redirectNew() {
-            window.location.href = "{!urlForNewRecord}";
+            window.top.location.href = "{!urlForNewRecord}";
 
             return false;
         }
@@ -94,7 +94,7 @@
         <apex:pageBlockButtons location="top" rendered="{!IF(hideButtons,false,true)}">
             <!-- <apex:outputLink value="{!urlForNewRecord}" rendered="{!showNewButton}" styleClass="btn commandButton">New {!objectDescribe.label}</apex:outputLink> -->
             <apex:outputPanel layout="none" rendered="{!IF(OR(ISBLANK(urlForNewRecord),NOT(ShowNewButton)),false,true)}">
-                <input type="button" onclick="return redirectNew();" class="btn" value="New {!objectDescribe.label}"/>
+                <input type="button" onclick="return redirectNew();" class="btn newButton" value="New {!objectDescribe.label}"/>
             </apex:outputPanel>
 
             <!-- Show 'Edit All' button if the updatable fields are defined And showUpdateButton (user has permissions to edit) is set to true -->
@@ -102,7 +102,7 @@
             <!-- Show 'Save' and 'Cancel' buttons if inlineEditeMode is set to true -->
             <apex:commandButton value="Save" onclick="if(!confirm('Are you sure?')) return false;" action="{!updateRecords}" rendered="{!inlineEditMode}" rerender="pageBlock" styleClass="btn commandButton"></apex:commandButton>
             <apex:commandButton value="Close" action="{!cancelChanges}" rendered="{!inlineEditMode}" styleClass="btn commandButton"></apex:commandButton>
-            <apex:commandButton value="Select All" onclick="selectAll();" reRender="false"></apex:commandButton>
+            <apex:commandButton value="Select All" onclick="selectAll();" reRender="false" rendered="{!massUpdateValues && inLineEditMode}"></apex:commandButton>
         </apex:pageBlockButtons>
 
         <!-- Output error/warning messages here -->

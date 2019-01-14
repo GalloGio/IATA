@@ -51,7 +51,10 @@ private class AMS_GDP_Webservice_IntegrationTest {
      */
     static testMethod void gdsTest() {
     	
-        AMS_GDP_Webservice_Integration.gds('EXTERNALID', 'RESERVATIONSYSTEM', 'RESERVATIONSYSTEM2', 'RESERVATIONSYSTEM3', 'RESERVATIONSYSTEM4');
+        AMS_GDP_Webservice_Integration.gds('EXTERNALID', 'RESERVATIONSYSTEM', null, null, null);
+        AMS_GDP_Webservice_Integration.gds('EXTERNALID', null, 'RESERVATIONSYSTEM2', null, null);
+        AMS_GDP_Webservice_Integration.gds('EXTERNALID', null, null, 'RESERVATIONSYSTEM3', null);
+        AMS_GDP_Webservice_Integration.gds('EXTERNALID', null, null, null, 'RESERVATIONSYSTEM4');
     }
     
     /** 
@@ -74,15 +77,24 @@ private class AMS_GDP_Webservice_IntegrationTest {
      *
      */
     static testMethod void accreditationTest() {
+
+        String todayDate = system.now().format(AMS_GDP_Integration_Handler.DATE_FORMAT);
     	
-        AMS_GDP_Webservice_Integration.accreditation('EXTERNALID', 'VERIFICATIONDATE', 'RC', 'ORGABBR', 'STATUS', 'EFFECTIVEDATE', 'ORGCLASS', 'LASTMODDATE');
+        AMS_GDP_Webservice_Integration.accreditation('EXTERNALID', todayDate, todayDate, 'ORGABBR', 'STATUS', todayDate, 'ORGCLASS', todayDate);
+
+        todayDate = 'not a date';
+        AMS_GDP_Webservice_Integration.accreditation('EXTERNALID', todayDate, todayDate, 'ORGABBR', 'STATUS', todayDate, 'ORGCLASS', todayDate);
     }
     
     /** 
      *
      */
     static testMethod void accountCategoryTest() {
-    	
+
         AMS_GDP_Webservice_Integration.accountCategory('EXTERNALID', 'LOCATIONCAT', 'LOCATIONCAT2');
+
+        insert new GDP_Reference_Table__c(Code__c = 'LOCATIONCA');
+    	
+        AMS_GDP_Webservice_Integration.accountCategory('EXTERNALID', 'LOCATIONCAT', 'LOCATIONCA');
     }
 }

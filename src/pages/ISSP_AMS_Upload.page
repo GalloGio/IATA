@@ -53,7 +53,8 @@
         </div>
         </apex:form>
      <div class="col-md-12">
-        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, $Label.ISSP_Cargo_Agent), $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, $Label.ISSP_Cargo_Agent))}">
+        <apex:variable var="sectorValueLabel" value="{!IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, IF(newlabels, $Label.ISSP_Cargo_Agent_New, $Label.ISSP_Cargo_Agent))}" />
+        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel)}">
             <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>
             <br />
                 <apex:pageMessages />
@@ -67,13 +68,22 @@
                     </div>
     <apex:variable var="cnt" value="{!0}" />
     <apex:repeat value="{!List_CountryReqments}" var="reqs">
-        <apex:variable var="cnt" value="{!cnt+1}"/>
-        <c:ISSP_AMS_FormUpload reqCnt="{!cnt}" 
-            reqRequired="{!reqs.File_to_Upload__c}" 
-            reqName="{!reqs.Name}" 
+        <apex:variable var="cnt" value="{!cnt+1}" />
+            <c:ISSP_AMS_FormUpload reqCnt="{!cnt}"
+            reqRequired="{!reqs.File_to_Upload__c}"
+            reqName="{!reqs.Name}"
             reqDescription="{!reqs.Requirement_text__c}"
-            reqIdentifier="{!reqs.File_Identifier2__c}"
+            reqIdentifier="{!reqs.File_Identifier2__c}"  
+            rendered="{!NOT(ISBLANK(reqs.File_Identifier2__c))}"     
         />
+        <apex:outputPanel  rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
+            <div class = "well">
+            <apex:outputText style="font-weight:bold" value ="{!reqs.Name}" escape="false"/>
+            <br/> 
+            <apex:outputText value ="{!reqs.Requirement_text__c}" escape="false"/>
+            <br/>
+            </div>
+        </apex:outputPanel>
     </apex:repeat>
        </apex:pageBlock>
          <apex:form id="UploadForm">
