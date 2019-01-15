@@ -549,6 +549,10 @@ public class AMS_OSCARTriggerHandler {
                     if (resultLoad)
                         boolean result = helper.processAutomation(updatedOSCAR.Process__c, step, (String)updatedOSCAR.get(step + '__c'), updatedOSCAR);
 
+                }else if(updatedOSCAR.Send_invoice__c && !oldOSCAR.Send_invoice__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
+                    updatedOSCAR.Payment_requested__c = Date.today();
+                    updatedOSCAR.STEP47__c = 'Passed';
+                    updatedOSCAR.STEP48__c = 'In Progress';
                 }
             }
 
