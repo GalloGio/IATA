@@ -428,6 +428,8 @@ public class AMS_OscarCaseTriggerHelper {
                     newCaseSubject = 'New Head Entity - GoLite - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWHESTANDARD)
                     newCaseSubject = 'New Head Entity - GoStandard - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWGESTANDARD)
+                    newCaseSubject = 'New Head Entity - GoGlobal - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWAE || oscars.get(c.Oscar__c).Process__c == AMS_Utils.MCAE)
                     newCaseSubject = 'New Associate Entity - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
                 else if(oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
