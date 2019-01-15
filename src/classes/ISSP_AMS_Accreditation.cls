@@ -280,6 +280,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public String mcFormIdToDelete {get; set;}
+    public String currentMCFormId {get; private set;}
 
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
@@ -460,7 +461,13 @@ public without sharing class ISSP_AMS_Accreditation {
         if (ApexPages.currentPage().getParameters().containsKey('isMultiCountryNewAE'))
             isMultiCountryNewAE = Boolean.valueOf(ApexPages.currentPage().getParameters().get('isMultiCountryNewAE'));
 
-        if (isMultiCountryNewAE) amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
+        if (ApexPages.currentPage().getParameters().containsKey('multicountryFormId'))
+            currentMCFormId = ApexPages.currentPage().getParameters().get('multicountryFormId');
+
+        if (isMultiCountryNewAE) {
+            if (currentMCFormId != null && currentMCFormId != '') fetchAMSProcessFormMC();
+            amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
+        } 
 
         if (isNoticeOfChange)
             Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Change_Summary.pdf');
@@ -687,10 +694,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     isFinalStep = true;
                 }
             }
-        } else {
-            // no case Id
-
-        }
+        } 
         //Set default VAT Number of Branch to that of the HO and
         // It's not a separate legal entity
         // It's null when it's a branch.
@@ -2383,8 +2387,6 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void editAgencyContact() {
-        newContact = new AMS_Accreditation_Contact__c();
-
         newContact = [SELECT Id, AMS_Pax_Accreditation_Form__c, Name, Authorised_signatory__c, Email__c, First_name__c, Last_name__c, Local_First_name__c, Local_Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c,
                       AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Financial_interest__c, Date_joined_agency__c, Registration_number__c, IATAcode__c, Company_Name_Local__c,Contact__c,
                       Phone__c, PhoneNational__c, FAX__c, FAXNational__c, Financial_Assessment_Contact__c, Job_title__c, Mobile__c, MobileNational__c, Time_devoted_to_Agency_business__c, Agencies_prev_worked_for__c,
@@ -2397,8 +2399,6 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void editInternationalSales() {
-        newInternationalSales = new ISSP_AMS_Statement_International_Sales__c();
-
         newInternationalSales = [SELECT Id, AMS_Online_Accreditation__c, IATA_Member_Airline__c, Sales_Amount__c, CurrencyIsoCode, Prepaid_Collected__c, Charges_Collected__c, Weight_Kg__c
                                  FROM ISSP_AMS_Statement_International_Sales__c
                                  WHERE Id = : editSalesId];
@@ -2672,7 +2672,6 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public class AccountChanges {
-
         public String accountFieldAPI {get; set;}
         public String oldValue {get; set;}
         public String newValue {get; set;}
@@ -2751,11 +2750,10 @@ public without sharing class ISSP_AMS_Accreditation {
             if (!isNoticeOfChange) {
                 //ONLY FOR PARTNERSHIP: Check if the signed PDF was uploaded to Amazon
                 if (getIsPartnership()) {
-                    list<AmazonFile__c> listAmazonFile = [
-                            SELECT Id
-                            FROM AmazonFile__c
-                            WHERE Case__c = :newCase.Id
-                            AND File_Identifier__c = :FILE_ID_FOR_PARTNERSHIP];
+                    list<AmazonFile__c> listAmazonFile = [SELECT Id
+                                                          FROM AmazonFile__c
+                                                          WHERE Case__c = :newCase.Id
+                                                            AND File_Identifier__c = :FILE_ID_FOR_PARTNERSHIP];
                     if (listAmazonFile.isEmpty()) {
                         ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Form_Missing_Signed_File));
                         return null;
@@ -3363,12 +3361,10 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void fetchCase(String vCaseId) {
-        List <Case> newCases = [
-                                   SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
+        List <Case> newCases = [SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
                                    Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c
                                    FROM Case
-                                   WHERE Id = :vCaseId
-                               ];
+                                   WHERE Id = :vCaseId];
         if (newCases.size() > 0) {
             isNewCase = false;
             newCase = newCases[0];
@@ -3591,23 +3587,35 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void fetchAccountConcernedDetails () {
-        accountConcerned = [
-                            SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
-                            TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
-                            Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
-                            Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
-                            ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
-                            Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                            VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
-                               FROM Account
-                               WHERE Id = :vAccountConcernedId
-                                          LIMIT 1
-                           ];
+        accountConcerned = [SELECT Id, Name, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, Legal_name__c,
+                                TradeName__c, Membership_status__c, IATACode__c, Sector__c, Category__c, Due_Diligence_Status__c,
+                                Due_Diligence_Remarks__c, Level_of_risk__c, Email__c, Website, Phone, PhoneNational__c, Fax, FaxNational__c,
+                                Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
+                                ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
+                                Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
+                                VAT_Number_2__c, CASS_Number__c,Company_Type__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+                            FROM Account
+                            WHERE Id = :vAccountConcernedId
+                            LIMIT 1];
+    }
+
+    private void fetchAMSProcessFormMC() {
+        String query = 'SELECT ';
+        Map<String, Schema.SObjectField> objectFields = Schema.getGlobalDescribe().get('AMS_Pax_Accreditation_Form__c').getDescribe().fields.getMap();
+
+        for(String field : objectFields.keySet())
+           query += field + ', ';
+
+        query += 'Branch_Office_Country__r.Name, SAAM_Case__r.Reason1__c ';
+        query += 'FROM AMS_Pax_Accreditation_Form__c';
+        query += ' WHERE Id = \'' + currentMCFormId + '\'';
+        
+        List<AMS_Pax_Accreditation_Form__c> mCNewForms = Database.query(query);
+        newForm = mCNewForms[0];
     }
 
     public void fetchAMSProcessForm() {
-        List <AMS_Pax_Accreditation_Form__c> newForms = [
-                    SELECT Id, Name, SAAM_Case__c, Submitted_to_IATA__c, CurrencyIsoCode, IATACode__c, ISSP_AMS_Bank_account__c, ISSP_AMS_Date_license_granted__c, ISSP_AMS_Date_Registration_granted__c, ISSP_AMS_GDS_with_signed_contract__c,
+        List <AMS_Pax_Accreditation_Form__c> newForms = [SELECT Id, Name, SAAM_Case__c, Submitted_to_IATA__c, CurrencyIsoCode, IATACode__c, ISSP_AMS_Bank_account__c, ISSP_AMS_Date_license_granted__c, ISSP_AMS_Date_Registration_granted__c, ISSP_AMS_GDS_with_signed_contract__c,
                     ISSP_AMS_Gross_Amnt_First_year__c, ISSP_AMS_Gross_Amnt_Second_year__c, ISSP_AMS_IATA_Registered_Cargo_Agent__c, ISSP_AMS_Legal_Reg_Name_Address__c, ISSP_AMS_Legal_Status__c,
                     ISSP_AMS_License_No__c, ISSP_AMS_Min_Paidup_capital__c, ISSP_AMS_Online_Agency_Application__c, ISSP_AMS_Online_Agency_URL__c, ISSP_AMS_Paidup_capital__c, Total_International_Sales__c,
                     ISSP_AMS_Pax_Office_Open_Date__c, ISSP_AMS_Cargo_Office_Open_Date__c, ISSP_AMS_Premises_located_at_airport__c, ISSP_AMS_Previous_default__c, ISSP_AMS_Prev_default_explanation__c, ISSP_AMS_Principal_business_Org__c, Branch_Office_Phone_National__c, Branch_Office_Fax_National__c,
@@ -3634,23 +3642,20 @@ public without sharing class ISSP_AMS_Accreditation {
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,Shipping_Country__c,HO_Account__c,RecordTypeId,
                     IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c,AE_separate_Legal_Entity__c,ANG_AE_SameLegal__c,ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c, Last_Scope_Of_Change__c, ANG_Accreditation_type__c,
-                    SAAM_Case__r.Reason1__c
+                    SAAM_Case__r.Reason1__c, Status__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
-                                         LIMIT 1
-                ];
-        if (newForms.size() > 0) {
-            newForm = newForms[0];
-        }
+                    LIMIT 1];
+
+        if (!newForms.isEmpty()) newForm = newForms[0];
     }
 
     public void resetOwnership() { //NEWGEN-1249
-        List<AMS_Accreditation_Contact__c> allOwners = [
-            SELECT Name, RecordType.DeveloperName, Financial_interest__c,ANG_contactFromAccount__c
-            FROM AMS_Accreditation_Contact__c
-            WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id
-            AND Agency_owner__c = true
-            AND ANG_contactFromAccount__c = true];
+        List<AMS_Accreditation_Contact__c> allOwners = [SELECT Name, RecordType.DeveloperName, Financial_interest__c,ANG_contactFromAccount__c
+                                                        FROM AMS_Accreditation_Contact__c
+                                                        WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id
+                                                            AND Agency_owner__c = true
+                                                            AND ANG_contactFromAccount__c = true];
 
         checkAllOwners = new List<AMS_Accreditation_Contact__c>();
 
@@ -3676,7 +3681,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Facility__c> facilityList {
         get{
-            List<AMS_Facility__c> fl = [SELECT Id, recordTypeId, recordType.Name, Name, AMS_Online_Accreditation__c, Alarm_system__c, Automated_export_accounting__c, Automated_export_documentation__c,
+            return [SELECT Id, recordTypeId, recordType.Name, Name, AMS_Online_Accreditation__c, Alarm_system__c, Automated_export_accounting__c, Automated_export_documentation__c,
             Date_agreement_expires__c, Date_lease_expires__c, Duration_of_contract__c, Email__c, Name_of_lessor__c,
             Name_of_sub_contractor__c, Other_pertinent_details__c, Telephone__c, Accessibility_to_vehicles__c,
             An_alarm_system__c, Any_functions_involved_in_preperations__c, Area_used_for_Air_freight__c, Are_Consignments_made_ready__c,
@@ -3688,22 +3693,19 @@ public without sharing class ISSP_AMS_Accreditation {
             Scales_Max_Weight__c, Scales_Number__c, Scales_Type__c, Duration_of_lease__c
             FROM AMS_Facility__c
             WHERE AMS_Online_Accreditation__c = : this.newForm.Id];
-            return fl;
         }
-        set{}
+        set;
     }
 
     public List<AMS_Accreditation_Contact__c> trainedStaffList {
         get{
-            List<AMS_Accreditation_Contact__c> tsl = [
-                SELECT Id, Name, First_name__c, Last_name__c, Position_trained_staff__c, List_Dangerous_Goods_Awareness__c,
-                IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c, Valid_until__c, Air_cargo_transport_business_exp__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__c = :this.newForm.Id
-                AND recordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff')];
-            return tsl;
+            return [SELECT Id, Name, First_name__c, Last_name__c, Position_trained_staff__c, List_Dangerous_Goods_Awareness__c,
+                        IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c, Valid_until__c, Air_cargo_transport_business_exp__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__c = :this.newForm.Id
+                        AND recordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff')];
         }
-        set{}
+        set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_AgencyContacts {
@@ -3774,16 +3776,13 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<AMS_Accreditation_Contact__c> List_CurrentCompanies {
         get{
-            List<AMS_Accreditation_Contact__c> cons = [
-                SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
-                FROM AMS_Accreditation_Contact__c
-                WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND  RecordType.DeveloperName = 'Current_Company_Owner'
-                ORDER BY Name ASC
-            ];
-            return cons;
-
+            return [SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c
+                    FROM AMS_Accreditation_Contact__c
+                    WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id 
+                        AND RecordType.DeveloperName = 'Current_Company_Owner'
+                    ORDER BY Name ASC];
         }
-        set{}
+        set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_PreviousCompanies {
@@ -3797,7 +3796,7 @@ public without sharing class ISSP_AMS_Accreditation {
             return cons;
 
         }
-        set{}
+        set;
     }
 
     public List<AMS_Accreditation_Contact__c> List_AgencyCompanies {
@@ -6812,14 +6811,6 @@ public without sharing class ISSP_AMS_Accreditation {
         return auxAccreditCont;
     }
 
-    public void dummy() {
-        notNull(null);
-        notNull('null');
-        getAmscontactsEmails(new List <AMS_Accreditation_Contact__c>() );
-        validateNewAccModelHO(true);
-        validateNewAccModelHO(false);
-    }
-
     private String translateAccreditationModel(String accreditationModel) {
         if(accreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASH) {
             return Label.ANG_ISSP_ProductStandardAccreditationWithCash;
@@ -6903,7 +6894,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private List<AMS_Pax_Accreditation_Form__c> fetchMultiCountryApplicationForms() {
         //Set<string> closedStatusesList = createListOfClosedStatuses();
 
-        List<AMS_Pax_Accreditation_Form__c> mCountryApplicationForms = [SELECT Id
+        List<AMS_Pax_Accreditation_Form__c> mCountryApplicationForms = [SELECT Id, Name, Status__c
                                                                             FROM AMS_Pax_Accreditation_Form__c];
 
         if (!mCountryApplicationForms.isEmpty())
