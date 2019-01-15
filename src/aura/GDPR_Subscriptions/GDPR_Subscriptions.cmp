@@ -10,11 +10,17 @@
 
     <aura:attribute name="email" type="String"  /> 
     <aura:attribute name="opted_out" type="Boolean"  /> 
+    <aura:attribute name="salesforceSynced" type="Boolean" default="false"/> 
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
     <h5>Yes I would like to receive</h5>
     <p>Email Address: {!v.email}</p>
+    <p><br />By ticking the box below you are subscribing to general communication.<br />
+
+        To personalize your area of interest, please update the <a onclick="{!c.redirectToSubscriptionTab}">Interest’s tab</a>.
+    </p>
+    
     <div class="slds-p-horizontal--small slds-size--1-of-1 ">
             <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
                     Newsletters
@@ -55,14 +61,16 @@
 </div>
 <br />
 
-<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-    <aura:if isTrue="{!v.opted_out}">
-        <button class="btn btn-primary slds-float_right" type="submit" onclick="{!c.subscribe}">Subscribe from all IATA Communication</button>
-    <aura:set attribute="else">
-        <button class="btn btn-primary slds-float_right" type="submit" onclick="{!c.unsubscribe}">Unsubscribe from all IATA Communication</button>
-    </aura:set>
-    </aura:if>
-</div>
+<aura:if isTrue="{!v.salesforceSynced}">
+    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+        <aura:if isTrue="{!v.opted_out}">
+            <button class="btn btn-primary slds-float_right" type="submit" onclick="{!c.subscribe}">Subscribe to all IATA Communication</button>
+        <aura:set attribute="else">
+            <button class="btn btn-primary slds-float_right" type="submit" onclick="{!c.unsubscribe}">Unsubscribe from all IATA Communication</button>
+        </aura:set>
+        </aura:if>
+    </div>
+</aura:if>
 
 
 <br /><br />

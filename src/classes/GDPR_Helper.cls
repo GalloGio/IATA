@@ -264,7 +264,7 @@ public without sharing class GDPR_Helper {
                                 'Dear user,<br/><br/>'+ 
                                 'We confirm that your modifications of your subscriptions and interests have been taken into account.<br/><br/>';
                                 if(optout) {
-                                    htmlBody += 'You decide to unsubsribe from all IATA communication. You will no longer receive any email from our service.<br/><br/>';
+                                    htmlBody += 'You decided to unsubsribe from all IATA communication. You will no longer receive any email from our service.<br/><br/>';
                                 }
                                 htmlBody +='Best regards,<br/>'+
                                 'IATA Team'+
