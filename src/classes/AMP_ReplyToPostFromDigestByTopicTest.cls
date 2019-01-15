@@ -32,7 +32,7 @@ private class AMP_ReplyToPostFromDigestByTopicTest {
 		
 		insert new List<IATA_ISO_Country__c>{countryQR, countryPT};
 
-		Id airlineHQRectTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+		Id airlineHQRectTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account firstAcctHQ = new Account(
 			Name = 'Qatar Airways', 
