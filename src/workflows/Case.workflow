@@ -12,16 +12,6 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>GDPR_Templates/Case_changed</template>
     </alerts>
-    <rules>
-        <fullName>GDPR Case Updated</fullName>
-        <actions>
-            <name>Case_changed</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <formula>NOT( ISNEW() ) &amp;&amp; RecordType__c = &apos;GDPR Request&apos;</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request</fullName>
         <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
