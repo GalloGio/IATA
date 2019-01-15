@@ -15,9 +15,11 @@ public class LeadTriggerHandler {
         
         List<String> leadsEmails = new List<String>();
         List<Individual> il = new List<Individual>();
+        Map<String, Lead> mapMailLead = new Map<String, Lead>();
 
         for (Lead l : newLeads){
             leadsEmails.add(l.Email);
+            mapMailLead.put(l.Email, l);
         }
 
         try{
@@ -33,17 +35,23 @@ public class LeadTriggerHandler {
 
             attachIndividualToLeadHelper(il, newLeads);    
         }
+        
+        System.debug('[MAIL AND LEAD MAP] -> '+mapMailLead);
+        List<String> uniqueEmails = new List<String>(new Set<String>(leadsEmails));
+		Integer numOfUniqueEmails = uniqueEmails.size();
 
         //If there are more leads being inserted than individuals in the system. Some individuals have to be created and attached to the leads 
-        if((numOfLeads - numOfIndivs) > 0){
+        if((numOfUniqueEmails - numOfIndivs) > 0){
 
             List<Individual> individualsToCreate = new List<Individual>();
 
-            for(Lead l : newLeads){
+            for(String s : uniqueEmails){
                 
+                if(mapMailLead.containsKey(s)){
                 //TODO review if these are the only fields needed
-                individualsToCreate.add(new Individual(FirstName = l.FirstName, LastName = l.LastName, Salutation = l.Salutation,  Email__c = l.Email));                
-
+                Lead l = mapMailLead.get(s); 
+                individualsToCreate.add(new Individual(FirstName = l.FirstName, LastName = l.LastName, Salutation = l.Salutation,  Email__c = l.Email, Area_of_Interest__c = l.Pardot_Area_of_Interest__c));                
+                }
             }
 
             try{
@@ -81,7 +89,7 @@ public class LeadTriggerHandler {
         
         
         //Search for existing Individuals, by Email
-        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
+        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
                 System.debug('[INDIVIDUAL] - '+i);
                 //Get the respective Lead with the new version of the object
                 Lead newLead = newLeadMap.get(mapEmailLead.get(i.Email__c).Id);
@@ -95,6 +103,7 @@ public class LeadTriggerHandler {
                     i.LastName = newLead.LastName;
                     i.Salutation = newLead.Salutation;
                     i.Email__c = newLead.Email;
+                    i.Area_of_Interest__c = newLead.Pardot_Area_of_Interest__c;
 
                     individualsToUpdate.add(i);
                              
@@ -123,7 +132,7 @@ public class LeadTriggerHandler {
 
                 Lead l = newLeadMap.get(oldLead.Id);
                 
-                individualsToCreate.add(new Individual(FirstName = l.FirstName, LastName = l.LastName, Salutation = l.Salutation,  Email__c = l.Email));
+                individualsToCreate.add(new Individual(FirstName = l.FirstName, LastName = l.LastName, Salutation = l.Salutation,  Email__c = l.Email, Area_of_Interest__c=l.Pardot_Area_of_Interest__c));
             
             }
         }

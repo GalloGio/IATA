@@ -57,11 +57,28 @@ public without sharing class Pardot_API {
             prospect.salesforceId = prospectNode.getChildElement('salesforce_fid', null).getText();
             prospect.opted_out = prospectNode.getChildElement('opted_out', null).getText();
 
-            Dom.XMLNode listSubNode = prospectNode.getChildElement('lists', null);
-            System.debug(listSubNode);
+         System.debug(prospect);
+
+            
+            prospect.area_of_Interest = new list<String>();
+            Dom.XMLNode areaNode = prospectNode.getChildElement('Area_of_Interest', null);
+            if(areaNode != null) {
+                system.debug(areaNode);
+                if(areaNode.getChildElements().isEmpty()) // has only 1 interest
+                    prospect.area_of_Interest.add(areaNode.getText());
+                else { // As multiple area of intere
+                     for(Dom.XmlNode anAreaNode : areaNode.getChildElements()) {
+                        String anArea = anAreaNode.getText();
+                        prospect.area_of_Interest.add(anArea);
+                    }
+                }
+            }
+
+            System.debug(prospect.area_of_Interest);
+
             
             prospect.list_subscription = new list<List_Subscription>();
-
+            Dom.XMLNode listSubNode = prospectNode.getChildElement('lists', null);
             for(Dom.XmlNode aListSubNode : listSubNode.getChildElements()) {
                 Dom.XMLNode listNode = aListSubNode.getChildElement('list', null);
                 String listId = listNode.getChildElement('id', null).getText();
@@ -69,6 +86,7 @@ public without sharing class Pardot_API {
                 
                 prospect.list_subscription.add(new List_Subscription(listId, listName));
             }
+            
             System.debug(prospect);
             return prospect;
         } catch(Exception e) {
@@ -157,7 +175,7 @@ public without sharing class Pardot_API {
         return res.getBody();
 	}
 
-    @future (callout=true)
+   
     public static void updateProspectInterestAsync(String prospectID, String email,  list<String> interests) {
         Boolean isOk = updateProspectInterest(prospectID, interests);
         if(isOk) GDPR_Helper.sendSubscriptionModificationEmail(email, false);
@@ -297,6 +315,8 @@ public without sharing class Pardot_API {
 		public list<List_Subscription> list_subscription {get;set;}
         @AuraEnabled
 		public String opted_out {get;set;} // true or false
+        @AuraEnabled
+		public list<String> area_of_Interest {get;set;}
 
 		public String buildURLParameter() {
 			String parameters = '?';

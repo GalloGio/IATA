@@ -42,7 +42,9 @@ public class IATA_ServiceList_CTRL_TEST {
         Portal_Application_Right__c portalAppUser = new Portal_Application_Right__c();
         portalAppUser.Right__c = 'Access Granted';
         portalAppUser.Contact__c = con.Id;
-        
+        portalAppUser.Portal_Application__c = portalApp.Id;
+        PortalServiceAccessTriggerHandler.privetTrigger = true;
+        insert portalAppUser;
         
         System.runAs(newUser) {
         

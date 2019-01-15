@@ -7,7 +7,7 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 		list<String> initialSubscription =  new list<String>();
 
 		// Get all possible subscrptions
-		list<GDPR_Pardot_Subscription_List__mdt> allSubscriptions = [SELECT id, label, section__c, Help_text__c, Pardot_ID__c  FROM GDPR_Pardot_Subscription_List__mdt];
+		list<GDPR_Pardot_Subscription_List__mdt> allSubscriptions = [SELECT id, label, section__c, Help_text__c, Pardot_ID__c  FROM GDPR_Pardot_Subscription_List__mdt ORDER BY label];
 		
 		// Get subscription info from Pardot
 		Pardot_API.Pardot_Prospect prospect = new Pardot_API.Pardot_Prospect();
@@ -89,44 +89,30 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 	}
 
 	@AuraEnabled
-  public static list<InterestsWrapper> getInterestList(String individualId) {
+  public static list<InterestsWrapper> getInterestList(String email) {
 		list<InterestsWrapper> iws =  new list<InterestsWrapper>();
+		// Get available choices from metadata
+		list<GDPR_Pardot_Interest_List__mdt> allInterests = [SELECT label, Pardot_label__c FROM GDPR_Pardot_Interest_List__mdt ORDER BY Pardot_label__c];
 
-		list<GDPR_Pardot_Interest_List__mdt> allInterests = [SELECT label, Pardot_label__c FROM GDPR_Pardot_Interest_List__mdt];
-		if(String.isNotBlank(individualId)) {
-			list<Individual> indivs = [SELECT Area_of_Interest__c FROM Individual WHERE Id =: individualId];
-			for(GDPR_Pardot_Interest_List__mdt aInterest : allInterests){
-					InterestsWrapper iw = new InterestsWrapper();
-					iw.label = aInterest.Pardot_label__c;
-					String areasSelected = indivs[0].Area_of_Interest__c;
-					iw.selected = areasSelected == null ? false : indivs[0].Area_of_Interest__c.contains(aInterest.label);
-					iws.add(iw);
-			}
-		} 
+		// Get Interest info from Pardot
+		Pardot_API.Pardot_Prospect prospect = new Pardot_API.Pardot_Prospect();
+		prospect = Pardot_API.getProspect(email);
+		system.debug(prospect);
+
+		for(GDPR_Pardot_Interest_List__mdt aInterest : allInterests){
+				InterestsWrapper iw = new InterestsWrapper();
+				iw.label = aInterest.Pardot_label__c;
+				iw.selected = prospect.area_of_Interest == null || prospect.area_of_Interest.isEmpty() ? false : prospect.area_of_Interest.contains(aInterest.label);
+				iws.add(iw);
+		}
+		system.debug(iws);
 		return iws;
 	}
 
 	@AuraEnabled
   public static boolean updateInterest(String prospectID, String email, String individualId, list<String> interests) {
-		// Save to individual
-		if(String.isNotBlank(individualId)) {
-			list<Individual> indivs = [SELECT Area_of_Interest__c FROM Individual WHERE Id =: individualId];
-			if(! indivs.isEmpty()) {
-				System.debug(interests);
-				String value = '';
-				if(interests.size() == 1)
-					value = interests[0];
-				else
-					value = String.join(interests,';');
-
-				indivs[0].Area_of_Interest__c = value;
-				update indivs[0];
-			}
-		}
-
-		// Update in Pardot
-		PArdot_API.updateProspectInterestAsync(prospectID, email, interests);
-
+		// Update in Pardot and let the connector sync area of interest
+		Pardot_API.updateProspectInterestAsync(prospectID, email, interests);
 		return true;
 	}
 

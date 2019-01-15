@@ -23,7 +23,7 @@ public without sharing class GDPR_Helper {
             
             //Send Email
             // Link to oneId with redirection to GDPR Portal
-            String link = 'https://gdprsalim-customer-portal-iata.cs106.force.com/identity/s/login/?language=en_US&serviceName=GDPR';
+            String link = Label.OneId_URL_To_GDPR;
             sendAccessEmail(email, link);
             
             return UserType.USER;
@@ -239,6 +239,24 @@ public without sharing class GDPR_Helper {
          sendEmail(email, htmlBody);
     }
 
+    public static void sendWelcomeEmail(String email){
+        String htmlBody = '<html>'+
+                            '<body>'+
+                                headerHtml()+
+                                'Welcome to IATA<br/><br/>'+ 
+                                'Thank you for registering to the IATA Signup & Privacy Portal, your one place to:<br/>'+
+                                '- Manage Your Profile;<br/>'+
+                                '- Manage Your Subscriptions (newsletters, products and services);<br/>'+
+                                '- Manage Your Interests for Our Products & Services (events, training, publications, travel agent ID card);<br/>'+
+                                '- Exercise Your Privacy Rights (access, modify, and object).<br/><br/>'+
+                                'Best regards,<br/>'+
+                                'IATA Team'+
+                                    footerHtml()+
+                            '</body>'+
+                            '</html>';  
+        sendEmail(email, htmlBody);
+    }
+
     public static void sendSubscriptionModificationEmail(String email, Boolean optout){
         String htmlBody = '<html>'+
                             '<body>'+
@@ -376,12 +394,17 @@ public without sharing class GDPR_Helper {
 		}
 
 		if(String.isBlank(individualId)) {
-			User registreredUser = [SELECT  Contact.IndividualId FROM User WHERE Id =: UserInfo.getUserId() limit 1];
-			individualId = registreredUser.Contact.IndividualId;
-             uiw.individualId = individualId;
+			User registreredUser = [SELECT  Contact.IndividualId, Contact.LastName, Contact.FirstName, Contact.email FROM User WHERE Id =: UserInfo.getUserId() limit 1];
+            // Create indivudal if not exist for existing contact
+            if(registreredUser.Contact.IndividualId == null) {
+                Individual ind = createIndividual(registreredUser.Contact.firstName, registreredUser.Contact.lastName, registreredUser.Contact.email);
+                individualId = ind.id;
+            } else 
+			    individualId = registreredUser.Contact.IndividualId;
+             
+            uiw.individualId = individualId;
 		}
 		Individual indiv = new Individual();
-		//email ='salim.mohamed.isup+10002@gmail.com';
 		list<Individual> indivs = [SELECT id, FirstName, LastName, Salutation, Country__c, Company__c, Job_Title__c, Phone__c, Industry__c, Email__c FROM Individual WHERE Id =: individualId];
 		indiv = ! indivs.isEmpty() ? indivs[0] : null;
 
@@ -390,14 +413,10 @@ public without sharing class GDPR_Helper {
 			Pardot_API.Pardot_Prospect prospect = new Pardot_API.Pardot_Prospect();
 			prospect = Pardot_API.getProspect(indivs[0].email__c);
 			if(prospect != null) {
-                System.debug('ooooooooo');
 				indiv = prospectToIndividual(indiv, prospect);
                 uiw.prospectId = prospect.Id;
-                System.debug(prospect.list_subscription);
                 uiw.subscriptions = prospect.list_subscription;
                 uiw.salesforceId = prospect.salesforceId;
-                System.debug(uiw);
-                
 			} 
 			// Return individual informatino if Pardot is down or no prospect found
 		}

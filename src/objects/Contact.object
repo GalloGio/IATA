@@ -3329,6 +3329,111 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Pardot_Area_of_Interest__c</fullName>
+        <description>For GDPR, field used to synchronize field Area_of_Interest of Pardot in SF and to store in individual object</description>
+        <externalId>false</externalId>
+        <label>Pardot_Area_of_Interest</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Air navigation services</fullName>
+                    <default>false</default>
+                    <label>Air navigation services</label>
+                </value>
+                <value>
+                    <fullName>Airline management</fullName>
+                    <default>false</default>
+                    <label>Airline management</label>
+                </value>
+                <value>
+                    <fullName>Airline operations and quality</fullName>
+                    <default>false</default>
+                    <label>Airline operations and quality</label>
+                </value>
+                <value>
+                    <fullName>Airport planning, operations and management</fullName>
+                    <default>false</default>
+                    <label>Airport planning, operations and management</label>
+                </value>
+                <value>
+                    <fullName>Cargo</fullName>
+                    <default>false</default>
+                    <label>Cargo</label>
+                </value>
+                <value>
+                    <fullName>Civil aviation</fullName>
+                    <default>false</default>
+                    <label>Civil aviation</label>
+                </value>
+                <value>
+                    <fullName>Dangerous goods</fullName>
+                    <default>false</default>
+                    <label>Dangerous goods</label>
+                </value>
+                <value>
+                    <fullName>Economics</fullName>
+                    <default>false</default>
+                    <label>Economics</label>
+                </value>
+                <value>
+                    <fullName>Environment</fullName>
+                    <default>false</default>
+                    <label>Environment</label>
+                </value>
+                <value>
+                    <fullName>Fares and ticketing</fullName>
+                    <default>false</default>
+                    <label>Fares and ticketing</label>
+                </value>
+                <value>
+                    <fullName>Financial services and revenue management</fullName>
+                    <default>false</default>
+                    <label>Financial services and revenue management</label>
+                </value>
+                <value>
+                    <fullName>Flight operations</fullName>
+                    <default>false</default>
+                    <label>Flight operations</label>
+                </value>
+                <value>
+                    <fullName>Ground operations</fullName>
+                    <default>false</default>
+                    <label>Ground operations</label>
+                </value>
+                <value>
+                    <fullName>Law and regulations</fullName>
+                    <default>false</default>
+                    <label>Law and regulations</label>
+                </value>
+                <value>
+                    <fullName>Passenger services</fullName>
+                    <default>false</default>
+                    <label>Passenger services</label>
+                </value>
+                <value>
+                    <fullName>Safety</fullName>
+                    <default>false</default>
+                    <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Security and risk management</fullName>
+                    <default>false</default>
+                    <label>Security and risk management</label>
+                </value>
+                <value>
+                    <fullName>Travel and tourism</fullName>
+                    <default>false</default>
+                    <label>Travel and tourism</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Authorized_Signatory__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

@@ -653,8 +653,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             /*Contacts Trigger.AfterDelete*/
 
             //GDPR Portal//
-            GDPR_ContactHandler handler = new GDPR_ContactHandler();
-            handler.onAfterDelete();
+                GDPR_ContactHandler handler = new GDPR_ContactHandler();
+                handler.onAfterDelete();
             //GDPR Portal//
         }
         /*Trigger.AfterDelete*/

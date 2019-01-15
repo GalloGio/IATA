@@ -1,4 +1,4 @@
-public without sharing class GDPR_AccessControl_CTRL {
+global without sharing class GDPR_AccessControl_CTRL {
 
     public enum TokenIs{VALID, INVALID, NONE}
 

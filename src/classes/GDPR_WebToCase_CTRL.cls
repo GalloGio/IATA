@@ -27,16 +27,25 @@ global without sharing class GDPR_WebToCase_CTRL {
     global static Case createEmptyCase(String creatorEmail){
         Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'GDPR_Request');
         String contactId = null;
+        String cId = null;
         String userId = UserInfo.getUserId();
+        Boolean isRegisteredUser = false;
 
         User userAux = [SELECT Id, ContactId,Contact.Data_Protection_Officer__c FROM User WHERE Id = :userId];
-        if(userAux != null && userAux.ContactId != null){contactId = userAux.ContactId;}
-        
+        if(userAux != null && userAux.ContactId != null){
+            contactId = userAux.ContactId;
+            isRegisteredUser = true;
+        }else {
+            list<Contact> contactAux = [SELECT Id FROM Contact WHERE Email = :creatorEmail];
+            if(! contactAux.isempty()) cId = String.valueOf(contactAux[0].Id);
+        }
+        System.debug('cid - '+cId);
         Case caseAux = new Case();
         caseAux.RecordTypeId = rtId;
-        caseAux.ContactId = contactId;
+        caseAux.ContactId = contactId != null ? contactId:cId;
         caseAux.SuppliedEmail = creatorEmail;
         caseAux.Origin = 'Portal';
+        caseAux.Do_Not_Send_Notification__c = !isRegisteredUser;
         
         return caseAux;
     }

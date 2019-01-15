@@ -15,9 +15,11 @@ public class GDPR_ContactHandler {
         
         List<String> contactsEmails = new List<String>();
         List<Individual> il = new List<Individual>();
+        Map<String, Contact> mapMailContact = new Map<String, Contact>();
 
         for (contact c : newcontacts){
             contactsEmails.add(c.Email);
+            mapMailContact.put(c.Email, c);
         }
 
         try{
@@ -34,16 +36,22 @@ public class GDPR_ContactHandler {
             attachIndividualToContactHelper(il, newcontacts);    
         }
 
+        System.debug('Map Mail Contact -> '+mapMailContact);
+        List<String> uniqueEmails = new List<String>(new Set<String>(contactsEmails));
+		Integer numOfUniqueEmails = uniqueEmails.size();
         //If there are more contacts being inserted than individuals in the system. Some individuals have to be created and attached to the contacts 
-        if((numOfcontacts - numOfIndivs) > 0){
+        if((numOfUniqueEmails - numOfIndivs) > 0){
 
             List<Individual> individualsToCreate = new List<Individual>();
 
-            for(contact c : newcontacts){
+            for(String s : uniqueEmails){
                 
-                //TODO review if these are the only fields needed
-                individualsToCreate.add(new Individual(FirstName = c.FirstName, LastName = c.LastName, Salutation = c.Salutation,  Email__c = c.Email));                
-
+                if(mapMailContact.containsKey(s)){
+                
+                    //TODO review if these are the only fields needed
+                    Contact c = mapMailContact.get(s);
+                    individualsToCreate.add(new Individual(FirstName = c.FirstName, LastName = c.LastName, Salutation = c.Salutation,  Email__c = c.Email, Area_of_Interest__c = c.Pardot_Area_of_Interest__c));                
+                }
             }
 
             try{
@@ -81,7 +89,7 @@ public class GDPR_ContactHandler {
         
         
         //Search for existing Individuals, by Email
-        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
+        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
                 System.debug('[INDIVIDUAL] - '+i);
                 //Get the respective contact with the new version of the object
                 contact newcontact = newcontactMap.get(mapEmailcontact.get(i.Email__c).Id);
@@ -95,6 +103,7 @@ public class GDPR_ContactHandler {
                     i.LastName = newcontact.LastName;
                     i.Salutation = newcontact.Salutation;
                     i.Email__c = newcontact.Email;
+                    i.Area_of_Interest__c = newcontact.Pardot_Area_of_Interest__c;
 
                     individualsToUpdate.add(i);
                              
@@ -123,7 +132,7 @@ public class GDPR_ContactHandler {
 
                 contact l = newcontactMap.get(oldcontact.Id);
                 
-                individualsToCreate.add(new Individual(FirstName = l.FirstName, LastName = l.LastName, Salutation = l.Salutation,  Email__c = l.Email));
+                individualsToCreate.add(new Individual(FirstName = l.FirstName, LastName = l.LastName, Salutation = l.Salutation,  Email__c = l.Email, Area_of_Interest__c=l.Pardot_Area_of_Interest__c));
             
             }
         }
@@ -183,8 +192,11 @@ public class GDPR_ContactHandler {
         }
         List<Id> individualsToDeleteIds = new List<Id>(mapIdIndividual.keySet());
         List<Individual> individualsToDelete = [SELECT ID FROM Individual WHERE Id in :individualsToDeleteIds];
-
-        Database.DeleteResult[] results = Database.delete(individualsToDeleteIds, false);
+        Database.DeleteResult[] results = new List<Database.DeleteResult>();
+        if(individualsToDelete.size()>0){
+            results = Database.delete(individualsToDeleteIds, false);
+        }
+        
 
         System.debug('DeleteResult - '+results);
 

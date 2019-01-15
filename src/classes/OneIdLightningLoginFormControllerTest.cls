@@ -189,4 +189,9 @@ private class  OneIdLightningLoginFormControllerTest {
         System.assertNotEquals(null, authConfig);
     }
 
+    @IsTest
+    static void testLoginToGDPR() {
+        testReactivateUser();
+        OneIdLightningLoginFormController.login('Test@test11111.com', 'fakepwd', null, 'GDPR');
+    }
 }

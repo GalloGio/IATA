@@ -37,7 +37,7 @@ public class GDPR_WebToCase_CTRL_TEST {
             
             Boolean isDPO = GDPR_WebToCase_CTRL.checkIfContactIsDPO();
             
-            Case caseAux = GDPR_WebToCase_CTRL.createEmptyCase();
+            Case caseAux = GDPR_WebToCase_CTRL.createEmptyCase(newUser.email);
             
             caseAux.Subject = 'test';
             caseAux.Description = 'test';
