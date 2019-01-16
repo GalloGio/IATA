@@ -1229,6 +1229,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		/*ANG Triggers*/
 		new ANG_CaseTriggerHandler().onAfterUpdate();
 		/*ANG Triggers*/
+
+		ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Case', 'ANG_Case_Tracking_History__c'); //ACAMBAS - WMO-390
+
 	/*Trigger.isUpdate*/
 	}
 	/****************************************************************************************************************************************************/    

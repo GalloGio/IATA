@@ -1,5 +1,27 @@
 public class ANG_TrackingHistory {
 
+	//ACAMBAS - WMO-390 - Start
+	
+	public static Map<String, List<String>> trackedFieldsMap = new Map<String, List<String>>();
+
+	public static List<String> getTrackedFields(String objectName) {
+
+		List<String> trackedFieldsNames = trackedFieldsMap.get(objectName);
+
+		if(trackedFieldsNames == null) {
+			trackedFieldsNames = new List<String>();
+
+			List<FieldDefinition> trackedFields = [SELECT QualifiedApiName FROM FieldDefinition WHERE EntityDefinition.QualifiedApiName = :objectName AND IsFieldHistoryTracked = true];
+
+			for(FieldDefinition field : trackedFields) {
+				trackedFieldsNames.add(field.QualifiedApiName);
+			}
+			trackedFieldsMap.put(objectName, trackedFieldsNames);
+		}
+
+		return trackedFieldsNames;
+	}
+	//ACAMBAS - WMO-390 - End
 
 	public static void trackHistory(Map<Id, SObject> newMap, Map<Id, SObject> oldMap, String trackedObjectApiName, String trackingObjectApiName){
 
@@ -29,29 +51,66 @@ public class ANG_TrackingHistory {
 				
 				for(Schema.FieldSetMember field_set_member: fieldSet.getFields()){
 					//system.debug('ANG_TrackingHistory: Processing filedSet member: ' + field_set_member);
-					Object newValue = newMap.get(sobjId).get(field_set_member.getFieldPath());
-					Object oldValue = oldMap.get(sobjId).get(field_set_member.getFieldPath());
+					//ACAMBAS - WMO-390 - Start
+					String fieldAPIName = field_set_member.getFieldPath();
+					String fieldLabel = mapFields.get(fieldAPIName).getDescribe().getLabel();
+					//String parentId = String.valueOf(newMap.get(sobjId).get('Id'));
+					Object newValue = newMap.get(sobjId).get(fieldAPIName);
+					Object oldValue = oldMap.get(sobjId).get(fieldAPIName);
 
-					if(newValue != oldValue)
-					{
-						SObject newHistRecord = trackingSObjType.newSObject();
-
-						newHistRecord.put(masterDetailFieldName, newMap.get(sobjId).get('Id'));
-						newHistRecord.put('New_Value__c', newValue != null ? String.valueOf(newValue) : '');
-						newHistRecord.put('Old_Value__c', oldValue != null ? String.valueOf(oldValue) : '');
-						newHistRecord.put('What__c', mapFields.get(field_set_member.getFieldPath()).getDescribe().getLabel());
-						newHistRecord.put('ApiName__c', field_set_member.getFieldPath());
-
+					if(newValue != oldValue) {
+						SObject newHistRecord = createHistoryRecord(sobjId, fieldLabel, fieldAPIName, newValue, oldValue, masterDetailFieldName, trackingSObjType);
 						recordsToInsert.add(newHistRecord);
+					}
+					//ACAMBAS - WMO-390 - End
+				}
+			}
+		}
+		//ACAMBAS - WMO-390 - Start
+		//Track all fields if keyset is empty
+		else {
+			List<String> trackedFieldsNames = getTrackedFields(trackedObjectApiName);
+			List<String> fieldsToIgnore = new List<String> {'LastModifiedDate', 'SystemModstamp'};
+			
+			Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+			Map<String, Schema.SObjectField> fieldMap = SchemaMap.get(trackedObjectApiName).getDescribe().fields.getMap(); 
 
+			for(Id sobjId: newMap.keySet()) {
+				for(Schema.SObjectField sfield : fieldMap.Values()) {
+					String fieldLabel = sfield.getDescribe().getLabel();
+					String fieldAPIName = sfield.getDescribe().getName();
+					//String parentId = String.valueOf(newMap.get(sobjId).get('Id'));
+					Object newValue = newMap.get(sobjId).get(fieldAPIName);
+					Object oldValue = oldMap.get(sobjId).get(fieldAPIName);
+
+					if(newValue != oldValue && !trackedFieldsNames.contains(fieldAPIName) && !fieldsToIgnore.contains(fieldAPIName)) {
+						SObject newHistRecord = createHistoryRecord(sobjId, fieldLabel, fieldAPIName, newValue, oldValue, masterDetailFieldName, trackingSObjType);
+						recordsToInsert.add(newHistRecord);	
 					}
 				}
 			}
-
-			if(recordsToInsert.size()>0)
-				insert recordsToInsert;
 		}
+		//ACAMBAS - WMO-390 - End
+
+		if(recordsToInsert.size() > 0)
+			insert recordsToInsert;
 
 	}
+
+
+	//ACAMBAS - WMO-390 - Start
+	public static SObject createHistoryRecord(String objectId, String fieldLabel, String fieldAPIName, Object newValue, Object oldValue, String masterDetailFieldName, Schema.SObjectType trackingSObjType) {
+
+		SObject newHistRecord = trackingSObjType.newSObject();
+
+		newHistRecord.put(masterDetailFieldName, objectId);
+		newHistRecord.put('New_Value__c', newValue != null ? String.valueOf(newValue) : '');
+		newHistRecord.put('Old_Value__c', oldValue != null ? String.valueOf(oldValue) : '');
+		newHistRecord.put('What__c', fieldLabel);
+		newHistRecord.put('ApiName__c', fieldAPIName);
+
+		return newHistRecord;
+	}
+	//ACAMBAS - WMO-390 - End
 
 }
