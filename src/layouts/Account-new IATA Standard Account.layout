@@ -58,6 +58,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Identify_as_Key_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                 <behavior>Readonly</behavior>
+                 <field>Multicountry_Key_Hierarchy__c</field>
+             </layoutItems>
+             <layoutItems>
+                 <behavior>Edit</behavior>
+                 <field>Identify_as_Multicountry_Key_Hierarchy__c</field>
+             </layoutItems>
+             <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Site</field>
             </layoutItems>
             <layoutItems>
@@ -75,10 +87,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>TradeName__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Identify_as_Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
