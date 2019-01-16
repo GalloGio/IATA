@@ -3322,6 +3322,7 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
     </fields>
 	<fields>
         <fullName>Data_Protection_Officer__c</fullName>
+        <description>Identification of a DPO in an organization. Used in privacy management portal (GDPR)</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Data Protection Officer</label>

@@ -91,6 +91,7 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
     </fields>
 	<fields>
         <fullName>GDPR_PrivacyStatement__c</fullName>
+        <description>URL to privacy statement (document or web page) for each service</description>
         <externalId>false</externalId>
         <label>GDPR_PrivacyStatement</label>
         <required>false</required>

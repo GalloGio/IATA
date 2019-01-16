@@ -40,6 +40,7 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>Area_of_Interest__c</fullName>
+        <description>Pardot Area of interest preferences</description>
         <externalId>false</externalId>
         <label>Area of Interest</label>
         <required>false</required>
@@ -156,6 +157,7 @@
     </fields>
     <fields>
         <fullName>Company__c</fullName>
+        <description>Individual company name</description>
         <externalId>false</externalId>
         <label>Company</label>
         <length>255</length>
@@ -170,6 +172,7 @@
     </fields>
     <fields>
         <fullName>Country__c</fullName>
+        <description>Individual country</description>
         <externalId>false</externalId>
         <label>Country</label>
         <required>false</required>
@@ -1438,6 +1441,7 @@
     </fields>
     <fields>
         <fullName>Email__c</fullName>
+        <description>Individual email</description>
         <externalId>false</externalId>
         <label>Email</label>
         <required>false</required>
@@ -1472,6 +1476,7 @@
     </fields>
     <fields>
         <fullName>Industry__c</fullName>
+        <description>Individual industry</description>
         <externalId>false</externalId>
         <label>Industry</label>
         <required>false</required>
@@ -1793,6 +1798,7 @@
     </fields>
     <fields>
         <fullName>Phone__c</fullName>
+        <description>Individual phone number</description>
         <externalId>false</externalId>
         <label>Phone</label>
         <length>255</length>
@@ -1811,6 +1817,7 @@
     </fields>
     <fields>
         <fullName>Timestamp__c</fullName>
+        <description>Timestamp to store when access token of GDPR portal was last generated. It controls the 1h session validity</description>
         <externalId>false</externalId>
         <label>Timestamp</label>
         <length>255</length>
@@ -1821,6 +1828,7 @@
     </fields>
     <fields>
         <fullName>Token__c</fullName>
+        <description>Token used during access control of the GDPR portal</description>
         <externalId>false</externalId>
         <label>Token</label>
         <length>255</length>
