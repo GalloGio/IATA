@@ -4877,9 +4877,6 @@ private class ISSP_AMS_Accreditation_Test {
 
             ISSP_AMS_Accreditation cont = new ISSP_AMS_Accreditation();
 
-
-            cont.dummy();
-
             cont.resetOwnership();
 
             cont.iatacode = '121321343';

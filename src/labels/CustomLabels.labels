@@ -27121,6 +27121,14 @@ CNS Customer Services</value>
         <value>The following contact is a Primary Contact for your Organization and so cannot be deactivated. Please &lt;a style=&quot;color:blue &quot; href=&quot;/ISSP_FAQ2Case?topic=TIP%20HelpDesk&quot;&gt;contact IATA Customer Service&lt;/a&gt; to designate a new Primary Contact.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Validated</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Validated</shortDescription>
+        <value>Validated</value>
+    </labels>
+    <labels>
         <fullName>ISSP_VR_Case_Submited</fullName>
         <categories>ISSP, PCI</categories>
         <language>en_US</language>
