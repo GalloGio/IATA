@@ -33622,6 +33622,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>Pardot API KEY</shortDescription>
         <value>113c05f5396378cfdbbab5991a046739</value>
     </labels>
+    <labels>
+        <fullName>OneId_URL_To_GDPR</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_URL_To_GDPR</shortDescription>
+        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/identity/s/login/?language=en_US&amp;serviceName=GDPR</value>
+    </labels>
 </CustomLabels>
 
 </CustomLabels>
