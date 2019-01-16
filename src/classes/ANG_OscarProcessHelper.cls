@@ -1265,7 +1265,6 @@ global class ANG_OscarProcessHelper {
 		Set<String> appliedChangeCodes = new Set<String> {'DIS', 'NWD'}; 
 		List<Agency_Applied_Change_code__c> changeCodes = agency.Agencies_Applied_Change_codes__r;
 
-		if(!accountStatus.contains(agency.Reason__c) || !processes.contains(oscar.Process__c) || !processesNG.contains(oscar.Process__c)) {
 		if(!accountStatus.contains(agency.Reason__c) || !processes.contains(oscar.Process__c)) {
 			return false;
 		}
