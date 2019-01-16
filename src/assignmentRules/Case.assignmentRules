@@ -892,7 +892,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>notEqual</operation>
-                <value>Complaint (IDFS ISS)</value>
+                <value>Complaint (IDFS ISS),IATA Financial Review</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
