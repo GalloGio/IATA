@@ -247,7 +247,7 @@ public without sharing class GDPR_Helper {
                                 'Thank you for registering to the IATA Signup & Privacy Portal, your one place to:<br/>'+
                                 '- Manage Your Profile;<br/>'+
                                 '- Manage Your Subscriptions (newsletters, products and services);<br/>'+
-                                '- Manage Your Interests for Our Products & Services (events, training, publications, travel agent ID card);<br/>'+
+                                '- Manage Your Interests for Our Products & Services (events, training, publications);<br/>'+
                                 '- Exercise Your Privacy Rights (access, modify, and object).<br/><br/>'+
                                 'Best regards,<br/>'+
                                 'IATA Team'+
