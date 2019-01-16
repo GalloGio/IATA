@@ -194,7 +194,6 @@ public with sharing class ANG_GenericHistoryViewerController {
             
             //System.debug('Creating new GenericHistoryWrapper with values|oldValue:'+oldValue + '|newValue:'+newValue + '|fieldName:'+fieldName + '|fieldAPIName:'+fieldAPIName + '|isLookUpValue:' +isLookUpValue);
 
-            this.fieldAPIName = fieldAPIName;
             this.createdById = createdById;
             this.createdByName = createdByName;
             this.createdDate = createdDate;
@@ -204,19 +203,23 @@ public with sharing class ANG_GenericHistoryViewerController {
             Id idOfTheObject = ApexPages.currentPage().getParameters().get('id');
             
             //small little pirate hack :)
-            if(fieldAPIName == 'RecordType')
+            if(fieldAPIName == 'RecordType') {
                 fieldAPIName = 'RecordTypeId';
-            
-            if(fieldAPIName == 'Parent'){
+            }           
+            else if(fieldAPIName == 'Parent') {
                 fieldAPIName = 'ParentId';
-                this.fieldAPIName = 'ParentId';
             }
-
-            if(fieldAPIName == 'Owner'){
+            else if(fieldAPIName == 'Owner') {
                 fieldAPIName = 'OwnerId';
-                this.fieldAPIName = 'OwnerId';
+            }
+            else if(fieldAPIName == 'Account') {
+                fieldAPIName = 'AccountId';
+            }
+            else if(fieldAPIName == 'Contact') {
+                fieldAPIName = 'ContactId';
             }
 
+            this.fieldAPIName = fieldAPIName;
             
             if(isLookUpValueOld){
                 this.oldObj = idOfTheObject.getSObjectType().newSObject();
