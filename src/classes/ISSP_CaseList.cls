@@ -276,7 +276,7 @@ global with sharing class ISSP_CaseList {
                     fieldPathSet.add(f.getFieldPath());
                 }
                 //basto1p
-                String query = '  Account.Name , Contact.Name, Owner.Name, E2CP__AdditionalCC__c   ';
+                String query = '  Account.Name , Contact.Name, Owner.Name, E2CP__AdditionalCC__c, BSP_CASS__c, IATA_Code__c, Remittance_period__c   ';
                 Boolean hasStatus = false;
                 
                 for(String fieldPath  : fieldPathSet) {
