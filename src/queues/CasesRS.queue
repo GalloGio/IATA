@@ -24,6 +24,7 @@
             <publicGroup>IDFSSpainAndorra</publicGroup>
             <publicGroup>IDFSSwitzerlandLiechtenstein</publicGroup>
             <publicGroup>IDFSUnitedKingdom</publicGroup>
+            <publicGroup>AllInternalUsers</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
             <roleAndSubordinateInternal>DistributionAirlineManagementHOI</roleAndSubordinateInternal>
