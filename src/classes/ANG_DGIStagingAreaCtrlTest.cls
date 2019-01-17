@@ -50,7 +50,7 @@ private class ANG_DGIStagingAreaCtrlTest {
 
 		insert oscar;
 
-		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT, ParentId = parentCase.Id);
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT, ParentId = parentCase.Id, caseArea__c = 'Accreditation Process', Reason1__c = 'GDI Setup');
         oscarCase.AccountId = a1.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
