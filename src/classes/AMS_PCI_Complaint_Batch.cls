@@ -90,6 +90,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             query += ' Id IN :filteredAccounts';
         } else { /* Process for renewal batch */
             query += ' ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:60';
+            query += ' AND Location_Type__c = \'HO\'';
             query += ' AND Location_Class__c IN :locations';
             query += ' AND Status__c IN :availableStatus';
             query += ' AND Is_PCI_compliant__c NOT IN :pciValues';
