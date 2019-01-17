@@ -452,7 +452,7 @@ public class AMS_InspectionHelper {
                     appt.Date_Organisation_Status_attained__c = System.today();
                 }
                 //If Account__c is not null means that the appointment is being created in an Account
-                if(appt.Account__c != null){
+                else if(appt.Account__c != null){
                     String accStatus = mAccounts.get(appt.Account__c).Status__c;
                     if(accStatus == 'Approved'){
                         appt.Accreditation_Endorsement_Status_code__c = '9';
@@ -466,4 +466,32 @@ public class AMS_InspectionHelper {
         }
     }
     /*AMSU-161 - end*/
+
+    /*AMSU-188 - AMSU-161 - begin*/
+    /**
+    When creating a "New Appointment" (under class G or X only), create also a territory record under that appointment 
+    with ISO Country populated with account.IATA_ISO_Country__c or AMS_Pax_Accreditation_Form.ISO_Country__c
+    **/
+    public static void createTerritoryForAppointments(List<AMS_Inspection__c> appointments) {
+        System.debug('createTerritoryForAppointments - Init');
+
+        Set<String> LocationClassForTerritory = new Set<String>{'X','G'};
+
+        List<AMS_Territory__c> territoryToInsert = new List<AMS_Territory__c>();
+        List<AMS_Inspection__c> appointmentsWithAccData = [SELECT Id, Account__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, OSCAR__c, OSCAR__r.Account__r.IATA_ISO_Country__c, OSCAR__r.Account__r.Location_Class__c FROM AMS_Inspection__c WHERE Id in :appointments];
+
+        System.debug('createTerritoryForAppointments - Init - appointmentsWithAccData: ' + appointmentsWithAccData);
+
+        for(AMS_Inspection__c apptm : appointmentsWithAccData){
+            //Check if Account field is set, comming directly from the account, if not then we'll Check if OSCAR field is set, comming directly from the OSCAR
+            if(apptm.Account__c != null && LocationClassForTerritory.contains(apptm.Account__r.Location_Class__c)){
+                territoryToInsert.add( new AMS_Territory__c(Appointment__c=apptm.Id, ISO_Country__c=apptm.Account__r.IATA_ISO_Country__c) );
+            }else if(apptm.OSCAR__c != null && LocationClassForTerritory.contains(apptm.OSCAR__r.Account__r.Location_Class__c)){
+                territoryToInsert.add( new AMS_Territory__c(Appointment__c=apptm.Id, ISO_Country__c=apptm.OSCAR__r.Account__r.IATA_ISO_Country__c) );
+            }
+        }
+        System.debug('createTerritoryForAppointments - Init - territoryToInsert: ' + territoryToInsert);
+        insert territoryToInsert;
+	}
+    /*AMSU-188 - AMSU-161 - end*/
 }

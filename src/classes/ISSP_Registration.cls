@@ -181,10 +181,11 @@ public without sharing class ISSP_Registration {
 		get{
 			if(countriesNamesWithoutZipCode == null) {
 				Set<String> countriesNamesWithoutZipCodeLst = new Set<String>();
+                
 				List<IATA_ISO_Country__c> lstCountries = IATAIsoCountryDAO.getIsoCountriesByZipCoderequired(false);
 				
 				for(IATA_ISO_Country__c c : lstCountries) {
-					countriesNamesWithoutZipCodeLst.add(c.Name.toUpperCase().trim());
+					countriesNamesWithoutZipCodeLst.add(c.ISO_Code__c.toUpperCase().trim());
 				}
 				
 				countriesNamesWithoutZipCode = JSON.serialize(countriesNamesWithoutZipCodeLst);

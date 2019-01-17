@@ -21,6 +21,22 @@
 							<td colspan="2"> <span class="Red"> Logged Off </span> </td>
 						</apex:outputPanel>
 				</tr>
+                <tr class="bold">
+						<apex:outputPanel >
+						<td>Logout Time (now): </td>
+						</apex:outputPanel>
+						<apex:outputPanel >
+						<td colspan="2"> <span>{!exactLogOffTime}</span> </td>
+						</apex:outputPanel>
+				</tr>
+                <tr class="bold">
+						<apex:outputPanel >
+						<td>Reassignment Time: </td>
+						</apex:outputPanel>
+						<apex:outputPanel >
+						<td colspan="2"> <span>{!LogOffTimeAfterTimeout}</span> </td>
+						</apex:outputPanel>
+				</tr>
 				<tr class="bold"><td>
 						Change Status: </td><td>
 						<apex:inputField value="{!agent.Log_on_picklist__c}"/>
@@ -28,7 +44,8 @@
 						<tr class="bold"><td>&nbsp;
 						</td>
 						<td><apex:inputField value="{!agent.Request_next_case__c}" /> Allocate next relevant case to me</td></tr>
-						<tr>
+
+                		<tr>
 						<td class="bold">
 							Last Request : 
 						</td>

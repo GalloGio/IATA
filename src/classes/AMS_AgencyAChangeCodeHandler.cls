@@ -16,6 +16,10 @@ public class AMS_AgencyAChangeCodeHandler {
          //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
         set<id> setIdAACCForNewApplicationPending = new set<id>();
 
+        /*** AMSU-198 ***/
+        List<Agency_Applied_Change_code__c> accToProcessPayment = new List<Agency_Applied_Change_code__c>();
+        Set<String> accPaymentDefault = new Set<String> {'DFE','DEF'};
+
         for(Agency_Applied_Change_Code__c aaccRecord : aacc) {
         	setIdAACC.add(aaccRecord.id);
             if(aaccRecord.RecordTypeId == irregRtId)
@@ -25,6 +29,11 @@ public class AMS_AgencyAChangeCodeHandler {
             //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
             if(aaccRecord.Change_Code__c == 'NEW' && aaccRecord.AccountNewStatus__c == 'New application pending' && aaccRecord.Reason_Code__c == '21')
                 setIdAACCForNewApplicationPending.add(aaccRecord.id);
+
+            /*** AMSU-198 ***/
+            if(accPaymentDefault.contains(aaccRecord.Change_Code__c)) {
+                accToProcessPayment.add(aaccRecord);
+            }
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
 		system.debug('SALVES handleAfterInsert -->  processMinorChangesValidationFlag: ' + AMS_AccountTriggerHandler.processMinorChangesValidationFlag);
@@ -39,6 +48,17 @@ public class AMS_AgencyAChangeCodeHandler {
         //FM 22-09-2016 - Create "Agency Update" records
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
             AMS_AgencyUpdateHelper.agencyUpdate( (List<SObject>) aacc);
+
+        /*** AMSU-198 ***/
+        if(!accToProcessPayment.isEmpty()) {
+            notifyAirlines(accToProcessPayment);
+        }
+
+    }
+    
+    /*** AMSU-198 ***/
+    public static void notifyAirlines(List<Agency_Applied_Change_code__c> aaccs) {
+        Database.executeBatch(new AMS_MajorDefaultCommunication(aaccs), 50);
     }
     
     public static void handleBeforeUpdate(List<Agency_Applied_Change_code__c> aacc){

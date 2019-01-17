@@ -255,7 +255,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		        	if (caseToBAccs.get(c.id) == null)
 		          		caseToBAccs.put(c.id, new List<ICCS_BankAccount_To_Case__c>());
 
-		        	if (c.CaseArea__c == 'ICCS – Assign Product') {
+		        	//INC441640: Removed validation for ICCS – Assign Product
+			        /*if (c.CaseArea__c == 'ICCS – Assign Product') {
 
 		          		if (caseToBAccs.get(c.id).size() == 0)
 		            		c.addError('If the case area is "ICCS – Assign Product" is required at least one ICCS Bank Accounts.');
@@ -286,7 +287,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				            pa.CurrencyIsoCode = batc.CurrencyIsoCode;
 		            		lstProdAssignments.add(pa);
 		          		}
-		        	}else if (c.CaseArea__c == 'ICCS – Remove Product') {
+		        	}else*/ if (c.CaseArea__c == 'ICCS – Remove Product') {
 			        	// Identify the corresponding ICCS Product Currency
 			          	ICCS_Product_Currency__c tmpProdCurr = mapProductCurrencyPerKey.get(c.ICCS_Product__c + '-' + c.ICCS_Country__c + '-' + c.ICCS_Currencies__c);
 			          	// Take all the product assigment with key: ProductCurrency - AccountId   regardless to the bank account selected

@@ -256,19 +256,23 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCase_SIS_ICH_AreaVsType Trigger*/
         if (trgCase_SIS_ICH_AreaVsType) {
             System.debug('____ [cls CaseBeforeTrigger - trgCase_SIS_ICH_AreaVsType]');
+            Set<String> caseTypeICHAndSIS = new Set<String>{
+                'SIS Feature Request',
+                'SIS Technical Problem',
+                'SIS Internal Case',
+                'SIS Question/Problem',
+                'SIS Member Profile Update',
+                'SIS Membership',
+                'Feature Request',
+                'General Question',
+                'Problem / Issue'
+            };
+            for (Case newCase : Trigger.New) {
+                if(newCase.Type != null && newCase.RecordTypeId == sisHelpDeskCaseRecordTypeID && newCase.Origin != 'Internal Case' 
+                && ((newCase.CaseArea__c == 'ICH' && caseTypeICHAndSIS.contains(newCase.Type)) 
+                || (newCase.CaseArea__c == 'SIS' && !caseTypeICHAndSIS.contains(newCase.Type)))) {
 
-            for (case newCase: Trigger.new) {
-                if (newCase.Type != null && newCase.CaseArea__c != null) {
-                    if (newCase.CaseArea__c == 'ICH' && (newCase.Type == 'SIS Feature Request' || newCase.Type == 'SIS Technical Problem' || newCase.Type == 'SIS Internal Case'
-                                                         || newCase.Type == 'SIS Question/Problem' || newCase.Type == 'SIS Member Profile Update' || newCase.Type == 'SIS Membership'
-                                                         || newCase.Type == 'Feature Request' || newCase.Type == 'General Question' || newCase.Type == 'Problem / Issue')) {
-                        newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
-                    }
-                    if (newCase.CaseArea__c == 'SIS' && (newCase.Type != 'SIS Feature Request' && newCase.Type != 'SIS Technical Problem' && newCase.Type != 'SIS Internal Case'
-                                                         && newCase.Type != 'SIS Question/Problem' && newCase.Type != 'SIS Member Profile Update' && newCase.Type != 'SIS Membership'
-                                                         && newCase.Type != 'Feature Request' && newCase.Type != 'General Question' && newCase.Type != 'Problem / Issue')) {
-                        newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
-                    }
+                    newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
                 }
             }
         }
@@ -1427,6 +1431,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (trgCase){
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isUpdate]');
             SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
+            CaseDueDiligence.beforeUpdate(Trigger.newMap, Trigger.oldMap);
         }
 
         /*trgProcessISSCase Trigger.isUpdate*/
@@ -2075,20 +2080,22 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
 
-                if(!oscarIdcases.isEmpty()){
-                    for (AMS_OSCAR__C oscar : [SELECT Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
-                                               Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
-                                               Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
-                                               FROM AMS_OSCAR__c WHERE Id in :oscarIdcases.keySet()]) {
+                if(oscarIdcases.keySet().isEmpty()) return;
+                
+                for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
+                                           Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
+                                           Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
+                                           from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]) {
 
-                        oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id), oscarIdcases.get(oscar.Id), oscar, false);
-                        if (oscar != null) {
-                            oscarsToUpdate.add(oscar);
-                        }
+                    oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id), oscarIdcases.get(oscar.Id), oscar, false);
+
+                    if (oscar != null) {
+                        oscarsToUpdate.add(oscar);
                     }
-                    if (!oscarsToUpdate.isEmpty()) {
-                        update oscarsToUpdate;
-                    }
+                }
+
+                if (!oscarsToUpdate.isEmpty()) {
+                    update oscarsToUpdate;
                 }
 
             }

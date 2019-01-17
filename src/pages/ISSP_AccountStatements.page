@@ -4,12 +4,79 @@
            showHeader="false"
            standardStylesheets="false"
            action="{!initActions}"
-           >
+           id="page">
 
 <c:ISSP_Header ></c:ISSP_Header>
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_AccountStatements,'css/style.css')}"/>
 <apex:stylesheet value="{!URLFOR($Resource.bootstraptoggle,'css/bootstrap-toggle.min.css')}"/>
 <script src="{!URLFOR($Resource.bootstraptoggle,'js/bootstrap-toggle.min.js')}"></script>
+<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+
+    <!--WMO358 Start 2018/11/02-->
+    <style>
+        /* The Modal (background) */
+        .modal {
+            position: fixed; 
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .showModal {
+            display: block; /* Hidden by default */
+        }
+
+        .notShowModal {
+            display: none; /* Hidden by default */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 0px;
+            /*height: 55%;*/
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+        }
+
+        .imageButton {
+            width:20px; 
+            height:20px;
+        }
+
+        .iataBlue {
+            background-color: rgb(0, 66, 124);
+        }
+
+        .modalTitle {
+            color: white;
+            font-weight: bold;
+        }
+
+    </style>
+    <!--WMO358 End-->
 
 <script>
   $(document).ready( function () {
@@ -77,11 +144,135 @@
       }
     });
   }
+//WMO 358 Start 2018/11/02
+
+    function startLoading(){
+
+    }
+
+    function refreshList(){
+        callrefreshList();
+    }
+
+    function attFuntion(objectId, fileName, amazonRecordTypeId, accountStatementPeriod, amazonFileStartName, amazonFileNameIdentifier)
+    {
+         console.log('start call' + objectId);
+
+         let amazonFileModel = {
+            RecordTypeId: amazonRecordTypeId,
+            Name: fileName,
+            Remittance_Period__c: accountStatementPeriod,
+            Category__c: amazonFileStartName,
+            File_Identifier_picklist__c: amazonFileNameIdentifier};
+
+        runClickAction(objectId, "{!credentialName}", amazonFileModel, false);
+        console.log('after call');
+
+    }
+
+    function onStart(){
+        startLoading();
+    }
+
+    function onStop(){
+        //stopLoading();
+    }
+
+    function onAfterUpload(amazonfileid) {
+        //alert(amazonfileid);
+        //closeModal();
+        //stopLoading();
+        callrefreshList();
+    }
+
+
+
+
+    //WMO 358 End
 </script>
 
-<div class="container">
-  <c:ISSP_CustomNavigation />
+    <apex:variable var="currencyTreeValuesList" value="[{!''}{!treePlacesCurrency}" />
 
+    <c:Loading />
+
+    <div class="container">
+        <c:ISSP_CustomNavigation />
+        <apex:pageMessages />
+
+       <!--WMO358 Start 2018/11/02-->
+        <!-- Modal popuo to allow the user to add attachments-->
+        <apex:outputPanel id="myModal" >
+            <apex:outputPanel rendered="{!showPopUp}">
+                <apex:form >
+                    <c:UploadFileToAmazonButton />
+                    <apex:actionFunction name="callrefreshList" action="{!refreshList}"  rerender="myModal"  status="loading" oncomplete="stopLoading();"/>
+                    <apex:actionFunction name="closeModal" action="{!saveAttachment}"  rerender="myModal" />
+                    <div class="{!IF(showPopUp==true, 'modal showModal', 'modal notShowModal')}">
+                        <div class="{!IF(showPopUp==true, 'modal-content', 'notShowModal modal-content')}" >
+                             <div class="modal-header iataBlue">
+                                <span class="close" onclick="closeModal(); return false;">&times;</span>
+                                <h4 class="modal-title modalTitle">{!$Label.Account} {!accountSelectedName}</h4>
+                                <h5 class="modal-title modalTitle">{!$Label.Period} {!accountStatementPeriod}</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row" >
+                                            <apex:pageBlock > <!--rendered="{!listAttachments.empty}"-->
+                                                <h4 >{!$Label.Add_an_attachment}</h4>
+
+                                                <apex:variable var="cnt" value="{!0}" />
+
+                                                <button onclick="attFuntion('{!accountSelectedId}','{!amazonFileName}','{!amazonRecordTypeId}','{!accountStatementPeriod}','{!amazonFileStartName}','{!amazonFileNameIdentifier}'); return false;" >{!$Label.Add_attachment_Action}</button>
+
+                                            </apex:pageBlock>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <apex:pageBlock rendered="{!listAttachments.size>0}">
+                                                <div class="table">
+                                                    <table id="tableAttachments" class="table table-hover table-condensed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th colspan="3">{!$Label.Documents_POP}</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>{!$Label.File_Name}</th>
+                                                            <th>{!$Label.Created_Date}</th>
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <apex:repeat value="{!listAttachments}" var="attach">
+                                                            <tr>
+                                                                <td>{!attach.name}</td>
+                                                                <td>{!attach.Full_Name_Unique__c}</td>
+                                                                <td>{!attach.createdDate}</td>
+                                                            </tr>
+                                                        </apex:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </apex:pageBlock>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="modal-footer">
+                                  <div class="row">
+                                     <div class="col-md-6">
+                                            <apex:commandButton value="{!$Label.Done}" styleclass="btn btn-blue btn-sm" action="{!saveAttachment}" reRender="myModal" status="loading" oncomplete="stopLoading();" rendered="{!listAttachments.size>0}"/>
+                                            <apex:commandButton value="{!$Label.Cancel}" styleclass="btn btn-sm" action="{!saveAttachment}" reRender="myModal" status="loading" oncomplete="stopLoading();" rendered="{!listAttachments.empty}"/>
+                                     </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:form>
+            </apex:outputPanel>
+        </apex:outputPanel>
+            <!-- WMO 358 End-->
   <apex:form id="mainForm" styleclass="form-inline">
     <apex:actionFunction name="updateAppRight" action="{!updateAppRight}" rerender="notificationsSwitch"/>
 
@@ -154,12 +345,13 @@
                 <th class="currency-width">{!$ObjectType.Account_Statement__c.fields.Balance__c.label}</th>
                 <th class="hidden-xs"></th>
                 <th>{!$ObjectType.Account_Statement__c.fields.Status__c.label}</th>
+		<th><!--Payment--></th> <!--WMO358 2018/11/02-->
               </tr>
             </thead>
             <tbody>
 						<apex:repeat var="wrapper" value="{!listWrapper}">
               <tr class="{!IF(wrapper.showSeparation,'','hidden')}">
-                <td colspan="10" class="separation-row"><div>{!$Label.ISSP_Past_Periods}</div></td>
+                <td colspan="12" class="separation-row"><div>{!$Label.ISSP_Past_Periods}</div></td>
               </tr>
               <tr class="accordion-toggle collapse in" data-toggle="collapse" data-target="#{!wrapper.parent.Period__c}-{!wrapper.parent.CurrencyISOCode}-period" data-filter="{!wrapper.parent.CurrencyIsoCode}">
                 <td class="hidden-xs">
@@ -178,27 +370,27 @@
                   <apex:outputText value="{!$Label.ISSP_Consolidated}" />
                 </td>
                 <td class="hidden-xs hidden-sm">
-                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                   <apex:param value="{!wrapper.parent.Billing_Amount__c}"/>
                 </apex:outputText>
               </td>
                 <td class="hidden-xs hidden-sm">
-                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                     <apex:param value="{!wrapper.ParentBillingAdjustment}"/>
                   </apex:outputText>
                 </td>
                 <td class="">
-                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                     <apex:param value="{!wrapper.parent.Amount_to_be_Paid__c}"/>
                   </apex:outputText>
                 </td>
                 <td class="hidden-xs hidden-sm">
-                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                     <apex:param value="{!wrapper.parent.Paid__c}"/>
                   </apex:outputText>
                 </td>
                 <td>
-                  <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                <apex:outputText value="{!wrapper.parent.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,wrapper.parent.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                     <apex:param value="{!wrapper.parent.Balance__c}"/>
                   </apex:outputText>
                 </td>
@@ -208,6 +400,28 @@
                 <td class="{!IF(wrapper.ParentStatus==$Label.ISSP_Fullpayment,'success','')}{!IF(wrapper.ParentStatus==$Label.ISSP_Excess,'warning','')}{!IF(wrapper.ParentStatus==$Label.ISSP_Pending,'danger','')}">
                   <apex:outputText value="{!wrapper.ParentStatus}"/>
                 </td>
+                                            <!-- WMO358 Start 2018/11/02-->
+                                            <td class="hidden-xs" >
+                                                <!--Add proof of payment image from: "www.iconmonstr.com/paperclip-8-png/" -->
+                                                <div >
+                                                    <apex:commandbutton action="{!addAttachment}"
+                                                                        image="{!URLFOR($Resource.AttachmentIcon)}"
+                                                                        id="addAttachement"
+                                                                        reRender="myModal"
+                                                                        disabled="{!NOT(wrapper.ParentPaymentProof)}"
+                                                                        rendered="{!wrapper.ParentPaymentProof}"
+                                                                        onmouseup="startLoading(); return false;"
+                                                                        oncomplete="stopLoading(); return false;"
+                                                                        title="{!$Label.Add_an_attachment}">
+                                                                            <apex:param name="account" value="{!wrapper.parent.Account__c}" assignTo="{!accountSelectedId}"/>
+                                                                            <apex:param name="accountStatement" value="{!wrapper.accountSatementId}" assignTo="{!accountStatementSelectedId}"/>
+                                                                            <apex:param name="accountName" value="{!wrapper.accountName}" assignTo="{!accountSelectedName}"/>
+                                                                            <apex:param name="accountStatementPeriod" value="{!wrapper.parent.Period__c}" assignTo="{!accountStatementPeriod}"/>
+                                                                            <apex:param name="accountStatementBillingAmount" value="{!wrapper.parent.Billing_Amount__c}" assignTo="{!billingAmount}"/>
+                                                    </apex:commandbutton>
+                                               </div>
+                                            </td>
+                                            <!--WMO358 End-->
               </tr>
               <!-- DETAIL TABLE-->
               <tr class="accordion-body collapse" id="{!wrapper.parent.Period__c}-{!wrapper.parent.CurrencyISOCode}-period">
@@ -222,31 +436,31 @@
                         </apex:column>
 
                         <apex:column styleclass="hidden-xs currency-width">
-                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                             <apex:param value="{!statement.Billing_Amount__c}"/>
                           </apex:outputText>
                         </apex:column>
 
                         <apex:column styleclass="hidden-xs currency-width">
-                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                             <apex:param value="{!statement.Billing_Amount__c-statement.Amount_to_be_Paid__c}"/>
                           </apex:outputText>
                         </apex:column>
 
                         <apex:column styleclass="hidden-xs currency-width">
-                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                             <apex:param value="{!statement.Amount_to_be_Paid__c}"/>
                           </apex:outputText>
                         </apex:column>
 
                         <apex:column styleclass="hidden-xs currency-width">
-                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                             <apex:param value="{!statement.Paid__c}"/>
                           </apex:outputText>
                         </apex:column>
 
                         <apex:column styleclass="currency-width">
-                          <apex:outputText value="{!statement.CurrencyIsoCode} {0, number, ###,##0.00}">
+                                                        <apex:outputText value="{!statement.CurrencyIsoCode} {!IF(CONTAINS(currencyTreeValuesList,statement.CurrencyIsoCode), '{0, number, ###,##0.000}', '{0, number, ###,##0.00}')}">
                             <apex:param value="{!statement.Balance__c}"/>
                           </apex:outputText>
                         </apex:column>
