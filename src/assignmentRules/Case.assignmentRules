@@ -5957,7 +5957,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>notEqual</operation>
-                <value>Bermuda,Canada,Argentina,Mexico,Paraguay,Uruguay</value>
+                <value>Bermuda,Canada,Argentina,Mexico,Paraguay,Panama,Uruguay</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>
