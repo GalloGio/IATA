@@ -22,6 +22,9 @@ public class AMS_AgencyRegulationTriggerHandler {
         Set<String> regulationPerAccount = new Set<String>();
 
         Map<Id,String> agencyRegulationsAccStatus = new Map<Id,String>();
+
+        Set<String> accountStatusToDiscard = new Set<String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING};
+
         for(AMS_Agency_Regulation__c agRegStatus : [SELECT Id, Account__r.Status__c FROM AMS_Agency_Regulation__c WHERE Id IN :agencyRegulations])
         {
             agencyRegulationsAccStatus.put(agRegStatus.Id, agRegStatus.Account__r.Status__c);
@@ -29,7 +32,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
 
-            if(agencyRegulationsAccStatus.get(agReg.Id) != AMS_Utils.ACC_S0_TERMINATED){
+            if(!accountStatusToDiscard.contains(agencyRegulationsAccStatus.get(agReg.Id))){
 
                 accountIds.add(agReg.Account__c);
             
