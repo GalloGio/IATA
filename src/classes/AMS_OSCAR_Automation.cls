@@ -1421,9 +1421,7 @@ public with sharing class AMS_OSCAR_Automation {
 
                 oscar.Financial_security_information_confirmed__c = Date.today();
                 res = true;
-                case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
-                c.status = 'Closed';
-                update c;
+                oscar.status__c = 'Closed';
             }
 
             return res;
@@ -1439,9 +1437,7 @@ public with sharing class AMS_OSCAR_Automation {
 
                 oscar.Financial_security_information_confirmed__c = Date.today();
                 res = true;
-                case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
-                c.status = 'Closed';
-                update c;
+                oscar.status__c = 'Closed';
             }
 
             return res;

@@ -1,4 +1,4 @@
-public with sharing class ISSP_Financial_Institutions {
+public without sharing class ISSP_Financial_Institutions {
 	public static final String GDI_PORTAL_SERVICE = 'Global Default Insurance (GDI)';
 	public static final String GDI_FINANCIAL_INSTITUTION = 'GDI - Euler Hermes';
 
@@ -202,6 +202,8 @@ public with sharing class ISSP_Financial_Institutions {
 			return;
 		}
 
+		previousUserFailedProvisioning = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
+		getSSOPermissionSet();
 		gdiPolling = true;
 	}
 
@@ -210,10 +212,7 @@ public with sharing class ISSP_Financial_Institutions {
 							                   Portal_Application__c = gdiPortalAppId,
 							                   Right__c = 'Access Requested',
 							                   Terms_Acceptance__c = termsAndConditions,
-							                   Terms_Acceptance_Date__c = Datetime.now());
-
-		previousUserFailedProvisioning = [SELECT Id FROM UserProvisioningRequest WHERE SalesforceUserId = :UserInfo.getUserId() AND State = 'Failed'];
-		getSSOPermissionSet();
+							                   Terms_Acceptance_Date__c = Datetime.now());		
 	}
 
 	private void getSSOPermissionSet() {

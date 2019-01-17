@@ -122,7 +122,7 @@
     <fields>
         <fullName>Financial_Security_Country_Coverage__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Select all countries where this Financial Institution provides Financial Security. Used to show list of Fincacial Institutions on CS Portal.</inlineHelpText>
+        <inlineHelpText>Select all countries where this Financial Institution provides Financial Security. Used to show list of Financial Institutions on CS Portal.</inlineHelpText>
         <label>Financial Security Country Coverage</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
