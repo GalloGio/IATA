@@ -6012,11 +6012,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Card Brand</label>
                 </value>
                 <value>
-                    <fullName>Cargo Agency Association</fullName>
-                    <default>false</default>
-                    <label>Cargo Agency Association</label>
-                </value>
-                <value>
                     <fullName>Cargo only</fullName>
                     <default>false</default>
                     <label>Cargo only</label>
@@ -6080,6 +6075,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <fullName>ERSP Agent</fullName>
                     <default>false</default>
                     <label>ERSP Agent</label>
+                </value>
+                <value>
+                    <fullName>Freight Forwarder Association</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarder Association</label>
                 </value>
                 <value>
                     <fullName>Fuel Supplier</fullName>
@@ -6578,7 +6578,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Association</controllingFieldValue>
-                <valueName>Cargo Agency Association</valueName>
+                <valueName>Freight Forwarder Association</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Association</controllingFieldValue>
@@ -54903,10 +54903,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -54948,6 +54944,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -64340,10 +64340,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -64381,6 +64377,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -73576,10 +73576,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -73621,6 +73617,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -79500,10 +79500,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -79541,6 +79537,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85975,10 +85975,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -86020,6 +86016,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
