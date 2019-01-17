@@ -18114,7 +18114,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Web</value>
+            <value>Web,Internal Case,Portal</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>

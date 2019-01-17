@@ -510,7 +510,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Update_AIMS_DEF__c))) ,Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;SEDA&quot;, Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,Parent.RecordType.DeveloperName = &quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;), NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;)) ,NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
+        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Update_AIMS_DEF__c))) ,Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;SEDA&quot;, Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName = &quot;Airline_Coding_Application&quot;, Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,Parent.RecordType.DeveloperName = &quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;), NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;)) ,NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -605,8 +605,8 @@
         </actions>
         <active>true</active>
         <description>Used in SIDRA Cases when a comment is received from E2C to trigger CS Actions</description>
-        <formula>AND(   CreatedDate=NOW(),  OR(CreatedById=&apos;00520000000h6AU&apos;, AND(ISPICKVAL(Parent.New_interaction__c,&quot;New Comment&quot;),CONTAINS(Parent.LastModifiedBy.Profile.Name,&quot;ISS Portal&quot;))),  Parent.RecordType.DeveloperName=&quot;SIDRA&quot;,     OR   (ISBLANK(Parent.Update_AIMS_DEF__c),            DATEVALUE(Parent.Update_AIMS_DEF__c)&gt;(TODAY()-1),            ISPICKVAL(Parent.Status,&quot;Closed&quot;),            CONTAINS(Parent.Owner:Queue.QueueName,&quot;Cases&quot;)))</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <formula>AND( ISNEW(), OR(CreatedById=&apos;00520000000h6AU&apos;, AND(ISPICKVAL(Parent.New_interaction__c,&quot;New Comment&quot;),CONTAINS(Parent.LastModifiedBy.Profile.Name,&quot;ISS Portal&quot;))),  Parent.RecordType.DeveloperName=&quot;SIDRA&quot;,     OR   (ISBLANK(Parent.Update_AIMS_DEF__c),            DATEVALUE(Parent.Update_AIMS_DEF__c)&gt;(TODAY()-1),            ISPICKVAL(Parent.Status,&quot;Closed&quot;),            CONTAINS(Parent.Owner:Queue.QueueName,&quot;Cases&quot;)))</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>SIDRA_DOP7_R%26S_feedback to CS - R%26S completed</fullName>
