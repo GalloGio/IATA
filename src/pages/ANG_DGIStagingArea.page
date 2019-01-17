@@ -153,9 +153,10 @@
                     <apex:pageBlockSection>
 
                         <apex:inputField value="{!stagingFs.Amount__c}" required="true" />
-                        <apex:inputField value="{!stagingFs.Expiry_Date__c}" required="true"/>
-                        <apex:inputField value="{!stagingFs.FS_Currency__c}" required="true"/>
                         <apex:inputField value="{!stagingFs.Validity_Start_Date__c}" required="true"/>
+                        <apex:inputField value="{!stagingFs.FS_Currency__c}" required="true"/>
+                        <apex:inputField value="{!stagingFs.Expiry_Date__c}" required="true"/>
+
 
                     </apex:pageBlockSection>  
 

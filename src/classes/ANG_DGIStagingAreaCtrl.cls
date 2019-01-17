@@ -181,6 +181,8 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 
             stagingFs.pricebookentryid = pbe.id;
             upsert stagingFs;
+        
+        	fetchStagingFs();
 
     }
 
