@@ -458,9 +458,8 @@
     <div class="panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">
-                    {!IF(NOT(isNoticeOfChange), lblStep1Title,
-                    lblNoCRequest)
-                    }</h3>
+                    {!IF(NOT(isNoticeOfChange), lblStep1Title, lblNoCRequest)}
+                </h3>
             </div>
     <div class="panel-body" id="body-enquiries">
 
@@ -572,7 +571,7 @@
                         </div>
 
                         <!-- NEWGEN-1249-->
-                        <apex:outputpanel id="isSameLegal" rendered="{!AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent', OR(isHOAccredited, isMultiCountryNewAE))}">
+                        <apex:outputpanel id="isSameLegal" rendered="{!OR(AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent', isHOAccredited), isMultiCountryNewAE)}">
                             <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
                                 <div class="form-group" id='isLegal'>
                                     <label for="isLegal" class="col-lg-3 control-label">{!$Label.ANG_AE_separate_Legal_Entity}</label>
