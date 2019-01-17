@@ -6802,7 +6802,8 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private List<AMS_Pax_Accreditation_Form__c> fetchMultiCountryApplicationForms() {
-        List<AMS_Pax_Accreditation_Form__c> mCountryApplicationForms = [SELECT Id, Name, Status__c, HO_Account__c, Branch_Office_Country__r.Name, SAAM_Case__r.Subject
+        List<AMS_Pax_Accreditation_Form__c> mCountryApplicationForms = [SELECT Id, Name, Status__c, HO_Account__c, Branch_Office_Country__r.Name, 
+                                                                            SAAM_Case__r.Subject, SAAM_Case__r.Id
                                                                         FROM AMS_Pax_Accreditation_Form__c
                                                                         WHERE SAAM_Case__c = :newCase.Id];
 
