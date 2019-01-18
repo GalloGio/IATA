@@ -34314,110 +34314,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </picklistValues>
         <picklistValues>
             <picklist>Account_Type__c</picklist>
-            <values>
-                <fullName>ATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline Industry</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Attorneys</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Clearing Bank</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consultancy</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Credit Card Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer Associations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DPC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Domestic Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ERSP Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Financial Institution</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fuel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GDS %2F CRS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GSA General Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>General Public</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Handling Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Local Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA Passenger Sales Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inspector</fullName>
-                <default>false</default>
-            </values>
 			<values>
 				<fullName>Key Global</fullName>
 				<default>false</default>
@@ -34430,58 +34326,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
 				<fullName>Key Regional</fullName>
 				<default>false</default>
 			</values>
-            <values>
-                <fullName>MSO Member Sales Office</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Newspaper</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Newswire</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Cargo Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA Travel Agent</fullName>
-                <default>false</default>
-            </values>
 			<values>
 				<fullName>Not Applicable</fullName>
 				<default>false</default>
 			</values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other suppliers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PRIN agents %28individuals%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Registered Fuel Supplier</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Research Institute</fullName>
-                <default>false</default>
-            </values>
 			<values>
 				<fullName>Standard Global</fullName>
 				<default>false</default>
@@ -34506,42 +34354,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
 				<fullName>Strategic Regional</fullName>
 				<default>false</default>
 			</values>
-            <values>
-                <fullName>Student</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>System providers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TIDS Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TV%2FRadio</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ticket Document Distributor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ticket Printer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Trade Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Partner</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Airline_Model_Type__c</picklist>
