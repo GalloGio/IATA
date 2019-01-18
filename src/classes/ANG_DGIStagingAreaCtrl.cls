@@ -261,7 +261,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
         fs.Reception_Date__c = stagingFs.Reception_Date__c;
 
         insert fs;
-
+/*
         //Inactivate old FS
         if(currentFS <> null && !hasAdendum){
             currentFS.Security_Status__c = 'Inactive_Addendum';
@@ -269,7 +269,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
             currentFS.Release_Reason__c = 'Security Update';
             update currentFS;
         }
-
+*/
         newFSId = fs.Id;
 
 
