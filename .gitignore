@@ -319,6 +319,8 @@ src/queues/ICH_Help_Desk_ICH_General.queue
 src/queues/ICH_Help_Desk_ICH_Membership.queue
 src/queues/ICH_Help_Desk_ICH_Operations.queue
 src/queues/CasesRS.queue
+src/queues/DistributionAirlineManagementHOI.queue
+src/queues/SISCustomerSupportA.queue
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace
