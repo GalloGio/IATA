@@ -119,7 +119,6 @@ private class BtchGDPReplicateTerrTest {
 		
 		List<Accreditation__c> accredall = [select Id, Name, AIMS_ID__c, Related_Account__c
 												, Related_Account__r.Name
-												, Endorsed_Accredited_By__c 
 												, Class__c, Class__r.Code__c
 												from Accreditation__c
 										   		order by Id];

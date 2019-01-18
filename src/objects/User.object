@@ -78,6 +78,26 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ProfileId</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>UserRoleId</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Username</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Email</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
     <fields>
@@ -2373,7 +2393,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filters>
             <field>FULL_NAME</field>
             <operation>contains</operation>
-            <value>Weydath</value>
+            <value>goh</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>

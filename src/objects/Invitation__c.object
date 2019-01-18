@@ -270,8 +270,14 @@
     <label>Invitation</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>First_Name__c</columns>
+        <columns>Last_Name__c</columns>
+        <columns>Email__c</columns>
+        <columns>Role__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>INV-{00000000}</displayFormat>

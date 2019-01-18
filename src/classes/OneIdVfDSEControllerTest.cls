@@ -469,7 +469,7 @@ private class OneIdVfDSEControllerTest {
             acc.IATA_ISO_Country__c = ISO_Country.id;
             anListAct.add(acc);
         }
-        
+        /*
         insert anListAct;
 
         Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
@@ -556,7 +556,7 @@ private class OneIdVfDSEControllerTest {
         
         ctrl.accList.add(anListAct[0]);     
         ctrl.nextAsGP();           
-
+	*/
     }         
 
     public static void createTestData(){

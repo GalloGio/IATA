@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="Monthly RTS Red Alerts" recipientType="User" >
+  <messaging:htmlEmailBody >
+    <c:RTSMonthlyDigestEmailComponent ></c:RTSMonthlyDigestEmailComponent>
+  </messaging:htmlEmailBody>
+</messaging:emailTemplate>

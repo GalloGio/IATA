@@ -28,6 +28,7 @@
 		var firstname = component.find("editfirstname").get("v.value");
 		var lastname = component.find("editlastname").get("v.value");
 		var phone = component.find("editphone").get("v.value");
+		var mobilephone = component.find("editmobilephone").get("v.value");
 		var fax = component.find("editfax").get("v.value");
 		var jobtitle = component.find("editjobtitle").get("v.value");
 		var functionpick = component.find("functionpicklist").get("v.value");
@@ -72,6 +73,7 @@
 			"firstname" : firstname,
 			"lastname" : lastname,
 			"phone" : phone,
+			"mobilephone" : mobilephone,
 			"fax" : fax,
 			"jobtitle" : jobtitle,
 			"functionpick" : functionpick,
