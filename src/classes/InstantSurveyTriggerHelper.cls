@@ -58,17 +58,20 @@ public class InstantSurveyTriggerHelper {
 
 	//ACAMBAS - WMO-392 - Start
 	public static void fillDataFromCase(list<Instant_Surveys__c> triggerNew) {
-		set<Id> setParentCasesIds = new set<Id>();
+		set<Id> parentCasesIds = new set<Id>();
 
 		for (Instant_Surveys__c is : triggerNew) {
-			setParentCasesIds.add(is.Relationship_to_Case__c);
+			if(!String.isEmpty(is.Relationship_to_Case__c))
+				parentCasesIds.add(is.Relationship_to_Case__c);
 		}
 
-		Map<Id, Case> casesMap = new Map<Id, Case>([SELECT Id, AccountId, ContactId FROM Case WHERE Id in :setParentCasesIds]);
+		Map<Id, Case> casesMap = new Map<Id, Case>([SELECT Id, AccountId, ContactId FROM Case WHERE Id in :parentCasesIds]);
 
 		for(Instant_Surveys__c is : triggerNew) {
-			is.Relationship_to_Account__c = casesMap.get(is.Relationship_to_Case__c).AccountId;
-			is.Contact__c = casesMap.get(is.Relationship_to_Case__c).ContactId;
+			if(casesMap.containsKey(is.Relationship_to_Case__c)) {
+				is.Relationship_to_Account__c = casesMap.get(is.Relationship_to_Case__c).AccountId;
+				is.Contact__c = casesMap.get(is.Relationship_to_Case__c).ContactId;		
+			}
 		}
 	}
 	//ACAMBAS - WMO-392 - End
