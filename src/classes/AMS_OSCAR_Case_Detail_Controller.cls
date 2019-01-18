@@ -599,7 +599,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     }
     /*** AMSU-121 End ***/
 
-    public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c','Abbreviated_name__c'};
+    public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c'};
 
 
     // The extension constructor initializes the private member
