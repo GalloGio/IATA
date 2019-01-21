@@ -5647,6 +5647,14 @@ and
         <name>ISSP_AMS_Apply_New_Office</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2 --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Entity</name>
     </customLabels>
@@ -15654,6 +15662,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_FRED_Troubleshooting_Link --></label>
         <name>OneId_FRED_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_URL --></label>
+        <name>OneId_FRED_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
