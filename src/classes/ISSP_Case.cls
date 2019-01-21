@@ -442,7 +442,7 @@ public without sharing class ISSP_Case {
                 }
 
                 system.debug('status: ' + newCase.Status);
-                if (newCase.Status == 'Draft' || newCase.Status == 'Open - EDMC' || newCase.Status == 'Pending customer' || newCase.Status == 'Return application to customer') {
+                if (newCase.Status == 'Draft' || newCase.Status == 'Open - EDMC' || newCase.Status == 'Return application to customer') {
                     List <AP_Process_Form__c> apList = [SELECT Id FROM AP_Process_Form__c WHERE Case__c = :caseId];
 
                     system.debug('apList: ' + apList);
@@ -680,6 +680,7 @@ public without sharing class ISSP_Case {
                 JSONcontacts = JSON.serialize(lsContacts);
                 System.debug(lsAccounts);
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
+                newCase.Status = 'Action Needed';
 
                 System.debug(profileRole);
 
