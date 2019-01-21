@@ -46,7 +46,6 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 	        fieldsOfObject.put('Process__c', AMS_Utils.MCAE);
 			fieldsOfObject.put('Status__c','Open');
-			fieldsOfObject.put('Name',c.CaseNumber);
 			
 			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_MCAE, acct.Id, fieldsOfObject);
 
