@@ -191,15 +191,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>PCI_Not_Compliant</fullName>
-        <field>Is_PCI_compliant__c</field>
-        <literalValue>No</literalValue>
-        <name>PCI_Not_Compliant</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Parent_Branch_member_airlines</fullName>
         <description>This workflow makes a subsidiary have the same value in the field &apos;IATA member airline&apos; as its Parent company</description>
         <field>IATA_Member__c</field>
@@ -467,26 +458,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </criteriaItems>
         <description>to fix the fact that webstar accounts do not have sector and category</description>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>AMS_PCI_Auto_Expire</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>Account.Is_PCI_compliant__c</field>
-            <operation>equals</operation>
-            <value>Yes</value>
-        </criteriaItems>
-        <description>When PCI Expire date is reach auto change PCI to &quot;No&quot;</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>PCI_Not_Compliant</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Account.ANG_PCI_compliance_expiry_date__c</offsetFromField>
-            <timeLength>0</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Account incomplete</fullName>
