@@ -18905,16 +18905,9 @@ ISCHANGED(ISSP_Contact_Name__c )
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>
         <active>true</active>
         <description>FDS OPS + Account management Contact cannot be logged under MSO office, but should be under the airline account</description>
-        <errorConditionFormula>AND(
-	TEXT(Account.Location_Class__c) = &quot;M&quot;,
-	OR(
-		ISNEW(),
-		ISCHANGED(AccountId)
-	),
-	CreatedBy.LastName &lt;&gt; &quot;Site Guest User&quot;
-)</errorConditionFormula>
+        <errorConditionFormula>TEXT(Account.Location_Class__c) = &quot;M&quot;</errorConditionFormula>
         <errorDisplayField>AccountId</errorDisplayField>
-        <errorMessage>Contacts should not be created under the MSO account, but under the airline Headquarters or branch account.</errorMessage>
+        <errorMessage>Contacts cannot be created under the MSO account, but under the airline Headquarters or branch account.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Contact_cannot_change_his_portal_status</fullName>
