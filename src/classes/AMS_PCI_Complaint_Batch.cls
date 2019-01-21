@@ -308,6 +308,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         theCommunicationCase.Visible_on_ISS_Portal__c = true;
         theCommunicationCase.Status = 'Accepted_Future Date';
         theCommunicationCase.IATACodeProduct__c = accountData.IATACode__c;
+        theCommunicationCase.Origin = isRenewal ? 'PCI automatic renewal' : 'Massive PCI Creation';
         
         if(communicationCaseContact != null)
             theCommunicationCase.ContactId = communicationCaseContact.Id;
