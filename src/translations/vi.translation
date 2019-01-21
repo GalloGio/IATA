@@ -15664,6 +15664,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_FRED_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_FRED_URL --></label>
+        <name>OneId_FRED_URL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
     </customLabels>

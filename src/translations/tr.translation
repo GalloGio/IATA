@@ -15671,6 +15671,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_FRED_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_FRED_URL --></label>
+        <name>OneId_FRED_URL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
     </customLabels>
