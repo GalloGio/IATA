@@ -366,8 +366,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 	private Set<Id> fetchHierarchySelection(Id accountOscar){
 
 		Set<Id> accountIds = new Set<Id>();
-		
-        /*
+/*
 		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
 		Id accountId = acct.Id;
 		
@@ -378,15 +377,16 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 			accountIds.add(acctToSearch.Id);
 	
 		accountIds.add(accountId);
-        */
+*/
+        if(technicalLogsMap.size() > 0) {
+            System.debug('technicalLogsMap are:'+technicalLogsMap);
+            
+            for(String acctStr : technicalLogsMap.get('Account')){
 
-        System.debug('technicalLogsMap are:'+technicalLogsMap);
-        
-        for(String acctStr : technicalLogsMap.get('Account')){
+                Account a = (Account) JSON.deserialize(acctStr, Account.class);
 
-            Account a = (Account) JSON.deserialize(acctStr, Account.class);
-
-            accountIds.add(a.Id);
+                accountIds.add(a.Id);
+            }
         }
         
 		return accountIds;

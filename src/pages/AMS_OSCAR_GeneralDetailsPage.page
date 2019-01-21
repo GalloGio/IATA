@@ -176,7 +176,7 @@
        </apex:outputPanel>
     </apex:outputPanel>
      
-    <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!accreditationObj != null}">
+    <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!and(accreditationObj != null, showStagingArea)}">
 
     
         <apex:pageBlockButtons location="both">
@@ -345,7 +345,9 @@
 
     </apex:form>
     
-    <hr/>
+    <apex:outputPanel rendered="{!showStagingArea}">
+    	<hr/>
+    </apex:outputPanel>
 
     <apex:detail id="detailInfo" subject="{!oscarObj}" relatedList="true"  title="false" rendered="{!IF(oscarObj != null, true, false)}" rerender="{!oscarObj}" inlineEdit="true" oncomplete="refreshTab()"/>
 
