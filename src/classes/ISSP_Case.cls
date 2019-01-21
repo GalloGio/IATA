@@ -129,6 +129,14 @@ public without sharing class ISSP_Case {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
 
+            //ACAMBAS - WMO-389 - Start
+            if(newCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
+                newCase.Subject = 'IMPORTANT: IATA Payment';
+                newCase.Subject = (newCase.IATA_Code__c != null) ? newCase.Subject + ' - IATA Code ' + newCase.IATA_Code__c : newCase.Subject;
+                newCase.Subject = (newCase.Remittance_period__c != null) ? newCase.Subject + ' - Period ' +  newCase.Remittance_period__c : newCase.Subject;
+            }
+            //ACAMBAS - WMO-389 - End
+
             if(newCase.status == TIP_Utils.CASE_STATUS_DRAFT && newCase.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS){ //Transparency in Payment's portal access assignment
                 User user = DAL_ISSP.getUser(Userinfo.getUserId());
                 Id appListId;
@@ -434,7 +442,7 @@ public without sharing class ISSP_Case {
                 }
 
                 system.debug('status: ' + newCase.Status);
-                if (newCase.Status == 'Draft' || newCase.Status == 'Open - EDMC' || newCase.Status == 'Return application to customer') {
+                if (newCase.Status == 'Draft' || newCase.Status == 'Open - EDMC' || newCase.Status == 'Pending customer' || newCase.Status == 'Return application to customer') {
                     List <AP_Process_Form__c> apList = [SELECT Id FROM AP_Process_Form__c WHERE Case__c = :caseId];
 
                     system.debug('apList: ' + apList);
@@ -672,7 +680,6 @@ public without sharing class ISSP_Case {
                 JSONcontacts = JSON.serialize(lsContacts);
                 System.debug(lsAccounts);
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
-                newCase.Status = 'Action Needed';
 
                 System.debug(profileRole);
 
