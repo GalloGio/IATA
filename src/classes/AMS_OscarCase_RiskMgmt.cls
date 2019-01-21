@@ -1114,7 +1114,10 @@ public class AMS_OscarCase_RiskMgmt {
 			if(sMemoText.containsIgnoreCase('<Oscar Type Of Change>')){
 				sMemoText = sMemoText.replace('<Oscar Type Of Change>', theCase.OSCAR__r.ANG_Type_Of_Change__c==null?'Nil':theCase.OSCAR__r.ANG_Type_Of_Change__c);
 			}
-			
+
+			if(sMemoText.containsIgnoreCase('<Last Due Date>')){
+				sMemoText = sMemoText.replace('<Last Due Date>', getLastDueDate(theCase.Id));
+			}
 		}
 
 		sMemoText = extraMemoText != null ? (sMemoText + ' ' + extraMemoText) : sMemoText;
@@ -1238,5 +1241,18 @@ public class AMS_OscarCase_RiskMgmt {
             accreditationObj.ISSP_AMS_VAT_number__c = String.valueOf(12436);
             accreditationObj.Is_your_firm_handling_Dangerous_Goods__c = String.valueOf('true');
         }
+    }
+    
+    private static String getLastDueDate(Id caseId) {
+        for (Case_Detail__c detail:
+                [SELECT Id, Due_Date__c
+                FROM Case_Detail__c
+                WHERE Case__c = :caseId
+                AND RecordType.DeveloperName = 'Repayment_Instalment'
+                AND Due_Date__c != null
+                ORDER BY Due_Date__c DESC LIMIT 1]) {
+            return String.ValueOf(detail.Due_Date__c);
+        }
+        return '';
     }
 }

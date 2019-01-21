@@ -1713,7 +1713,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (trgSidraCaseBeforeInsertUpdate) { //FLAG
             Set<Id> accountIds = new Set<Id>();
             system.debug('trgSidraCaseBeforeInsertUpdate Trigger.isUpdate');
+            list<Id> listCasesUpdatedAIMS = new list<Id>();
             for (Case aCase : trigger.new) { // Fill a set of Account Ids for the cases select statement
+                Case oldCase = trigger.oldmap.get(aCase.Id);
                 // Only for Sidra small amount cases, only cases created within the last 24 hours
                 system.debug(LoggingLevel.Error, '============== UPDATE analyze ' + aCase.Subject + ' which has IRR_Withdrawal_Reason__c = ' + aCase.IRR_Withdrawal_Reason__c + '================');
                 if (aCase.RecordTypeId == SIDRAcaseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null) {
@@ -1724,6 +1726,23 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     Case aCaseOld = Trigger.oldMap.get(aCase.Id);
                     if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
                         aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
+                    }
+                }
+                if (aCase.RecordTypeId == SIDRAcaseRecordTypeID &&
+                    oldCase.Update_AIMS_Repayment_agreed__c == null &&
+                    aCase.Update_AIMS_Repayment_agreed__c != null) {
+                    listCasesUpdatedAIMS.add(aCase.Id);
+                }
+            }
+
+            // Validation when the field Update_AIMS_Repayment_agreed__c is updated
+            // Update not allowed if there is no Repayment Instalment records related to the case
+            if (!listCasesUpdatedAIMS.isEmpty()) {
+                for (Case cse: [SELECT Id, (SELECT Id FROM Case_Details__r WHERE RecordType.DeveloperName = 'Repayment_Instalment')
+                    FROM Case WHERE Id IN :listCasesUpdatedAIMS]) {
+                    Case originalCase = trigger.newmap.get(cse.Id);
+                    if (cse.Case_Details__r.isEmpty()) {
+                        originalCase.addError('Please complete the repayment instalment section to be able to confirm that the agreement has been reached');
                     }
                 }
             }
