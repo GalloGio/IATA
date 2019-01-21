@@ -5649,6 +5649,14 @@ and
         <name>ISSP_AMS_Apply_New_Office</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2 --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Entity</name>
     </customLabels>

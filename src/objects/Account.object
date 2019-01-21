@@ -3320,7 +3320,7 @@
         <fullName>ANG_IsNewGenAgency__c</fullName>
         <description>To show information to analyst. To simplify triggers and classes.</description>
         <externalId>false</externalId>
-        <formula>IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)</formula>
+        <formula>(IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)) || (IATA_ISO_Country__r.Enable_NewGen_Pilot__c &amp;&amp; OR(TEXT(Location_Type__c) = &apos;HE&apos;, TEXT(Location_Type__c) = &apos;AE&apos;, TEXT(Location_Type__c) = &apos;GE&apos;) &amp;&amp; TEXT(Location_Class__c) = &apos;D&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
@@ -3349,15 +3349,16 @@
     <fields>
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-        ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
-            &apos;Not Applicable&apos;,
-                IF(
-          ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-            TEXT(ANG_HE_RiskHistoryAssessment__c),  
-            TEXT(Top_Parent__r.ANG_HE_RiskHistoryAssessment__c)
-          )
-        )</formula>
+        <formula>IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+    &apos;Not Applicable&apos;,
+    IF(ISPICKVAL(Location_Type__c, &apos;HE&apos;),
+        TEXT(ANG_HE_RiskHistoryAssessment__c),
+		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
+			&apos;&apos;,		
+			TEXT(Top_Parent__r.ANG_HE_RiskHistoryAssessment__c)
+        )
+    )
+)</formula>
         <label>Risk History Assessment</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -3367,15 +3368,16 @@
     <fields>
         <fullName>ANG_RiskStatus__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ANG_FA_Opt_out__c,
-                &apos;Not Applicable&apos;,
-                    IF(
-              ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-                TEXT(ANG_HE_RiskStatus__c),  
-                TEXT(Top_Parent__r.ANG_HE_RiskStatus__c)
-              )
-            )</formula>
+        <formula>IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ANG_FA_Opt_out__c,
+    &apos;Not Applicable&apos;,
+	IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+		TEXT(ANG_HE_RiskStatus__c),
+		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
+			&apos;&apos;,			
+			TEXT(Top_Parent__r.ANG_HE_RiskStatus__c)
+		)
+	)
+)</formula>
         <label>Risk Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -94403,6 +94405,30 @@ myuser={!User.Id}</url>
         <openType>sidebar</openType>
         <protected>false</protected>
         <url>/apex/AMP_ChatterBroadcastTool?accountId={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>China_Pilot_Conversion_Wizard</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>China Pilot Conversion Wizard</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+
+var countryIsoCode = '{!Account.Country_ISO_Code__c}'; 
+
+// China Only
+if(countryIsoCode != 'CN'){
+    alert(&apos;This functionality is only available for accounts in China&apos;);
+} 
+else if((&apos;{!Account.Location_Type__c}&apos; == &apos;HE&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;HO&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;AO&apos;) &amp;&amp; &apos;{!Account.Location_Class__c}&apos; == &apos;D&apos; &amp;&amp; &apos;{!Account.IATACode__c}&apos; != &apos;&apos;) {
+   javascript:srcUp(&quot;/apex/AMS_AccountOSCARWizardPage?accountId={!Account.Id}&amp;NewGenPilot=true&quot;);
+}
+else {
+   alert(&apos;Conditions are not verified to trigger a conversion process on this agent&apos;);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Create_Airline_Branch</fullName>
