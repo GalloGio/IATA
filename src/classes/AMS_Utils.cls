@@ -189,6 +189,23 @@ public without sharing class AMS_Utils {
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
     public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
 
+    public static final String NGCHINACONVERSION  = 'ANG.MAJOR.CHANGES.CHINA.1.0'; //ACAMBAS - NEWGEN-4445
+ 
+    public static final String CONVERTTONEWGENPILOT = 'Conversion to GoLite'; //ACAMBAS - NEWGEN-4445
+    public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
+    public static final String CONVERTTOINTERNATIONAL = 'Conversion to International'; //ACAMBAS - NEWGEN-4445
+    
+    public static final Map<String, List<String>> OSCARBackupProcessMap = new Map<String, List<String>>{
+        NGCHANGES => new List<String>{'Step4__c'},
+        NGCHINACONVERSION => new List<String>{'Step4__c', 'Step3__c'}
+    };
+
+    public static final Set<String> pilotAccStatusNotRequireLocClassD = new Set<String>{
+        AMS_Utils.ACC_S0_TERMINATED, 
+        AMS_Utils.ACC_S3_NOTINOPERATION, 
+        AMS_Utils.ACC_S1_NOTACCREDITED
+    };
+
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
