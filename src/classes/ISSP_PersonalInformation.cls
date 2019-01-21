@@ -229,46 +229,6 @@ public with sharing class ISSP_PersonalInformation {
         bBlockTradeNameChange = con.Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c;
         isNAMEnabled = con.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c;
     }
-    
-    /*public void save(){
-        try {
-        	isEditMode = false;
-        	update con;  
-        	popContact();    
-        } catch (DmlException ex) {
-            ApexPages.addMessages(ex);   
-
-        }
-    }*/
-
-    public List<ISSP_AMS_Accreditation.AccountChanges> getAccountChangesList(){
-        List<ISSP_AMS_Accreditation.AccountChanges> accChanges_List = new List<ISSP_AMS_Accreditation.AccountChanges>();
-
-        Account acc = [Select Phone,PhoneNational__c,Fax,FaxNational__c,Email__c,TradeName__c,WebSite From Account Where id=:con.Account.Id limit 1];
-
-        if(acc.Phone != con.Account.Phone)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Phone',acc.Phone,con.Account.Phone));
-
-        if(acc.PhoneNational__c != con.Account.PhoneNational__c)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('PhoneNational__c',acc.PhoneNational__c,con.Account.PhoneNational__c));
-
-        if(acc.Fax != con.Account.Fax)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Fax',acc.Fax,con.Account.Fax));
-
-        if(acc.FaxNational__c != con.Account.FaxNational__c)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('FaxNational__c',acc.FaxNational__c,con.Account.FaxNational__c));
-
-        if(acc.Email__c != con.Account.Email__c)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('Email__c',acc.Email__c,con.Account.Email__c));
-
-        if(acc.TradeName__c != con.Account.TradeName__c)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('TradeName__c',acc.TradeName__c,con.Account.TradeName__c));
-        
-        if(acc.WebSite != con.Account.WebSite)
-            accChanges_List.add(new ISSP_AMS_Accreditation.AccountChanges('WebSite',acc.WebSite,con.Account.WebSite));
-        
-        return accChanges_List;
-    }
 	
 	public Pagereference saveContact(){
         try {
@@ -298,14 +258,10 @@ public with sharing class ISSP_PersonalInformation {
     public Pagereference saveAccount(){
         try {
             isEditMode = false;
-            if(isHOAccredited && bIsMinorChangeEnabled){
-             //   ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
-            }
+
             update con.Account;
             popContact();  
-            //Pagereference homePage = Page.ISSP_Homepage;
-            //homePage.setRedirect(true); 
-            //return homePage;
+
             return null;
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);
@@ -316,14 +272,10 @@ public with sharing class ISSP_PersonalInformation {
     public Pagereference saveAccountBR(){
         try {
             isEditMode = false;
-            if(isHOAccredited && bIsMinorChangeEnabled){
-             //   ISSP_AMS_Accreditation.callToMinorChangesWS(ISSP_AMS_Accreditation.getWSInstance(),con.Account.Id,getAccountChangesList());
-            }
+            
             update branchOffice;
             popContact();  
-            //Pagereference homePage = Page.ISSP_Homepage;
-            //homePage.setRedirect(true); 
-            //return homePage;
+
             return null;
         } catch (DmlException ex) {
             ApexPages.addMessages(ex);

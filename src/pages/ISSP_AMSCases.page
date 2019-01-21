@@ -225,7 +225,7 @@
                 <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/>
                 <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
                 <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases"/>
-                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryCases">
+                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms">
                     <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
                 </apex:actionFunction>    
             
@@ -308,11 +308,11 @@
                                         <apex:pageBlockTable id="onGoingMultiCountryForms" value="{!multiCountryApplicationForms}" var="mcForm" styleClass="table" rendered="{!mcApplicationFormsFound}">
                                             
                                             <apex:column headerValue="">
-                                                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=5{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!mcForm.Status__c == 'Completed'}">Modify</apex:outputLink>&nbsp;
+                                                <apex:outputLink value="/{!IF(mcForm.HO_Account__c != null, 'ISSP_ANG_PAX_HE', 'ISSP_ANG_PAX_AE?isMultiCountryNewAE')}?caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!mcForm.Status__c == 'Completed'}">Modify</apex:outputLink>
                                                 
-                                                <apex:outputLink value="/ISSP_ANG_PAX_AE?caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!mcForm.Status__c == 'InProgress'}">Edit</apex:outputLink>&nbsp;
+                                                <apex:outputLink value="/{!IF(mcForm.HO_Account__c != null, 'ISSP_ANG_PAX_HE', 'ISSP_ANG_PAX_AE?isMultiCountryNewAE')}?caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!mcForm.Status__c == 'InProgress'}">Edit</apex:outputLink>&nbsp;
 
-                                                <apex:commandLink immediate="true" onfocus="confirmMCCaseDelete('{!mcForm.Id}'); return false;" rendered="{!mcForm.HO_Account__c == null}" reRender="">Remove</apex:commandLink>
+                                                <apex:commandLink immediate="true" onfocus="confirmMCFormDelete('{!mcForm.Id}'); return false;" rendered="{!mcForm.HO_Account__c == null}" reRender="">Remove</apex:commandLink>
                                             </apex:column>
 
                                             <apex:column headerValue="{!$ObjectType.Case.fields.Subject.label}" style="margin-left: {!IF(mcForm.HO_Account__c == null, '40px', 'none')};">
