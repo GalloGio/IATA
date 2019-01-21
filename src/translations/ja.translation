@@ -15664,6 +15664,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_FRED_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_FRED_URL --></label>
+        <name>OneId_FRED_URL</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
         <name>OneId_ForgotPassword</name>
     </customLabels>
