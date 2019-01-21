@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Default_Amount__c</field>
-        <value xsi:type="xsd:double">2000000.0</value>
+        <value xsi:type="xsd:double">1.0E16</value>
     </values>
 </CustomMetadata>
