@@ -167,8 +167,6 @@ private class ANG_EligibilityForNewMCAgentTest {
             ParentId = accountGE.Id
         );
 
-		insert accountHE;
-
 		ANG_EligibilityForNewMulticountryAgent.EligibilityInputWrapper input = new ANG_EligibilityForNewMulticountryAgent.EligibilityInputWrapper();
 
 		input.currentAgent = accountHE;
@@ -210,8 +208,6 @@ private class ANG_EligibilityForNewMCAgentTest {
             Top_Parent__c = accountGE.Id,
             ParentId = accountGE.Id
         );
-
-        insert accountAE;
 
 		ANG_EligibilityForNewMulticountryAgent.EligibilityInputWrapper input = new ANG_EligibilityForNewMulticountryAgent.EligibilityInputWrapper();
 
