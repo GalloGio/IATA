@@ -22963,7 +22963,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP</shortDescription>
-        <value>SALUTATION</value>
+        <value>Salutation</value>
     </labels>
     <labels>
         <fullName>ISSP_MyProfile_SECTOR</fullName>
@@ -23906,7 +23906,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your password has now been changed. Please sign in again.</value>
+        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -30071,6 +30071,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_FRED_Troubleshooting_Link</shortDescription>
         <value>https://fred.iata.org/contact</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_URL</shortDescription>
+        <value>Your password has now been changed. Please go to &lt;a href=&quot;https://fred.iata.org&quot;&gt; FRED.iata.org&lt;/a&gt; to sign in again.</value>
     </labels>
     <labels>
         <fullName>OneId_ForgotPassword</fullName>
