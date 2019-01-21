@@ -2108,6 +2108,16 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                     <default>false</default>
                     <label>2250.00</label>
                 </value>
+                <value>
+                    <fullName>4100.00</fullName>
+                    <default>false</default>
+                    <label>4100.00</label>
+                </value>
+                <value>
+                    <fullName>1400.00</fullName>
+                    <default>false</default>
+                    <label>1400.00</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>TEST_FILE</controllingFieldValue>
@@ -2145,6 +2155,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_JOINS</controllingFieldValue>
+                <controllingFieldValue>MITA application fee - 701910</controllingFieldValue>
                 <controllingFieldValue>Code Reinstatement Fee - 701927</controllingFieldValue>
                 <controllingFieldValue>MITA Reinstatement Fee - 701912</controllingFieldValue>
                 <controllingFieldValue>CNSFEE_JOIN</controllingFieldValue>
@@ -2213,10 +2224,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>FDS_TDPMS</controllingFieldValue>
                 <controllingFieldValue>Code Assignment Fee - 701907</controllingFieldValue>
-                <controllingFieldValue>Code Annual Retention Fee-  701900</controllingFieldValue>
-                <controllingFieldValue>MITA application fee - 701910</controllingFieldValue>
                 <controllingFieldValue>Code A4A Assignment Fee - 752539</controllingFieldValue>
-                <controllingFieldValue>Code Annual A4A Retention Fee - 701903</controllingFieldValue>
                 <valueName>4000.00</valueName>
             </valueSettings>
             <valueSettings>
@@ -2237,12 +2245,20 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Code Annual Administration Fee - 701899</controllingFieldValue>
-                <controllingFieldValue>Code Application Fee - 752537</controllingFieldValue>
-                <valueName>1300.00</valueName>
+                <valueName>1400.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Code Annual Retention Fee-  701900</controllingFieldValue>
+                <controllingFieldValue>Code Annual A4A Retention Fee - 701903</controllingFieldValue>
+                <valueName>4100.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>MITA annual fee - 701909</controllingFieldValue>
                 <valueName>23000.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Code Application Fee - 752537</controllingFieldValue>
+                <valueName>1300.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Location Identifier Assignment Fee - 701920</controllingFieldValue>
