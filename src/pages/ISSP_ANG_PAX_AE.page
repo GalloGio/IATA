@@ -780,6 +780,9 @@
                 <div class="alert alert-info" role="alert">
                   {!$Label.ISSP_AMS_Step3_Save_Anytime}
                 </div>
+                <apex:outputPanel styleClass="alert alert-info" rendered="{!AND(isMultiCountryNewAE, newForm.AE_separate_Legal_Entity__c == 'No')}">
+                  hello
+                </apex:outputPanel>
                 <apex:pageBlockButtons >
                   <apex:commandButton action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}" />&nbsp;
                   <apex:commandButton id="nextFormRip" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}"/>
@@ -787,12 +790,10 @@
                 </apex:pageBlockButtons>
                 <apex:PageMessages id="msgs" />
 
-
-
                 <!-- ****************************************************************************** -->
                 <!-- ************* SECTION 1 - IATA Accredited Head Entity Details **************** -->
                 <!-- ****************************************************************************** -->
-                <div class="apcontainer" style="border: 1px solid #ececec;">
+                <div class="apcontainer" style="border: 1px solid #ececec; {!IF(AND(isMultiCountryNewAE, newForm.AE_separate_Legal_Entity__c == 'No'), 'margin-top: 10px', '')}">
                   <span id="nav_one"></span>
                   <span id="nav_two"></span>
                   <apex:pageBlock >
