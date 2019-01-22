@@ -61,7 +61,6 @@ private class ISSP_PersonalInformationTest {
 			ctrl.iataCode = '132';
 			ctrl.saveNewCompanyName();
 			ctrl.getPicklistValues();
-			List<ISSP_AMS_Accreditation.AccountChanges> accountChnages =  ctrl.getAccountChangesList();
 			List<SelectOption> paxBranches = ctrl.getPAXBranches();
 			ctrl.getBranchOffice();
 			ctrl.saveContact(); 
@@ -148,7 +147,6 @@ private class ISSP_PersonalInformationTest {
 			ctrl.iataCode = '132';
 			ctrl.saveNewCompanyName();
 			ctrl.getPicklistValues();
-			List<ISSP_AMS_Accreditation.AccountChanges> accountChnages =  ctrl.getAccountChangesList();
 			List<SelectOption> paxBranches = ctrl.getPAXBranches();
 			ctrl.selectedBranchAccount = acc.Id;
 			ctrl.getBranchOffice();
