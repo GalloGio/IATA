@@ -8,11 +8,13 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     public static Map<Id, EmailTemplate> templateIdVsTemplates {get;set;}
     public static Map<Id, List<Attachment>> templateIdVsAttachemnt {get;set;}
     public static Map<Id, Case> casesInfo {get;set;}
+    public Boolean oneShotRenewal {get;set;} //AMSU-200
 
     global AMS_PCI_Complaint_Batch(Integer batchScope) {
         this.batchScope = batchScope;
         this.lstErrors = new List<ErrorWrapper>();
         this.lstResult = new List<ResultWrapper>();
+        this.oneShotRenewal = false; //AMSU-200
     }
 
     global AMS_PCI_Complaint_Batch(Integer batchScope, Set<Id> filteredAccounts) {
@@ -20,6 +22,16 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         this.lstErrors = new List<ErrorWrapper>();
         this.lstResult = new List<ResultWrapper>();
         this.filteredAccounts = filteredAccounts;
+        this.oneShotRenewal = false; //AMSU-200
+    }
+
+    //AMSU-200
+    global AMS_PCI_Complaint_Batch(Integer batchScope, Set<Id> filteredAccounts, Boolean oneShotParam) {
+        this.batchScope = batchScope;
+        this.lstErrors = new List<ErrorWrapper>();
+        this.lstResult = new List<ResultWrapper>();
+        this.filteredAccounts = filteredAccounts;
+        this.oneShotRenewal = oneShotParam;
     }
 
     public static void start(String cron, Integer scope) {
@@ -78,6 +90,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             query += ' Id IN :filteredAccounts';
         } else { /* Process for renewal batch */
             query += ' ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:60';
+            query += ' AND Location_Type__c = \'HO\'';
             query += ' AND Location_Class__c IN :locations';
             query += ' AND Status__c IN :availableStatus';
             query += ' AND Is_PCI_compliant__c NOT IN :pciValues';
@@ -94,8 +107,9 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         Savepoint sp = Database.setSavepoint();
         try {
             Boolean isRenewal = filteredAccounts == null; // if filteredAccounts is null means that is a renewal process running
+            if(oneShotRenewal) isRenewal = true; //AMSU-200 - in case of oneshot is always renewal
             system.debug('isRenewal: ' + isRenewal);
-            validateCandidatesForRenewal(scope, resChunk, isRenewal);            
+            validateCandidatesForRenewal(scope, resChunk, isRenewal, oneShotRenewal);            
         } catch(Exception e) {
             System.debug('execute validateCandidatesForRenewal - Exception : ' + e);
             System.debug('execute validateCandidatesForRenewal - Exception : ' + e.getStackTraceString());
@@ -132,7 +146,12 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         }
     }
 
+    //AMSU-200
     public static void validateCandidatesForRenewal(List<Account> pciRequiringRenewal, List<ResultWrapper> resW, Boolean isRenewal){
+        validateCandidatesForRenewal(pciRequiringRenewal, resW, isRenewal, false);  
+    }
+
+    public static void validateCandidatesForRenewal(List<Account> pciRequiringRenewal, List<ResultWrapper> resW, Boolean isRenewal, Boolean isOneShot){
 
         Set<Id> accountIds = new Set<Id>();
 
@@ -227,8 +246,16 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         for(Account acc: accountData.values())
             isoCountries.add(acc.IATA_ISO_Country__c);
 
+        //AMSU-200
+        String type = 'PCI';
+
+        if(isOneShot){
+            type = type + '_oneShot';
+        }
         
-        Map<String, Id> countryTemplates = PCIemailTemplates('PCI', isRenewal);
+        //AMSU-200
+        //Map<String, Id> countryTemplates = PCIemailTemplates('PCI', isRenewal);
+        Map<String, Id> countryTemplates = PCIemailTemplates(type, isRenewal);
         OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
         for(Account agReg: pciRequiringRenewal){
@@ -256,7 +283,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
             system.debug('creating renewal for PCI');
 
-            AMS_OSCAR__c oscar = createStagingArea(agReg, comCasecontact, isRenewal);
+            AMS_OSCAR__c oscar = createStagingArea(agReg, comCasecontact, isRenewal, isOneShot);
             ResultWrapper resProcess = new ResultWrapper(agReg);
             if(comCaseContact != null) {
                 resProcess.con = comCaseContact;
@@ -280,8 +307,13 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
     }
 
-    
+    //AMSU-200
     public static AMS_OSCAR__c createStagingArea(Account accountData, Contact communicationCaseContact, Boolean isRenewal){
+        return createStagingArea(accountData, communicationCaseContact, isRenewal, false);
+    }
+    
+	//AMSU-200 - added param "isOneShot"
+    public static AMS_OSCAR__c createStagingArea(Account accountData, Contact communicationCaseContact, Boolean isRenewal, Boolean isOneShot){
 
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = accountData.Id,
                                     Process__c = AMS_Utils.PCI_COMPLIANT, Status__c='Accepted_Future Date', ANG_PCI_compliance_expiry_date__c = accountData.ANG_PCI_compliance_expiry_date__c);
@@ -309,6 +341,10 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         theCommunicationCase.Status = 'Accepted_Future Date';
         theCommunicationCase.IATACodeProduct__c = accountData.IATACode__c;
         theCommunicationCase.Origin = isRenewal ? 'PCI automatic renewal' : 'Massive PCI Creation';
+        
+        //AMSU-200
+        if(isOneShot) theCommunicationCase.Do_Not_Send_Notification__c = true;
+
         
         if(communicationCaseContact != null)
             theCommunicationCase.ContactId = communicationCaseContact.Id;

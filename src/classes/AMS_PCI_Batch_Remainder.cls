@@ -93,6 +93,8 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
         query += 'WHERE RecordTypeId = :recordTypeId AND Account.Status__c != :accountStatus AND IsClosed = false AND Reason1__c = :reason AND Account.ANG_IsNewGenAgency__c = false ';
         query += ' AND Origin IN :origins';
         query += 'AND (Account.ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:30 OR (Account.Is_PCI_compliant__c = null AND CreatedDate < LAST_N_DAYS:14))';
+        query += 'AND Do_Not_Send_Notification__c = false'; //AMSU-200
+        //query += 'AND (Account.ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:30 OR (Account.Is_PCI_compliant__c = null AND CreatedDate = today))';
 
         system.debug('query: ' + query);
         
