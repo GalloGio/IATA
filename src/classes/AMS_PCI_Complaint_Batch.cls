@@ -485,115 +485,12 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                 system.debug('DGR sendEmailAlert: userId : ' + userId);
 
                 if(userId != null){
-
-                    if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
-
-                        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                        //mail.saveAsActivity = true;
-                        mail.saveAsActivity = false; //must be false when sending mail to users.
-                        
-                        //mail.setToAddresses(new List<String>{recipient.Email});
-                        mail.setTargetObjectId(userId);
-                        
-                        if(templateToIATA){
-                            mail.setTemplateId(tempIata.get(0).Id);
-                        } else {
-                            //AMSU-177 - added "+ recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'' "
-                            mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') , countryTemplates));
-                        }
-                        //mail.setTargetObjectId(recipient.Id);
-                        
-                        //mail.setWhatId(oscarId); //WhatId is not available for sending emails to UserIds
-                       
-                        mail.setOrgWideEmailAddressId(owea.Id);
-
-                        mailsToSend.add(mail);
-
-                    //FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
-                    //PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
-                    }else if(isDGR){
-
-                        system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
-
-                        //FM 24/10/2017 - AMSU-32 
-                        if(recipient.User_Portal_Status__c == 'Approved Admin'){
-
-                            //AMSU-177
-                            String sPreferred_Language = recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'');
-
-                            system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
-                            //system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
-                            system.debug('DGR sendEmailAlert: Pref Lang ' + sPreferred_Language); //AMSU-177
-
-                            //lPortalAdminsEmailsDGR.add(recipient.Email);
-                            //if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
-                            if(mPortalAdminsEmailsDGR.containsKey(sPreferred_Language)){ //AMSU-177
-                                //system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + recipient.Preferred_Language__c);
-                                system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + sPreferred_Language); //AMSU-177
-                                
-                                //List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
-                                //aux.add(recipient.Email);
-                                //List<Id> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
-                                List<Id> aux = mPortalAdminsEmailsDGR.get(sPreferred_Language); //AMSU-177
-                                aux.add(userId);
-                                
-                                //mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
-                                mPortalAdminsEmailsDGR.put(sPreferred_Language, aux); //AMSU-177
-                            }else{
-                                //system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + recipient.Preferred_Language__c);
-                                system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + sPreferred_Language); //AMSU-177
-                                //List<String> aux = new List<String>();
-                                //aux.add(recipient.Email);
-                                List<Id> aux = new List<Id>();
-                                aux.add(userId);
-                                
-                                //mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
-                                mPortalAdminsEmailsDGR.put(sPreferred_Language, aux); //AMSU-177
-                                //mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
-                            }
-
-                            system.debug('DGR sendEmailAlert: mPortalAdminsEmailsDGR ' + mPortalAdminsEmailsDGR);
-
-
-                        }else{
-                            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                            //mail.saveAsActivity = true;
-                            mail.saveAsActivity = false; //must be false when sending mail to users.
-                            //mail.setToAddresses(new List<String>{recipient.Email});
-                            if(templateToIATA){
-                                mail.setTemplateId(tempIata.get(0).Id);
-                            } else {
-                                //AMSU-177 - added "+ recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'' "
-                                mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') , countryTemplates));
-                            }
-                            //.setTargetObjectId(recipient.Id);
-                            mail.setTargetObjectId(userId);
-                                                        
-                            //mail.setWhatId(oscarId); //WhatId is not available for sending emails to UserIds
-                               
-                            mail.setOrgWideEmailAddressId(owea.Id);
-
+                    String templateName = recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'');
+                    Id templateId = getSpecificLangTemplate(templateName , countryTemplates); 
+                    Messaging.SingleEmailMessage mail = mergeTemplate(templateId, recipient.Id, userId, oscarCommCaseId, owea.Id);
                             mailsToSend.add(mail);
                         }
                     }
-                }
-            }
-
-            if(mPortalAdminsEmailsDGR != null) {
-                for(String key : mPortalAdminsEmailsDGR.keySet()){
-                    List<Id> users = mPortalAdminsEmailsDGR.get(key);
-                    
-                    for(Id userId : users) {                    
-                        Id templateId = templateToIATA ? tempIata.get(0).Id : getSpecificLangTemplate(key, countryTemplates);
-                        Id contactId = mapUsers.get(userId).ContactId;
-                        Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(templateId, contactId, oscarCommCaseId);
-                        mail.setOrgWideEmailAddressId(owea.Id);
-                        mail.setTargetObjectId(userId);
-                        mail.saveAsActivity = false;
-                        mailsToSend.add(mail);
-                    }
-                }
-            }
 
             for(Messaging.SingleEmailMessage mail : mailsToSend){
                 
@@ -766,6 +663,14 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
         Messaging.sendEmail(messages);
 
+    }
+
+    private static Messaging.SingleEmailMessage mergeTemplate(Id templateId, Id contactId, Id userId, Id caseId, Id oweaId) {
+        Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(templateId, contactId, caseId);   
+        mail.setOrgWideEmailAddressId(oweaId);
+        mail.setTargetObjectId(userId);
+        mail.saveAsActivity = false;
+        return mail;
     }
     
 }
