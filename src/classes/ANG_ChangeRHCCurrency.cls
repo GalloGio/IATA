@@ -4,6 +4,7 @@ public with sharing class ANG_ChangeRHCCurrency {
         'ANG_Financial_Security__c', 'ANG_RME_Amount__c','ANG_RHC_Amount_Provisional__c','ANG_Exceeding_Financial_Security__c'};
 
     private String objId;
+
     private static DescribeSObjectResult sObjDesc{
         get{
             if(sObjDesc==null)
@@ -31,23 +32,12 @@ public with sharing class ANG_ChangeRHCCurrency {
 
             return isEdit;
         }
-        private set;
+        set;
     }
 
     public List<FieldWrapper> displayFields{get; set;}
-
-    public String caseNumber{get; set;}
-
-    public void setCaseToUpdate(){
-        List<case> cse = [Select Id, CaseNumber, Subject, Reason1__c, CaseArea__c FROM Case Where CaseNumber = :caseNumber];
-        if (cse.isEmpty()){
-            ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.ERROR,'Incorrect Case Number'));
-        } else {
-            this.caseToUpdate = cse[0];
-        }
-    }
-
-    private Case caseToUpdate {get; set;}
+    
+    public Case caseToUpdate {get; set;}
 
     private Set<String> fieldsToQuery{
         get{
@@ -105,13 +95,25 @@ public with sharing class ANG_ChangeRHCCurrency {
     }
 
     public void toggleEditMode(){
-        isEdit = (!isEdit && sObjDesc.isUpdateable());
+        isEdit = (isEdit && sObjDesc.isUpdateable());
     }
 
     public void save(){
-        if(caseToUpdate != null){
+        if(caseToUpdate.ParentId != null){
+
+            List<case> cse = [Select Id, CaseNumber, Subject, Reason1__c, CaseArea__c FROM Case Where Id = :caseToUpdate.ParentId and recordTypeId = :AMS_Utils.RECTYPE_SAAM];
+            
+            if (cse.isEmpty()){
+                ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.ERROR,'Incorrect Case Number'));
+                return;
+            }
+
+            this.caseToUpdate = cse[0];
+
             caseToUpdate.Reason1__c = 'RHC Changes';
             caseToUpdate.CaseArea__c = 'Risk Management Process';
+            caseToUpdate.Subject = 'RHC currency updated';
+
             update caseToUpdate;
             update rhc;
             queryRHC();
@@ -123,13 +125,14 @@ public with sharing class ANG_ChangeRHCCurrency {
     }
 
     private void queryRHC(){
-        this.rhc = Database.query('SELECT Id,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
+        this.rhc = Database.query('SELECT Id,Name,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
     }
 
     public ANG_ChangeRHCCurrency() {
         this.objId = ApexPages.currentPage().getParameters().get('Id'); 
         queryRHC();
-        oldCurrency = rhc.CurrencyIsoCode;      
+        oldCurrency = rhc.CurrencyIsoCode;
+        caseToUpdate = new case();
     }
 
     public class FieldWrapper{
