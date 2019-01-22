@@ -1,11 +1,23 @@
 public without sharing class Pardot_API {
-    private static String pardotAPIVersion = Label.TECH_PARDOT_API_VERSION; // 3 or 4
-    private static String TECH_PARDOT_INTEGRATION_EMAIL = Label.TECH_PARDOT_INTEGRATION_EMAIL;
-	private static String TECH_PARDOT_INTEGRATION_PWD = Label.TECH_PARDOT_INTEGRATION_PWD;
-    private static String TECH_PARDOT_INTEGRATION_USER_KEY = Label.TECH_PARDOT_INTEGRATION_USER_KEY;
-    private static String TECH_PARDOT_ASSGINED_USER = Label.TECH_PARDOT_ASSGINED_USER;
+    private static String pardotAPIVersion; // 3 or 4
+    private static String TECH_PARDOT_INTEGRATION_EMAIL;
+	private static String TECH_PARDOT_INTEGRATION_PWD;
+    private static String TECH_PARDOT_INTEGRATION_USER_KEY;
+    private static String TECH_PARDOT_ASSGINED_USER;
     
+    private static void getAPICredentials() {
+        Pardot_API__c pardotSetting = [SELECT API_Version__c, Password__c, User_Key__c, Email__c, Assigned_User__c FROM Pardot_API__c LIMIT 1][0];
+        pardotAPIVersion = pardotSetting.API_Version__c;
+        TECH_PARDOT_INTEGRATION_EMAIL = pardotSetting.Email__c;
+        TECH_PARDOT_INTEGRATION_PWD = pardotSetting.Password__c;
+        TECH_PARDOT_INTEGRATION_USER_KEY = pardotSetting.User_Key__c;
+        TECH_PARDOT_ASSGINED_USER = pardotSetting.Assigned_User__c;
+    }
+
     public static String getAPIToken() {
+        // Get creddentials from custom settings
+        getAPICredentials();
+
 		String url = 'https://pi.pardot.com/api/login/version/'+pardotAPIVersion+'?email='+EncodingUtil.urlEncode(TECH_PARDOT_INTEGRATION_EMAIL, 'UTF-8')+'&password='+EncodingUtil.urlEncode(TECH_PARDOT_INTEGRATION_PWD, 'UTF-8')+'&user_key='+EncodingUtil.urlEncode(TECH_PARDOT_INTEGRATION_USER_KEY, 'UTF-8');
         String body = '';
 
@@ -25,6 +37,8 @@ public without sharing class Pardot_API {
     }
 
 	 public static Pardot_Prospect getProspect(String email) {
+        // Get creddentials from custom settings
+        getAPICredentials();
 		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8');
 		Map<String,String> headers = new Map<String,String>{
 			'Authorization'=>'Pardot api_key='+getAPIToken()+',user_key='+TECH_PARDOT_INTEGRATION_USER_KEY
@@ -98,6 +112,8 @@ public without sharing class Pardot_API {
 	public static boolean updateProspect(Pardot_Prospect prospect) {
 		if( prospect == null || String.isBlank(prospect.id) )
 			return false;
+        // Get creddentials from custom settings
+        getAPICredentials();
 
 		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospect.id;
 		url = url+prospect.buildURLParameter();
@@ -125,7 +141,8 @@ public without sharing class Pardot_API {
 	public static boolean createProspect(Pardot_Prospect prospect) {
 		if( prospect == null || String.isBlank(prospect.email) )
 			return false;
-
+        // Get creddentials from custom settings
+        getAPICredentials();
 		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/create/email/'+EncodingUtil.urlEncode(prospect.email, 'UTF-8');
 		url = url+prospect.buildURLParameter();
         url += '&user_id='+TECH_PARDOT_ASSGINED_USER;
@@ -183,7 +200,8 @@ public without sharing class Pardot_API {
 
     public static boolean updateProspectInterest(String prospectID, list<String> interests) {
 		if( String.isBlank(prospectID) ) return false;
-
+        // Get creddentials from custom settings
+        getAPICredentials();
 		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospectID;
 
         String params = '?';
@@ -225,6 +243,8 @@ public without sharing class Pardot_API {
 
     public static boolean createListMembership(String prospect_id, String list_id) {
 		if( String.isBlank(prospect_id) || String.isBlank(list_id)) return false;
+        // Get creddentials from custom settings
+        getAPICredentials();
 		String url = 'https://pi.pardot.com/api/listMembership/version/'+pardotAPIVersion+'/do/create/list_id/'+list_id+'/prospect_id/'+prospect_id;
 
 		Map<String,String> headers = new Map<String,String>{
@@ -255,6 +275,8 @@ public without sharing class Pardot_API {
 
      public static boolean deleteListMembership(String prospect_id, String list_id) {
 		if( String.isBlank(prospect_id) || String.isBlank(list_id)) return false;
+        // Get creddentials from custom settings
+        getAPICredentials();
 		String url = 'https://pi.pardot.com/api/listMembership/version/'+pardotAPIVersion+'/do/delete/list_id/'+list_id+'/prospect_id/'+prospect_id;
 
 		Map<String,String> headers = new Map<String,String>{
@@ -356,46 +378,4 @@ public without sharing class Pardot_API {
         }
     }
     
-    /*
-   <lists>
-            <list_subscription>
-                <id>362373050</id>
-                <did_opt_in>false</did_opt_in>
-                <did_opt_out>false</did_opt_out>
-                <created_at>2019-01-07 04:44:07</created_at>
-                <updated_at>2019-01-07 04:44:07</updated_at>
-                <list>
-                    <id>95394</id>
-                    <name>Air pulse newsletter</name>
-                    <is_public>true</is_public>
-                    <is_dynamic>false</is_dynamic>
-                    <title>Air pulse newsletter</title>
-                    <description></description>
-                    <is_crm_visible>false</is_crm_visible>
-                    <created_at>2019-01-03 12:48:36</created_at>
-                    <updated_at>2019-01-03 12:48:36</updated_at>
-                </list>
-            </list_subscription>
-            <list_subscription>
-                <id>362373052</id>
-                <did_opt_in>false</did_opt_in>
-                <did_opt_out>false</did_opt_out>
-                <created_at>2019-01-07 04:44:07</created_at>
-                <updated_at>2019-01-07 04:44:07</updated_at>
-                <list>
-                    <id>95398</id>
-                    <name>Alexander de Juniac’s blog</name>
-                    <is_public>true</is_public>
-                    <is_dynamic>false</is_dynamic>
-                    <title>Alexander de Juniac’s blog</title>
-                    <description></description>
-                    <is_crm_visible>false</is_crm_visible>
-                    <created_at>2019-01-03 12:49:04</created_at>
-                    <updated_at>2019-01-03 12:49:04</updated_at>
-                </list>
-            </list_subscription>
-        </lists>
-        */
-
-	
 }

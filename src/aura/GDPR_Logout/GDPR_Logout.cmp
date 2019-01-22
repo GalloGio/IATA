@@ -1,5 +1,5 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes"  controller="GDPR_Logout_CTRL">
-    
+    <ltng:require scripts="{!$Resource.GDPR_Helper}" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:attribute name="isGuest" type="Boolean" default="false" />
     

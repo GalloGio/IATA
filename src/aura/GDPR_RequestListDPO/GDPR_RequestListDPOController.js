@@ -10,7 +10,6 @@
                 var isDPO = responseOne.getReturnValue();
                 if(isDPO==null)
                     isDPO = false;
-                console.log(isDPO);
 
                 component.set("v.isContactDPO", isDPO);
                 
@@ -52,11 +51,9 @@
     
     openDPOCasePopupHandleClick : function (component, event, helper){
         var clickedCaseId = event.getSource().get("v.name");
-        //console.log(clickedCaseId);
         var lstCases = component.get("v.lstCases");
         for(var i = 0; i < lstCases.length; i++){
             if(lstCases[i].Id == clickedCaseId){
-                //console.log(lstCases[i]);
 				component.set("v.showCasePopupObjectDPO", lstCases[i]);
                 component.set("v.showCasePopupDPO", true);
                 break;

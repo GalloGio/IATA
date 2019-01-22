@@ -1,5 +1,5 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" access="global" controller="GDRP_UserInfo_CTRL">
-    <ltng:require scripts="{!$Resource.GDPR_Helper}" afterScriptsLoaded="{!c.initGDPR}"/>
+    <ltng:require scripts="{!$Resource.GDPR_Helper}" />
 
     <aura:attribute name="iid" type="String" />
     <aura:attribute name="individual"  type="Map" default="{ 'sobjectType': 'Individual' }" />

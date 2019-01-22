@@ -9,7 +9,7 @@
     <aura:attribute name="showDPOArea" type="Boolean" default="false" />
     <aura:attribute name="submitNewCase" type="Boolean" default="false" />
     <aura:attribute name="requestType" type="String" default="passenger" />
-    
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
     <aura:registerEvent name="EVT_GDPR_UpdateCaseList" type="c:EVT_GDPR_UpdateCaseList"/>
@@ -39,7 +39,7 @@
                             <div class="slds-grid slds-wrap slds-grid--align-center">
                                 
                                 <div class="slds-p-vertical_medium slds-p-horizontal_medium slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-                                    <ui:inputText aura:id="subject"  label="Subject" value="{!v.newCaseDPO.Subject}" required="true"/>
+                                  <ui:inputText aura:id="subject"  label="Subject" value="{!v.newCaseDPO.Subject}" />
                                 </div>
                                 
                                 <div class="slds-p-vertical_medium slds-p-horizontal_medium slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">

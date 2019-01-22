@@ -56,7 +56,7 @@ public without sharing class OneIdUtils {
             
             if(m == Mode.ISSP) netMode = 'IATA Portal';
             if(m == Mode.IDENTITY) netMode = 'identity';
-            if(m == Mode.GDPR) netMode = 'GDPR Portal';
+            if(m == Mode.GDPR) netMode = Label.TECH_GDPR_Network_Name;
             
             String networkId = networks.get(netMode);
             

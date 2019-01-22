@@ -122,6 +122,8 @@ public without sharing class GDRP_UserInfo_CTRL {
 		System.debug(token.left(10));
 		if(token.left(10) == String.valueOf(System.TODAY()).left(10)) {
 			String email = token.substring(10);
+			// Check if there is already a individual created - means that the guest already access to the portal at least once and individual was created
+			if( [SELECT count() FROM Individual WHERE email__c =: email] > 0) return null;
 			return email;
 		}
 		return null;

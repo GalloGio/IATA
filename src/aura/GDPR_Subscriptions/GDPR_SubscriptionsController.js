@@ -1,10 +1,14 @@
 ({	
 	doInit : function(cmp, evt, hlp) {
+		
+		cmp.set("v.salesforceSynced", _userInfo.getUserInfo() != null && !$A.util.isEmpty(_userInfo.getUserInfo().salesforceId));
 		hlp.getSubcriptionsList(cmp);
 		cmp.set("v.email", _userInfo.getUserInfo().email);
 	},
 
 	saveAll : function(cmp, evt, hlp) {
+		cmp.set("v.localLoading", true);
+
 		var allSubscriptions = [];
 		var a = cmp.get("v.newsletters");
 
@@ -26,41 +30,22 @@
 		hlp.saveSubscriptions(cmp, userChoice);
 	},
 
-	unsubscribe : function(cmp, evt, hlp) {
-		// Opt-out using Pardot API
-		var action = cmp.get("c.optOut");
-		action.setParams({
-			"prospect_id" : _userInfo.getUserInfo().pardotID,
-			"email" : _userInfo.getUserInfo().email,
-			"doOptOut" : true
-		});
-		action.setCallback(this, function(a) {
-			var result = a.getReturnValue();
-			if(result) {
-				hlp.showToast("success", "Success","Information updated");
-			} else {
-				hlp.showToast("error", "Error","An error occurs");
-			}
-		});
-		$A.enqueueAction(action);
+	changeUnsubscribe : function(cmp, evt, hlp) {
+		cmp.set("v.localLoading", true);
+		hlp.subscribe(cmp);
 	},
 
-	subscribe : function(cmp, evt, hlp) {
-		// Opt-in by upading the lead or contact and the connector will sync the info in Pardot (not possible to opt-in using the API)
-		var action = cmp.get("c.optIn");
-		action.setParams({
-			"salesforce_id" : _userInfo.getUserInfo().salesforceId,
-			"email" : _userInfo.getUserInfo().email
-		});
-		action.setCallback(this, function(a) {
-			var result = a.getReturnValue();
-			if(result) {
-				hlp.showToast("success", "Success","Information updated");
-				cmp.set("v.opted_out", false);
-			} else {
-				hlp.showToast("error", "Error","An error occurs");
-			}
-		});
-		$A.enqueueAction(action);
-	}
+	redirectToSubscriptionTab : function(cmp, evt, hlp) {
+		// Notify tabs component to display the subscription tab
+		var aaa = $A.get("e.c:EVT_GDPR_DisplayTab");
+		aaa.setParams({"activeTabId": "3"}); 
+		aaa.fire();
+	},
+
+	handleEVT_GDPR_OptOutSync : function(cmp, evt, hlp) {
+		cmp.set("v.opted_out", evt.getParam("optout"));
+		cmp.set("v.unsubscribe", evt.getParam("optout"));
+	},
+
+	
 })

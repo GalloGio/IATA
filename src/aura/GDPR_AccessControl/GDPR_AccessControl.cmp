@@ -7,7 +7,7 @@
             <lightning:spinner size="large" aura:id="spinner"/>
         </div> 
     <aura:set attribute="else">
-        <c:GDPR_TabsContainer version="2"/>
+        <c:GDPR_TabsContainer version="1"/>
     </aura:set>
 
     </aura:If>

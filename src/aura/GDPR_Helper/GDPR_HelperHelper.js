@@ -1,5 +1,5 @@
 ({
-	retrieveUserInfo : function(cmp) {
+	retrieveUserInfo : function(cmp, evt) {
 		
 		// Create lead + individual
 		var isGuest = true;
@@ -31,12 +31,24 @@
 					_userInfo.setSubscriptions(userInfoObj.subscriptions);
 					_userInfo.setSalesforceId(userInfoObj.salesforceId);
 					//_userInfo.setInterests(userInfoObj.prospectId);
+					
+                    var tabIndex = "1";
+                    if(! _userInfo.getUserInfo().isGuest) // Registrered user
+                        tabIndex = "4";
+                    else {
+                        if(_userInfo.getUserInfo().salesforceId == null || $A.util.isEmpty(_userInfo.getUserInfo().salesforceId)) // unknown users
+                            tabIndex = "2";
+                        else // lead or contact
+                            tabIndex = "1";
+                    }
+                    // Notify tabs component to display
+                    var aaa = $A.get("e.c:EVT_GDPR_DisplayTab");
+                    aaa.setParams({"activeTabId":tabIndex}); 
+                    aaa.fire();
 				}
             } else {
 				console.log("GDPR Helper error: Problem while trying to load user info");
 			}
-			console.log("USER INFO:");
-			console.log(_userInfo.getUserInfo());
         });
 		$A.enqueueAction(action);
 	},

@@ -4,9 +4,20 @@
 
     <aura:attribute name="interests" type="GDPR_SubscriptionsAndInterests_CTRL.InterestsWrapper[]"  />
     <aura:attribute name="email" type="String"  />
+    <aura:attribute name="salesforceSynced" type="Boolean" default="false"/>
+    <aura:attribute name="unsubscribe" type="Boolean" default="false"/> 
+    <aura:attribute name="opted_out" type="Boolean"  default="true"/> 
+    <aura:attribute name="localLoading" type="Boolean" default="false"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-   
+    <aura:registerEvent name="EVT_GDPR_OptOutSync" type="c:EVT_GDPR_OptOutSync"/>
+    <aura:handler event="c:EVT_GDPR_OptOutSync" action="{!c.handleEVT_GDPR_OptOutSync}"/>
+    
+     <!-- Spinner DIV -->
+     <aura:if isTrue="{!v.localLoading}">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+
     <p>Email Address: {!v.email}</p>
     
     <div class="slds-p-horizontal--small slds-size--1-of-1 ">
@@ -19,7 +30,7 @@
         <div class="slds-grid slds-wrap" >
             <aura:iteration items="{!v.interests}" var="i">
                 <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
-                    <ui:inputCheckbox  aura:id="interestsCbx" value="{!i.selected}" class="slds-p-horizontal--small cbx" />
+                    <ui:inputCheckbox  aura:id="interestsCbx" value="{!i.selected}" class="slds-p-horizontal--small cbx" disabled="{!v.opted_out}"/>
                     <span class="label">{!i.label}</span>
                     
                 </div>
@@ -30,10 +41,27 @@
 <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
 <p>*Selecting your interests personalizes your experience with IATA Products and Services Communication. Interests are not additional subscriptions.</p>
 </div>
-<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-    <button class="btn btn-primary slds-float_right" type="submit" onclick="{!c.saveAll}">Save All Changes</button> <br />
-</div>
-<br />
+
+<!-- Common footer with subscription tab-->
 
 <div class="slds-text-heading_large slds-m-vertical_large IATA_sectionEndSeparator"></div>
+
+<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+    <aura:if isTrue="{!!v.opted_out}">
+        <button class="btn btn-primary slds-float_right" type="submit" onclick="{!c.saveAll}" >Save All Changes</button> <br />
+    </aura:if>
+</div>
+<br />
+<aura:if isTrue="{!v.salesforceSynced}">
+    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-text-align_center">
+        <p><b>Don’t want to receive IATA Communication?</b></p><br />
+        <aura:if isTrue="{!v.opted_out}">
+            <p class="redMsg">*If you want to subscribe again, un-tick the box.</p>
+        </aura:if>
+        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-text-align_center" >
+            <ui:inputCheckbox  aura:id="subscriptionsCbx" value="{!v.unsubscribe}" class="slds-p-horizontal--small cbx" change="{!c.changeUnsubscribe}"/>
+            <span class="label"><b>Unsubscribe</b></span>
+        </div>
+    </div>
+</aura:if>
 </aura:component>

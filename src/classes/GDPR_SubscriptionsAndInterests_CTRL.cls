@@ -1,6 +1,6 @@
 public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 	@AuraEnabled
-  public static String getSubscriptionList(String email) {
+  public static String getSubscriptionList(String email, String salesforceId) {
 		SubWrapper sws = new SubWrapper();
 		list<SubscriptionWrapper> newsletters =  new list<SubscriptionWrapper>();
 		list<SubscriptionWrapper> products =  new list<SubscriptionWrapper>();
@@ -12,7 +12,6 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 		// Get subscription info from Pardot
 		Pardot_API.Pardot_Prospect prospect = new Pardot_API.Pardot_Prospect();
 		prospect = Pardot_API.getProspect(email);
-
 		set<String> listSubcribed = new set<String>();
 		for(Pardot_API.List_Subscription ls : prospect.list_subscription ) {
 			listSubcribed.add(ls.id);
@@ -38,6 +37,21 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 			sws.products = products;
 			sws.initialSubscription = initialSubscription;
 			sws.opted_out = prospect.opted_out == '1';
+
+			// Get opt-out value from Salesforce (not for Pardot to avoid disynchronisation)
+			Boolean isOptedOut = false;
+			if(String.isNotBlank(salesforceId)) {
+				Id sdfcId = salesforceId;
+				String sObjectName = sdfcId.getsobjecttype() == Schema.Lead.SObjectType  ? 'Lead' : 'Contact';
+				if(sdfcId.getsobjecttype() == Schema.Lead.SObjectType) {
+					Lead l = [SELECT Id, HasOptedOutOfEmail FROM Lead WHERE Id =: salesforceId];
+					isOptedOut = l.HasOptedOutOfEmail;
+				} else {
+					Contact c = [SELECT Id, HasOptedOutOfEmail FROM Contact WHERE Id =: salesforceId];
+					isOptedOut = c.HasOptedOutOfEmail;
+				}
+			}
+			sws.opted_out = isOptedOut;
 		} 
 	system.debug(sws);
 		return JSON.serialize(sws);
@@ -70,26 +84,26 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 	}
 
 	@AuraEnabled
-  public static boolean optIn(String salesforce_id, String email) {
+  public static boolean optIn(String salesforce_id, String email, Boolean doOptOut) {
 		if( String.isBlank(salesforce_id)) return false;
 
 		Id sdfcId = salesforce_id;
 		String sObjectName = sdfcId.getsobjecttype() == Schema.Lead.SObjectType  ? 'Lead' : 'Contact';
 		if(sdfcId.getsobjecttype() == Schema.Lead.SObjectType) {
 			Lead l = [SELECT Id, HasOptedOutOfEmail FROM Lead WHERE Id =: salesforce_id];
-			l.HasOptedOutOfEmail = false;
+			l.HasOptedOutOfEmail = doOptOut;
 			update l;
 		} else {
 			Contact c = [SELECT Id, HasOptedOutOfEmail FROM Contact WHERE Id =: salesforce_id];
-			c.HasOptedOutOfEmail = false;
+			c.HasOptedOutOfEmail = doOptOut;
 			update c;
 		}
-		GDPR_Helper.sendSubscriptionModificationEmail(email, false);
+		GDPR_Helper.sendSubscriptionModificationEmail(email, doOptOut);
 		return true;
 	}
 
 	@AuraEnabled
-  public static list<InterestsWrapper> getInterestList(String email) {
+  public static list<InterestsWrapper> getInterestList(String email, String salesforceId) {
 		list<InterestsWrapper> iws =  new list<InterestsWrapper>();
 		// Get available choices from metadata
 		list<GDPR_Pardot_Interest_List__mdt> allInterests = [SELECT label, Pardot_label__c FROM GDPR_Pardot_Interest_List__mdt ORDER BY Pardot_label__c];
@@ -99,13 +113,29 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 		prospect = Pardot_API.getProspect(email);
 		system.debug(prospect);
 
+		// Get opt-out value from Salesforce (not for Pardot to avoid disynchronisation)
+		Boolean isOptedOut = false;
+		if(String.isNotBlank(salesforceId)) {
+			Id sdfcId = salesforceId;
+			String sObjectName = sdfcId.getsobjecttype() == Schema.Lead.SObjectType  ? 'Lead' : 'Contact';
+			if(sdfcId.getsobjecttype() == Schema.Lead.SObjectType) {
+				Lead l = [SELECT Id, HasOptedOutOfEmail FROM Lead WHERE Id =: salesforceId];
+				isOptedOut = l.HasOptedOutOfEmail;
+			} else {
+				Contact c = [SELECT Id, HasOptedOutOfEmail FROM Contact WHERE Id =: salesforceId];
+				isOptedOut = c.HasOptedOutOfEmail;
+			}
+		}
+
 		for(GDPR_Pardot_Interest_List__mdt aInterest : allInterests){
-				InterestsWrapper iw = new InterestsWrapper();
-				iw.label = aInterest.Pardot_label__c;
-				iw.selected = prospect.area_of_Interest == null || prospect.area_of_Interest.isEmpty() ? false : prospect.area_of_Interest.contains(aInterest.label);
-				iws.add(iw);
+			InterestsWrapper iw = new InterestsWrapper();
+			iw.label = aInterest.Pardot_label__c;
+			iw.selected = prospect.area_of_Interest == null || prospect.area_of_Interest.isEmpty() ? false : prospect.area_of_Interest.contains(aInterest.label);
+			iw.opted_out = isOptedOut;
+			iws.add(iw);
 		}
 		system.debug(iws);
+
 		return iws;
 	}
 
@@ -117,10 +147,12 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 	}
 
 	public class InterestsWrapper {
-    @AuraEnabled
-	  public String label {get;set;} 
 		@AuraEnabled
-	  public Boolean selected {get;set;} 
+		public String label {get;set;} 
+		@AuraEnabled
+		public Boolean selected {get;set;} 
+		@AuraEnabled
+		public Boolean opted_out {get;set;}
 	}
 
 	public class SubscriptionWrapper {

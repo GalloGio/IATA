@@ -8,24 +8,14 @@
             
         	if (state === "SUCCESS") {
                 var lstServices = response.getReturnValue();
-                console.log(lstServices);
                 component.set("v.lstServices", lstServices);
                 
                 if(lstServices != undefined && lstServices != null){
                     component.set("v.lstServicesLength", lstServices.length);
                 }
-                
-                /*setTimeout(function() {
-                    component.set("v.localLoading", false);
-                }, 500);*/
-                
-                
                 component.set("v.localLoading", false);
          	}
       	});
        	$A.enqueueAction(getUserServicesActions);
-           
     }
-    
-    
 })

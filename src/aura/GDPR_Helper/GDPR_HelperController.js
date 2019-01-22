@@ -12,6 +12,6 @@
 				_userInfo.setIndividualID(sParameterName[1]);
             }
 		}
-		hlp.retrieveUserInfo(cmp);
+		hlp.retrieveUserInfo(cmp, evt);
 	}
 })

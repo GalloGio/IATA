@@ -53,8 +53,10 @@
             var isValidDate = this.isValidDate(new Date(dateIssue.get("v.value")));
             if(isValidDate)
                 dateIssue.set("v.errors", null);
-            else
+            else {
                 dateIssue.set("v.errors", [{message: "Invalid date format : mm/dd/yyyy"}]);
+                isAllFilled = false;
+            }
         }
 		return isAllFilled;
     },

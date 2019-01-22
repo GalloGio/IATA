@@ -25,12 +25,10 @@
 			action.setCallback(this, function(response){
 				var email = response.getReturnValue();
 				if(email != null){
-					console.log(email);
 					var indiv = component.get("v.individual");
 					indiv.Email__c = email;
 					component.set('v.individual', indiv);
 				}else {
-					console.log('invalid');
 					window.open($A.get('$Label.c.IATA_GDPR_URL')+'/s/invalid-token','_top');
 				}
 			});
@@ -43,8 +41,8 @@
 	submit : function(cmp, evt, hlp) {
 		
 		if(hlp.checkRequiredFields(cmp)) {
+			cmp.set("v.localLoading", true);
 			// Create prospect in Pardot + generate token + email to the portal (welcome email)	
-			console.log(cmp.get("v.individual"));
 			var action = cmp.get("c.grantAccessToPortal");
 			action.setParams({
 				"indivJson": JSON.stringify(cmp.get("v.individual"))
@@ -57,6 +55,7 @@
 				} else {
 					console.log('Error');
 				}
+				cmp.set("v.localLoading", false);
 			});	
 			$A.enqueueAction(action);    
 		}

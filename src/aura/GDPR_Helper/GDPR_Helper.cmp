@@ -1,3 +1,5 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" access="global" controller="GDPR_Helper">
-<ltng:require scripts="{!$Resource.GDPR_Helper}" afterScriptsLoaded="{!c.initGDPR}"/>
+	<ltng:require scripts="{!$Resource.GDPR_Helper}" afterScriptsLoaded="{!c.initGDPR}"/>
+    <aura:registerEvent name="EVT_GDPR_DisplayTab" type="c:EVT_GDPR_DisplayTab"/>
+      <aura:registerEvent name="EVT_GDPR_UpdateCaseList" type="c:EVT_GDPR_UpdateCaseList"/>
 </aura:component>

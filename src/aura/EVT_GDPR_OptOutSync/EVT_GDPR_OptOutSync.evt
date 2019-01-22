@@ -1,0 +1,4 @@
+<!--EVT_GDPR_OptOutSync-->
+<aura:event type="APPLICATION" description="Notify component when optout state changes" >
+    <aura:attribute name="optout" type="Boolean"/>
+</aura:event>

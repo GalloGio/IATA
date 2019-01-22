@@ -39,11 +39,9 @@
     
     openCasePopupHandleClick : function (component, event, helper){
         var clickedCaseId = event.getSource().get("v.name");
-        console.log(clickedCaseId);
         var lstCases = component.get("v.lstCases");
         for(var i = 0; i < lstCases.length; i++){
             if(lstCases[i].Id == clickedCaseId){
-                console.log(lstCases[i]);
 				component.set("v.showCasePopupObject", lstCases[i]);
                 component.set("v.showCasePopup", true);
                 break;

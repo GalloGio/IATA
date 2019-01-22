@@ -73,7 +73,6 @@
         if(!cmp.get("v.termsChecked")) {
             isAllFilled = false;
 		} 
-		console.log('isAllFilled'+isAllFilled);
 		return isAllFilled;
 
 	},

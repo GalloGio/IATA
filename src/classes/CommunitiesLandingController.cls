@@ -20,7 +20,7 @@ public with sharing class CommunitiesLandingController {
                 return new pageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage'));
               }
             } 
-						if(serviceName=='GDPR'){
+						if(serviceName==Label.TECH_GDPR_Community_Name){
 							// GP-17: GDPR need a direct redirection to the GDPR portal not to OneId home page
 							return new pageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.GDPR, '/'));
 						}

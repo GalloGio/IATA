@@ -3,17 +3,21 @@
 		// Retrieve subscritpion list from custom settings
 		var action = cmp.get("c.getSubscriptionList");
         action.setParams({
-			"email" : _userInfo.getUserInfo().email
+			"email" : _userInfo.getUserInfo().email,
+			"salesforceId" : _userInfo.getUserInfo().salesforceId
         });
         action.setCallback(this, function(a) {
             var result = a.getReturnValue();
             if(result != null) {
-				console.log(JSON.parse(result));
 				var obj = JSON.parse(result); 
 				cmp.set("v.newsletters",obj.newsletters);
 				cmp.set("v.products",obj.products);
 				cmp.set("v.initialSubscription", obj.initialSubscription);
 				cmp.set("v.opted_out", obj.opted_out);
+				cmp.set("v.unsubscribe", obj.opted_out);
+				if(! $A.util.isEmpty(_userInfo.getUserInfo().salesforceId)) {
+					cmp.set("v.salesforceSynced", true);
+				}
             } else {
 				this.showToast("error", "Error", "An error occurs");
 			}
@@ -46,11 +50,12 @@
         action.setCallback(this, function(a) {
             var result = a.getReturnValue();
             if(result) {
-				this.showToast("success", "Success","Information updated");
+				this.showToast("success", "Success","Your subscriptions have been updated");
 				cmp.set("v.initialSubscription", currentChoice);
             } else {
 				this.showToast("error", "Error", "An error occurs");
 			}
+			cmp.set("v.localLoading", false);
         });
 		$A.enqueueAction(action);
 	},
@@ -67,5 +72,32 @@
 			"message": msg
 		});
 		toastEvent.fire();
-	}
+	},
+
+	subscribe : function(cmp) {
+		// Opt-in by upading the lead or contact and the connector will sync the info in Pardot (not possible to opt-in using the API)
+		var action = cmp.get("c.optIn");
+		action.setParams({
+			"salesforce_id" : _userInfo.getUserInfo().salesforceId,
+			"email" : _userInfo.getUserInfo().email,
+			"doOptOut" : cmp.get("v.unsubscribe")
+		});
+		action.setCallback(this, function(a) {
+			var result = a.getReturnValue();
+			console.log(result);
+			if(result) {
+				this.showToast("success", "Success","Your subscriptions have been updated");
+				cmp.set("v.opted_out", cmp.get("v.unsubscribe"));
+				// Notifiy interest component to be synced
+				var appEvent = $A.get("e.c:EVT_GDPR_OptOutSync");
+				appEvent.setParams({"optout" :  cmp.get("v.unsubscribe")});
+				appEvent.fire();
+			} else {
+				this.showToast("error", "Error","An error occurs");
+			}
+
+			cmp.set("v.localLoading", false);
+		});
+		$A.enqueueAction(action);
+	},
 })

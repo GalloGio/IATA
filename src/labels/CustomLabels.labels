@@ -33582,45 +33582,21 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>IATA GDPR White Logo</shortDescription>
         <value>https://iata--gdprsalim--c.cs106.content.force.com/servlet/servlet.ImageServer?id=0150D000000EJAd&amp;oid=00D0D0000000PrE&amp;lastMod=1547018185000</value>
     </labels>
-    <labels>
-        <fullName>TECH_PARDOT_API_VERSION</fullName>
-        <categories>Pardot</categories>
+     <labels>
+        <fullName>TECH_GDPR_Community_Name</fullName>
+        <categories>GDPR</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Pardot API version to use (3 or 4)</shortDescription>
-        <value>4</value>
+        <shortDescription>Name of the GDPR community in the URL</shortDescription>
+        <value>dataprivacy</value>
     </labels>
     <labels>
-        <fullName>TECH_PARDOT_ASSGINED_USER</fullName>
-        <categories>Pardot</categories>
+        <fullName>TECH_GDPR_Network_Name</fullName>
+        <categories>GDPR</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Pardot Id of the user who will be assigned during prospect creation</shortDescription>
-        <value>18601663</value>
-    </labels>
-    <labels>
-        <fullName>TECH_PARDOT_INTEGRATION_EMAIL</fullName>
-        <categories>Pardot</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Pardot username for authentification</shortDescription>
-        <value>salim.mohamed.isup@gmail.com</value>
-    </labels>
-    <labels>
-        <fullName>TECH_PARDOT_INTEGRATION_PWD</fullName>
-        <categories>Pardot</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Pardot password</shortDescription>
-        <value>zYG5JDmk#</value>
-    </labels>
-    <labels>
-        <fullName>TECH_PARDOT_INTEGRATION_USER_KEY</fullName>
-        <categories>Pardot</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Pardot API KEY</shortDescription>
-        <value>113c05f5396378cfdbbab5991a046739</value>
+        <shortDescription>Name of GDPR  Network. Usually name of the community - Query on network objec</shortDescription>
+        <value>Data Privacy</value>
     </labels>
     <labels>
         <fullName>OneId_URL_To_GDPR</fullName>
@@ -33630,6 +33606,4 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>OneId_URL_To_GDPR</shortDescription>
         <value>https://gdprsalim-customer-portal-iata.cs106.force.com/identity/s/login/?language=en_US&amp;serviceName=GDPR</value>
     </labels>
-</CustomLabels>
-
 </CustomLabels>

@@ -5,6 +5,8 @@
 	},
 
 	saveAll : function(cmp, evt, hlp) {
+		cmp.set("v.localLoading", true);
+
 		var allInterests = cmp.get("v.interests");
 		var choices = cmp.find("interestsCbx");
 		var userChoice = [];
@@ -15,5 +17,15 @@
 			}
 		}
 		hlp.saveInterests(cmp, _userInfo.getUserInfo().pardotID, _userInfo.getUserInfo().individualId, userChoice);
-	}
+	},
+
+	changeUnsubscribe : function(cmp, evt, hlp) {
+		cmp.set("v.localLoading", true);
+		hlp.subscribe(cmp);
+	},
+
+	handleEVT_GDPR_OptOutSync : function(cmp, evt, hlp) {
+		cmp.set("v.opted_out", evt.getParam("optout"));
+		cmp.set("v.unsubscribe", evt.getParam("optout"));
+	},
 })

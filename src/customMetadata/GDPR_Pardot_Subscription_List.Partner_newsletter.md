@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Help_text__c</field>
-        <value xsi:type="xsd:string">Text pending</value>
+        <value xsi:type="xsd:string">Latest SP news</value>
     </values>
     <values>
         <field>Pardot_ID__c</field>

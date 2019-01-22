@@ -5,8 +5,8 @@ public with sharing class GDPR_Logout_CTRL {
 		list<Individual> inds = [SELECT id FROM Individual WHERE Id =: individualId];
 		if(!inds.isEmpty()) {
 			Individual ind = inds[0];
-			//ind.token__c = '';
-			//ind.date__c = null;
+			ind.Token__c = '';
+			ind.Timestamp__c = null;
 			try {
 				update ind;
 			} catch(Exception e) {
@@ -16,5 +16,4 @@ public with sharing class GDPR_Logout_CTRL {
 		}
         return false;
     }
-    
 }

@@ -67,7 +67,7 @@
                 </aura:if>
                 
                 <aura:set attribute="else" >
-                    <table id="requestListTableId" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <table id="requestListTableId" class="slds-table slds-table_cell-buffer slds-table_bordered"  style="width:100%">
                         <thead>
                             <tr class="slds-line-height_reset">
                                 <th class="slds-text-title_caps slds-cell-wrap" scope="col">

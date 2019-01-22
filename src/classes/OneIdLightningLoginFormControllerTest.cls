@@ -192,6 +192,19 @@ private class  OneIdLightningLoginFormControllerTest {
     @IsTest
     static void testLoginToGDPR() {
         testReactivateUser();
-        OneIdLightningLoginFormController.login('Test@test11111.com', 'fakepwd', null, 'GDPR');
+
+        // Create permission set if doesn't exist
+        list<PermissionSet> pss = [SELECT id FROM PermissionSet WHERE Name = 'GDPR'];
+        if(pss.isEmpty()){ 
+            PermissionSet ps = new PermissionSet();
+            ps.Name = 'GDPR';
+            ps.label = 'GDPR';
+            ps.Description = 'GDPR permission to access to the portal as an IATA service in One Identity';
+            insert ps;
+        }
+
+        Test.startTest();
+            OneIdLightningLoginFormController.login('Test@test11111.com', 'fakepwd', null, Label.TECH_GDPR_Community_Name);
+        Test.stopTest();
     }
 }

@@ -43,6 +43,8 @@
                 var newCaseDPO = response.getReturnValue();
                 component.set("v.newCaseDPO", newCaseDPO);
                 component.set("v.localLoading", false);
+            } else {
+                console.log('error');
             }
         });
         $A.enqueueAction(createEmptyCaseAction);
@@ -52,6 +54,7 @@
         // Check field first
         var canInsertCase = true;
         var controlDPOField = true;
+
         var controlFields  = helper.controlFields(component);
         if(component.get("v.isContactDPO") && component.get("v.requestType") == "passenger")
             controlDPOField = helper.controlDPOFields(component);
