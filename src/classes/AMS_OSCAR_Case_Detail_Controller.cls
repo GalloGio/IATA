@@ -628,6 +628,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         Integer pendingCases = 0;
 
         if(oscarObj.Process__c == AMS_Utils.NGCHINACONVERSION){
+
+            //Just in case there is a single agency in the hierachy
+            hierarchyAccountIds.add(oscarObj.Account__c);
+            
             Set<String> invalidAccountStatusSet = new Set<String>{
                 AMS_Utils.ACC_S1_NOTACCREDITED, 
                 AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, 
