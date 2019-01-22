@@ -416,7 +416,6 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     
 
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
-        Id templateId;
         Boolean templateToIATA = false;
         List<EmailTemplate> tempIata = new List<EmailTemplate>();
         Map<Id, Id> mapContactsVs_User = new Map<Id, Id>();
@@ -453,10 +452,12 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             contactsId.add(c.Id);
         }
 
+        Map<Id,User> mapUsers = new Map<Id,User>();
         For(User u :  [Select Id, ContactId, Email, Name FROM User WHERE ContactId in :contactsId]){
             mapContactsVs_User.put(u.ContactId, u.Id);
             mapUserVsEmail.put(u.Id, u.Email);
             mapUsersVsContactName.put(u.Id, u.Name);
+            mapUsers.put(u.Id, u);
         }        
         
         system.debug('DGR sendEmailAlert: mapContactsVs_User : ' + mapContactsVs_User);
@@ -578,87 +579,24 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                 }
             }
 
-            if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
+            if(mPortalAdminsEmailsDGR != null) {
                 for(String key : mPortalAdminsEmailsDGR.keySet()){
                     List<Id> users = mPortalAdminsEmailsDGR.get(key);
-                    system.debug('DGR sendEmailAlert: key : ' + key);
-                    system.debug('DGR sendEmailAlert: List : mPortalAdminsEmailsDGR.get(key) : ' + mPortalAdminsEmailsDGR.get(key));
-                    system.debug('DGR sendEmailAlert: users : ' + users);
                     
-                    for(Id user : users){
-
-                        Messaging.SingleEmailMessage mailPortalAdmin = new Messaging.SingleEmailMessage();
-                        //mailPortalAdmin.saveAsActivity = true; //must be false when sending mail to users.
-                        mailPortalAdmin.saveAsActivity = false; //must be false when sending mail to users.
-                        
-                        //mailPortalAdmin.setToAddresses(mPortalAdminsEmailsDGR.get(key));
-
-                        mailPortalAdmin.setTargetObjectId(user);
-                        //setToAddresses(mPortalAdminsEmailsDGR.get(key));
-                        
-                        if(templateToIATA){
-                            mailPortalAdmin.setTemplateId(tempIata.get(0).Id);
-                        } else {
-                            mailPortalAdmin.setTemplateId(getSpecificLangTemplate(key, countryTemplates));
-                        }
-                       
-                        //Contact auxCont = mRecipientPortalAdminsEmailsDGR.get(key);
-                        //mailPortalAdmin.setTargetObjectId(auxCont.Id);
-
-                        //mailPortalAdmin.setWhatId(oscarId); //WhatId is not available for sending emails to UserIds
-                       
-                        mailPortalAdmin.setOrgWideEmailAddressId(owea.Id);
-                        mailsToSend.add(mailPortalAdmin);
+                    for(Id userId : users) {                    
+                        Id templateId = templateToIATA ? tempIata.get(0).Id : getSpecificLangTemplate(key, countryTemplates);
+                        Id contactId = mapUsers.get(userId).ContactId;
+                        Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(templateId, contactId, oscarCommCaseId);
+                        mail.setOrgWideEmailAddressId(owea.Id);
+                        mail.setTargetObjectId(userId);
+                        mail.saveAsActivity = false;
+                        mailsToSend.add(mail);
                     }
                 }
             }
 
-            //Since when sending mails with the user in the TargetObjectId we lost the automatic 
-            //merge functionality so we have to merge in here
-            Date dTodayPlus30 = (date.today() + 30);
-
-            system.debug('DGR sendEmailAlert: dTodayPlus30 - ' + dTodayPlus30);
-            system.debug('DGR sendEmailAlert: AMS_PCI_Complaint_Batch.templateIdVsTemplates - ' + AMS_PCI_Complaint_Batch.templateIdVsTemplates);
-            system.debug('DGR sendEmailAlert: casesInfo - ' +casesInfo);
-
             for(Messaging.SingleEmailMessage mail : mailsToSend){
                 
-                system.debug('DGR sendEmailAlert: mail.getTemplateId() - ' + mail.getTemplateId());
-
-                EmailTemplate template = AMS_PCI_Complaint_Batch.templateIdVsTemplates.get( mail.getTemplateId() );
-
-                String subject = template.Subject;
-                String htmlBody = template.HtmlValue == null?'':template.HtmlValue;
-                String textBody = template.Body == null?'':template.Body;
-                String caseNumber = casesInfo.get(oscarCommCaseId).CaseNumber == null?'':casesInfo.get(oscarCommCaseId).CaseNumber;
-                String iatacode = casesInfo.get(oscarCommCaseId).IATACodeProduct__c == null?'':casesInfo.get(oscarCommCaseId).IATACodeProduct__c;
-                String sContactName = mapUsersVsContactName.get(mail.getTargetObjectId());
-                
-                subject = subject.replace('{!Case.CaseNumber} ', caseNumber);
-                mail.setSubject(subject);
-
-
-                if(htmlBody != ''){
-                    htmlBody = htmlBody.replace('<![CDATA[', '');
-                    htmlBody = htmlBody.replace('{!Contact.Name}', sContactName);
-                    htmlBody = htmlBody.replace('{!Case.CaseNumber}', caseNumber);
-                    htmlBody = htmlBody.replace('{!Case.IATA_Code__c}', iatacode);
-                    htmlBody = htmlBody.replace('{!Today()+30}', dTodayPlus30.format());
-                    htmlBody = htmlBody.replace('{!Case.Id}', oscarCommCaseId);
-                    htmlBody = htmlBody.replace(']]>', '');
-                }
-
-                if(textBody != ''){
-                    textBody = textBody.replace('{!Contact.Name}', sContactName);
-                    textBody = textBody.replace('{!Case.CaseNumber}', caseNumber);
-                    textBody = textBody.replace('{!Case.IATA_Code__c}', iatacode);
-                    textBody = textBody.replace('{!Today()+30}', dTodayPlus30.format());
-                    textBody = textBody.replace('{!Case.Id}', oscarCommCaseId);
-                }
-
-                mail.setHtmlBody(htmlBody);
-                mail.setPlainTextBody(textBody);
-
                 List<Attachment> attachs = templateIdVsAttachemnt.get(mail.getTemplateId());
                 system.debug('DGR sendEmailAlert: attachs : ' + attachs);
                 List<Messaging.EmailFileAttachment> emailAttachs = new list<Messaging.EmailFileAttachment>();
