@@ -381,44 +381,24 @@ Object used to store objectives that can be independent, related to other object
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Eastern Africa</fullName>
+                    <fullName>South and East Africa</fullName>
                     <default>false</default>
-                    <label>Eastern Africa</label>
+                    <label>South and East Africa</label>
                 </value>
                 <value>
-                    <fullName>Gulf Area</fullName>
+                    <fullName>Gulf &amp; Near East</fullName>
                     <default>false</default>
-                    <label>Gulf Area</label>
+                    <label>Gulf &amp; Near East</label>
                 </value>
                 <value>
-                    <fullName>Levant</fullName>
+                    <fullName>North Africa and Levant</fullName>
                     <default>false</default>
-                    <label>Levant</label>
+                    <label>North Africa and Levant</label>
                 </value>
                 <value>
-                    <fullName>North Africa</fullName>
+                    <fullName>West and Central Africa</fullName>
                     <default>false</default>
-                    <label>North Africa</label>
-                </value>
-                <value>
-                    <fullName>Saudi &amp; Yemen</fullName>
-                    <default>false</default>
-                    <label>Saudi &amp; Yemen</label>
-                </value>
-                <value>
-                    <fullName>South Western Africa</fullName>
-                    <default>false</default>
-                    <label>South Western Africa</label>
-                </value>
-                <value>
-                    <fullName>Southern Africa</fullName>
-                    <default>false</default>
-                    <label>Southern Africa</label>
-                </value>
-                <value>
-                    <fullName>Central West Africa</fullName>
-                    <default>false</default>
-                    <label>Central West Africa</label>
+                    <label>West and Central Africa</label>
                 </value>
                 <value>
                     <fullName>Arg-Par-Uru</fullName>
@@ -731,35 +711,19 @@ Object used to store objectives that can be independent, related to other object
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>AME</controllingFieldValue>
-                <valueName>Eastern Africa</valueName>
+                <valueName>South and East Africa</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>AME</controllingFieldValue>
-                <valueName>Gulf Area</valueName>
+                <valueName>Gulf &amp; Near East</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>AME</controllingFieldValue>
-                <valueName>Levant</valueName>
+                <valueName>North Africa and Levant</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>AME</controllingFieldValue>
-                <valueName>North Africa</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>AME</controllingFieldValue>
-                <valueName>Saudi &amp; Yemen</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>AME</controllingFieldValue>
-                <valueName>South Western Africa</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>AME</controllingFieldValue>
-                <valueName>Southern Africa</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>AME</controllingFieldValue>
-                <valueName>Central West Africa</valueName>
+                <valueName>West and Central Africa</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>ASPAC</controllingFieldValue>
@@ -2273,10 +2237,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Central West Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Chile</fullName>
                 <default>false</default>
             </values>
@@ -2290,10 +2250,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Colombia-Ecuador</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Eastern Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2313,7 +2269,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gulf Area</fullName>
+                <fullName>Gulf %26 Near East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2345,10 +2301,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Levant</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Mexico</fullName>
                 <default>false</default>
             </values>
@@ -2357,7 +2309,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>North Africa</fullName>
+                <fullName>North Africa and Levant</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2385,15 +2337,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi %26 Yemen</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>South Western Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Southern Africa</fullName>
+                <fullName>South and East Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2430,6 +2374,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Vietnam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>West and Central Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3273,10 +3221,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Central West Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Chile</fullName>
                 <default>false</default>
             </values>
@@ -3290,10 +3234,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Colombia-Ecuador</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Eastern Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3313,7 +3253,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gulf Area</fullName>
+                <fullName>Gulf %26 Near East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3345,10 +3285,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Levant</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Mexico</fullName>
                 <default>false</default>
             </values>
@@ -3357,7 +3293,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>North Africa</fullName>
+                <fullName>North Africa and Levant</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3385,11 +3321,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>South Western Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Southern Africa</fullName>
+                <fullName>South and East Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3426,6 +3358,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Vietnam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>West and Central Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3848,10 +3784,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Central West Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Chile</fullName>
                 <default>false</default>
             </values>
@@ -3865,10 +3797,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Colombia-Ecuador</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Eastern Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3888,7 +3816,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gulf Area</fullName>
+                <fullName>Gulf %26 Near East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3920,10 +3848,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Levant</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Mexico</fullName>
                 <default>false</default>
             </values>
@@ -3932,7 +3856,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>North Africa</fullName>
+                <fullName>North Africa and Levant</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3960,15 +3884,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi %26 Yemen</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>South Western Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Southern Africa</fullName>
+                <fullName>South and East Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4005,6 +3921,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Vietnam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>West and Central Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4841,10 +4761,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Central West Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Chile</fullName>
                 <default>false</default>
             </values>
@@ -4858,10 +4774,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Colombia-Ecuador</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Eastern Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4881,7 +4793,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gulf Area</fullName>
+                <fullName>Gulf %26 Near East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4913,10 +4825,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Levant</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Mexico</fullName>
                 <default>false</default>
             </values>
@@ -4925,7 +4833,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>North Africa</fullName>
+                <fullName>North Africa and Levant</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4953,15 +4861,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi %26 Yemen</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>South Western Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Southern Africa</fullName>
+                <fullName>South and East Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4998,6 +4898,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Vietnam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>West and Central Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5833,10 +5737,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Central West Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Chile</fullName>
                 <default>false</default>
             </values>
@@ -5850,10 +5750,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Colombia-Ecuador</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Eastern Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5873,7 +5769,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gulf Area</fullName>
+                <fullName>Gulf %26 Near East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5905,10 +5801,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Levant</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Mexico</fullName>
                 <default>false</default>
             </values>
@@ -5917,7 +5809,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>North Africa</fullName>
+                <fullName>North Africa and Levant</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5945,11 +5837,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>South Western Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Southern Africa</fullName>
+                <fullName>South and East Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5986,6 +5874,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Vietnam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>West and Central Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6424,10 +6316,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Central West Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Chile</fullName>
                 <default>false</default>
             </values>
@@ -6441,10 +6329,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Colombia-Ecuador</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Eastern Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6464,7 +6348,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Gulf Area</fullName>
+                <fullName>Gulf %26 Near East</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6496,10 +6380,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Levant</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Mexico</fullName>
                 <default>false</default>
             </values>
@@ -6508,7 +6388,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>North Africa</fullName>
+                <fullName>North Africa and Levant</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6536,15 +6416,7 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <default>false</default>
             </values>
             <values>
-                <fullName>Saudi %26 Yemen</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>South Western Africa</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Southern Africa</fullName>
+                <fullName>South and East Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6581,6 +6453,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
             </values>
             <values>
                 <fullName>Vietnam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>West and Central Africa</fullName>
                 <default>false</default>
             </values>
             <values>
