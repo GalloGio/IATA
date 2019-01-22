@@ -65,7 +65,7 @@ public class ISSP_PersonalInformationWithoutSharing {
         			}
 
             for (ISSP_PersonalInformation.UserWrapper admin : admins) {
-                if (admin.userRole.contains('Portal Administrator') || admin.userRole.contains('SIS Super User')) {
+                if (admin.userRole.contains('Portal Administrator')) {
                     theParentController.listAdmins.add(admin);
         		}
         	}
@@ -95,13 +95,8 @@ public class ISSP_PersonalInformationWithoutSharing {
 		
 	}
 	
-    //WMO-386 - add SIS Super User to list of admin contacts
+    //WMO-386
     public static List<ISSP_PersonalInformation.UserWrapper> getPortalAdminAndSuperUsers(List<Id> accountIds) {
-        List<Contact> contacts = [SELECT Id, Name, Salutation, Email, Account.BillingCountry, AccountId
-                                  FROM Contact
-                                  WHERE AccountId IN :accountIds AND SIS_Contact_Type__c = 'Super User' AND
-                                    Status__c = 'Active' AND Account.SIS_Status__c = 'Active'];
-
         Set<String> roles = new Set<String> {'Portal Administrator', 'Portal Regional Administrator'};
         List<AccountTeamMember> members = [SELECT Id, UserId, TeamMemberRole, User.ContactId, User.Contact.Salutation,
                                                 User.Contact.Name, User.Contact.Email, User.Contact.AccountId,
@@ -114,16 +109,6 @@ public class ISSP_PersonalInformationWithoutSharing {
             ISSP_PersonalInformation.UserWrapper uw = new ISSP_PersonalInformation.UserWrapper(member.User.Contact.Salutation, member.User.Contact.Name, 
                 member.User.Contact.Email, member.User.Contact.Account.BillingCountry, member.TeamMemberRole, member.User.Contact.AccountId, member.User.ContactId);
             mapContacts.put(member.User.ContactId, uw);
-        }
-
-        for(Contact c : contacts) {
-            ISSP_PersonalInformation.UserWrapper uw = mapContacts.get(c.Id);
-            if(uw == null) {
-                uw = new ISSP_PersonalInformation.UserWrapper(c.Salutation, c.Name, c.Email, c.Account.BillingCountry, 'SIS Super User', c.AccountId, c.Id);
-                mapContacts.put(c.Id, uw);
-            } else {
-                uw.userRole += ' and SIS Super User';
-            }
         }
 
         return mapContacts.values();
