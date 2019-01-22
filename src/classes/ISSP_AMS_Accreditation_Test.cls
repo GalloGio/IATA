@@ -1,6 +1,8 @@
 @isTest
 private class ISSP_AMS_Accreditation_Test {
     @testSetup static void customSettingSetup() {
+        Test.startTest();
+
         List<ISSP_CS__c> csSettings = new List<ISSP_CS__c>();
         csSettings.add(new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL', Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)([.])(([a-zA-Z]{3})|([a-zA-Z]{2}))'));
         csSettings.add(new ISSP_CS__c(Name = 'No Notification Email Contact Id', Value__c = null));
@@ -30,6 +32,8 @@ private class ISSP_AMS_Accreditation_Test {
         IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'testOptOut2', ISO_Code__c = 'tl', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
 
         insert new List<IATA_ISO_Country__c>{country, country2};
+
+        Test.stopTest();
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_1() {
