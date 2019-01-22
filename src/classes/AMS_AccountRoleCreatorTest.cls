@@ -549,6 +549,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
             Email__c= 'owner.test@test.com',
             Phone__c= '123456789',
             Financial_interest__c= 100,
+            Agency_Owner__c = true,
             AMS_Pax_Accreditation_Form__c= accre.Id,
             RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
         );
