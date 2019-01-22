@@ -334,34 +334,30 @@ private class GlobalContactTriggerTest {
             License_Cost_Center__c = 'ISF005CH01'
         );
 
-        User usr = [Select id from User where Id = :UserInfo.getUserId()];
-        System.RunAs(usr){
-            Test.startTest();
-        
-            Account acc = ISSP_ObjectFactory.createNewAccount();
-            insert acc;
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        insert acc;
 
-            Account acc2 = ISSP_ObjectFactory.createNewAccount();
-            insert acc2;
+        Account acc2 = ISSP_ObjectFactory.createNewAccount();
+        insert acc2;
 
-            Contact con = ISSP_ObjectFactory.createNewContact();
-            con.AccountId= acc.Id;
-            con.Status__c = 'Active';
-            con.title = 'Monsieur';
-            con.function__c = 'Aeropolitical;Cargo';
-            con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-            con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-            insert con;
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= acc.Id;
+        con.Status__c = 'Active';
+        con.title = 'Monsieur';
+        con.function__c = 'Aeropolitical;Cargo';
+        con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        insert con;
 
-            testUser.ContactId = con.id;
-            testUser.ContactKaviId__c = con.id;
-            insert testUser;
+        testUser.ContactId = con.id;
+        testUser.ContactKaviId__c = con.id;
+        insert testUser;
 
-            con.Preferred_Language__c = 'Italian';
-            con.Accountid = acc2.id;
-            con.User_Portal_Status__c = 'Deactivated';
-            con.status__c = 'Inactive';
-            con.Kavi_User__c = testUser.id;
+        con.Preferred_Language__c = 'Italian';
+        con.Accountid = acc2.id;
+        con.User_Portal_Status__c = 'Deactivated';
+        con.status__c = 'Inactive';
+        con.Kavi_User__c = testUser.id;
 
 		User usr = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 		
@@ -416,23 +412,20 @@ private class GlobalContactTriggerTest {
             License_Cost_Center__c = 'ISF005CH01'
         );
 
-        User usr = [Select id from User where Id = :UserInfo.getUserId()];
-        System.RunAs(usr){
-
-            Account acc = ISSP_ObjectFactory.createNewAccount();
-            insert acc;
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        insert acc;
 
         Account acc2 = ISSP_ObjectFactory.createNewAccount();
         insert acc2;
 
-            Contact con = ISSP_ObjectFactory.createNewContact();
-            con.AccountId= acc.Id;
-            con.Status__c = 'Active';
-            con.function__c = 'Aeropolitical;Cargo';
-            con.title = 'Monsieur';
-            con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-            con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-            insert con;
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= acc.Id;
+        con.Status__c = 'Active';
+        con.function__c = 'Aeropolitical;Cargo';
+        con.title = 'Monsieur';
+        con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        insert con;
 
         testUser.ContactId = con.id;
         testUser.ContactKaviId__c = con.id;
@@ -485,7 +478,6 @@ private class GlobalContactTriggerTest {
 	        }
 	        catch(Exception e){
 	            Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
-	            //System.AssertEquals(expectedExceptionThrown, true);
 	        }
         
 	        Test.stopTest();
