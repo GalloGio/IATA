@@ -1,5 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+<labels>
+        <fullName>IDCard_BSP_Agent_Billing_Reports_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Agent_Billing_Reports_Procedures</shortDescription>
+        <value>Learn about the Agent reporting process in the Billing and Settlement Plan (BSP) and how to interpret billing reports. This course will enable travel agent users to understand the BSP Agent reporting process, show how to identify BSP Reporting documents and correct any discrepancies, if and when they occur. You will be shown the BSP reporting calendar for Travel Agents and the range of Billing Reports issued by BSP in the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-billing-agent-tttg46.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Agent_Remittance_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Agent_Remittance_Procedures</shortDescription>
+        <value>Examine the Agent Remittance process of the Billing and Settlement Plan (BSP), including the reporting calendar and debt identification. This module will familiarize you with the Agent BSP Remittance process; BSP Reporting calendar for Agents; and how to find, verify and timelines for the amount a travel agent owes to the BSP. You will also learn what to do if the amount due does not seem to be correct, the importance of timely remittance, and the consequences of failing to settle by the remittance date. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-agent-remittance-tttg47.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Essentials_for_Travel_Agents</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Essentials_for_Travel_Agents</shortDescription>
+        <value>BSP Essentials for Travel Agents is a training course providing essential knowledge of the Billing and Settlement Plan (BSP), specifically for travel agents. It is designed to raise the learner’s awareness of the BSP system and processes, and improve an Agent’s efficiency and level of knowledge. This course is intended to explain elements of the BSP system that are common to all parts of the world and is divided into five learning modules covering the fundamental components of the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-essentials-tttg49.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Standard_Documents_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Standard_Documents_Procedures</shortDescription>
+        <value>The course will enable travel agent users to understand ticketing authority, know the main standard traffic documents used in the BSP system, issue a virtual MPD, provide refunds, understand document enquiries and accept credit card payments for commercial transactions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-documents-procedures-tttg45.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Intro_to_the_BSP_System_Language</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Intro_to_the_BSP_System_Language</shortDescription>
+        <value>Learn how the IATA Billing and Settlement Plan (BSP) works and how it benefits a travel agency. This course will enable travel agent users to describe the BSP system and how it works; explain the benefits of being a BSP travel agency; identify BSP participants and explain their roles; identify the steps in reporting airline ticket transactions; find information on BSP procedures; and learn common BSP terms and definitions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-system-language-tttg43.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
     <labels>
         <fullName>ACCEPTED_PAYMENT_METHODS_MANDATORY</fullName>
         <categories>IEC,Payment,Payment Method,Product,Configuration</categories>

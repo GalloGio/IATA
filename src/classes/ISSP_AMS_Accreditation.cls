@@ -3718,6 +3718,45 @@ public without sharing class ISSP_AMS_Accreditation {
         set;
     }
 
+        public List<AMS_Accreditation_Contact__c> List_PreviousCompaniesOwners {
+
+            get{
+                List<AMS_Accreditation_Contact__c> cons = new List<AMS_Accreditation_Contact__c>();
+
+                for (AMS_Accreditation_Contact__c auxPrev : List_PreviousCompanies) {
+                    cons.add(auxPrev);
+                }
+
+                for (AMS_Accreditation_Contact__c auxPrev2 : List_PreviousOwners) {
+                    cons.add(auxPrev2);
+                }
+
+                return cons;
+
+            }
+            set{}
+        }
+
+        public List<AMS_Accreditation_Contact__c> List_CurrentCompaniesOwners {
+
+            get{
+                List<AMS_Accreditation_Contact__c> cons = new List<AMS_Accreditation_Contact__c>();
+                
+                for (AMS_Accreditation_Contact__c auxPrev : List_CurrentCompanies) {
+                    cons.add(auxPrev);
+                }
+
+                for (AMS_Accreditation_Contact__c auxPrev2 : List_CurrentOwners) {
+                    cons.add(auxPrev2);
+                }
+
+                return cons;
+
+            }
+            set{}
+        }
+
+
     public List<AMS_Accreditation_Contact__c> List_AgencyCompanies {
         get{
             return [SELECT Name, Financial_interest__c, Registration_number__c, IATAcode__c, Company_Name_Local__c, Agency_owner__c
