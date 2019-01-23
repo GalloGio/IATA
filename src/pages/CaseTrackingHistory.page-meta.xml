@@ -3,5 +3,5 @@
     <apiVersion>45.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>ANG_CaseTrackingHistory</label>
+    <label>CaseTrackingHistory</label>
 </ApexPage>

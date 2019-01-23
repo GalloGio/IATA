@@ -626,7 +626,7 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
             }
             /*ISSP_UpdateContacKaviIdOnUser AfterUpdate*/
 
-            ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Contact', 'ANG_Contact_Tracking_History__c'); //ACAMBAS - WMO-390
+            ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Contact', 'Contact_Tracking_History__c'); //ACAMBAS - WMO-390
 
         }
         /*Trigger.AfterUpdate*/

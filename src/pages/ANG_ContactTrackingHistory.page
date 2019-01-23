@@ -1,3 +1,0 @@
-<apex:page standardController="Contact" showHeader="true" sidebar="true">
-	<c:ANG_GenericHistoryViewer trackedObject="{!Contact}" trackerApiName="ANG_Contact_Tracking_History__c" trackedApiName="Contact"/>	
-</apex:page>

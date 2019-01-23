@@ -1,3 +1,0 @@
-<apex:page standardController="Case" showHeader="true" sidebar="true">
-	<c:ANG_GenericHistoryViewer trackedObject="{!Case}" trackerApiName="ANG_Case_Tracking_History__c" trackedApiName="Case"/>	
-</apex:page>
