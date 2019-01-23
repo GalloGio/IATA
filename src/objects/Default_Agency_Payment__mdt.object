@@ -32,6 +32,31 @@ Each code must be delimited by a semicolon.</description>
         <type>Number</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Visibility__c</fullName>
+        <description>Field to control notification visibility</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Visibility</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Internal</fullName>
+                    <default>true</default>
+                    <label>Internal</label>
+                </value>
+                <value>
+                    <fullName>Public</fullName>
+                    <default>false</default>
+                    <label>Public</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <label>Default Agency Payment</label>
     <pluralLabel>Default Agencies Payment</pluralLabel>
     <visibility>Public</visibility>

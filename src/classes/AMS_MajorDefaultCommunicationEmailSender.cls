@@ -137,7 +137,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 				exampleAttc.setFileName('Notification Example.html');
 	        	exampleAttc.setBody(emailExampleContent);
 
-	        	Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, tmpContactId, caseId);
+	        	Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, u.Id, caseId);
 				mail.setTargetObjectId(u.Id);
 				mail.setSaveAsActivity(false);
 				mail.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc, exampleAttc});
