@@ -1,20 +1,18 @@
 @isTest
 private class ServiceRenderedLogicTest {
 
-    static void insertCustomSetting() {
-
-        list<Case_Reason_Service__c> lista = new list<Case_Reason_Service__c> {
-            new Case_Reason_Service__c ( name = 'myReason',
-            service__c = 'CASS Participation',
-            Provider_Required__c = false
-                                       ),
-            new Case_Reason_Service__c ( name = 'myReason2',
-            service__c = 'BSP Representation',
-            Provider_Required__c = false)
+    static void insertCustomSetting(){
+        List<Case_Reason_Service__c> caseReasonServices = new List<Case_Reason_Service__c> {
+            new Case_Reason_Service__c (Name ='myReason',
+                                        Service__c ='CASS Participation',
+                                        Provider_Required__c = false),
+            new Case_Reason_Service__c (Name ='myReason2',
+                                        Service__c ='BSP Representation',
+                                        Provider_Required__c = false)
         };
-
-        insert lista;
-
+        
+        insert caseReasonServices;                                                                          
+    
     }
 
     @isTest

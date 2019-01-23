@@ -106,6 +106,7 @@ private class CaseBeforeTriggerTest {
                          Country_concerned__c = 'Italy',
                          contactid = con.id,
                          AccountId = a.id,
+                          Late_Payment_Date__c = Date.today(),
                          CS_Contact_Result__c = 'Agent closed'
                              //Update_AIMS_IRR__c = system.now(),
                              //Update_AIMS_DEF__c = system.now(),
@@ -973,7 +974,7 @@ private class CaseBeforeTriggerTest {
 
     // create an Airline Coding Application case on the account
     ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
-    Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1');
+    Case cs_coding1 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs1', Reason1__c='Designator Form');
     insert cs_coding1;
 
     //////////////////////////
@@ -1010,7 +1011,7 @@ private class CaseBeforeTriggerTest {
     // try to open a new Airline Coding case on the same account, check that it is not inserted
     Boolean isExceptionRaised = false;
     try {
-      Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2');
+      Case cs_coding2 = new Case(recordtypeID = AirlineCodingRTId, Status = 'Open', AccountId = a.id, Subject = 'cs2', Reason1__c='Designator Form');
       insert cs_coding2;
     } catch (Exception e) {
       isExceptionRaised = true;
@@ -1058,7 +1059,8 @@ private class CaseBeforeTriggerTest {
                         Short_Payment_Amount__c = 50,
                         CurrencyExchangeRateUSD__c = 1,
                         SIDRA_exchange_rate_updated__c = true,
-                        BSP_CASS__c = 'BSP'
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
                       ));
 
     // NOT SMALLAMOUNT
@@ -1072,7 +1074,8 @@ private class CaseBeforeTriggerTest {
                         Short_Payment_Amount__c = 60,
                         CurrencyExchangeRateUSD__c = 1,
                         SIDRA_exchange_rate_updated__c = true,
-                        BSP_CASS__c = 'BSP'
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
                       ));
 
     // MINORPOLICY
@@ -1086,7 +1089,8 @@ private class CaseBeforeTriggerTest {
                         Short_Payment_Amount__c = 100,
                         CurrencyExchangeRateUSD__c = 1,
                         SIDRA_exchange_rate_updated__c = true,
-                        BSP_CASS__c = 'BSP'
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
                       ));
 
     // NOT MINORPOLICY
@@ -1100,7 +1104,8 @@ private class CaseBeforeTriggerTest {
                         Short_Payment_Amount__c = 101,
                         CurrencyExchangeRateUSD__c = 1,
                         SIDRA_exchange_rate_updated__c = true,
-                        BSP_CASS__c = 'BSP'
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
                       ));
 
     // MINORPOLICY
@@ -1114,7 +1119,8 @@ private class CaseBeforeTriggerTest {
                         Short_Payment_Amount__c = 150000,
                         CurrencyExchangeRateUSD__c = 1,
                         SIDRA_exchange_rate_updated__c = true,
-                        BSP_CASS__c = 'BSP'
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
                       ));
 
     // NOT MINORPOLICY
@@ -1128,7 +1134,8 @@ private class CaseBeforeTriggerTest {
                         Short_Payment_Amount__c = 160000,
                         CurrencyExchangeRateUSD__c = 1,
                         SIDRA_exchange_rate_updated__c = true,
-                        BSP_CASS__c = 'BSP'
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
                       ));
 
     insert cases;
@@ -1159,7 +1166,8 @@ private class CaseBeforeTriggerTest {
                         Short_Payment_Amount__c = 5,
                         CurrencyExchangeRateUSD__c = 1,
                         SIDRA_exchange_rate_updated__c = true,
-                        BSP_CASS__c = 'BSP'
+                        BSP_CASS__c = 'BSP',
+                        Late_Payment_Date__c = Date.today()
                    );
 
     Case theCase;
@@ -1244,7 +1252,8 @@ private class CaseBeforeTriggerTest {
                            Short_Payment_Amount__c = 50,
                            CurrencyExchangeRateUSD__c = 1,
                            BSP_CASS__c = 'BSP',
-                           SIDRA_exchange_rate_updated__c = true
+                           SIDRA_exchange_rate_updated__c = true,
+                           Late_Payment_Date__c = Date.today()
                          );
     insert cas01;
 
@@ -1259,7 +1268,8 @@ private class CaseBeforeTriggerTest {
                            Short_Payment_Amount__c = 100,
                            CurrencyExchangeRateUSD__c = 1,
                            BSP_CASS__c = 'BSP',
-                           SIDRA_exchange_rate_updated__c = true
+                           SIDRA_exchange_rate_updated__c = true,
+                           Late_Payment_Date__c = Date.today()
                          );
     insert cas02;
 
@@ -1308,7 +1318,8 @@ private class CaseBeforeTriggerTest {
                                  Short_Payment_Amount__c = 5,
                                  CurrencyExchangeRateUSD__c = 1,
                                  SIDRA_exchange_rate_updated__c = true,
-                                 BSP_CASS__c = 'BSP'
+                                 BSP_CASS__c = 'BSP',
+                                 Late_Payment_Date__c = Date.today()
                             );
     insert testcase;
 

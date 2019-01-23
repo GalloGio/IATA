@@ -430,6 +430,46 @@
                     <default>false</default>
                     <label>ZAR</label>
                 </value>
+                <value>
+                    <fullName>VES</fullName>
+                    <default>false</default>
+                    <label>VES</label>
+                </value>
+                <value>
+                    <fullName>MWK</fullName>
+                    <default>false</default>
+                    <label>MWK</label>
+                </value>
+                <value>
+                    <fullName>TTD</fullName>
+                    <default>false</default>
+                    <label>TTD</label>
+                </value>
+                <value>
+                    <fullName>XOF</fullName>
+                    <default>false</default>
+                    <label>XOF</label>
+                </value>
+                <value>
+                    <fullName>KZT</fullName>
+                    <default>false</default>
+                    <label>KZT</label>
+                </value>
+                <value>
+                    <fullName>NAD</fullName>
+                    <default>false</default>
+                    <label>NAD</label>
+                </value>
+                <value>
+                    <fullName>SYP</fullName>
+                    <default>false</default>
+                    <label>SYP</label>
+                </value>
+                <value>
+                    <fullName>VUV</fullName>
+                    <default>false</default>
+                    <label>VUV</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

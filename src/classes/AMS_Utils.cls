@@ -77,6 +77,8 @@ public without sharing class AMS_Utils {
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
     public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
+    public static final String IEPMODELAACCOUNTSETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
+    public static final String IEPMODELBACCOUNTSETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
     public static final String PCI_COMPLIANT    = 'PCI.COMPLIANT.1.0';
 
     //Process of type NewGen
@@ -90,11 +92,31 @@ public without sharing class AMS_Utils {
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
     public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
 
+    public static final String NGCHINACONVERSION  = 'ANG.MAJOR.CHANGES.CHINA.1.0'; //ACAMBAS - NEWGEN-4445
+ 
+    public static final String CONVERTTONEWGENPILOT = 'Conversion to GoLite'; //ACAMBAS - NEWGEN-4445
+    public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
+    public static final String CONVERTTOINTERNATIONAL = 'Conversion to International'; //ACAMBAS - NEWGEN-4445
+    
+    public static final Map<String, List<String>> OSCARBackupProcessMap = new Map<String, List<String>>{
+        NGCHANGES => new List<String>{'Step4__c'},
+        NGCHINACONVERSION => new List<String>{'Step4__c', 'Step3__c'}
+    };
+
+    public static final Set<String> pilotAccStatusNotRequireLocClassD = new Set<String>{
+        AMS_Utils.ACC_S0_TERMINATED, 
+        AMS_Utils.ACC_S3_NOTINOPERATION, 
+        AMS_Utils.ACC_S1_NOTACCREDITED
+    };
+
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
 	//AMSU-162
     public static final Set<String> AMS_ProcessesAddressToValidate = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA, new_MSO};
+
+    //AMSU-180
+    public static final Set<String> oscarAMSProcesses_ValidateOwnership = new Set <String>{new_HO, AGENCYCHANGES, new_TIDS, COR};
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
     public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE};
@@ -127,6 +149,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWGENFOP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
     public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
     public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
+    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
@@ -326,7 +349,6 @@ public without sharing class AMS_Utils {
     private static Map<String, String> fieldsMap = new Map<String, String> {
          'Name' => 'Account_Name__c'
         ,'IATACode__c' => 'IATACode__c'
-        ,'Short_Name__c' => 'Short_Name__c'
         ,'TradeName__c' => 'Trade_Name__c'
         ,'License_Number__c' => 'ISSP_AMS_License_No__c'
         ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
@@ -1067,6 +1089,8 @@ public without sharing class AMS_Utils {
 
         for (AMS_OSCAR__c oscar : oscars) {
 
+            Boolean accountHasChanges = false;
+
             Account acc = accounts.get(oscar.Account__c);
 
             AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
@@ -1083,6 +1107,8 @@ public without sharing class AMS_Utils {
 
                     if( acc.get(accfield) != newValue ){
 
+                        accountHasChanges = true;
+
                         if(AMS_AccountTriggerHandler.minorChangesAccountFields.contains(accfield.toLowerCase())){
                             accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', accfield, String.valueOf(acc.get(accfield)), String.valueOf(newValue)));
                         }
@@ -1096,33 +1122,71 @@ public without sharing class AMS_Utils {
                 if(acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name){
                     accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingState', acc.ShippingState, onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null));
                     acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
+                    accountHasChanges = true;
                 }
                 if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
                     accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingCountry', acc.ShippingCountry, onlineAcc.Shipping_ISO_Country__r.Name));
                     acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
+                    accountHasChanges = true;
                 }
 
-                acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
-                acc.Company_Type__c = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
-                acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
-                acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
-                acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
-                acc.BillingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.IATA_ISO_State__r.Name : null;
+                if((onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes' && acc.In_a_Airport__c != true) || (onlineAcc.ISSP_AMS_Premises_located_at_airport__c != 'Yes' && acc.In_a_Airport__c == true)){
+                    acc.In_a_Airport__c = (onlineAcc.ISSP_AMS_Premises_located_at_airport__c == 'Yes') ? true : false;
+                    accountHasChanges = true;
+                }
 
-                acc.ANG_Accreditation_Model__c = decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
+                String transformedCompanyType = transformCompanyType(onlineAcc.ISSP_AMS_Legal_Status__c);
+                if(acc.Company_Type__c != transformedCompanyType){
+                    acc.Company_Type__c = transformedCompanyType;
+                    accountHasChanges = true;
+                }
+
+                String transformedGDS = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
+                if(acc.GDS__c != transformedGDS){
+                    acc.GDS__c = transformedGDS;
+                    accountHasChanges = true;
+                }
+
+                if(acc.BillingCountry != onlineAcc.Branch_Office_Country__r.Name){
+                    acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
+                    accountHasChanges = true;
+                }
+
+                if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
+                    acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
+                    accountHasChanges = true;
+                }
+
+                if(onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true && (acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name || acc.BillingState != onlineAcc.IATA_ISO_State__r.Name)){
+                    acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
+                    acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
+                    accountHasChanges = true;
+                } else if(onlineAcc.IATA_ISO_State__r.Valid_for_Address__c != true && (acc.ShippingState != null || acc.BillingState != null)){
+                    acc.ShippingState = null;
+                    acc.BillingState = null;
+                    accountHasChanges = true;
+                }
+
+                String decodedAMFromOscarProcess = decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
+                if(acc.ANG_Accreditation_Model__c != decodedAMFromOscarProcess){
+                    acc.ANG_Accreditation_Model__c = decodedAMFromOscarProcess;
+                    accountHasChanges = true;
+                }
 
                 if(oscar.Process__c == NEWHESTANDARD && acc.RHC_Informations__r.isEmpty()) createRHCInfo.add(acc);
 
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
                 if(oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
+                    accountHasChanges = true;
                     acc.Is_PCI_compliant__c = oscar.Is_PCI_compliant__c;
                     if(acc.Is_PCI_compliant__c == 'Corporate Card')
                         acc.ANG_PCI_compliance_expiry_date__c = Date.newInstance(2099, 12, 31);
                 }
 
-                accountsToUpdate.add(acc);
+                if(accountHasChanges)
+                    accountsToUpdate.add(acc);
+
                 stagingToAccount.put(onlineAcc.Id, new Set<Id>{oscar.Account__c});
                 oscarsToCopy.add(oscar);
                 locationTypeByOscar.put(oscar.Id, acc.Location_Type__c);
@@ -1224,6 +1288,7 @@ public without sharing class AMS_Utils {
         // Account Fields => AMS Pax Accreditation Fields (Staging area)
         Map<String, String> fieldsMapping = new Map<String, String>(fieldsMap.clone()); //Reused map
         fieldsMapping.put('Link_agent_name__c', 'Link_agent_name__c');
+        fieldsMapping.put('Short_Name__c', 'Short_Name__c');
 
         /*** AMSU-121 Start ***/
         if(!oscarNewGenProcesses.contains(oscar.Process__c)) {
@@ -1233,12 +1298,14 @@ public without sharing class AMS_Utils {
         
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
             Map<String, Object> accountFieldNewValue = new Map<String,Object>();
+            Map<String, Object> accountFieldNewValueBKP = new Map<String,Object>(); //AMSU-184
 
             for (String key : fieldsMapping.keySet()) {
                 String value = fieldsMapping.get(key);
                 if (fieldsToMigrate.contains(value)) {
                 
                     accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
+                    accountFieldNewValueBKP.put(key, oscarOnlineAccreditation.get(value)); //AMSU-184
                     System.debug(key + ':' + oscarOnlineAccreditation.get(value));
                 }
             }
@@ -1261,6 +1328,23 @@ public without sharing class AMS_Utils {
 
                 Account newAcc = new Account(Id = acc.Id);
                 List<AMS_ChangeCodesHelper.ObjectChange> objectChangesList = new List <AMS_ChangeCodesHelper.ObjectChange>();
+
+                //AMSU-184 - need to bypass the name and short name for the Ownership changes to China and Taipei, but only for the remaining of the hierarchy, the selected account to change can change its name
+                if( (typesOfChange.contains(AMS_Utils.OWNERSHIP_NON_IATA) || typesOfChange.contains(AMS_Utils.OWNERSHIP_IATA) )
+                    && (oscarOnlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'CN' || oscarOnlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'TW') 
+                ){
+                    if(acc.Id != oscar.Account__c){
+                        fieldsToMigrate.remove('Account_Name__c');
+                        fieldsToMigrate.remove('Short_Name__c');
+                        accountFieldNewValue.remove('Name');
+                        accountFieldNewValue.remove('Short_Name__c');
+                    }else{
+                        fieldsToMigrate.add('Account_Name__c');
+                        fieldsToMigrate.add('Short_Name__c');
+                        accountFieldNewValue = accountFieldNewValueBKP;
+                    }
+                }
+                
 
                 for(String accFieldApiName: accountFieldNewValue.keySet())
                 {
@@ -1323,6 +1407,7 @@ public without sharing class AMS_Utils {
         //Reused map 
         Map<String, String> fieldsMapping = new Map<String, String>(fieldsMap.clone());
         fieldsMapping.put('Link_agent_name__c', 'Link_agent_name__c');
+        fieldsMapping.put('Short_Name__c', 'Short_Name__c');
 
         //AMSU-151
         fieldsMapping.put('In_a_Airport__c', 'ISSP_AMS_Premises_located_at_airport__c');
@@ -1495,7 +1580,38 @@ public without sharing class AMS_Utils {
 
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + account);
 
-        Map<String, String> fieldsMapping = new Map<String, String>(fieldsMap.clone());
+        Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
+                                                                    ,'IATACode__c' => 'IATACode__c'
+                                                                    ,'Short_Name__c' => 'Short_Name__c'
+                                                                    ,'TradeName__c' => 'Trade_Name__c'
+                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
+                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
+                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
+                                                                    ,'Website' => 'Website__c'
+                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
+                                                                    ,'BillingCity' => 'Branch_Office_City__c'
+                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
+                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
+                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
+                                                                    ,'Email__c' => 'Branch_Office_Email__c'
+                                                                    ,'Phone' => 'Branch_Office_Phone__c'
+                                                                    ,'Fax' => 'Branch_Office_FAX__c'
+                                                                    ,'ShippingCity' => 'Shipping_City__c'
+                                                                    ,'Operation__c' => 'Operation__c'
+                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
+                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
+                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
+                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
+                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
+                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
+                                                                    ,'Location_Class__c' => 'Location_Class__c'
+                                                                    ,'Location_Type__c' => 'Location_Type__c'
+                                                                    ,'Mobile__c' => 'Mobile__c'
+                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
+                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
+                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
+                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'};
 
         if (fieldsToMigrate != null && onlineAccreditation != null) {
                 Map<String, Object> onlineAccreditationFieldNewValue = new Map<String,Object>();
@@ -1513,11 +1629,21 @@ public without sharing class AMS_Utils {
                 if (fieldsToMigrate.contains('ISSP_AMS_Premises_located_at_airport__c'))
                     onlineAccreditationFieldNewValue.put('ISSP_AMS_Premises_located_at_airport__c', (account.In_a_Airport__c == true) ? 'Yes' : 'No');
                 if (fieldsToMigrate.contains('ISSP_AMS_Legal_Status__c'))
-                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Legal_Status__c', account.Company_Type__c);
+                    onlineAccreditationFieldNewValue.put('ISSP_AMS_Legal_Status__c', transformLegalStatus(account.Company_Type__c));
                 if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
                     onlineAccreditationFieldNewValue.put('ISSP_AMS_GDS_with_signed_contract__c', account.GDS__c);
 
 
+                //AMSU-184 - need to bypass the name and short name for the Ownership changes to China and Taipei, but only for the remaining of the hierarchy, the selected account to change can change its name
+                if( typesOfChange.contains(AMS_Utils.OWNERSHIP_IATA) 
+                    && (onlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'CN' || onlineAccreditation.Branch_Office_Country__r.ISO_Code__c == 'TW') 
+                ){
+                    fieldsToMigrate.remove('Account_Name__c');
+                    fieldsToMigrate.remove('Short_Name__c');
+                    onlineAccreditationFieldNewValue.remove('Account_Name__c');
+                    onlineAccreditationFieldNewValue.remove('Short_Name__c');
+                }
+                
                 for(String accredFieldApiName: onlineAccreditationFieldNewValue.keySet())
                 {
 
@@ -1550,7 +1676,15 @@ public without sharing class AMS_Utils {
                     insp.Account__c = insp.OSCAR__r.Account__c;
                 }
                 
-                insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                /* AMSU-161 - begin - force change of date for these process */
+                //insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                if(String.isNotBlank(insp.OSCAR__c) && insp.OSCAR__r.Process__c != null && (insp.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP || insp.OSCAR__r.Process__c == AMS_Utils.new_AHA_BSP || insp.OSCAR__r.Process__c == AMS_Utils.new_GSSA)){ 
+                    insp.Date_Organisation_Status_attained__c = system.today();
+                }else{
+                	insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                }
+                /* AMSU-161 - end */
+                
                 insp.Accreditation_Endorsement_Status_code__c = statusToApply;
                 insp.Last_synchronization__c = system.today();
 
@@ -2178,7 +2312,15 @@ public without sharing class AMS_Utils {
     }
 
     //20-06-2017 - Change AMSU-93 - special chars replacement
+    // AMSU-195 - new method signature below 
     public static String cleanSpecialChars(String s){
+        return cleanSpecialChars(s, true);
+    }
+
+
+    //20-06-2017 - Change AMSU-93 - special chars replacement
+    //AMSU-195 - in order to not remove chars that don't exist on the SPECIAL CHAR list
+    public static String cleanSpecialChars(String s, Boolean replaceWithSpace){
 
         String sRes = '';
 
@@ -2194,23 +2336,16 @@ public without sharing class AMS_Utils {
 
                 Map<String, String> mSpecialChars = JsonSpecialChars;
 
-                //String regex = '[^a-zA-Z0-9]';
-                //String regex = '[a-zA-Z\\d\\!@#\\$%&,;\'"\\(\\-º\\){}?:+ª\\*]';
-                //String regex = '[^a-zA-Z\\d\\!@#\\$%&;\'"\\-{}()\\[\\]?:_. ,+\\*\\\\/]';
                 String regex = AMS_SAP_Settings__c.getOrgDefaults().RegEx_Special_Chars__c;
 
                 String specialCharsToEscape = AMS_SAP_Settings__c.getOrgDefaults().Special_Chars_to_Escape_List__c;
-
-                //System.debug('specialCharsToEscape: ' + specialCharsToEscape);
 
                 sRes = s;
 
                 Matcher m = Pattern.compile(regex).matcher(s);
 
-                
                 while (m.find()) {
 
-                    //System.debug('m.group: ' + m.group());
                     if(mSpecialChars.containsKey( m.group() )) {
                         if(specialCharsToEscape.contains(m.group())){
                             sRes = sRes.replaceAll('\\'+m.group(), mSpecialChars.get(m.group()));
@@ -2218,10 +2353,19 @@ public without sharing class AMS_Utils {
                             sRes = sRes.replaceAll(m.group(), mSpecialChars.get(m.group()));
                         }
                     }else{
-                        sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
+                        if(replaceWithSpace) sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
                     }
 
+				}
+
+                //Check for TAB (\t)
+                if(s.contains('\t')) {
+                    sRes = sRes.replaceAll('\t', mSpecialChars.get('SPACE'));
                 }
+
+                //remove inner double spaces
+                sRes = sRes.replaceAll('\\s+',' '); 
+                
             }
             System.debug('sRes: ' + sRes);
 
@@ -2230,7 +2374,7 @@ public without sharing class AMS_Utils {
             sRes = s;
         }
 
-        return sRes;
+        return sRes.trim();
 
     }
 
@@ -2445,14 +2589,14 @@ public without sharing class AMS_Utils {
     /**
     *   Method that validates if the record fields contain only latin characters
     **/
-    public static List<String> validateCharacters(sObject record, List<Schema.SObjectField> fieldsToCheck) {
+    public static List<String> validateCharacters(sObject record, List<Schema.FieldSetMember> fieldsToCheck) {
         List<String> res = new List<String>();
         String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
-        for(Schema.SObjectField field : fieldsToCheck) {
-            String fieldAPIName = field.getDescribe().getName();
-            String fieldLabel = field.getDescribe().getLabel();
+        for(Schema.FieldSetMember field : fieldsToCheck) {
+            String fieldAPIName = field.getFieldPath();
+            String fieldLabel = field.getLabel();
             Object value = record.get(fieldAPIName);
             if( value == null || !(value instanceof String)) {
                 continue; //Skip non String fields
@@ -2470,26 +2614,40 @@ public without sharing class AMS_Utils {
         return res;
     }
 
-    public static final List<Schema.SObjectField> STAGING_AREA_FIELDS_TO_VALIDATE = new List<Schema.SObjectField> {
-        AMS_Pax_Accreditation_Form__c.Account_Name__c, 
-        AMS_Pax_Accreditation_Form__c.IATACode__c, 
-        AMS_Pax_Accreditation_Form__c.CASS_Number__c, 
-        AMS_Pax_Accreditation_Form__c.Short_Name__c, 
-        AMS_Pax_Accreditation_Form__c.Trade_Name__c, 
-        AMS_Pax_Accreditation_Form__c.ISSP_AMS_License_No__c, 
-        AMS_Pax_Accreditation_Form__c.ISSP_AMS_VAT_number__c,
-        AMS_Pax_Accreditation_Form__c.Branch_Office_Street_name_number__c, 
-        AMS_Pax_Accreditation_Form__c.Branch_Office_Postal_code__c, 
-        AMS_Pax_Accreditation_Form__c.Branch_Office_City__c, 
-        AMS_Pax_Accreditation_Form__c.Shipping_Street__c, 
-        AMS_Pax_Accreditation_Form__c.Shipping_Postal_Code__c,
-        AMS_Pax_Accreditation_Form__c.Shipping_City__c, 
-        AMS_Pax_Accreditation_Form__c.Branch_Office_Email__c, 
-        AMS_Pax_Accreditation_Form__c.Website__c, 
-        AMS_Pax_Accreditation_Form__c.Abbreviated_name__c, 
-        AMS_Pax_Accreditation_Form__c.Abbreviated_Address__c, 
-        AMS_Pax_Accreditation_Form__c.VAT_Number_2__c
-    };
+    public static final List<Schema.FieldSetMember> STAGING_AREA_FIELDS_TO_VALIDATE = SObjectType.AMS_Pax_Accreditation_Form__c.FieldSets.STAGING_AREA_FIELDS_TO_VALIDATE.getFields();
     /*** AMSU-166 End ***/
 
+    /*** AMSU-179 ***/
+        public static final List<Schema.FieldSetMember> ACCOUNT_FIELDS_TO_VALIDATE = SObjectType.Account.FieldSets.AMS_ACCOUNT_FIELDS_TO_VALIDATE.getFields();
+
+    /*** AMSU-173 ***/
+    public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
+    
+	/*** AMSU-195 Start ***/
+    /**
+    *   Method that validates if the record fields contain only latin characters
+    **/
+    public static List<String> cleanAndUpdateSpecialChars(sObject record, List<Schema.FieldSetMember> fieldsToCheck, Boolean toUpdate) {
+        List<String> res = new List<String>();
+        String ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';
+        Pattern p = Pattern.compile(ISO_8859_1_regEx);
+
+        for(Schema.FieldSetMember field : fieldsToCheck) {
+            String fieldAPIName = field.getFieldPath();
+            String fieldLabel = field.getLabel();
+            Object value = record.get(fieldAPIName);
+            Object newvalue;
+            if( value == null || !(value instanceof String)) {
+                continue; //Skip non String fields
+            }
+            newvalue = AMS_Utils.cleanSpecialChars((String) value, false);
+            record.put(fieldAPIName, newvalue);
+
+            if(value != newvalue){
+                res.add(fieldLabel + ': Old = ' + value + ' : New = ' + newvalue);
+            }
+        }
+        return res;
+    }
+    /*** AMSU-195 End ***/
 }

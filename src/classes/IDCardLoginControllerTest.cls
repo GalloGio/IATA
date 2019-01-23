@@ -72,6 +72,7 @@ public class IDCardLoginControllerTest {
         idCardLoginController = new IDCardLoginController();
         idCardLoginController.getLangItems();
         idCardLoginController.findLocation();
+		idCardLoginController.fakemethod();
     }
 
     @isTest

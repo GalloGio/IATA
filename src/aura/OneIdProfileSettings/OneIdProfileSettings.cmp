@@ -30,6 +30,10 @@
 								<ui:outputText class="   read_output" value="{!v.userinfo.Email}"/>
 							</div>
 							<div class="    profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_MyProfile_SALUTATION} </span>
+								<ui:outputText class="  read_output" value="{!v.contactinfo.Salutation}"/>
+							</div>
+							<div class="    profile_readItem">
 								<span class="  read_span"> {!$Label.c.ISSP_MyProfile_FIRSTNAME} </span>
 								<ui:outputText class="  read_output" value="{!v.contactinfo.FirstName}"/>
 							</div>
@@ -48,6 +52,10 @@
 						</div>
 
 						<div class="  profile_col1">
+							<div class="   profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_Registration_MobilePhone} </span>
+								<ui:outputPhone class="  read_output" value="{!v.contactinfo.MobilePhone}"/>
+							</div>
 							<div class="   profile_readItem">
 								<span class="  read_span"> {!$Label.c.OneId_Profile_BusinessFax} </span>
 								<ui:outputPhone class="  read_output" value="{!v.contactinfo.Fax}"/>
@@ -186,6 +194,15 @@
 							<div class="  profile_column1">
 
 								<div class="    profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_SALUTATION} </span>
+									<ui:inputSelect aura:id="salutationpicklist" class="slds-size--2-of-4  read_output"  value="">
+										<ui:inputSelectOption text="Mr." label="{!$Label.c.ISSP_Registration_MR}"/>
+										<ui:inputSelectOption text="Mrs." label="{!$Label.c.ISSP_Registration_MRS}"/>
+										<ui:inputSelectOption text="Ms." label="{!$Label.c.ISSP_Registration_MS}"/>
+									</ui:inputSelect>
+								</div>
+
+								<div class="    profile_readItem">
 									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_FIRSTNAME} </span>
 									<ui:inputText aura:id="editfirstname" class="slds-size--2-of-4  read_output" value="{!v.contactinfo.FirstName}"/>
 								</div>
@@ -198,6 +215,12 @@
 									<span class="  read_span"> {!$Label.c.ISSP_Registration_BusinessPhone} </span>
 									<ui:inputPhone aura:id="editphone" class="  read_output" value="{!v.contactinfo.Phone}"/>
 								</div>
+
+								<div class="   profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_Registration_MobilePhone} </span>
+									<ui:inputPhone aura:id="editmobilephone" class="  read_output" value="{!v.contactinfo.MobilePhone}"/>
+								</div>
+
 								<div class="   profile_readItem">
 									<span class="  read_span"> {!$Label.c.OneId_Profile_BusinessFax} </span>
 									<ui:inputPhone aura:id="editfax" class="  read_output" value="{!v.contactinfo.Fax}"/>

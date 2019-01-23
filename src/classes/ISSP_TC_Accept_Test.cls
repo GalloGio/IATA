@@ -2,7 +2,7 @@
 private class ISSP_TC_Accept_Test {
 
 	static testMethod void myUnitTest_1() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -51,7 +51,7 @@ private class ISSP_TC_Accept_Test {
     }
     
     static testMethod void myUnitTest_2() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -105,7 +105,7 @@ private class ISSP_TC_Accept_Test {
     }
     
     static testMethod void myUnitTest_3() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -146,7 +146,7 @@ private class ISSP_TC_Accept_Test {
     }
     
     static testMethod void myUnitTest_4() {
-		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -187,6 +187,19 @@ private class ISSP_TC_Accept_Test {
     	system.runAs(newUser){	
         	cttr.CheckLogoutorSurvey();
     	}
+    }
+	
+    static testMethod void myUnitTest_5() {
+        ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
+        insert issc;
+        Test.startTest();
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+        cttr.getOperationalCalendarPermission();
+        cttr.CheckLogoutorSurvey();
+        PageReference pageRef = Page.ISSP_TC_Accept;
+        Test.setCurrentPage(pageRef);
+        PageReference pr1 = cttr.pageLoad();
+		Test.stopTest();        
     }
 
 }

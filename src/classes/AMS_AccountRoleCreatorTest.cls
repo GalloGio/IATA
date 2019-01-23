@@ -541,10 +541,19 @@ public with sharing class AMS_AccountRoleCreatorTest {
         insert accre;
         System.debug('test_CADCCCorrectionProcess accre: ' + accre);
 
-        AMS_Accreditation_Contact__c owner3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = accre.Id, Agency_Owner__c = true, Financial_interest__c = 100,
-                                                                                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner'), 
-                                                                                Last_name__c = 'New Owner', First_Name__c = 'New Contact', Email__c = 'newContact@newOwner.test');
-        insert owner3;
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            Agency_Owner__c = true,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
 
         oscar.RecordTypeId = correctionOSCARRecTypeId;
         //oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
@@ -618,6 +627,19 @@ public with sharing class AMS_AccountRoleCreatorTest {
         insert owner3;
 
         System.debug('test_CADCCCorrectionProcess accre: ' + accre);
+
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= accre.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
 
         oscar.RecordTypeId = correctionOSCARRecTypeId;
         //oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;

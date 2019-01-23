@@ -17,7 +17,8 @@ public with sharing class clsInternalCaseDML {
                 RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia'), //Oct-27-2011 AP
                 RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_Ad_hoc_Calendar_Change_R_S_Locked'), // FDS Ad-hoc Calendar Change (R&S) Locked  // Jul-27-2015 SA INC193042
                 RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ComplaintIDFS'), //Complaint (IDFS ISS) 
-                RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application') // Jan-25-2016
+                RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Application'), // Jan-25-2016
+		RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global')
             };
 
             Set<Id> parentIds = new Set<Id>();

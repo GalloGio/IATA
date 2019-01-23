@@ -256,19 +256,23 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCase_SIS_ICH_AreaVsType Trigger*/
         if (trgCase_SIS_ICH_AreaVsType) {
             System.debug('____ [cls CaseBeforeTrigger - trgCase_SIS_ICH_AreaVsType]');
+            Set<String> caseTypeICHAndSIS = new Set<String>{
+                'SIS Feature Request',
+                'SIS Technical Problem',
+                'SIS Internal Case',
+                'SIS Question/Problem',
+                'SIS Member Profile Update',
+                'SIS Membership',
+                'Feature Request',
+                'General Question',
+                'Problem / Issue'
+            };
+            for (Case newCase : Trigger.New) {
+                if(newCase.Type != null && newCase.RecordTypeId == sisHelpDeskCaseRecordTypeID && newCase.Origin != 'Internal Case' 
+                && ((newCase.CaseArea__c == 'ICH' && caseTypeICHAndSIS.contains(newCase.Type)) 
+                || (newCase.CaseArea__c == 'SIS' && !caseTypeICHAndSIS.contains(newCase.Type)))) {
 
-            for (case newCase: Trigger.new) {
-                if (newCase.Type != null && newCase.CaseArea__c != null) {
-                    if (newCase.CaseArea__c == 'ICH' && (newCase.Type == 'SIS Feature Request' || newCase.Type == 'SIS Technical Problem' || newCase.Type == 'SIS Internal Case'
-                                                         || newCase.Type == 'SIS Question/Problem' || newCase.Type == 'SIS Member Profile Update' || newCase.Type == 'SIS Membership'
-                                                         || newCase.Type == 'Feature Request' || newCase.Type == 'General Question' || newCase.Type == 'Problem / Issue')) {
-                        newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
-                    }
-                    if (newCase.CaseArea__c == 'SIS' && (newCase.Type != 'SIS Feature Request' && newCase.Type != 'SIS Technical Problem' && newCase.Type != 'SIS Internal Case'
-                                                         && newCase.Type != 'SIS Question/Problem' && newCase.Type != 'SIS Member Profile Update' && newCase.Type != 'SIS Membership'
-                                                         && newCase.Type != 'Feature Request' && newCase.Type != 'General Question' && newCase.Type != 'Problem / Issue')) {
-                        newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
-                    }
+                    newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
                 }
             }
         }
@@ -532,8 +536,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // New from Oct 2015: if there's already another Airline Coding case open, raise an error
                     // Mod from 2016/04/05: this restriction is only when the case has the same Reason1__c 
                     if (c.RecordTypeId == AirlineCodingRTId && mapACCasesPerAccountId.get(c.AccountId) != null) {
-                        for (Case cse : mapACCasesPerAccountId.get(c.AccountId) ) {
-                            if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id) {
+                        system.debug('##ROW##');
+                        set<String> setInvalidReasons = new set<String>{'Baggage Tag Identifier Codes','Designator Form'};
+                        for (Case cse: mapACCasesPerAccountId.get(c.AccountId) ) {
+                            if (cse.Reason1__c == c.Reason1__c && cse.Id != c.Id && setInvalidReasons.contains(c.Reason1__c)) {
                                 c.addError('There is already an open Airline Coding Application case with Reason "' + c.Reason1__c + '" on the selected Account. There can be only one open case of this type on an Account.');
                             }
                         }
@@ -1425,6 +1431,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (trgCase){
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isUpdate]');
             SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
+            CaseDueDiligence.beforeUpdate(Trigger.newMap, Trigger.oldMap);
         }
 
         /*trgProcessISSCase Trigger.isUpdate*/
@@ -1855,7 +1862,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if(aCase.RecordTypeId == caseRecordType){
                     idCardCases.add(aCase);
                     if (aCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL) {
-                        contactIDList.add(aCase.ContactId);
+                        
+                        if(aCase.ContactId != null)
+                            contactIDList.add(aCase.ContactId);
+
                         relatedIDCardAppList.add(aCase.Related_ID_Card_Application__c);
 
                         if(aCase.AccountId == null) casesWithoutAccount.add(aCase.Related_ID_Card_Application__c);
@@ -1907,7 +1917,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
             if(!iataCodes.isEmpty()){
                 for(Account a : [SELECT 
-                                 Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c, Status__c
+                                 Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c, Status__c, BillingCountry
                                  FROM Account 
                                  WHERE Id IN :accounttIDList OR
                                   (RecordType.Name = : 'Agency' 
@@ -1974,15 +1984,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         if (application.ID_Cards__r.size() == 0) {
                             //**Create Contact only for new application
                             if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW){
-
                                 theContact = IDCardUtil.CreateContactWhenNewCardIsApproved(application, theAccount);
                                 theContact.Email = application.Email_admin__c; 
                                 aCase.ContactId = theContact.ID;
-                            }else{
-                                theContact = contactMap.get(aCase.ContactId);
                             }
-                            //Check if theContact exists with VER_Number na lista anterior preenchida - Ver codigo antigo
-
+                            else theContact = contactMap.get(aCase.ContactId);
+                            
                             if (theContact == null || theContact.VER_Number__c != Decimal.valueOf(application.VER_Number__c)) 
                                 throw new IDCardApplicationException(string.format(Label.ID_Card_Contact_Not_found_for_VER, new string[] {application.VER_Number__c}));
                             
@@ -2073,20 +2080,22 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
 
-                if(!oscarIdcases.isEmpty()){
-                    for (AMS_OSCAR__C oscar : [SELECT Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
-                                               Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
-                                               Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
-                                               FROM AMS_OSCAR__c WHERE Id in :oscarIdcases.keySet()]) {
+                if(oscarIdcases.keySet().isEmpty()) return;
+                
+                for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
+                                           Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
+                                           Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c
+                                           from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]) {
 
-                        oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id), oscarIdcases.get(oscar.Id), oscar, false);
-                        if (oscar != null) {
-                            oscarsToUpdate.add(oscar);
-                        }
+                    oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id), oscarIdcases.get(oscar.Id), oscar, false);
+
+                    if (oscar != null) {
+                        oscarsToUpdate.add(oscar);
                     }
-                    if (!oscarsToUpdate.isEmpty()) {
-                        update oscarsToUpdate;
-                    }
+                }
+
+                if (!oscarsToUpdate.isEmpty()) {
+                    update oscarsToUpdate;
                 }
 
             }

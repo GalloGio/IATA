@@ -177,6 +177,11 @@ public without sharing class ISSP_Case {
                 return new PageReference('/ISSP_ModelA_Onboarding?caseId=' + caseId);
             }
 
+            //if case is a SIS Joining Form
+            if(newCase.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process' && newCase.Classification_SIS__c == 'SIS Membership'
+                    && newCase.Status == 'Draft' && !newCase.isClosed && !newCase.Owner.Name.StartsWith('Recycle Bin')){
+                return new PageReference('/ISSP_SISMembershipApplicationForm?id=' + caseId + '&step=2');
+            }
             // If Case is an ICCS Case, redirect to ICCS Service
 			Set<String> recordTypesSet = new Set<String>{
 				'FDS ASP Management',
@@ -356,7 +361,7 @@ public without sharing class ISSP_Case {
         String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
         //Verify if user is a PWC profile
         if (profileName.startsWith('ISS Portal PwC')) {  isPWCProfile = true; }
-        if (profileName.startsWith('ISS Portal DPC') ) {  isDPCUser = true; }
+        if (profileName.startsWith('ISS Portal DPC Admin') ) {  isDPCUser = true; }
         if (profileName.startsWith('ISS Portal Agency') ) {  isAgencyUser = true; }
         if (profileName.startsWith('ISS Portal GSA') ) {  isGSAUser = true; }
 
@@ -386,11 +391,12 @@ public without sharing class ISSP_Case {
                 isEditMode = true;
 
 
-            //Survey Handle
+            //Survey Handle 
             mySurveyCompletedVariable  = false ;
+            //RN-INC428791 - remove live agent chat rt
             List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
                     FROM Instant_Surveys__c
-                    WHERE Relationship_to_Case__c = :newCase.Id]);
+                    WHERE Relationship_to_Case__c = :newCase.Id and recordType.developername != 'Live_Agent_Chat']);
             if (Survey_List != null && Survey_List.size() > 0) {
                 mySurveyCompletedVariable = true ;
             }
@@ -653,8 +659,6 @@ public without sharing class ISSP_Case {
                     }
                 }
                 
-                
-                
                 List<Contact> lsContacts = new list<Contact>();
                 for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
                         FROM User
@@ -668,6 +672,7 @@ public without sharing class ISSP_Case {
                 JSONcontacts = JSON.serialize(lsContacts);
                 System.debug(lsAccounts);
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
+                newCase.Status = 'Action Needed';
 
                 System.debug(profileRole);
 
@@ -1792,5 +1797,18 @@ public without sharing class ISSP_Case {
             }
         }
         return listHistory;
+    }
+    
+    /**
+        Allowed values for Status field when a DPC user is using this page
+    **/
+    public list<SelectOption> getListDPCValidCaseStatus() {
+        set<String> setStatus = new set<String>{'Pending Feedback From Requestor','Action Needed'};
+        setStatus.add(this.newCase.Status);
+        list<SelectOption> listOptions = new list<SelectOption>();
+        for (String status: setStatus) {
+            listOptions.add(new SelectOption(status,status));
+        }
+        return listOptions;
     }
 }

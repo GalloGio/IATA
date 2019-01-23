@@ -474,6 +474,9 @@ public class AMS_ChangeCodesHelper {
         List<AMS_Oscar__c> oscars = new List<AMS_Oscar__c>();
 
         String identifier = oscar.Business_process__c + '-VR-';
+        //AMSU-161
+        if(oscar.Business_process__c == null && oscar.Current_Step__c == 'STEP31__c' && oscar.Documentation_remarks__c == 'OSCAR FOR VR by Appointment Termination' )
+            identifier = 'AMS-VR-';
 
         if(Test.isRunningTest()){
             AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-VRR', Change_Code__c = 'VRR', Account_status_change__c = null);
@@ -662,6 +665,8 @@ public class AMS_ChangeCodesHelper {
         Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
+
+        if(accsIds.isEmpty()) return fOPs;
         for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c = 'Active']){
             if(fOPs.keySet().contains(fop.Account__c))
                 fOPs.get(fop.Account__c).add(fop);

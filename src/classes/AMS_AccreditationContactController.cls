@@ -199,6 +199,10 @@ public with sharing class AMS_AccreditationContactController {
         if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c == null || !(ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
             blockOwnershipEdit = true;
 
+        if(aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHINACONVERSION){
+            blockOwnershipEdit = true;
+        }
+
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
         isCASSAssociate = aoa.SAAM_Case__r.OSCAR__r.Account__r.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE;
@@ -337,13 +341,15 @@ public with sharing class AMS_AccreditationContactController {
             
         }
 
+        /*
         if(!isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
             return null;
         }
-
-        if(isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
+        */
+        //AMSU-180
+        if(!calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to at least 99.99% before saving.'));
             return null;
@@ -602,8 +608,7 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' &&
-         ((!isNewGenProcess && ownership != 100)||(isNewGenProcess && ownership < 99.99 )))
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && ownership < 99.99) //AMSU-180
         {
             return false;
         } else

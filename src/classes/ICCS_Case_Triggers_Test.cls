@@ -324,6 +324,8 @@ private class ICCS_Case_Triggers_Test {
         system.assertEquals('Closed', cs.Status);
         system.assertEquals(true, cs.isClosed);
         
+		
+		/*
         List<Product_Assignment__c> lstPAs = [SELECT Id, Status__c FROM Product_Assignment__c];
         system.assertEquals(1, lstPAs.size());
         system.assertEquals('Active', lstPAs[0].Status__c);        
@@ -391,7 +393,7 @@ private class ICCS_Case_Triggers_Test {
         system.assertEquals(3, lstPAs.size());
         
         
-        
+        */
         // Create a product removal Case, close it and test that the Product Assignments have been inactivated
         /*Case cs3 = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS � Remove Product', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');
@@ -417,6 +419,7 @@ private class ICCS_Case_Triggers_Test {
         System.AssertEquals(3,lstCases.size()); // Check that the case was not inserted; 3 cases present, cs1, cs3 and cs4
         */
         test.stopTest();
+
     }
     
     

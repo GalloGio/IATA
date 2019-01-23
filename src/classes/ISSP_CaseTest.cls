@@ -574,7 +574,7 @@ public class ISSP_CaseTest {
 
     public static testMethod void testDCPnewCase() {
         Account account = ISSP_ObjectFactory.createNewAccount();
-        account.Name = 'Account1';
+        account.Name = 'iDPC';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
@@ -583,7 +583,7 @@ public class ISSP_CaseTest {
         contact.Email = 'teamcontact@email.com';
         insert contact;
 
-       Id p = [select id from profile where name='ISS Portal DPC'].id;
+       Id p = [select id from profile where name='ISS Portal DPC Admin'].id;
 
         User user = new User(alias = 'test123', email=contact.Email,
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
@@ -660,7 +660,7 @@ public class ISSP_CaseTest {
         teamContact.Email = 'teamcontact@email.com';
         insert teamContact;
 
-       Id p = [select id from profile where name='ISS Portal DPC'].id;
+       Id p = [select id from profile where name='ISS Portal DPC Admin'].id;
        ISSP_UserTriggerHandler.preventTrigger = true;
         User user = new User(alias = 'test123', email=teamContact.Email,
                 emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
@@ -701,6 +701,7 @@ public class ISSP_CaseTest {
             update cttr.newCase;
             cttr.getAccountConcernedName();
             cttr.getCaseContactName();
+            cttr.getListDPCValidCaseStatus();
         }
         Test.stopTest();
     }

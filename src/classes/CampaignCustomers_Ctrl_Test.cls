@@ -39,6 +39,11 @@ public class CampaignCustomers_Ctrl_Test
 		}
 		upsert products SAP_Material_Number__c;
 
+
+		List<IEC_Event_Subscription__c> lstSubscriptions = new  List<IEC_Event_Subscription__c>();
+		lstSubscriptions.add(new IEC_Event_Subscription__c(Subscriber__c = oContact.Id, Product__c = products[0].Id, Quantity__c = 1, Active__c = true, Start_Date__c = Date.today()));
+		insert lstSubscriptions;
+
 		//Orders & OrderItems
 		List<Order> orders = TestDataGenerator.generateOrder(1, oContact.AccountId, usr.contactId, usr.contactId, false); 
 		orders[0].Type = 'Order';
@@ -114,7 +119,7 @@ public class CampaignCustomers_Ctrl_Test
 		List<Id> lstSelectedProdId = new List<Id>();
 		for (Integer id : ctrl.selectedProducts.keySet())
 			lstSelectedProdId.add(ctrl.selectedProducts.get(Id).id);
-		orderItems = [select Id, PriceBookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c, ServiceDate, Product__c, Invoice_Date__c, Order.BillToContactId
+		orderItems = [select Id, PriceBookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c, ServiceDate, Product__c, Invoice_Date__c, Order.BillToContactId, Product_Number__c
 		              from OrderItem where OrderId = :orders[0].Id and PricebookEntry.Product2.Id in :lstSelectedProdId];
 
 		insert new CampaignMember(CampaignId = campaigns[1].Id, ContactId = usr.ContactId );

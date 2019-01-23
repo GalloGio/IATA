@@ -6,6 +6,7 @@ public with sharing class ISSP_PortalUserStatusChange {
     public Boolean portalUser {get;set;}
     public List<String> errorMessages {get;set;}
     public String contactStatus {get;set;}
+    public List<SelectOption> portalStatusOptions {get;set;}
     public List<SelectOption> rejectionReasonOptions {get;set;}
     public List<SelectOption> inactiveReasonOptions {get;set;}
     public String createUserStatus {get;set;}
@@ -50,9 +51,22 @@ public with sharing class ISSP_PortalUserStatusChange {
                 userExists = true;
             }
         }
-        User currentUser = [select Id, ContactId, UserType from User where Id = :Userinfo.getUserId()];
+        User currentUser = [select Id, ContactId, UserType, Profile.Name from User where Id = :Userinfo.getUserId()];
         if (currentUser.UserType == 'PowerPartner'){
             portalUser = true;
+        }
+        
+        String contactType = ISSP_Utilities.getContactTypeById(con.Id);
+        map<String,SelectOption> mapPortalStatusOptions = new map<String,SelectOption>();
+        for( Schema.PicklistEntry f : Contact.User_Portal_Status__c.getDescribe().getPicklistValues()) {
+            mapPortalStatusOptions.put(f.getValue(),new SelectOption(f.getValue(),f.getLabel()));
+        }
+        portalStatusOptions = new List<SelectOption>();
+        portalStatusOptions.add(new SelectOption('',System.Label.ANG_ISSP_Picklist_None));
+        portalStatusOptions.add(mapPortalStatusOptions.get('Deactivated'));
+        portalStatusOptions.add(mapPortalStatusOptions.get('Approved Admin'));
+        if (contactType!='DPC') {
+            portalStatusOptions.add(mapPortalStatusOptions.get('Approved User'));
         }
         
         rejectionReasonOptions = new List<SelectOption>();
@@ -179,8 +193,10 @@ public with sharing class ISSP_PortalUserStatusChange {
                 u.IsActive = false;
             }
         }
-        update usersToUpdate;
-        
+        try{
+            update usersToUpdate;
+        }catch(Exception e){}
+
     }
     
     @RemoteAction
@@ -250,14 +266,18 @@ public with sharing class ISSP_PortalUserStatusChange {
     
     
     public Pagereference sendEmailToUser(){
+
+        try{
         
-        User user = [select Id from User where ContactId =:contactId];
-        ISSP_Registration.password =  ISSP_Registration.generatePassword();
-        system.setPassword(user.Id, ISSP_Registration.password);
-        if(CommunityName=='CNS'){
-            ISSP_Registration.sendCNSEmail(user.Id,contactId);
-        }else{ ISSP_Registration.sendEmail(user.Id,contactId); }
-        
+            User user = [select Id from User where ContactId =:contactId];
+            ISSP_Registration.password =  ISSP_Registration.generatePassword();
+            system.setPassword(user.Id, ISSP_Registration.password);
+            if(CommunityName=='CNS'){
+                ISSP_Registration.sendCNSEmail(user.Id,contactId);
+            }else{ ISSP_Registration.sendEmail(user.Id,contactId);            }
+
+        }catch(Exception e){  } 
+
         return null;
     }
 
@@ -266,7 +286,8 @@ public with sharing class ISSP_PortalUserStatusChange {
     public string contactId {get;set;}
     public string portalStatus{get;set;}
     public string oldPortalStatus {get;set;}
-    public  Pagereference preformAction(){
+
+    public Pagereference preformAction(){
         
         string actionName = getActionName(portalStatus,oldPortalStatus);
         if(actionName == '' || actionName == null) 
@@ -275,7 +296,11 @@ public with sharing class ISSP_PortalUserStatusChange {
         Type t = Type.forName('ISSP_PortalUserStatusChange.'+actionName);
         
         IActions action = (IActions) t.newInstance();
-        action.processAction(contactId);
+        try{
+            action.processAction(contactId);
+        }catch(Exception e){ 
+            //return new map<String, String> { 'error' => e.getMessage() };
+        } 
         return null;
     }
 
@@ -381,7 +406,10 @@ public with sharing class ISSP_PortalUserStatusChange {
                 u.IsActive = false;
             }
         }
-        update usersToUpdate;
+        try{
+            update usersToUpdate;
+        }catch(Exception e){    }
+        
         update new Contact(Id=contactId,User_Portal_Status__c='');
     } 
 
@@ -1099,29 +1127,6 @@ public with sharing class ISSP_PortalUserStatusChange {
     
     @future
     public static void updateUser(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
-        updateUserSync(conId, isActive, email, profileId, firstCommunity);
-    }
-
-    /*** AMSU-163 ***/
-    public static void updateUserSync(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
-        list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Email, u.Contact.Email, u.Community__c
-                                     from User u where contactId =:conId];
-
-        if (!usersToUpdate.isEmpty()){
-            for(User u : usersToUpdate){
-                u.IsActive = isActive;
-                u.IsPortalEnabled = true;
-                if (profileId != ''){
-                    u.ProfileId = profileId;
-                }
-                u.Email = email;
-                string userName = ISSP_Utilities.buildPortalUserName(email);
-                u.Username = userName;
-                if(firstCommunity != '')
-                    u.Community__c = firstCommunity;
-            }
-
-            update usersToUpdate;
-        }
-    }
+        ISSP_PortalUserStatusChangeHelper.updateUserSync(conId, isActive, email, profileId, firstCommunity);
+    }    
 }

@@ -32,7 +32,7 @@ public class AMS_OscarCaseTriggerHelper {
             }
         }
                 
-        if(!parentcaseIds.isEmpty()) return;
+        if(parentcaseIds.isEmpty()) return;
 
         Map<Id, Case> parentCase = new Map<Id, Case>([SELECT Id, Oscar__c, RecordTypeId FROM Case 
                                                     WHERE Id IN :parentcaseIds AND RecordTypeId = :OSCARCaseRecordTypeID AND OSCAR__c != null]);
@@ -83,8 +83,10 @@ public class AMS_OscarCaseTriggerHelper {
         Map<Id, Case> caseOSCARMap = new Map<Id, Case>();
 
         //see if the oscars had a case before the insert/update
-        for(Case c :  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscarIds AND ParentId = null AND Id NOT IN :oscarCases]){
-            caseOSCARMap.put(c.OSCAR__c, c);
+        if(!oscarIds.isEmpty() && !oscarCases.isEmpty()) {
+            for(Case c :  [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscarIds AND ParentId = null AND Id NOT IN :oscarCases]){
+                caseOSCARMap.put(c.OSCAR__c, c);
+            }
         }
 
         for(Case c: oscarCases){
@@ -366,15 +368,20 @@ public class AMS_OscarCaseTriggerHelper {
         }
 
         if(oscarCases.isEmpty()) return;
-
-        oscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c, Location_Class__c, 
-            Account__r.Category__c, Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, 
-            Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, Type_of_change__c 
+        /*** AMSU-205 added the process details list ***/
+        oscars = new Map<Id, AMS_OSCAR__c>([
+            SELECT Id, OwnerId, Status__c, Account__r.Name, Account__r.Location_Type__c, Location_Class__c, Account__r.Category__c, 
+                Account__r.ANG_Accreditation_Model__c, Process__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__r.Name, Account__r.ANG_IsNewGenAgency__c, 
+                Type_of_change__c, (SELECT AMS_IATAcode__c FROM AMS_Process_Detail__r) 
             FROM AMS_OSCAR__c WHERE Id IN :oscars.keySet()]);
 
         for(Case c : oscarCases){
-            c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
-            c.Status = oscars.get(c.Oscar__c).Status__c;
+            
+            if(c.OwnerId != oscars.get(c.Oscar__c).OwnerId)
+                c.OwnerId = oscars.get(c.Oscar__c).OwnerId;
+            
+            if(c.Status != oscars.get(c.Oscar__c).Status__c)
+                c.Status = oscars.get(c.Oscar__c).Status__c;
 
             String typeOfCustomer = AMS_Utils.fetchTypeOfCustomer(oscars.get(c.Oscar__c).Account__r.Location_Type__c,oscars.get(c.Oscar__c).Account__r.Category__c);
 
@@ -382,6 +389,7 @@ public class AMS_OscarCaseTriggerHelper {
                 c.Type_of_customer__c = typeOfCustomer;
 
             String newCaseSubject = null;
+            String newDescription = null;//AMSU-205
             
             if(c.reason1__c != null)
                 if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NGVR && oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
@@ -396,13 +404,21 @@ public class AMS_OscarCaseTriggerHelper {
                     newCaseSubject = 'New Head Entity - GoStandard - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.NEWAE)
                     newCaseSubject = 'New Associate Entity - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.IATA_ISO_Country__r.Name;
-                else if(oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c)
+                else if(oscars.get(c.Oscar__c).Account__r.ANG_IsNewGenAgency__c && oscars.get(c.Oscar__c).Process__c != AMS_Utils.NGCHINACONVERSION)
                     newCaseSubject = c.reason1__c + ' - ' + AMS_Utils.officialAccreditationTypeMap.get(oscars.get(c.Oscar__c).Account__r.ANG_Accreditation_Model__c) + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.new_MSO || (c.Subject != null && c.Subject.startsWith('MSO code '))) //AMSU-119
 					newCaseSubject = null;
                 else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.COR && oscars.get(c.Oscar__c).Location_Class__c == 'I' && c.Origin == 'Portal') //AMSU-140
                     newCaseSubject = 'Agency Changes - ' +oscars.get(c.Oscar__c).Account__r.Name;
-				else {
+                else if(oscars.get(c.Oscar__c).Process__c == AMS_Utils.VOLRELINQUISH || oscars.get(c.Oscar__c).Process__c == AMS_Utils.VOLRELINQUISH_CA) { //AMSU-205
+                    AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
+                    newCaseSubject = c.Reason1__c + ' - ' + oscar.Account__r.Name + ' - ' + oscar.Account__r.IATACode__c;
+                    newDescription = oscar.Account__r.IATACode__c;
+
+                    for(AMS_Process_Detail__c detail : oscar.AMS_Process_Detail__r) {
+                        newDescription += '\n' + detail.AMS_IATAcode__c;
+                    }
+                } else {
                     AMS_OSCAR__c oscar = oscars.get(c.Oscar__c); 
                     newCaseSubject = c.reason1__c + ' - ' + oscar.Account__r.Name;
                     /*** AMSU-133 Start ***/
@@ -414,6 +430,11 @@ public class AMS_OscarCaseTriggerHelper {
 
             if(newCaseSubject != null && c.Subject != newCaseSubject && (c.Subject == null || !c.Subject.startsWith(newCaseSubject)) && AMS_OscarMigrationFromCase.changeSubject)
                 c.Subject = newCaseSubject;
+
+            //AMSU-205
+            if(newDescription <> null) {
+                c.Description = newDescription;
+            }
         }
     }
 

@@ -23,7 +23,7 @@ public class IATAIsoCountryDAO {
 														//AMS_XML_Generator Fields
 														BSP_Country_free_text__c, CASS_Country_free_text__c,SLA_Type__c, Sub_Region__c, 
 														Country_Manager__r.Name,
-
+														Informatica_Value__c,
 														IATA_COUNTRY_EN__c,
                                                         IATA_Contry_KR__c,
                                                        	IATA_Country_FR__c,
@@ -50,13 +50,15 @@ public class IATAIsoCountryDAO {
                                                         ANG_Enable_NewGen__c, EU_Country__c,
                                                         Tax_Number_label__c, Tax_number_format__c,
                                                         Tax_number_help_text__c, Hide_Tax_Number_VAT__c,
+                                                        Tax_Number_VAT_field_mandatory__c, Postal_Code_Format_regEx__c,
+														State_Province_Mandatory__c, Postal_Code_Hint_Format__c,
                                                         EACP_Country__c, CASS_Import__c,
                                                         Disable_non_IATA_Cargo_Agents__c, original_bank_details_not_required__c,
                                                         Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c,
                                                         Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
                                                         Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c,
                                                         EBulletin_enabled__c, AMS_Vouchers_Benchmark__c, AMS_Max_Vouchers_Per_Year__c,
-                                                        LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, 
+                                                        LVA_CountryLanguage__c, CNS_Country__c, ANG_Portal_Service__c, Airline_EasyPay_Opt_Out_Date__c, 
 
                                                         (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
                                                         FROM IATA_ISO_States__r

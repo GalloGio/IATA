@@ -744,9 +744,9 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     notifyAdmin(de, e, System.Label.PKB2_Error_Admin_Notification_Email);
 
     // flip the site settings to not create contact/account in future
-	PKB__c kbSets = PKB__c.getValues(siteName);
-	kbSets.Create_Contact_and_Account__c = false;
-	update kbSets;
+    PKB__c kbSets = PKB__c.getValues(siteName);
+    kbSets.Create_Contact_and_Account__c = false;
+    update kbSets;
 	
   }
 
@@ -855,7 +855,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
                currentSiteUrl = Page.pkb_Home.getUrl();
         }
       }
-      return currentSiteUrl;
+      return currentSiteUrl +'/';
     }
   }
 

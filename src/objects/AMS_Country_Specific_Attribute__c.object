@@ -53,11 +53,28 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ANG_Block_Cut_Cash_Form_of_Payment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Block Cut Cash Form of Payment</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Create_Process_Case__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If an alert match this config, should it create a process case? (Creation is done by the ANG_RHCAlertTriggerHandler)</description>
         <externalId>false</externalId>
         <label>Create Process Case</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Create_Sidra_Lite__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Controls the sidra lite/ SMAP case and Change code creation action on RTS</description>
+        <externalId>false</externalId>
+        <label>Create Sidra Lite and Parent Case</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -143,6 +160,53 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_RTS_Severity__c</fullName>
+        <externalId>false</externalId>
+        <label>RTS Severity</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Red</fullName>
+                    <default>false</default>
+                    <label>Red</label>
+                </value>
+                <value>
+                    <fullName>Orange</fullName>
+                    <default>false</default>
+                    <label>Orange</label>
+                </value>
+                <value>
+                    <fullName>Yellow</fullName>
+                    <default>false</default>
+                    <label>Yellow</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Remove_Ticketing_Authority__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Controls the removing Ticketing authorization action on RTS</description>
+        <externalId>false</externalId>
+        <label>Remove Ticketing Authority</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Send_Email_Agent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Controls the email notification to the agents action on RTS</description>
+        <externalId>false</externalId>
+        <label>Send Email To Agent</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Country_Class_Check__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>Secure country/class uniqueness (workflow on creation/update)</description>
@@ -200,7 +264,7 @@ O-SATO
 P-Passenger
 S-SSI
 T-TIDS
-V-Travel Service Intermediaries-TSI (USA Only) 
+V-Travel Service Intermediaries-TSI (USA Only)
 X-Handling Agents and Shipping Lines
 J-Joint Vent</description>
         <externalId>false</externalId>
@@ -408,6 +472,13 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -495,6 +566,13 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Yellow</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -590,6 +668,13 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -681,6 +766,13 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -768,6 +860,21 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -864,6 +971,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -951,6 +1073,21 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1046,6 +1183,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -1121,6 +1273,44 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
     </recordTypes>
+    <recordTypes>
+        <fullName>RTS_Risk_Alert_Notification</fullName>
+        <active>true</active>
+        <label>RTS Risk Alert Notification</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
@@ -1133,6 +1323,14 @@ OR(
     ISPICKVAL(Location_Class__c, &apos;&apos;)
 )</errorConditionFormula>
         <errorMessage>Please inform the location class and threshold</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RTS_Notification_Severity_not_empty</fullName>
+        <active>true</active>
+        <description>RTS Notification- RTS Severity must be selected for RTS Risk alert notification records</description>
+        <errorConditionFormula>RecordType.DeveloperName==&apos;RTS_Risk_Alert_Notification&apos; &amp;&amp; ISPICKVAL(ANG_RTS_Severity__c,&apos;&apos;)</errorConditionFormula>
+        <errorDisplayField>ANG_RTS_Severity__c</errorDisplayField>
+        <errorMessage>RTS Severity not selected. Please select one</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Risk_Alert_Required_Fields</fullName>

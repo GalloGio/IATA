@@ -1,7 +1,9 @@
 @isTest
 private class trgCheckOnlyOneActiveServiceTest {
 
-  @isTest
+	private static String testServiceName = new list<String>(AirlineSuspensionChildCaseCreationBatch.SET_VALID_PARITICIPATIONS).get(0);
+
+	@isTest
 	static void runPositive() {
  
        ID recTypeBranCons = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
@@ -32,7 +34,7 @@ private class trgCheckOnlyOneActiveServiceTest {
                                                                Services_Rendered_to_Airline__c = Consumer.id,
                                                                Services_Rendered_By__c =HQ.id ,
                                                                Services_Rendered_Status__c = 'Active',
-                                                               Services_Rendered_Type__c = 'BSP Representation'
+                                                               Services_Rendered_Type__c = testServiceName
                                                                 );
       insert ser1;
       
@@ -41,7 +43,7 @@ private class trgCheckOnlyOneActiveServiceTest {
                                                                Services_Rendered_to_Airline__c = Consumer.id,
                                                                Services_Rendered_By__c =HQ2.id ,
                                                                Services_Rendered_Status__c = 'Active',
-                                                               Services_Rendered_Type__c = 'BSP Representation');
+                                                               Services_Rendered_Type__c = testServiceName);
     
      
       insert ser2;
@@ -78,7 +80,7 @@ private class trgCheckOnlyOneActiveServiceTest {
                                                                Services_Rendered_to_Airline__c = Consumer.id,
                                                                Services_Rendered_By__c =HQ.id ,
                                                                Services_Rendered_Status__c = 'Active',
-                                                               Services_Rendered_Type__c = 'BSP Representation'
+                                                               Services_Rendered_Type__c = testServiceName
                                                                 );
       lista.add(ser1);
       
@@ -87,7 +89,7 @@ private class trgCheckOnlyOneActiveServiceTest {
                                                                Services_Rendered_to_Airline__c = Consumer.id,
                                                                Services_Rendered_By__c =HQ.id ,
                                                                Services_Rendered_Status__c = 'Active',
-                                                               Services_Rendered_Type__c = 'BSP Representation'
+                                                               Services_Rendered_Type__c = testServiceName
       
                                                                 );
                                                                 
@@ -133,7 +135,7 @@ private class trgCheckOnlyOneActiveServiceTest {
                                                                Services_Rendered_to_Airline__c = Consumer.id,
                                                                Services_Rendered_By__c =HQ.id ,
                                                                Services_Rendered_Status__c = 'Active',
-                                                               Services_Rendered_Type__c = 'BSP Representation'
+                                                               Services_Rendered_Type__c = testServiceName
                                                                 );
       insert ser1;
       
@@ -142,7 +144,7 @@ private class trgCheckOnlyOneActiveServiceTest {
                                                                Services_Rendered_to_Airline__c = Consumer.id,
                                                                Services_Rendered_By__c =HQ.id ,
                                                                Services_Rendered_Status__c = 'Active',
-                                                               Services_Rendered_Type__c = 'BSP Representation'
+                                                               Services_Rendered_Type__c = testServiceName
                                                                 );
      try {
      

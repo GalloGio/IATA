@@ -62,6 +62,21 @@ public without sharing class LightningConnectedAppHelper {
 
     	return values;
     }
+ 
+    @AuraEnabled
+    public static Boolean areMandatoryFieldsFilled (String connectedapp) {
+    	if(connectedApp == 'FRED'){
+	        User userIn = [SELECT Id, contact.Salutation, Contact.Title, Contact.MobilePhone from user where Id =: UserInfo.getUserId()];
+	        
+	        if(userIn.contact.Salutation == null || userIn.contact.Title == null || userIn.contact.MobilePhone == null){
+	        	return false;
+	        }
+	        return true;
+    	}
+    	else{
+    		return true;
+    	}
+    }
 
     @AuraEnabled
     public static String getAutomaticRole (String connectedapp) {
@@ -105,7 +120,14 @@ public without sharing class LightningConnectedAppHelper {
                 if(secondariesIds.size() < config.Max_Number_Of_Secondary_User__c){
                     automaticRole = 'Secondary User';
                 }
+                
+				// INC431553 : For verifiers, limits don't apply
+	            Id verifierRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Verifiers');
+	            Account acc = [select RecordTypeId from Account where Id =: usr.AccountId];
+				if(verifierRecordTypeId != acc.RecordTypeId){
+                    automaticRole = 'Secondary User';
             }
+        }
         }
         
         return automaticRole;

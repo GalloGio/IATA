@@ -279,11 +279,29 @@ private class ANG_RiskEventMigrationHelperTest {
 		insert a;
 		setAccs.add(a);
 
+		// criar Sidra Lite case com reason Late para adicionar ao Change code
+		Id SIDRALiteRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+
+		Map<String,Object> fieldsOfObject = new Map<String,Object>();
+        fieldsOfObject.clear();
+		fieldsOfObject.put('RecordTypeid',SIDRALiteRecordTypeId);
+		fieldsOfObject.put('BSP_CASS__c','BSP');
+		fieldsOfObject.put('Status','Open');
+		fieldsOfObject.put('Origin','IATA Internal User');
+		fieldsOfObject.put('Subject','subject');
+		fieldsOfObject.put('IATAcode__c','webiata code');
+		fieldsOfObject.put('SIDRA_Lite_Reason__c','Late/Absence of notification of change');
+		fieldsOfObject.put('AccountId',a.Id);
+
+		Case caseSidraLite = ANG_EntityCreator.createCase(SIDRALiteRecordTypeId,a.Id,fieldsOfObject);
+		insert caseSidraLite;
+		
 		Agency_Applied_Change_code__c cc 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
 												Reason_Code__c = '60',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCAC
+												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCAC,
+												SIDRA_Case__c = caseSidraLite.Id
 												);
 		insert cc;
 		
@@ -299,13 +317,14 @@ private class ANG_RiskEventMigrationHelperTest {
 		Agency_Applied_Change_code__c ccntw
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NTW,
-												PreviousReason__c = '60'
+												PreviousReason__c = '60',
+												SIDRA_Case__c = caseSidraLite.Id
 												);
 		insert ccntw;
 
 		helper = new ANG_RiskEventMigrationHelper(setAccs);
 		listRisks = helper.convertChangeCodesToRiskEvents();
-
+		
 		system.assertEquals(listRisks.size() , 1);
 		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_UNREPORTED_CHANGE);
 		system.assertEquals(ANG_Risk_Helper.STATUS_WITHDRAWN,listRisks.get(0).ANG_Event_Status__c);
@@ -767,6 +786,7 @@ private class ANG_RiskEventMigrationHelperTest {
 							Status = 'Open',
 							Origin = 'IATA Internal User',
 							Subject = 'subject',
+							Late_Payment_Date__c = Date.today(),
 							IATAcode__c	 = 'webiata code');
 
  		return c;

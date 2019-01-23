@@ -44,6 +44,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				accountFields = new Set<String>{
 					'Name'
 					, 'Location_Type__c'
+					, 'Location_Class__c'
 					, 'Is_Branch_Abroad__c'
 					, 'IATACode__c'
 					, 'Status__c'
@@ -73,6 +74,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				}
 				if(tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to the full hierarchy');
 				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) notes.add('Change of accreditation type must be applied to the full hierarchy unless you are also selecting change of Hierarchy');
+				if(tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT)){ notes.add('The conversion to GoLite must be applied to the full hierarchy'); }
+				else if(tocList.contains(AMS_Utils.CONVERTTOLEGACY)){ notes.add('The conversion to Domestic with Cash must be applied to the full hierarchy'); }
+				else if(tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)){ notes.add('The conversion to International must be applied to the full hierarchy'); }
 			
 			}
 
@@ -81,6 +85,22 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
+	private Map<String, String> warningMessages {
+		get {
+			if(warningMessages == null){
+
+				warningMessages = new Map<String, String>();
+
+				warningMessages.put(
+					'On Going OSCAR',
+					'Please finalize any ongoing OSCAR process before proceeding with the conversion.'
+				);
+
+			}
+			return warningMessages;
+		}
+		set;
+	}
 
 	private Map<String, String> errorMessages{
 		get{
@@ -152,6 +172,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					'You cannot perform a change of location type on a Top Level Agency.'	
 				);
 						
+				errorMessages.put(
+					'Require Location Class Domestic',
+					'The conversion must be applied to a hierarchy of Domestic agents. Please proceed with a change of location type before processing the conversion.'
+				);
+				
 			}
 			return errorMessages;
 		}
@@ -274,6 +299,28 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
+	public Boolean isChinaConversion { 
+		get {
+			return oscar.Process__c == AMS_Utils.NGCHINACONVERSION;
+		}
+		set;
+	}
+
+	public Boolean showOnGoingOscarWarning {
+		get {
+			
+			if(showOnGoingOscarWarning == null){
+				return false;
+			}
+			
+			return showOnGoingOscarWarning;
+		
+		}
+		set;
+	}
+	
+	private Boolean existsLocClassDomesticError = false;
+	
 	public Map<Id, HierarchyItem> hierarchy{
 		get{
 			if(hierarchy == null) {
@@ -295,17 +342,75 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					accountIds.add(oscar.New_parent__c);
 				*/
 
-				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c not in ( ' +  getInvalidStatus() + ' )')){
+				integer nbrOfPendingCases = 0;
+				
+				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c ' + getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
 					Boolean main = (a.Id == oscar.Account__c);
-					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), a.Location_Type__c == AMS_Utils.HE));
+					Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
+					hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected, a.Location_Type__c == AMS_Utils.HE));
+					
+					if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
+						// Requires that every account have location class "D" if the account status 
+						// is not one of the following: "Terminated", "Not in Operation", "Not Accredited" (pilotAccStatusNotRequireLocClassD)
+						if(a.Location_Class__c != 'D' && !AMS_Utils.pilotAccStatusNotRequireLocClassD.contains(a.Status__c)){
+							existsLocClassDomesticError = true;
+						}
+
+						List<Case> caseLst = a.getSobjects('Cases');
+						if(caseLst != null) { 
+							nbrOfPendingCases += caseLst.size(); 
+						}
+					}
+
 				}
+
+				// Require that at least 2 cases aren't finished
+				// since the case associated with the account in context 
+				// will not be finished at this point	
+				if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION && nbrOfPendingCases > 1){
+					showOnGoingOscarWarning = true;
+				}
+				
 				selectMain();
+				
+				if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
+					selectAll = true;
+					doSelectAll();
+				}
+				
 			}
 			return hierarchy;
 		}
 		set;
 	}
 
+	public String getOscarCaseSubQuery(){
+
+		String oscarCaseSubQuery = '';
+		
+		if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
+			oscarCaseSubQuery += ', (SELECT Id FROM Cases WHERE RecordType.DeveloperName = \'OSCAR_Communication\' ';
+			oscarCaseSubQuery += ' AND Status NOT IN (\'Closed_ Not Accepted\', \'Closed_Rejected\', \'Closed_Withdrawn\', \'Closed\'))';
+		}
+		
+		return oscarCaseSubQuery;
+
+	}
+
+	public String getInvalidStatusCondition(){
+		
+		String condition = '';
+		
+		if(oscar.Process__c != AMS_Utils.NGCHINACONVERSION){
+			condition += ' AND Status__c NOT IN (';
+			condition += getInvalidStatus();
+			condition += ')';
+		}
+		
+		return condition;
+		
+	}
+	
 	public String getInvalidStatus(){
 
 		return '\''+AMS_Utils.ACC_S1_NOTACCREDITED + '\'' + ',' + '\'' +  AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING + '\'' + ',' + '\'' + AMS_Utils.ACC_S3_NOTINOPERATION + '\'' + ',' + '\'' + AMS_Utils.ACC_S0_TERMINATED + '\'' + ',' + '\'' + '\'';
@@ -314,6 +419,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 	public List<HierarchyItem> hierarchyValues{
 		get{
+			//Making sure that this warning is exhibt after elements rerenders
+			if(showOnGoingOscarWarning){
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, warningMessages.get('On Going OSCAR')));
+			}
 			return hierarchy.values();
 		}
 	}
@@ -410,6 +519,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && diffDestination(oscar.New_parent__c)) errorChecks.put('Mixed types of changes', true);
 			}
+		}
+
+
+		if((tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT) || tocList.contains(AMS_Utils.CONVERTTOLEGACY) || tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)) && existsLocClassDomesticError){
+			errorChecks.put('Require Location Class Domestic', true);
 		}
 
 		//retrieve error messages

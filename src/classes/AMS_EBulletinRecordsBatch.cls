@@ -110,7 +110,7 @@ global class AMS_EBulletinRecordsBatch implements Database.Batchable<sObject>, D
 		attachment.ContentType = 'text/csv; charset=UTF-8';
 		attachment.Body = Blob.valueOf( csvPrintable );
 		
-		String recordTypeName = Schema.SObjectType.AMS_eBulletin_Profile__c.RecordTypeInfosById.get(eBulletinProfile.RecordTypeId).Name;
+		String recordTypeName = RecordTypeSingleton.getInstance().getRecordTypeById('AMS_eBulletin_Profile__c', eBulletinProfile.RecordTypeId).Name;
 
 		String csvName = jobId + '_EBulletin ' + recordTypeName + ' Report ';
 		String csvDate = '';

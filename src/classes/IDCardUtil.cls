@@ -106,6 +106,8 @@ global with sharing class IDCardUtil {
     public static final String ACCOUNT_STATUS_CASE_COMMISSION = 'Cash basis/with commission';
     @RemoteAction
     public static final   Set<String> ALLOWED_ACCOUNT_STATUS = new  Set<String> { ACCOUNT_STATUS_LISTED, ACCOUNT_STATUS_APPROVED , ACCOUNT_STATUS_CHANGES_PROCESSED, ACCOUNT_STATUS_UNDER_REVIEW, ACCOUNT_STATUS_CASH_NOCOMMISSION, ACCOUNT_STATUS_CASE_COMMISSION};
+     @RemoteAction
+    public static final   Set<String> ALLOWED_ACCOUNT_LOCATION_CLASS = new  Set<String> {'D', 'P', 'T'};    
     @RemoteAction
     public static final String ACCOUNT_STATUS_TERMINATED = 'Terminated';
 
@@ -1106,6 +1108,12 @@ global with sharing class IDCardUtil {
             insert theContact;
             update application;
 
+            //Needs to get theContact.VerNumber - calculates after the insert on GlobalContactTrigger
+            theContact = [SELECT c.AgencyShare_Confirmation__c,c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName, c.Middle_Initial__c, c.LastName, c.UIR__c, 
+                            c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c, c.Solicitation_Flag__c, c.Revenue_Confirmation__c 
+                          FROM Contact c 
+                          WHERE id=:theContact.id];
+
             return theContact;
         } catch (Exception ex) {
             system.debug('Error: ' + ex);
@@ -1475,7 +1483,7 @@ global with sharing class IDCardUtil {
 
                     //get IDCard and Application
 
-                    ID_Card_Application__c application = [Select VER_Number__c, UIR__c, Type_of_application__c, Title__c, Terms_and_Conditions_Time_Stamp__c, Telephone__c, SystemModstamp, Start_Date_Industry__c, Start_Date_Agency_Year__c, Start_Date_Agency_Month__c, Solicitation_Flag__c, Selected_Preferred_Language__c, Revenue_Confirmation__c, Revenue_Confirmation_Validation_Failed__c, Renewal_From_Replace__c, Regional_Office__c, Promotion_Code__c, Profit_Center__c, Position_in_Current_Agency__c, Position_Code__c, Photo__c, Payment_Type__c, Payment_Transaction_Number__c, Payment_Date__c, Payment_Currency__c, Payment_Credit_Card_Number__c, Payment_Amount__c, Package_of_Travel_Professionals_Course_2__c, Package_of_Travel_Professionals_Course_1__c, OwnerId, Name, Middle_Initial__c, Last_Name__c, LastModifiedDate, LastModifiedById, LastActivityDate, IsDeleted, Id, ITDI_Courses_Fee__c, ID_Card_Fee__c, IDCard_Prefered_Language__c, IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c, IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c, First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId, ConnectionReceivedId, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c From ID_Card_Application__c WHERE ID = : c[0].Related_ID_Card_Application__c limit 1];
+                    ID_Card_Application__c application = [Select VER_Number__c, UIR__c, Type_of_application__c, Title__c, Terms_and_Conditions_Time_Stamp__c, Telephone__c, SystemModstamp, Start_Date_Industry__c, Start_Date_Agency_Year__c, Start_Date_Agency_Month__c, Solicitation_Flag__c, Selected_Preferred_Language__c, Revenue_Confirmation__c, Revenue_Confirmation_Validation_Failed__c, Renewal_From_Replace__c, Regional_Office__c, Promotion_Code__c, Profit_Center__c, Position_in_Current_Agency__c, Position_Code__c, Photo__c, Payment_Type__c, Payment_Transaction_Number__c, Payment_Date__c, Payment_Currency__c, Payment_Credit_Card_Number__c, Payment_Amount__c, Package_of_Travel_Professionals_Course_2__c, Package_of_Travel_Professionals_Course_1__c, OwnerId, Name, Middle_Initial__c, Last_Name__c, LastModifiedDate, LastModifiedById, LastActivityDate, IsDeleted, Id, ITDI_Courses_Fee__c, ID_Card_Fee__c, IDCard_Prefered_Language__c, IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c, IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c, First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c From ID_Card_Application__c WHERE ID = : c[0].Related_ID_Card_Application__c limit 1];
 
                     ID_Card__c[] existingIdCard = [Select Valid_To_Date__c, Valid_From_Date__c, Type_of_ID_Card__c, Related_Contact__c, Name_on_ID_Card__c, IsDeleted, Id, ID_Card_Application__c, Card_Status__c, Card_Code__c, Agency_IATA_Code__c From ID_Card__c WHERE ID_Card_Application__c = : application.ID limit 1];
 
