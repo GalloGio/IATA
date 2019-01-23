@@ -212,6 +212,7 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>ACCOUNT.NAME</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
