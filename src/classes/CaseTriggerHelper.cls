@@ -1,4 +1,3 @@
-
 /**
  * Class created as helper to keep logic separated from the CaseAfterTrigger.
  *
@@ -90,6 +89,7 @@ public with sharing class CaseTriggerHelper {
 
             //case closure
             if(newMap.get(c.Id).Status == 'Closed' && configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(c.RecordType.DeveloperName)){
+                System.debug('+++ first matched');
                 oldStatuses = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(c.RecordType.DeveloperName).Status_From__c.split(',');
                 system.debug('LWLWLW: ' + oldStatuses);
 
@@ -99,6 +99,8 @@ public with sharing class CaseTriggerHelper {
                 }
             } else
              //case escalation
+                             System.debug('+++ scnd matched');
+
              if(newMap.get(c.Id).Status == 'Escalated Internally' && configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(c.RecordType.DeveloperName)){
                  oldStatuses = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(c.RecordType.DeveloperName).Status_From__c.split(',');
 
@@ -107,11 +109,15 @@ public with sharing class CaseTriggerHelper {
                      kpiValuesToInsert.add(valueToInsert);
                  }
              } else
-             //case reopening
-             if(newMap.get(c.Id).Status == 'Reopen' && oldMap.get(c.Id).Status == 'Closed' && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(c.RecordType.DeveloperName)){
-                 List<String> reopenReason = configsMap.get(CASE_ACTION_CASE_REOPENING).get(c.RecordType.DeveloperName).Reopening_Reason__c.split(',');
+			                System.debug('+++ 3rd matched');
 
+              //case reopening
+             if(oldMap.get(c.Id).Status == 'Reopen' && newMap.get(c.Id).Status == 'Closed' && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(c.RecordType.DeveloperName)){
+                 List<String> reopenReason = configsMap.get(CASE_ACTION_CASE_REOPENING).get(c.RecordType.DeveloperName).Reopening_Reason__c.split(',');
+				 System.debug('+++ passed initial condition');
                  if(reopenReason.contains(c.Reopening_reason__c)){
+                     				 System.debug('+++ Reopening reason match');
+
                      valueToInsert = createKPIReportingValue(c, Integer.valueOf(configsMap.get(CASE_ACTION_CASE_REOPENING).get(c.RecordType.DeveloperName).Points__c), kpiReportingReopeningId);
                      kpiValuesToInsert.add(valueToInsert);
                  }
@@ -121,10 +127,14 @@ public with sharing class CaseTriggerHelper {
                 valueToInsert = createKPIReportingValue(c, Integer.valueOf(configsMap.get(CASE_ACTION_SEND_NOI).get(c.RecordType.DeveloperName).Points__c), kpiReportingNOIId);
                 kpiValuesToInsert.add(valueToInsert);
             }
+            
+           
+                
         }
 
         try{
             if(kpiValuesToInsert.size() > 0 ){
+                
                 insert kpiValuesToInsert;
             }
         } catch(DmlException e) {
@@ -238,9 +248,20 @@ public with sharing class CaseTriggerHelper {
         valueToAdd.Month__c = convertMonthNumberToText(Integer.valueOf(Date.today().month()));
         valueToAdd.Year__c = String.valueOf(Date.today().year());
         valueToAdd.KPI_Value__c = points;
-        valueToAdd.Responsible__c = UserInfo.getUserId();
-
+        // IATA CS Portal extension | Vanja Djurdjevic 
+        // kpi correction for point award when re-closing someone else's case. That someone else
+        // should get points substracted, not the other agent initiating the action
+        List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c FROM KPI_Value__c WHERE
+                                                       CaseNumber__c=:caseToProcess.Id
+                                              		   AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE];
+        
+        if(caseToProcess.Reopening_reason__c == 'same query' && claimingClosures.size() > 0) {
+            valueToAdd.Responsible__c = claimingClosures[0].Responsible__c;
+            System.debug('+++modding responsible');
+        } else {
+            System.debug('+++first responsible by my user');
+        	valueToAdd.Responsible__c = UserInfo.getUserId();
+        }
         return valueToAdd;
     }
-
 }

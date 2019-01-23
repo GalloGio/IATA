@@ -9,7 +9,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
   global list<Case> cases;
   global Set<Id> ContactIds;
   //global List<Email> MyEmailToBeSent;
-  global map<string, Id> templates = new map<string, Id>();
+  global map<string, Id> templates = new map<string, Id>(); 
   //global String RoleName;
   global string log;
 
@@ -67,7 +67,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     templates = new Map<String, Id>();
 
     Date startd = Test.isRunningTest() ? Date.today() : Date.today().addDays(-1);
-    Date endd = Test.isRunningTest() ? Date.today().addDays(1) : Date.today();
+    Date endd = Test.isRunningTest() ? Date.today().addDays(1) : Date.today().addDays(1);
 
     /*For testing:
     Date startd =  Date.today();
@@ -76,7 +76,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     if (ClosedDate != null) {
       startd =  ClosedDate;
-      endd = ClosedDate.addDays(1);
+      endd = ClosedDate.addDays(2);
     } else
       ClosedDate = startd;
 
@@ -112,7 +112,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                  'AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = \'\'\n)' +
                  'AND Instant_Survey_Feedback_requested__c = false');
 
-    casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
+    /*casesToBeProcessed.addAll([SELECT  RecordType.DeveloperName, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
                                ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
                                Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
                                Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
@@ -128,7 +128,52 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
                                AND CaseArea__c != 'E&F Operations' AND Reason1__c != 'Debt Recovery' AND Reason1__c != 'Dispute' //ICSC-36 exclude Cases with Reason =  Debt Recovery or Dispute
                                    ORDER BY ClosedDate DESC]);
-
+    */
+    
+    casesToBeProcessed.addAll([SELECT  
+                               RecordType.DeveloperName, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
+                               ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
+                               Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
+                               Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
+                               Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,Account.Source_System__c,Account.CNS_Account__c,
+                               Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
+                               WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
+                               WhoClosedCase__r.Profile.Name, CNSCase__c
+                               FROM Case
+                               WHERE
+                               // ClosedDate > :startd AND ClosedDate < :endd
+                               //AND 
+                               ContactId <> NULL AND Contact.Email <> NULL
+                               AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
+                               AND Instant_Survey_Feedback_requested__c = false
+                               AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
+                               AND (NOT(CaseArea__c = 'E&F Operations' AND (Reason1__c = 'Debt Recovery' OR Reason1__c = 'Dispute'))) //ICSC-36 exclude Cases with Reason =  Debt Recovery or Dispute
+                                ORDER BY ClosedDate DESC]);
+    Case[] ccc=[SELECT  
+                               RecordType.DeveloperName, CaseArea__c, IATA_Code__c, Reason1__c, Status, Instant_Survey_Feedback_requested__c, BSPCountry__c, Subject,
+                               ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
+                               Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
+                               Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
+                               Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,Account.Source_System__c,Account.CNS_Account__c,
+                               Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
+                               WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
+                               WhoClosedCase__r.Profile.Name, CNSCase__c
+                               FROM Case
+                               WHERE //ClosedDate > :startd AND ClosedDate < :endd
+                               //AND 
+                ContactId <> NULL AND Contact.Email <> NULL
+                               AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
+                               AND Instant_Survey_Feedback_requested__c = false
+                               AND RecordType.DeveloperName NOT IN :excludedRecordTypesFromScope //ICSC-110 exclude Complaint cases
+                               AND (NOT(CaseArea__c = 'E&F Operations' AND (Reason1__c = 'Debt Recovery' OR Reason1__c = 'Dispute'))) //ICSC-36 exclude Cases with Reason =  Debt Recovery or Dispute
+                                ORDER BY ClosedDate DESC];
+      System.debug('+++ '+ccc);
+      for(Case c:ccc) {
+          if(c.Id=='5000D000000xlDZQAY')
+          	System.debug('+++ our case is being processed');
+          else
+              System.debug('+++ our case IS NOT being processed');
+      }
     CasesPart1 = new Set<Id>();
     for (Case c : casesToBeProcessed)
       CasesPart1.add(c.Id);
@@ -196,13 +241,15 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     for (Case c : scope) {
       if (CasesPart1.contains(c.ID)){
-        scopepart1.add(c);
+          scopepart1.add(c);
+          System.debug('LW1: ' + scopepart1.size());  
       }
-
+        
       else {
-        scopepart2.add(c);
+          scopepart2.add(c);
+          System.debug('LW2: ' + scopepart2.size());  
       }
-
+        
     }
 
     processSurveyEmail(scopepart1);
@@ -276,7 +323,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
     if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
-    email.setBccAddresses(new list<string> {'aertsr@iata.org','rovedaa@iata.org','irturko@iata.org'});
+    email.setBccAddresses(new list<string> {'aertsr@iata.org','rovedaa@iata.org'});
     email.setPlainTextBody(log);
     email.setSubject('Instant survey email batch');
     Messaging.sendEmail(new list<Messaging.SingleEmailMessage> {email});
@@ -291,7 +338,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     // Send an email to the Apex job's submitter notifying of job completion.
     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-    String[] toAddresses = new String[] {'aertsr@iata.org','rovedaa@iata.org','irturko@iata.org'};
+    String[] toAddresses = new String[] {'aertsr@iata.org','rovedaa@iata.org'};
     mail.setToAddresses(toAddresses);
     mail.setSubject('Instant Survey Customer Recovery batch status: ' + a.Status);
     mail.setPlainTextBody ('The batch process that processes the Instant Surveys with a score between 0 and 4 processed ' + a.TotalJobItems + ' survey batches (containing up to 10 surveys each) with ' + a.NumberOfErrors + ' failures.');
@@ -322,14 +369,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
       String RoleName = c.WhoClosedCase__r.UserRole.Name != null ? c.WhoClosedCase__r.UserRole.Name : 'none';
       String ProfileName = c.WhoClosedCase__r.Profile.Name != null ? c.WhoClosedCase__r.Profile.Name : 'none';
-      System.debug('::: RoleName : ' + RoleName + 'ProfileName : ' + ProfileName);
-
-      // Conditions requested on INC428523
-      if((c.Reason1__c == 'Debt Recovery' && RoleName.contains('E&F')) || (c.Origin == 'E&F Client – Email to Case') || (RoleName.contains('E&F Client Services'))){
-        System.debug('Bypass case due to match conditions : c.Reason1__c = Debt Recovery AND RoleName.contains(E&F) OR c.Origin = E&F Client – Email to Case OR RoleName.contains(E&F Client Services)');
-        continue;
-      }
-      // End of requested conditions on INC428523
 
       // Using the country data from the contact's account and not from the  AccountCountry anymore, to minimize the risk of select the wrong language
       String AccountCountry = '';
@@ -373,7 +412,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
         //start of INC310891
         List<SurveyBatchIgnoreUsers__c> surveyIgnoreUsers = SurveyBatchIgnoreUsers__c.getAll().values();
-        Boolean ignore;
+        Boolean ignore; 
         for(SurveyBatchIgnoreUsers__c siu : surveyIgnoreUsers){
           ignore = false;
           if(siu.FirstName__c == c.Owner.FirstName && siu.LastName__c == c.Owner.LastName){
@@ -386,7 +425,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         if(ignore==true)
           continue;
         //end of INC310891
-
+        
         // If the case is owned by some users the email should not start
    /*     if ((c.Owner.FirstName == 'Ángel' && c.Owner.LastName == 'Peña' ) ||
             (c.Owner.FirstName == 'Alvaro' && c.Owner.LastName == 'Alonso' ) ||
@@ -394,7 +433,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             (c.Owner.FirstName == 'Miguel' && c.Owner.LastName == 'Rodriguez Hernandez' ) ||
             (c.Owner.FirstName == 'Cristina' && c.Owner.LastName == 'Lopez' ) ||
             (c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon' ) ||
-            (c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) ||
+            (c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) || 
             (c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado' ) ||
             (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk' ) ||
             (c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' ) ||
@@ -452,9 +491,9 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                  AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
           template = templates.get('Clicktools_Contact_Email_CX_AM_AR');
           //start INC325289
-        else if(c.Account.Source_System__c == 'WEBSTAR' &&
+        else if(c.Account.Source_System__c == 'WEBSTAR' && 
                 (AccountCountry == 'United States' ||  AccountCountry == 'US TERRITORIES AND POSSESS' || AccountCountry == 'Northern Mariana Islands') &&
-               (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) &&
+               (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) && 
               (c.CNSCase__c != true || c.Account.CNS_Account__c != true) && c.Case_Group__c == 'Process'){
                 template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
         } //end INC325289
@@ -510,20 +549,20 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         //start INC306722 - EXCLUDE the email invitation to fill in the survey from IFAP cases
         /****** Clicktools Workflow_ARM_CX_.... *****/
       /*} else if (*/
-      /*1*/
+      /*1*/ 
       /*c.RecordType.DeveloperName == 'IATA_Financial_Review' &&*/
-                       /*2 */
+                       /*2 */ 
                        /*c.Status == 'Closed' &&
                        !c.Contact.Email.contains('@iata.org') &&
                        !c.Contact.Email.contains('@salesforce.com') &&*/
-                       /*3*/
+                       /*3*/ 
                        /*(c.Financial_Review_Result__c == 'Satisfactory - New Financial Security' ||
                               c.Financial_Review_Result__c == 'Satisfactory - Update Financial Security' ||
                               c.Financial_Review_Result__c == 'Unsatisfactory - New Financial Security' ||
                               c.Financial_Review_Result__c == 'Unsatisfactory - Update Financial Security') &&*/
-                       /*4*/
+                       /*4*/ 
                        /*c.Financial_Review_Type__c == 'Annual' &&*/
-                       /*5*/
+                       /*5*/ 
                        /*c.FS_Submitted_Date__c != null  &&*/
                        /*6*/
                        /*c.CreatedDate > Date.parse('1/1/2014')*/
@@ -633,18 +672,17 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           else     countersMap.put(c.Region__c, --n);
         }
 
-      */
+      */ 
       //end INC306722 - EXCLUDE the email invitation to fill in the survey from IFAP cases
-
-
-          /****** For Cases - Global Record Type******/
+      
+     /****** For Cases - Global Record Type******/
       } else if(c.RecordType.DeveloperName == 'Cases_Global' && !c.Contact.Email.contains('@iata.org') && !c.Contact.Email.contains('@salesforce.com') && c.Status == 'Closed'){
+          
+          template = templates.get('Clicktools_Contact_Email_EN');
+          System.debug('LW template');
 
-          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
 
-
-
-        /****** New rule January 2015 ******/
+      /****** New rule January 2015 ******/
       } else if (c.RecordType.DeveloperName == 'FDS_ICCS_Email_to_Case' && /*FDS ICCS Generic Request Management*/
                  !c.Contact.Email.contains('@iata.org') &&
                  !c.Contact.Email.contains('@salesforce.com') &&
@@ -724,7 +762,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         4- Americas Customer Service Manager
         5- Americas Customer Service Staff
         6- MAD Hub CS Manager
-        7- MAD Hub CS staff
+        7- MAD Hub CS staff 
         */
         Set<String> rolesCanSendSurveysTo3Regions = new Set<String> {'Africa & ME CS Manager',
           'Africa & ME First Level CS Staff','Africa & ME Second Level CS Staff',
@@ -734,9 +772,9 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
         }
         //Inc325289
-        else if(c.Account.Source_System__c == 'WEBSTAR' &&
-              AccountCountry == 'United States' &&
-               (c.Account.Status__c != '' ||  c.Account.Status__c != null) &&
+        else if(c.Account.Source_System__c == 'WEBSTAR' && 
+              AccountCountry == 'United States' && 
+               (c.Account.Status__c != '' ||  c.Account.Status__c != null) && 
               (c.CNSCase__c != true || c.Account.CNS_Account__c != true) ){
           template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
         }
@@ -746,10 +784,10 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
         else if (ProfileName.contains('FDS ICCS Administrator') || ProfileName.contains('FDS ICCS User')){
           template = templates.get('Clicktools_Contact_Email_CX_ICCS_EN2');
-        }
+        } 
          //inc321684 verification for roleName = 'Staff - TIESS'
         else if (RoleName.contains('Staff - TIESS')) {
-          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
+          template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');   
         }
         else if (RoleName.contains('E&F')) {
           template = templates.get('Clicktools_Contact_Email_CX_EN_AUG17');
@@ -953,7 +991,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                        !c.Contact.Email.contains('@iata.org') &&
                        !c.Contact.Email.contains('@salesforce.com')){
         template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
-      } //end INC292755
+      } //end INC292755      
 
       /****** Preparing the email *****/
       if (template != null) {
