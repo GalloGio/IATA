@@ -4,7 +4,7 @@
     <name>ICH Help Desk - ICH Finance</name>
     <queueMembers>
         <roles>
-            <role>SISCustomerSupportA</role>
+            <role>SISCustomerSupport</role>
         </roles>
         <users>
             <user>sadiqs@iata.org</user>
