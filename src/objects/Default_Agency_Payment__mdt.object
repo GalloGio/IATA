@@ -50,9 +50,14 @@ Each code must be delimited by a semicolon.</description>
                     <label>Internal</label>
                 </value>
                 <value>
-                    <fullName>Public</fullName>
+                    <fullName>External</fullName>
                     <default>false</default>
-                    <label>Public</label>
+                    <label>External</label>
+                </value>
+                <value>
+                    <fullName>Internal/External</fullName>
+                    <default>false</default>
+                    <label>Internal/External</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

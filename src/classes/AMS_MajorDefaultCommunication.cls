@@ -5,12 +5,14 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 	global Map<Id,List<Id>> mapContactToCase {get;set;}
 	global Map<Id,EmailTemplate> mapContactToTemplate {get;set;}
 	global List<Case> casesForInternalNotification {get;set;} //WMO-398
+	global Set<Id> onlyExternalNotification {get;set;}
 
 	public AMS_MajorDefaultCommunication(List<Agency_Applied_Change_code__c> changeCodes) {
 		this.contactIds = new Set<Id>();
 		this.mapContactToCase = new Map<Id,List<Id>>();
 		this.mapContactToTemplate = new Map<Id,EmailTemplate>();
 		this.casesForInternalNotification = new List<Case>();
+		this.onlyExternalNotification = new Set<Id>();
 
 		Set<Id> caseIds = new Set<Id>();
 		for(Agency_Applied_Change_code__c ccode : changeCodes) {
@@ -51,14 +53,21 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 			if(cse.Short_Payment_Amount_USD__c >= countryDefault.Default_Amount__c) {
 				if(countryDefault.Visibility__c == 'Internal') {
 					casesForInternalNotification.add(cse);
-				} else {
+					continue;
+				}
+
+				if(countryDefault.Visibility__c == 'External') {
+					onlyExternalNotification.add(cse.Id);
+				}
+
+
 				Set<Id> accountIds = accountIdsByCountry.get(cse.Account.IATA_ISO_Country__r.ISO_Code__c);
 				if(accountIds == null) {
 					accountIds = new Set<Id>();
 					accountIdsByCountry.put(cse.Account.IATA_ISO_Country__r.ISO_Code__c, accountIds);
 				}
 				accountIds.add(cse.AccountId);
-			}
+			
 		}
 	}
 	}
@@ -181,7 +190,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 
 	global void finish(Database.BatchableContext BC) {
 		if(!contactIds.isEmpty()) {
-			Database.executeBatch(new AMS_MajorDefaultCommunicationEmailSender(contactIds, mapContactToCase, mapContactToTemplate), 25);
+			Database.executeBatch(new AMS_MajorDefaultCommunicationEmailSender(contactIds, mapContactToCase, mapContactToTemplate, onlyExternalNotification), 25);
 		}
 
 		if(!casesForInternalNotification.isEmpty()) {
