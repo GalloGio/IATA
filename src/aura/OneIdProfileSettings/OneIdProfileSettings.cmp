@@ -30,6 +30,10 @@
 								<ui:outputText class="   read_output" value="{!v.userinfo.Email}"/>
 							</div>
 							<div class="    profile_readItem">
+								<span class="  read_span"> {!$Label.c.ISSP_MyProfile_SALUTATION} </span>
+								<ui:outputText class="  read_output" value="{!v.contactinfo.Salutation}"/>
+							</div>
+							<div class="    profile_readItem">
 								<span class="  read_span"> {!$Label.c.ISSP_MyProfile_FIRSTNAME} </span>
 								<ui:outputText class="  read_output" value="{!v.contactinfo.FirstName}"/>
 							</div>
@@ -45,13 +49,13 @@
 								<span class="  read_span"> {!$Label.c.ISSP_Registration_BusinessPhone} </span>
 								<ui:outputPhone class="  read_output" value="{!v.contactinfo.Phone}"/>
 							</div>
+						</div>
+
+						<div class="  profile_col1">
 							<div class="   profile_readItem">
 								<span class="  read_span"> {!$Label.c.ISSP_Registration_MobilePhone} </span>
 								<ui:outputPhone class="  read_output" value="{!v.contactinfo.MobilePhone}"/>
 							</div>
-						</div>
-
-						<div class="  profile_col1">
 							<div class="   profile_readItem">
 								<span class="  read_span"> {!$Label.c.OneId_Profile_BusinessFax} </span>
 								<ui:outputPhone class="  read_output" value="{!v.contactinfo.Fax}"/>
@@ -71,9 +75,6 @@
 							<div class="   profile_readItem">
 								<span class="  read_span"> {!$Label.c.ISSP_Services} </span>
 								<ui:outputText class="  read_output" value="{!v.contactinfo.Services__c}"/>
-							</div>
-							<div class="   profile_readItem">
-								<br/>
 							</div>
 						</div>
 					</div>
@@ -191,6 +192,15 @@
 						<div class="  profile_edit-part1">
 
 							<div class="  profile_column1">
+
+								<div class="    profile_readItem">
+									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_SALUTATION} </span>
+									<ui:inputSelect aura:id="salutationpicklist" class="slds-size--2-of-4  read_output"  value="">
+										<ui:inputSelectOption text="Mr." label="{!$Label.c.ISSP_Registration_MR}"/>
+										<ui:inputSelectOption text="Mrs." label="{!$Label.c.ISSP_Registration_MRS}"/>
+										<ui:inputSelectOption text="Ms." label="{!$Label.c.ISSP_Registration_MS}"/>
+									</ui:inputSelect>
+								</div>
 
 								<div class="    profile_readItem">
 									<span class="  read_span"> {!$Label.c.ISSP_MyProfile_FIRSTNAME} </span>

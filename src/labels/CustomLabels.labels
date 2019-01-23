@@ -10479,6 +10479,20 @@ IFG Customer Services</value>
         <value>Apply for a New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</shortDescription>
+        <value>Apply for New Travel Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</shortDescription>
+        <value>Apply for New Cargo Head Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Apply_New_Travel_Head_Entity</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22802,7 +22816,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP</shortDescription>
-        <value>SALUTATION</value>
+        <value>Salutation</value>
     </labels>
     <labels>
         <fullName>ISSP_MyProfile_SECTOR</fullName>
@@ -23745,7 +23759,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your password has now been changed. Please sign in again.</value>
+        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -29373,7 +29387,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_0</shortDescription>
-        <value>BETA AGREEMENT</value>
+        <value>USER AGREEMENT</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_1</fullName>
@@ -29381,7 +29395,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_1</shortDescription>
-        <value>By clicking &quot;I have read and accept the Terms and Conditions of Use&quot; or accessing the FRED+ System, you (&quot;User&quot;) agree to enter into a legally binding agreement with the International Air Transport Association (&quot;IATA&quot;) requiring you to abide by the provisions contained in this agreement (&quot;Beta Agreement&quot;).  If you do not agree to the terms contained herein, do not click that you accept and do not access or otherwise use any of the services related to the FRED+ System.</value>
+        <value>By clicking &quot;I have read and accept the Terms and Conditions of Use&quot; or accessing the FRED+ System, you (&quot;User&quot;) agree to enter into a legally binding agreement with the International Air Transport Association (&quot;IATA&quot;) on the terms specified in this agreement (&quot;Agreement&quot;).  If you do not agree to the terms contained herein, do not click that you accept and do not access or otherwise use any of the services related to the FRED+ System.  IATA reserves the right to amend this Agreement from time to time.  User&apos;s continued use of the System following amendments means User has consented to these amendments.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_10</fullName>
@@ -29389,7 +29403,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_10</shortDescription>
-        <value>ARTICLE 2	BETA DISCLAIMER</value>
+        <value>1.2	This Agreement shall commence from the time that User is granted access to the System and first accesses the System via an authorised employee or representative. The term of the Agreement shall be taken to continue indefinitely until such time as it is terminated or otherwise comes to an end in accordance with law.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_11</fullName>
@@ -29397,7 +29411,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_11</shortDescription>
-        <value>2.1	The User accepts and acknowledges the System is not a finished product and may contain defects, design flaws, and other functional problems.  IATA will not be held responsible for any data that is uploaded onto the System and subsequently lost or destroyed.</value>
+        <value>ARTICLE 2	USE OF THE SYSTEM</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_12</fullName>
@@ -29405,7 +29419,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_12</shortDescription>
-        <value>2.2	The User accepts and acknowledges that at the conclusion of the Beta Period, all data uploaded by the User onto the System will be deleted from the System, and IATA will not be responsible for storing, preserving, or otherwise making this data available for recovery by the User.</value>
+        <value>2.1	IATA grants User access to the System on a complimentary basis by making available one or more accounts for User. Access is granted to User at IATA&apos;s sole discretion and IATA reserves the right to terminate or suspend accounts.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_13</fullName>
@@ -29413,7 +29427,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_13</shortDescription>
-        <value>ARTICLE 3	NO WARRANTY</value>
+        <value>2.2	User shall access the System using electronic credentials issued by IATA for its account(s).</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_14</fullName>
@@ -29421,7 +29435,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_14</shortDescription>
-        <value>3.1	The System and all of its components are provided &quot;as is&quot; and &quot;as available without any warranty, representation or conditions whatsoever, express or implied.</value>
+        <value>2.3	User shall be solely responsible for ensuring any individual(s) who access the System through User&apos;s account are authorised to act on behalf and bind User, and User accepts all responsibility for any actions taken by such individual(s) in relation to the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_15</fullName>
@@ -29429,7 +29443,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_15</shortDescription>
-        <value>TO THE MAXIMUM EXTENT ALLOWED UNDER APPLICABLE LEGISLATION, IATA DISCLAIMS ANY WARRANTY, REPRESENTATION OR CONDITION, EXPRESS OR IMPLIED, IN RESPECT OF THE SYSTEM AND ITS COMPONENTS, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES, REPRESENTATIONS, CONDITIONS AND WARRANTIES OF QUALITY, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.</value>
+        <value>2.4	When using the System, User shall be entitled to access and use the information therein for the Purpose only.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_16</fullName>
@@ -29437,7 +29451,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_16</shortDescription>
-        <value>WITHOUT LIMITING THE GENERALITY OF THE FOREGOING, IATA DOES NOT REPRESENT, NOR WARRANT, THAT THE SYSTEM WILL BE UNINTERRUPTED OR ERROR FREE, THAT ANY DEFICIENCIES WILL BE CORRECTED, OR THAT THE SERVER, THE SYSTEMS OR THE NETWORK UNDERLYING SAME ARE, OR WILL BE, FREE FROM VIRUSES OR OTHER HARMFUL COMPONENTS. IATA DOES NOT MAKE ANY WARRANTY OR REPRESENTATION CONCERNING THE CONTENT, USER CONTENT OR ANY OTHER INFORMATION, DATA OR OTHER ITEMS OFFERED BY WAY OF THE SYSTEM, INCLUDING WITHOUT LIMITATION, WITH RESPECT TO THE CORRECTNESS, ACCURACY, COMPLIANCE, USEFULNESS, RELIABILITY OR ANY OTHER QUALITY THEREOF. IATA UNDERTAKES NO OBLIGATION TO CONTINUE TO MAINTAIN THE SYSTEM IN OPERATION OR TO PRODUCE NEW VERSIONS OF, OR IMPROVEMENTS TO, THE SYSTEM.</value>
+        <value>2.5	The System shall be accessible by User 24 hours per day, 365 days per year, subject to scheduled down time, necessary support and maintenance or the occurrence of any force majeure event.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_17</fullName>
@@ -29445,7 +29459,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_17</shortDescription>
-        <value>3.2	The User expressly acknowledges and agrees that its use of the System is at its own risk and that IATA shall not be liable for any errors, deficiencies or omissions in connection with the use of the System. In particular, the User has sole responsibility for adequate protection and backup of data and equipment used in connection with the System and will not make a claim against IATA for lost data, re-run time, inaccurate output, work delays or lost profits resulting from the use of the System. IATA also bears no responsibility for exposed User data in case of theft or loss of the computer equipment or mobile device used to access the System.</value>
+        <value>2.6	User and other third parties shall not without the prior written permission of IATA:</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_18</fullName>
@@ -29453,7 +29467,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_18</shortDescription>
-        <value>3.3	Any material downloaded or otherwise obtained through the System is done at the User&apos;s own discretion and risk, and the User is solely responsible for any damage to its computer system or other equipment, or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by the User from IATA or through the System will create any warranty not expressly stated in this Beta Agreement.</value>
+        <value>(a)	Re-sell, make mass, automated or systematic extractions from, or otherwise transfer to any other person or organisation, the System or information contained therein;</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_19</fullName>
@@ -29461,7 +29475,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_19</shortDescription>
-        <value>ARTICLE 4	LIMITATION OF LIABILITY</value>
+        <value>(b)	Store information from the System in such a manner that enables such stored information to be retrieved, manually, mechanically or systematically by any third party; or include it within, or merge it with, or permit such inclusion in or merger with, another archival or searchable system;</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_2</fullName>
@@ -29469,7 +29483,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_2</shortDescription>
-        <value>Terms and Conditions</value>
+        <value>FRED+ System Terms of Use</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_20</fullName>
@@ -29477,7 +29491,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_20</shortDescription>
-        <value>4.1	To the maximum extent allowed under applicable legislation, and except for damages related to physical prejudice resulting from an intentional or gross fault, or damages resulting from bodily or moral prejudice, IATA does not undertake any liability towards the User or any other person with respect to direct, indirect, incidental, special, consequential, punitive, or exemplary damages, including but not limited to, damages for loss of profits, revenue, goodwill, use, data, electronically transmitted orders, or other economic advantage resulting or arising from access to, use of, or inability to use, the System or its components, even if IATA is advised of the possibility of such damages or even if such damages are reasonably foreseeable.</value>
+        <value>(c)	Make use of any kind of device or application that enables retrieval of previously accessed information from the System without the need for access; and</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_21</fullName>
@@ -29485,7 +29499,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_21</shortDescription>
-        <value>4.2	Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, and accordingly some of the above limitations or exclusions may not apply to a specific User.</value>
+        <value>(d)	Advertise, report, or distribute to any third party the information generated by the System, including but not limited to, any reports generated by the benchmarking functions of the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_22</fullName>
@@ -29493,7 +29507,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_22</shortDescription>
-        <value>ARTICLE 5	PRIVACY POLICY</value>
+        <value>ARTICLE 3	REPRESENTATIONS, WARRANTIES, DISCLAIMERS AND LIMITATION OF LIABILITY</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_23</fullName>
@@ -29501,7 +29515,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_23</shortDescription>
-        <value>5.1	The User accepts and acknowledges that IATA&apos;s Privacy Policy (found at https://www.iata.org/Pages/privacy.aspx) applies to the System, and by signing the Beta Agreement the User agrees to be bound by the terms contained therein.</value>
+        <value>3.1	User represents and warrants that User has the right to transmit any data User uploads onto the System, and in respect to the reporting functionality contained within the System, that User has the appropriate authority to submit, view, and/or transfer the respective data as applicable.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_24</fullName>
@@ -29509,7 +29523,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_24</shortDescription>
-        <value>ARTICLE 6	CONFIDENTIALITY</value>
+        <value>3.2	In the event a User uploads, submits, or transmits data onto the System on behalf of an affiliated entity, including but not limited to a subsidiary or group company, User represents and warrants that User has the appropriate legal authority to do so.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_25</fullName>
@@ -29517,7 +29531,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_25</shortDescription>
-        <value>6.1	The User will not disclose to a third party any data contained on the System or any comments regarding the System without the prior written approval of IATA.  The User will maintain the confidentiality of the System and any data contained therein with at least the same degree of care the User uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
+        <value>3.3	The System and all of its components are provided &quot;as is&quot; and as available without any warranty, representation or conditions whatsoever, express or implied.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_26</fullName>
@@ -29525,7 +29539,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_26</shortDescription>
-        <value>6.2	IATA will not disclose to a third party any User data contained on the System or any comments regarding the information uploaded by the User onto the System without the User&apos;s prior written approval.  IATA will maintain the confidentiality of the System and any data contained therein with at least the same degree of care that IATA uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
+        <value>TO THE MAXIMUM EXTENT ALLOWED UNDER APPLICABLE LEGISLATION, IATA DISCLAIMS ANY WARRANTY, REPRESENTATION OR CONDITION, EXPRESS OR IMPLIED, IN RESPECT OF THE SYSTEM AND ITS COMPONENTS, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES, REPRESENTATIONS, CONDITIONS AND WARRANTIES OF QUALITY, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_27</fullName>
@@ -29533,7 +29547,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_27</shortDescription>
-        <value>ARTICLE 7	IP RIGHTS</value>
+        <value>WITHOUT LIMITING THE GENERALITY OF THE FOREGOING, IATA DOES NOT REPRESENT, NOR WARRANT, THAT THE SYSTEM WILL BE UNINTERRUPTED OR ERROR FREE, THAT ANY DEFICIENCIES WILL BE CORRECTED, OR THAT THE SERVER, THE SYSTEMS OR THE NETWORK UNDERLYING SAME ARE, OR WILL BE, FREE FROM VIRUSES OR OTHER HARMFUL COMPONENTS. IATA DOES NOT MAKE ANY WARRANTY OR REPRESENTATION CONCERNING THE CONTENT, USER CONTENT OR ANY OTHER INFORMATION, DATA OR OTHER ITEMS OFFERED BY WAY OF THE SYSTEM, INCLUDING WITHOUT LIMITATION, WITH RESPECT TO THE CORRECTNESS, ACCURACY, COMPLIANCE, USEFULNESS, RELIABILITY OR ANY OTHER QUALITY THEREOF. IATA UNDERTAKES NO OBLIGATION TO CONTINUE TO MAINTAIN THE SYSTEM IN OPERATION OR TO PRODUCE NEW VERSIONS OF, OR IMPROVEMENTS TO, THE SYSTEM.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_28</fullName>
@@ -29541,7 +29555,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_28</shortDescription>
-        <value>7.1	IATA owns and operates the System.  During the Beta Period, and subject to the terms and conditions of these Terms of Use, IATA grants to the User a non-exclusive, personal, non-assignable, non-transferrable, non-sublicensable license to access and use the System.  Except for the rights specifically granted hereinabove to the User, this does not transfer to the User any right (of ownership or otherwise) in or to the System, or any of the services or information accessible thereon. As between the User and IATA, IATA shall be considered the sole and exclusive owner of all components of the System. Any improvements, developments, modifications, changes, supplements, augmentations or works that may be derived from, created or otherwise made by the User in connection with the System shall be the exclusive property of IATA and the User hereby irrevocably and forever assigns to IATA all of his or her worldwide right, title and interest in and to same.</value>
+        <value>3.4	IATA makes no representation or warranty as to the accuracy or completeness of any data uploaded onto the System, or to the continued availability of data contained therein, and does not accept responsibility for any act, interpretation, opinion, or conclusion that User or any party authorised to view the data may form as a result of examining the data contained within the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_29</fullName>
@@ -29549,7 +29563,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_29</shortDescription>
-        <value>For greater certainty, the license granted to the User under the preceding paragraph shall not grant to the User any license or right to use names, words, titles, logos, slogans, graphics or designs that constitute trademarks, service marks or trade names, and which are made available in connection with the System (collectively, the &quot;Marks&quot;), regardless of whether such Marks are the property of IATA or of third parties, without the prior written consent of IATA.</value>
+        <value>3.5	User expressly acknowledges and agrees that its use of the System is at its own risk and that IATA shall not be liable for any errors, deficiencies or omissions in connection with the use of the System. In particular, User has sole responsibility for adequate protection and backup of data and equipment used in connection with the System and will not make a claim against IATA for lost data, re-run time, inaccurate output, work delays or lost profits resulting from the use of the System. IATA also bears no responsibility for exposed User data in case of theft or loss of the computer equipment or mobile device used to access the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_3</fullName>
@@ -29557,7 +29571,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_3</shortDescription>
-        <value>I.	IATA has developed the FRED+ System (the &quot;System&quot;) for use by airline operators, regulators, and authorized verifiers to fulfill their CORSIA reporting requirements.</value>
+        <value>WHEREAS</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_30</fullName>
@@ -29565,7 +29579,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_30</shortDescription>
-        <value>ARTICLE 8	TERMINATION</value>
+        <value>3.6	Any material downloaded or otherwise obtained through the System is done at User&apos;s own discretion and risk, and User is solely responsible for any damage to its computer system or other equipment, or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by User from IATA or through the System will create any warranty not expressly stated in this Agreement.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_31</fullName>
@@ -29573,7 +29587,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_31</shortDescription>
-        <value>8.1	Both parties reserve the right, at their sole discretion, to terminate the Beta Agreement at any time by providing the other party written notice.  Notification by email will be considered sufficient written notice under this Beta Agreement.</value>
+        <value>3.7	TO THE MAXIMUM EXTENT ALLOWED UNDER APPLICABLE LEGISLATION, IATA DISCLAIMS ANY LIABILITY TOWARDS USER OR ANY OTHER PERSON WITH RESPECT TO DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO, DAMAGES FOR LOST PROFITS, REVENUE, GOODWILL, USE, DATA, ELECTRONICALLY TRANSMITTED ORDERS, OR OTHER ECONOMIC ADVANTAGE RESULTING OR ARISING FROM ACCESS TO, USE OF, OR INABILITY TO USE THE SYSTEM OR ITS COMPONENTS, EVEN IF IATA IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES OR EVEN IF SUCH DAMAGES ARE REASONABLY FORESEEABLE.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_32</fullName>
@@ -29581,7 +29595,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_32</shortDescription>
-        <value>ARTICLE 9	CHANGES</value>
+        <value>3.8	User accepts and acknowledges that User remains solely responsible for its reporting obligations under CORSIA and applicable national law, and IATA assumes no liability in the event data submissions are in any way interrupted, disrupted, or unavailable through the System.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_33</fullName>
@@ -29589,7 +29603,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_33</shortDescription>
-        <value>9.1	IATA may modify this Beta Agreement and its Privacy Policy from time to time.  If any material changes are made, IATA will provide the User notice through the System or through other means. The User will have the opportunity to review the changes before they become effective.  If the User objects to any changes, the User may close its account and cease to access the System.  The User&apos;s continued use of the System after receiving notice about any changes to these terms means that the User has consented to the updated terms.</value>
+        <value>ARTICLE 4	DATA SECURITY</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_34</fullName>
@@ -29597,7 +29611,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_34</shortDescription>
-        <value>ARTICLE 10	ENTIRE AGREEMENT</value>
+        <value>4.1	IATA will store and process the data uploaded onto the System and may use the services of a contractor or partner to do so. IATA will require that appropriate security measures be established and maintained by any contractor or partner maintaining the database(s) containing User data to safeguard against unauthorised access of User data by third parties.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_35</fullName>
@@ -29605,7 +29619,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_35</shortDescription>
-        <value>10.1	This Beta Agreement constitutes the entire and only agreement between the parties regarding the System and all other prior negotiations, representations, agreements, and understandings are superseded hereby. No agreements altering or supplementing the terms hereof may be made except by means of a written document signed by the duly authorized representatives of the parties.</value>
+        <value>ARTICLE 5	PRIVACY POLICY</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_36</fullName>
@@ -29613,7 +29627,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_36</shortDescription>
-        <value>ARTICLE 11	APPLICABLE LAW</value>
+        <value>5.1	User accepts and acknowledges that IATA&apos;s Privacy Policy (located at https://www.iata.org/Pages/privacy.aspx) applies to the System, and by signing this Agreement, User agrees to be bound by the terms contained therein.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_37</fullName>
@@ -29621,7 +29635,23 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_37</shortDescription>
-        <value>11.1	The validity, interpretation, construction and performance of this Beta Agreement shall be governed by and construed in accordance with the laws of England and Wales.  The courts of these jurisdictions shall have exclusive jurisdiction over any judicial proceedings arising directly or indirectly from, or associated with, the use of the System.</value>
+        <value>ARTICLE 6	CONFIDENTIALITY</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_38</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_38</shortDescription>
+        <value>6.1	Except as required to fulfill the Purpose, User will not disclose to a third party any data contained on the System without the prior written approval of IATA.  User will maintain the confidentiality of the System and any data contained therein with at least the same degree of care User uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_39</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_39</shortDescription>
+        <value>6.2	Except as required to fulfill the Purpose, IATA will not disclose to a third party any User data contained on the System without the User&apos;s prior written approval, unless the data has been de-identified and is disclosed in an aggregated format.  IATA will maintain the confidentiality of the System and any data contained therein with at least the same degree of care that IATA uses to protect its own confidential and proprietary information, but not less than a reasonable standard of care.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_4</fullName>
@@ -29629,7 +29659,87 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_4</shortDescription>
-        <value>II.	Prior to its general release, IATA seeks to grant the User access to the System to explore the functionality of the System and help to identify any possible areas of improvement within the System.</value>
+        <value>IATA has developed the FRED+ System (the &quot;System&quot;) for use by aircraft operators, regulators and authorised verifiers to fulfill their CORSIA requirements and related reporting and administrative requirements (the &quot;Purpose&quot;);</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_40</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_40</shortDescription>
+        <value>ARTICLE 7	INTELLECTUAL PROPERTY RIGHTS</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_41</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_41</shortDescription>
+        <value>7.1	IATA owns, or is otherwise entitled to use and sub-licence, the System and hereby reserves to itself all Intellectual Property Rights in the System.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_42</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_42</shortDescription>
+        <value>7.2	IATA grants to User a non-exclusive, non-assignable, non-transferrable, non-sublicensable license to access and use the System.  Except for the rights specifically granted hereinabove to User, this does not transfer to User any right (of ownership or otherwise) in or to the System, or any of the services or information accessible thereon.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_43</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_43</shortDescription>
+        <value>7.3	Any improvements, developments, modifications, changes, supplements, augmentations or works that may be derived from, created or otherwise made by User in connection with the System shall be the exclusive property of IATA and User hereby irrevocably and forever assigns to IATA all of his or her worldwide right, title and interest in and to same. IATA reserves the right to use de-identified and aggregated data from the System for the purpose of improvements to the functionality of the System and for the delivery of related industry products and services. User hereby irrevocably assigns to IATA its worldwide right, title and interest to and in this data.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_44</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_44</shortDescription>
+        <value>7.4	The license granted to User under this Article shall not grant to User any license or right to use names, words, titles, logos, slogans, graphics or designs that constitute trademarks, service marks or trade names, and which are made available in connection with the System (collectively, the &quot;Marks&quot;), regardless of whether such Marks are the property of IATA or of third parties, without the prior written consent of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_45</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_45</shortDescription>
+        <value>ARTICLE 8	TERMINATION</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_46</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_46</shortDescription>
+        <value>8.1	Both parties reserve the right, at their sole discretion, to terminate the Agreement at any time by providing the other party thirty days (30) written notice.  Notification by email will be considered sufficient written notice under this Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_47</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_47</shortDescription>
+        <value>8.2	Either party may terminate the Agreement immediately by written notice if either shall become insolvent, be declared bankrupt or shall enter into any liquidation proceedings (other than for the purpose of reconstruction or amalgamation).</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_48</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_48</shortDescription>
+        <value>8.3	IATA reserves the right at its sole discretion to temporarily suspend User&apos;s access to the System at any time without prior notice.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_49</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_49</shortDescription>
+        <value>ARTICLE 9	AMENDMENTS</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_5</fullName>
@@ -29637,7 +29747,87 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_5</shortDescription>
-        <value>III.	The User wishes to serve as a beta tester for the System.</value>
+        <value>User wishes to use the System for the Purpose;</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_50</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_50</shortDescription>
+        <value>9.1	IATA may amend this Agreement and its Privacy Policy from time to time.  If amendments are made, IATA will provide User notice through the System or through other means. If User does not consent to any of these amendments, User may close its account and cease to access the System. User&apos;s continued use of the System following amendment to these terms means that User has agreed to the amendment(s).</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_51</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_51</shortDescription>
+        <value>ARTICLE 10	ENTIRE AGREEMENT</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_52</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_52</shortDescription>
+        <value>10.1	This Agreement constitutes the entire and only agreement between the parties regarding the System and all other prior negotiations, representations, agreements, and understandings are superseded hereby.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_53</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_53</shortDescription>
+        <value>ARTICLE 11	APPLICABLE LAW AND FORUM</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_54</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_54</shortDescription>
+        <value>11.1	This Agreement is construed under and shall be governed by the laws of England.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_55</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_55</shortDescription>
+        <value>11.2	If any dispute arises out of, or in connection with the performance of this Agreement, the parties shall endeavour to settle the same amicably. In the event that such amicable solution is not possible, the dispute shall be settled by the competent court in England. The courts of England shall have exclusive jurisdiction.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_56</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_56</shortDescription>
+        <value>ARTICLE 12	GENERAL</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_57</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_57</shortDescription>
+        <value>12.1	Neither party shall assign this Agreement or its respective rights and obligations under this Agreement without the prior written consent of the other party.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_58</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_58</shortDescription>
+        <value>12.2	The failure by either party at any time to require performance by the other party&apos;s rights to require such performance at any time thereafter.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_59</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_59</shortDescription>
+        <value>12.3	If any term, or provision of this Agreement shall be held illegal, unenforceable, or in conflict with any law of a government having jurisdiction over this Agreement, the validity of the remaining portions or provisions of the Agreement shall not be affected thereby and shall remain in force.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_6</fullName>
@@ -29645,7 +29835,47 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_6</shortDescription>
-        <value>THE PARTIES AGREE AS FOLLOWS:</value>
+        <value>IATA wishes to make the System available for use subject to this Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_60</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_60</shortDescription>
+        <value>12.4	The performance of this Agreement by either party is subject to circumstances beyond the parties&apos; reasonable control, including, not limited to, war, government regulations that were not foreseeable at the time this Agreement was entered into, disaster, epidemics, terrorist acts or other emergencies making it impractical, illegal, or impossible for a party to perform its obligations under this Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_61</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_61</shortDescription>
+        <value>12.5	Words importing the singular shall include the plural and vice versa.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_62</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_62</shortDescription>
+        <value>12.6	The headings of Sections are for convenience only and shall not be used to interpret provisions of this Agreement or otherwise affect the substantive provisions.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_63</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_63</shortDescription>
+        <value>ARTICLE 13	PRIORITY</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_Terms_64</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_Terms_64</shortDescription>
+        <value>13.1	In the event any terms contained in this Agreement conflict with the terms contained in IATA&apos;s General Terms of Use for its public website (located at https://www.iata.org/Pages/terms.aspx), the terms contained in this Agreement will govern.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_7</fullName>
@@ -29653,7 +29883,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_7</shortDescription>
-        <value>ARTICLE 1	TERM AND SCOPE</value>
+        <value>THE PARTIES AGREE AS FOLLOWS:</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_8</fullName>
@@ -29661,7 +29891,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_8</shortDescription>
-        <value>1.1	IATA grants the User a non-exclusive, non-transferable license to access the System during the beta stage which will conclude on 31 December 2018 (the &quot;Beta Period&quot;) subject to the provisions below.</value>
+        <value>ARTICLE 1	TERM AND SCOPE</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_9</fullName>
@@ -29669,7 +29899,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_9</shortDescription>
-        <value>1.2	In consideration for receiving access to the System, the User agrees to provide general feedback to IATA regarding the overall performance of the System.</value>
+        <value>1.1	IATA grants User a non-exclusive, non-transferable license to access the System subject to this Agreement. In consideration for access to the System, User agrees to abide by the terms of the Agreement.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_Of_Use_Link</fullName>
@@ -29694,6 +29924,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_FRED_Troubleshooting_Link</shortDescription>
         <value>https://fred.iata.org/contact</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_URL</shortDescription>
+        <value>Your password has now been changed. Please go to &lt;a href=&quot;https://fred.iata.org&quot;&gt; FRED.iata.org&lt;/a&gt; to sign in again.</value>
     </labels>
     <labels>
         <fullName>OneId_ForgotPassword</fullName>

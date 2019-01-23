@@ -199,6 +199,10 @@ public with sharing class AMS_AccreditationContactController {
         if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c == null || !(ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
             blockOwnershipEdit = true;
 
+        if(aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHINACONVERSION){
+            blockOwnershipEdit = true;
+        }
+
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
         isCASSAssociate = aoa.SAAM_Case__r.OSCAR__r.Account__r.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE;

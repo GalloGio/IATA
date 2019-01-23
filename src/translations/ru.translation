@@ -5643,6 +5643,14 @@
         <name>ISSP_AMS_Apply_New_Office</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2 --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Entity</name>
     </customLabels>
@@ -15520,16 +15528,124 @@ IATA Treasury Dashboard — динамичный информационный в
         <name>OneId_FRED_Terms_37</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_FRED_Terms_38 --></label>
+        <name>OneId_FRED_Terms_38</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_39 --></label>
+        <name>OneId_FRED_Terms_39</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_FRED_Terms_4 --></label>
         <name>OneId_FRED_Terms_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_40 --></label>
+        <name>OneId_FRED_Terms_40</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_41 --></label>
+        <name>OneId_FRED_Terms_41</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_42 --></label>
+        <name>OneId_FRED_Terms_42</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_43 --></label>
+        <name>OneId_FRED_Terms_43</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_44 --></label>
+        <name>OneId_FRED_Terms_44</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_45 --></label>
+        <name>OneId_FRED_Terms_45</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_46 --></label>
+        <name>OneId_FRED_Terms_46</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_47 --></label>
+        <name>OneId_FRED_Terms_47</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_48 --></label>
+        <name>OneId_FRED_Terms_48</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_49 --></label>
+        <name>OneId_FRED_Terms_49</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_5 --></label>
         <name>OneId_FRED_Terms_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_FRED_Terms_50 --></label>
+        <name>OneId_FRED_Terms_50</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_51 --></label>
+        <name>OneId_FRED_Terms_51</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_52 --></label>
+        <name>OneId_FRED_Terms_52</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_53 --></label>
+        <name>OneId_FRED_Terms_53</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_54 --></label>
+        <name>OneId_FRED_Terms_54</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_55 --></label>
+        <name>OneId_FRED_Terms_55</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_56 --></label>
+        <name>OneId_FRED_Terms_56</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_57 --></label>
+        <name>OneId_FRED_Terms_57</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_58 --></label>
+        <name>OneId_FRED_Terms_58</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_59 --></label>
+        <name>OneId_FRED_Terms_59</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_FRED_Terms_6 --></label>
         <name>OneId_FRED_Terms_6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_60 --></label>
+        <name>OneId_FRED_Terms_60</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_61 --></label>
+        <name>OneId_FRED_Terms_61</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_62 --></label>
+        <name>OneId_FRED_Terms_62</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_63 --></label>
+        <name>OneId_FRED_Terms_63</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_64 --></label>
+        <name>OneId_FRED_Terms_64</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_7 --></label>
@@ -15554,6 +15670,10 @@ IATA Treasury Dashboard — динамичный информационный в
     <customLabels>
         <label><!-- OneId_FRED_Troubleshooting_Link --></label>
         <name>OneId_FRED_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_URL --></label>
+        <name>OneId_FRED_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
