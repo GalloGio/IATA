@@ -27,7 +27,7 @@
             <publicGroup>AllInternalUsers</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>DistributionAirlineManagementHOI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>DistributionAirlineManagementHO</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>
