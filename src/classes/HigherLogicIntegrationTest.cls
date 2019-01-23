@@ -69,9 +69,10 @@ private class HigherLogicIntegrationTest {
 	
 		Portal_Applications__c app = new Portal_Applications__c(Name = 'Standards Setting Workspace'); 
 		insert app;
-
+		
 		//Triggers the following exception:
 		//Methods defined as TestMethod do not support Web service callouts
+		//This does not block the test results
 		createPortalApplicationRights(app.Id, contactSubList, 'Access Granted');
 		
 	}
@@ -105,7 +106,7 @@ private class HigherLogicIntegrationTest {
 		
 		Test.stopTest();
 		
-		assertWebServiceLogs(2);	
+		assertWebServiceLogs(1);	
 
 		fillMembersDetails();
 		
@@ -193,7 +194,7 @@ private class HigherLogicIntegrationTest {
 		
 		Test.stopTest();
 
-		assertWebServiceLogs(2);
+		assertWebServiceLogs(1);
 
 	}
 	
@@ -297,7 +298,7 @@ private class HigherLogicIntegrationTest {
 				return;				
 			}
 			
-			system.assertEquals(log.Error_Code__c, '200');
+			system.assertEquals('200', log.Error_Code__c, log.Error_Message__c);
 			system.assert(log.Error_Message__c.contains('{"success":true'));
 			
 			i++;

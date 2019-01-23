@@ -226,20 +226,21 @@ public class HigherLogicIntegrationHelper {
 		Map<Id, Id> contactIdMap = new Map<Id, Id>();
 		Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
 		
-		for(User newUser : newUsersMap.values()){
+		for(User newUser : userLst){
 			
 			Id contactId = newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c;
 
-			if(!contactRightsMap.containsKey(contactId) || operation == DISABLE_EXISTING_MEMBERS){
+			if(!contactRightsMap.containsKey(contactId)){
 				activeUserMap.put(newUser.Id, false);
-				continue;
+
+				if(operation != DISABLE_EXISTING_MEMBERS) newUsersMap.remove(newUser.Id);
+			}else{
+				String access = contactRightsMap.get(contactId).Right__c;
+				
+				activeUserMap.put(newUser.Id, access == 'Access Granted');
 			}
 
-			String access = contactRightsMap.get(contactId).Right__c;
-			
-			activeUserMap.put(newUser.Id, access == 'Access Granted');
-
-			if(operation == PUSH_EXISTING_MEMBERS){
+			if(operation == PUSH_EXISTING_MEMBERS|| operation == DISABLE_EXISTING_MEMBERS){
 				continue;	
 			}
 			
@@ -254,8 +255,10 @@ public class HigherLogicIntegrationHelper {
 
 		}
 		
+		if(newUsersMap.isEmpty()) return;
+
 		if(operation == PUSH_EXISTING_MEMBERS || operation == DISABLE_EXISTING_MEMBERS){
-			HigherLogicIntegrationWS.pushMembers(userLst, null, activeUserMap);
+			HigherLogicIntegrationWS.pushMembers(newUsersMap.values(), null, activeUserMap);
 			HigherLogicIntegrationWS.flushWebServiceLogs();
 			return;
 		}
@@ -263,21 +266,23 @@ public class HigherLogicIntegrationHelper {
 		List<Account> accountLst = fetchAccountRecords(newAccountsIds);
 		
 		membersToPushLst.addAll(accountLst);
-		membersToPushLst.addAll(userLst);
+		membersToPushLst.addAll(newUsersMap.values());
 		
 		HigherLogicIntegrationWS.pushMembers(membersToPushLst, contactIdMap, activeUserMap);
 		
+		Boolean hasChanged = false;
 		for(User newUser : newUsersMap.values()){
 			
 			Id contactId = newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c;
 			
 			if(contactRightsMap.containsKey(contactId)){
 				contactRightsMap.get(contactId).Kavi_user__c = true;
+				hasChanged = true;
 			}
 			
 		}
 
-		update contactRightsMap.values();	
+		if(hasChanged) update contactRightsMap.values();	
 		
 		HigherLogicIntegrationWS.flushWebServiceLogs();
 		
