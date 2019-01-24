@@ -780,10 +780,7 @@
                 <div class="alert alert-info" role="alert">
                   {!$Label.ISSP_AMS_Step3_Save_Anytime}
                 </div>
-                <apex:outputPanel styleClass="alert alert-info" rendered="{!AND(isMultiCountryNewAE, newForm.AE_separate_Legal_Entity__c == 'No')}">
-                  hello
-                </apex:outputPanel>
-                <apex:pageBlockButtons >
+                <apex:pageBlockButtons>
                   <apex:commandButton action="{!saveAMSFormAndGoBack}" value="{!$Label.ISSP_Back}" />&nbsp;
                   <apex:commandButton id="nextFormRip" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_Next}"/>
                   <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" />
@@ -1151,6 +1148,9 @@
                     <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
                       {!$Label.ISSP_AMS_Not_Listed_Msg}
                     </div>
+
+                    <apex:outputText rendered="{!AND(isMultiCountryNewAE, newForm.AE_separate_Legal_Entity__c == 'No')}" value="hello"/>
+                    
                     <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
 
                     <apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon" id="contactList" styleClass="table-hover table table-condensed table-responsive">
