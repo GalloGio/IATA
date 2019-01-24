@@ -99,7 +99,7 @@ global without sharing class ANG_ExposeAccountInfo {
                                     ,(	 //Change Code
                                         Select Id, Change_Code__c, Irregularity_Type__c, Created_Date_To_Show__c
                                         From Agencies_Applied_Change_codes__r
-                                        where Created_Date_To_Show__c >= LAST_N_MONTHS:6
+                                        where Created_Date_To_Show__c >= :system.today().addMonths(-6)
                                         and (
                                             Change_Code__c in ('LSP', 'DFE', 'RCR', 'DFW', 'LSW')
                                             OR
