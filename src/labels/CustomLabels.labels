@@ -24181,6 +24181,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Previous</value>
     </labels>
     <labels>
+        <fullName>ISSP_FDS_Filters</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Filters</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PriceList</fullName>
         <categories>S11, Portal</categories>
         <language>en_US</language>
@@ -29021,6 +29029,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Add</value>
     </labels>
     <labels>
+        <fullName>MultiselectPicklist_AddAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_AddAll</shortDescription>
+        <value>Add All</value>
+    </labels>
+    <labels>
         <fullName>MultiselectPicklist_Down</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29033,6 +29048,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>MultiselectPicklist_Remove</shortDescription>
         <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_RemoveAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_RemoveAll</shortDescription>
+        <value>Remove All</value>
     </labels>
     <labels>
         <fullName>MultiselectPicklist_Up</fullName>
@@ -33627,5 +33649,138 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CustomFilterBtn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CustomFilterBtn</shortDescription>
+        <value>Custom</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_DownloadOpts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_DownloadOpts</shortDescription>
+        <value>I want to download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_ChooseCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_ChooseCountries</shortDescription>
+        <value>All Operational Calendards for specific countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_AllCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountries</shortDescription>
+        <value>All Operational Calendars</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_AllCountriesWithServices</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountriesWithServices</shortDescription>
+        <value>All Countries where my airline participates</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FileFormat</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FileFormat</shortDescription>
+        <value>Format</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Operations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Operations</shortDescription>
+        <value>Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_OperationsSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_OperationsSelected</shortDescription>
+        <value>Selected Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Remittance</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Remittance</shortDescription>
+        <value>Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_RemittanceSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_RemittanceSelected</shortDescription>
+        <value>Selected Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Countries</shortDescription>
+        <value>Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountriesSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountriesSelected</shortDescription>
+        <value>Selected Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Download</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_PopupTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_PopupTitle</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_NoResults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_NoResults</shortDescription>
+        <value>No results for your search.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_SelectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_SelectAll</shortDescription>
+        <value>Select All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_UnselectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_UnselectAll</shortDescription>
+        <value>Unselect All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountryName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountryName</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FillAllFields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FillAllFields</shortDescription>
+        <value>Please fill all mandatory filters.</value>
     </labels>
 </CustomLabels>
