@@ -1316,6 +1316,14 @@ IATA Customer Service</value>
         <value>I agree</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_GDI_Breadcrumb</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Breadcrumb</shortDescription>
+        <value>The list of Financial Institutions providing Financial Security Insurance in your country</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_GDI_Navigate_Portal</fullName>
         <categories>ISSP, ANG, GDI</categories>
         <language>en_US</language>
@@ -1369,7 +1377,7 @@ IATA Customer Service</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_GDI_Terms_Conditions</shortDescription>
-        <value>By applying for your Accreditation Security to be provided to IATA by Euler Hermes, you consent to IATA sharing with Euler Hermes information it holds which is relevant to your financial standing, whether obtained directly from you when applying for IATA Accreditation or which IATA has maintained throughout your period of membership of IATA.</value>
+        <value>By applying for your Financial Security to be provided to IATA by Euler Hermes, you consent to IATA sharing with Euler Hermes information it holds which is relevant to your financial standing, whether obtained directly from you when applying for IATA Accreditation or which IATA has maintained throughout your period of membership of IATA.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_GDI_UserProvisioningError</fullName>
