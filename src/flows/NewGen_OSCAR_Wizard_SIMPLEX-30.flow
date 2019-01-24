@@ -3395,7 +3395,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <showHeader>true</showHeader>
     </screens>
     <startElementReference>AccountToProcessLookup_1</startElementReference>
-    <status>Active</status>
     <variables>
         <name>AccountAbbreviatedaddress</name>
         <dataType>String</dataType>

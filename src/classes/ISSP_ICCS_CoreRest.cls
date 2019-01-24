@@ -741,7 +741,7 @@ public class ISSP_ICCS_CoreRest{
     	public Integer id {get;set;}
     	public BankAccountCode accountCode {get;set;}
     	public InstructionLineType type {get;set;}
-    	public Double value {get;set;}
+    	public Decimal value {get;set;}
     	public Integer order {get;set;}
     	public String modifiedOn {get;set;}
 
