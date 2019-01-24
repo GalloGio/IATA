@@ -168,8 +168,8 @@ public with sharing class TestDataGenerator
                 obj.setValue('Id',generateZuoraFakeId());
                 obj.setValue('Name','Zuora Product '+i);
                 obj.setValue('SAPProductMaterialNo__c', generateProductCode());
-                obj.setValue('EffectiveStartDate',Zuora.zUtil.getZuoraDate(DEFAULT_EFFECTIVE_START_DATE));
-                obj.setValue('EffectiveEndDate',Zuora.zUtil.getZuoraDate(DEFAULT_EFFECTIVE_END_DATE));
+                obj.setValue('EffectiveStartDate',Zuora.zUtil.getZuoraDateOnly(DEFAULT_EFFECTIVE_START_DATE));
+                obj.setValue('EffectiveEndDate',Zuora.zUtil.getZuoraDateOnly(DEFAULT_EFFECTIVE_END_DATE));
 
             results.add(obj); 
         }
