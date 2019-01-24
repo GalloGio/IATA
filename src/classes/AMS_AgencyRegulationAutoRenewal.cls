@@ -552,7 +552,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                 for(Messaging.SingleEmailMessage mail: mailsToSend)
                 {
                     EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
-                    emailMsg.ToAddress=(mail.getToAddresses())[0];
+                    emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
                     emailMsg.Subject = mail.getSubject();
                     emailMsg.HtmlBody = mail.getHtmlBody();
                     emailMsg.ParentId = oscarCommCaseId; //Attach with the case
