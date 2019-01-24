@@ -234,11 +234,17 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
     private static Boolean isCountBelowThreshold(Account accountData, Integer numberOfActiveCertificates, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements,String typeOfCertificate){
 
         if(accountData.Is_your_firm_handling_Dangerous_Goods__c != 'No'){
+        	//AMSU-208
+        	if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && typeOfCertificate == AMS_Utils.CERT_DGR) {
+        		if(accountData.Location_Type__c == AMS_Utils.HO) {
+        			return numberOfActiveCertificates < 2;
+    			} else {
+    				return numberOfActiveCertificates < 1;
+    			}
+        	}
 
             //China
             if(typeOfCertificate == AMS_Utils.CERT_CATA && accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveCertificates == 0)
-            	return true;
-            else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveCertificates < 3)
             	return true;
             //India has this particular exception to the normal behaviour, no check is to be done
             else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999)
@@ -546,7 +552,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                 for(Messaging.SingleEmailMessage mail: mailsToSend)
                 {
                     EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
-                    emailMsg.ToAddress=(mail.getToAddresses())[0];
+                    emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
                     emailMsg.Subject = mail.getSubject();
                     emailMsg.HtmlBody = mail.getHtmlBody();
                     emailMsg.ParentId = oscarCommCaseId; //Attach with the case
