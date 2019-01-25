@@ -33,6 +33,25 @@ global class ISSP_AmazonS3_Ctrl {
     public String uploadedFileIdentifier {get; set;}
     public string message {get; private set;}
     public boolean archived {get; private set;}
+    
+    public String currentIdentifier {
+        get;
+        set {
+            //Current input value is blank nothing is performed
+            if(String.isBlank(value)) return; 
+            if(currentIdentifier!=null) return;
+            currentIdentifier = value;
+            list<AmazonFile__c> listAmazonFile = [
+                Select Id
+                From AmazonFile__c
+                Where Case__c = :this.cse.Id
+                AND File_Identifier__c = :currentIdentifier
+            ];
+            this.countFiles = listAmazonFile.size();
+        }
+    }
+    public Integer countFiles {private set; get;}
+    
 
     private Case cse;
     private Account acc {get;set;}
@@ -360,6 +379,7 @@ global class ISSP_AmazonS3_Ctrl {
         AmazonFileAMS newAmazonFile;
         reqIdentifierList = new List<String>();
 
+        this.countFiles = 0;
         for ( AmazonFile__c amazonFile: listAmazonFile) {
 
             newAmazonFile = new AmazonFileAMS(amazonFile);
@@ -369,6 +389,9 @@ global class ISSP_AmazonS3_Ctrl {
             } else {
                 amazonFileMap.put(amazonFile.File_Identifier__c, new List<AmazonFileAMS>{newAmazonFile});
                 reqIdentifierList.add(amazonFile.File_Identifier__c);
+            }
+            if (this.currentIdentifier==amazonFile.File_Identifier__c) {
+                this.countFiles++;
             }
         }
 

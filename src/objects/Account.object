@@ -181,6 +181,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>TradeName__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>AMS_ACCOUNT_FIELDS_TO_VALIDATE</label>
     </fieldSets>
     <fieldSets>
@@ -3346,7 +3351,7 @@
         <fullName>ANG_IsNewGenAgency__c</fullName>
         <description>To show information to analyst. To simplify triggers and classes.</description>
         <externalId>false</externalId>
-        <formula>IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)</formula>
+        <formula>(IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)) || (IATA_ISO_Country__r.Enable_NewGen_Pilot__c &amp;&amp; OR(TEXT(Location_Type__c) = &apos;HE&apos;, TEXT(Location_Type__c) = &apos;AE&apos;, TEXT(Location_Type__c) = &apos;GE&apos;) &amp;&amp; TEXT(Location_Class__c) = &apos;D&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
@@ -3375,15 +3380,16 @@
     <fields>
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-        ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
-            &apos;Not Applicable&apos;,
-                IF(
-          ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-            TEXT(ANG_HE_RiskHistoryAssessment__c),  
-            TEXT(Top_Parent__r.ANG_HE_RiskHistoryAssessment__c)
-          )
-        )</formula>
+        <formula>IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+    &apos;Not Applicable&apos;,
+    IF(ISPICKVAL(Location_Type__c, &apos;HE&apos;),
+        TEXT(ANG_HE_RiskHistoryAssessment__c),
+		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
+			&apos;&apos;,		
+			TEXT(Top_Parent__r.ANG_HE_RiskHistoryAssessment__c)
+        )
+    )
+)</formula>
         <label>Risk History Assessment</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -3393,15 +3399,16 @@
     <fields>
         <fullName>ANG_RiskStatus__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-            ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ANG_FA_Opt_out__c,
-                &apos;Not Applicable&apos;,
-                    IF(
-              ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-                TEXT(ANG_HE_RiskStatus__c),  
-                TEXT(Top_Parent__r.ANG_HE_RiskStatus__c)
-              )
-            )</formula>
+        <formula>IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ANG_FA_Opt_out__c,
+    &apos;Not Applicable&apos;,
+	IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+		TEXT(ANG_HE_RiskStatus__c),
+		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
+			&apos;&apos;,			
+			TEXT(Top_Parent__r.ANG_HE_RiskStatus__c)
+		)
+	)
+)</formula>
         <label>Risk Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -6007,11 +6014,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Card Brand</label>
                 </value>
                 <value>
-                    <fullName>Cargo Agency Association</fullName>
-                    <default>false</default>
-                    <label>Cargo Agency Association</label>
-                </value>
-                <value>
                     <fullName>Cargo only</fullName>
                     <default>false</default>
                     <label>Cargo only</label>
@@ -6075,6 +6077,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <fullName>ERSP Agent</fullName>
                     <default>false</default>
                     <label>ERSP Agent</label>
+                </value>
+                <value>
+                    <fullName>Freight Forwarder Association</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarder Association</label>
                 </value>
                 <value>
                     <fullName>Fuel Supplier</fullName>
@@ -6573,7 +6580,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Association</controllingFieldValue>
-                <valueName>Cargo Agency Association</valueName>
+                <valueName>Freight Forwarder Association</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Association</controllingFieldValue>
@@ -6666,6 +6673,42 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Clearance_level__c</fullName>
+        <description>Clearance level performed on account by due diligence</description>
+        <externalId>false</externalId>
+        <label>Clearance level</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>Level 1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>Level 2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>Level 3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>Level 4</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Collection_Case_Indicator__c</fullName>
@@ -9308,6 +9351,16 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Date_of_last_clearance__c</fullName>
+        <description>Date due diligence performed last clearance on an account</description>
+        <externalId>false</externalId>
+        <label>Date of last clearance</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Date_of_most_recent_name_change__c</fullName>
         <externalId>false</externalId>
         <label>Date of most recent name change</label>
@@ -10183,6 +10236,38 @@ WSPN-Worldspan</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Give_SIS_Membership__c</fullName>
+        <description>Allow ISS portal users under this account to access to Join SIS e-Invoicing application</description>
+        <externalId>false</externalId>
+        <label>Give SIS Membership</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ISPA</fullName>
+                    <default>false</default>
+                    <label>ISPA</label>
+                </value>
+                <value>
+                    <fullName>ISUA</fullName>
+                    <default>false</default>
+                    <label>ISUA</label>
+                </value>
+                <value>
+                    <fullName>TOU</fullName>
+                    <default>false</default>
+                    <label>TOU</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Guaranteed_amount__c</fullName>
@@ -18990,6 +19075,16 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>iiNet_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field is used to set Account as part of iiNet</description>
+        <externalId>false</externalId>
+        <label>iiNet Account</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>number_of_Opportunities__c</fullName>
         <description>This field calculates the number of opportunities associated with this account.</description>
         <externalId>false</externalId>
@@ -23179,6 +23274,36 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </filters>
         <label>GDP - My Accounts</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>GDS_s</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.Others</value>
+        </filters>
+        <filters>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>Global Distribution System</value>
+        </filters>
+        <filters>
+            <field>Identify_as_Key_Customer__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>GDS&apos;s Key accounts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>DistributionOperationalMgmtHO</role>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>GeneralPublicAccounts</fullName>
@@ -29924,6 +30049,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -30345,6 +30489,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35558,6 +35717,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Company_Type__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -36599,6 +36777,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42593,6 +42786,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Customer_Type__c</picklist>
             <values>
                 <fullName>Accredited Training Center %28ATC%29</fullName>
@@ -42948,6 +43160,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48622,6 +48849,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Customer_Type__c</picklist>
             <values>
                 <fullName>CNS</fullName>
@@ -48945,6 +49191,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54644,10 +54905,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -54689,6 +54946,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -54881,6 +55142,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -56978,6 +57258,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64047,10 +64342,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -64088,6 +64379,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -64268,6 +64563,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -66357,6 +66671,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73249,10 +73578,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -73294,6 +73619,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -73474,6 +73803,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73751,6 +74099,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -79139,10 +79502,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -79180,6 +79539,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -79352,6 +79715,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -79777,6 +80159,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -85580,10 +85977,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cargo Agency Association</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cargo only</fullName>
                 <default>false</default>
             </values>
@@ -85625,6 +86018,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -85817,6 +86214,25 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Vendor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Clearance_level__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -87914,6 +88330,21 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Give_SIS_Membership__c</picklist>
+            <values>
+                <fullName>ISPA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -93639,7 +94070,7 @@ ISCHANGED(IATA_ISO_Country__c),
 ISCHANGED(RecordTypeId))
 ,
 NOT
-(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;Restricted Profile - automated process&quot;))
+(CONTAINS($Profile.Name, &quot;System Administrator&quot;) || CONTAINS($Profile.Name, &quot;Restricted Profile - automated process&quot;))
 )</errorConditionFormula>
         <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>
@@ -94020,6 +94451,30 @@ myuser={!User.Id}</url>
         <openType>sidebar</openType>
         <protected>false</protected>
         <url>/apex/AMP_ChatterBroadcastTool?accountId={!Account.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>China_Pilot_Conversion_Wizard</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>China Pilot Conversion Wizard</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+
+var countryIsoCode = &apos;{!Account.Country_ISO_Code__c}&apos;; 
+
+// China Only
+if(countryIsoCode != &apos;CN&apos;){
+    alert(&apos;This functionality is only available for accounts in China&apos;);
+} 
+else if((&apos;{!Account.Location_Type__c}&apos; == &apos;HE&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;HO&apos; || &apos;{!Account.Location_Type__c}&apos; == &apos;AO&apos;) &amp;&amp; &apos;{!Account.Location_Class__c}&apos; == &apos;D&apos; &amp;&amp; &apos;{!Account.IATACode__c}&apos; != &apos;&apos;) {
+   javascript:srcUp(&quot;/apex/AMS_AccountOSCARWizardPage?accountId={!Account.Id}&amp;NewGenPilot=true&quot;);
+}
+else {
+   alert(&apos;Conditions are not verified to trigger a conversion process on this agent&apos;);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Create_Airline_Branch</fullName>

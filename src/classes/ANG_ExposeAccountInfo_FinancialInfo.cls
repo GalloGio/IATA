@@ -50,7 +50,7 @@ public without sharing class ANG_ExposeAccountInfo_FinancialInfo {
 			
 			this.IATACode = accnt.IATACode__c;
 			if(boolean.valueOf(accnt.ANG_FA_Opt_out__c) || string.isBlank(accnt.Financial_Review_Result__c))
-				this.LastFinancialReviewResult = 'n\\a';
+				this.LastFinancialReviewResult = 'n/a';
 			else{
 				if(accnt.Financial_Review_Result__c.startsWithIgnoreCase('Satisfactory'))
 					this.LastFinancialReviewResult = 'Satisfactory';

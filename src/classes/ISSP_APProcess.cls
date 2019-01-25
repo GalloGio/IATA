@@ -235,6 +235,7 @@ public without sharing class ISSP_APProcess {
             strOperationTypeAux = strOperationType;
             strAreaType = newCase.CaseArea__c;
             strChangeType = newCase.Reason1__c;
+            isoCountryEligible = (isocountry.Airline_EasyPay_Opt_Out_Date__c != null && isocountry.Airline_EasyPay_Opt_Out_Date__c <= Date.today());
 
             //Need to get Id for Account for country of application concerned
             vAccountConcernedId = newCase.Account_Concerned__c;

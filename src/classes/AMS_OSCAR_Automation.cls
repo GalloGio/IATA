@@ -515,7 +515,7 @@ public with sharing class AMS_OSCAR_Automation {
                 }
             }
 
-            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))
+            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCHINACONVERSION))
                 && !hasFRRequiredStep) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
@@ -1323,6 +1323,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 oscar.Invoice_Requested__c = Date.today();
+                oscar.Process_Start_Date__c = Date.today();
                 res = true;
             }
 
@@ -1420,9 +1421,7 @@ public with sharing class AMS_OSCAR_Automation {
 
                 oscar.Financial_security_information_confirmed__c = Date.today();
                 res = true;
-                case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
-                c.status = 'Closed';
-                update c;
+                oscar.status__c = 'Closed';
             }
 
             return res;
@@ -1438,9 +1437,7 @@ public with sharing class AMS_OSCAR_Automation {
 
                 oscar.Financial_security_information_confirmed__c = Date.today();
                 res = true;
-                case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
-                c.status = 'Closed';
-                update c;
+                oscar.status__c = 'Closed';
             }
 
             return res;

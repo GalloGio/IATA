@@ -26,7 +26,7 @@ public with sharing class UserProvisioningTestUtils {
         // Create a test user - changes will be reverted automatically by Salesforce        
         Profile p = [SELECT Id FROM profile WHERE name='Standard User'];
         User user = new User(
-            userName = 'john.doe@example.org', 
+            userName = DateTime.now().getTime() +'john.doe@example.org', 
             email = 'john.doe@example.org', 
             firstName = 'John',
             lastName = 'Doe',
@@ -135,7 +135,7 @@ public with sharing class UserProvisioningTestUtils {
         acc.Name = 'TestAccount';
         insert acc;
 
- 		Contact c = new Contact ( accountid = acc.id, FirstName = 'AAAlberto'  , LastName = 'Borges' , Phone = 'phone' , Fax = 'fax', Title='jobtitle', Membership_Function__c = 'functionpick', Preferred_Language__c='preferredlanguage', email='testddd.fff@gmail.com');
+ 		Contact c = new Contact ( accountid = acc.id, FirstName = 'AAAlberto'  , LastName = 'Borges' , Phone = 'phone' , Fax = 'fax', Title='jobtitle', Membership_Function__c = 'Aeropolitical', Preferred_Language__c='preferredlanguage', email='testddd.fff@gmail.com');
   		insert c;
 
   		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal (Partner)'];

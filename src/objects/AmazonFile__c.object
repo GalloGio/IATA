@@ -73,6 +73,20 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Use this lookup when the file is related to an account</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AmazonFiles</relationshipLabel>
+        <relationshipName>AmazonFiles</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Additional_Information__c</fullName>
         <description>Additional information if the E&amp;F Category is Ad-Hoc Report or Miscellaneous</description>
         <externalId>false</externalId>
@@ -185,6 +199,11 @@
                     <fullName>Miscellaneous</fullName>
                     <default>false</default>
                     <label>Miscellaneous</label>
+                </value>
+                <value>
+                    <fullName>ICE POP</fullName>
+                    <default>false</default>
+                    <label>ICE POP</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -669,6 +688,16 @@
                     <default>false</default>
                     <label>Leave Participation</label>
                 </value>
+                <value>
+                    <fullName>ICE_POP</fullName>
+                    <default>false</default>
+                    <label>ICE_POP</label>
+                </value>
+                <value>
+                    <fullName>GDI_ENDORSEMENT</fullName>
+                    <default>false</default>
+                    <label>GDI_ENDORSEMENT</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -712,6 +741,18 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remittance_Period__c</fullName>
+        <description>Remittance Period</description>
+        <externalId>false</externalId>
+        <label>Remittance Period</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -800,6 +841,11 @@
                     <fullName>Internal</fullName>
                     <default>false</default>
                     <label>Internal</label>
+                </value>
+                <value>
+                    <fullName>External</fullName>
+                    <default>false</default>
+                    <label>External</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1083,7 +1129,7 @@
         <filters>
             <field>Case__c</field>
             <operation>equals</operation>
-            <value>09536782</value>
+            <value>09737094</value>
         </filters>
         <label>files by case</label>
         <language>en_US</language>
@@ -1253,6 +1299,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ID_PASSP</fullName>
                 <default>false</default>
             </values>
@@ -1414,6 +1464,10 @@
         </picklistValues>
         <picklistValues>
             <picklist>Source__c</picklist>
+            <values>
+                <fullName>External</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Internal</fullName>
                 <default>false</default>
@@ -1661,6 +1715,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ID_PASSP</fullName>
                 <default>false</default>
             </values>
@@ -1819,6 +1877,10 @@
         <picklistValues>
             <picklist>Source__c</picklist>
             <values>
+                <fullName>External</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Internal</fullName>
                 <default>false</default>
             </values>
@@ -1950,6 +2012,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>ICE POP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Meeting Minutes</fullName>
                 <default>false</default>
             </values>
@@ -2066,6 +2132,14 @@
             </values>
             <values>
                 <fullName>FIN_STATEMENTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICE_POP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2222,6 +2296,10 @@
         </picklistValues>
         <picklistValues>
             <picklist>Source__c</picklist>
+            <values>
+                <fullName>External</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Internal</fullName>
                 <default>false</default>

@@ -17,7 +17,8 @@ public with sharing class clsInternalCaseDML {
         	'Cases_China_North_Asia', //Oct-27-2011 AP
         	'FDS_Ad_hoc_Calendar_Change_R_S_Locked', // FDS Ad-hoc Calendar Change (R&S) Locked	 // Jul-27-2015 SA INC193042
         	'ComplaintIDFS', //Complaint (IDFS ISS)	
-        	'ID_Card_Application' // Jan-25-2016
+        	'ID_Card_Application', // Jan-25-2016
+			'Cases_Global'
         };
 
 
@@ -58,7 +59,8 @@ public with sharing class clsInternalCaseDML {
                                 (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[5]))||
                                 (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[6]))|| // Jul-27-2015 SA INC193042
                                 (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[7]))||
-                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[8]))){ // Jan-25-2016
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[8]))||
+								(ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[9]))){ // Jan-25-2016
                                     //ObjCase.Status = 'Escalated';
                                     ObjCase.Status = 'Escalated Internally'; //Oct-27-2011 AP
 
@@ -100,7 +102,8 @@ public with sharing class clsInternalCaseDML {
                                 (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[5]))||
                                 (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[6]))|| // Jul-27-2015 SA INC193042
                                 (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[7]))||
-                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[8]))){
+                                (ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[8]))||
+								(ObjCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', Recordtypes[9]))){
 
                                     ObjCase.Status = 'Action Needed'; //Oct-27-2011 AP
                                     //ObjCase.Status = 'In progress';

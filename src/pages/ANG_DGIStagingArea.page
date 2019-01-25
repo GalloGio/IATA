@@ -3,7 +3,7 @@
     <apex:includeScript value="{!$Resource.jquery2_1_4}" />
     <apex:includeScript value="/support/console/34.0/integration.js" />
 
-    <script type="text/javascript">
+    <script>
         var pageLoad = window.onload;
 
         function openPrimaryTab(tabId, tabName) {
@@ -36,53 +36,136 @@
                 sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);
             };
             sforce.console.getEnclosingPrimaryTabId(openSubtab);
+        };
+
+		function refreshTab(){
+
+				if (sforce.console.isInConsole()) {
+						sforce.console.getEnclosingTabId(function(enclosingResult){
+								sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+										sforce.console.refreshPrimaryTabById(primaryResult.id,true,null);
+										closeTab();
+								});
+						});
+				} else {
+						// for inline Vf
+						window.top.location.href = '/'+redirectUrl
+						// for normal vf
+						// window.location.href = '/'+redirectUrl
+				}
+        };
+        
+        function blockPanel(action){
+
+            document.getElementById('loaderPageBlock').style.display = 'block';
+
+            setTimeout(function(){
+                if(action == 'accept')
+                    acceptMethod();
+                if(action == 'reject')
+                    rejectMethod();
+            },10);
         }
+
+
     </script>
 
-    <apex:sectionHeader title="Newgen ISS Financial Staging Area" />
+<style>
+.overlay{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.85);
+    overflow-x: hidden;
+}
+
+.overlay-content {
+    position: relative;
+    top: 15%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+.overlay a:visited {
+    color: #666666;
+}
+
+.overlay p, ul, li {
+    padding: 0 0 8px 0;
+    text-decoration: none;
+    font-size: 22px;
+    color: #818181;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+.overlay ul, li {
+    font-size: 14px;
+    color: #818181;
+    text-align: left;
+    display: block; /* Display block instead of inline */
+}
+</style>
+
+    <apex:sectionHeader title="Newgen ISS Financial Staging Area"/>
 
 
     <apex:form id="stagingAreaForm">
 
-        <apex:messages />
-
-        <apex:pageMessages id="pageMessages" />
+    <apex:pageMessages id="pageMessages" rendered="{!addCertificate}"/>
 
         <apex:outputpanel id="stagingAreaPanel">
-
-            <apex:pageBlock mode="detail" tabStyle="Account" id="stagingWarning" rendered="{!!waitingForEndorsement && (stagingFs = null || stagingFs.Id = null)}">
+                
+            <apex:pageBlock mode="detail" tabStyle="Account" id="stagingWarning" rendered="{!(stagingFs == null || stagingFs.Id == null)}">
  
-                <apex:pageMessage severity="warning" strength="1" summary="The certificate of endorsement has not been received from GDI yet." />
+                <apex:pageMessage severity="warning" strength="1" summary="The certificate of endorsement has not been received from GDI yet." rendered="{!oscarCase.Origin == 'GDI Portal'}" />
+                <apex:pageMessage severity="warning" strength="1" summary="The certificate of endorsement has not been created yet." rendered="{!oscarCase.Origin <> 'GDI Portal'}" />
 
-                <apex:pageBlockSection>
+                <apex:pageBlockSection rendered="{!!waitingForEndorsement && (stagingFs = null || stagingFs.Id = null)}">
 
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="Add Certificate of Endorsment" />
-                        <apex:inputCheckbox value="{!addCertificate}" id="addCertificateId">
-                            <apex:actionsupport event="onchange" rerender="stagingAreaForm,createStagingForm" action="{!createStagingAreaDefault}" />
-                        </apex:inputCheckbox>
-                    </apex:pageBlockSectionItem>
+                    <apex:actionRegion>
 
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="Add Certificate of Endorsment" />
+                            <apex:inputCheckbox value="{!addCertificate}" id="addCertificateId"> 
+                                <apex:actionsupport event="onchange" rerender="stagingAreaForm" action="{!createStagingAreaDefault}" />
+                            </apex:inputCheckbox>
+                        </apex:pageBlockSectionItem>
+            
+                    </apex:actionRegion>
+                
                 </apex:pageBlockSection>
 
             </apex:pageBlock>
 
-            <apex:pageBlock mode="edit" tabStyle="Account" id="createStagingForm" rendered="{!addCertificate && (stagingFs = null || stagingFs.Id = null)}">
 
-                <apex:pageBlockSection>
+                <apex:pageBlock mode="edit" tabStyle="Account" id="createStagingForm" rendered="{!addCertificate && (stagingFs = null || stagingFs.Id = null)}">
 
-                    <apex:inputField value="{!stagingFs.Amount__c}" />
-                    <apex:inputField value="{!stagingFs.Expiry_Date__c}" />
-                    <apex:inputField value="{!stagingFs.FS_Currency__c}" />
-                    <apex:inputField value="{!stagingFs.Validity_Start_Date__c}" />
+                    <apex:pageBlockSection>
 
-                </apex:pageBlockSection>  
+                        <apex:inputField value="{!stagingFs.Amount__c}" required="true" />
+                        <apex:inputField value="{!stagingFs.Validity_Start_Date__c}" required="true"/>
+                        <apex:inputField value="{!stagingFs.FS_Currency__c}" required="true"/>
+                        <apex:inputField value="{!stagingFs.Expiry_Date__c}" required="true"/>
 
-                <apex:pageBlockButtons location="both">
-                    <apex:commandButton value="Create Certificate of Endorsement" action="{!createStagingArea}" id="createStagingArea" rerender="stagingAreaForm,mainFormRegular"/>
-                </apex:pageBlockButtons>
 
-            </apex:pageBlock>
+                    </apex:pageBlockSection>  
+
+                    <apex:pageBlockButtons location="both">
+                        <apex:commandButton value="Create Certificate of Endorsement" action="{!createStagingArea}" id="createStagingArea" rerender="stagingAreaForm,mainFormRegular"/>
+                    </apex:pageBlockButtons>
+
+                </apex:pageBlock>
+
 
         </apex:outputpanel>
 
@@ -92,19 +175,41 @@
             <apex:pageBlockSection columns="2" rendered="{!NOT(OR(ISNULL(newFSId),ISBLANK(newFSId)))}" collapsible="false">
                 <script type="text/javascript">
                     openSubtab('/{!newFSId}', 'New Financial Security');
-                    closeTab();
+                    refreshTab();
                 </script>
             </apex:pageBlockSection>
-
+            <apex:pageBlockSection columns="2" rendered="{!oscarObj.step50__c == 'Failed'}" collapsible="false">
+                <script type="text/javascript">
+                    refreshTab();
+                </script>
+            </apex:pageBlockSection>
         </apex:pageBlock>
  
         <apex:pageBlock mode="read">
+
             <apex:pageBlockButtons location="both">
-                <apex:commandButton value="Accept" action="{!accept}" onComplete="if({!!hasErrorMessages}){closeTab()}" id="acceptButton" rerender="stagingAreaForm" disabled="{!oscarProcessed}" />
-                <apex:commandButton value="Reject" action="{!reject}" onComplete="closeTab()" id="rejectButton" rerender="stagingAreaForm" disabled="{!oscarProcessed}" />
+
+                <apex:actionFunction name="acceptMethod" action="{!accept}"  />
+                <apex:actionFunction name="rejectMethod" action="{!reject}"  />
+
+                <apex:commandButton value="Accept" onclick="blockPanel('accept');"  id="acceptButton" disabled="{!oscarProcessed}">
+                </apex:commandButton>
+
+                <apex:commandButton value="Reject" onclick="blockPanel('reject');" id="rejectButton" disabled="{!oscarProcessed}">
+                </apex:commandButton>
+
             </apex:pageBlockButtons>
 
             <apex:pageBlockSection id="stagingAreaContents" columns="2" title="Staging Area Details" collapsible="true">
+
+                <div Id="loaderPageBlock" style="display:none;">
+                    <div class="overlay">
+                         <div class="overlay-content">
+                            <p style="font-size: 18px;color:#FFFFFF">Processing...</p>
+                        </div>
+                      <div class="loaderCircle"></div>
+                    </div>
+                </div>
 
                 <apex:repeat value="{!stagingAreaFields}" var="field">
                     <apex:pageBlockSectionItem>
@@ -112,35 +217,48 @@
                         <apex:outputField value="{!stagingFs[field]}" />
                     </apex:pageBlockSectionItem>
                 </apex:repeat>
-                <apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!!oscarProcessed}">
                     <apex:outputLabel value="Reason" />
                     <apex:inputField value="{!stagingFs.reason__c}" required="true"/>
                 </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem rendered="{!oscarProcessed}">
+                    <apex:outputLabel value="Reason" />
+                    <apex:outputField value="{!stagingFs.reason__c}" />
+                </apex:pageBlockSectionItem>
+
             </apex:pageBlockSection>
+        
+            <apex:actionRegion>
 
-            <apex:outputpanel id="AddendumDetails">
+                <apex:outputpanel id="AddendumDetails" rendered="{!!oscarProcessed}">
 
-                <apex:pageBlockSection id="AddendumCheck" title="Addendum Details" collapsible="true">
+                    <apex:pageBlockSection id="AddendumCheck" title="Addendum Details" collapsible="true">
 
-                    <apex:pageBlockSectionItem>
-                        <apex:outputLabel value="Add Adendum" />
-                        <apex:inputCheckbox value="{!hasAdendum}" id="AdendumCheckbox">
+                        <apex:pageBlockSectionItem>
+                            <apex:outputLabel value="Add Addendum" />
+                            <apex:inputCheckbox value="{!hasAdendum}" id="AdendumCheckbox">
+                                <apex:actionsupport event="onchange" rerender="AddendumDetails" />
+                            </apex:inputCheckbox>
+                        </apex:pageBlockSectionItem>
+
+                    </apex:pageBlockSection>
+
+                    <apex:pageBlockSection rendered="{!hasAdendum}">
+
+                        <apex:inputField value="{!stagingFs.Financial_Security__c}">
                             <apex:actionsupport event="onchange" rerender="AddendumDetails" />
-                        </apex:inputCheckbox>
-                    </apex:pageBlockSectionItem>
+                        </apex:inputField>
+                        <apex:outputField value="{!currentFS.Amount__c}" />
+                        <apex:outputField value="{!currentFS.Reception_Case__c}" />
+                        <apex:outputField value="{!currentFS.Security_Type__c}" />
 
-                </apex:pageBlockSection>
+                    </apex:pageBlockSection>
+                 </apex:outputpanel>
 
-                <apex:pageBlockSection rendered="{!hasAdendum}">
-                    <apex:inputField value="{!stagingFs.Financial_Security__c}">
-                        <apex:actionsupport event="onchange" rerender="AddendumDetails" />
-                    </apex:inputField>
-                    <apex:outputField value="{!currentFS.Amount__c}" />
-                    <apex:outputField value="{!currentFS.Reception_Case__c}" />
-                    <apex:outputField value="{!currentFS.Security_Type__c}" />
+            </apex:actionRegion>
 
-                </apex:pageBlockSection>
-            </apex:outputpanel>
         </apex:pageBlock>
     </apex:outputpanel>
 

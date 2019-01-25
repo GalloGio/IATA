@@ -331,7 +331,7 @@ global without sharing class ISSP_OperationalCalendarController {
         if (String.isBlank(operationType)) {
             // if the operation type is not defines we have to run the query for all available types
             list<Operational_Calendar__c> listOperations = new list<Operational_Calendar__c>();
-            for (String opType: MAP_OPERATION_TYPES.values()) {
+            for (String opType: new set<String>(MAP_OPERATION_TYPES.values())) {
                 listOperations.addAll(runQuery(country, frequency, opType, currencyCode, billingPeriod));
             }
             return listOperations;

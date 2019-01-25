@@ -62,6 +62,33 @@ public class AMS_OSCARTriggerHandler {
         set;
     }
 
+    //ACAMBAS - NEWGEN-4445 - Start
+    public static Map<String, Map<String, String>> changeCodesForChina {
+        get {
+            return new Map<String, Map<String, String>> {
+                'STEP6' => new Map<String, String> {
+                                    AMS_Utils.CONVERTTONEWGENPILOT => 'PLT',
+                                    AMS_Utils.CONVERTTOLEGACY => 'LGC',
+                                    AMS_Utils.CONVERTTOINTERNATIONAL => 'DOM'
+                                },
+                'STEP2' => new Map<String, String> {
+                                    AMS_Utils.CONVERTTONEWGENPILOT => 'PLF',
+                                    AMS_Utils.CONVERTTOLEGACY => 'LGF'
+                                },
+                'STEP3' => new Map<String, String> {
+                                    AMS_Utils.CONVERTTONEWGENPILOT => 'DIS-CHINA-TO-NEWGEN',
+                                    AMS_Utils.CONVERTTOLEGACY => 'DIS-CHINA-TO-LEGACY'
+                                },
+                'STEP4' => new Map<String, String> {
+                                    AMS_Utils.CONVERTTONEWGENPILOT => 'CWD-CHINA-TO-NEWGEN',
+                                    AMS_Utils.CONVERTTOLEGACY => 'CWD-CHINA-TO-LEGACY'
+                                }
+            };
+        }
+        set;
+    }
+    //ACAMBAS - NEWGEN-4445 - End
+
     /*** AMSU-113 Start ***/
     public static Set<String> pciCompliantProcesses {
         get {
@@ -144,6 +171,8 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-125 End ***/
 
         handleAnnualRevalidation((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+
+        handleGDIRequestEndorsementCertificate((Map<Id,AMS_OSCAR__c>)Trigger.newMap, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		
 		//Newgen 13/09/2018: Temporary removed
 		//if(test.IsRunningTest())
@@ -161,6 +190,7 @@ public class AMS_OSCARTriggerHandler {
         copyDataFromTargetAgency();
     
         processGeneralActionsOnOscarBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);
+        performBackupANGBeforeInsert((List<AMS_OSCAR__c>)Trigger.New);//Tick rollback in course
     }
 
     public static void handleAfterInsert() {
@@ -197,6 +227,91 @@ public class AMS_OSCARTriggerHandler {
 		//if(test.IsRunningTest())
 			performRollbackANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
+        /*** AMSU-193 ***/
+        prepopulateRFrequencyStgArea((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+    }
+	
+    /*** AMSU-193 ***/
+    public static void prepopulateRFrequencyStgArea(List<AMS_OSCAR__c> oscars, Map<Id, AMS_OSCAR__c> oldMap) {
+        Set<String> countryCodes = new Set<String>();
+        List<AMS_Oscar__c> oscarsToValidate = new List<AMS_Oscar__c>();
+        Map<String, Map<String, Set<String>>> mapCountryClassAttributes = new Map<String, Map<String, Set<String>>>();
+
+        Set<String> locationsToCheck = new Set<String> {'P','D','C','R'};
+
+        //Set the NEW processes and Change Process
+        Set<String> processToCheck = AMS_Utils.oscarNewProcesses.clone();
+        processToCheck.add(AMS_Utils.AGENCYCHANGES);
+
+        Map<Id,AMS_Pax_Accreditation_Form__c> stgAreas = allOnlineAccr;
+        if(stgAreas == null || stgAreas.isEmpty()) {
+            stgAreas = getAllAccreditations(oscars);
+        }
+
+        for(AMS_OSCAR__c oscar : oscars) {
+            AMS_Pax_Accreditation_Form__c stgArea = stgAreas.get(oscar.AMS_Online_Accreditation__c);
+            Boolean stgAreaToCheck = stgArea <> null && locationsToCheck.contains(stgArea.Location_Class__c) && String.isBlank(stgArea.Remittance_frequency__c); 
+            Boolean passedSanityCheck = oscar.STEP6__c == AMS_Utils.PASSED && oscar.STEP6__c <> oldMap.get(oscar.Id).STEP6__c;
+
+            System.debug('passedSanityCheck: ' + passedSanityCheck);
+            System.debug('stgAreaToCheck: ' + stgAreaToCheck);
+            System.debug('processToCheck.contains(oscar.Process__c): ' + processToCheck.contains(oscar.Process__c));
+
+            System.debug('stgArea: ' + stgArea);
+
+            if(passedSanityCheck && processToCheck.contains(oscar.Process__c) && stgAreaToCheck) {
+                countryCodes.add(oscar.Country_ISO_Code__c);
+                oscarsToValidate.add(oscar);
+                mapCountryClassAttributes.put(oscar.Country_ISO_Code__c, null);
+            }
+        }
+
+        Schema.RecordTypeInfo assessmentRT = Schema.SObjectType.AMS_Settlement_System__c.getRecordTypeInfosByName().get('BSP');
+        if(!oscarsToValidate.isEmpty() && assessmentRT != null) {
+            List<AMS_Operation__c> operations = [SELECT Id, Name, Country__c, Country__r.ISO_Code__c,
+                                                    (SELECT Class_Type__c , Remittance_Frequency__c FROM BSP_Attributes__r WHERE Class_Type__c IN :locationsToCheck) 
+                                                 FROM AMS_Operation__c
+                                                 WHERE Country__r.ISO_Code__c IN :mapCountryClassAttributes.keySet() AND 
+                                                    Settlement__r.RecordtypeId = :assessmentRT.getRecordTypeId()]; 
+
+            for(AMS_Operation__c operation : operations) {
+                for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
+                    Map<String, Set<String>> mapClassAttributes = mapCountryClassAttributes.get(operation.Country__r.ISO_Code__c);
+                    if(mapClassAttributes == null) {
+                        mapClassAttributes = new Map<String, Set<String>>();
+                        mapCountryClassAttributes.put(operation.Country__r.ISO_Code__c, mapClassAttributes);
+                    }
+
+                    Set<String> classAttributes = mapClassAttributes.get(attribute.Class_Type__c);
+                    if(classAttributes == null) {
+                        classAttributes = new Set<String>();
+                        mapClassAttributes.put(attribute.Class_Type__c, classAttributes);
+                    }
+
+                    classAttributes.add(attribute.Remittance_Frequency__c);
+                }
+            }
+
+            System.debug(mapCountryClassAttributes);
+
+            List<AMS_Pax_Accreditation_Form__c> paxToUpdate = new List<AMS_Pax_Accreditation_Form__c>();
+            for(AMS_Oscar__c oscar : oscarsToValidate) {
+                Map<String, Set<String>> mapClassAttributes = mapCountryClassAttributes.get(oscar.Country_ISO_Code__c);
+                if(mapClassAttributes == null) {
+                    continue;
+                }
+                Set<String> classAttributes = mapClassAttributes.get(oscar.Location_Class__c);
+                if(classAttributes != null && classAttributes.size() == 1 ) {
+                    AMS_Pax_Accreditation_Form__c auxPAX = new AMS_Pax_Accreditation_Form__c (Id = oscar.AMS_Online_Accreditation__c, Remittance_Frequency__c = (new list<string>(classAttributes) )[0] );
+                    paxToUpdate.add(auxPAX); 
+                }
+            }   
+
+            if(paxToUpdate != null && paxToUpdate.size() > 0 ){
+                update paxToUpdate;
+            }
+
+        }        
     }
 
     /*** AMSU-134 Start ***/
@@ -258,8 +373,8 @@ public class AMS_OSCARTriggerHandler {
 
         for(AMS_Oscar__c oscar : oscars) {
             AMS_Oscar__c oldRecord = oldMap.get(oscar.Id);
-            if(processToCheck.contains(oscar.Process__c) && oldRecord.RPM_Approval__c <> oscar.RPM_Approval__c && 
-                oscar.RPM_Approval__c == 'Authorize Approval' && 
+            //AMSU-206 changed to validation step
+            if(processToCheck.contains(oscar.Process__c) && oscar.STEP15__c == AMS_Utils.PASSED && oscar.STEP15__c <> oldRecord.STEP15__c &&
                 oscar.AMS_Online_Accreditation__c != null && !String.isBlank(oscar.Country_ISO_Code__c)) {
                 oscarsToValidate.add(oscar);
                 mapClassAttributes.put(oscar.Country_ISO_Code__c, null);
@@ -442,6 +557,18 @@ public class AMS_OSCARTriggerHandler {
 
             processFieldsTracking(oldOSCAR, updatedOscar);
 
+            //ACAMBAS - NEWGEN-4445 - Start           
+            //ID chinaRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG Agency Changes China').getRecordTypeId();
+
+            //if(updatedOscar.recordTypeID == chinaRT) {
+            if(updatedOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
+                //If Perform Sanity Check passed
+                if(oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed') {
+                    ANG_ChinaConversionsHelper.convertAccountsHierarchy(updatedOSCAR);
+                }
+            }
+            //ACAMBAS - NEWGEN-4445 - End
+
             //check for each OSCAR which steps were changed
             for (String step : stepsOSCAR) {
 
@@ -462,6 +589,10 @@ public class AMS_OSCARTriggerHandler {
                     if (resultLoad)
                         boolean result = helper.processAutomation(updatedOSCAR.Process__c, step, (String)updatedOSCAR.get(step + '__c'), updatedOSCAR);
 
+                }else if(updatedOSCAR.Send_invoice__c && !oldOSCAR.Send_invoice__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
+                    updatedOSCAR.Payment_requested__c = Date.today();
+                    updatedOSCAR.STEP47__c = 'Passed';
+                    updatedOSCAR.STEP48__c = 'In Progress';
                 }
             }
 
@@ -570,7 +701,7 @@ public class AMS_OSCARTriggerHandler {
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
-            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
                 oscar.Sanity_check_deadline__c = Date.today() + 15;
                 oscar.OSCAR_Deadline__c = Date.today() + 30;
 
@@ -2726,9 +2857,9 @@ public class AMS_OSCARTriggerHandler {
 
         for(AMS_OSCAR__c oscar: oscars){
 
-            Boolean isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c);
+            Boolean isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION;
             Boolean isAMSProcess = AMS_Utils.oscarAMSProcesses_ValidateOwnership.contains(oscar.Process__c);//AMSU-180
-            Boolean run_validation = (oscar.Location_Class__c != 'R') && ((isAMSProcess && oscar.Process__c <> AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.new_TIDS && oscar.Location_Type__c == 'HO'));
+            Boolean run_validation = !((oscar.Location_Class__c == 'G') || (oscar.Location_Class__c == 'M') || (oscar.Location_Class__c == 'R')) && ((isAMSProcess && oscar.Process__c <> AMS_Utils.new_TIDS) || (oscar.Process__c == AMS_Utils.new_TIDS && oscar.Location_Type__c == 'HO'));
 
             if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && (isNewGenProcess || run_validation) && oscar.ANG_Type_Of_Change__c <> AMS_Utils.ANG_VMFR && oscar.Type_of_change__c <> AMS_Utils.VFMR){
 
@@ -2802,7 +2933,7 @@ public class AMS_OSCARTriggerHandler {
 
             if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
 
-                if (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
+                if (AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
                     if(oscar.Process__c == AMS_Utils.NGCORRECTION) {
                         if (oscar.Is_PCI_compliant__c == 'Yes' && oscar.ANG_PCI_compliance_expiry_date__c == null) {
                             oscar.addError('Please specify the PCI compliance expiry date.');
@@ -2815,8 +2946,8 @@ public class AMS_OSCARTriggerHandler {
                         }
                     }
                 }
-				//AMSU-34 - AMS gets to have the same validations as NG
-                if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c) || AMS_Utils.processesAMSrequiredAttachValidation.contains(oscar.Process__c)){
+                //AMSU-34 - AMS gets to have the same validations as NG
+                if(AMS_Utils.processesANGrequiredAttachValidation.contains(oscar.Process__c) || AMS_Utils.processesAMSrequiredAttachValidation.contains(oscar.Process__c) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
                     
                     boolean isToValidate = true;
                     
@@ -2909,6 +3040,21 @@ public class AMS_OSCARTriggerHandler {
                     }
                 }
                 /*** AMSU-161 End ***/ 
+
+                //ACAMBAS - NEWGEN-4784 - Start
+                if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
+                    List<Account> accountsList = ANG_ChinaConversionsHelper.getAllAccountsFromRelationships(oscar.Account__c);
+
+                    // Requires that every account have location class "D" if the account status
+                    // is not one of the following: "Terminated", "Not in Operation", "Not Accredited"               
+                    for(Account a : accountsList) {
+                        if(a.Location_Class__c != 'D' && !AMS_Utils.pilotAccStatusNotRequireLocClassD.contains(a.Status__c)) {
+                            oscar.addError('The conversion must be applied to a hierarchy of Domestic agents. Please proceed with a change of location type before processing the conversion.');
+                            break;
+                        }    
+                    }
+                }
+                //ACAMBAS - NEWGEN-4784 - End
             }
         }
     }
@@ -3130,13 +3276,13 @@ public class AMS_OSCARTriggerHandler {
         if (oldOSCAR.Send_FS_request__c == false && updatedOscar.Send_FS_request__c == true) {
             updatedOSCAR.Bank_Guarantee_requested__c = Date.today();
 
-            if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c) && updatedOSCAR.Process__c <> AMS_Utils.NGOPTINOUT)
+            if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c) && updatedOSCAR.Process__c <> AMS_Utils.NGOPTINOUT && updatedOscar.Process__c != AMS_Utils.NGCHINACONVERSION)
                 updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 40;
             else
                 updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
         }
 
-        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && (oldOSCAR.ANG_Type_Of_Change__c != 'VMFR' || updatedOscar.ANG_Type_Of_Change__c != 'VMFR') && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed' && updatedOscar.Process__c != AMS_Utils.NGCHINACONVERSION){
 
             System.debug('Sending the email for the user to anounce approval of the oscar');
 
@@ -3212,21 +3358,34 @@ public class AMS_OSCARTriggerHandler {
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE){
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWAE || updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION){
 
                 if (updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD && updatedOscar.STEP34__c != AMS_Utils.PASSED)
                      updatedOscar.addError('Approval can\'t be set if Request financial security step is not Passed.');
 
-                System.debug('Sending the email for the user to anounce approval of the oscar');
+                if(updatedOscar.Process__c != AMS_Utils.NGCHINACONVERSION) {
+                    System.debug('Sending the email for the user to anounce approval of the oscar');
 
-                //using an already existing method to send email aler to user.
-                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
+                    //using an already existing method to send email aler to user.
+                    AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
+                }
 
                 if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
                     createAgencyAuthorizations(updatedOscar);
                 else if(updatedOscar.Process__c == AMS_Utils.NEWAE)
                     copyAgencyAuthorizationsFromParent(updatedOscar);
-
+                //ACAMBAS - NEWGEN-4445 - Start
+                else if(updatedOscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
+                    if(updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTONEWGENPILOT) {
+                        createAgencyAuthorizations(updatedOscar);
+                        copyAgencyAuthorizationsToChildren(updatedOscar.account__c);
+                    }
+                    else if(updatedOscar.ANG_Type_Of_Change__c == AMS_Utils.CONVERTTOLEGACY) {
+                        ANG_ChinaConversionsHelper.deleteAccountsFoPs(updatedOscar.account__c);
+                        ANG_ChinaConversionsHelper.deleteRiskEvents(updatedOscar.account__c);
+                    }
+                }
+                //ACAMBAS - NEWGEN-4445 - End
             }
 
             // Approve the Approval Process from the Manager's perspective
@@ -3371,11 +3530,11 @@ public class AMS_OSCARTriggerHandler {
             // ********* GENERIC VALIDATIONS FOR NEW APPLICATIONS**********
             // ************************************************************
             if(updatedOSCAR.Process__c != AMS_Utils.NGCHANGES){
-                if(oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)){
+                if((oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)) && !updatedOscar.Is_NewGen_Pilot__c){
                     updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
                 }
 
-                if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
+                if((oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed') && !updatedOscar.Is_NewGen_Pilot__c) {
                     updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
                 }
             }
@@ -3425,6 +3584,7 @@ public class AMS_OSCARTriggerHandler {
 
         ID corrRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
         ID certRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION'); //FM AMSU-113
+        ID chinaRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China'); //ACAMBAS - NEWGEN-4445
         
         if (updatedOscar.recordTypeID == newRT || updatedOscar.recordTypeID == newNGRT || updatedOSCAR.recordTypeID == AMS_Utils.RECTYPE_NEWAE){
         	//TD2080607: partially refactored below code
@@ -3435,7 +3595,7 @@ public class AMS_OSCARTriggerHandler {
 
 
                 /*** AMSU-31 Start ***/
-                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD};
+                Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD};
                 Set<String> classesToCheck = new Set<String> {'P', 'D'}; 
                 if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
                     oscarsToCreateAuth.add(updatedOscar);
@@ -3882,6 +4042,38 @@ public class AMS_OSCARTriggerHandler {
                 }
             }
         }
+        //ACAMBAS - NEWGEN-4445 - Start
+        else if (updatedOscar.recordTypeID == chinaRT) {
+            
+            String changeCode;
+            String caseReason = updatedOscar.ANG_Type_Of_Change__c;
+
+            //If Perform Sanity Check passed
+            if(oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed') {
+                changeCode = changeCodesForChina.get('STEP6').get(updatedOscar.ANG_Type_Of_Change__c);
+                ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);              
+            }
+
+            //If Approval step passed  
+            else if(oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
+                changeCode = changeCodesForChina.get('STEP2').get(updatedOscar.ANG_Type_Of_Change__c);
+                ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);  
+            }
+
+            //If Disapproval Finalization step passed  
+            else if(oldOSCAR.STEP3__c != 'Passed' && updatedOscar.STEP3__c == 'Passed') {
+                changeCode = changeCodesForChina.get('STEP3').get(updatedOscar.ANG_Type_Of_Change__c);
+                ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);  
+            }   
+
+            //If Withdrawal Finalization step passed  
+            else if(oldOSCAR.STEP4__c != 'Passed' && updatedOscar.STEP4__c == 'Passed') {
+                changeCode = changeCodesForChina.get('STEP4').get(updatedOscar.ANG_Type_Of_Change__c);
+                ANG_OscarProcessHelper.createGenericChangeCode(updatedOscar, changeCode);  
+            }
+
+        }
+        //ACAMBAS - NEWGEN-4445 - End
     }
 
         private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
@@ -3904,6 +4096,7 @@ public class AMS_OSCARTriggerHandler {
         ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         String statusForCC = 'Active';
+        String statusForIEP = 'Active';
 
         if(oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NEWHESTANDARD)
             statusForCC = (oscar.Is_PCI_compliant__c == 'Yes' || oscar.Is_PCI_compliant__c == 'Corporate Card'  ? 'Active' : 'Non-Active');
@@ -3915,10 +4108,15 @@ public class AMS_OSCARTriggerHandler {
                 statusForCC = 'Non-Active';
         }
 
+        if(oscar.Is_NewGen_Pilot__c) {
+            statusForCC = 'Non-Active';
+            statusForIEP = 'Non-Active';
+        }
+
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusForCC, RecordTypeId = FormOfPaymentRT));
         if(oscar.Process__c == AMS_Utils.NEWHESTANDARD)
             authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = statusForIEP, RecordTypeId = FormOfPaymentRT));
 
         insert authorizations;
     }
@@ -3939,13 +4137,15 @@ public class AMS_OSCARTriggerHandler {
 
             if(fop.ANG_FormOfPayment_ID__c == 'CC' && oscar.Process__c == AMS_Utils.NEWAE && oscar.Is_PCI_compliant__c == 'No')
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = 'Non-Active', RecordTypeId = fop.RecordTypeId));
-            else
-                authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = fop.Status__c, RecordTypeId = fop.RecordTypeId));
+            else {
+                String statusForFOP = oscar.Is_NewGen_Pilot__c ? 'Non-Active' : fop.Status__c;
+                authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = statusForFOP, RecordTypeId = fop.RecordTypeId));
+            }
         }
 
         if(!isCCCreated && oscar.Process__c == AMS_Utils.NEWAE){
 
-            if(oscar.Process__c == AMS_Utils.NEWAE && oscar.Is_PCI_compliant__c == 'No')
+            if(oscar.Process__c == AMS_Utils.NEWAE && (oscar.Is_PCI_compliant__c == 'No' || oscar.Is_NewGen_Pilot__c))
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Non-Active', RecordTypeId = FormOfPaymentRT));
             else
                 authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
@@ -3953,6 +4153,25 @@ public class AMS_OSCARTriggerHandler {
 
         insert authorizations;
     }
+
+    //ACAMBAS - NEWGEN-4809 - Start
+    private static void copyAgencyAuthorizationsToChildren(Id accountId) {
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+
+        List<Account> childAccounts = [SELECT Id FROM Account WHERE ParentId =: accountId ];
+
+        List<Agency_Authorization__c> parentFormsOfPayment = [SELECT Account__c, ANG_FormOfPayment_ID__c, Status__c, RecordTypeId FROM Agency_Authorization__c WHERE Account__c =: accountId AND RecordTypeId =: FormOfPaymentRT];
+
+        for(Account acc: childAccounts) {
+            for(Agency_Authorization__c fop: parentFormsOfPayment) {
+                authorizations.add(new Agency_Authorization__c(Account__c = acc.Id, ANG_FormOfPayment_ID__c = fop.ANG_FormOfPayment_ID__c, Status__c = fop.Status__c, RecordTypeId = fop.RecordTypeId));
+            }
+        }
+
+        insert authorizations;
+    }
+    //ACAMBAS - NEWGEN-4809 - End
 
     public static void handleNewgenFOPActionsBeforeUpdate(List<AMS_OSCAR__c> oscarsToInsert, Map<Id,AMS_OSCAR__c> oldOscars){
 
@@ -4284,6 +4503,12 @@ public class AMS_OSCARTriggerHandler {
 
     }
 
+    public static void performBackupANGBeforeInsert(list<AMS_OSCAR__c> newList){ //activates backup in progress flag in before insert context
+        for(AMS_OSCAR__c oscarrec:newList){
+            if(oscarrec.ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessMap.containsKey(oscarrec.Process__c) && oscarrec.ANG_Type_of_change__c !=AMS_Utils.CONVERTTOINTERNATIONAL) oscarrec.Backup_In_Progress__c = true;
+        }
+    }
+
     public static void performBackupANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
         
         if(ANG_AgencyChangesHelper.testRunnningForNonBackup)
@@ -4292,10 +4517,8 @@ public class AMS_OSCARTriggerHandler {
         List<Id> oscarsToProcess = new List<Id>();
 
         if(Trigger.isInsert){
-
             for(ID oscarId:newMap.keySet()){
-
-                if(newMap.get(oscarId).Process__c == AMS_Utils.NGCHANGES && newMap.get(oscarId).ANG_Type_Of_Change__c != null)
+                if(newMap.get(oscarId).ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessMap.containsKey(newMap.get(oscarId).Process__c) && newMap.get(oscarId).ANG_Type_of_change__c != AMS_Utils.CONVERTTOINTERNATIONAL)
                     oscarsToProcess.add(oscarId);
             }
         }
@@ -4303,18 +4526,16 @@ public class AMS_OSCARTriggerHandler {
         if(Trigger.isUpdate){
 
             for(ID oscarId:oldMap.keySet()){
-
-                if(newMap.get(oscarId).Process__c == AMS_Utils.NGCHANGES && oldMap.get(oscarId).ANG_Type_Of_Change__c != newMap.get(oscarId).ANG_Type_Of_Change__c && newMap.get(oscarId).ANG_Type_Of_Change__c != null)
+                if(newMap.get(oscarId).ANG_Type_Of_Change__c != null && AMS_Utils.OSCARBackupProcessMap.containsKey(newMap.get(oscarId).Process__c) && oldMap.get(oscarId).ANG_Type_Of_Change__c != newMap.get(oscarId).ANG_Type_Of_Change__c &&  newMap.get(oscarId).ANG_Type_of_change__c != AMS_Utils.CONVERTTOINTERNATIONAL){
                     oscarsToProcess.add(oscarId);
+                    newMap.get(oscarId).Backup_In_Progress__c = true;
+                }
 
             }
         }
        
 
         for(Id oscarId: oscarsToProcess){
-            
-            newMap.get(oscarId).Backup_In_Progress__c = true;
-            
             ID jobID = System.enqueueJob(new ANG_BackupEngineHelper(oscarId,true));
             
         }
@@ -4322,7 +4543,7 @@ public class AMS_OSCARTriggerHandler {
         
     }
 
-     public static void performRollbackANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
+    public static void performRollbackANG(Map<Id, AMS_OSCAR__c> oldMap, Map<Id, AMS_OSCAR__c> newMap){
         
         if(ANG_AgencyChangesHelper.testRunnningForNonBackup)
             return;
@@ -4331,19 +4552,59 @@ public class AMS_OSCARTriggerHandler {
 
         for(ID oscarId:oldMap.keySet()){
 
-            if(newMap.get(oscarId).Process__c == AMS_Utils.NGCHANGES && oldMap.get(oscarId).Step4__c != newMap.get(oscarId).Step4__c && newMap.get(oscarId).Step4__c == AMS_Utils.PASSED)
-                oscarsToProcess.add(oscarId);
+            String process = newMap.get(oscarId).Process__c;
 
+            if(AMS_Utils.OSCARBackupProcessMap.containsKey(process)){
+                for(String stepFld : AMS_Utils.OSCARBackupProcessMap.get(process)){
+                    if(oldMap.get(oscarId).get(stepFld) != newMap.get(oscarId).get(stepFld) && newMap.get(oscarId).get(stepFld) == AMS_Utils.PASSED){
+                        oscarsToProcess.add(oscarId);
+                        break;
+                    }
+                }
+            }
         }
 
         for(Id oscarId: oscarsToProcess){
-
             ID jobID = System.enqueueJob(new ANG_RollbackEngineHelper(oscarId));
-            
         }
 
-        
-    }           
+    }
 
+    // NEWGEN-4426
+    public static void handleGDIRequestEndorsementCertificate(Map<Id, AMS_OSCAR__c> newMap, Map<Id, AMS_OSCAR__c> oldMap) {
+
+        //START validation 1: Check if Endorsement_Requested__c was set to true
+        Map<Id,AMS_OSCAR__c> oscarsToProcessMap = new Map<Id,AMS_OSCAR__c>();
+        for(AMS_OSCAR__c oscar :  newMap.values())
+            if(oscar.Endorsement_Requested__c && oscar.Endorsement_Requested__c <> oldMap.get(oscar.Id).Endorsement_Requested__c){
+                oscarsToProcessMap.put(oscar.Id,oscar);
+            }
+
+        if(oscarsToProcessMap.isEmpty())
+            return;
+        //END Validation 1
+
+        //START Validation 2: check if oscar has an opportunity created
+        Map<Id,Opportunity> oppOscarIdMap = new Map<Id,Opportunity>();
+        for(Opportunity opp : [SELECT Id, Related_Oscar__c, GDI_Offer_Id__c FROM Opportunity WHERE Related_Oscar__c IN :oscarsToProcessMap.keySet()])
+            oppOscarIdMap.put(opp.Related_Oscar__c, opp);
+
+        Map<String,String> iataCodes = new Map<String,String>();
+
+        for(AMS_OSCAR__c oscar :oscarsToProcessMap.values()) {
+            if(!oppOscarIdMap.containsKey(oscar.Id) || String.isBlank(oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c) ) {
+               oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
+            } else {
+                iataCodes.put(oscar.IATACode__c,oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c);
+            }
+        }
+
+        if(iataCodes.isEmpty())
+            return;
+
+        for(String key : iataCodes.keySet())
+            ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
+        
+    }          
 
 }

@@ -210,7 +210,7 @@
         <fullName>ANG_Ticketing_Authority_Removed__c</fullName>
         <description>Date of Ticketing Authority Removal triggered by RTS Red Alert</description>
         <externalId>false</externalId>
-        <formula>IF( ISPICKVAL(ANG_Severity__c, &quot;Red&quot;),  CreatedDate , null)</formula>
+        <formula>IF( ISPICKVAL(ANG_Severity__c, &quot;Red&quot;),  ANG_Sidra_Lite__r.Shut_Down_TKT_System_GDS_and_BSPlink__c , null)</formula>
         <label>Ticketing Authority Removed</label>
         <required>false</required>
         <trackTrending>false</trackTrending>

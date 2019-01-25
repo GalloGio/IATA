@@ -1241,6 +1241,10 @@
         <name>Acceptance_date</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account --></label>
+        <name>Account</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Account Invoicing Collection Cases Report ID --></label>
         <name>Account_Invoicing_Collection_Cases_Report_ID</name>
     </customLabels>
@@ -1263,6 +1267,14 @@
     <customLabels>
         <label><!-- AddToCart --></label>
         <name>AddToCart</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add an attachment --></label>
+        <name>Add_an_attachment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Add_attachment_Action --></label>
+        <name>Add_attachment_Action</name>
     </customLabels>
     <customLabels>
         <label><!-- Add campaign member error --></label>
@@ -2153,6 +2165,14 @@
     <customLabels>
         <label><!-- Discounted Amount --></label>
         <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Documents POP --></label>
+        <name>Documents_POP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Done --></label>
+        <name>Done</name>
     </customLabels>
     <customLabels>
         <label><!-- Download Invoice --></label>
@@ -3417,6 +3437,10 @@
     <customLabels>
         <label><!-- ICCS will replace Label --></label>
         <name>ICCS_will_replace_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ICE_POP_Sidra_Msg --></label>
+        <name>ICE_POP_Sidra_Msg</name>
     </customLabels>
     <customLabels>
         <label><!-- ICE Portal Service --></label>
@@ -5623,6 +5647,14 @@ and
         <name>ISSP_AMS_Apply_New_Office</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2 --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Entity</name>
     </customLabels>
@@ -7167,39 +7199,39 @@ and
         <name>ISSP_AMS_Means_Agency_Identified</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_April --></label>
+        <label>Tháng Tư</label>
         <name>ISSP_AMS_Month_April</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_August --></label>
+        <label>Tháng Tám</label>
         <name>ISSP_AMS_Month_August</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_December --></label>
+        <label>Tháng Mười Hai</label>
         <name>ISSP_AMS_Month_December</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_February --></label>
+        <label>Tháng Hai</label>
         <name>ISSP_AMS_Month_February</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_January --></label>
+        <label>Tháng Một</label>
         <name>ISSP_AMS_Month_January</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_July --></label>
+        <label>Tháng Bảy</label>
         <name>ISSP_AMS_Month_July</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_June --></label>
+        <label>Tháng Sáu</label>
         <name>ISSP_AMS_Month_June</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_March --></label>
+        <label>Tháng Ba</label>
         <name>ISSP_AMS_Month_March</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_May --></label>
+        <label>Tháng Năm</label>
         <name>ISSP_AMS_Month_May</name>
     </customLabels>
     <customLabels>
@@ -7207,15 +7239,15 @@ and
         <name>ISSP_AMS_Month_None</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_November --></label>
+        <label>Tháng Mười Một</label>
         <name>ISSP_AMS_Month_November</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_October --></label>
+        <label>Tháng Mười</label>
         <name>ISSP_AMS_Month_October</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Month_September --></label>
+        <label>Tháng Chín</label>
         <name>ISSP_AMS_Month_September</name>
     </customLabels>
     <customLabels>
@@ -9619,7 +9651,7 @@ and
         <name>ISSP_ANG_OPT_OUT_FINANCIAL_REVIEW_BTN</name>
     </customLabels>
     <customLabels>
-        <label>&quot; Các Đại lý GoStandard đã nộp Bảo lãnh ngân hàng với IATA có thể quyết định không tham gia Đánh giá Tài chính Hàng năm. Trong trường hợp này, Đại lý sẽ bị giới hạn hạn mức Remittance Holding Capacity bằng với số tiền bảo lãnh ngân hàng đã cung cấp.&quot;</label>
+        <label>Các Đại lý GoStandard đã nộp Bảo lãnh ngân hàng với IATA có thể quyết định không tham gia Đánh giá Tài chính Hàng năm. Trong trường hợp này, Đại lý sẽ bị giới hạn hạn mức Remittance Holding Capacity bằng với số tiền bảo lãnh ngân hàng đã cung cấp.</label>
         <name>ISSP_ANG_OPT_OUT_MODAL_CONFIRMATION_TEXT</name>
     </customLabels>
     <customLabels>
@@ -10209,6 +10241,10 @@ and
     <customLabels>
         <label><!-- ISSP_CNS_quote2 --></label>
         <name>ISSP_CNS_quote2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <name>ISSP_CalendarDisclaimer</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
@@ -11277,6 +11313,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Fill_Profile_Fields</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Filter By Product Type --></label>
+        <name>ISSP_Filter_By_Product_Type</name>
+    </customLabels>
+    <customLabels>
         <label>Lọc theo Quốc Gia/ Khu vực</label>
         <name>ISSP_Filter_by_Country</name>
     </customLabels>
@@ -11295,6 +11335,26 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Lựa chọn chương trình tham gia</label>
         <name>ISSP_Filter_by_Type_Of_Participation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <name>ISSP_Financial_Securities_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <name>ISSP_Financial_Securities_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <name>ISSP_Financial_Securities_Summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
         <label>Chúng tôi rất vui vì nhận được lời khen của bạn</label>
@@ -12249,7 +12309,11 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_Ongoing_TIP_Requests</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar --></label>
+        <label>Chuyển tôi đến trường hợp này</label>
+        <name>ISSP_OpenCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Lịch vận hành</label>
         <name>ISSP_OperationalCalendar</name>
     </customLabels>
     <customLabels>
@@ -12257,31 +12321,31 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_OperationalCalendar_BSPCASSFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_BSPCASS_Filter_Required --></label>
+        <label>Vui lòng chọn giá trị lọc thông tin  tin ở mục BSP/CASS</label>
         <name>ISSP_OperationalCalendar_BSPCASS_Filter_Required</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Billing_Period --></label>
+        <label>Kỳ báo cáo</label>
         <name>ISSP_OperationalCalendar_Billing_Period</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_CountryFilter --></label>
+        <label>Quốc gia/ Khu vực</label>
         <name>ISSP_OperationalCalendar_CountryFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Country_Filter_Required --></label>
+        <label>Vui lòng chọn giá trị lọc thông tin  tin ở mục Quốc gia/ Khu vực</label>
         <name>ISSP_OperationalCalendar_Country_Filter_Required</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_CurrencyFilter --></label>
+        <label>Loại tiền tệ</label>
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_DownloadDate --></label>
+        <label>Ngày tải về</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_EnableFilters --></label>
+        <label>Áp dụng bộ lọc</label>
         <name>ISSP_OperationalCalendar_EnableFilters</name>
     </customLabels>
     <customLabels>
@@ -12293,27 +12357,27 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_OperationalCalendar_Export_Disclaimer</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_FilterTitle --></label>
+        <label>Lọc thông tin</label>
         <name>ISSP_OperationalCalendar_FilterTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_FrequencyFilter --></label>
+        <label>Tần suất thanh toán</label>
         <name>ISSP_OperationalCalendar_FrequencyFilter</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Full_Details --></label>
+        <label>Thông tin chi tiết và tải xuống</label>
         <name>ISSP_OperationalCalendar_Full_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Header --></label>
+        <label>{0} Lịch</label>
         <name>ISSP_OperationalCalendar_Header</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_LastModifiedDate --></label>
+        <label>Ngày sửa đổi gần nhất</label>
         <name>ISSP_OperationalCalendar_LastModifiedDate</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_No_Events --></label>
+        <label>Không có sự kiện nào</label>
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
@@ -12321,11 +12385,11 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Show_Calendar --></label>
+        <label>Hiển thị lịch</label>
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_OperationalCalendar_Sync_Calendar --></label>
+        <label>Sync Calendar</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
     </customLabels>
     <customLabels>
@@ -13126,6 +13190,454 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_SIS_Help_Desk</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_SIS_Membership_Agreement --></label>
+        <name>ISSP_SIS_Membership_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Airline_Designator_Code --></label>
+        <name>ISSP_SIS_Membership_Airline_Designator_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Application_no_access --></label>
+        <name>ISSP_SIS_Membership_Application_no_access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Application_ongoing --></label>
+        <name>ISSP_SIS_Membership_Application_ongoing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Apply Now --></label>
+        <name>ISSP_SIS_Membership_Apply_Now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership AutoBilling Helptext --></label>
+        <name>ISSP_SIS_Membership_AutoBilling_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_BankMandateDescription --></label>
+        <name>ISSP_SIS_Membership_BankMandateDescription</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Billing Value Confirmation Helptext --></label>
+        <name>ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Billing Value Determination Helptext --></label>
+        <name>ISSP_SIS_Membership_Billing_Value_Determination_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Choose_an_Option --></label>
+        <name>ISSP_SIS_Membership_Choose_an_Option</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_City_Name --></label>
+        <name>ISSP_SIS_Membership_City_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Continue_Draft --></label>
+        <name>ISSP_SIS_Membership_Continue_Draft</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Description --></label>
+        <name>ISSP_SIS_Membership_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Description ISPA --></label>
+        <name>ISSP_SIS_Membership_Description_ISPA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Description ISUA --></label>
+        <name>ISSP_SIS_Membership_Description_ISUA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Description TOU --></label>
+        <name>ISSP_SIS_Membership_Description_TOU</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Digital_Signature Application Helptext --></label>
+        <name>ISSP_SIS_Membership_Digital_Signature_Application_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Digital Signature Verification Helptext --></label>
+        <name>ISSP_SIS_Membership_Digital_Signature_Verification_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Disclaimer_Line1 --></label>
+        <name>ISSP_SIS_Membership_Disclaimer_Line1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Download_PDF --></label>
+        <name>ISSP_SIS_Membership_Download_PDF</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext --></label>
+        <name>ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA --></label>
+        <name>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionB --></label>
+        <name>ISSP_SIS_Membership_EU_Data_Privacy_Laws_OptionB</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Features --></label>
+        <name>ISSP_SIS_Membership_Features</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Fill_The_Form --></label>
+        <name>ISSP_SIS_Membership_Fill_The_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_FormDescription --></label>
+        <name>ISSP_SIS_Membership_FormDescription</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_City_Name --></label>
+        <name>ISSP_SIS_Membership_Head_Office_City_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_Country --></label>
+        <name>ISSP_SIS_Membership_Head_Office_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_Postal_Code --></label>
+        <name>ISSP_SIS_Membership_Head_Office_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_State_Name --></label>
+        <name>ISSP_SIS_Membership_Head_Office_State_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Head_Office_Street --></label>
+        <name>ISSP_SIS_Membership_Head_Office_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section1_CopyButton --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section1_CopyButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section1_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section1_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section1_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section1_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section1_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section2_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section2_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section2_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section3_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section3_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section3_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section3_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section3_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section4_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section4_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section4_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section4_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section4_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section5_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section5_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section5_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section5_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section6_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section6_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section6_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section7_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section7_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section7_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section7_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section8_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section8_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section8_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section8_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section8_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section8_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Question --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Subtitle3 --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Subtitle3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISPA_Section9_Title --></label>
+        <name>ISSP_SIS_Membership_ISPA_Section9_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section1_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section1_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section1_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section2_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section2_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section2_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section3_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section3_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section3_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section3_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section3_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section4_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section4_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section4_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section5_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section5_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section5_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section6_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section6_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section6_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section6_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section7_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section7_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section7_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section7_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section8_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section8_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section8_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section8_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_ISUA_Section8_Title --></label>
+        <name>ISSP_SIS_Membership_ISUA_Section8_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Incorporated_Under_Laws --></label>
+        <name>ISSP_SIS_Membership_Incorporated_Under_Laws</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Join_ICH --></label>
+        <name>ISSP_SIS_Membership_Join_ICH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Legal Archiving Helptext --></label>
+        <name>ISSP_SIS_Membership_Legal_Archiving_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Legal_Name_Of_The_Company --></label>
+        <name>ISSP_SIS_Membership_Legal_Name_Of_The_Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Legal_Name_of_the_Airline --></label>
+        <name>ISSP_SIS_Membership_Legal_Name_of_the_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Missing_Input_File --></label>
+        <name>ISSP_SIS_Membership_Missing_Input_File</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Name_Writte_out_in_full --></label>
+        <name>ISSP_SIS_Membership_Name_Writte_out_in_full</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Only_One_File --></label>
+        <name>ISSP_SIS_Membership_Only_One_File</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Originals_To_IATA --></label>
+        <name>ISSP_SIS_Membership_Originals_To_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Participation_Agreement --></label>
+        <name>ISSP_SIS_Membership_Participation_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Position --></label>
+        <name>ISSP_SIS_Membership_Position</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Put_a_valid_email --></label>
+        <name>ISSP_SIS_Membership_Put_a_valid_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Requirements --></label>
+        <name>ISSP_SIS_Membership_Requirements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Review_Country_Req --></label>
+        <name>ISSP_SIS_Membership_Review_Country_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Save_Draft_And_Leave --></label>
+        <name>ISSP_SIS_Membership_Save_Draft_And_Leave</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_State_Name --></label>
+        <name>ISSP_SIS_Membership_State_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Submit_To_IATA --></label>
+        <name>ISSP_SIS_Membership_Submit_To_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Subtitle --></label>
+        <name>ISSP_SIS_Membership_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section1_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_TOU_Section1_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section1_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_TOU_Section1_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section1_Title --></label>
+        <name>ISSP_SIS_Membership_TOU_Section1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section2_Subtitle1 --></label>
+        <name>ISSP_SIS_Membership_TOU_Section2_Subtitle1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section2_Subtitle2 --></label>
+        <name>ISSP_SIS_Membership_TOU_Section2_Subtitle2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_TOU_Section2_Title --></label>
+        <name>ISSP_SIS_Membership_TOU_Section2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Terms_Disclaimer --></label>
+        <name>ISSP_SIS_Membership_Terms_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Title --></label>
+        <name>ISSP_SIS_Membership_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Title ISPA --></label>
+        <name>ISSP_SIS_Membership_Title_ISPA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Title ISUA --></label>
+        <name>ISSP_SIS_Membership_Title_ISUA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership Title TOU --></label>
+        <name>ISSP_SIS_Membership_Title_TOU</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Trade_Name --></label>
+        <name>ISSP_SIS_Membership_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Type_Not_Valid --></label>
+        <name>ISSP_SIS_Membership_Type_Not_Valid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_View_My_Application --></label>
+        <name>ISSP_SIS_Membership_View_My_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Who_requested_to_join_TOU --></label>
+        <name>ISSP_SIS_Membership_Who_requested_to_join_TOU</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_Your_Current --></label>
+        <name>ISSP_SIS_Membership_Your_Current</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_SIS_Membership_no_services --></label>
+        <name>ISSP_SIS_Membership_no_services</name>
+    </customLabels>
+    <customLabels>
         <label>Lời chào</label>
         <name>ISSP_Salutation</name>
     </customLabels>
@@ -13252,6 +13764,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- ISSP Showing total records --></label>
         <name>ISSP_Showing_total_records</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng lưu ý hiện tại quý công ty vẫn còn một khoản tiền chưa thanh toán cho IATA. Xin vui lòng cung cấp cho chúng tôi giấy xác nhận thanh toán để tránh các hình thức xử lý vi phạm.</label>
+        <name>ISSP_SidraPopMessage</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Simplified_Interline_Settlement --></label>
@@ -13633,6 +14149,10 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
     <customLabels>
         <label>Chúng tôi có thể giúp gì cho bạn?</label>
         <name>ISSP_TopicsAndArticlesTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Topics To Exclude Country PL --></label>
+        <name>ISSP_Topics_To_Exclude_Country_PL</name>
     </customLabels>
     <customLabels>
         <label><!-- Tracking ID Google Analitycs --></label>
@@ -14868,6 +15388,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_FRED_ContactUs_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
+        <name>OneId_FRED_Missing_Mandatory_Fields</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
         <name>OneId_FRED_Terms_0</name>
     </customLabels>
@@ -14996,16 +15520,124 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_FRED_Terms_37</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_FRED_Terms_38 --></label>
+        <name>OneId_FRED_Terms_38</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_39 --></label>
+        <name>OneId_FRED_Terms_39</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_FRED_Terms_4 --></label>
         <name>OneId_FRED_Terms_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_40 --></label>
+        <name>OneId_FRED_Terms_40</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_41 --></label>
+        <name>OneId_FRED_Terms_41</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_42 --></label>
+        <name>OneId_FRED_Terms_42</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_43 --></label>
+        <name>OneId_FRED_Terms_43</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_44 --></label>
+        <name>OneId_FRED_Terms_44</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_45 --></label>
+        <name>OneId_FRED_Terms_45</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_46 --></label>
+        <name>OneId_FRED_Terms_46</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_47 --></label>
+        <name>OneId_FRED_Terms_47</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_48 --></label>
+        <name>OneId_FRED_Terms_48</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_49 --></label>
+        <name>OneId_FRED_Terms_49</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_5 --></label>
         <name>OneId_FRED_Terms_5</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_FRED_Terms_50 --></label>
+        <name>OneId_FRED_Terms_50</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_51 --></label>
+        <name>OneId_FRED_Terms_51</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_52 --></label>
+        <name>OneId_FRED_Terms_52</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_53 --></label>
+        <name>OneId_FRED_Terms_53</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_54 --></label>
+        <name>OneId_FRED_Terms_54</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_55 --></label>
+        <name>OneId_FRED_Terms_55</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_56 --></label>
+        <name>OneId_FRED_Terms_56</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_57 --></label>
+        <name>OneId_FRED_Terms_57</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_58 --></label>
+        <name>OneId_FRED_Terms_58</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_59 --></label>
+        <name>OneId_FRED_Terms_59</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_FRED_Terms_6 --></label>
         <name>OneId_FRED_Terms_6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_60 --></label>
+        <name>OneId_FRED_Terms_60</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_61 --></label>
+        <name>OneId_FRED_Terms_61</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_62 --></label>
+        <name>OneId_FRED_Terms_62</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_63 --></label>
+        <name>OneId_FRED_Terms_63</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_Terms_64 --></label>
+        <name>OneId_FRED_Terms_64</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_7 --></label>
@@ -15030,6 +15662,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_FRED_Troubleshooting_Link --></label>
         <name>OneId_FRED_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_URL --></label>
+        <name>OneId_FRED_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
@@ -16119,6 +16755,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Payment_number</name>
     </customLabels>
     <customLabels>
+        <label><!-- Period --></label>
+        <name>Period</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Personal information --></label>
         <name>Personal_information</name>
     </customLabels>
@@ -16273,6 +16913,18 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- RE --></label>
         <name>RE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification Message --></label>
+        <name>RTS_TAR_Notification_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification MessageB --></label>
+        <name>RTS_TAR_Notification_MessageB</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RTS TAR Notification Title --></label>
+        <name>RTS_TAR_Notification_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- Reader Main Content --></label>
@@ -17161,6 +17813,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customTabs>
         <label><!-- Purge IATA Code Process --></label>
         <name>Purge_IATA_Code_Process</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Report Red Alerts --></label>
+        <name>Report_Red_Alerts</name>
     </customTabs>
     <customTabs>
         <label>Thông tin học hỏi</label>

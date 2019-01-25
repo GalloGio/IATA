@@ -465,6 +465,11 @@
                     <default>false</default>
                     <label>SYP</label>
                 </value>
+                <value>
+                    <fullName>VUV</fullName>
+                    <default>false</default>
+                    <label>VUV</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

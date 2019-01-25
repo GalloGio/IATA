@@ -151,6 +151,16 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>Acknowledgment_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>check if a notification was sent regarding the FS</description>
+        <externalId>false</externalId>
+        <label>Acknowledgment sent</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Amount__c</fullName>
         <description>Amount with currency</description>
         <externalId>false</externalId>
@@ -2548,11 +2558,11 @@ NOT( ISPICKVAL( Region__c , &quot;China &amp; North Asia&quot;) )
     </validationRules>
     <validationRules>
         <fullName>SARA_Security_must_be_linked_to_HO</fullName>
-        <active>false</active>
-        <description>check that the financial security is linked to the HO account of the agent (except for cross border guarantees and GDI).</description>
+        <active>true</active>
+        <description>check that the financial security is linked to the top parent account of the agent (except for cross border guarantees and GDI).</description>
         <errorConditionFormula>AND(NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HO&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;HE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;GE&quot;)),NOT(ISPICKVAL(Account__r.Location_Type__c , &quot;AO&quot;)) , ISNEW(),  not(ispickval(Security_Type__c , &quot;Cross Border Guarantee&quot;)),not(ispickval(Security_Type__c , &quot;GDI&quot;)))</errorConditionFormula>
         <errorDisplayField>Account__c</errorDisplayField>
-        <errorMessage>The financial security must be linked to the HO/AO account of the agent, never to a branch. Please classify the security accordingly or contact your administrator if any doubts.</errorMessage>
+        <errorMessage>The financial security must be linked to the HO/AO/HE/GE account of the agent, never to a branch. Please classify the security accordingly or contact your administrator if any doubts.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>SARA_reception_information_mandatory</fullName>
@@ -2566,7 +2576,7 @@ OR( ISPICKVAL(Reasonforrequest__c, &quot;&quot;) ,  ISBLANK( Reception_Date__c )
         <fullName>SARA_validity_start_date_mandatory</fullName>
         <active>true</active>
         <description>validity start date mandatory for all securities from 19 July 2012</description>
-        <errorConditionFormula>AND( isnull(Validity_Start_Date__c ),  ISNEW(), DATEVALUE(CreatedDate ) &gt; DATE(2012,07,18))</errorConditionFormula>
+        <errorConditionFormula>AND( isnull(Validity_Start_Date__c ), ISNEW(), DATEVALUE(CreatedDate ) &gt; DATE(2012,07,18))</errorConditionFormula>
         <errorDisplayField>Validity_Start_Date__c</errorDisplayField>
         <errorMessage>Please enter the validity start date for this security</errorMessage>
     </validationRules>

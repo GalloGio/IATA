@@ -1,6 +1,11 @@
 @isTest
 private class ISSP_TC_Accept_Test {
 
+    @testSetup static void setup() {
+        insert new Preferred_Language_on_ISS_Portal__c(Name = 'Test', Language__c = 'Language', LanguageLocalKey__c = 'Language');
+        insert new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
+    }
+
 	static testMethod void myUnitTest_1() {
 		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -25,8 +30,6 @@ private class ISSP_TC_Accept_Test {
                                 IsActive = true);
     	insert newUser;
 		
-    	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
-    	insert issc;
         //Instantiated outside of the RunAs just to be able to access to a field that a newUser don't have access
         ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
@@ -39,6 +42,8 @@ private class ISSP_TC_Accept_Test {
         	cttr.docontinue();
         	cttr.accept = true;
         	cttr.docontinue();
+
+            Boolean show = cttr.showFinancialInstitution;
 
             PageReference pageRef = Page.ISSP_TC_Accept;
             Test.setCurrentPage(pageRef);
@@ -75,7 +80,7 @@ private class ISSP_TC_Accept_Test {
 	                            ToU_Accepted__c = true,
 	                            IsActive = true);
     	insert newUser;
-    	
+
     	Portal_Applications__c newApp = new Portal_Applications__c();
 		newApp.Name = 'TEST';
 		insert newApp;
@@ -87,9 +92,7 @@ private class ISSP_TC_Accept_Test {
 		ISSP_Portal_Service_Ids__c theIds = new ISSP_Portal_Service_Ids__c();
 		theIds.BSPLink__c = newApp.Id;
 		insert theIds;
-		
-    	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
-    	insert issc;
+
         ISSP_TC_Accept cttr = new ISSP_TC_Accept();
     	
     	system.runAs(newUser){
@@ -129,9 +132,6 @@ private class ISSP_TC_Accept_Test {
 	                            IsActive = true);
     	insert newUser;
     	
-    	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
-    	insert issc;
-    	
     	ISSPLogoutSurvey__c newSurvey = new ISSPLogoutSurvey__c();
     	newSurvey.Name = 'test';
     	newSurvey.Survey_Link__c = 'http:\\test&iv=1234';
@@ -170,9 +170,6 @@ private class ISSP_TC_Accept_Test {
 	                            IsActive = true);
     	insert newUser;
     	
-    	ISSP_CS__c issc = new ISSP_CS__c(name = 'PasswordResetPeriod', value__c = '90');
-    	insert issc;
-    	
     	ISSPLogoutSurvey__c newSurvey = new ISSPLogoutSurvey__c();
     	newSurvey.Name = 'test';
     	newSurvey.Survey_Link__c = 'http:\\test&iv=1234';
@@ -189,4 +186,14 @@ private class ISSP_TC_Accept_Test {
     	}
     }
 
+    static testMethod void myUnitTest_5() {
+        Test.startTest();
+        ISSP_TC_Accept cttr = new ISSP_TC_Accept();
+        cttr.getOperationalCalendarPermission();
+        cttr.CheckLogoutorSurvey();
+        PageReference pageRef = Page.ISSP_TC_Accept;
+        Test.setCurrentPage(pageRef);
+        PageReference pr1 = cttr.pageLoad();
+		Test.stopTest();        
+    }
 }

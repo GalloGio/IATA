@@ -419,12 +419,12 @@
         <dataType>String</dataType>
         <expression>&apos;{&apos;+
 &apos;&quot;language&quot;:&quot;&apos; + UPPER(LEFT(TEXT({!UserFields.LanguageLocaleKey}), 2)) + &apos;&quot;,&apos; +
-&apos;&quot;Agent Numeric Code&quot;:&quot;&apos; + {!UserFields.Contact_Account_IATA_Code__c} + &apos;&quot;,&apos; +
-&apos;&quot;BSP Country&quot;:&quot;&apos; + {!UserFields.Contact.Account.Country_ISO_Code__c} + &apos;&quot;,&apos; +
-&apos;&quot;External Systems&quot;:&quot;&apos; + &quot;Global Default Insurance&quot; + &apos;&quot;,&apos; +
-&apos;&quot;AccountId&quot;:&quot;&apos; + {!UserFields.Contact.AccountId} + &apos;&quot;,&apos; +
-&apos;&quot;Phone&quot;:&quot;&apos; + {!UserFields.Contact.Phone} + &apos;&quot;,&apos; +
-&apos;&quot;IFAPContact&quot;:&quot;&apos; + IF({!UserFields.Contact.Financial_Assessment_Contact__c}, &apos;true&apos;, &apos;false&apos;) + &apos;&quot;&apos; +
+&apos;&quot;iataCode&quot;:&quot;&apos; + {!UserFields.Contact_Account_IATA_Code__c} + &apos;&quot;,&apos; +
+&apos;&quot;bspCountry&quot;:&quot;&apos; + {!UserFields.Contact.Account.Country_ISO_Code__c} + &apos;&quot;,&apos; +
+&apos;&quot;externalSystems&quot;:&quot;&apos; + &quot;Global Default Insurance (GDI)&quot; + &apos;&quot;,&apos; +
+&apos;&quot;accountId&quot;:&quot;&apos; + {!UserFields.Contact.AccountId} + &apos;&quot;,&apos; +
+&apos;&quot;phone&quot;:&quot;&apos; + {!UserFields.Contact.Phone} + &apos;&quot;,&apos; +
+&apos;&quot;ifapContact&quot;:&quot;&apos; + IF({!UserFields.Contact.Financial_Assessment_Contact__c}, &apos;true&apos;, &apos;false&apos;) + &apos;&quot;&apos; +
 &apos;}&apos;</expression>
     </formulas>
     <formulas>
@@ -481,7 +481,7 @@
             <field>Application_Name__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>&apos;Global Default Insurance&apos;</stringValue>
+                <stringValue>&apos;Global Default Insurance (GDI)&apos;</stringValue>
             </value>
         </filters>
         <filters>
