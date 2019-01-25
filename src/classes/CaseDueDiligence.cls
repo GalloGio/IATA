@@ -50,7 +50,7 @@ public with sharing class CaseDueDiligence {
             if ((newCase.RecordTypeId == RT_ICCS_ASP_ID || newCase.RecordTypeId == RT_CODING_ID)
                     && newCase.Status.containsIgnoreCase('closed')
                     && !oldCase.Status.containsIgnoreCase('closed')
-                    && !LIST_IGNORED_STATUSES.contains(newCase.Status)
+                    && !LIST_IGNORED_STATUSES.contains(oldCase.Status)
                     && !isRecycleGroup(newCase.OwnerId)
                     ) {
                 listClosedCasesToCheck.add(newCase);
