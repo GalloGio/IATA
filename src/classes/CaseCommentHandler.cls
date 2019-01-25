@@ -22,7 +22,7 @@ public with sharing class CaseCommentHandler {
             ccIds.add(cc.Id);
         }
 
-        List<CaseComment> fullCaseComments = [SELECT id, ParentId, Parent.RecordType.DeveloperName FROM CaseComment WHERE ID IN: ccIds];
+        List<CaseComment> fullCaseComments = [SELECT id, isPublished, ParentId, Parent.RecordType.DeveloperName FROM CaseComment WHERE ID IN: ccIds];
         List<String> recordTypesToProcess = new List<String>();
 
         config = getKPIConfig(CASE_COMMENT_ACTION);
@@ -35,7 +35,7 @@ public with sharing class CaseCommentHandler {
             String kpiReportingId = kpiReportingExistsOrCreate();
 
             for (CaseComment cc : fullCaseComments) {
-                if (recordTypesToProcess.contains(cc.Parent.RecordType.DeveloperName)) {
+                if (cc.isPublished && recordTypesToProcess.contains(cc.Parent.RecordType.DeveloperName)) {
                     createKPIReportingValue(cc, Integer.valueOf(rtToConfigMap.get(cc.Parent.RecordType.DeveloperName).Points__c), kpiReportingId);
                 }
             }
