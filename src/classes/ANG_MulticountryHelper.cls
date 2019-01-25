@@ -70,7 +70,8 @@ public class ANG_MulticountryHelper {
 
 	/**
 	* Verifies if the multicountry validations
-	* should run for the given account  
+	* should run for the given account
+	*
 	* @param account: Account
 	* @return Boolean
 	*
@@ -99,7 +100,8 @@ public class ANG_MulticountryHelper {
 
            	if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
                 vw.valid = false;
-                vw.message = 'The hierarchy does not have any location in this BSP. The agency can only be an HE in this BSP.';
+                vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error;
+            	return vw;
             }
 
         }
@@ -109,9 +111,16 @@ public class ANG_MulticountryHelper {
 
             Set<Id> accountIds = accountsHePerBspMap.get(bspId);
 
+			if(account.Parent.Location_Type__c == AMS_Utils.GE && account.IATA_ISO_Country__r.AMS_Settlement_System__c == account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
+            	vw.valid = false;
+            	vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error;
+				return vw;
+			}
+
             if(accountIds != NULL && accountIds.size() > 1){
             	vw.valid = false;
-                vw.message = 'The hierarchy already has locations in this BSP. The agency can only be an AE with the correct HE Parent Account in this BSP.';
+                vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error;
+                return vw;
             }
 
         }

@@ -346,6 +346,20 @@ private class AMS_AccountTriggerHandlerTest {
 	}
 	
 	static testMethod void test_MulticountryValidations() {
+
+		Id settlementRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+
+		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(
+			Name = 'test settlement',
+			RecordTypeId = settlementRTId
+		);
+
+        AMS_Settlement_System__c settlement2 = new AMS_Settlement_System__c(
+			Name = 'test settlement2',
+			RecordTypeId = settlementRTId
+		);
+
+		insert new List<AMS_Settlement_System__c>{settlement, settlement2};
         
         IATA_ISO_Country__c country1 = new IATA_ISO_Country__c(
 			Name = 'Test Country',
@@ -353,44 +367,11 @@ private class AMS_AccountTriggerHandlerTest {
 			AIMS_Area_Name__c = 'Test City',
 			OSCAR_enabled__c = true,
 			Multicountry_Enabled__c = true,
-            ANG_Enable_NewGen__c = true
+            ANG_Enable_NewGen__c = true,
+            AMS_Settlement_System__c = settlement.id
 		);
-        
-        insert country1;
-        
-        Account topGEParent = new Account(name = 'trigger GE',
-                                          IATA_ISO_Country__c = country1.Id,
-                                          Location_Type__c = 'GE',
-                                          Location_Class__c = 'P',
-                                          ANG_Accreditation_Model__c = 'Multicountry');
-        insert topGEParent;
-        
-        Account HECountry = new Account(name = 'trigger HE1',
-                                          IATA_ISO_Country__c = country1.Id,
-                                          Location_Type__c = 'HE',
-                                          Location_Class__c = 'P',
-                                          ANG_Accreditation_Model__c = 'Multicountry',
-                                          ParentId = topGEParent.Id);
-        insert HECountry;
-        
-        Account HESameCountry = new Account(name = 'Validation trigger same HE',
-                                          IATA_ISO_Country__c = country1.Id,
-                                          Location_Type__c = 'HE',
-                                          Location_Class__c = 'P',
-                                          ANG_Accreditation_Model__c = 'Multicountry',
-                                          ParentId = topGEParent.Id);
-        
-        try{        
-        	insert HESameCountry;
-        }
-        catch(Exception e){
-        
-        	Boolean expectedExceptionThrown =  e.getMessage().contains('The BSP is already in the multicountry hierarchy, the new agency can only be an AE in that BSP') ? true : false;
-        
-        	System.AssertEquals(expectedExceptionThrown, true);
-		} 
-        
-        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(
+
+  		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(
 			Name = 'Test Country 2',
 			ISO_Code__c = 'ZZ',
 			AIMS_Area_Name__c = 'Test City2',
@@ -399,22 +380,110 @@ private class AMS_AccountTriggerHandlerTest {
             ANG_Enable_NewGen__c = true
 		);
         
-        insert country2;
+		IATA_ISO_Country__c country3 = new IATA_ISO_Country__c(
+			Name = 'Test Country 3',
+			ISO_Code__c = 'TS',
+			AIMS_Area_Name__c = 'Test City 3',
+			OSCAR_enabled__c = true,
+			Multicountry_Enabled__c = true,
+            ANG_Enable_NewGen__c = true,
+            AMS_Settlement_System__c = settlement2.id
+		);
+
+        insert new List<IATA_ISO_Country__c>{country1, country2, country3};
         
-        Account AECountry = new Account(name = 'Validation trigger AE with no HE',
-                                          IATA_ISO_Country__c = country2.Id,
-                                          Location_Type__c = 'AE',
-                                          Location_Class__c = 'P',
-                                          ANG_Accreditation_Model__c = 'Multicountry',
-                                          ParentId = topGEParent.Id);
+        Account topGEParent = new Account(
+        	Name = 'trigger GE',
+            IATA_ISO_Country__c = country1.Id,
+            Location_Type__c = 'GE',
+            Location_Class__c = 'P',
+            ANG_Accreditation_Model__c = 'Multicountry'
+        );
+
+        insert topGEParent;
+        
+        Test.startTest();
+
+        Account HESameGEBSPCountry = new Account(
+        	Name = 'trigger HE same bsp than GE',
+            IATA_ISO_Country__c = country1.Id,
+            Location_Type__c = 'HE',
+            Location_Class__c = 'P',
+            ANG_Accreditation_Model__c = 'Multicountry',
+            ParentId = topGEParent.Id
+        );
+        
+        try{
+        	insert HESameGEBSPCountry;
+        }
+        catch(Exception e){
+
+        	Boolean expectedExceptionThrown = e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error);
+
+        	System.AssertEquals(expectedExceptionThrown, true);
+        }
+
+		Account HECountry = new Account(
+			Name = 'trigger HE',
+			IATA_ISO_Country__c = country3.Id,
+            Location_Type__c = 'HE',
+            Location_Class__c = 'P',
+            ANG_Accreditation_Model__c = 'Multicountry',
+            ParentId = topGEParent.Id
+        );
+        
+        insert HEcountry;
+ 
+        Account HESameCountry = new Account(
+        	Name = 'Validation trigger same HE ',
+            IATA_ISO_Country__c = country3.Id,
+            Location_Type__c = 'HE',
+            Location_Class__c = 'P',
+            ANG_Accreditation_Model__c = 'Multicountry',
+            ParentId = topGEParent.Id
+        );
+        
+        try{        
+        	insert HESameCountry;
+        }
+        catch(Exception e){
+           	Boolean expectedExceptionThrown =  e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error);
+        
+        	System.AssertEquals(expectedExceptionThrown, true);
+		} 
+        
+        Account AECountry = new Account(
+        	Name = 'Validation trigger AE with no HE',
+            IATA_ISO_Country__c = country2.Id,
+            Location_Type__c = 'AE',
+            Location_Class__c = 'P',
+            ANG_Accreditation_Model__c = 'Multicountry',
+            ParentId = topGEParent.Id
+        );
+        
         try{       
         	insert AECountry;
         }
         catch(Exception e){
         
-        	Boolean expectedExceptionThrown =  e.getMessage().contains('The BSP is not in the multicountry hierarchy yet, the new agency can only be an HE in that BSP') ? true : false;
+        	Boolean expectedExceptionThrown =  e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error);
         
         	System.AssertEquals(expectedExceptionThrown, true);
-		} 
+		}
+
+		//Test Before Update 
+		HECountry.IATA_ISO_Country__c = country1.id;
+		try{   
+        	update HECountry;
+        }
+        catch(Exception e){
+
+        	Boolean expectedExceptionThrown = e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error);
+
+        	System.AssertEquals(expectedExceptionThrown, true);
+        }
+
+        Test.stopTest();
+
     }
 }
