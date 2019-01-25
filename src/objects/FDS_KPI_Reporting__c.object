@@ -46,7 +46,6 @@
     <description>New object to measure KPI&apos;s that are being calculated outside Salesforce</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
@@ -244,6 +243,100 @@
         <fullName>CSC</fullName>
         <active>true</active>
         <label>CSC</label>
+        <picklistValues>
+            <picklist>Area_Concerned__c</picklist>
+            <values>
+                <fullName>Agency Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Suspension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing %26 Collection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Remittance %26 Settlement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Action__c</picklist>
+            <values>
+                <fullName>Case Closure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Case Escalation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Case Reopening</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Creating a Task</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Case Comment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send NOI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Value_Type__c</picklist>
+            <values>
+                <fullName>Number</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Percentage</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Global_reporting</fullName>
+        <active>true</active>
+        <label>Global reporting</label>
         <picklistValues>
             <picklist>Area_Concerned__c</picklist>
             <values>

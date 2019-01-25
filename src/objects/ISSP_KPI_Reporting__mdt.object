@@ -155,7 +155,25 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <label>ISSP KPI Reporting</label>
+    <label>GCS KPI Reporting</label>
+    <listViews>
+        <fullName>GCS_Perf_matrix</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>Type_of_Task__c</columns>
+        <columns>Action__c</columns>
+        <columns>NamespacePrefix</columns>
+        <columns>Case_Record_Type__c</columns>
+        <columns>Status_From__c</columns>
+        <columns>Status_To__c</columns>
+        <columns>Reopening_Reason__c</columns>
+        <columns>Value_From__c</columns>
+        <columns>Value_To__c</columns>
+        <columns>Points__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>GCS Perf matrix</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>ISSP KPI Reporting</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>
