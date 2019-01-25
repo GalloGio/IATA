@@ -1404,7 +1404,13 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
 
-                if(oscar.Endorsement_Requested__c)  oscar.Endorsement_requested_date__c = Date.today();
+                if(oscar.Endorsement_Requested__c){
+                    oscar.Endorsement_requested_date__c = Date.today();
+                    oscar.step50__c = 'Passed';
+                    oscar.Financial_security_information_confirmed__c = Date.today();
+                    res = true;
+                    oscar.status__c = 'Closed';
+                } 
                 res = true;
             }
 
