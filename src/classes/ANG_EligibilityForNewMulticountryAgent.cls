@@ -1,7 +1,5 @@
 public class ANG_EligibilityForNewMulticountryAgent {
 
-	private static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
-
 	public class EligibilityInputWrapper {
 	    @InvocableVariable(required=true)
 		public Account currentAgent;
@@ -61,7 +59,7 @@ public class ANG_EligibilityForNewMulticountryAgent {
  			eligibilityOutput.isAgentEligible = childHEList.isEmpty();
 
 		}
-		else if(ew.currentAgent.Location_Type__c == AMS_Utils.AE && allowedLocationsSet.contains(ew.currentAgent.Location_Class__c)){
+		else if(ew.currentAgent.Location_Type__c == AMS_Utils.AE && ANG_MulticountryHelper.allowedLocationsSet.contains(ew.currentAgent.Location_Class__c)){
 			//If the agent is in the same BSP as the parent the agent is eligible for multicountry
 			eligibilityOutput.isAgentEligible = eligibilityOutput.isParentInSameBSP;
 		}
