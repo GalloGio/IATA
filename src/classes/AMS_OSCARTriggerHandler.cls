@@ -2401,9 +2401,15 @@ public class AMS_OSCARTriggerHandler {
 					throw new AMSException('##' + incorrectExpiryDateError + '##' );
 				}
 			} else { 
-				if(countryCode == 'CN' && locationClass == 'C' && (numberDGR < 3 || numberCATA < 1)){
-					throw new AMSException('##This agency must have at least 3 DGR and 1 CATA that are not expired.' + (incorrectExpiryDate ? incorrectExpiryDateError : '') + '##' );
-
+                //AMSU-208 
+                if(countryCode == 'CN' && locationClass == 'C') {
+                    if(accountLocationType == AMS_Utils.HO && numberDGR < 2) {
+                        throw new AMSException('##This agency must have at least 2 DGR that are not expired.' + (incorrectExpiryDate ? incorrectExpiryDateError : '') + '##' );
+                    } else if(accountLocationType == AMS_Utils.BR && numberDGR < 1) {
+                        throw new AMSException('##This agency must have at least 1 DGR that are not expired.' + (incorrectExpiryDate ? incorrectExpiryDateError : '') + '##' );
+                    } else if(numberCATA < 1) {
+                        throw new AMSException('##This agency must have at least 1 CATA that are not expired.' + (incorrectExpiryDate ? incorrectExpiryDateError : '') + '##' );
+                    }
 				}else if(countryCode == 'IN' && locationClass == 'C' && accountLocationType == AMS_Utils.BR && cassNumber >= 900 && cassNumber <= 999){
 					 //India has this particular exception to the normal behaviour, no check is to be done
 				}else if(locationClass == 'C'){
