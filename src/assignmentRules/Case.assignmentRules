@@ -603,7 +603,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -617,7 +617,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -631,7 +631,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -645,7 +645,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -659,7 +659,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
