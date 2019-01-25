@@ -248,7 +248,13 @@
 
             function checkBranchAbroad(nextStep) {
                 var countriesNotAllowedList = JSON.parse('{!jsonCountriesNotAllowedList}');
-                defaultHQCountry = $('[id$=countrySelected]').val();
+
+                if({!isMultiCountryNewAE}) {
+                    defaultHQCountry = $('[id$=countrySelectedMC]').val();
+                } else {
+                    defaultHQCountry = $('[id$=countrySelected]').val();
+                }
+
                 if (isInArray(countriesNotAllowedList, defaultHQCountry)){
                     bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step1_Branch_Abroad_Not_Allowed)}", function(result) {
                             if(result) {
@@ -440,8 +446,12 @@
       <script>
       function getCountryFromController() {
         $('#brcountry').text("{!amsAllLangCountryLabel}");
-        $('[id$=countrySelected]').val('{!con.Account.IATA_ISO_Country__r.ISO_Code__c}');
-        //$('[id$=countrySelected]').val('');
+
+        if({!isMultiCountryNewAE}) {
+            $('[id$=countrySelectedMC]').val('{!con.Account.IATA_ISO_Country__r.ISO_Code__c}');
+        } else {
+            $('[id$=countrySelected]').val('{!con.Account.IATA_ISO_Country__r.ISO_Code__c}');
+        }
       }
       </script>
     </apex:outputPanel>
@@ -696,9 +706,16 @@
                                 <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
-                                    <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
+                                    <apex:outputPanel rendered="{!isMultiCountryNewAE}">
+                                        <apex:selectList id="countrySelectedMC" required="false" styleClass="form-control" style="width:40%" value="{!newForm.Branch_Office_Country__c}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
-                                    </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
+                                        </apex:selectList>
+                                    </apex:outputPanel>    
+                                    <apex:outputPanel rendered="{!NOT(isMultiCountryNewAE)}">
+                                        <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
+                                            <apex:selectOptions value="{!countryISOCodeList}"/>
+                                        </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
+                                    </apex:outputPanel>
                                 </div>
                                 <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
                                     <apex:outputText value="{!amsAllLangCountryLabel}"/>

@@ -440,6 +440,8 @@
         document.getElementById(ownerModalFields[3]).disabled = true;
         //replaceShippingTXT(document.body);
         console.log('vHQAccountId: ' + retAddressCompUrl());
+
+        if ({!modifyForm}) updateStatus();
     });
 
     function removeReq(){
@@ -761,6 +763,8 @@
              <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                     <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
              </apex:actionfunction>
+             <apex:actionFunction name="updateStatus" action="{!updateStatusMCForm}" rerender=""/>
+             
             <apex:pageBlock id="AMSBlock">
             <div class="alert alert-info" role="alert">
                 {!$Label.ISSP_AMS_Step3_Save_Anytime}
