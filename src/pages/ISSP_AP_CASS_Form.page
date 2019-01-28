@@ -43,7 +43,6 @@
         }
         thisBox.value = value;
     }
-
     </script>
 
     <apex:variable var="localVATMandatory" value="{!countryRequirement.Local_VAT_Mandatory__c=='YES'}" />
@@ -283,7 +282,7 @@
                     </apex:pageBlockSectionItem>                
                 </apex:pageBlockSection>
                 <span id="nav_three"></span>            
-                <apex:pageBlockSection title="3. Airline Information" columns="2" >
+                <apex:pageBlockSection id="section3" title="3. Airline Information" columns="2" >
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="3.  Airline Information"/>
@@ -325,12 +324,14 @@
                     <apex:outputText rendered="{!apcountryisocode='FR'}"><!--empty: move following field to next row --></apex:outputText>
                     
                     <apex:pageBlockSectionItem helpText="i.e. is the Airline an online carrier?">
-                        <apex:outputLabel value="* Does the Airline operate flights into/out of CASS {!apcountry}?" style="color:#a31717; font-weight: bold !important;"/>
-                        <apex:inputField value="{!newForm.Online_carrier_in_the_BSP_country__c}" label=""/>
+                        <apex:outputLabel value="Does the Airline operate flights into/out of CASS {!apcountry}?" styleclass="ap-required"/>
+                        <apex:inputField value="{!newForm.Online_carrier_in_the_BSP_country__c}" label="">
+                            <apex:actionSupport event="onchange" rerender="section3" />
+                        </apex:inputField>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="Please indicate the flights the airline operates in CASS {!apcountry}" styleclass="ap-required"/>
-                        <apex:inputField value="{!newForm.Flights_operated_in_the_BSP_country__c}" label=""/>
+                        <apex:outputLabel for="flightsoperatedBSP" value="Please indicate the flights the airline operates in CASS {!apcountry}" styleclass="{!IF(newForm.Online_carrier_in_the_BSP_country__c=='No','','ap-required')}"/>
+                        <apex:inputField id="flightsoperatedBSP" value="{!newForm.Flights_operated_in_the_BSP_country__c}" label=""/>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem rendered="{!apcountryisocode='CY'}">
                         <apex:outputLabel value="* Please advise if your airline is a Turkey based Airline" style="color:#a31717; font-weight: bold !important;"/>
@@ -365,8 +366,11 @@
                     <apex:outputText >&nbsp;<!--empty: move following field to next row --></apex:outputText>
                     
                     <apex:pageBlockSectionItem helpText="Or equivalent (RUT/RUC/RIF/ NIT). Only if applicable. Please refer to Country requirements" rendered="{!NOT(OR(apcountryisocode='BR',apcountryisocode='EC',apcountryisocode='VE'))}">
-                        <apex:outputLabel value="Local VAT number in CASS {!apcountry}" styleClass="{!IF(localVATMandatory,'ap-required','')}" />
-                        <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label=""/>
+                        <apex:outputLabel value="Local VAT number in CASS {!apcountry}" 
+                            styleClass="{!IF(AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null),'ap-required','')}"/>
+                        <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label="">
+                            <apex:actionSupport event="onchange" rerender="section3"/>
+                        </apex:inputField>
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem rendered="{!apcountryisocode='IT'}">
@@ -380,13 +384,19 @@
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem helpText="In Ecuador the VAT number is called the RUC and given to each company by the Commerce Registry (Registro Mercantil)" rendered="{!apcountryisocode='EC'}">
-                        <apex:outputLabel value="Your airline's VAT/RUC Number" styleClass="{!IF(localVATMandatory,'ap-required','')}"/>
-                        <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label=""/>
+                        <apex:outputLabel value="Your airline's VAT/RUC Number"
+                            styleClass="{!IF(AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null),'ap-required','')}"/>
+                        <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label="">
+                            <apex:actionSupport event="onchange" rerender="section3"/>
+                        </apex:inputField>
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem helpText="The RIF must belong to the bank beneficiary account holder" rendered="{!apcountryisocode='VE'}">
-                        <apex:outputLabel value="Please provide the Registro Informacion Fiscal (RIF) information" styleClass="{!IF(localVATMandatory,'ap-required','')}"/>
-                        <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label=""/>
+                        <apex:outputLabel value="Please provide the Registro Informacion Fiscal (RIF) information"
+                            styleClass="{!IF(AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null),'ap-required','')}"/>
+                        <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label="">
+                            <apex:actionSupport event="onchange" rerender="section3"/>
+                        </apex:inputField>
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem rendered="{!OR(apcountryisocode='EC',apcountryisocode='VE')}">
@@ -395,8 +405,11 @@
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem rendered="{!NOT(apcountryisocode='BR')}">
-                        <apex:outputLabel value="VAT/Tax Registration number of the Airline's Home Country / Head Office" styleClass="{!IF(VATAlwaysInserted,'ap-required','')}"/>
-                        <apex:inputField value="{!newForm.VAT_Tax_number_in_your_home_country__c}" label=""/>
+                        <apex:outputLabel value="VAT/Tax Registration number of the Airline's Home Country / Head Office"
+                            styleClass="{!IF(AND(VATAlwaysInserted,newForm.BSP_Country_VAT_Tax_number__c==null),'ap-required','')}"/>
+                        <apex:inputField value="{!newForm.VAT_Tax_number_in_your_home_country__c}" label="">
+                            <apex:actionSupport event="onchange" rerender="section3"/>
+                        </apex:inputField>
                     </apex:pageBlockSectionItem>
                     <apex:outputText rendered="{!OR(apcountryisocode='EC',apcountryisocode='VE')}"><!--empty: move following field to next row --></apex:outputText>
                     
@@ -525,16 +538,16 @@
                     </apex:pageBlockSectionItem>
                 </apex:pageBlockSection>
                 <span id="nav_six"></span>        
-                <apex:pageBlockSection id="section-product-subscriptions" title="6. Report Options" columns="2" >
+                <apex:pageBlockSection id="section6" title="6. Report Options" columns="2" >
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="6.  Report Options"/>
                         </apex:outputpanel>
                     </apex:facet>           
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="* Does the Airline wish to receive HOT files?" style="color:#a31717; font-weight: bold !important;"/>
+                        <apex:outputLabel value="Does the Airline wish to receive HOT files?" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.Receive_HOT_files__c}">
-                            <apex:actionSupport event="onchange" rerender="section-product-subscriptions"/>
+                            <apex:actionSupport event="onchange" rerender="section6"/>
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >

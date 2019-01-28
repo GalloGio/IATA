@@ -386,6 +386,12 @@ global without sharing class ISSP_APProcess {
                     } else {
                         ISSP_AP_fieldLists.cassMandatoryFields.putAll(ISSP_AP_fieldLists.cassLocalVATNOTMandatoryFields);
                     }
+                    if (this.newForm.Online_carrier_in_the_BSP_country__c!='No') {
+                        ISSP_AP_fieldLists.cassMandatoryFields.put('Flights_operated_in_the_BSP_country__c','');
+                    }
+                    if (this.newForm.Receive_HOT_files__c=='YES - Billing Period HOT' || this.newForm.Receive_HOT_files__c=='YES - Remittance Period HOT') {
+                        ISSP_AP_fieldLists.cassMandatoryFields.put('Hot_files_delivery_format__c','');
+                    }
                     for (String fldLabel : ISSP_AP_fieldLists.cassMandatoryFields.keySet())
                     {
                         System.Debug('CASS FldLabel: '+ fldLabel);

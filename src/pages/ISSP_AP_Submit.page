@@ -245,8 +245,8 @@
                     <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=Please upload the completed Bank Mandates&reqIdentifier=CounterIndemnityAgreement" height="180px" width="100%" scrolling="false"/>
                 </apex:pageBlockSection>
 
-                <!-- Form of concurrence -->
-                <apex:pageBlockSection title="Form of concurrence" columns="1"
+                <!-- Form of Concurrence -->
+                <apex:pageBlockSection title="Form of Concurrence" columns="1"
                     rendered="{!AND(
                         strAreaType=='Airline Joining',
                         hqAccount.Sector__c=='Airline',
@@ -256,13 +256,13 @@
                     )}">
                     <div class="aplabel">
                         <p>
-                            According to our records, your airline needs to provide a form of authorization document signed. This document needs to be provided only once. Please download using the following link and attach an escaned copy using the button below. The hard copy must be send to the address below.
+                            According to our records, your airline needs to provide a form of Concurrence document signed. This document needs to be provided only once. Please download using the following link and attach an escaned copy using the button below. The hard copy must be send to the address below.
                         </p>
                     </div>
                     <p>
-                        <a href="#" style="text-decoration: underline;">Form of Authorization</a>
+                        <a href="#" style="text-decoration: underline;">Form of Concurrence</a>
                     </p>
-                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName=Form of Authorization&reqDescription=&reqIdentifier=FormOfAuthorization" height="180px" width="100%" scrolling="false"/>
+                    <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName=Form of Concurrence&reqDescription=&reqIdentifier=FormOfAuthorization" height="180px" width="100%" scrolling="false"/>
                 </apex:pageBlockSection>
 
                 <!-- Form Of Application -->
@@ -270,6 +270,7 @@
                     rendered="{!
                             AND(strAreaType=='Airline Joining',
                                 hqAccount.Sector__c=='Airline',
+                                hqAccount.Membership_status__c!='IATA Member',
                                 isBSP
                             )}">
                     <div class="aplabel">
@@ -285,6 +286,7 @@
                     rendered="{!
                             AND(strAreaType=='Airline Joining',
                                 hqAccount.Sector__c=='Airline',
+                                hqAccount.Membership_status__c!='IATA Member',
                                 isCASS
                             )}">
                     <div class="aplabel">

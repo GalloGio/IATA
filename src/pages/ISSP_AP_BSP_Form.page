@@ -76,6 +76,7 @@
     </script>
 
     <apex:variable var="localAddressMandatory" value="{!countryRequirement.Type_of_address_accepted__c=='Local'}" />
+    <apex:variable var="VATAlwaysInserted" value="{!countryRequirement.VAT_no_always_inserted_into_ISS_systems__c=='YES'}" />
 
     <!-- Modal -->
 <div class="modal fade" id="ModalCountryReqs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -294,7 +295,7 @@
                 </apex:pageBlockSection>
                 
                 <span id="nav_two"></span>
-                   <apex:pageBlockSection columns="2">
+                   <apex:pageBlockSection id="section2" columns="2">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             2. Airline information
@@ -318,19 +319,26 @@
                             <apex:image value="/img/msg_icons/info16.png" title="If YES, please provide your Airline's local name in {!apcountry}" html-data-placement="right" html-data-toggle="tooltip"/>
                         </apex:outputPanel>
                     </apex:pageBlockSectionItem>
-                         
+                    
                     <apex:pageBlockSectionItem >
-                        <apex:outputLabel value="VAT/Tax number in your home country" for="vathomeno" styleClass="ap-required" />
-                         <apex:inputText id="vathomeno" value="{!newForm.VAT_Tax_number_in_your_home_country__c}" />
+                        <apex:outputLabel value="VAT/Tax number in your home country" for="vathomeno" styleClass="{!IF(AND(VATAlwaysInserted,newForm.BSP_Country_VAT_Tax_number__c==null),'ap-required','')}" />
+                         <apex:inputText id="vathomeno" value="{!newForm.VAT_Tax_number_in_your_home_country__c}">
+                            <apex:actionSupport event="onchange" rerender="section2"/>
+                         </apex:inputText>
                     </apex:pageBlockSectionItem>
                         <apex:pageBlockSectionItem rendered="{!NOT(OR(apcountryisocode='BR',apcountryisocode='EC',apcountryisocode='MX',apcountryisocode='VE'))}">
-                            <apex:outputLabel value="VAT/Tax number in BSP {!apcountry}" for="vatbspno" styleClass="ap-required" />
-                            <apex:inputText id="vatbspno" value="{!newForm.BSP_Country_VAT_Tax_number__c}" />
+                            <apex:outputLabel value="VAT/Tax number in BSP {!apcountry}" for="vatbspno" styleClass="{!IF(AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null),'ap-required','')}" />
+                            <apex:inputText id="vatbspno" value="{!newForm.BSP_Country_VAT_Tax_number__c}">
+                                <apex:actionSupport event="onchange" rerender="section2"/>
+                            </apex:inputText>
                         </apex:pageBlockSectionItem>
                         
                         <apex:pageBlockSectionItem rendered="{!OR(apcountryisocode='EC',apcountryisocode='VE')}">
-                            <apex:outputLabel value="{!CASE(apcountryisocode, 'EC', '* Your airlines VAT/RUC Number', '* Please provide the Registro Informacion Fiscal (RIF) information')}" for="vatrut" styleClass="ap-required" />
-                            <apex:inputText id="vatrut" value="{!newForm.BSP_Country_VAT_Tax_number__c}" />
+                            <apex:outputLabel value="{!CASE(apcountryisocode, 'EC', 'Your airlines VAT/RUC Number', 'Please provide the Registro Informacion Fiscal (RIF) information')}" for="vatrut"
+                                styleClass="{!IF(AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null),'ap-required','')}" />
+                            <apex:inputText id="vatrut" value="{!newForm.BSP_Country_VAT_Tax_number__c}">
+                                <apex:actionSupport event="onchange" rerender="section2"/>
+                            </apex:inputText>
                         </apex:pageBlockSectionItem>
                         
                         <apex:pageBlockSectionItem rendered="{!NOT(OR(apcountryisocode='BR',apcountryisocode='CR',apcountryisocode='MX',apcountryisocode='IT'))}">
