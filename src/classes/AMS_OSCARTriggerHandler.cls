@@ -2735,9 +2735,14 @@ public class AMS_OSCARTriggerHandler {
             List<Contact> contList;
             contList = fetchContactInfoFromCase(oscarCommCaseId);
 
-            if(!contList.isEmpty())
-                AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
+            if(!contList.isEmpty()){
+                Map<String, Id> countryTemplates = ANGemailTemplates(agencyType, step, wasApproved);
 
+                if(!countryTemplates.isEmpty())
+                    AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, countryTemplates, oscarCommCaseId, owea[0], false);
+                else
+                    System.debug('Template not found for this type of change.');
+            }
         }else{
 
             System.debug('Could not find the case Id to send the email.');
@@ -3279,7 +3284,7 @@ public class AMS_OSCARTriggerHandler {
                 updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
         }
 
-        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && (oldOSCAR.ANG_Type_Of_Change__c != 'VMFR' || updatedOscar.ANG_Type_Of_Change__c != 'VMFR') && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed' && updatedOscar.Process__c != AMS_Utils.NGCHINACONVERSION){
+        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && (updatedOscar.Process__c != AMS_Utils.NGCORRECTION) && (oldOSCAR.ANG_Type_Of_Change__c != 'VMFR' || updatedOscar.ANG_Type_Of_Change__c != 'VMFR') && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed' && updatedOscar.Process__c != AMS_Utils.NGCHINACONVERSION){
 
             System.debug('Sending the email for the user to anounce approval of the oscar');
 
