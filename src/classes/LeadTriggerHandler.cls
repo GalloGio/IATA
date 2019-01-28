@@ -82,28 +82,34 @@ public class LeadTriggerHandler {
 
         //Map the emails with the leads looping on oldLeads because the change field could be Email itself
         for(Lead l : oldLeads){
-            mapEmailLead.put(l.Email, l);
+            mapEmailLead.put(l.Email.toLowerCase(), l);
         }
    
         List<String> individualsToSearchByEmail = new List<String>(mapEmailLead.keySet());
         
         
         //Search for existing Individuals, by Email
-        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
+        for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
                 System.debug('[INDIVIDUAL] - '+i);
                 //Get the respective Lead with the new version of the object
-                Lead newLead = newLeadMap.get(mapEmailLead.get(i.Email__c).Id);
+                Lead newLead = newLeadMap.get(mapEmailLead.get(i.Email__c.toLowerCase()).Id);
 
                
                     //Save the individual email before update
-                    individualsToUpdateEmails.add(i.Email__c);
+                    individualsToUpdateEmails.add(i.Email__c.toLowerCase());
 
                     //update the individual record with Lead data
                     i.FirstName = newLead.FirstName;
                     i.LastName = newLead.LastName;
                     i.Salutation = newLead.Salutation;
-                    i.Email__c = newLead.Email;
+                    i.Email__c = newLead.Email.toLowerCase();
                     i.Area_of_Interest__c = newLead.Pardot_Area_of_Interest__c;
+                    // extend missing mapping
+                    i.job_title__c = newLead.title;
+                    i.phone__c = newLead.phone;
+                    i.company__c = newLead.company;
+                    i.country__c = newLead.country;
+                    i.industry__c = newLead.industry;
 
                     individualsToUpdate.add(i);
                              

@@ -48,7 +48,7 @@ private class LightningRegistrationProcess_Test {
         
         LightningRegistrationProcess.getLanguageFromURL();
         
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        Id rtId = [SELECT Id, Name, DeveloperName, SObjectType FROM RecordType WHERE SobjectType = 'Contact'][0].Id;
         Contact c = new Contact(FirstName = 'firstName', LastName = 'L', Email = 'test@test.com', phone='(514) 111 2222',AccountId=oAccount.Id, RecordTypeId= rtId);
         insert c;
                 
@@ -56,8 +56,6 @@ private class LightningRegistrationProcess_Test {
         
         String userId = LightningRegistrationProcess.createUserFromExistingContact(c.Email);
         System.assertEquals(null, userId);
-        
-        rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'IATA_Service_Provider_Contact');
         
         Contact c1 = new Contact(FirstName = 'firstName1', LastName = 'L2', Email = 'test2@test.com', phone='(513) 141 2125',AccountId=oAccount.Id, RecordTypeId= rtId);
         insert c1;

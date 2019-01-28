@@ -53,15 +53,7 @@
 </div>
 <br />
 <aura:if isTrue="{!v.salesforceSynced}">
-    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-text-align_center">
-        <p><b>Don’t want to receive IATA Communication?</b></p><br />
-        <aura:if isTrue="{!v.opted_out}">
-            <p class="redMsg">*If you want to subscribe again, un-tick the box.</p>
-        </aura:if>
-        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-text-align_center" >
-            <ui:inputCheckbox  aura:id="subscriptionsCbx" value="{!v.unsubscribe}" class="slds-p-horizontal--small cbx" change="{!c.changeUnsubscribe}"/>
-            <span class="label"><b>Unsubscribe</b></span>
-        </div>
-    </div>
+   <!-- Requesteed by IATA: Have the sub/unscribe feature as a component-->
+   <c:GDPR_Unsubscribe unsubscribe="{!v.opted_out}"/>
 </aura:if>
 </aura:component>

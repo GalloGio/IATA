@@ -33,7 +33,7 @@
                     Newsletters
                 </div>
             <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-                <p><b>Subscribe to our Newsletters to receive the latest updates*</b> Hover over each item to learn more.</p> 
+                <p><b>Subscribe to our Newsletters to receive the latest updates*</b> Mouseover each item to learn more.</p> 
                 </div>
         <div class="slds-grid slds-wrap" >
             <aura:iteration items="{!v.newsletters}" var="i">
@@ -50,7 +50,7 @@
             <a style="color: black;" onclick="{!c.redirectToSubscriptionTab}">Products and services</a>
             </div>
             <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
-                <p><b>Subscribe to any of our Products and Services.</b> Hover over each item to learn more. <b>Please personalize your <a onclick="{!c.redirectToSubscriptionTab}">area of interest</a>.</b></p> 
+                <p><b>Subscribe to any of our Products and Services.</b> Please click on the <a onclick="{!c.redirectToSubscriptionTab}">Interest’s tab</a> to personalize. Mouseover each item to learn more.</p> 
             </div>
     <div class="slds-grid slds-wrap" >
            <aura:iteration items="{!v.products}" var="i">
@@ -78,17 +78,11 @@
 </div>
 <br />
 
+
+
 <aura:if isTrue="{!v.salesforceSynced}">
-    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-text-align_center">
-        <p><b>Don’t want to receive IATA Communication?</b></p><br />
-        <aura:if isTrue="{!v.opted_out}">
-            <p class="redMsg">*If you want to subscribe again, un-tick the box.</p>
-        </aura:if>
-        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-text-align_center" >
-            <ui:inputCheckbox  aura:id="subscriptionsCbx" value="{!v.unsubscribe}" class="slds-p-horizontal--small cbx" change="{!c.changeUnsubscribe}"/>
-            <span class="label"><b>Unsubscribe</b></span>
-        </div>
-    </div>
+    <!-- Requesteed by IATA: Have the sub/unscribe feature as a component-->
+    <c:GDPR_Unsubscribe unsubscribe="{!v.opted_out}"/>
 </aura:if>
 
 </aura:component>
