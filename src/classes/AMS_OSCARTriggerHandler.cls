@@ -2801,29 +2801,33 @@ public class AMS_OSCARTriggerHandler {
         
         System.debug('[ANGemailTemplates] Template to use is:'+templateId);
 
-        //Get the templates for NG accreditation outcoume
-        List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
+        //to avoid make the query when the template doesn't xists and query all the templates
+        if(templateId != ''){
+            //Get the templates for NG accreditation outcoume
+            List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
 
-        Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
-        for(EmailTemplate et: etNG){
-            if(!countryTemplates.containsKey(et.DeveloperName))
-                countryTemplates.put(et.DeveloperName, et);
+            Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
+            for(EmailTemplate et: etNG){
+                if(!countryTemplates.containsKey(et.DeveloperName))
+                    countryTemplates.put(et.DeveloperName, et);
+            }
+
+            //map template Ids with their respective language
+            List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
+            
+            for(Schema.Picklistentry pe: prefLanguages){
+                EmailTemplate langTemplate = countryTemplates.get(templateId+ '_' + pe.getValue());
+                if(langTemplate == null) //English is default and must exist in the system
+                    countryTemplates.get(templateId+'_English');
+                    if(langTemplate != null)
+                        multilangTemplates.put(pe.getValue(), langTemplate.Id);
+            }
+
+            //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
+            if(multilangTemplates.isEmpty())
+                multilangTemplates.put('English', countryTemplates.get(templateId + '_English').Id);
+
         }
-
-        //map template Ids with their respective language
-        List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
-        
-        for(Schema.Picklistentry pe: prefLanguages){
-            EmailTemplate langTemplate = countryTemplates.get(templateId+ '_' + pe.getValue());
-            if(langTemplate == null) //English is default and must exist in the system
-                countryTemplates.get(templateId+'_English');
-                if(langTemplate != null)
-                    multilangTemplates.put(pe.getValue(), langTemplate.Id);
-        }
-
-        //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
-        if(multilangTemplates.isEmpty())
-            multilangTemplates.put('English', countryTemplates.get(templateId + '_English').Id);
 
         return multilangTemplates;
 
