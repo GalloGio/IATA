@@ -648,6 +648,16 @@ public with sharing class AMS_OSCAR_Automation {
                 
                 if (oscar != null && ((oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed') && oscar.STEP12__c != 'Failed') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES)) {
 
+				// ENHC0012518 - BEGIN 
+                    if(oscar.Is_NewGen__c){
+                        Portal_Application_Right__c par = new Portal_Application_Right__c (
+                                    Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
+                                    Contact__c = [select name, Contact__r.name, Portal_administrator__c, ANG_AE_fromOnlineForm__c, AMS_Pax_Accreditation_Form__r.IATACode__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c and Portal_administrator__c = true].Contact__c,
+                                    Portal_Application__c = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1].Id
+						);
+                        insert par;
+                    }
+                // ENHC0012518 - END
                     oscar.Approval_disapproval_date__c = Date.today();
                     oscar.Status__c = 'On Hold_Internal';
                     res = True;
