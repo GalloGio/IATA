@@ -227,4 +227,51 @@ public class ANG_MulticountryHelper {
 
 	}
 
+	/**
+	 * cloneOwnersFromParentAccount description - Process to clone the Accreditation Contacts from Parent's Online Form into this one
+	 * @param  accountId         account from Accreditation Form
+	 * @param  accreditationFormId Online Accreditation from where to clone the contacts
+	 */
+	public static String cloneOwnersFromParentAccount(Id accreditationFormId){
+
+		if(accreditationFormId == null)
+			return 'You must provide a valid Online Accreditation Form Id.';
+
+		AMS_Pax_Accreditation_Form__c onlineForm = [Select Id, SAAM_Case__r.AccountId, SAAM_Case__r.Account.ParentId from AMS_Pax_Accreditation_Form__c where Id = :accreditationFormId];
+
+		// check null value for parent
+
+		if(onlineForm == null || onlineForm.SAAM_Case__r.AccountId == null || onlineForm.SAAM_Case__r.Account.ParentId == null)
+			return 'The Parent Account could not be found.';
+
+		for(AMS_Account_Role__c contactRole: [Select Id, Owner_Account__c, Owner_Account__r.Name, Contact__c, Contact__r.FirstName, Contact__r.LastName, Contact_Email__c,Financial_Assessment_Contact__c,Percentage__c,Legacy_External_ID__c,Person__c, Person__r.First_Name__c, Person__r.Lastname__c, Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Person__r.Name, Contact_Phone__c from AMS_Account_Role__c where Account__c = :onlineForm.SAAM_Case__r.Account.ParentId and active__c = true and RecordTypeId = :AMS_Utils.AccountRoleOwnershipRT]){
+
+			String firstName = contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.FirstName : contactRole.Person__c <> null ? '' : contactRole.Owner_Name__c;
+			String lastName =  contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.FirstName : contactRole.Person__c <> null ? contactRole.Person__r.Name : contactRole.Owner_Name__c;
+
+			AMS_Accreditation_Contact__c aContact = new AMS_Accreditation_Contact__c();
+				
+			aContact.AMS_Pax_Accreditation_Form__c =accreditationFormId;
+			aContact.Agency_owner__c = true;
+			aContact.Company__c = contactRole.Owner_Account__c;
+			aContact.Contact__c = contactRole.Contact__c;
+			aContact.Email__c = contactRole.Contact_Email__c;
+			aContact.Financial_Assessment_Contact__c = contactRole.Financial_Assessment_Contact__c;
+			aContact.Financial_interest__c = contactRole.Percentage__c;
+			aContact.First_name__c = firstName;
+			aContact.Last_name__c = lastName;
+			aContact.Legacy_External_Id__c = contactRole.Legacy_External_ID__c;
+			aContact.Name = firstName == null ? LastName : firstName + ' ' + LastName;
+			aContact.Person_AMS__c = contactRole.Person__c;
+			aContact.Phone__c = contactRole.Contact_Phone__c;
+			aContact.RecordTypeId = contactRole.Owner_Account__c == null ? AMS_Utils.AccreditationContactPersonRT : AMS_Utils.AccreditationContactCompanyRT;
+
+			insert aContact;
+
+		}
+	
+		return null;
+	
+	}
+
 }	
