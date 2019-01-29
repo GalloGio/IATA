@@ -153,138 +153,124 @@
     </style>
 
     <script>
+        var showProductComparisonLink = false;
+        var hideProductComparisonLink = false;
 
-            var showProductComparisonLink = false;
-            var hideProductComparisonLink = false;
+        setVarsProductComparisonLink('{!namEnabled}', '{!sectorValue}', '{!isHOAccredited}', '{!con.Account.Sector__c}');
 
-            setVarsProductComparisonLink('{!namEnabled}', '{!sectorValue}', '{!isHOAccredited}', '{!con.Account.Sector__c}');
-
-
-            $(function(){ $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); } );
-            var pilotList = {{!pilotList}};
-            var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
-            var vOfficeType = '{!newCase.Reason1__c}';
-            console.log('vOfficeType '+vOfficeType);
-            console.log('Default country '+ defaultHQCountry);
-            var operationType = '{!sectorvalue}';
-            var hasPermission = true;
-
-            var isPilotCountry = pilotList[defaultHQCountry];
-            var isEUcountry = {!isEUcountry};
-
-            function setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector) {
-               if(namEnabled == 'true' && (sectorValue === 'Travel_Agent') && (isHOAccredited == 'false' || sector === 'Cargo Agent')) {
-                    showProductComparisonLink = true;
-                    hideProductComparisonLink = false;
-                } else {
-                    hideProductComparisonLink = true;
-                    showProductComparisonLink = false;
-                }
-            }
-
-            function setIsPilotCountry(isocode) {
-                isPilotCountry = pilotList[isocode];
-            }
-
-            function toggleCountries(v) {
-                if (v==undefined || v.indexOf('New BR Abroad')==-1){
-                    updateAmsCountry();
-                    $('#brcountry').show();
-                    $('#brabroadcountries').hide();
-                }
-                else{
-                    $('#brcountry').hide();
-                    $('#brabroadcountries').show();
-                }
-            }
-
-            function toggleOfficeTypes(officeSelect, ctrylistid) {
-                //var mySelectOptions = $('select[name="' + ctrylistid + '"] option');
-                //var mySelect = $('select[name="' + ctrylistid + '"]');
-                var officeTypeSel = $('select[name="' + officeSelect + '"]');
-                vOfficeType = officeTypeSel.val();
-                /**
-                mySelectOptions.each(function() {
-                  if(vOfficeType=='New BR Abroad') {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', false);
-                     } else {
-                        $(this).prop('disabled', true);
-                        mySelect.val('');
-                     }
-                  } else {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', true);
-                     } else {
-                        $(this).prop('disabled', false);
-                        mySelect.val(defaultHQCountry);
-                     }
-                  }
-                });
-                **/
-            }
-
-            function isInArray(arr, val) {
-                for(var i=0; i<arr.length; i++) {
-                    if (arr[i] == val) return true;
-                }
-                return false;
-           }
-
-            function isChinaDomestic() {
-                var chinaAgentType;
-                var chinaAgentTypeId = '{!$Component.step1Form.step1Block.chinaagenttype}';
-
-                if(defaultHQCountry=='CN') {
-                    var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]');
-                    if(chinaAgentType.val() == 'Domestic') {
-                        console.log('in domestic');
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            function checkBranchAbroad(nextStep) {
-                var countriesNotAllowedList = JSON.parse('{!jsonCountriesNotAllowedList}');
-
-                if({!isMultiCountryNewAE}) {
-                    defaultHQCountry = $('[id$=countrySelectedMC]').val();
-                } else {
-                    defaultHQCountry = $('[id$=countrySelected]').val();
-                }
-
-                if (isInArray(countriesNotAllowedList, defaultHQCountry)){
-                    bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step1_Branch_Abroad_Not_Allowed)}", function(result) {
-                            if(result) {
-                                window.open('{!Portal_Login_URL}', '_blank');
-                            }
-                    });
-                    hasPermission = false;
-                }else {
-                    document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
-                    hasPermission = true;
-                }
-            }
-
-            function gotoStep1(myValue, nextStep) {
+        $(function() { 
+            $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); 
+        });
+        
+        var pilotList = {{!pilotList}};
+        
+        var defaultHQCountry;
+        if ({!isMultiCountryNewAE}) {
+            defaultHQCountry = $('[id$=countrySelectedMC]').val();
+        } else {
             defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
+        }
+
+        var vOfficeType = '{!newCase.Reason1__c}';
+
+        var operationType = '{!sectorvalue}';
+        var hasPermission = true;
+
+        var isPilotCountry = pilotList[defaultHQCountry];
+        var isEUcountry = {!isEUcountry};
+
+        function setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector) {
+           if(namEnabled == 'true' && (sectorValue === 'Travel_Agent') && (isHOAccredited == 'false' || sector === 'Cargo Agent')) {
+                showProductComparisonLink = true;
+                hideProductComparisonLink = false;
+            } else {
+                hideProductComparisonLink = true;
+                showProductComparisonLink = false;
+            }
+        }
+
+        function setIsPilotCountry(isocode) {
+            isPilotCountry = pilotList[isocode];
+        }
+
+        function toggleCountries(v) {
+            if (v==undefined || v.indexOf('New BR Abroad')==-1){
+                updateAmsCountry();
+                $('#brcountry').show();
+                $('#brabroadcountries').hide();
+            }
+            else{
+                $('#brcountry').hide();
+                $('#brabroadcountries').show();
+            }
+        }
+
+        function toggleOfficeTypes(officeSelect, ctrylistid) {
+            var officeTypeSel = $('select[name="' + officeSelect + '"]');
+            vOfficeType = officeTypeSel.val();
+        }
+
+        function isInArray(arr, val) {
+            for(var i=0; i<arr.length; i++) {
+                if (arr[i] == val) return true;
+            }
+            return false;
+        }
+
+        function isChinaDomestic() {
+            var chinaAgentType;
+            var chinaAgentTypeId = '{!$Component.step1Form.step1Block.chinaagenttype}';
+
+            if(defaultHQCountry=='CN') {
+                var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]');
+                if(chinaAgentType.val() == 'Domestic') {
+                    console.log('in domestic');
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function checkBranchAbroad(nextStep) {
+            var countriesNotAllowedList = JSON.parse('{!jsonCountriesNotAllowedList}');
+
+            if({!isMultiCountryNewAE}) {
+                defaultHQCountry = $('[id$=countrySelectedMC]').val();
+            } else {
+                defaultHQCountry = $('[id$=countrySelected]').val();
+            }
+
+            if (isInArray(countriesNotAllowedList, defaultHQCountry)){
+                bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step1_Branch_Abroad_Not_Allowed)}", function(result) {
+                    if(result) {
+                        window.open('{!Portal_Login_URL}', '_blank');
+                    }
+                });
+                hasPermission = false;
+            } else {
+                document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
+                hasPermission = true;
+            }
+        }
+
+        function gotoStep1(myValue, nextStep) {
+            defaultHQCountry = ({!isMultiCountryNewAE}) ? $('[id$=countrySelectedMC]').val() : '{!newCase.IFAP_Country_ISO__c}';
+            
             if($('#brcountry').css('display') == 'none'){
                 checkBranchAbroad(nextStep);
             }
+
             if(hasPermission==true){
                 var $lists = $('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]');
                 vOfficeType = $lists.val();
                 var countriesMap = JSON.parse('{!jsonCountriesMap}');
                 var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
-                console.log('no empty voffice '+vOfficeType);
+
                 if('{!isNoticeOfChange}'=='true' || vOfficeType=='')
                     isAllowedCountry = 't';
                 else{
                     var idx = vOfficeType.indexOf(' - ');
-
-                    console.log('vOfficeType goto '+vOfficeType);
 
                     if( (vOfficeType.substring(idx + 3).trim() == 'Legacy') || (vOfficeType.includes('Standard')) || (vOfficeType.includes('AE'))){
                         operationType = 'Travel_Agent';
@@ -292,26 +278,19 @@
                         operationType = 'Cargo_Agent';
                     }
 
-                    // NHO -
-                    console.log('vOfficeType.substring(0, idx) ' + operationType+'-'+vOfficeType.substring(0, idx));
-
                     var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];
 
                     var isAllowedCountry = false;
-                    console.log('countryList ' + countryList);
+
                     if(defaultHQCountry != null && countryList != undefined) {
                         var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3];
                     }
-                    console.log('isAllowedCountry ' + isAllowedCountry);
-                    ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
+
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';
                     var langSel = $('select[name="' + langId + '"]');
                     var vLang = langSel.val();
 
-                        //For pilot only English & Spanish HO applications for pilot countries alllowed
-
-                    if( $('input[name="' + myValue + '"][value=Travel_Agent]').prop("checked")) {
-                        console.log('Travel China Domestic: ' + isChinaDomestic());
+                    if($('input[name="' + myValue + '"][value=Travel_Agent]').prop("checked")) {
                         if(isAllowedCountry=='f' || isChinaDomestic() ) {
                             bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Pax)}", function(result) {
                                 if(result) {
@@ -328,27 +307,25 @@
                             document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
                             hasPermission = true;
                         }
-                } else {
-                    if(isAllowedCountry=='f' || isChinaDomestic()) {
-                        // temporary for CNS
-                        console.log('{!communityName}');
-                        if('{!communityName}'==='CNS') {
-                            bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
-                                if(result) {
-                                    window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
-                                    if(isChinaDomestic()) {
-                                        window.open('https://www.iata-asd.com', '_blank');
-                                    } else {
-                                        window.open('https://mycnsc.com/accreditation/step1', '_blank');
-                                    }
-                                }
-                            });
-
-                        } else {
-
-                        bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo)}", function(result) {
+                    } else {
+                        if(isAllowedCountry=='f' || isChinaDomestic()) {
+                            if('{!communityName}'==='CNS') {
+                                bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
                                     if(result) {
                                         window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
+                                        
+                                        if(isChinaDomestic()) {
+                                            window.open('https://www.iata-asd.com', '_blank');
+                                        } else {
+                                            window.open('https://mycnsc.com/accreditation/step1', '_blank');
+                                        }
+                                    }
+                                });
+                            } else {
+                                bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo)}", function(result) {
+                                    if(result) {
+                                        window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
+                                
                                         if(isChinaDomestic()) {
                                             window.open('https://www.iata-asd.com', '_blank');
                                         } else {
@@ -357,21 +334,20 @@
                                     }
                                 });
                             }
-                        hasPermission = false;
+                            hasPermission = false;
+                        } else {
+                            document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
+                            hasPermission = true;
                         }
-
-                    else {
-                        document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
-                        hasPermission = true;
                     }
                 }
             }
+            console.log(hasPermission);
         }
-    }
 
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
         function resetStep1(v) {
             operationType = v ;
@@ -396,7 +372,6 @@
         }
 
         function getFileLink(fileName) {
-            // alert(''+fileName);
             $("#loading").show();
             setTimeout(function(){
             try{
@@ -428,7 +403,6 @@
     var vReqNo
 
     function resetUploadBar() {
-        //$('.uploadbar-' + vReqNo).css('width', '0%');
         $("#loading-" + vReqNo).hide();
     }
 
@@ -437,7 +411,7 @@
     }
 
     function redirectToPDF() {
-         window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
+        window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
     }
 
     </script>
@@ -622,35 +596,6 @@
 
 
                             <apex:outputpanel rendered="{!isNoticeOfChange}">
-                        <!--
-                                <apex:outputPanel rendered="{!isBankAccountChange==false}">
-                                    <div class="form-group">
-                                        <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Noc_Type_of_Change}:</label>
-                                        <div class="col-lg-9" style="top:7px">
-                                            <apex:panelGrid columns="8">
-                                                <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Is_change_bank_account_details__c==false,newForm.Is_change_legal_name__c==false,newForm.Is_change_location__c==false,newForm.Is_change_ownership_or_shareholding__c==false), 'requiredIndicator', '')}" value="{!newForm.Is_change_legal_name__c}" />
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Noc_Legal_Name}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                                <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Is_change_bank_account_details__c==false,newForm.Is_change_legal_name__c==false,newForm.Is_change_location__c==false,newForm.Is_change_ownership_or_shareholding__c==false), 'requiredIndicator', '')}" value="{!newForm.Is_change_location__c}" />
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Noc_Location}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                                <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Is_change_bank_account_details__c==false,newForm.Is_change_legal_name__c==false,newForm.Is_change_location__c==false,newForm.Is_change_ownership_or_shareholding__c==false), 'requiredIndicator', '')}" value="{!newForm.Is_change_ownership_or_shareholding__c}" />
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_NoC_Ownership_Shareholding}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                            </apex:panelGrid>
-                                        </div>
-                                    </div>
-                                </apex:outputPanel>
-
-                                <apex:outputText rendered="{!isBankAccountChange}">
-                                    <div class="form-group">
-                                        <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Noc_Type_of_Change}:</label>
-                                        <div class="col-lg-9" style="top:7px">
-                                            <apex:panelGrid columns="2">
-                                                <apex:inputCheckbox value="{!newForm.Is_change_bank_account_details__c}" selected="true" disabled="true"/>
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_NoC_Bank_acount_details}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                            </apex:panelGrid>
-                                        </div>
-                                    </div>
-                                </apex:outputText>
-                                -->
 
                                 <apex:outputpanel >
                                     <div class="form-group">
@@ -707,14 +652,14 @@
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:outputPanel rendered="{!isMultiCountryNewAE}">
-                                        <apex:selectList id="countrySelectedMC" required="false" styleClass="form-control" style="width:40%" value="{!newForm.Branch_Office_Country__c}" size="1">
+                                        <apex:selectList id="countrySelectedMC" required="false" styleClass="form-control" style="width:40%" value="{!mcformCountryISO}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
                                         </apex:selectList>
                                     </apex:outputPanel>    
                                     <apex:outputPanel rendered="{!NOT(isMultiCountryNewAE)}">
                                         <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
-                                        </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
+                                        </apex:selectList>
                                     </apex:outputPanel>
                                 </div>
                                 <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
@@ -722,7 +667,6 @@
                                 </div>
                             </div>
 
-                            <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
                             <apex:outputpanel id="langGSA">
                             <apex:actionRegion >
                                 <apex:outputpanel rendered="{!NOT(AND(BEGINS(sectorValue,'Cargo_Agent'), NOT(isNoticeOfChange)))}">
