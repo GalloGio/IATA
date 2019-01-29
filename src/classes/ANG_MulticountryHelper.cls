@@ -234,15 +234,17 @@ public class ANG_MulticountryHelper {
 	* @return String
 	*
 	*/
-	public static String getPaxRemittanceFrequencyByID(Id accreditationID){
+	private static String getPaxRemittanceFrequencyByID(Id accreditationID){
 		
 		List<AMS_Pax_Accreditation_Form__c> onlineAccred = [SELECT Remittance_frequency__c 
 															FROM AMS_Pax_Accreditation_Form__c
 															WHERE id = :accreditationID];
 
-		if(!onlineAccred.isEmpty()) return onlineAccred[0].Remittance_frequency__c;
+		String rf;
 
-		return '';
+		if(!onlineAccred.isEmpty()) rf = onlineAccred[0].Remittance_frequency__c;
+
+		return rf;
 	}
 
 
