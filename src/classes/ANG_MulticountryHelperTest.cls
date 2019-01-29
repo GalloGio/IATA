@@ -302,4 +302,85 @@ private class ANG_MulticountryHelperTest {
 
     }
 
+	@isTest static void cloneOwnersFromParentAccountTest() {
+
+		List<Account> accountLst = new List<Account>(
+			[SELECT 
+				Id , ParentId, Name
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Name IN ('Multicountry HE UK', 'Multicountry GE PT')
+			 ORDER BY
+			 	Name ASC
+			]
+		);
+
+		Account accountGE = accountLst.get(1).Name == 'Multicountry GE PT' ? accountLst.get(1) : accountLst.get(0);
+		Account accountAE = accountLst.get(1).Name == 'Multicountry GE PT' ? accountLst.get(0) : accountLst.get(1);
+
+		AMS_Oscar__c oscar = new AMS_OSCAR__c(
+        	RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+        	Account__c = accountGE.Id
+        );
+
+        insert oscar;
+
+        Case cse = new Case(
+        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+        	AccountId = accountGE.Id,
+        	Oscar__c = oscar.Id
+        );
+
+        insert cse;
+
+		AMS_Pax_Accreditation_Form__c onlineAccreditation  = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', SAAM_Case__c = cse.Id, Account_Name__c = accountGE.Name);
+        insert onlineAccreditation;
+
+		System.assertEquals('The Parent Account could not be found.',ANG_MulticountryHelper.cloneOwnersFromParentAccount(onlineAccreditation.Id),'Expecting: The Parent Account could not be found.');
+
+        Contact c1 = new Contact(AccountId = accountGE.id, Firstname = 'firstNAme', Lastname='LastNAme', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		insert c1;
+
+        Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+        
+        AMS_Account_Role__c accountRole = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = accountGE.Id, Person__c = null, Contact__c = c1.Id, Percentage__c=100.0);
+        insert accountRole;
+
+		Test.startTest();
+
+        Contact c2 = new Contact(AccountId = accountAE.id, Firstname = 'firstNAme', Lastname='LastNAme', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
+		insert c2;
+        
+        AMS_Account_Role__c accountRoleAE = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = accountAE.Id, Person__c = null, Contact__c = c1.Id, Percentage__c=100.0);
+        insert accountRoleAE;
+
+		//for the AE
+		AMS_Oscar__c oscarAE = new AMS_OSCAR__c(
+        	RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+        	Account__c = accountAE.Id
+        );
+
+        insert oscarAE;
+
+        Case cseAE = new Case(
+        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+        	AccountId = accountAE.Id,
+        	Oscar__c = oscarAE.Id
+        );
+
+        insert cseAE;
+
+		AMS_Pax_Accreditation_Form__c onlineAccreditationAE  = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', SAAM_Case__c = cseAE.Id, Account_Name__c = accountAE.Name);
+        insert onlineAccreditationAE;
+
+		String result = ANG_MulticountryHelper.cloneOwnersFromParentAccount(onlineAccreditationAE.Id);
+
+		System.assert(result == null);
+		System.assertEquals(1,[Select Id from AMS_Accreditation_Contact__c].size(),'The expected size is 1.');
+		System.assertEquals('You must provide a valid Online Accreditation Form Id.',ANG_MulticountryHelper.cloneOwnersFromParentAccount(null),'Expecting: You must provide a valid Online Accreditation Form Id.');
+		Test.stopTest();
+
+	}
+
 }

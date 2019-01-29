@@ -281,7 +281,7 @@
                 
                 <!-- SERVER FUNCTIONS -->
                 <apex:actionFunction name="saveServer" action="{!onSave}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus" onComplete="onSaveCompleteJs();{!IF(successfulSave, 'closeTab()', '')}"/>
-				<apex:actionFunction name="cloneContactsFromParent" action="{!cloneContactsFromParent}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus" onComplete="refreshTab()"/>
+				<apex:actionFunction name="cloneContactsFromParent" action="{!cloneContactsFromParent}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus"/>
 
                 <!-- AMSU-132 -->
                 <apex:actionFunction name="saveServerImport" action="{!saveImport}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus" />
@@ -321,9 +321,6 @@
                 <apex:outputPanel id="correctionWarningMessageNew" rendered="{!IF( isCorrection ,true, false)}">
                   <div class="slds-box slds-theme--warning" role="alert">
                     <div class="slds-notify__content slds-grid">
-                      <svg aria-hidden="true" class="slds-icon slds-icon--small slds-m-right--small slds-col slds-no-flex">
-                        <use xlink:href="{!URLFOR($Resource.SLDS103, 'assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
-                      </svg>
                       <div class="slds-col slds-align-middle">
                         <h5 class="slds-section-title" >Corrections done on the owners will be applied to all the agencies in the hierarchy.</h5>
                       </div>
@@ -351,7 +348,7 @@
                         </ul>
                     </nav>
                     <nav align="center">
-                    	<apex:commandButton rendered="{!isMCAEProcess}" onClick="cloneContactsFromParent();refreshTab();" id="cloneContactsFromParentBtn" styleClass="slds-button slds-button--brand" value="Clone Contacts from Parent"></apex:commandButton>
+                    	<apex:commandButton rendered="{!isMCAEProcess}" onClick="cloneContactsFromParent();return false;" id="cloneContactsFromParentBtn" styleClass="slds-button slds-button--brand" value="Clone Contacts from Parent"></apex:commandButton>
                 	</nav>
                     </div>
 
@@ -920,9 +917,6 @@
                 <div class="slds-modal__container">
                 <div class="slds-modal__header slds-border_right slds-border_left">
                     <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="closeTrainedStaffModal()">
-                      <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
-                        <use xlink:href="/assets/icons/action-sprite/svg/symbols.svg#close"></use>
-                      </svg>
                       <span class="slds-assistive-text">Close</span>
                     </button>
                     <h2 class="slds-text-heading--medium">Import Agency Regulation Certificates</h2>

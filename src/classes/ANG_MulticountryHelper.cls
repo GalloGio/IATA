@@ -20,7 +20,7 @@ public class ANG_MulticountryHelper {
 	* 
 	* @param acctId: Id 
 	* @param changeCode: String
-	* @return Boolean
+	* @return Boolean 
 	*
 	*/
 	private static Boolean parentHasChangeCode(Id acctId, String changeCode){
@@ -251,7 +251,7 @@ public class ANG_MulticountryHelper {
 		for(AMS_Account_Role__c contactRole: [Select Id, Owner_Account__c, Owner_Account__r.Name, Contact__c, Contact__r.FirstName, Contact__r.LastName, Contact_Email__c,Financial_Assessment_Contact__c,Percentage__c,Legacy_External_ID__c,Person__c, Person__r.First_Name__c, Person__r.Lastname__c, Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Person__r.Name, Contact_Phone__c from AMS_Account_Role__c where Account__c = :onlineForm.SAAM_Case__r.Account.ParentId and active__c = true and RecordTypeId = :AMS_Utils.AccountRoleOwnershipRT]){
 
 			String firstName = contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.FirstName : contactRole.Person__c <> null ? '' : contactRole.Owner_Name__c;
-			String lastName =  contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.FirstName : contactRole.Person__c <> null ? contactRole.Person__r.Name : contactRole.Owner_Name__c;
+			String lastName =  contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.LastName : contactRole.Person__c <> null ? contactRole.Person__r.Name : contactRole.Owner_Name__c;
 
 			AMS_Accreditation_Contact__c aContact = new AMS_Accreditation_Contact__c();
 				
@@ -259,7 +259,7 @@ public class ANG_MulticountryHelper {
 			aContact.Agency_owner__c = true;
 			aContact.Company__c = contactRole.Owner_Account__c;
 			aContact.Contact__c = contactRole.Contact__c;
-			aContact.Email__c = contactRole.Contact_Email__c;
+			aContact.Email__c = contactRole.Contact_Email__c; 
 			aContact.Financial_Assessment_Contact__c = contactRole.Financial_Assessment_Contact__c;
 			aContact.Financial_interest__c = contactRole.Percentage__c;
 			aContact.First_name__c = firstName;
