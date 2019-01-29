@@ -237,7 +237,7 @@
                 </apex:pageBlockSectionItem>
 
                  <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == true)}">
-                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>    
                     <apex:outputPanel >
                             <apex:outputLabel id="mRFLabel" value="{!remittanceFrequencyToShow}"/>
                             <apex:outputPanel id="multipick" style="display: none;">
@@ -289,10 +289,10 @@
         });
 
         function remittanceFrequencyChange() {
-            if(!({!isNewAE}||{!isNewMulticountryAE})){
+            if(!({!isNewAE}||({!isNewMulticountryAE} && {!isAEAccount}))){
                 $('[id$=saveButton]')[0].style.display = '';
                 $('[id$=cancelButton]')[0].style.display = '';
-            }
+            }   
         }
 
         function showMultiPick() {
@@ -303,7 +303,7 @@
         }
 
         function showCPickList() {
-            if(!({!isNewAE}||{!isNewMulticountryAE})){
+            if(!({!isNewAE}||({!isNewMulticountryAE} && {!isAEAccount}))){
                 $('[id$=cPicklist]')[0].style.display = '';
                 $('[id$=outputRF]')[0].style.display = 'none';
             }

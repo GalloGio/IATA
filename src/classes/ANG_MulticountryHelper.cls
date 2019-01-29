@@ -231,4 +231,38 @@ public class ANG_MulticountryHelper {
 
 	}
 
-}	
+   /**
+	* Gets the Remittance frequency from the current AMS Online Accreditation
+	*
+	* @param accreditationID: ID
+	* @return String
+	*
+	*/
+	private static String getPaxRemittanceFrequencyByID(Id accreditationID){
+		
+		List<AMS_Pax_Accreditation_Form__c> onlineAccred = [SELECT Remittance_frequency__c 
+															FROM AMS_Pax_Accreditation_Form__c
+															WHERE id = :accreditationID];
+
+		String rf;
+
+		if(!onlineAccred.isEmpty()) rf = onlineAccred[0].Remittance_frequency__c;
+
+		return rf;
+	}
+
+
+	/**
+	 * Verifies if an MC HE account has an empty Remittance_frequency__c
+	 * NEWGEN-4850
+	 * 
+	 * @param oscar: AMS_OSCAR__c
+	 * @return Boolean
+	 */
+	public static Boolean accountHEhasRemittenceFrequencyEmpty(AMS_OSCAR__c oscar){
+		return ((String.isEmpty(getPaxRemittanceFrequencyByID(oscar.AMS_Online_Accreditation__c)))
+			&& oscar.Location_Type__c == AMS_Utils.HE
+			&& oscar.Process__c == AMS_Utils.MCAE);
+	}
+
+}

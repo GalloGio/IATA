@@ -16,6 +16,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isNewGenProcess{get;set;}
     public Boolean isNewAE{get{return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
     public Boolean isNewMulticountryAE{get{return (oscarObj.Process__c == AMS_Utils.MCAE);}set;}
+    public Boolean isAEAccount{get{return (oscarObj.Location_Type__c == AMS_Utils.AE);}set;}
     public Boolean displayErrorMsg{get{return false;} set;}
 	public Boolean showStagingArea {get; set;}
 	
@@ -197,8 +198,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(fieldName == 'IATACode__c') return false;
         //if(fieldName == 'Location_Class__c' && isNewGenProcess) return false;
         //if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
-        if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;
-        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && (oscarObj.Process__c == AMS_Utils.NEWAE || oscarObj.Process__c == AMS_Utils.MCAE)) return false;     
+        if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;  
+        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && (oscarObj.Process__c == AMS_Utils.NEWAE || (oscarObj.Process__c == AMS_Utils.MCAE && isAEAccount))) return false;     
 
         if(!isAgencyChanges && !isAgencyCorrection) return true;     
 
@@ -307,7 +308,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 
 
                // for new HE Accreditations get the values from the BSP configuration of all BSP operation codes related to this country
-                if(oscarObj.Process__c == AMS_Utils.NEWHELITE || oscarObj.Process__c == AMS_Utils.NEWHESTANDARD || oscarObj.Process__c == AMS_Utils.NEWGESTANDARD) {
+                if(oscarObj.Process__c == AMS_Utils.MCAE || oscarObj.Process__c == AMS_Utils.NEWHELITE || oscarObj.Process__c == AMS_Utils.NEWHESTANDARD || oscarObj.Process__c == AMS_Utils.NEWGESTANDARD) {
 
                     for(AMS_Operation__c operation :operationCodes) {
                         for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
@@ -629,7 +630,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             this.accreditationObj = fetchAccreditationFields(this.oscarObj.AMS_Online_Accreditation__c);
             this.isCargoAgency = AMS_Utils.LocationClassDGR.contains(accreditationObj.Location_Class__c);
             this.isCertificationOSCAR = oscarObj.Process__c == AMS_Utils.CERTIFICATION;
-            this.isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscarObj.Process__c);
+            this.isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscarObj.Process__c); 
  
         }else{
             System.debug('## Could not fetch any Oscar or does not have an accreditation object');
@@ -688,7 +689,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
                         ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c,
                         AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, STEP6__c, //FM AMSU-1
-                        Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c //AMSU-151 
+                        Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c, //AMSU-151 
+                        Location_Type__c  //NEWGEN-4850
                         FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;

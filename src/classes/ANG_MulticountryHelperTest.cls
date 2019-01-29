@@ -302,4 +302,52 @@ private class ANG_MulticountryHelperTest {
 
     }
 
+
+    @isTest static void testAccountHEhasRemittenceFrequencyEmpty() {
+
+    	List<Account> accountLst = new List<Account>(
+			[SELECT Id 
+			 FROM  	Account 
+			 WHERE  Name IN ('Multicountry HE UK')
+			 ORDER BY Name ASC
+			]);
+
+		Account accountHE = accountLst.get(0);
+
+		AMS_Oscar__c oscar = new AMS_OSCAR__c(
+        	RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+        	Account__c = accountHE.Id,
+        	Process__c = AMS_Utils.MCAE
+        );
+
+        insert oscar;
+
+		Case cse = new Case(
+        	RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+        	AccountId = accountHE.Id,
+        	Oscar__c = oscar.Id
+        );
+
+        insert cse;
+
+		AMS_Pax_Accreditation_Form__c paxAccreditation = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.Id);
+		insert paxAccreditation; 
+
+		oscar.AMS_Online_Accreditation__c = paxAccreditation.id;
+		update oscar;
+
+		AMS_Oscar__c oscar2 = [SELECT Id, Account__c, Process__c, Location_Type__c, AMS_Online_Accreditation__c 
+								FROM AMS_Oscar__c WHERE Account__c = : accountHE.Id limit 1];
+
+		Test.startTest();
+
+		Boolean hasRF = ANG_MulticountryHelper.accountHEhasRemittenceFrequencyEmpty(oscar2);
+
+    	Test.stopTest();
+    	
+    	//Has empty Remittance Frequency 
+    	System.assert(hasRF); 
+
+    }
+
 }
