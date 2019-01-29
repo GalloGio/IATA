@@ -310,7 +310,9 @@ public class ISSP_ICCS_ServiceController{
 		
 		currentComponent = ISSP_ICCS_Utils.Page.HOMEPAGE;
 
-		checkLogginAs();
+		if(!Test.isRunningTest()){
+			checkLogginAs();
+        }
 		
 		if(!isActivePortalUser){
 			setMessage(Label.ICCS_Homepage_UnapprovedUser, false);
