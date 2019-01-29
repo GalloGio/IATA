@@ -308,9 +308,9 @@
                                         <apex:pageBlockTable id="onGoingMultiCountryForms" value="{!multiCountryApplicationForms}" var="mcForm" styleClass="table" rendered="{!mcApplicationFormsFound}">
                                             
                                             <apex:column headerValue="">
-                                                <apex:outputLink value="/{!IF(mcForm.HO_Account__c != null, 'ISSP_ANG_PAX_HE', 'ISSP_ANG_PAX_AE?isMultiCountryNewAE=true&')}?caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}&modify=true" rendered="{!mcForm.Status__c == 'Completed'}">Modify</apex:outputLink>
+                                                <apex:outputLink value="/{!IF(mcForm.HO_Account__c != null, 'ISSP_ANG_PAX_HE?', 'ISSP_ANG_PAX_AE?isMultiCountryNewAE=true&')}caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}&modify=true" rendered="{!mcForm.Status__c == 'Completed'}">Modify</apex:outputLink>
                                                 
-                                                <apex:outputLink value="/{!IF(mcForm.HO_Account__c != null, 'ISSP_ANG_PAX_HE', 'ISSP_ANG_PAX_AE?isMultiCountryNewAE=true&')}?caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!mcForm.Status__c == 'InProgress'}">Edit</apex:outputLink>&nbsp;
+                                                <apex:outputLink value="/{!IF(mcForm.HO_Account__c != null, 'ISSP_ANG_PAX_HE?', 'ISSP_ANG_PAX_AE?isMultiCountryNewAE=true&')}caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!mcForm.Status__c == 'InProgress'}">Edit</apex:outputLink>&nbsp;
 
                                                 <apex:commandLink immediate="true" onfocus="confirmMCFormDelete('{!mcForm.Id}'); return false;" rendered="{!mcForm.HO_Account__c == null}" reRender="">Remove</apex:commandLink>
                                             </apex:column>
