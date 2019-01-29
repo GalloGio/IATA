@@ -20,7 +20,7 @@ public class ANG_MulticountryHelper {
 	* 
 	* @param acctId: Id 
 	* @param changeCode: String
-	* @return Boolean
+	* @return Boolean 
 	*
 	*/
 	private static Boolean parentHasChangeCode(Id acctId, String changeCode){

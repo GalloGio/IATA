@@ -24,6 +24,17 @@ public with sharing class AMS_AccreditationContactController {
     public boolean isNewProcess {get; set;}
     public boolean isChangeProcess {get; set;}
     public boolean isNewGenProcess {get; set;}
+    
+    public boolean isMCAEProcess{
+        get{
+		if(this.aoa == null)
+			return false;
+		else
+			return this.aoa.SAAM_Case__r.OSCAR__r.Process__c ==AMS_Utils.MCAE;
+    	}
+        set;
+    }
+    
     public List<AMS_Agency_Regulation__c> agRegList {get; set;} //AMSU-132
 
     public List<AgRegItemWrapper> agRegValuesForDisplay{ //AMSU-132
@@ -1278,5 +1289,70 @@ public with sharing class AMS_AccreditationContactController {
 
             this.trainedStaffWrapper.add(new TrainedStaffWrapper(ac));
         }
+    }
+    
+    public void cloneContactsFromParent(){
+		
+        if(this.aoa == null || this.aoa.Id == null){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Could not find Staging Area identifier.'));
+            return;
+        }
+
+        acWrapper = new List<AccreditationContactWrapper>();
+        accountWrapper = new List<AccountWrapper>();
+        trainedStaffWrapper = new List<TrainedStaffWrapper>();
+        
+        delete [Select Id from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c =:this.aoa.Id];
+
+		String result = ANG_MulticountryHelper.cloneOwnersFromParentAccount(this.aoa.Id);
+        
+        if(result != null){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, result));
+            return;
+        }
+
+        String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
+        String query = 'select ' + commaSeparatedFields + ', Company__r.Legal_Name__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c from AMS_Accreditation_Contact__c where  RecordType.DeveloperName IN (\'Company\',\'Current_Company_Owner\',\'Current_Owner\',\'Person\', \'Trained_Staff\') and AMS_Pax_Accreditation_Form__c = \'' + this.aoa.Id + '\'';
+        acList = Database.query(query);
+
+        System.debug('acList is:'+acList);
+        
+        if(acList.isEmpty())
+            return;
+            
+        // Need to go over the list to get to know if any Companies belong to the ownership to get a map of Ac.Id and Account
+        Set<Id> accountsToLoadSet = new Set<Id>();
+        
+        for(AMS_Accreditation_Contact__c acTemp : acList)
+            if(accreditationContactRT.get(acTemp.RecordTypeId) == 'Company')
+                accountsToLoadSet.add(acTemp.Company__c);
+            
+            
+        Map<Id, Account> accList = new Map<Id, Account>();
+        
+        if(!accountsToLoadSet.isEmpty())
+            accList = new Map<Id, Account>([select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c from Account where Id in :accountsToLoadSet]);
+
+        AccreditationContactWrapper wrapper;
+        AccountWrapper accWrapper;
+        
+        for(AMS_Accreditation_Contact__c ac : acList){
+            if(accreditationContactRT.get(ac.RecordTypeId) == 'Trained Staff')
+                trainedStaffWrapper.add(new TrainedStaffWrapper(ac));
+            else if(accreditationContactRT.get(ac.RecordTypeId) != 'Company'){
+                wrapper = new AccreditationContactWrapper(ac);
+                acWrapper.add(wrapper); 
+            } else
+            {
+                if(accList.get(ac.Company__c) != null)
+                    accWrapper = new AccountWrapper(ac, accList.get(ac.Company__c), accList.get(ac.Company__c).Id, false);
+                else
+                    accWrapper = new AccountWrapper(ac, new Account(), '', false);
+
+                accountWrapper.add(accWrapper); 
+            }
+        }
+
+        System.debug('acWrapper:'+acWrapper);
     }
 }
