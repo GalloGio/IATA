@@ -454,8 +454,6 @@
       $j(document).ready(function () {
         document.getElementById(ownerModalFields[3]).value = '{!JSENCODE(amsCountryLabel)}';
         document.getElementById(ownerModalFields[3]).disabled = true;
-        //replaceShippingTXT(document.body);
-        console.log('vHQAccountId: ' + retAddressCompUrl());
 
         if ({!modifyForm}) updateStatus();
       });

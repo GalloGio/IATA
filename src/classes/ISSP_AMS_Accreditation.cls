@@ -509,6 +509,7 @@ public without sharing class ISSP_AMS_Accreditation {
             fetchCase(vSAAMCaseId);
 
             if (newCase != null) {
+                System.debug('asd');
                 if (newCase.IFAP_Country_ISO__c == null) {
                     //If case created internally by IATA, for user, then set country from the contact's Account
                     newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
@@ -676,7 +677,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     if (!String.isEmpty(currentMCFormId)) {
                         newForm.Status__c = 'InProgress';
-                        newForm.Id = currentMCFormId;
                     }
 
                     //Validation error flag is set in STEP 5 (when submitting to IATA); redirects back to STEP 3
@@ -1870,8 +1870,6 @@ public without sharing class ISSP_AMS_Accreditation {
             if (String.isBlank(String.ValueOf(newForm.SAAM_Case__c))) newForm.SAAM_Case__c = newCase.Id;
 
             if (isMultiCountryNewAE) newform.HO_Account__c = null;
-            
-            if (!String.isEmpty(currentMCFormId)) newForm.Id = currentMCFormId;
                  
             upsert newForm;
 
@@ -3434,38 +3432,37 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private string getApplicationTypeLabel(string amsLocationType) {
-        if (amsLocationType == AMS_Utils.TYPE_EACP_HO)
+        if (amsLocationType == AMS_Utils.TYPE_EACP_HO) {
             return Label.ISSP_AMS_OPTION_EACP_HO;
-        else if (amsLocationType == AMS_Utils.TYPE_EACP_BRANCH)
+        } else if (amsLocationType == AMS_Utils.TYPE_EACP_BRANCH) {
             return Label.ISSP_AMS_OPTION_EACP_BRANCH;
-        else if (amsLocationType == AMS_Utils.TYPE_CGO_HO)
+        } else if (amsLocationType == AMS_Utils.TYPE_CGO_HO) {
             return isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO;
-        else if (amsLocationType == AMS_Utils.TYPE_CGO_BRANCH)
+        } else if (amsLocationType == AMS_Utils.TYPE_CGO_BRANCH) {
             return Label.ISSP_AMS_OPTION_CGO_BRANCH;
-        else if (amsLocationType == AMS_Utils.TYPE_CASS_ASSOC_HO)
+        } else if (amsLocationType == AMS_Utils.TYPE_CASS_ASSOC_HO) {
             return Label.ISSP_AMS_OPTION_CASS_ASSOC_HO;
-        else if (amsLocationType == AMS_Utils.TYPE_CASS_ASSOC_BRANCH)
+        } else if (amsLocationType == AMS_Utils.TYPE_CASS_ASSOC_BRANCH) {
             return Label.ISSP_AMS_OPTION_CASS_ASSOC_BRANCH;
-        else if (amsLocationType == AMS_Utils.TYPE_IMPORT_HO)
+        } else if (amsLocationType == AMS_Utils.TYPE_IMPORT_HO) {
             return Label.ISSP_AMS_OPTION_IMPORT_HO;
-        else if (amsLocationType == AMS_Utils.TYPE_IMPORT_BRANCH)
+        } else if (amsLocationType == AMS_Utils.TYPE_IMPORT_BRANCH) {
             return Label.ISSP_AMS_OPTION_IMPORT_BRANCH;
-        else if (amsLocationType == AMS_Utils.TYPE_COURIER_HO)
+        } else if (amsLocationType == AMS_Utils.TYPE_COURIER_HO) {
             return Label.ISSP_AMS_OPTION_COURIER_HO;
-        else if (amsLocationType == AMS_Utils.TYPE_COURIER_BRANCH)
+        } else if (amsLocationType == AMS_Utils.TYPE_COURIER_BRANCH) {
             return Label.ISSP_AMS_OPTION_COURIER_BRANCH;
-        else if (amsLocationType == AMS_Utils.TYPE_PAX_HO)
+        } else if (amsLocationType == AMS_Utils.TYPE_PAX_HO) {
             return Label.ISSP_AMS_OPTION_PAX_HO;
-        else if (amsLocationType == AMS_Utils.TYPE_PAX_BRANCH_ABROAD_PSA) 
+        } else if (amsLocationType == AMS_Utils.TYPE_PAX_BRANCH_ABROAD_PSA) {
             return Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD;
-        else if (amsLocationType == AMS_Utils.TYPE_PAX_AE_CASH || amsLocationType == AMS_Utils.TYPE_PAX_AE_NO_CASH || amsLocationType == AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY) //NEWGEN - 552
+        } else if (amsLocationType == AMS_Utils.TYPE_PAX_AE_CASH || amsLocationType == AMS_Utils.TYPE_PAX_AE_NO_CASH || amsLocationType == AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY) {
             return Label.ISSP_ANG_OPTION_PAX_AE;
-        else if (amsLocationType == AMS_Utils.TYPE_HE_ST_CASH || amsLocationType == AMS_Utils.TYPE_HE_MULTICOUNTRY)
+        } else if (amsLocationType == AMS_Utils.TYPE_HE_ST_CASH || amsLocationType == AMS_Utils.TYPE_HE_MULTICOUNTRY) {
             return Label.ISSP_ANG_OPTION_PAX_HE_standard;
-        else if (amsLocationType == AMS_Utils.TYPE_HE_LITE_NO_CASH)
+        } else if (amsLocationType == AMS_Utils.TYPE_HE_LITE_NO_CASH) {
             return Label.ISSP_ANG_OPTION_PAX_HE_lite;
-        else
-            return Label.ISSP_AMS_OPTION_PAX_BRANCH;
+        } else return Label.ISSP_AMS_OPTION_PAX_BRANCH;
     }
 
     public AMS_Accreditation_Country_CheckList__c CountryCheckList {
@@ -5101,6 +5098,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         if(newForm.ISSP_AMS_Legal_Status__c == null){
+            System.debug('try1');
             newForm.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
             ngErrorFoundBR = true;
         }
@@ -5380,6 +5378,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         }
 
                         if (newForm.ISSP_AMS_Legal_Status__c == null) {
+                            System.debug('try2');
                             newForm.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
                             errorFound = true;
                         }
@@ -5480,7 +5479,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     //Legal / Registered name required for Branches Abroad, Terminated Agent and Accred Agent applying for New HO
                     if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || isTerminatedAgent || isNewHOforAccredAgent) {
-                        if (newForm.Account_Name__c == null) { //rui
+                        if (newForm.Account_Name__c == null) {
                             newForm.Account_Name__c.addError(Label.ISSP_YouMustEnter);
                             errorFound = true;
                         }
@@ -5550,7 +5549,9 @@ public without sharing class ISSP_AMS_Accreditation {
                     if(validateNewAccModelBranch(true)) errorFound = true;
                 }
 
-                if (!validateBROfficeDetails()) errorFound = true;
+                if (!validateBROfficeDetails() && !isMultiCountryNewAE) {
+                    errorFound = true;
+                }
 
                 if (newForm.ISSP_AMS_VAT_Number_Input__c == null && isocountry.Hide_Tax_Number_VAT__c == false) {
                     newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_YouMustEnter);
@@ -5570,26 +5571,28 @@ public without sharing class ISSP_AMS_Accreditation {
                 errorFound = true;
             }
 
-            if (CountryCheckList.Registration_required__c) {
-                if (newForm.ISSP_AMS_Trade_Reg_No__c == null) {
-                    newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
-                    errorFound = true;
+            if (CountryCheckList != null) {
+                if (CountryCheckList.Registration_required__c) {
+                    if (newForm.ISSP_AMS_Trade_Reg_No__c == null) {
+                        newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+
+                    if (newForm.ISSP_AMS_Date_Registration_granted__c == null) {
+                        newForm.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
                 }
 
-                if (newForm.ISSP_AMS_Date_Registration_granted__c == null) {
-                    newForm.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
-                    errorFound = true;
-                }
-            }
-
-            if (CountryCheckList.License_required__c) {
-                if (newForm.ISSP_AMS_License_No__c == null) {
-                    newForm.ISSP_AMS_License_No__c.addError(Label.ISSP_YouMustEnter);
-                    errorFound = true;
-                }
-                if (newForm.ISSP_AMS_Date_License_granted__c == null) {
-                    newForm.ISSP_AMS_Date_License_granted__c.addError(Label.ISSP_YouMustEnter);
-                    errorFound = true;
+                if (CountryCheckList.License_required__c) {
+                    if (newForm.ISSP_AMS_License_No__c == null) {
+                        newForm.ISSP_AMS_License_No__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+                    if (newForm.ISSP_AMS_Date_License_granted__c == null) {
+                        newForm.ISSP_AMS_Date_License_granted__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
                 }
             }
 
@@ -6131,7 +6134,9 @@ public without sharing class ISSP_AMS_Accreditation {
                 errorFound = true;
             }
 
-            if (!validateBROfficeDetails()) errorFound = true;
+            if (!validateBROfficeDetails()) {
+                errorFound = true;
+            }
         }
         
         if (newForm.Est_Future_Sales__c == null) {
