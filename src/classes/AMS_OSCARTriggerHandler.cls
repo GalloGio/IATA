@@ -3376,6 +3376,10 @@ public class AMS_OSCARTriggerHandler {
                     updatedOscar.addError(Label.ANG_Multicountry_Process_Parent_Account_Error);
                 }
 
+                //NEWGEN-4850
+                if(ANG_MulticountryHelper.accountHEhasRemittenceFrequencyEmpty(updatedOscar)) updatedOscar.addError('Approval can\'t be set if Remittance frequency is empty');
+                
+
                 if (updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD && updatedOscar.STEP34__c != AMS_Utils.PASSED)
                      updatedOscar.addError('Approval can\'t be set if Request financial security step is not Passed.');
 

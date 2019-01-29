@@ -283,7 +283,10 @@ public class AMS_AgencyAChangeCodeHandler {
         Id rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         Id newNGRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
-        Set<Id> oscarRecordTypes = new Set<Id>{rtNew,newNGRT};
+        //NEWGEN-4850
+        Id rtMC = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Multicountry_AE');
+
+        Set<Id> oscarRecordTypes = new Set<Id>{rtNew,newNGRT,rtMC};
 
         Set<Id> oscarIds = new Set<Id>();
 
@@ -292,7 +295,7 @@ public class AMS_AgencyAChangeCodeHandler {
                 oscarIds.add(code.OSCAR__c);
             }
         }
-
+         
         //let's first find the OSCAR that need to be migrated
         List<AMS_OSCAR__c> oscarsToCopyData = new List<AMS_OSCAR__c>();
         List<AMS_OSCAR__c> oscarsToUpdateAppointments = new List<AMS_OSCAR__c>();

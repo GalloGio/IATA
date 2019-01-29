@@ -437,53 +437,6 @@ private class AMS_OSCAR_AutomationTest {
         	System.assertEquals(false, factory.processWork(event, oscar));
 
         
-        	/*
-        	 	Step 46 
-        	*/
-        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step46_passed');
-        	System.assertEquals(true, factory.processWork(event, oscar));
-        
-        	
-        	/*
-        	 	Step 47
-        	*/
-        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step47_passed');
-        	System.assertEquals(true, factory.processWork(event, oscar));
-        	System.assertEquals(AMS_Utils.IN_PROGRESS, oscar.STEP48__c);
-        
-        
-        	/*
-        	 	Step 48
-        	*/
-        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_passed');
-        	System.assertEquals(true, factory.processWork(event, oscar));
-        	System.assertEquals('Paid', oscar.Invoice_status__c);
-        
-        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_failed');
-        	System.assertEquals(true, factory.processWork(event, oscar));
-        	System.assertEquals('Outstanding', oscar.Invoice_status__c);
-        
-       		factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_notApplicable');
-        	System.assertEquals(true, factory.processWork(event, oscar));
-        	System.assertEquals('N/A', oscar.Invoice_status__c);
-        
-        
-        	/*
-        	 	Step 49
-        	*/
-        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step49_passed');
-        	System.assertEquals(true, factory.processWork(event, oscar));
-        
-        
-        	/*
-        	 	Step 50
-        	*/
-        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step50_passed');
-        	System.assertEquals(true, factory.processWork(event, oscar));
-        
-        	factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step50_failed');
-        	System.assertEquals(true, factory.processWork(event, oscar));
-        
 		Test.stopTest();
 
 	}
