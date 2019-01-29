@@ -1406,7 +1406,6 @@ public with sharing class AMS_OSCAR_Automation {
 
                 if(oscar.Endorsement_Requested__c){
                     oscar.Endorsement_requested_date__c = Date.today();
-                    oscar.step49__c = 'Passed';
                 } 
                 res = true;
             }
