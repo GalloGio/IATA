@@ -527,7 +527,7 @@
         });
 
         hasBSP = Boolean(hasBSP);
-        if(!fileFormat || operations.length < 1 || (hasBSP && remittance.length < 1) || countries.length < 1) {
+        if(!fileFormat || operations.length < 1 || (hasBSP && remittance.length < 1) || (countries.length < 1 && opt == 'custom')) {
             alert("{!$Label.ISSP_FDS_FillAllFields}");
             return;
         }
