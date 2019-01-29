@@ -56,8 +56,8 @@ public class ANG_GDIRemoteInvocationTest {
 		testSetup('USD',false);
 
 		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567',
-                                                           RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Remote_Invocation__c','ANG_IEP_MODEL_A'),
-															Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+                                                           RecordTypeId = RemoteInvocationTriggerHandler.RECTYPE_GDI,
+															Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO,
 															status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
 		
 		insert ri;
@@ -79,7 +79,7 @@ public class ANG_GDIRemoteInvocationTest {
 		testSetup('EUR',false);
 
 		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567', 
-			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO,
 			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING, currencyisoCode = 'USD');
 		
 		insert ri;
@@ -105,7 +105,7 @@ public class ANG_GDIRemoteInvocationTest {
 		testSetup('EUR',false);
 
 		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1111111', 
-			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO,
 			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING, currencyisoCode = 'USD');
 		
 		insert ri;
@@ -132,7 +132,7 @@ public class ANG_GDIRemoteInvocationTest {
 		testSetup('EUR',false);
 
 		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1111111', 
-			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO,
 			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING, currencyisoCode = 'USD');
 		
 		insert ri;
@@ -160,7 +160,7 @@ public class ANG_GDIRemoteInvocationTest {
 		testSetup('EUR',true);
 
 		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567', 
-			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = 'GDI',
+			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO,
 			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING, currencyisoCode = 'USD');
 		
 		insert ri;

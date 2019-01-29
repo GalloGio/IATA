@@ -92,9 +92,9 @@
                     <label>NewGen - Easy Pay Model A</label>
                 </value>
                 <value>
-                    <fullName>GDI</fullName>
+                    <fullName>GDI_ENDORSMENT</fullName>
                     <default>false</default>
-                    <label>GDI</label>
+                    <label>GDI_ENDORSMENT</label>
                 </value>
                 <value>
                     <fullName>TIP_IFG_REPORT</fullName>
@@ -193,11 +193,61 @@ When MS sets “In Progress”, trigger to fire</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDI</fullName>
+                <fullName>GDI_ENDORSMENT</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TIP_IFG_REPORT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
+            <values>
+                <fullName>IEP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initializing</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>GDI_ENDORSMENT</fullName>
+        <active>true</active>
+        <label>GDI ENDORSMENT</label>
+        <picklistValues>
+            <picklist>Request_Type__c</picklist>
+            <values>
+                <fullName>ANG_IEP_MODEL_A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP_IFG_REPORT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDI_ENDORSMENT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -240,6 +290,10 @@ When MS sets “In Progress”, trigger to fire</description>
             <picklist>Request_Type__c</picklist>
             <values>
                 <fullName>ANG_IEP_MODEL_A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDI_ENDORSMENT</fullName>
                 <default>false</default>
             </values>
             <values>

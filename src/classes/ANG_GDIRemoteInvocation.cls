@@ -14,7 +14,7 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 		Set<Remote_Invocation__c> remoteInvocationsGDI = new Set<Remote_Invocation__c>();
 
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess)
-			if(ri.Request_Type__c == 'GDI')	remoteInvocationsGDI.add(ri);
+			if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO) remoteInvocationsGDI.add(ri);
 
 		if(remoteInvocationsGDI.isEmpty()) return;
 
@@ -76,7 +76,7 @@ public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocatio
 		Set<String> currencyIsoCodeToFetch = new Set<String>();
 
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
-			if(ri.Request_Type__c == 'GDI') remoteInvocationsGDI.add(ri);
+			if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO) remoteInvocationsGDI.add(ri);
 			currencyIsoCodeToFetch.add(ri.currencyISOCode);	
 		}
 
