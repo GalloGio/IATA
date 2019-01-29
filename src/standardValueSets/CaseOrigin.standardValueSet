@@ -1167,6 +1167,11 @@
         <label>Funds Management</label>
     </standardValue>
     <standardValue>
+        <fullName>GDI Portal</fullName>
+        <default>false</default>
+        <label>GDI Portal</label>
+    </standardValue>
+    <standardValue>
         <fullName>IATA Americas - ID Card (CA)</fullName>
         <default>false</default>
         <label>IATA Americas - ID Card (CA)</label>
