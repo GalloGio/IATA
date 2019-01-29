@@ -48,7 +48,10 @@
 
 <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
     <aura:if isTrue="{!!v.opted_out}">
-        <button class="btn btn-primary slds-float_right" type="submit" onclick="{!c.saveAll}" >Save All Changes</button> <br />
+        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 positionRight">
+            <button class="btn btn-primary buttonSelectAllSpace" type="submit" onclick="{!c.selectAll}" >Select All</button>
+            <button class="btn btn-primary " type="submit" onclick="{!c.saveAll}" >Save All Changes</button>
+        </div>
     </aura:if>
 </div>
 <br />

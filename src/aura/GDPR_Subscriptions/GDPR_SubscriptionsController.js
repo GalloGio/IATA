@@ -47,5 +47,18 @@
 		cmp.set("v.unsubscribe", evt.getParam("optout"));
 	},
 
+	selectAll : function(cmp, evt, hlp) {
+		var allNewletters = cmp.get("v.newsletters");
+		for (var i = 0; i < allNewletters.length; i++) { 
+			allNewletters[i].selected = true;
+		}
+		cmp.set("v.newsletters", allNewletters);
+
+		var allProducts = cmp.get("v.products");
+		for (var i = 0; i < allProducts.length; i++) { 
+			allProducts[i].selected = true;
+		}
+		cmp.set("v.products", allProducts);
+	}
 	
 })

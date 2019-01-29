@@ -11,3 +11,11 @@
     color:red;
     font-weight: bold;
 }
+
+.THIS .positionRight{
+    text-align: right;
+}
+
+.THIS .buttonSelectAllSpace {
+    margin-right: 10px;
+}

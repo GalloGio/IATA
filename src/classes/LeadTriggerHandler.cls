@@ -82,7 +82,8 @@ public class LeadTriggerHandler {
 
         //Map the emails with the leads looping on oldLeads because the change field could be Email itself
         for(Lead l : oldLeads){
-            mapEmailLead.put(l.Email.toLowerCase(), l);
+            String email = String.isBlank(l.Email) ? null : l.Email.toLowerCase();
+            mapEmailLead.put(l.email, l);
         }
    
         List<String> individualsToSearchByEmail = new List<String>(mapEmailLead.keySet());
@@ -92,17 +93,18 @@ public class LeadTriggerHandler {
         for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
                 System.debug('[INDIVIDUAL] - '+i);
                 //Get the respective Lead with the new version of the object
-                Lead newLead = newLeadMap.get(mapEmailLead.get(i.Email__c.toLowerCase()).Id);
+                String email = String.isBlank(i.Email__c) ? null : i.Email__c.toLowerCase();
+                Lead newLead = newLeadMap.get(mapEmailLead.get(email).Id);
 
                
                     //Save the individual email before update
-                    individualsToUpdateEmails.add(i.Email__c.toLowerCase());
+                    individualsToUpdateEmails.add(email);
 
                     //update the individual record with Lead data
                     i.FirstName = newLead.FirstName;
                     i.LastName = newLead.LastName;
                     i.Salutation = newLead.Salutation;
-                    i.Email__c = newLead.Email.toLowerCase();
+                    i.Email__c = email;
                     i.Area_of_Interest__c = newLead.Pardot_Area_of_Interest__c;
                     // extend missing mapping
                     i.job_title__c = newLead.title;
@@ -199,9 +201,7 @@ public class LeadTriggerHandler {
         List<Id> individualsToDeleteIds = new List<Id>(mapIdIndividual.keySet());
         List<Individual> individualsToDelete = [SELECT ID FROM Individual WHERE Id in :individualsToDeleteIds];
 
-        Database.DeleteResult[] results = Database.delete(individualsToDeleteIds, false);
-
-        System.debug('DeleteResult - '+results);
+         if(! individualsToDelete.isEmpty()) Database.delete(individualsToDeleteIds, false);
 
     }
 

@@ -28,4 +28,13 @@
 		cmp.set("v.opted_out", evt.getParam("optout"));
 		cmp.set("v.unsubscribe", evt.getParam("optout"));
 	},
+
+	selectAll : function(cmp, evt, hlp) {
+		var allInterests = cmp.get("v.interests");
+		
+		for (var i = 0; i < allInterests.length; i++) { 
+			allInterests[i].selected = true;
+		}
+		cmp.set("v.interests", allInterests);
+	}
 })

@@ -82,7 +82,8 @@ public class GDPR_ContactHandler {
 
         //Map the emails with the contacts looping on oldcontacts because the change field could be Email itself
         for(contact l : oldcontacts){
-            mapEmailcontact.put(l.Email.toLowerCase(), l);
+            String email = String.isBlank(l.Email) ? null : l.Email.toLowerCase();
+            mapEmailcontact.put(email, l);
         }
    
         List<String> individualsToSearchByEmail = new List<String>(mapEmailcontact.keySet());
@@ -92,17 +93,18 @@ public class GDPR_ContactHandler {
         for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
                 System.debug('[INDIVIDUAL] - '+i);
                 //Get the respective contact with the new version of the object
-                contact newcontact = newcontactMap.get(mapEmailcontact.get(i.Email__c.toLowerCase()).Id);
+                String email = String.isBlank(i.Email__c) ? null : i.Email__c.toLowerCase();
+                contact newcontact = newcontactMap.get(mapEmailcontact.get(email).Id);
 
                
                     //Save the individual email before update
-                    individualsToUpdateEmails.add(i.Email__c.toLowerCase());
+                    individualsToUpdateEmails.add(email);
 
                     //update the individual record with contact data
                     i.FirstName = newcontact.FirstName;
                     i.LastName = newcontact.LastName;
                     i.Salutation = newcontact.Salutation;
-                    i.Email__c = newcontact.Email.toLowerCase();
+                    i.Email__c = email;
                     i.Area_of_Interest__c = newcontact.Pardot_Area_of_Interest__c;
                      // extend missing mapping
                     i.job_title__c = newcontact.title;
