@@ -9,7 +9,7 @@ public with sharing class RemoteInvocationTriggerHandler {
 	//Remote Invocation Request Types
 	public static final String NEWGEN_EASY_PAY = 'ANG_IEP_MODEL_A';
 	public static final String TIP_IFG_REPORT  = 'TIP_IFG_REPORT';
-	public static final String NEWGEN_GDI_ENDO  = 'GDI_ENDORSMENT';
+	public static final String NEWGEN_GDI_ENDO  = 'GDI_ENDORSEMENT';
 
 	//Remote Invocation Status
 	public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';

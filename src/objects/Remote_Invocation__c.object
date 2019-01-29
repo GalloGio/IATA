@@ -92,9 +92,9 @@
                     <label>NewGen - Easy Pay Model A</label>
                 </value>
                 <value>
-                    <fullName>GDI_ENDORSMENT</fullName>
+                    <fullName>GDI_ENDORSEMENT</fullName>
                     <default>false</default>
-                    <label>GDI_ENDORSMENT</label>
+                    <label>GDI_ENDORSEMENT</label>
                 </value>
                 <value>
                     <fullName>TIP_IFG_REPORT</fullName>
@@ -193,7 +193,7 @@ When MS sets “In Progress”, trigger to fire</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDI_ENDORSMENT</fullName>
+                <fullName>GDI_ENDORSEMENT</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -233,9 +233,9 @@ When MS sets “In Progress”, trigger to fire</description>
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>GDI_ENDORSMENT</fullName>
+        <fullName>GDI_ENDORSEMENT</fullName>
         <active>true</active>
-        <label>GDI ENDORSMENT</label>
+        <label>GDI ENDORSEMENT</label>
         <picklistValues>
             <picklist>Request_Type__c</picklist>
             <values>
@@ -243,11 +243,11 @@ When MS sets “In Progress”, trigger to fire</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>TIP_IFG_REPORT</fullName>
+                <fullName>GDI_ENDORSEMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDI_ENDORSMENT</fullName>
+                <fullName>TIP_IFG_REPORT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -293,7 +293,7 @@ When MS sets “In Progress”, trigger to fire</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDI_ENDORSMENT</fullName>
+                <fullName>GDI_ENDORSEMENT</fullName>
                 <default>false</default>
             </values>
             <values>
