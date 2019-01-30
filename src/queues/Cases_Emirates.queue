@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>noreply@iata.org</email>
+    <name>Cases – Emirates</name>
+    <queueMembers>
+        <roles>
+            <role>APCustomerServiceManager</role>
+            <role>APCustomerServiceStaff</role>
+            <role>AfricaMECSManager</role>
+            <role>AfricaMEFirstLevelCSStaff</role>
+            <role>AfricaMESecondLevelCSStaff</role>
+            <role>AmericasCustomerServiceManager</role>
+            <role>AmericasCustomerServiceStaff</role>
+            <role>ChinaNAsiaCustomerServiceManager</role>
+            <role>ChinaNAsiaCustomerServiceStaff</role>
+            <role>MADHubCSManager</role>
+            <role>MADHubCSstaff</role>
+        </roles>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>
