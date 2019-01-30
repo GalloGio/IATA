@@ -12588,7 +12588,7 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
     <customLabels>
         <label> Puede emplear Payment Link para pagar facturas de IATA mediante tarjeta de crédito.&lt;br/&gt;
 &lt;b&gt;Atención&lt;/b&gt;&lt;br/&gt;
-Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a través de BPS/CASS. Le rogamos que observe detenidamente los datos de la factura para asegurarse de que no la ha abonado ya, antes de proceder a su pago mediante tarjeta de crédito.</label>
+Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a través de BSP/CASS. Le rogamos que observe detenidamente los datos de la factura para asegurarse de que no la ha abonado ya, antes de proceder a su pago mediante tarjeta de crédito.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>

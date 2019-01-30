@@ -23825,7 +23825,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <shortDescription>ISSP_Payment_Link_Description</shortDescription>
         <value>Payment Link can be used to pay IATA invoices by credit card.&lt;br/&gt;
 &lt;b&gt;Warning!&lt;/b&gt;&lt;br/&gt;
-Please note that many IATA invoices for accredited agents are collected through the BPS/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
+Please note that many IATA invoices for accredited agents are collected through the BSP/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
     </labels>
     <labels>
         <fullName>ISSP_Payment_Link_Description_CNS</fullName>
