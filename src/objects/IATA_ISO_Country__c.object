@@ -2926,6 +2926,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <fullName>All_The_Countries</fullName>
         <columns>NAME</columns>
         <columns>ISO_Code__c</columns>
+        <columns>LVA_CountryLanguage__c</columns>
         <columns>Region__c</columns>
         <columns>Sub_Region__c</columns>
         <columns>AMS_Settlement_System__c</columns>

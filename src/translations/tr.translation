@@ -12561,7 +12561,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label>IATA faturalarını kredi kartıyla ödemek için Ödeme Linki kullanılabilir.&lt;br/&gt;
 &lt;b&gt;Uyarı!&lt;/b&gt;&lt;br/&gt;
-Akredite edilmiş acenteler için bir çok IATA faturası BPS/CASS yoluyla tahsil edilmektedir. Kredi kartıyla ödeme yapmadan önce fatura bilgilerinizi kontrol ederek faturanızın daha önceden ödenmemiş olduğundan emin olmalısınız.</label>
+Akredite edilmiş acenteler için bir çok IATA faturası BSP/CASS yoluyla tahsil edilmektedir. Kredi kartıyla ödeme yapmadan önce fatura bilgilerinizi kontrol ederek faturanızın daha önceden ödenmemiş olduğundan emin olmalısınız.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>

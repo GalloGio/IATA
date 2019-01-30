@@ -8432,6 +8432,24 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>PCI_Cases_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>PCI Cases</label>
+        <queue>PCI_Cases</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>PCI_Cases_GDC_SIN_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>PCI Cases GDC SIN</label>
+        <queue>PCI_Cases_GDC_SIN</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>RecycleBinAfricaMiddleEast_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Recycle Bin Africa &amp; Middle East</label>
