@@ -18905,7 +18905,10 @@ ISCHANGED(ISSP_Contact_Name__c )
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>
         <active>true</active>
         <description>FDS OPS + Account management Contact cannot be logged under MSO office, but should be under the airline account</description>
-        <errorConditionFormula>TEXT(Account.Location_Class__c) = &quot;M&quot;</errorConditionFormula>
+        <errorConditionFormula>AND(
+TEXT(Account.Location_Class__c) = &quot;M&quot;,
+Account.RecordType.DeveloperName = &quot;IATA_Agency&quot;
+)</errorConditionFormula>
         <errorDisplayField>AccountId</errorDisplayField>
         <errorMessage>Contacts cannot be created under the MSO account, but under the airline Headquarters or branch account.</errorMessage>
     </validationRules>
