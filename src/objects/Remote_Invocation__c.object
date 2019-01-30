@@ -126,6 +126,11 @@
                     <default>false</default>
                     <label>IFG</label>
                 </value>
+                <value>
+                    <fullName>GDI</fullName>
+                    <default>false</default>
+                    <label>GDI</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -204,6 +209,10 @@ When MS sets “In Progress”, trigger to fire</description>
         <picklistValues>
             <picklist>Source__c</picklist>
             <values>
+                <fullName>GDI</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IEP</fullName>
                 <default>false</default>
             </values>
@@ -254,6 +263,10 @@ When MS sets “In Progress”, trigger to fire</description>
         <picklistValues>
             <picklist>Source__c</picklist>
             <values>
+                <fullName>GDI</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IEP</fullName>
                 <default>false</default>
             </values>
@@ -303,6 +316,10 @@ When MS sets “In Progress”, trigger to fire</description>
         </picklistValues>
         <picklistValues>
             <picklist>Source__c</picklist>
+            <values>
+                <fullName>GDI</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IEP</fullName>
                 <default>false</default>
