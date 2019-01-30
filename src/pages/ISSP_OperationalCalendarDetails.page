@@ -27,6 +27,13 @@
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/details.min.css')}" rel="stylesheet"/>
 <link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
 
+<style>
+    #loading-download {
+        text-align: center;
+        display: none;
+    }
+</style>
+
 <script>
     moment.locale("{!UserLanguage}");
     var LIST_FILTERS = {!listFiltersJson};
@@ -538,10 +545,17 @@
     }
 
     var generationCounter;
+    var totalNrFiles;
     var zipFile;
+    var percentage;
     function startDownload(opt, operations, remittance, countries, accountId, fileFormat) {
         generationCounter = null;
         zipFile = null;
+        percentage = 0;
+        totalNrFiles = 0;
+        $('#downloadBtn').attr("disabled", true);
+        $("#loading-download").show();
+        document.getElementById("loading-download-ptg").innerHTML = "0.00%";
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.createZipFile}',
             opt, operations, remittance, countries, accountId,
@@ -559,6 +573,8 @@
                     } else {
                         generationCounter = result.nrOfFiles;  
                     }
+
+                    totalNrFiles = generationCounter;
                     if(generationCounter == 0) {
                         alert("{!$Label.ISSP_FDS_NoResults}");
                         return;
@@ -575,8 +591,12 @@
                     });
                 } else if (event.type === 'exception') {
                     showError(event.message);
+                    $('#downloadBtn').attr("disabled", false);
+                    $("#loading-download").hide();
                 } else {
                     console.log('Unknown error during download result: ' + unescape(result));
+                    $('#downloadBtn').attr("disabled", false);
+                    $("#loading-download").hide();
                 }
             },
             {escape: false}
@@ -650,9 +670,16 @@
     function addPDFFileToFolder(folder, file, filename) {
         folder.file(filename, file);
         generationCounter--;
+        setPercentage();
         if(generationCounter == 0) {
             finishDownload();
         }
+    }
+
+    function setPercentage() {
+        var pctg = ((totalNrFiles - generationCounter) * 100) / totalNrFiles;
+        pctg = pctg.toFixed(2);
+        document.getElementById("loading-download-ptg").innerHTML = (pctg + "%");
     }
 
     function finishDownload() {
@@ -665,6 +692,8 @@
             document.body.appendChild(element);
             element.click();
             document.body.removeChild(element);
+            $('#downloadBtn').attr("disabled", false);
+            $("#loading-download").hide();
         });
     }
 
@@ -856,6 +885,15 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">{!$Label.ISSP_FDS_PopupTitle}</h4>
+                                <div id="loading-download">
+                                    <div id="loading-download-bkg"></div>
+                                    <div id="#loading-download-ctn">
+                                        <apex:image value="{!URLFOR($Resource.ISSP_Loaders, 'loaders/IataLoadingImage.gif')}" />
+                                        <!-- <img src="{!URLFOR($Resource.)}"/> -->
+                                        <div id="loading-download-ptg">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>            
                             <div class="modal-body">
                                 <div class="row">
@@ -927,8 +965,9 @@
                                     <div class="col-sm-1"></div>
                                 </div>
                             </div>
+                            
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="downloadZip(); return false;">{!$Label.ISSP_FDS_Download}</button>
+                                <button id="downloadBtn" type="button" class="btn btn-primary" onclick="downloadZip(); return false;">{!$Label.ISSP_FDS_Download}</button>
                             </div>
                         </apex:form>
                     </div>
