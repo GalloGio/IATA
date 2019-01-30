@@ -509,7 +509,6 @@ public without sharing class ISSP_AMS_Accreditation {
             fetchCase(vSAAMCaseId);
 
             if (newCase != null) {
-                System.debug('asd');
                 if (newCase.IFAP_Country_ISO__c == null) {
                     //If case created internally by IATA, for user, then set country from the contact's Account
                     newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
@@ -5097,8 +5096,7 @@ public without sharing class ISSP_AMS_Accreditation {
             ngErrorFoundBR = true;
         }
 
-        if(newForm.ISSP_AMS_Legal_Status__c == null){
-            System.debug('try1');
+        if(newForm.ISSP_AMS_Legal_Status__c == null && !isMultiCountryNewAE && newForm.AE_separate_Legal_Entity__c == 'Yes'){
             newForm.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
             ngErrorFoundBR = true;
         }
@@ -5119,6 +5117,7 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_YouMustEnter);
             ngErrorFoundBR = true;
         }
+
         if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes' && newForm.Cargo_Agent_Account__c == null) {
             newForm.IATA_Cargo_Code__c.addError(Label.ISSP_AMS_Validation_Cargo_Code);
             ngErrorFoundBR = true;
@@ -5378,7 +5377,6 @@ public without sharing class ISSP_AMS_Accreditation {
                         }
 
                         if (newForm.ISSP_AMS_Legal_Status__c == null) {
-                            System.debug('try2');
                             newForm.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
                             errorFound = true;
                         }

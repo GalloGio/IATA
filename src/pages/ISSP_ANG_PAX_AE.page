@@ -241,7 +241,7 @@
 
     <script type="text/javascript">
       var $j = jQuery.noConflict();
-      var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
+      var defaultHQCountry = {!isMultiCountryNewAE} ? '{!mcformCountryISO}' : '{!newCase.IFAP_Country_ISO__c}';
       var isEUcountry = {!isEUcountry};
 
       $j(function () { $j('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); });
@@ -363,8 +363,6 @@
         document.getElementById('{!$Component.newContact.contactBlock.job2employer}').disabled = false;
         document.getElementById('{!$Component.newContact.contactBlock.job2address}').disabled = false;
         document.getElementById('job2').style.display = 'none';
-
-
       }
 
       function IsNumeric(input) {
@@ -405,7 +403,6 @@
       }
 
       function toggleDefaultDetails(myValue) {
-        //  alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
         if ($j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
           document.getElementById('txtDefaultDetails').style.display = 'block';
         } else {
@@ -414,7 +411,6 @@
       }
 
       function toggleInternationalSales(myValue, salesId) {
-        //  alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
         if ($j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
           document.getElementById('InternationalSales').style.display = 'block';
         } else {
@@ -544,8 +540,6 @@
       }
 
       function toggleIATACode(myValue) {
-
-        //alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
         if ($j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
           document.getElementById('iatacode').style.display = 'block';
           $j('[id$=cargoagentdetails]')[0].style.display = 'none';
@@ -594,8 +588,6 @@
       }
 
       function toggleShareholdersMsg(myValue) {
-
-        //alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
         if ($j('input[name="' + myValue + '"][value=No]').prop("checked")) {
           document.getElementById('msgshareholdersdetails').style.display = 'block';
         } else {
@@ -771,7 +763,6 @@
               <apex:actionFunction name="cancelAccountUpdate" action="{!cancelAccountUpdate}" status="WaitingStatus" reRender="updateAgency,HQdetails,accountMessages" />
               <apex:actionFunction name="cancelSalesUpdate" action="{!cancelSalesUpdate}" status="WaitingStatus" reRender="newSalesForm" />
               <apex:actionFunction name="accountUpdatedToggleOff" action="{!accountUpdatedToggleOff}" status="WaitingStatus" reRender="updateAgency" />
-              <!-- <apex:actionFunction name="resetSaleSaved" action"{!}" status="WaitingStatus" reRender="newSalesForm"/> -->
               <apex:inputHidden value="{!newForm.ISSP_AMS_Portal_admin__c}" id="PortalAdminId" />
               <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                 <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
@@ -943,7 +934,8 @@
                                 </div>
                                 <apex:outputPanel layout="none">
                                   <div class="field-wrapper">
-                                    <apex:outputField value="{!newForm.ISSP_AMS_Legal_Status__c}" style="width:174.4px" />
+                                    <apex:outputField value="{!newForm.ISSP_AMS_Legal_Status__c}" style="width:174.4px" rendered="{!NOT(isMultiCountryNewAE)}"/>
+                                    <apex:outputLabel value="{!$Label.ANG_ISSP_ProductMulticountry}" style="width:174.4px" rendered="{!isMultiCountryNewAE}"/> <!--rui label -->
                                   </div>
                                 </apex:outputPanel>
                               </apex:outputPanel>
@@ -1822,7 +1814,6 @@
                     </div>
 
                     <div class="modal-footer">
-                      <!-- <apex:commandButton action="{!createAgencyContact}" value="{!$Label.PKB2_Submit}" oncomplete="closeModal(); setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" reRender="contactList, ownerList"> -->
                       <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
                         <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
                       </apex:commandButton>&nbsp;
@@ -1841,7 +1832,7 @@
                       
                       var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
                       var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
-                      console.log('natphone ' + natphone);
+
                       natphone.intlTelInput({
                           nationalMode: true,
                           defaultCountry: defaultHQCountry,
@@ -1875,7 +1866,6 @@
                       natfax.intlTelInput("setNumber", fax.val());
                   
                       function setInternationalPhoneNo(p) {
-                        console.log('aqui p ' + p);
                           if(p=='phone') {
                               phone.val(natphone.intlTelInput("getNumber"));
                           } else if(p=='mobile') {
@@ -2043,7 +2033,6 @@
                 </div>
               </div>
               
-              <!--<script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>-->
               <script>
 
                 var target = $j('.statusBox #recordstatuscontainer')[0],
@@ -2056,7 +2045,6 @@
                 var natphonebranch = $j('[id$="natphonebranch"]');
                 var phoneacct = $j(".branch_office_phone__c");
                 var phonebranch = $j('[id$="phonebranch"]');
-
 
                 natphonebranch.intlTelInput({
                   nationalMode: true,
@@ -2075,9 +2063,7 @@
                   utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
                 });
 
-                //natphonebranch.intlTelInput("setNumber", phonebranch.val());
                 natphonebranch.intlTelInput("setNumber", phoneacct.val());
-                //natmobileacct.intlTelInput("setNumber", mobile.val());
                 
                 natfaxbranch.intlTelInput("setNumber", faxbranch.val());
 
