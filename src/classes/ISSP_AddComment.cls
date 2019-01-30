@@ -45,6 +45,16 @@ public class ISSP_AddComment {
       //insert CaseComment ;
       insert CaseComment;
       update tmpCase;
+
+      //ACAMBAS - WMO-395 - Start
+      
+      List<User> userList = [SELECT Id, ContactId FROM User WHERE Id = :userInfo.getUserId()];
+      List<Contact> contactList = [SELECT Id, Preferred_Language__c, Email FROM Contact WHERE Id = :userList[0].ContactId];
+
+      EmailUtils.sendEmailAlert(contactList, 'Portal_Case_Comment_Autoreply', 'noreply@iata.org', tmpCase.Id);
+
+      //ACAMBAS - WMO-395 - End
+
     } catch (DMLException e) {
       ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error Adding Comment'));
       return null;
