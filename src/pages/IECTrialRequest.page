@@ -1,443 +1,967 @@
-<apex:page title="Trial Request" controller="vfIECTrialRequest" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" action="{!pageLoad}">
-   <Title>Trial Request</Title>
-   
+<apex:component controller="IEC_PageController" layout="none">
     
-    <div class="gdpwrapper">    
-    <div class="gdpbody">
-        
-        
-    <apex:includeScript value="{!$Resource.postmessage_js}" />
-    <apex:includeScript value="{!$Resource.IECjQuery172}" />
-    <c:IECSiteHeader id="componentHeader" />
-    
-    <!-- only used for confirmation divs -->
-    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'register.css')}" />
-    
-    <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'cart.css')}" />
-    
-    
-   
     <style>
-        .errorPanel h4 {
-        font-size: 17px;
-        font-family: "Raleway",sans-serif;
-        font-weight: 700;
-        color: #1EBEC8;
+        .messageCell .messageText h4{display:none;}
+        .category-container {
+            border: none !important;
+            /*display: table-cell;
+            padding: 0 30px;*/
         }
-        
-        /* fixes "procceed with payment" button on firefox */
-        .checkout-wrapper .checkout-submit {
-            display: inline;
+        .intl-tel-input{
+           
         }
-        #cart .checkout-wrapper .checkout-info tr td:first-child {
-        padding-left: 15px;
-        padding-right: 15px;
-        }
-        .paymentMethodRadio {
-            padding-top: 15px;
-        }
-        .checkout-wrapper .checkout-submit{
-            margin: 0px 0 0 auto;
-        }
-
-        
     </style>
 
-    
-    <script type="text/javascript"> 
+    <apex:attribute name="page_name" description="Page where the component is embeded: used for dashboard pages" required="false" type="String" default="false" />
+    <apex:attribute name="is_store_front" description="Determine if current page is store front" required="false" type="Boolean" default="false" />
+    <apex:attribute name="is_dashboard" description="Determine if current page is dashboard page" required="false"  type="Boolean" default="false" />
+    <apex:attribute name="is_checkout" description="Determine if current page is checkout page" required="false" type="Boolean" default="false" />
 
-        function disablePaymentButtons() {
-            var proceedButton = this.document.getElementById('{!$Component.formTrial.submitTrialRequest}');
-            proceedButton.style.cursor = 'progress';
-            proceedButton.disabled = true;
-        }
+    <apex:variable var="pngLogo" value="img/common/logo-IATA-international-air-transport-association.png"/>
+    <apex:variable var="svgLogo" value="img/common/logo-IATA-international-air-transport-association.svg"/>
+    <apex:variable var="svgLogoLight" value="img/common/logo-IATA-international-air-transport-association-white.svg"/>
 
-        function enablePaymentButtons() {
-            var proceedButton = this.document.getElementById('{!$Component.formTrial.submitTrialRequest}');
-            proceedButton.style.cursor = 'default';
-            proceedButton.disabled = false;
-        }
+
+<script type="text/javascript">
+    function redirectToLogout() {
+        var current = window.self.location.href;
         
-        function changeTextColor(object) {
-            
-            if (object.value == null || object.value == '') {
-                object.style.color = '#aaa';
+        var prefix = current.substr(0, current.lastIndexOf("/"));
+
+        window.location.href = prefix + '/IEC_Logout';
+    }
+
+
+    function pushClickViewLoginOverlay(){
+        dataLayer.push({
+            "event": "VPV",
+            "page": {
+                "requestURI": window.location.pathname + window.location.search + "&ga_step=login-overlay"
             }
-            else
-            {
-                object.style.color = '#000';
+        });
+    }
+
+    function pushClickOnForgotPassword(){
+        dataLayer.push({
+            "event": "userAction",
+            "eventCategory": "Login",
+            "eventAction": "Forgot password",
+            "eventLabel": "Forgot password"
+        });
+    }
+
+    function pushClickGoToContactLink(){
+        dataLayer.push({
+            "event": "userAction",
+            "eventCategory": "Top Navigation",
+            "eventAction": "Contact link",
+            "eventLabel": "Contact link"
+        });
+    }
+
+    function pushClickViewShoppingCartOverlay(){
+        dataLayer.push({
+            "event": "userAction",
+            "eventCategory": "Top Navigation",
+            "eventAction": "Click on Cart",
+            "eventLabel": "Click on Cart"
+        });
+    }
+
+    function pushClickGoToIATALogoLink(){
+        dataLayer.push({
+            "event": "userAction",
+            "eventCategory": "Top Navigation",
+            "eventAction": "IATA Logo",
+            "eventLabel": "IATA Logo"
+        });
+    }
+
+    function pushClickViewProductsOverlay(){
+        dataLayer.push({
+            "event": "VPV",
+            "page": {
+                "requestURI": window.location.pathname + window.location.search + "&ga_step=open-category-menu"
             }
-        }        
-        
-    </script>
+        });
+    }
 
-    <apex:form id="formTrial" forceSSL="true">
-   
-   <div id="cart"> 
-       <!----------  Carousel Static Start -------- -->
-  <div class="carouselWrapper static">
+</script>
 
-    <div class="gradient"></div>
+    <header class="page-header">
+        <div class="inner-wrapper">
+            <!-- Site Logo -->
+            <apex:variable var="isHomePage" value="1" rendered="{!is_store_front}">
+                <h1 class="site-logo">
+                    <a href="{!$Site.BaseUrl}" onclick="pushClickGoToIATALogoLink();">
+                        <!--[if lte IE 8]>
+                            <img src="{!URLFOR($Resource.EcommerceAssets, pngLogo)}" alt="{!$Label.SiteTitle}" width="70" />
+                        <![endif]--> 
+                        <!--[if (gte IE 9)|!(IE)]><!--> 
+                            <img src="{!URLFOR($Resource.EcommerceAssets, svgLogo)}" alt="{!$Label.SiteTitle}" width="70" class="logo-dark" />
+                            <img src="{!URLFOR($Resource.EcommerceAssets, svgLogoLight)}" alt="{!$Label.SiteTitle}" width="70" class="logo-light" />
+                        <!--<![endif]-->  
+                    </a>
+                </h1>
+            </apex:variable>
 
-    <div class="carousel">
-      <ul class="carousel__list">
+            <apex:variable var="notHomePage" value="1" rendered="{!NOT(is_store_front)}">
+                <div class="site-logo">
+                    <a href="{!$Site.BaseUrl}" onclick="pushClickGoToIATALogoLink();">
+                        <!--[if lte IE 8]>
+                            <img src="{!URLFOR($Resource.EcommerceAssets, pngLogo)}" alt="{!$Label.SiteTitle}" width="70" />
+                        <![endif]--> 
+                        <!--[if (gte IE 9)|!(IE)]><!--> 
+                            <img src="{!URLFOR($Resource.EcommerceAssets, svgLogo)}" alt="{!$Label.SiteTitle}" width="70" class="logo-dark" />
+                            <img src="{!URLFOR($Resource.EcommerceAssets, svgLogoLight)}" alt="{!$Label.SiteTitle}" width="70" class="logo-light" />
+                        <!--<![endif]-->  
+                    </a>
+                </div>
+            </apex:variable>
 
-          <li class="carousel__slide" style="background-image:url({!$Resource.IECBannerHome}); width: 1263px;">
-         <div class="autoAdjustMargin">
-            <div class="carousel__slide-wrapper">
-              <!--<h1>About Us</h1>-->
-              <h2 class="carousel__slide-text -heading"><span>Trial Request</span></h2>
-               <a class="carousel__slide-anchor customButton" href="mailto:globaldata@iata.org?subject=eCommerce">Contact us</a>
+            <!-- Mobile Menu Openner -->
+            <div class="menu-icon" id="js-menu-button">
+                <a class="icon bars" href="#"><span class="reader-only">Toggle Main Navigation</span></a>
             </div>
-          </div>
-        </li>
-        
-      </ul>
-    </div>
-  </div>
-  
- <!----------  Carousel Static END -------- -->
-        
-   <div class="sepEmptyDiv"></div>
-   
-   
-   
-    
-        <apex:outputPanel id="panelTrialPage" layout="block" style="margin:15px">
-       
-        <apex:outputPanel id="errorMessage">                               
-             <div class="errorPanel">
-                        <apex:pageMessages escape="no"/>                                                   
-             </div>      
-          </apex:outputPanel>  
-            
-            
-            <apex:outputPanel id="panelTrial" layout="block" style="width: 100%" rendered="{! NOT(requestSucessful)}">
 
-                <!-- Links after the renew -->                      
-                <apex:outputPanel id="trialPage_contentPanel" layout="block">
-                    <div class="content-container">
-                        <div class="checkout-wrapper">
-                            <div class="checkout-total">
-                                <table class="checkout-table">
-                                    <thead>
-                                        <th class="checkout-table__heading -item"><div style="width:100%; text-align: left">Product Name</div></th>
-                                        <th class="checkout-table__heading -price"><div style="width:100%; text-align: left">Unit Price</div></th>
-                                        <th class="checkout-table__heading -price"><div style="width:100%; text-align: left">Quantity</div></th>
-                                    </thead>   
-                                             
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <apex:outputText styleClass="checkout-table__item-text" value="{!sProductName}" />
-                                                <apex:outputText styleClass="checkout-table__item-text" value="{!sShortDesc}" />
-                                                <br/>
-                                            </td>
-                                            <td>
-                                                <apex:outputText styleClass="checkout-table__price" >$0</apex:outputText>
-                                            </td>
-                                            <td>
-                                                <apex:outputText styleClass="checkout-table__price" >1</apex:outputText> 
-                                            </td>
-                                        </tr>
+            <apex:outputPanel layout="block" styleClass="access-my-services" rendered="{!AND(is_dashboard!=true,is_checkout!=true, bHasAnyProdAccess)}">
+                <a href="{!$Site.BaseUrl}/IEC_MyServices">Access My Services</a>
+            </apex:outputPanel>
+
+            <!-- <ul class="nav skip-links">
+                <li><a class="reader-only" href="#reader-search">Skip to search</a></li>
+                <li><a class="reader-only" href="#reader-main-nav">Skip to main navigation</a></li>
+                <li><a class="reader-only" href="#reader-main-content">Skip to main content</a></li>
+                <li><a class="reader-only" href="#reader-footer">Skip to footer content</a></li>
+            </ul> -->
+
+            <div class="nav-wrapper">
+                <!-- Top Menu -->
+                <ul class="nav nav-top">
+                    <apex:variable var="logged" value="1" rendered="{!loggedCustomer != null}">
+                        <apex:form >
+                            <apex:actionFunction name="logout" action="{!logout}" oncomplete="redirectToLogout();"/>
+                        </apex:form>
+                        <li class="menu login"> 
+                            <a href="#" class="icon user-name js-open-toggle">{!loggedCustomer.sfContact.Name}</a>
+                            <ul class="nav nav-account">
+                                <li><a href="{!$Site.BaseUrl}/IEC_ContactInformation">My Account</a></li>
+                                <li><a href="{!$Site.BaseUrl}/IEC_MyPaymentMethods">My Payments</a></li>
+                                <li><a href="{!$Site.BaseUrl}/IEC_OrderHistory">My Order History</a></li>
+                                <li><a href="{!$Site.BaseUrl}/IEC_ViewQuotes">My Quotes</a></li>
+                                <li><a href="{!$Site.BaseUrl}/IEC_PublicationsSubscriptions">My Subscriptions</a></li>
+                                <li><a href="javascript:logout();">Logout</a></li>
+                            </ul> 
+                        </li>
+                    </apex:variable>
+
+                    <apex:variable var="notLogged" value="0" rendered="{!loggedCustomer == null}">
+                        <li class="menu sign-in">
+                            <form action="{!$Site.BaseUrl}/IEC_Login?doLogin=true&retUrl={!currentPageName}" method="post">
+                                <a class="icon sign-in js-open-login" onclick="pushClickViewLoginOverlay();" href="{!$Site.BaseUrl}/IEC_Login"><span class="text">{!$Label.SignIn}</span></a>
+                                <div class="group-container sign-in-container">
+                                    <div class="group-title">Please log in</div>
+                                    <p style="margin-bottom : 0; word-break: break-word; width: 350px;  white-space: pre-line;
+                                        font-size: 1.2rem;">{!$label.IE_Warning}
+                                        {!$label.ThankYou}</p>                           
+                                    <div class="field-group text">
+                                        <label>
+                                            <span class="input-label">Enter your email address</span>
+                                            <input class="user-input text" type="text" name="username" id="username" />
+                                        </label>
+                                    </div>
+                                    <div class="field-group text">
+                                        <label>
+                                            <span class="input-label">Enter your password</span>
+                                            <input class="user-input text" type="password" name="password" />
+                                        </label>
+                                    </div>
+                                    <input type="submit" class="button" value="Log in" />
+
+                                    <!-- <button class="button">Log in</button> -->
+                                    <p style="margin-bottom : 0;">Forgot your password? <a class="text-link" href="{!$Site.BaseUrl}/IEC_ForgotPassword" onclick="pushClickOnForgotPassword();">Click here</a></p>
+                                    <p style="margin : 0;">No Account? <a class="text-link" href="#" onclick="signUpAction()">Register</a></p>
                                        
-                                    </tbody>
-                                </table>
-                                <div class="checkout-submitPanel">                                 
-                                    <apex:outputLink value="{!$Page.IECBrowseProducts}" styleClass="checkout-submit_2buttons -right" style="width: 300px; float:left;">Cancel</apex:outputLink>
+                                </div>
+                            </form>
+                            <apex:form >
+                                <apex:actionFunction name="signUpAction" action="{!miniRegister}"/>
+                            </apex:form>
+                        </li>
+                    </apex:variable>                    
+                    
+                    <apex:variable value="1" var="notDashBoardOrCheckout" rendered="{!AND(is_dashboard!=true,is_checkout!=true)}">
+                        <li class="menu contact"><a class="icon envelope" href="mailto:onlinestoresupport@iata.org" target="_blank" onclick="pushClickGoToContactLink();"><span class="text">Contact</span></a></li>
+
+
+                        <apex:variable value="1" var="isOldShoppingCart" rendered="{!NOT(newShoppingCart)}">
+
+                            <li class="menu cart js-mini-cart">
+                                <a class="icon shopping-cart" href="{!$Site.BaseUrl}/IEC_ShoppingCart" style="background-color: red;" onclick="pushClickViewShoppingCartOverlay();">
+                                    <span class="text">{!$Label.Cart}</span>
+                                    <span class="number-of-items">({!cartContent.size})</span>
+                                </a>
+                                <section class="mini-cart-container">
+                                    <h2 class="section-title">{!$Label.Your_cart}</h2>
+                                    <!-- Cart empty -->
+                                    <apex:variable var="cartEmpty" value="0" rendered="{!cartContent.size = 0}">
+                                        <p>{!$Label.EmptyCart}</p>
+                                    </apex:variable>
+
+                                    <!-- Cart Not empty  -->
+                                    <apex:variable var="cartNotEmpty" value="{!0}" rendered="{!cartContent.size > 0}">
+                                        <div class="quantity-text">{!$Label.QTY}</div>
+                                        <apex:outputPanel styleClass="scroll-container" id="miniCartContent" layout="block">
+                                            <ul class="list mini-cart-list">
+                                                <apex:repeat value="{!cartContent}" var="item">
+                                                    <li class="cart-item">
+                                                        <h3 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!item.productCode}">{!item.productName}</a></h3>
+                                                        <span class="item-quantity">{!item.quantity}</span>
+                                                    </li>
+                                                </apex:repeat>
+                                            </ul>
+                                        </apex:outputPanel>
+                                        <!-- View Cart button -->
+
+                                        <a class="button" href="{!$Site.BaseUrl}/IEC_ShoppingCart">{!$Label.ViewCart}</a>
+                                    </apex:variable>                                                            
+                                </section>
+                            </li>
+                        </apex:variable>
+
+                        <apex:variable value="1" var="isNewShoppingCard" rendered="{!newShoppingCart}">
+                            <!-- NEW CART start -->
+                            <li class="menu cart js-mini-cart">
+                                <a class="icon shopping-cart" href="{!$Site.BaseUrl}/IEC_ShoppingCart" onclick="pushClickViewShoppingCartOverlay();">
+                                    <span class="text">{!$Label.Cart}</span>
+                                    <span class="number-of-items">({!storeCart.CartContent.size})</span>
+                                </a>
+                                <section class="mini-cart-container">
+                                    <h2 class="section-title">{!$Label.Your_cart}</h2>
+                                    <!-- Cart empty -->
+                                    <apex:variable var="cartEmpty" value="0" rendered="{!storeCart.CartContent.size = 0}">
+                                        <p>{!$Label.EmptyCart}</p>
+                                    </apex:variable>
+
+                                    <!-- Cart Not empty  -->
+                                    <apex:variable var="cartNotEmpty" value="{!0}" rendered="{!storeCart.cartContent.size > 0}">
+                                        <div class="quantity-text">{!$Label.QTY}</div>
+                                        <apex:outputPanel styleClass="scroll-container" id="miniCartContent" layout="block">
+                                            <ul class="list mini-cart-list">
+                                                <apex:repeat value="{!storeCart.CartContent}" var="item">
+                                                    <li class="cart-item">
+                                                        <h3 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!item.productNumber}">{!item.productName}</a></h3>
+                                                        <span class="item-quantity">{!item.quantity}</span>
+                                                    </li>
+                                                </apex:repeat>
+                                            </ul>
+                                        </apex:outputPanel>
+                                        <!-- View Cart button -->
+                                        <a class="button" href="{!$Site.BaseUrl}/IEC_ShoppingCart">{!$Label.ViewCart}</a>
+                                    </apex:variable>                                                            
+                                </section>
+                            </li>
+                            <!-- NEW CART end -->
+                        </apex:variable>
+
+
+
+
+                    </apex:variable>
+
+                </ul>
+
+                <!-- Global Search Form -->
+                <apex:variable value="1" var="notDashBoardOrCheckout2" rendered="{!AND(is_dashboard!=true,is_checkout!=true)}">
+                    <div id="search-container" class="search-container">
+                        <a class="icon search toggle-button" id="search-button" onclick="toggleText();" ><span class="reader-only">{!$Label.Button_Open_search_field}</span></a>
+                        <form class="form form-search" id="search-form" action="{!$Site.BaseUrl}/IEC_SearchResults" name="form-site-search">
+                            <label>
+                                <span class="reader-only">{!$Label.Search}</span>
+                                <input class="user-input text" type="text" name="site-search" placeholder="{!$Label.Search}" />
+                            </label>
+                            <button class="button icon search " type="submit"><span class="reader-only">{!$Label.Search}</span><span class="text">{!$Label.Go}</span></button>
+                        </form>
+                    </div>
+                </apex:variable>
+            </div>
+        </div>
+    </header>
+
+    <nav id="js-page-nav" class="page-nav">
+        <div class="inner-wrapper">
+            <div class="reader-only" id="reader-main-nav">Main Navigation</div>
+
+            <div class="nav-header">                    
+                <div class="site-logo">
+                    <a href="{!$Site.BaseUrl}" onclick="pushClickGoToIATALogoLink();">
+                        <!--[if lte IE 8]>
+                            <img src="{!URLFOR($Resource.EcommerceAssets, pngLogo)}" alt="{!$Label.SiteTitle}" width="70" />
+                        <![endif]--> 
+                        <!--[if (gte IE 9)|!(IE)]><!--> 
+                            <img src="{!URLFOR($Resource.EcommerceAssets, svgLogo)}" alt="{!$Label.SiteTitle}" width="70" class="logo-dark" />
+                            <img src="{!URLFOR($Resource.EcommerceAssets, svgLogoLight)}" alt="{!$Label.SiteTitle}" width="70" class="logo-light" />
+                        <!--<![endif]-->  
+                    </a>
+                </div>
+
+                <apex:outputPanel layout="block" styleClass="menu login" rendered="{!loggedCustomer != null}">
+                    <a href="#" class="icon user-name js-open-toggle">{!loggedCustomer.sfContact.Name}</a>
+                    <ul class="nav nav-account">
+                        <li><a href="{!$Site.BaseUrl}/IEC_ContactInformation">My Account</a></li>
+                        <li><a href="{!$Site.BaseUrl}/IEC_MyPaymentMethods">My Payments</a></li>
+                        <li><a href="{!$Site.BaseUrl}/IEC_OrderHistory">My Order History</a></li>
+                        <li><a href="{!$Site.BaseUrl}/IEC_ViewQuotes">My Quotes</a></li>
+                        <li><a href="{!$Site.BaseUrl}/IEC_PublicationsSubscriptions">My Subscriptions</a></li>
+                        <li><a href="javascript:logout();">Logout</a></li>
+                    </ul>
+                </apex:outputPanel>
+                
+                <apex:outputPanel layout="block" styleClass="menu login" rendered="{!loggedCustomer == null}">
+                    <!-- <form action="{!$Site.BaseUrl}/IEC_Login?doLogin=true&retUrl={!currentPageName}" method="post"> -->
+                    <a class="icon sign-in js-open-login" href="{!$Site.BaseUrl}/IEC_Login"><span class="text">{!$Label.SignIn}</span></a>
+                    <div class="group-container sign-in-container">
+                        <form action="{!$Site.BaseUrl}/IEC_Login?doLogin=true&retUrl={!currentPageName}" method="post">
+                            <div class="group-title">Please log in</div>                                    
+                            <div class="field-group text">
+                                <label>
+                                    <span class="input-label">Enter your email address</span>
+                                    <input class="user-input text" type="text" name="username" id="username1" />
+                                </label>
+                            </div>
+                            <div class="field-group text">
+                                <label>
+                                    <span class="input-label">Enter your password</span>
+                                    <input class="user-input text" type="password" name="password" />
+                                </label>
+                            </div>
+                            <input type="submit" class="button" value="Log in" />
+                            <!-- <button class="button">Log in</button> -->
+                            <p>Forgot your password? <a class="text-link" href="{!$Site.BaseUrl}/IEC_ForgotPassword">Click here</a></p>
+                            <p><apex:outputLink value="#" onclick="signUpAction();">No Account? Register</apex:outputLink></p>  
+                        </form>                           
+                    </div>
+                    <!-- </form>     -->
+                </apex:outputPanel>
+            </div>
+
+            <apex:variable var="isNotDashboard" value="1" rendered="{!is_dashboard != true}">
+                <ul class="nav nav-main" id="js-nav-main">
+                    <li class="has-child"> 
+                        <a class="js-open-nav-content" href="#" onclick="pushClickViewProductsOverlay();">{!$Label.Products}</a>
+                        <div class="nav-content">
+                            <div class="inner-wrapper">
+                                <apex:repeat value="{!categories}" var="cat">
+                                    <div class="category-container "><!-- {!cat.value} -->
+                                        <div class="category-title">{!cat.label}</div>
+                                        
+                                        <ul class="nav">
+                                            <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}">{!$Label.View_all}</a></li>
+                                            
+                                            <apex:repeat value="{!subCategories[cat.value]}" var="topic">
+                                                <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!cat.value}&topic={!topic.value}">{!topic.label}</a></li>
+                                            </apex:repeat>
+                                        </ul>
+                                        <!-- Customer Types -->
+                                        <!-- <apex:variable var="isPublication" value="1" rendered="{!cat.value == 'publications'}">
+                                            <ul class="nav">
+                                                <apex:repeat var="ct" value="{!customerTypes}">
+                                                    <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category=publications&customer_type={!ct}">{!ct}</a></li>
+                                                </apex:repeat>
+                                            </ul>
+                                        </apex:variable> -->
+                                    </div>
+                                </apex:repeat>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <apex:outputPanel layout="block" styleClass="access-my-services" rendered="{!AND(is_dashboard!=true,is_checkout!=true, bHasAnyProdAccess)}">
+                    <a href="{!$Site.BaseUrl}/IEC_MyServices">Access My Services</a>
+                </apex:outputPanel>
+            </apex:variable>
+
+            <apex:variable var="isDashboard" value="1" rendered="{!is_dashboard == true}" >
+                <div class="back-to-home">
+                    <a class="icon chevron-left" href="{!$Site.BaseUrl}">Back to home</a>
+                </div>
+
+                <div class="nav-dashboard" id="js-nav-dashboard">
+                    <dl class="list js-accordion accordion-container">
+                        <dt class="accordion-title {!IF(OR(page_name=='IEC_ContactInformation', page_name=='IEC_UpdateAddress',page_name=='IEC_AccountActivity'), ' is-open ', '')}">Account</dt>
+                        <dd class="accordion-panel {!IF(OR(page_name=='IEC_ContactInformation', page_name=='IEC_UpdateAddress',page_name=='IEC_AccountActivity'), ' is-open ', '')}">
+                            <ul class="nav">
+                                <li class="{!IF(page_name=='IEC_ContactInformation', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_ContactInformation">{!$Label.Contact_Information}</a></li>
+                                <li class="{!IF(page_name=='IEC_UpdateAddress', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_UpdateAddress">{!$Label.IEC_UpdateAddress_PageTitle}</a></li>
+                                <li class="{!IF(page_name=='IEC_AccountActivity', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_AccountActivity">{!$Label.Account_activity}</a></li>
+                            </ul>
+                        </dd>
+
+                        <dt class="accordion-title {!IF(OR(page_name=='IEC_MyPaymentMethods', page_name=='IEC_PaymentHistory'), ' is-open ', '')}">Payment</dt>
+                        <dd class="accordion-panel {!IF(OR(page_name=='IEC_MyPaymentMethods', page_name=='IEC_PaymentHistory'), ' is-open ', '')}">
+                            <ul class="nav">
+                                <li class="{!IF(page_name=='IEC_MyPaymentMethods', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_MyPaymentMethods">{!$Label.PageTitleMyPaymentMethods}</a></li>
+                                <li class="{!IF(page_name=='IEC_PaymentHistory', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_PaymentHistory">{!$Label.Payment_history}</a></li>
+                            </ul>
+                        </dd>
+
+                        <dt class="accordion-title {!IF(OR(page_name=='IEC_MyInvoices', page_name=='IEC_OrderHistory'), ' is-open ', '')}">{!$Label.Order_history}</dt>
+                        <dd class="accordion-panel {!IF(OR(page_name=='IEC_MyInvoices', page_name=='IEC_OrderHistory'), ' is-open ', '')}">
+                            <ul class="nav">
+                                <li class="{!IF(page_name=='IEC_OrderHistory', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_OrderHistory">{!$Label.Order_history}</a></li>
+                                <li class="{!IF(page_name=='IEC_MyInvoices', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_MyInvoices">{!$Label.PageTitleMyInvoices}</a></li>
+                            </ul>
+                        </dd>
+
+                        <dt class="accordion-title {!IF(OR(page_name=='IEC_ViewQuotes', page_name=='IEC_ZQuotes',page_name=='IEC_MyRenewalNotices'), ' is-open ', '')}">{!$Label.View_quotes}</dt>
+                        <dd class="accordion-panel {!IF(OR(page_name=='IEC_ViewQuotes', page_name=='IEC_ZQuotes',page_name=='IEC_MyRenewalNotices'), ' is-open ', '')}">
+                            <ul class="nav">
+                                <li class="{!IF(page_name=='IEC_ViewQuotes', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_ViewQuotes">{!$Label.PublicationQuotes}</a></li>
+                                <li class="{!IF(page_name=='IEC_ZQuotes', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_ZQuotes">{!$Label.ZQuotes}</a></li>
+                                <li class="{!IF(page_name=='IEC_MyRenewalNotices', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_MyRenewalNotices">{!$Label.My_Renewals}</a></li>
+                            </ul>
+                        </dd>
+
+                        <dt class="accordion-title {!IF(OR(page_name=='IEC_MyServices', page_name=='IEC_DataStatisticsSubscriptions',page_name=='IEC_DataStatisticsHistory', page_name='IEC_PublicationsSubscriptions'), ' is-open ', '')}">Subscriptions</dt>
+                        <dd class="accordion-panel {!IF(OR(page_name=='IEC_MyServices', page_name=='IEC_DataStatisticsSubscriptions',page_name=='IEC_DataStatisticsHistory', page_name='IEC_PublicationsSubscriptions'), ' is-open ', '')}">
+                            <ul class="nav">
+                                <li class="{!IF(page_name=='IEC_MyServices', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_MyServices">Access to My Services</a></li>
+                                <li class="{!IF(page_name=='IEC_DataStatisticsSubscriptions', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_DataStatisticsSubscriptions">{!$Label.Data_Statistics_Subscriptions}</a></li>
+                                <li class="{!IF(page_name=='IEC_DataStatisticsHistory', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_DataStatisticsHistory">{!$Label.Data_Statistics_History}</a></li>
+                                <li class="{!IF(page_name=='IEC_PublicationsSubscriptions', ' selected ', '')}"><a href="{!$Site.BaseUrl}/IEC_PublicationsSubscriptions">{!$Label.Publications_subscriptions}</a></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+            </apex:variable>
+        </div>
+    </nav>
+
+<!-- Pardot tracking -->
+<apex:includeScript value="{!$Resource.IEC_Pardot_Track_Page}" loadOnReady="false" />
+<script type="text/javascript">
+
+    window.addEventListener("load",toggleText,false);
+
+    function toggleText() {
+        var isDevice = function(alias) {
+                        return $('.device-' + alias).is(':visible');
+                    };
+
+        if(isDevice('xs') || isDevice('sm') || isDevice('md'))
+        {
+            $('#search-form').toggleClass('is-hidden');
+        } else {
+            if($('#search-form').hasClass('is-hidden'))
+            {
+                $('#search-form').toggleClass('is-hidden');
+            }
+        }
+    }<apex:page title="Trial Request" controller="vfIECTrialRequest" cache="false" sidebar="false" showHeader="false" standardStylesheets="false" action="{!pageLoad}">
+
+    <html>   
+        <head>
+        <!-- Google Tag Manager -->
+        <script>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-PWSNSM3');
+        </script>
+        <!-- End Google Tag Manager -->
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+        <title>{!$Label.SiteTitle}</title>
+        <script>
+            function getDevice() {
+                if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                    return "Tablet";
+                } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                    return "Mobile";
+                } else {
+                    return "Desktop";
+                }
+            }
+
+            window.dataLayer = window.dataLayer||[];
+            dataLayer.push({
+                "user": {
+                    "email": "{!userDetails.userEmail}",
+                    "loginStatus": "{!userDetails.userLoginStatus}",
+                    "memberStatus": "{!userDetails.userMemberStatus}",
+                    "userId": "{!userDetails.userId}",   
+                    "zipCode": "{!userDetails.userZipCode}",
+                    "city": "{!userDetails.userCity}",
+                    "region": "{!userDetails.userRegion}",
+                    "country": "{!userDetails.userCountry}",
+                    "companyName": "{!userDetails.userCompany}"
+                },
+                "page": {
+                    "requestURI": window.location.pathname + window.location.search + "&ga_step=trial-request-page",
+                    "device": getDevice(),
+                    "breadcrumb": "Home",
+                    "language": "{!language}"
+                }
+            });
+
+            function pushSubmitTrialRequest(){
+                dataLayer.push({
+                    "event":"VPV",
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search + "&ga_step=trial-request-form-submitted"
+                    }
+                });
+            }
+
+        </script>
+
+        <style>
+            .errorPanel h4 {
+            font-size: 17px;
+            font-family: "Raleway",sans-serif;
+            font-weight: 700;
+            color: #1EBEC8;
+            }
+            
+            /* fixes "procceed with payment" button on firefox */
+            .checkout-wrapper .checkout-submit {
+                display: inline;
+            }
+            #cart .checkout-wrapper .checkout-info tr td:first-child {
+            padding-left: 15px;
+            padding-right: 15px;
+            }
+            .paymentMethodRadio {
+                padding-top: 15px;
+            }
+            .checkout-wrapper .checkout-submit{
+                margin: 0px 0 0 auto;
+            }
+
+            
+        </style>
+
+    
+        <script type="text/javascript"> 
+
+            function disablePaymentButtons() {
+                var proceedButton = this.document.getElementById('{!$Component.formTrial.submitTrialRequest}');
+                proceedButton.style.cursor = 'progress';
+                proceedButton.disabled = true;
+            }
+
+            function enablePaymentButtons() {
+                var proceedButton = this.document.getElementById('{!$Component.formTrial.submitTrialRequest}');
+                proceedButton.style.cursor = 'default';
+                proceedButton.disabled = false;
+            }
+            
+            function changeTextColor(object) {
+                
+                if (object.value == null || object.value == '') {
+                    object.style.color = '#aaa';
+                }
+                else
+                {
+                    object.style.color = '#000';
+                }
+            }        
+            
+        </script>
+
+        <Title>Trial Request</Title>
+
+    </head>
+    
+    <body>
+
+        <div class="gdpwrapper">    
+            <div class="gdpbody">
+        
+        
+                <apex:includeScript value="{!$Resource.postmessage_js}" />
+                <apex:includeScript value="{!$Resource.IECjQuery172}" />
+                <c:IECSiteHeader id="componentHeader" />
+    
+                <!-- only used for confirmation divs -->
+ 
+                <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'register.css')}" />
+    
+                <apex:stylesheet value="{!URLFOR($Resource.IECStyles, 'cart.css')}" />
+                
+                
+                <apex:form id="formTrial" forceSSL="true">
+                       
+                        <div id="cart"> 
+                            <!----------  Carousel Static Start -------- -->
+                            <div class="carouselWrapper static">
+
+                                <div class="gradient"></div>
+
+                                <div class="carousel">
+                                    <ul class="carousel__list">
+
+                                        <li class="carousel__slide" style="background-image:url({!$Resource.IECBannerHome}); width: 1263px;">
+                                            <div class="autoAdjustMargin">
+                                                <div class="carousel__slide-wrapper">
+                                                    <!--<h1>About Us</h1>-->
+                                                    <h2 class="carousel__slide-text -heading"><span>Trial Request</span></h2>
+                                                    <a class="carousel__slide-anchor customButton" href="mailto:globaldata@iata.org?subject=eCommerce">Contact us</a>
+                                                </div>
+                                            </div>
+                                        </li>
+                            
+                                    </ul>
                                 </div>
                             </div>
-                        
-                            <!-- Login panel -->
-                            <apex:outputPanel id="panelLogin" layout="block" rendered="{!NOT(isUserLoggedIn)}" >
-                                <div class="checkout-info">
-                                    <div class="checkout-info__section -short">
-                                        <apex:outputPanel >
-                                            <c:IECLogin ReturnURL="{!$Page.IECTrialRequest}?{!PARAM_RATEPLAN_ID}={!sEncryptedParamRatePlanId}" />
-                                        </apex:outputPanel>                 
-                                    </div>
-                                </div>
-                            </apex:outputPanel>  
-
-                            <apex:outputPanel id="panelPurchaseSteps" layout="block"  rendered="{!isUserLoggedIn}">
-                                <div class="checkout-info">
+                      
+                            <!----------  Carousel Static END -------- -->
                             
-                                    <!-- Billing address -->
-                                    <div class="checkout-info__section -short">  
-                                                                
-                                        <apex:outputPanel id="panelContactInfo" layout="block">
-                                            <h2 class="checkout-info__heading">Billing Details</h2> 
-                                         
-                                            <apex:outputPanel id="errorMessageContactInfo" rendered="{!inEditContactInfo}">
-                                                <apex:pageMessages escape="no" />
-                                            </apex:outputPanel>
-                                            <apex:outputText rendered="{!needToFillContactInfo}">
-                                                <p class="checkout-info__subHeading">Please fill your contact information in order to continue</p>
-                                            </apex:outputText>
-                                            
-                                            <!-- Non etidable Contact and Billing Address Information -->
-                                            <apex:outputPanel id="panelReadOnlyContactInfo" layout="block" rendered="{!NOT(inEditContactInfo)}">
-                                                <table  style="width:100%; margin-left:20px;">
-                                                     <tr>
-                                                        <td colspan="2">
-                                                            &nbsp;
-                                                        </td>
-                                                    </tr>
-                                                    
-                                                    <tr>
-                                                        <td colspan="2" class="checkout-info__billingdetails-value" style="font-size: 17px; font-family: 'Raleway', sans-serif;font-weight: 700;color: #1ebec8;">{!oAccount.Name}</td>
-                                                    </tr>
-                                                    
-                                                    <tr>
-                                                        <td colspan="2" class="checkout-info__billingdetails-value">
-                                                            <span style="display:{!IF(NOT(oContact.Salutation == ''), '', 'none')}">{!oContact.Salutation}&nbsp;</span>
-                                                            {!oContact.FirstName}&nbsp;{!oContact.LastName}
-                                                        </td>
-                                                    </tr>
-                                                    <!-- 
-                                                    <tr>
-                                                        <td class="checkout-info__billingdetails-label">Title</td>
-                                                        <td class="checkout-info__billingdetails-value">{!oContact.Title}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="checkout-info__billingdetails-label">Phone</td>
-                                                        <td class="checkout-info__billingdetails-value">{!oContact.Phone}</td>
-                                                    </tr>
-                                                    -->
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <p class="checkout-info__subHeading">Billing Address</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2" class="checkout-info__billingdetails-value">{!oBillingAddress.Street__c}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2" class="checkout-info__billingdetails-value">
-                                                            {!oBillingAddress.City__c}
-                                                            <span style="display:{!IF(NOT(oBillingAddress.City__c == ''), '', 'none')}">,&nbsp;</span>
-                                                            {!oBillingAddress.ISO_State_Name__c}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2" class="checkout-info__billingdetails-value">
-                                                            {!oBillingAddress.ZipCode__c}
-                                                            <span style="display:{!IF(NOT(oBillingAddress.ZipCode__c == ''), '', 'none')}">-&nbsp;</span>
-                                                            {!oBillingAddress.ISO_Country_Name__c}
-                                                        </td>
-                                                    </tr>
-                                                    <apex:outputPanel id="panelVATReadOnly" layout="none" rendered="{!vatConfig <> NULL}">
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <p class="checkout-info__subHeading">Tax Information</p>
-                                                            </td>
-                                                        </tr>
-                                                        <apex:outputPanel id="panelTax1ReadOnly" layout="none" rendered="{!vatConfig.ShowTax1}">
+                            <div class="sepEmptyDiv"></div>
+                       
+                            <apex:outputPanel id="panelTrialPage" layout="block" style="margin:15px">
+                           
+                            <apex:outputPanel id="errorMessage">                               
+                                <div class="errorPanel">
+                                    <apex:pageMessages escape="no"/>                                                   
+                                </div>      
+                            </apex:outputPanel>  
+                            
+                            <apex:outputPanel id="panelTrial" layout="block" style="width: 100%" rendered="{! NOT(requestSucessful)}">
+
+                                    <!-- Links after the renew -->                      
+                                    <apex:outputPanel id="trialPage_contentPanel" layout="block">
+                                        <div class="content-container">
+                                            <div class="checkout-wrapper">
+                                                <div class="checkout-total">
+                                                    <table class="checkout-table">
+                                                        <thead>
+                                                            <th class="checkout-table__heading -item"><div style="width:100%; text-align: left">Product Name</div></th>
+                                                            <th class="checkout-table__heading -price"><div style="width:100%; text-align: left">Unit Price</div></th>
+                                                            <th class="checkout-table__heading -price"><div style="width:100%; text-align: left">Quantity</div></th>
+                                                        </thead>   
+                                                                 
+                                                        <tbody>
                                                             <tr>
-                                                                <td class="checkout-info__billingdetails-label">{!vatConfig.Tax1Label}</td>
-                                                                <td class="checkout-info__billingdetails-value">{!IF(vatConfig.VATValidationRequired, vatConfig.CountryCode, '')}{!oContact.Tax_1_ID__c}</td>
-                                                            </tr>
-                                                        </apex:outputPanel>
-                                                        <apex:outputPanel id="panelTax2ReadOnly" layout="none" rendered="{!vatConfig.ShowTax2}">
-                                                            <tr>
-                                                                <td class="checkout-info__billingdetails-label">{!vatConfig.Tax2Label}</td>
-                                                                <td class="checkout-info__billingdetails-value">{!oContact.Tax_2_ID__c}</td>
-                                                            </tr>
-                                                        </apex:outputPanel>
-                                                    </apex:outputPanel>
-                                                </table>
-                                                <apex:commandButton styleClass="checkout-submit -fixed100" id="btnModifyContactInfo" value="Modify" action="{!modifyContactInfo}" rerender="panelContactInfo, panelTCs, panelSubmit" />
-                                            </apex:outputPanel>
-                                            
-                                            
-                                            <!-- Editable Contact and Billing Information -->
-                                            <apex:outputPanel id="panelEditContactInfo" layout="block" rendered="{!inEditContactInfo}">
-                                                <table style="width:100%;">
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <p class="checkout-info__subHeading">Contact Details</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">First Name<span class="required">*</span></td>
-                                                        -->
-                                                        <td colspan="2"><apex:inputText value="{!oContact.FirstName}" styleClass="login__input -required" html-placeholder="First Name" title="First Name" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">Last Name<span class="required">*</span></td>
-                                                        -->
-                                                        <td colspan="2"><apex:inputText value="{!oContact.LastName}"  styleClass="login__input -required" html-placeholder="Last Name" title="Last Name" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">Title<span class="required">*</span></td>
-                                                        -->
-                                                        <td colspan="2"><apex:inputText value="{!oContact.Title}"  styleClass="login__input -required" html-placeholder="Job Title" title="Job Title" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">Phone<span class="required">*</span></td>
-                                                        -->
-                                                        <td colspan="2"><apex:inputText value="{!oContact.Phone}"  styleClass="login__input -required" html-placeholder="Phone" title="Phone" /></td>
-                                                    </tr> 
-                                                    <tr> 
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">Email<span class="required">*</span></td>
-                                                        -->
-                                                        <td colspan="2"><apex:inputText value="{!oContact.Email}"  styleClass="login__input -required" html-placeholder="Email" title="Email" disabled="{!IF(oContact.Email=='', 'false', 'true')}"/></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <p class="checkout-info__subHeading">Billing Address</p>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">Address<span class="required">*</span></td>
-                                                        -->
-                                                        <td colspan="2"><apex:inputText value="{!oBillingAddress.Street__c}"  styleClass="login__input -required" html-placeholder="Address" title="Address" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">City<span class="required">*</span></td>
-                                                        -->
-                                                        <td colspan="2"><apex:inputText value="{!oBillingAddress.City__c}"  styleClass="login__input -required" html-placeholder="City" title="City" /></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">Country<span class="required">*</span></td>
-                                                        -->
-                                                        <td colspan="2">
-                                                            <apex:selectList style="color: {!IF(oBillingAddress.ISO_Country__c != null, '#000', '#aaa')}"  html-placeholder="Country" value="{!oBillingAddress.ISO_Country__c}" size="1"  styleClass="login__input -required">
-                                                                <apex:selectOptions value="{!lstISOCountries}"/> 
-                                                                <apex:actionsupport event="onchange" action="{!onChangeBillingCountry}" rerender="panelEditContactInfo, panelVATEdit" />
-                                                            </apex:selectList>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">State/Province<span class="required" style="display:{!IF(oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States', '', 'none')}">*</span></td>
-                                                        -->
-                                                        <td colspan="2">
-                                                            <apex:outputPanel id="panelBillingStatesProvince" layout="inline" rendered="{!bStateAvailable}">
-                                                                <apex:selectList onchange="changeTextColor(this);" title="Province" style="color: {!IF(oBillingAddress.ISO_State__c != null, '#000', '#aaa')}" value="{!oBillingAddress.ISO_State__c}" size="1" styleClass="login__input -required">
-                                                                    <apex:selectOptions value="{!lstStateProvince}" />
-                                                                </apex:selectList>  
-                                                            </apex:outputPanel>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <!-- 
-                                                        <td class="checkout-info__billingdetails-label">Zip/Postal code<span class="required" style="display:{!IF(oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States', '', 'none')}">*</span></td>
-                                                        -->
-                                                        <td colspan="2">
-                                                            <apex:inputText value="{!oBillingAddress.ZipCode__c}" styleClass="login__input" html-placeholder="Zip/Postal code"  />
-                                                        </td>
-                                                    </tr>
-                                                    <apex:outputPanel id="panelVATEdit" layout="none" rendered="{!vatConfig <> NULL}">
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <p class="checkout-info__subHeading">Tax Information</p>
-                                                            </td>
-                                                        </tr>
-                                                        <apex:outputPanel id="panelTax1Edit" layout="none" rendered="{!vatConfig.ShowTax1}">
-                                                            <tr>
-                                                        <!-- 
-                                                                <td class="checkout-info__billingdetails-label">{!vatConfig.Tax1Label}<apex:outputPanel id="panelTax1Required" rendered="{!vatConfig.TaxIDMandatory}"><span class="required">*</span></apex:outputPanel></td>
-                                                        -->     
-                                                                <td colspan="2">
-                                                                    <apex:outputPanel rendered="{!vatConfig.VATValidationRequired}">
-                                                                        <table style="width:100%">
-                                                                            <tr>
-                                                                                <td style="width:40px;padding-left: 0px;">
-                                                                                    <apex:inputText styleClass="login__input" value="{!vatConfig.CountryCode}" disabled="true" />
-                                                                                </td>
-                                                                                <td style="width:5px">&nbsp;</td>
-                                                                                <td>
-                                                                                    <apex:inputText styleClass="login__input -required" value="{!oContact.Tax_1_ID__c}" maxlength="20" html-placeholder="{!vatConfig.Tax1Label}" title="{!vatConfig.Tax1Label}"/>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </apex:outputPanel>
-                                                                    <apex:inputText maxlength="20" value="{!oContact.Tax_1_ID__c}"  styleClass="login__input" html-placeholder="{!vatConfig.Tax1Label}" title="{!vatConfig.Tax1Label}" rendered="{!NOT(vatConfig.VATValidationRequired)}"/>
+                                                                <td>
+                                                                    <apex:outputText styleClass="checkout-table__item-text" value="{!sProductName}" />
+                                                                    <apex:outputText styleClass="checkout-table__item-text" value="{!sShortDesc}" />
+                                                                    <br/>
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText styleClass="checkout-table__price" >$0</apex:outputText>
+                                                                </td>
+                                                                <td>
+                                                                    <apex:outputText styleClass="checkout-table__price" >1</apex:outputText> 
                                                                 </td>
                                                             </tr>
-                                                        </apex:outputPanel>
-                                                        <apex:outputPanel id="panelTax2Edit" layout="none" rendered="{!vatConfig.ShowTax2}">
-                                                            <tr>
-                                                                <!-- 
-                                                                <td class="checkout-info__billingdetails-label">{!vatConfig.Tax2Label}<apex:outputPanel id="panelTax2Required" rendered="{!vatConfig.TaxIDMandatory}"><span class="required">*</span></apex:outputPanel></td>
-                                                                -->
-                                                                <td  colspan="2"><apex:inputText maxlength="20" value="{!oContact.Tax_2_ID__c}"  styleClass="login__input" html-placeholder="{!vatConfig.Tax2Label}"  title="{!vatConfig.Tax2Label}" /></td>
-                                                            </tr>
-                                                        </apex:outputPanel>
-                                                    </apex:outputPanel>
-                                                </table>
-                                                <apex:commandButton styleClass="checkout-submit -fixed100" value="Submit" action="{!updateContactInfo}" rerender="errorMessageContactInfo, panelContactInfo, panelTCs, panelSubmit" />
-                                                <apex:commandButton styleClass="checkout-submit -fixed100" value="Cancel" action="{!cancelUpdateContactInfo}" rerender="errorMessageContactInfo, panelContactInfo, panelTCs, panelSubmit" rendered="{!NOT(needToFillContactInfo)}" />
-                                            </apex:outputPanel>
-                                        </apex:outputPanel>        
-                                    </div>    
+                                                           
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="checkout-submitPanel">                                 
+                                                        <apex:outputLink value="{!$Page.IECBrowseProducts}" styleClass="checkout-submit_2buttons -right" style="width: 300px; float:left;">Cancel</apex:outputLink>
+                                                    </div>
+                                                </div>
+                                            
+                                                <!-- Login panel -->
+                                                <apex:outputPanel id="panelLogin" layout="block" rendered="{!NOT(isUserLoggedIn)}" >
+                                                    <div class="checkout-info">
+                                                        <div class="checkout-info__section -short">
+                                                            <apex:outputPanel >
+                                                                <c:IECLogin ReturnURL="{!$Page.IECTrialRequest}?{!PARAM_RATEPLAN_ID}={!sEncryptedParamRatePlanId}" />
+                                                            </apex:outputPanel>                 
+                                                        </div>
+                                                    </div>
+                                                </apex:outputPanel>  
 
-                                    <!-- Terms & conditions -->
-                                    <apex:outputPanel id="panelTCs" layout="block" styleClass="collapsableSection">
-                                    
-                                        <apex:outputPanel rendered="{!NOT(inEditContactInfo)}">
-                                            <div class="checkout-info__section -short">                         
-                                                <h2 class="checkout-info__heading">Terms and Conditions</h2>
-                                                <br/>
-                                                <c:IECTermsAndConditions ProductInformationIDs="{!listProductInformationIDs}" IECPageController="{!this}" ComponentKey="{!TC_COMPONENT_KEY}"  RerenderComponentId="{!$Component.formTrial.panelSubmit}" />
-                                           </div>
-                                       </apex:outputPanel>
+                                                <apex:outputPanel id="panelPurchaseSteps" layout="block"  rendered="{!isUserLoggedIn}">
+                                                    <div class="checkout-info">
+                                                
+                                                        <!-- Billing address -->
+                                                        <div class="checkout-info__section -short">  
+                                                                                    
+                                                            <apex:outputPanel id="panelContactInfo" layout="block">
+                                                                <h2 class="checkout-info__heading">Billing Details</h2> 
+                                                             
+                                                                <apex:outputPanel id="errorMessageContactInfo" rendered="{!inEditContactInfo}">
+                                                                    <apex:pageMessages escape="no" />
+                                                                </apex:outputPanel>
+                                                                <apex:outputText rendered="{!needToFillContactInfo}">
+                                                                    <p class="checkout-info__subHeading">Please fill your contact information in order to continue</p>
+                                                                </apex:outputText>
+                                                                
+                                                                <!-- Non etidable Contact and Billing Address Information -->
+                                                                <apex:outputPanel id="panelReadOnlyContactInfo" layout="block" rendered="{!NOT(inEditContactInfo)}">
+                                                                    <table  style="width:100%; margin-left:20px;">
+                                                                         <tr>
+                                                                            <td colspan="2">
+                                                                                &nbsp;
+                                                                            </td>
+                                                                        </tr>
+                                                                        
+                                                                        <tr>
+                                                                            <td colspan="2" class="checkout-info__billingdetails-value" style="font-size: 17px; font-family: 'Raleway', sans-serif;font-weight: 700;color: #1ebec8;">{!oAccount.Name}</td>
+                                                                        </tr>
+                                                                        
+                                                                        <tr>
+                                                                            <td colspan="2" class="checkout-info__billingdetails-value">
+                                                                                <span style="display:{!IF(NOT(oContact.Salutation == ''), '', 'none')}">{!oContact.Salutation}&nbsp;</span>
+                                                                                {!oContact.FirstName}&nbsp;{!oContact.LastName}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <!-- 
+                                                                        <tr>
+                                                                            <td class="checkout-info__billingdetails-label">Title</td>
+                                                                            <td class="checkout-info__billingdetails-value">{!oContact.Title}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="checkout-info__billingdetails-label">Phone</td>
+                                                                            <td class="checkout-info__billingdetails-value">{!oContact.Phone}</td>
+                                                                        </tr>
+                                                                        -->
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                <p class="checkout-info__subHeading">Billing Address</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="2" class="checkout-info__billingdetails-value">{!oBillingAddress.Street__c}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="2" class="checkout-info__billingdetails-value">
+                                                                                {!oBillingAddress.City__c}
+                                                                                <span style="display:{!IF(NOT(oBillingAddress.City__c == ''), '', 'none')}">,&nbsp;</span>
+                                                                                {!oBillingAddress.ISO_State_Name__c}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="2" class="checkout-info__billingdetails-value">
+                                                                                {!oBillingAddress.ZipCode__c}
+                                                                                <span style="display:{!IF(NOT(oBillingAddress.ZipCode__c == ''), '', 'none')}">-&nbsp;</span>
+                                                                                {!oBillingAddress.ISO_Country_Name__c}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <apex:outputPanel id="panelVATReadOnly" layout="none" rendered="{!vatConfig <> NULL}">
+                                                                            <tr>
+                                                                                <td colspan="2">
+                                                                                    <p class="checkout-info__subHeading">Tax Information</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <apex:outputPanel id="panelTax1ReadOnly" layout="none" rendered="{!vatConfig.ShowTax1}">
+                                                                                <tr>
+                                                                                    <td class="checkout-info__billingdetails-label">{!vatConfig.Tax1Label}</td>
+                                                                                    <td class="checkout-info__billingdetails-value">{!IF(vatConfig.VATValidationRequired, vatConfig.CountryCode, '')}{!oContact.Tax_1_ID__c}</td>
+                                                                                </tr>
+                                                                            </apex:outputPanel>
+                                                                            <apex:outputPanel id="panelTax2ReadOnly" layout="none" rendered="{!vatConfig.ShowTax2}">
+                                                                                <tr>
+                                                                                    <td class="checkout-info__billingdetails-label">{!vatConfig.Tax2Label}</td>
+                                                                                    <td class="checkout-info__billingdetails-value">{!oContact.Tax_2_ID__c}</td>
+                                                                                </tr>
+                                                                            </apex:outputPanel>
+                                                                        </apex:outputPanel>
+                                                                    </table>
+                                                                    <apex:commandButton styleClass="checkout-submit -fixed100" id="btnModifyContactInfo" value="Modify" action="{!modifyContactInfo}" rerender="panelContactInfo, panelTCs, panelSubmit"/>
+                                                                </apex:outputPanel>
+                                                                
+                                                                
+                                                                <!-- Editable Contact and Billing Information -->
+                                                                <apex:outputPanel id="panelEditContactInfo" layout="block" rendered="{!inEditContactInfo}">
+                                                                    <table style="width:100%;">
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                <p class="checkout-info__subHeading">Contact Details</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">First Name<span class="required">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2"><apex:inputText value="{!oContact.FirstName}" styleClass="login__input -required" html-placeholder="First Name" title="First Name" /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">Last Name<span class="required">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2"><apex:inputText value="{!oContact.LastName}"  styleClass="login__input -required" html-placeholder="Last Name" title="Last Name" /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">Title<span class="required">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2"><apex:inputText value="{!oContact.Title}"  styleClass="login__input -required" html-placeholder="Job Title" title="Job Title" /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">Phone<span class="required">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2"><apex:inputText value="{!oContact.Phone}"  styleClass="login__input -required" html-placeholder="Phone" title="Phone" /></td>
+                                                                        </tr> 
+                                                                        <tr> 
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">Email<span class="required">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2"><apex:inputText value="{!oContact.Email}"  styleClass="login__input -required" html-placeholder="Email" title="Email" disabled="{!IF(oContact.Email=='', 'false', 'true')}"/></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                <p class="checkout-info__subHeading">Billing Address</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">Address<span class="required">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2"><apex:inputText value="{!oBillingAddress.Street__c}"  styleClass="login__input -required" html-placeholder="Address" title="Address" /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">City<span class="required">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2"><apex:inputText value="{!oBillingAddress.City__c}"  styleClass="login__input -required" html-placeholder="City" title="City" /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">Country<span class="required">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2">
+                                                                                <apex:selectList style="color: {!IF(oBillingAddress.ISO_Country__c != null, '#000', '#aaa')}"  html-placeholder="Country" value="{!oBillingAddress.ISO_Country__c}" size="1"  styleClass="login__input -required">
+                                                                                    <apex:selectOptions value="{!lstISOCountries}"/> 
+                                                                                    <apex:actionsupport event="onchange" action="{!onChangeBillingCountry}" rerender="panelEditContactInfo, panelVATEdit" />
+                                                                                </apex:selectList>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">State/Province<span class="required" style="display:{!IF(oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States', '', 'none')}">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2">
+                                                                                <apex:outputPanel id="panelBillingStatesProvince" layout="inline" rendered="{!bStateAvailable}">
+                                                                                    <apex:selectList onchange="changeTextColor(this);" title="Province" style="color: {!IF(oBillingAddress.ISO_State__c != null, '#000', '#aaa')}" value="{!oBillingAddress.ISO_State__c}" size="1" styleClass="login__input -required">
+                                                                                        <apex:selectOptions value="{!lstStateProvince}" />
+                                                                                    </apex:selectList>  
+                                                                                </apex:outputPanel>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <!-- 
+                                                                            <td class="checkout-info__billingdetails-label">Zip/Postal code<span class="required" style="display:{!IF(oBillingAddress.Country__c == 'Canada' || oBillingAddress.Country__c == 'United States', '', 'none')}">*</span></td>
+                                                                            -->
+                                                                            <td colspan="2">
+                                                                                <apex:inputText value="{!oBillingAddress.ZipCode__c}" styleClass="login__input" html-placeholder="Zip/Postal code"  />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <apex:outputPanel id="panelVATEdit" layout="none" rendered="{!vatConfig <> NULL}">
+                                                                            <tr>
+                                                                                <td colspan="2">
+                                                                                    <p class="checkout-info__subHeading">Tax Information</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <apex:outputPanel id="panelTax1Edit" layout="none" rendered="{!vatConfig.ShowTax1}">
+                                                                                <tr>
+                                                                            <!-- 
+                                                                                    <td class="checkout-info__billingdetails-label">{!vatConfig.Tax1Label}<apex:outputPanel id="panelTax1Required" rendered="{!vatConfig.TaxIDMandatory}"><span class="required">*</span></apex:outputPanel></td>
+                                                                            -->     
+                                                                                    <td colspan="2">
+                                                                                        <apex:outputPanel rendered="{!vatConfig.VATValidationRequired}">
+                                                                                            <table style="width:100%">
+                                                                                                <tr>
+                                                                                                    <td style="width:40px;padding-left: 0px;">
+                                                                                                        <apex:inputText styleClass="login__input" value="{!vatConfig.CountryCode}" disabled="true" />
+                                                                                                    </td>
+                                                                                                    <td style="width:5px">&nbsp;</td>
+                                                                                                    <td>
+                                                                                                        <apex:inputText styleClass="login__input -required" value="{!oContact.Tax_1_ID__c}" maxlength="20" html-placeholder="{!vatConfig.Tax1Label}" title="{!vatConfig.Tax1Label}"/>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </apex:outputPanel>
+                                                                                        <apex:inputText maxlength="20" value="{!oContact.Tax_1_ID__c}"  styleClass="login__input" html-placeholder="{!vatConfig.Tax1Label}" title="{!vatConfig.Tax1Label}" rendered="{!NOT(vatConfig.VATValidationRequired)}"/>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </apex:outputPanel>
+                                                                            <apex:outputPanel id="panelTax2Edit" layout="none" rendered="{!vatConfig.ShowTax2}">
+                                                                                <tr>
+                                                                                    <!-- 
+                                                                                    <td class="checkout-info__billingdetails-label">{!vatConfig.Tax2Label}<apex:outputPanel id="panelTax2Required" rendered="{!vatConfig.TaxIDMandatory}"><span class="required">*</span></apex:outputPanel></td>
+                                                                                    -->
+                                                                                    <td  colspan="2"><apex:inputText maxlength="20" value="{!oContact.Tax_2_ID__c}"  styleClass="login__input" html-placeholder="{!vatConfig.Tax2Label}"  title="{!vatConfig.Tax2Label}" /></td>
+                                                                                </tr>
+                                                                            </apex:outputPanel>
+                                                                        </apex:outputPanel>
+                                                                    </table>
+                                                                    <apex:commandButton styleClass="checkout-submit -fixed100" value="Submit" action="{!updateContactInfo}" rerender="errorMessageContactInfo, panelContactInfo, panelTCs, panelSubmit" />
+                                                                    <apex:commandButton styleClass="checkout-submit -fixed100" value="Cancel" action="{!cancelUpdateContactInfo}" rerender="errorMessageContactInfo, panelContactInfo, panelTCs, panelSubmit" rendered="{!NOT(needToFillContactInfo)}" />
+                                                                </apex:outputPanel>
+                                                            </apex:outputPanel>        
+                                                        </div>    
+
+                                                        <!-- Terms & conditions -->
+                                                        <apex:outputPanel id="panelTCs" layout="block" styleClass="collapsableSection">
+                                                        
+                                                            <apex:outputPanel rendered="{!NOT(inEditContactInfo)}">
+                                                                <div class="checkout-info__section -short">                         
+                                                                    <h2 class="checkout-info__heading">Terms and Conditions</h2>
+                                                                    <br/>
+                                                                    <c:IECTermsAndConditions ProductInformationIDs="{!listProductInformationIDs}" IECPageController="{!this}" ComponentKey="{!TC_COMPONENT_KEY}"  RerenderComponentId="{!$Component.formTrial.panelSubmit}" />
+                                                               </div>
+                                                           </apex:outputPanel>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <!-- Submit Request -->
+                                                        <apex:outputPanel id="panelSubmit" layout="block" style="text-align: center; margin-bottom: 50px;" >                                     <!-- removed from rerender V  panelTrial-->
+                                                            <apex:commandButton id="submitTrialRequest" rendered="{!not(isCriticalError) && NOT(inEditContactInfo)}"  onclick="disablePaymentButtons();pushSubmitTrialRequest();" style="width: 100%;" value="Submit Request" action="{!activateTrial}" styleClass="checkout-submit" rerender="errorMessage,panelTrialPage,errorMessageContactInfo" disabled="{! requestSucessful || NOT(hasAcceptedAllTnCs)}" />
+                                                        </apex:outputPanel> 
+                                                    </div>
+                                                </apex:outputPanel>                         
+                                            </div>
+                                        </div>
                                     </apex:outputPanel>
-                                    
-                                    <!-- Submit Request -->
-                                    <apex:outputPanel id="panelSubmit" layout="block" style="text-align: center; margin-bottom: 50px;" >                                     <!-- removed from rerender V  panelTrial-->
-                                        <apex:commandButton id="submitTrialRequest" rendered="{!not(isCriticalError) && NOT(inEditContactInfo)}"  onclick="disablePaymentButtons()" style="width: 100%;" value="Submit Request" action="{!activateTrial}" styleClass="checkout-submit" rerender="errorMessage,panelTrialPage,errorMessageContactInfo" disabled="{! requestSucessful || NOT(hasAcceptedAllTnCs)}" />
-                                    </apex:outputPanel> 
-                                </div>
-                            </apex:outputPanel>                         
-                        </div>
-                    </div>
-                </apex:outputPanel>
-            </apex:outputPanel>    
-        </apex:outputPanel>
-       
-       
-     </div>   
-    </apex:form>
-    
-</div> 
-    <!-- ************************************ -->
-     <div class="gadfooter">
-        <!-- Footer -->
-        <c:IECSiteFooter />
-     </div>
-    </div>
+                                </apex:outputPanel>    
+                            </apex:outputPanel>
+           
+           
+                        </div>   
+                    </apex:form>
+        
+                </div> 
+                <!-- ************************************ -->
+                <div class="gadfooter">
+                    <!-- Footer -->
+                    <c:IECSiteFooter />
+                </div>
+            </div>
 
-    <style> 
-        html, body {
-            height:100%;    
-            margin:0;
-            padding:0;
-        }               
-        .gdpwrapper {
-            min-height:100%;
-            position:relative;
-        }
-        .gdpbody{
-         padding-bottom:141px; 
-        }
-        .gadfooter{
-            width:100%;
-            height:100px; 
-            position:absolute;
-            bottom:0;
-            left:0;        
-        }
-  </style>
+            <style> 
+                html, body {
+                    height:100%;    
+                    margin:0;
+                    padding:0;
+                }               
+                .gdpwrapper {
+                    min-height:100%;
+                    position:relative;
+                }
+                .gdpbody{
+                 padding-bottom:141px; 
+                }
+                .gadfooter{
+                    width:100%;
+                    height:100px; 
+                    position:absolute;
+                    bottom:0;
+                    left:0;        
+                }
+            </style>
+
+        </body>
+    </html>
     
     
 </apex:page>
+
+</script>
+
+</apex:component>

@@ -1,4 +1,8 @@
 <apex:page controller="ISSP_Registration"  showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}">
+
+	<html>
+	
+		<head>
 	<style>
 		.errorMessage {
 			font-size: 10px;
@@ -11,9 +15,59 @@
 		}
 	</style>
 
-<head>
+			<!-- Google Tag Manager -->
+		    <script>
+		        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		        })(window,document,'script','dataLayer','GTM-PWSNSM3');
+		    </script>
+		    <!-- End Google Tag Manager -->
+		    <script>
+		      function getDevice() {
+		        if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+		            return "Tablet";
+		        } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+		            return "Mobile";
+		        } else {
+		            return "Desktop";
+		        }
+		      }      
+
+		      window.dataLayer = window.dataLayer||[];
+		      dataLayer.push({
+		        "user": {
+		          "loginStatus": "Logged Out",
+		          "memberStatus": "No",
+		        },
+		        "page": {
+		          "requestURI": window.location.pathname + window.location.search + "&ga_step=step3-account-registration",
+		          "device": getDevice(),
+		          "breadcrumb": "{!$Label.ISSP_Registration_RegistrationProcess}", 
+		          "language": "{!lang}"
+		        }                  
+		      });
+
+
+		      dataLayer.push({
+		        "event": "VPV",
+		        "page": {
+		          "requestURI": window.location.pathname + window.location.search + "&ga_step=step3-account-registration"
+		        }
+		      });
+
+		    </script>
+
     <title>{!IF(communityName=='CNS','CNS','IATA')}</title>
  </head>
+
+		 <body>
+
+		 	<!-- Google Tag Manager (noscript) -->
+		    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+		      	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		    <!-- End Google Tag Manager (noscript) -->
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
  <apex:stylesheet value="{!URLFOR($Resource.ValidationEngine, 'css/validationEngine.jquery.css')}" />
@@ -1594,5 +1648,6 @@
      </apex:define>
   </apex:composition>
  
-  
+		 </body>
+	</html>  
 </apex:page>
