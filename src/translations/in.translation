@@ -12570,7 +12570,7 @@ Jika Anda tetap mengalami kesulitan dalam proses registrasi ke Customer Portal, 
     <customLabels>
         <label>Payment Link dapat digunakan untuk pembayaran IATA invoices dengan menggunakan kartu kredit&lt;br/&gt;
 &lt;b&gt;Peringatan !&lt;/b&gt;&lt;br/&gt;
-Harap diperhatikan bahwa faktur (invoice) IATA untuk agen yang terakreditasi dikeluarkan melalui BPS / CASS. Anda harus memeriksa rincian faktur Anda untuk memastikan bahwa faktur ini belum dibayarkan sebelum Anda melanjutkan pembayaran dengan kartu kredit.</label>
+Harap diperhatikan bahwa faktur (invoice) IATA untuk agen yang terakreditasi dikeluarkan melalui BSP / CASS. Anda harus memeriksa rincian faktur Anda untuk memastikan bahwa faktur ini belum dibayarkan sebelum Anda melanjutkan pembayaran dengan kartu kredit.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>
