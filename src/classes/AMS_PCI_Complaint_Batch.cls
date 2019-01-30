@@ -8,11 +8,13 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     public static Map<Id, EmailTemplate> templateIdVsTemplates {get;set;}
     public static Map<Id, List<Attachment>> templateIdVsAttachemnt {get;set;}
     public static Map<Id, Case> casesInfo {get;set;}
+    public Boolean oneShotRenewal {get;set;} //AMSU-200
 
     global AMS_PCI_Complaint_Batch(Integer batchScope) {
         this.batchScope = batchScope;
         this.lstErrors = new List<ErrorWrapper>();
         this.lstResult = new List<ResultWrapper>();
+        this.oneShotRenewal = false; //AMSU-200
     }
 
     global AMS_PCI_Complaint_Batch(Integer batchScope, Set<Id> filteredAccounts) {
@@ -20,6 +22,16 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         this.lstErrors = new List<ErrorWrapper>();
         this.lstResult = new List<ResultWrapper>();
         this.filteredAccounts = filteredAccounts;
+        this.oneShotRenewal = false; //AMSU-200
+    }
+
+    //AMSU-200
+    global AMS_PCI_Complaint_Batch(Integer batchScope, Set<Id> filteredAccounts, Boolean oneShotParam) {
+        this.batchScope = batchScope;
+        this.lstErrors = new List<ErrorWrapper>();
+        this.lstResult = new List<ResultWrapper>();
+        this.filteredAccounts = filteredAccounts;
+        this.oneShotRenewal = oneShotParam;
     }
 
     public static void start(String cron, Integer scope) {
@@ -78,6 +90,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             query += ' Id IN :filteredAccounts';
         } else { /* Process for renewal batch */
             query += ' ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:60';
+            query += ' AND Location_Type__c = \'HO\'';
             query += ' AND Location_Class__c IN :locations';
             query += ' AND Status__c IN :availableStatus';
             query += ' AND Is_PCI_compliant__c NOT IN :pciValues';
@@ -94,8 +107,9 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         Savepoint sp = Database.setSavepoint();
         try {
             Boolean isRenewal = filteredAccounts == null; // if filteredAccounts is null means that is a renewal process running
+            if(oneShotRenewal) isRenewal = true; //AMSU-200 - in case of oneshot is always renewal
             system.debug('isRenewal: ' + isRenewal);
-            validateCandidatesForRenewal(scope, resChunk, isRenewal);            
+            validateCandidatesForRenewal(scope, resChunk, isRenewal, oneShotRenewal);            
         } catch(Exception e) {
             System.debug('execute validateCandidatesForRenewal - Exception : ' + e);
             System.debug('execute validateCandidatesForRenewal - Exception : ' + e.getStackTraceString());
@@ -132,7 +146,12 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         }
     }
 
+    //AMSU-200
     public static void validateCandidatesForRenewal(List<Account> pciRequiringRenewal, List<ResultWrapper> resW, Boolean isRenewal){
+        validateCandidatesForRenewal(pciRequiringRenewal, resW, isRenewal, false);  
+    }
+
+    public static void validateCandidatesForRenewal(List<Account> pciRequiringRenewal, List<ResultWrapper> resW, Boolean isRenewal, Boolean isOneShot){
 
         Set<Id> accountIds = new Set<Id>();
 
@@ -227,8 +246,16 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         for(Account acc: accountData.values())
             isoCountries.add(acc.IATA_ISO_Country__c);
 
+        //AMSU-200
+        String type = 'PCI';
+
+        if(isOneShot){
+            type = type + '_oneShot';
+        }
         
-        Map<String, Id> countryTemplates = PCIemailTemplates('PCI', isRenewal);
+        //AMSU-200
+        //Map<String, Id> countryTemplates = PCIemailTemplates('PCI', isRenewal);
+        Map<String, Id> countryTemplates = PCIemailTemplates(type, isRenewal);
         OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
         for(Account agReg: pciRequiringRenewal){
@@ -256,7 +283,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
             system.debug('creating renewal for PCI');
 
-            AMS_OSCAR__c oscar = createStagingArea(agReg, comCasecontact, isRenewal);
+            AMS_OSCAR__c oscar = createStagingArea(agReg, comCasecontact, isRenewal, isOneShot);
             ResultWrapper resProcess = new ResultWrapper(agReg);
             if(comCaseContact != null) {
                 resProcess.con = comCaseContact;
@@ -280,8 +307,13 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 
     }
 
-    
+    //AMSU-200
     public static AMS_OSCAR__c createStagingArea(Account accountData, Contact communicationCaseContact, Boolean isRenewal){
+        return createStagingArea(accountData, communicationCaseContact, isRenewal, false);
+    }
+    
+	//AMSU-200 - added param "isOneShot"
+    public static AMS_OSCAR__c createStagingArea(Account accountData, Contact communicationCaseContact, Boolean isRenewal, Boolean isOneShot){
 
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_CERT, Account__c = accountData.Id,
                                     Process__c = AMS_Utils.PCI_COMPLIANT, Status__c='Accepted_Future Date', ANG_PCI_compliance_expiry_date__c = accountData.ANG_PCI_compliance_expiry_date__c);
@@ -308,6 +340,10 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         theCommunicationCase.Visible_on_ISS_Portal__c = true;
         theCommunicationCase.Status = 'Accepted_Future Date';
         theCommunicationCase.IATACodeProduct__c = accountData.IATACode__c;
+        
+        //AMSU-200
+        if(isOneShot) theCommunicationCase.Do_Not_Send_Notification__c = true;
+
         
         if(communicationCaseContact != null)
             theCommunicationCase.ContactId = communicationCaseContact.Id;
@@ -380,7 +416,6 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
     
 
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
-        Id templateId;
         Boolean templateToIATA = false;
         List<EmailTemplate> tempIata = new List<EmailTemplate>();
         Map<Id, Id> mapContactsVs_User = new Map<Id, Id>();
@@ -417,10 +452,12 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             contactsId.add(c.Id);
         }
 
+        Map<Id,User> mapUsers = new Map<Id,User>();
         For(User u :  [Select Id, ContactId, Email, Name FROM User WHERE ContactId in :contactsId]){
             mapContactsVs_User.put(u.ContactId, u.Id);
             mapUserVsEmail.put(u.Id, u.Email);
             mapUsersVsContactName.put(u.Id, u.Name);
+            mapUsers.put(u.Id, u);
         }        
         
         system.debug('DGR sendEmailAlert: mapContactsVs_User : ' + mapContactsVs_User);
@@ -448,181 +485,15 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                 system.debug('DGR sendEmailAlert: userId : ' + userId);
 
                 if(userId != null){
-
-                    if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
-
-                        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                        //mail.saveAsActivity = true;
-                        mail.saveAsActivity = false; //must be false when sending mail to users.
-                        
-                        //mail.setToAddresses(new List<String>{recipient.Email});
-                        mail.setTargetObjectId(userId);
-                        
-                        if(templateToIATA){
-                            mail.setTemplateId(tempIata.get(0).Id);
-                        } else {
-                            //AMSU-177 - added "+ recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'' "
-                            mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') , countryTemplates));
-                        }
-                        //mail.setTargetObjectId(recipient.Id);
-                        
-                        //mail.setWhatId(oscarId); //WhatId is not available for sending emails to UserIds
-                       
-                        mail.setOrgWideEmailAddressId(owea.Id);
-
-                        mailsToSend.add(mail);
-
-                    //FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
-                    //PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
-                    }else if(isDGR){
-
-                        system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
-
-                        //FM 24/10/2017 - AMSU-32 
-                        if(recipient.User_Portal_Status__c == 'Approved Admin'){
-
-                            //AMSU-177
-                            String sPreferred_Language = recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'');
-
-                            system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
-                            //system.debug('DGR sendEmailAlert: Pref Lang ' + recipient.Preferred_Language__c);
-                            system.debug('DGR sendEmailAlert: Pref Lang ' + sPreferred_Language); //AMSU-177
-
-                            //lPortalAdminsEmailsDGR.add(recipient.Email);
-                            //if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
-                            if(mPortalAdminsEmailsDGR.containsKey(sPreferred_Language)){ //AMSU-177
-                                //system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + recipient.Preferred_Language__c);
-                                system.debug('DGR sendEmailAlert: Already contain record for Pref Lang : ' + sPreferred_Language); //AMSU-177
-                                
-                                //List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
-                                //aux.add(recipient.Email);
-                                //List<Id> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
-                                List<Id> aux = mPortalAdminsEmailsDGR.get(sPreferred_Language); //AMSU-177
-                                aux.add(userId);
-                                
-                                //mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
-                                mPortalAdminsEmailsDGR.put(sPreferred_Language, aux); //AMSU-177
-                            }else{
-                                //system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + recipient.Preferred_Language__c);
-                                system.debug('DGR sendEmailAlert: NO record for Pref Lang : ' + sPreferred_Language); //AMSU-177
-                                //List<String> aux = new List<String>();
-                                //aux.add(recipient.Email);
-                                List<Id> aux = new List<Id>();
-                                aux.add(userId);
-                                
-                                //mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
-                                mPortalAdminsEmailsDGR.put(sPreferred_Language, aux); //AMSU-177
-                                //mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
-                            }
-
-                            system.debug('DGR sendEmailAlert: mPortalAdminsEmailsDGR ' + mPortalAdminsEmailsDGR);
-
-
-                        }else{
-                            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                            //mail.saveAsActivity = true;
-                            mail.saveAsActivity = false; //must be false when sending mail to users.
-                            //mail.setToAddresses(new List<String>{recipient.Email});
-                            if(templateToIATA){
-                                mail.setTemplateId(tempIata.get(0).Id);
-                            } else {
-                                //AMSU-177 - added "+ recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'' "
-                                mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') , countryTemplates));
-                            }
-                            //.setTargetObjectId(recipient.Id);
-                            mail.setTargetObjectId(userId);
-                                                        
-                            //mail.setWhatId(oscarId); //WhatId is not available for sending emails to UserIds
-                               
-                            mail.setOrgWideEmailAddressId(owea.Id);
-
+                    String templateName = recipient.Preferred_Language__c + (recipient.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'');
+                    Id templateId = getSpecificLangTemplate(templateName , countryTemplates); 
+                    Messaging.SingleEmailMessage mail = mergeTemplate(templateId, recipient.Id, userId, oscarCommCaseId, owea.Id);
                             mailsToSend.add(mail);
                         }
                     }
-                }
-            }
-
-            if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
-                for(String key : mPortalAdminsEmailsDGR.keySet()){
-                    List<Id> users = mPortalAdminsEmailsDGR.get(key);
-                    system.debug('DGR sendEmailAlert: key : ' + key);
-                    system.debug('DGR sendEmailAlert: List : mPortalAdminsEmailsDGR.get(key) : ' + mPortalAdminsEmailsDGR.get(key));
-                    system.debug('DGR sendEmailAlert: users : ' + users);
-                    
-                    for(Id user : users){
-
-                        Messaging.SingleEmailMessage mailPortalAdmin = new Messaging.SingleEmailMessage();
-                        //mailPortalAdmin.saveAsActivity = true; //must be false when sending mail to users.
-                        mailPortalAdmin.saveAsActivity = false; //must be false when sending mail to users.
-                        
-                        //mailPortalAdmin.setToAddresses(mPortalAdminsEmailsDGR.get(key));
-
-                        mailPortalAdmin.setTargetObjectId(user);
-                        //setToAddresses(mPortalAdminsEmailsDGR.get(key));
-                        
-                        if(templateToIATA){
-                            mailPortalAdmin.setTemplateId(tempIata.get(0).Id);
-                        } else {
-                            mailPortalAdmin.setTemplateId(getSpecificLangTemplate(key, countryTemplates));
-                        }
-                       
-                        //Contact auxCont = mRecipientPortalAdminsEmailsDGR.get(key);
-                        //mailPortalAdmin.setTargetObjectId(auxCont.Id);
-
-                        //mailPortalAdmin.setWhatId(oscarId); //WhatId is not available for sending emails to UserIds
-                       
-                        mailPortalAdmin.setOrgWideEmailAddressId(owea.Id);
-                        mailsToSend.add(mailPortalAdmin);
-                    }
-                }
-            }
-
-            //Since when sending mails with the user in the TargetObjectId we lost the automatic 
-            //merge functionality so we have to merge in here
-            Date dTodayPlus30 = (date.today() + 30);
-
-            system.debug('DGR sendEmailAlert: dTodayPlus30 - ' + dTodayPlus30);
-            system.debug('DGR sendEmailAlert: AMS_PCI_Complaint_Batch.templateIdVsTemplates - ' + AMS_PCI_Complaint_Batch.templateIdVsTemplates);
-            system.debug('DGR sendEmailAlert: casesInfo - ' +casesInfo);
 
             for(Messaging.SingleEmailMessage mail : mailsToSend){
                 
-                system.debug('DGR sendEmailAlert: mail.getTemplateId() - ' + mail.getTemplateId());
-
-                EmailTemplate template = AMS_PCI_Complaint_Batch.templateIdVsTemplates.get( mail.getTemplateId() );
-
-                String subject = template.Subject;
-                String htmlBody = template.HtmlValue == null?'':template.HtmlValue;
-                String textBody = template.Body == null?'':template.Body;
-                String caseNumber = casesInfo.get(oscarCommCaseId).CaseNumber == null?'':casesInfo.get(oscarCommCaseId).CaseNumber;
-                String iatacode = casesInfo.get(oscarCommCaseId).IATACodeProduct__c == null?'':casesInfo.get(oscarCommCaseId).IATACodeProduct__c;
-                String sContactName = mapUsersVsContactName.get(mail.getTargetObjectId());
-                
-                subject = subject.replace('{!Case.CaseNumber} ', caseNumber);
-                mail.setSubject(subject);
-
-
-                if(htmlBody != ''){
-                    htmlBody = htmlBody.replace('<![CDATA[', '');
-                    htmlBody = htmlBody.replace('{!Contact.Name}', sContactName);
-                    htmlBody = htmlBody.replace('{!Case.CaseNumber}', caseNumber);
-                    htmlBody = htmlBody.replace('{!Case.IATA_Code__c}', iatacode);
-                    htmlBody = htmlBody.replace('{!Today()+30}', dTodayPlus30.format());
-                    htmlBody = htmlBody.replace('{!Case.Id}', oscarCommCaseId);
-                    htmlBody = htmlBody.replace(']]>', '');
-                }
-
-                if(textBody != ''){
-                    textBody = textBody.replace('{!Contact.Name}', sContactName);
-                    textBody = textBody.replace('{!Case.CaseNumber}', caseNumber);
-                    textBody = textBody.replace('{!Case.IATA_Code__c}', iatacode);
-                    textBody = textBody.replace('{!Today()+30}', dTodayPlus30.format());
-                    textBody = textBody.replace('{!Case.Id}', oscarCommCaseId);
-                }
-
-                mail.setHtmlBody(htmlBody);
-                mail.setPlainTextBody(textBody);
-
                 List<Attachment> attachs = templateIdVsAttachemnt.get(mail.getTemplateId());
                 system.debug('DGR sendEmailAlert: attachs : ' + attachs);
                 List<Messaging.EmailFileAttachment> emailAttachs = new list<Messaging.EmailFileAttachment>();
@@ -792,6 +663,14 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
         Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
         Messaging.sendEmail(messages);
 
+    }
+
+    private static Messaging.SingleEmailMessage mergeTemplate(Id templateId, Id contactId, Id userId, Id caseId, Id oweaId) {
+        Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(templateId, contactId, caseId);   
+        mail.setOrgWideEmailAddressId(oweaId);
+        mail.setTargetObjectId(userId);
+        mail.saveAsActivity = false;
+        return mail;
     }
     
 }
