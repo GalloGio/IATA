@@ -19,7 +19,7 @@
          }; 
     </script>
 
-    <apex:attribute name="trackedObject" type="SObject" assignTo="{!trackedObj}" required="true" description="The record that is being tracked" />
+    <apex:attribute name="trackedObjectId" type="String" assignTo="{!trackedObjId}" required="true" description="The record id that is being tracked" />
     <apex:attribute name="trackedApiName" type="String" assignTo="{!trackedObjApiName}" required="true" description="The object type that is being tracked" />
     <apex:attribute name="trackerApiName" type="String" assignTo="{!trackerObjApiName}" required="true" description="The object type that is used for tracking" />
 

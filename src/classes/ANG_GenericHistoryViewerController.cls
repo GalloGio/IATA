@@ -1,12 +1,10 @@
 public with sharing class ANG_GenericHistoryViewerController {
     
-    public SObject trackedObj {get;set;}
-
+    public String trackedObjId {get;set;}
     public String trackerObjApiName {get;set;}
-
     public String trackedObjApiName {get;set;}
 
-    public List<GenericHistoryWrapper> mergedHistoric {get;set;}
+    //public List<GenericHistoryWrapper> mergedHistoric {get;set;}
 
     public ANG_GenericHistoryViewerController() {
 
@@ -16,27 +14,32 @@ public with sharing class ANG_GenericHistoryViewerController {
     // variable mysObject by using the getRecord method from the standard
     // controller.
     public ANG_GenericHistoryViewerController(ApexPages.StandardController stdController) {
-
-        this.trackedObj = (sObject)stdController.getRecord();
-
+        this.trackedObjId = stdController.getRecord().Id;
     }
 
-    public List<GenericHistoryWrapper> getHistoryRecords(){
+    public List<GenericHistoryWrapper> getHistoryRecords() {
+        return getHistoryRecords(this.trackedObjId, this.trackerObjApiName, this.trackedObjApiName);
+    }
 
-        String theCustomQuery = 'SELECT CreatedDate, CreatedById, CreatedBy.Name, What__c, ApiName__c, New_Value__c, Old_Value__c FROM ' + trackerObjApiName + ' WHERE ' + trackedObjApiName + '__c = \'' + trackedObj.Id + '\' and ApiName__c != null ORDER BY CreatedDate DESC';
-        System.debug('Custom history query ' + theCustomQuery);
+    @AuraEnabled
+    public static List<GenericHistoryWrapper> getHistoryRecords(String trackedObjId, String trackerObjApiName, String trackedObjApiName) {
+
+        System.debug('### trackedObjId: ' + trackedObjId);
+        System.debug('### trackerObjApiName: ' + trackerObjApiName);
+        System.debug('### trackedObjApiName: ' + trackedObjApiName);
+
+        String theCustomQuery = 'SELECT CreatedDate, CreatedById, CreatedBy.Name, What__c, ApiName__c, New_Value__c, Old_Value__c FROM ' + trackerObjApiName + ' WHERE ' + trackedObjApiName + '__c = \'' + trackedObjId + '\' and ApiName__c != null ORDER BY CreatedDate DESC';
+        System.debug('### Custom history query ' + theCustomQuery);
 
         //TODO: NEED TO REFINE THIS QUERY TO MAKE IT WORK FOR CUSTOM OBJECTS AS WELL, HISTORY TABLE IS DIFFERENTLY NAMED
-        String theStandardQuery = 'SELECT CreatedDate, CreatedById, CreatedBy.Name, Field, NewValue, OldValue FROM ' + trackedObjApiName + 'History WHERE ' + trackedObjApiName + 'Id = \'' + trackedObj.Id + '\' ORDER BY CreatedDate DESC,ID DESC';
-        System.debug('Standard history query ' + theStandardQuery);
+        String theStandardQuery = 'SELECT CreatedDate, CreatedById, CreatedBy.Name, Field, NewValue, OldValue FROM ' + trackedObjApiName + 'History WHERE ' + trackedObjApiName + 'Id = \'' + trackedObjId + '\' ORDER BY CreatedDate DESC,ID DESC';
+        System.debug('### Standard history query ' + theStandardQuery);
 
         List<SObject> customHistoryRecords = database.query(theCustomQuery);
         List<SObject> standardHistoryRecords = database.query(theStandardQuery);
 
         if(standardHistoryRecords.isEmpty() && Test.isRunningTest()){
-
-            standardHistoryRecords.add(new AccountHistory(AccountId=trackedObj.Id,Field='Type'));
-
+            standardHistoryRecords.add(new AccountHistory(AccountId=trackedObjId,Field='Type'));
         }
 
         Set<Id> userIds = new Set<Id>();
@@ -57,7 +60,7 @@ public with sharing class ANG_GenericHistoryViewerController {
                 mapUserNamesPerId.put(u.Id, u.Name);
         }
 
-        mergedHistoric = new List<GenericHistoryWrapper>();
+        List<GenericHistoryWrapper> mergedHistoric = new List<GenericHistoryWrapper>();
 
         Set<String> fieldsToSearch = new Set<String>();
 
@@ -84,9 +87,10 @@ public with sharing class ANG_GenericHistoryViewerController {
             String tmpOld = history.get('Old_Value__c') != null ? String.valueOf(history.get('Old_Value__c')) : '<blank>';
             String tmpNew = history.get('New_Value__c') != null ? String.valueOf(history.get('New_Value__c')) : '<blank>';
             
-        boolean isLookupValue = ( (tmpOld == null || tmpOld == '' || tmpOld == '<blank>') ? false : isLookUpValueMap.get(tmpOld)) || ((tmpNew == null || tmpNew == '' || tmpNew == '<blank>')? false : isLookUpValueMap.get(tmpNew));
-            
+            boolean isLookupValue = ( (tmpOld == null || tmpOld == '' || tmpOld == '<blank>') ? false : isLookUpValueMap.get(tmpOld)) || ((tmpNew == null || tmpNew == '' || tmpNew == '<blank>')? false : isLookUpValueMap.get(tmpNew));
+                    
             mergedHistoric.add(new GenericHistoryWrapper(
+                                trackedObjId,
                                 history.get('CreatedById'),
                                 mapUserNamesPerId.get((Id)history.get('CreatedById')),
                                 String.valueOf(history.get('CreatedDate')),
@@ -125,17 +129,47 @@ public with sharing class ANG_GenericHistoryViewerController {
             if((trackedFieldLabel == 'RecordType' && tmpOld.startsWith('012') )|| trackedFieldApiName == 'created' || (trackedFieldLabel == 'Parent' && !tmpOld.startsWith('001') && !tmpNew.startsWith('001')) || (trackedFieldLabel == 'Owner' && !tmpOld.startsWith('005') && !tmpNew.startsWith('005')))
                 continue;
             else 
-                mergedHistoric.add(new GenericHistoryWrapper(history.get('CreatedById'),mapUserNamesPerId.get((Id)history.get('CreatedById')),String.valueOf(history.get('CreatedDate')),tmpOld,tmpNew,trackedFieldLabel,false,trackedFieldApiName,isLookUpValueMap.get(tmpNew) || isLookUpValueMap.get(tmpOld)));
+            mergedHistoric.add(new GenericHistoryWrapper(trackedObjId, history.get('CreatedById'),mapUserNamesPerId.get((Id)history.get('CreatedById')),String.valueOf(history.get('CreatedDate')),tmpOld,tmpNew,trackedFieldLabel,false,trackedFieldApiName,isLookUpValueMap.get(tmpNew) || isLookUpValueMap.get(tmpOld)));
         }
 
         //sort by createddate (comparable interface methods implemented in wrapper class)
         mergedHistoric.sort();
 
-        System.debug('MERGED HISTORY' + mergedHistoric);
+        System.debug('MERGED HISTORY: ' + mergedHistoric);
+
+        /*Map<Id, String> oldLookupDisplayValueMap = new Map<Id, String>();
+        Map<Id, String> newLookupDisplayValueMap = new Map<Id, String>();
+
+        Map<Id, String> lookupDisplayValueMap = new Map<Id, String>();
+
+        for(GenericHistoryWrapper hist : mergedHistoric) {
+            if(hist.isLookUpValueOld) {               
+                String oldLookupDisplayValue = getLookupDisplayValue(hist.lookupObject, 'Name', String.valueOf(hist.oldValue));
+                //oldLookupDisplayValueMap.put(hist.Id, lookupDisplayValue);
+                System.debug('### oldLookupDisplayValue: ' + oldLookupDisplayValue);
+                if()
+                lookupDisplayValueMap.put();            
+            }
+            if(hist.isLookUpValueNew) {               
+                String newLookupDisplayValue = getLookupDisplayValue(hist.lookupObject, 'Name', String.valueOf(hist.newValue));
+                //newLookupDisplayValueMap.put(hist.Id, lookupDisplayValue);
+                System.debug('### newLookupDisplayValue: ' + newLookupDisplayValue);
+            }
+        }*/
 
         return mergedHistoric;
 
     }
+
+    /*private static String getLookupDisplayValue(String obj, String field, String id) {
+        String query = 'SELECT ' + field + ' FROM ' + obj + ' WHERE Id = \'' + id + '\'';
+
+        List<SObject> queryRecords = database.query(query);
+
+        System.debug('### getLookupDisplayValue - query ' + query);
+
+        return String.valueOf(queryRecords.get(0).get(field));
+    }*/
 
     public static Map<String,Boolean> fetchVlookups( Set<String> fieldsToSearch ){
         
@@ -173,62 +207,69 @@ public with sharing class ANG_GenericHistoryViewerController {
 
     public class GenericHistoryWrapper implements Comparable{
 
-        public String fieldAPIName {get; set;}
-        public Object createdById {get; set;}
-        public String createdByName {get; set;}
-        public String createdDate {get; set;}
-        public Object oldValue {get; set;}
-        public Object newValue {get; set;}
-        public String fieldName {get; set;}
-        public Boolean isCustom {get; set;}
-        public Boolean isLookUpValueNew {get; set;}
-        public Boolean isLookUpValueOld {get; set;}
-
-        public sObject oldObj {get; set;}
-        public sObject newObj {get; set;}
+        @AuraEnabled public String fieldAPIName {get; set;}
+        @AuraEnabled public Object createdById {get; set;}
+        @AuraEnabled public String createdByName {get; set;}
+        @AuraEnabled public String createdDate {get; set;}
+        @AuraEnabled public Object oldValue {get; set;}
+        @AuraEnabled public Object newValue {get; set;}
+        @AuraEnabled public String fieldName {get; set;}
+        @AuraEnabled public Boolean isCustom {get; set;}
+        @AuraEnabled public Boolean isLookUpValueNew {get; set;}
+        @AuraEnabled public Boolean isLookUpValueOld {get; set;}
+        @AuraEnabled public sObject oldObj {get; set;}
+        @AuraEnabled public sObject newObj {get; set;}
+        @AuraEnabled public String lookupObject {get; set;}
+        //@AuraEnabled public String Id {get; set;}
         
-        public GenericHistoryWrapper(Object createdById, String createdByName, String createdDate, Object oldValue, Object newValue, String fieldName, Boolean isCustom, String fieldAPIName, boolean isLookUpValueIn){
+        public GenericHistoryWrapper(String trackedObjId, Object createdById, String createdByName, String createdDate, Object oldValue, Object newValue, String fieldName, Boolean isCustom, String fieldAPIName, boolean isLookUpValueIn){
             
             this.isLookUpValueOld = (isLookUpValueIn && oldValue != '<blank>');
             this.isLookUpValueNew = (isLookUpValueIn && newValue != '<blank>');
             
             //System.debug('Creating new GenericHistoryWrapper with values|oldValue:'+oldValue + '|newValue:'+newValue + '|fieldName:'+fieldName + '|fieldAPIName:'+fieldAPIName + '|isLookUpValue:' +isLookUpValue);
 
+            this.fieldAPIName = fieldAPIName;
             this.createdById = createdById;
             this.createdByName = createdByName;
             this.createdDate = createdDate;
             this.oldValue = oldValue;
             this.newValue = newValue;
             
-            Id idOfTheObject = ApexPages.currentPage().getParameters().get('id');
+            //Id idOfTheObject = ApexPages.currentPage().getParameters().get('id');
+            Id idOfTheObject = trackedObjId;
             
             //small little pirate hack :)
             if(fieldAPIName == 'RecordType') {
                 fieldAPIName = 'RecordTypeId';
-            }           
-            else if(fieldAPIName == 'Parent') {
+                this.fieldAPIName = 'RecordTypeId';
+            }   
+            
+            if(fieldAPIName == 'Parent'){
                 fieldAPIName = 'ParentId';
-            }
-            else if(fieldAPIName == 'Owner') {
-                fieldAPIName = 'OwnerId';
-            }
-            else if(fieldAPIName == 'Account') {
-                fieldAPIName = 'AccountId';
-            }
-            else if(fieldAPIName == 'Contact') {
-                fieldAPIName = 'ContactId';
+                this.fieldAPIName = 'ParentId';
             }
 
-            this.fieldAPIName = fieldAPIName;
+            if(fieldAPIName == 'Owner'){
+                fieldAPIName = 'OwnerId';
+                this.fieldAPIName = 'OwnerId';
+            }
+
             
             if(isLookUpValueOld){
                 this.oldObj = idOfTheObject.getSObjectType().newSObject();
                 oldObj.put(String.valueOf(fieldAPIName), oldValue);
+
+                Id lookupId = String.valueOf(oldValue);
+                this.lookupObject = lookupId.getSObjectType().getDescribe().getName();
             }
             
             if(isLookUpValueNew){
                 this.newObj = idOfTheObject.getSObjectType().newSObject();    
                 newObj.put(String.valueOf(fieldAPIName), newValue);
+
+                Id lookupId = String.valueOf(newValue);
+                this.lookupObject = lookupId.getSObjectType().getDescribe().getName();
             }
 
             this.fieldName = fieldName;
