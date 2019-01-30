@@ -12559,7 +12559,7 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
     <customLabels>
         <label>Payment Link có thể được sử dụng để trả hóa đơn IATA bằng thẻ Credit Card&lt;br/&gt;
 &lt;b&gt;Cảnh báo!&lt;/b&gt;&lt;br/&gt;
-Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều được thu thông qua BPS / CASS. Bạn nên kiểm tra các chi tiết trong hóa đơn để đảm bảo hoá đơn chưa được thanh toán trước khi bạn tiến hành trả bằng thẻ tín dụng.</label>
+Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều được thu thông qua BSP / CASS. Bạn nên kiểm tra các chi tiết trong hóa đơn để đảm bảo hoá đơn chưa được thanh toán trước khi bạn tiến hành trả bằng thẻ tín dụng.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>
