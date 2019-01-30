@@ -345,6 +345,21 @@
             <label>Collect</label>
         </rules>
         <rules>
+            <name>Delete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UserProvisioningRequest.Operation</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deactivate</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SCIM_Delete_User</targetReference>
+            </connector>
+            <label>Delete</label>
+        </rules>
+        <rules>
             <name>Toggle</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
