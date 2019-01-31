@@ -16,6 +16,8 @@ public virtual class IECPageController {
         return language;
     } set; }
 
+    public IEC_User_Utils userDetails {get;set;}
+
 	/**
 	 * Constructor
 	 */
@@ -26,6 +28,7 @@ public virtual class IECPageController {
 				loggedCustomer = IECCustomer.getCurrentIECCustomer();
 				hasLoadedCustomer = true;
 			}
+			userDetails = IEC_User_Utils.getInstance();
 		}
 		catch (Exception ex) {
 			addErrorMessage(ex.getMessage() + '<br/>' + ex.getStackTraceString());
