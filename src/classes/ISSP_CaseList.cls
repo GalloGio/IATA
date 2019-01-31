@@ -343,7 +343,8 @@ global with sharing class ISSP_CaseList {
         
             //ACAMBAS - WMO-389 - Start
             if(Item.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
-                Item.Subject = 'IMPORTANT: IATA Payment';
+                Item.Subject = 'IMPORTANT: ';
+                Item.Subject = (Item.BSP_CASS__c != null) ? Item.Subject + Item.BSP_CASS__c + ' Payment' : Item.Subject;
                 Item.Subject = (Item.IATA_Code__c != null) ? Item.Subject + ' - IATA Code ' + Item.IATA_Code__c : Item.Subject;
                 Item.Subject = (Item.Remittance_period__c != null) ? Item.Subject + ' - Period ' +  Item.Remittance_period__c : Item.Subject;
             }

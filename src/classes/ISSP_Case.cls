@@ -131,7 +131,8 @@ public without sharing class ISSP_Case {
 
             //ACAMBAS - WMO-389 - Start
             if(newCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
-                newCase.Subject = 'IMPORTANT: IATA Payment';
+                newCase.Subject = 'IMPORTANT: ';
+                newCase.Subject = (newCase.BSP_CASS__c != null) ? newCase.Subject + newCase.BSP_CASS__c + ' Payment' : newCase.Subject;
                 newCase.Subject = (newCase.IATA_Code__c != null) ? newCase.Subject + ' - IATA Code ' + newCase.IATA_Code__c : newCase.Subject;
                 newCase.Subject = (newCase.Remittance_period__c != null) ? newCase.Subject + ' - Period ' +  newCase.Remittance_period__c : newCase.Subject;
             }
