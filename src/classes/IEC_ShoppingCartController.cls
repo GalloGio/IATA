@@ -461,6 +461,8 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			}
 			cartProducts = String.join( lstProductNames,' - ');
 		}
+
+		cartProducts = JSON.serialize(cartProducts);
 	}
 
 

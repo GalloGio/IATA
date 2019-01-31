@@ -1256,4 +1256,14 @@
         <default>false</default>
         <label>Web SAF</label>
     </standardValue>
+    <standardValue>
+        <fullName>PCI automatic renewal</fullName>
+        <default>false</default>
+        <label>PCI automatic renewal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Massive PCI Creation</fullName>
+        <default>false</default>
+        <label>Massive PCI Creation</label>
+    </standardValue>
 </StandardValueSet>

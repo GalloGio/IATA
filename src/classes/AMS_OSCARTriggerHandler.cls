@@ -2748,9 +2748,14 @@ public class AMS_OSCARTriggerHandler {
             List<Contact> contList;
             contList = fetchContactInfoFromCase(oscarCommCaseId);
 
-            if(!contList.isEmpty())
-                AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
+            if(!contList.isEmpty()){
+                Map<String, Id> countryTemplates = ANGemailTemplates(agencyType, step, wasApproved);
 
+                if(!countryTemplates.isEmpty())
+                    AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, countryTemplates, oscarCommCaseId, owea[0], false);
+                else
+                    System.debug('Template not found for this type of change.');
+            }
         }else{
 
             System.debug('Could not find the case Id to send the email.');
@@ -2809,29 +2814,33 @@ public class AMS_OSCARTriggerHandler {
         
         System.debug('[ANGemailTemplates] Template to use is:'+templateId);
 
-        //Get the templates for NG accreditation outcoume
-        List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
+        //to avoid make the query when the template doesn't xists and query all the templates
+        if(templateId != ''){
+            //Get the templates for NG accreditation outcoume
+            List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
 
-        Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
-        for(EmailTemplate et: etNG){
-            if(!countryTemplates.containsKey(et.DeveloperName))
-                countryTemplates.put(et.DeveloperName, et);
+            Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
+            for(EmailTemplate et: etNG){
+                if(!countryTemplates.containsKey(et.DeveloperName))
+                    countryTemplates.put(et.DeveloperName, et);
+            }
+
+            //map template Ids with their respective language
+            List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
+            
+            for(Schema.Picklistentry pe: prefLanguages){
+                EmailTemplate langTemplate = countryTemplates.get(templateId+ '_' + pe.getValue());
+                if(langTemplate == null) //English is default and must exist in the system
+                    countryTemplates.get(templateId+'_English');
+                    if(langTemplate != null)
+                        multilangTemplates.put(pe.getValue(), langTemplate.Id);
+            }
+
+            //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
+            if(multilangTemplates.isEmpty())
+                multilangTemplates.put('English', countryTemplates.get(templateId + '_English').Id);
+
         }
-
-        //map template Ids with their respective language
-        List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
-        
-        for(Schema.Picklistentry pe: prefLanguages){
-            EmailTemplate langTemplate = countryTemplates.get(templateId+ '_' + pe.getValue());
-            if(langTemplate == null) //English is default and must exist in the system
-                countryTemplates.get(templateId+'_English');
-                if(langTemplate != null)
-                    multilangTemplates.put(pe.getValue(), langTemplate.Id);
-        }
-
-        //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
-        if(multilangTemplates.isEmpty())
-            multilangTemplates.put('English', countryTemplates.get(templateId + '_English').Id);
 
         return multilangTemplates;
 
@@ -3292,7 +3301,7 @@ public class AMS_OSCARTriggerHandler {
                 updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
         }
 
-        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && (oldOSCAR.ANG_Type_Of_Change__c != 'VMFR' || updatedOscar.ANG_Type_Of_Change__c != 'VMFR') && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed' && updatedOscar.Process__c != AMS_Utils.NGCHINACONVERSION){
+        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOscar.Process__c) && (updatedOscar.Process__c != AMS_Utils.NGCORRECTION) && (oldOSCAR.ANG_Type_Of_Change__c != 'VMFR' || updatedOscar.ANG_Type_Of_Change__c != 'VMFR') && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed' && updatedOscar.Process__c != AMS_Utils.NGCHINACONVERSION){
 
             System.debug('Sending the email for the user to anounce approval of the oscar');
 
