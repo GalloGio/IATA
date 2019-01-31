@@ -88,7 +88,7 @@ public class GDPR_ContactHandler {
    
         List<String> individualsToSearchByEmail = new List<String>(mapEmailcontact.keySet());
         
-        
+        map<Id, contact> contactId2Contact = new map<Id, contact> ([SELECT accountId, account.Name FROM Contact WHERE Id IN : newcontactMap.keySet()]);
         //Search for existing Individuals, by Email
         for(Individual i : [SELECT Id, FirstName, LastName, Salutation, Email__c, Area_of_Interest__c, job_title__c, phone__c, company__c, country__c, industry__c FROM Individual WHERE Email__c IN :individualsToSearchByEmail]){
                 System.debug('[INDIVIDUAL] - '+i);
@@ -109,8 +109,8 @@ public class GDPR_ContactHandler {
                      // extend missing mapping
                     i.job_title__c = newcontact.title;
                     i.phone__c = newcontact.phone;
-                    list<Contact> aContact = [SELECT accountId, account.Name FROM Contact WHERE Id =: newcontact.id];
-                    i.company__c = aContact.isEmpty() ? '' : aContact[0].accountId != null ? aContact[0].account.Name : '';
+                    Contact aContact = contactId2Contact.get(newcontact.id);
+                    i.company__c = aContact == null ? '' : aContact.accountId != null ? aContact.account.Name : '';
                     i.country__c = newcontact.mailingcountry;
                     //i.industry__c = newcontact.industry; // No industry field in contact in standard
 
