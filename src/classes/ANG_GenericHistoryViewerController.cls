@@ -255,6 +255,11 @@ public with sharing class ANG_GenericHistoryViewerController {
                 this.fieldAPIName = 'OwnerId';
             }
 
+            if(fieldAPIName == 'Contact'){
+                fieldAPIName = 'ContactId';
+                this.fieldAPIName = 'ContactId';
+            }
+
             
             if(isLookUpValueOld){
                 this.oldObj = idOfTheObject.getSObjectType().newSObject();

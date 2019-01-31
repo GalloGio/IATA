@@ -1,7 +1,7 @@
 <apex:page standardController="Case" showHeader="true" sidebar="true">
 	<apex:variable var="isClassic" value="{! $User.UIThemeDisplayed == 'Theme2' || $User.UIThemeDisplayed == 'Theme3' }"/>
 	<apex:outputPanel rendered="{!isClassic}">
-		<c:ANG_GenericHistoryViewer trackedObjectId="{!Case.Id}" trackerApiName="Case_Tracking_History__c" trackedApiName="Case"/>
+		<c:ANG_GenericHistoryViewer trackedObjectId="{!Case.Id}" trackerApiName="ANG_Case_Tracking_History__c" trackedApiName="Case"/>
 	</apex:outputPanel>
 	<apex:outputPanel rendered="{!!isClassic}">		
 		<apex:includeLightning />

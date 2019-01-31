@@ -1,7 +1,7 @@
 <apex:page standardController="Contact" showHeader="true" sidebar="true">
 	<apex:variable var="isClassic" value="{! $User.UIThemeDisplayed == 'Theme2' || $User.UIThemeDisplayed == 'Theme3' }"/>
 	<apex:outputPanel rendered="{!isClassic}">
-		<c:ANG_GenericHistoryViewer trackedObjectId="{!Contact.Id}" trackerApiName="Contact_Tracking_History__c" trackedApiName="Contact"/>
+		<c:ANG_GenericHistoryViewer trackedObjectId="{!Contact.Id}" trackerApiName="ANG_Contact_Tracking_History__c" trackedApiName="Contact"/>
 	</apex:outputPanel>
 	<apex:outputPanel rendered="{!!isClassic}">		
 		<apex:includeLightning />
