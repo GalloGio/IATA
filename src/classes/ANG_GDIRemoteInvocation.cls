@@ -1,195 +1,209 @@
-public with sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocationINT{
-
-	private static Map<String, PricebookEntry> mapCurrencyISOCodePBE = new map<String,pricebookentry>();
-
-	private static Map<ID,Remote_Invocation_Artefact__c> artifactsWithParents;
-	private static List<Remote_Invocation_Artefact__c> listArtifactsToUpdate;
-	private static Map<string,Account> mapIATACodeAccs;
-
-	private static Financial_Institution__c dfltFI;
-	private static Id pb;
-
-	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
-		listArtifactsToUpdate = new List<Remote_Invocation_Artefact__c>();
-		Set<Remote_Invocation__c> remoteInvocationsGDI = new Set<Remote_Invocation__c>();
-
-		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess)
-			if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO) remoteInvocationsGDI.add(ri);
-
-		if(remoteInvocationsGDI.isEmpty()) return;
-
-		artifactsWithParents = new Map<Id,Remote_Invocation_Artefact__c>();
-
-		Map<Id,Remote_Invocation_Artefact__c> artefacts = new Map<ID,Remote_Invocation_Artefact__c>([SELECT ID, External_ID__c, Format__c, Internal_ID__c, Name__c, Previous_Version__c, Remote_Invocation__c, 
-															Request_Result__c, Source__c, Status__C, Status_Detail__c, Valid_From__c, Valid_To__c, Version__c, Version_Notes__c
-															FROM Remote_Invocation_Artefact__c WHERE Remote_Invocation__c IN :remoteInvocationsGDI ORDER BY LastModifiedDate ASC]);								
-		
-		Set<String> keysForsBojects = new Set<String>();
-
-		for(Remote_Invocation_Artefact__c artifact: artefacts.values()){
-
-			keysForsBojects.add(artifact.Internal_ID__c);
-			artifactsWithParents.put(artifact.Remote_Invocation__c,artifact);
-		}
-
-		// let's take the orpahs and put them in error.
-
-		for(Remote_Invocation__c ri : remoteInvocationsGDI){
-
-			if(artifactsWithParents.get(ri.Id) == null){
-				ri.addError('The Remote invocation does not have a match for a remote invocation artifact. [Id:'+ri.Id+'].');
-				ri.Status__c = 'Failed';
-				ri.Status_detail__c = 'The Remote invocation does not have a match for a remote invocation artifact. [Id:'+ri.Id+'].';
-				remoteInvocationsIdToProcess.remove(ri); // one less to process
-				remoteInvocationsGDI.remove(ri);
-			}
-		}
-
-		mapIATACodeAccs = new Map<String, Account>();
-
-		for(Account acc : [SELECT ID, name, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c, IATACode__c, RecordTypeId FROM Account WHERE iataCode__c IN :keysForsBojects])
-			mapIATACodeAccs.put(acc.IATACode__c,acc);
-		
-		// let's understand if the keys are all valid.
-		for(Remote_Invocation__c ri : remoteInvocationsGDI){
-
-			if(mapIATACodeAccs.get(ri.Internal_ID__c) == null){
-				ri.addError('The Remote invocation does not have a match for the IATA Code provided ('+ri.Internal_ID__c+') invocation artifact. [Id:'+ri.Id+'].');
-				remoteInvocationsIdToProcess.remove(ri); // one less to process
-				remoteInvocationsGDI.remove(ri); 
-				ri.Status__c = 'Failed';
-				ri.Status_detail__c = 'The Remote invocation does not have a match for the IATA Code provided ('+ri.Internal_ID__c+') invocation artifact. [Id:'+ri.Id+'].';
-
-				artifactsWithParents.get(ri.id).Request_Result__c = 'Failed';
-				listArtifactsToUpdate.add(artifactsWithParents.get(ri.id));
-				artifactsWithParents.remove(ri.Id);
-			}
-		}
-
-		// so we're good, let's process
-
-	}
+public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvocationINT{
 
 	public void doProcess(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){
-
-		list<Remote_Invocation__c> remoteInvocationsGDI = new List<Remote_Invocation__c>();
+		map<string, string> mapOfferIdIataCode = new map<string,string>();	//Map index: offer Id. Value: related IATA Code. Arriving from interface.
+		Map<String, PricebookEntry> mapCurrencyISOCodePBE = new map<String,pricebookentry>();
+		map<id, Remote_Invocation__c> mapRemoteInvocationToUpdates = new map<id, Remote_Invocation__c>();
+		List<Remote_Invocation_Artefact__c> listArtifactsToUpdate = new List<Remote_Invocation_Artefact__c>();
+		map<id, Remote_Invocation_Artefact__c> mapValidArtefacts = new map<id, Remote_Invocation_Artefact__c>();
+		Set<Remote_Invocation__c> setValidRemoteInvocation = new Set<Remote_Invocation__c>();
 		Set<String> currencyIsoCodeToFetch = new Set<String>();
 
+		Financial_Institution__c dfltFI;
+		Id pb;
+
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
-			if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO) remoteInvocationsGDI.add(ri);
-			currencyIsoCodeToFetch.add(ri.currencyISOCode);	
-		}
-
-		if(remoteInvocationsGDI.isEmpty()) return;
-
-		//We have data, lets start processing...
-
-		Map<String,AMS_Oscar__c> mapIATACodeOSCARs = new Map<String,AMS_OSCAR__c>();
-		Map<String,Opportunity> opportunitiesMap = new Map<String,Opportunity>(); //key -> iata code
-		Map<String,Financial_Security__c> financialSecuritiesMap = new Map<String,Financial_Security__c>(); //key -> iata code
-		Set<ID> oscarIDs = new Set<ID>(); //used to fetch the opportunities
-
-		//Opportunities to update
-		List<Opportunity> updatedOpportunities = new List<Opportunity>();
-		List<Case> updatedCases = new List<Case>();
-		//the new Staging Financial Securities to be inserted
-		List<Opportunitylineitem> stagingFSs = new List<Opportunitylineitem>();
-		
-
-
-		dfltFI = [Select id from Financial_Institution__c where name = 'GDI - Euler Hermes'];
-		
-		if(!Test.isRunningTest()) pb = [select id from pricebook2 where name = 'NewGen Generic'].id;
-		else pb = Test.getStandardPricebookId();
-		
-		for(pricebookentry pbe : [SELECT id,unitprice,product2id,product2.name,CurrencyIsoCode FROM pricebookentry WHERE pricebook2id = :pb AND currencyISOCode in :currencyIsoCodeToFetch])
-			mapCurrencyISOCodePBE.put(pbe.CurrencyISOCode, pbe);
-
-
-		for (AMS_OSCAR__c oscar : [SELECT ID, name, Account__r.IATACode__c,Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Process__c = :AMS_Utils.NGGDI AND Account__c IN :mapIATACodeAccs.values() ]){
-			mapIATACodeOSCARs.put(oscar.Account__r.IATACode__c, oscar);
-			oscarIDs.add(oscar.id);
-		}
-
-        //fetch and store opportunities by iata code
-        for (Opportunity opp : [SELECT Id, currencyIsoCode, Account.Region_formula__c, Account.IATACode__c FROM Opportunity WHERE Related_Oscar__c IN :oscarIDs]){
-			opportunitiesMap.put(opp.Account.IATACode__c, opp);
-		}
-		
-		//List<Financial_Security__c> fsList = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
-		for (Financial_Security__c fs : [SELECT Id, Amount__c, Security_Type__c,Reception_Case__c,Account__r.IATACode__c FROM Financial_Security__c WHERE Account__r.IATACode__c IN :mapIATACodeOSCARs.keyset() AND Security_Type__c = 'GDI' AND Security_Status__c IN ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1]){
-			financialSecuritiesMap.put(fs.Account__r.IATACode__c, fs);
-		}
-		
-
-
-		//and finally lets start creating staging areas
-		for(Remote_Invocation__c ri : remoteInvocationsGDI){
-
-			AMS_OSCAR__c oscar = mapIATACodeOSCARs.get(ri.Internal_ID__c);
-			Opportunity opp = opportunitiesMap.get(ri.Internal_ID__c);
-			Financial_Security__c fs = financialSecuritiesMap.get(ri.Internal_ID__c);
-
-			updatedCases.add(new Case(New_interaction__c = 'New Attachment', ID = oscar.Oscar_Communication_Case_Id__c));
-			oscar.Financial_Security_Received__c = system.today();
-
-			if(ri.currencyISOCode != opp.currencyISOCode){
-				opp.currencyISOCode = ri.currencyISOCode; 
-				updatedOpportunities.add(opp);
-			}
-
-			stagingFSs.add(createStagingArea(oscar,ri,opp,fs));
-
-			//lets update the status of the ones that went well
-			if(ri.Status__c != 'Failed'){
-				ri.Status__c = 'Completed';
-				artifactsWithParents.get(ri.id).Request_Result__c = 'Completed';
-				listArtifactsToUpdate.add(artifactsWithParents.get(ri.id));
-				artifactsWithParents.remove(ri.Id);
+			//let's see if the source and request type are consistent
+			if(ri.Source__c=='GDI'){
+				if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO){
+					setValidRemoteInvocation.add(ri);
+					currencyIsoCodeToFetch.add(ri.CurrencyISOCode);
+				}
+				else{
+					ri.Status__c = 'Failed';
+					ri.Status_detail__c = 'Invalid Request Type';
+					mapRemoteInvocationToUpdates.put(ri.id, ri);
+				}
 			}
 		}
 
-		update updatedOpportunities;
-		update updatedCases;
-		update mapIATACodeOSCARs.values();
-		insert stagingFSs;
-		update listArtifactsToUpdate;
-	}
+		//there is no consistent request. Update them with failure and exit
+		if(setValidRemoteInvocation.isEmpty()){
+			update mapRemoteInvocationToUpdates.values();
+			return;
+		} 
 
-	public Opportunitylineitem createStagingArea(AMS_Oscar__c oscar, Remote_Invocation__c ri, Opportunity opp, Financial_Security__c fsList){
-	    
-		Opportunitylineitem stagingFs;
-
+		//Fetch the priceBook along with all entries
 		try{
-        
-			stagingFs = new Opportunitylineitem();
+			dfltFI = [Select id from Financial_Institution__c where name = 'GDI - Euler Hermes'];
 
-            stagingFs.OpportunityId = opp.Id;
-            stagingFs.OSCAR_GDI__c = oscar.Id;
-            stagingFs.Security_Type__c = 'GDI';
-            stagingFs.Security_Status__c = 'Draft';
+			if(!Test.isRunningTest()) pb = [select id from pricebook2 where name = 'NewGen Generic'].id;
+			else pb = Test.getStandardPricebookId();
 
-            if(fsList != null) stagingFs.Financial_Security__c = fsList.Id;
-            
-            stagingFs.Quantity = 1;
-            stagingFs.Region__c = opp.Account.Region_formula__c;
-            stagingFs.Financial_Institution__c = dfltFI.Id; 
-            stagingFs.TotalPrice = 1;
-            stagingFs.pricebookentryid = mapCurrencyISOCodePBE.get(opp.currencyISOCode).id;//pbe.id;
+			for(pricebookentry pbe : [SELECT id,unitprice,product2id,product2.name,CurrencyIsoCode FROM pricebookentry WHERE pricebook2id = :pb AND currencyISOCode in :currencyIsoCodeToFetch])
+				mapCurrencyISOCodePBE.put(pbe.CurrencyISOCode, pbe);
+		}
+		catch(Exception e){
+			for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
+				ri.Status__c = 'Failed';
+				ri.Status_Detail__c = 'Exception while fetching products ' + e.getMessage();
+				mapRemoteInvocationToUpdates.put(ri.id, ri);
+			}
+			update mapRemoteInvocationToUpdates.values();
+			return;
+		}
 
-            stagingFs.Reception_Case__c = oscar.Oscar_Communication_Case_Id__c;
-        
-        }catch(Exception e){
-            System.debug(e.getStackTraceString());
-			ri.addError('Unable to create staging are for the certificate of endorsment [Id:'+ri.Id+'] - Reason:'+e.getStackTraceString());
-			ri.Status__c = 'Failed';
-			ri.Status_detail__c = 'Unable to create staging are for the certificate of endorsment [Id:'+ri.Id+'] - Reason:'+e.getStackTraceString();
+		//Query artefacts
+		list<Remote_Invocation__c> lsRI = [select ID, Status__c, Status_Detail__c, CurrencyISOCode
+											,(select id, External_ID__c, Internal_ID__c, Remote_Invocation__c, Remote_Invocation__r.CurrencyISOCode,
+												Request_Result__c, Source__c, Status_Detail__c, Valid_From__c, Valid_To__c, CurrencyIsoCode, Amount__c
+												from Remote_Invocation_Artefacts__r)
+											from Remote_Invocation__c where id in :setValidRemoteInvocation];
 
-			artifactsWithParents.get(ri.id).Request_Result__c = 'Failed';
-			listArtifactsToUpdate.add(artifactsWithParents.get(ri.id));
-			artifactsWithParents.remove(ri.Id);
-        }
-        system.debug('##final stagingFs' + stagingFs);
-		return stagingFs;
+		//Validations
+		for(Remote_Invocation__c ri: lsRI){
+			//Check if there is any artefact related to the remote invocation
+			if(ri.Remote_Invocation_Artefacts__r.size()==0){
+				ri.Status__c = 'Failed';
+				ri.Status_detail__c = 'The Remote invocation does not have a match for a remote invocation artifact.';
+				mapRemoteInvocationToUpdates.put(ri.id, ri);
+			}else{
+				//Check to see if pricebook with given currency exists
+				if(!mapCurrencyISOCodePBE.containsKey(ri.CurrencyISOCode)){
+					ri.Status__c = 'Failed';
+					ri.Status_detail__c = 'Product with currency ' + ri.CurrencyISOCode + ' not found';
+					mapRemoteInvocationToUpdates.put(ri.id, ri);
+				}else{
+					for(Remote_Invocation_Artefact__c artifact: ri.Remote_Invocation_Artefacts__r){
+						//Check all necessary fields are populated
+						if(string.isBlank(artifact.Internal_ID__c) || string.isBlank(artifact.External_ID__c) || string.isBlank(string.valueOf(artifact.Valid_From__c)) || string.isBlank(string.valueOf(artifact.Amount__c))){
+							artifact.Request_Result__c = 'Failed';
+							artifact.Status_Detail__c = 'Missing mandatory fields';
+							listArtifactsToUpdate.add(artifact);
+						}else{
+							mapOfferIdIataCode.put(artifact.External_ID__c, artifact.Internal_ID__c);
+							mapValidArtefacts.put(artifact.id, artifact);
+						}
+					}
+				}
+			}
+		}
+
+		if(mapValidArtefacts.isEmpty()){
+			update mapRemoteInvocationToUpdates.values();
+			update listArtifactsToUpdate;
+			return;
+		}
+
+		//fetch all opportunities related to offerIds received
+		map<string, Opportunity> mapOpty = new map<string, Opportunity>();
+		for(opportunity opty:[select id, AccountId, GDI_Offer_Id__c, Related_Oscar__c, Related_Oscar__r.Oscar_Communication_Case_Id__c from Opportunity where GDI_Offer_Id__c in:mapOfferIdIataCode.keyset()])
+			mapOpty.put(opty.GDI_Offer_Id__c, opty);
+
+		//fetch all accounts related to IATAcodes received
+		map<string, id> mapIATACodeId = new map<string, id>();
+		for(Account accnt:[select id, IATACode__c from Account where IATACode__c in:mapOfferIdIataCode.values() and recordtype.developerName='IATA_Agency'])
+			mapIATACodeId.put(accnt.IATACode__c, accnt.id);
+
+		//Check that
+		// 1) IATACode received exists
+		// 2) OfferID received Exists
+		// 3) if both exists, IATA Code is associated to OfferId received
+		for(Remote_Invocation_Artefact__c artifact: mapValidArtefacts.values()){
+			if(!mapIATACodeId.containsKey(artifact.Internal_ID__c)){
+				artifact.Request_Result__c = 'Failed';
+				artifact.Status_Detail__c = 'Account not found!';
+				listArtifactsToUpdate.add(artifact);
+				mapValidArtefacts.remove(artifact.Id);
+				continue;
+			}
+
+			if(!mapOpty.containsKey(artifact.External_ID__c)){
+				artifact.Request_Result__c = 'Failed';
+				artifact.Status_Detail__c = 'Offer ID not found';
+				listArtifactsToUpdate.add(artifact);
+				mapValidArtefacts.remove(artifact.Id);
+				continue;
+			}
+
+			if(mapOpty.containsKey(artifact.External_ID__c)){
+				if(mapOpty.get(artifact.External_ID__c).AccountId != mapIATACodeId.get(artifact.Internal_ID__c)){
+					artifact.Request_Result__c = 'Failed';
+					artifact.Status_Detail__c = 'Offer ID is associated to a different IATA Code';
+					listArtifactsToUpdate.add(artifact);
+					mapValidArtefacts.remove(artifact.Id);
+					continue;
+				}
+			}
+		}
+
+		if(!mapValidArtefacts.isEmpty()){
+			//Yippee ki-yay! Let's process the artefacts
+			list<case> lsCaseToUpd = new list<case>();
+			list<AMS_Oscar__c> lsOscarToUpdate = new list<AMS_OSCAR__c>();
+			List<Opportunitylineitem> stagingFSs = new List<Opportunitylineitem>();
+
+			for(opportunity opty:[select id, CurrencyISOCode, AccountId, Account.Region_formula__c, GDI_Offer_Id__c, Related_Oscar__c, Related_Oscar__r.Oscar_Communication_Case_Id__c from Opportunity where GDI_Offer_Id__c in:mapOfferIdIataCode.keyset()])
+				mapOpty.put(opty.GDI_Offer_Id__c, opty);
+
+			for(Remote_Invocation_Artefact__c artifact: mapValidArtefacts.Values()){
+				Opportunity opp = mapOpty.get(artifact.External_ID__c);
+
+				lsCaseToUpd.add(new Case(New_interaction__c = 'New Attachment', ID = opp.Related_Oscar__r.Oscar_Communication_Case_Id__c));
+				lsOscarToUpdate.add(new AMS_OSCAR__c(id=opp.Related_Oscar__c, Financial_Security_Received__c = system.today()));
+
+				Opportunitylineitem stagingFs = new Opportunitylineitem();
+
+				stagingFs.OpportunityId = opp.Id;
+				stagingFs.OSCAR_GDI__c = opp.Related_Oscar__c;
+				stagingFs.Security_Type__c = 'GDI';
+				stagingFs.Security_Status__c = 'Draft';
+				stagingFs.Quantity = 1;
+
+				//if(fsList != null) stagingFs.Financial_Security__c = fsList.Id;
+				stagingFs.Region__c = opp.Account.Region_formula__c;
+				stagingFs.Financial_Institution__c = dfltFI.Id; 
+				stagingFs.TotalPrice = artifact.Amount__c;
+				opp.CurrencyISOCode = artifact.Remote_Invocation__r.CurrencyISOCode;
+				stagingFS.Amount__c = artifact.Amount__c;
+				stagingFS.Validity_Start_Date__c = artifact.Valid_From__c;
+				stagingFS.Expiry_Date__c = artifact.Valid_To__c;
+
+				stagingFs.pricebookentryid = mapCurrencyISOCodePBE.get(artifact.Remote_Invocation__r.currencyISOCode).id;
+
+				stagingFs.Reception_Case__c = opp.Related_Oscar__r.Oscar_Communication_Case_Id__c;
+				stagingFs.SourceId__c = artifact.id;
+				stagingFSs.add(stagingFS);
+			}
+
+			if(!lsCaseToUpd.isEmpty()) update lsCaseToUpd;
+			if(!lsOscarToUpdate.isEmpty()) update lsOscarToUpdate;
+			update mapOpty.values();
+			if(!stagingFSs.isEmpty()) insert stagingFSs;
+
+			//weird what I'm doing, but is needed
+			map<string,id> mapIdCreated = new map<string,id>();
+			for(Opportunitylineitem oli:stagingFSs)
+				mapIdCreated.put(string.valueOf(oli.SourceId__c), oli.Id);
+
+			for(Remote_Invocation_Artefact__c artifact: mapValidArtefacts.Values()){
+				artifact.Request_Result__c = 'Completed';
+				artifact.Status_Detail__c = '';
+				artifact.Object_ID_Created__c = mapIdCreated.get(artifact.Id);
+				listArtifactsToUpdate.add(artifact);
+
+				if(!mapRemoteInvocationToUpdates.containsKey(artifact.Remote_Invocation__c))
+				mapRemoteInvocationToUpdates.put(artifact.Remote_Invocation__c, new Remote_Invocation__c(id=artifact.Remote_Invocation__c, Status__c = 'Completed'));
+			}
+		}else{
+			for(Remote_Invocation__c ri: lsRI){
+				mapRemoteInvocationToUpdates.put(ri.Id, new Remote_Invocation__c(id=ri.Id, Status__c = 'Failed', Status_detail__c='Verify related artefacts for details'));
+			}
+		}
+	
+		update listArtifactsToUpdate;
+		update mapRemoteInvocationToUpdates.values();
 	}
+
+	public void doSanityCheck(Set<Remote_Invocation__c> remoteInvocationsIdToProcess){}
 }
