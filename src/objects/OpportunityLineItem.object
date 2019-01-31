@@ -100,6 +100,15 @@
         <fullName>ServiceDate</fullName>
     </fields>
     <fields>
+        <fullName>SourceId__c</fullName>
+        <externalId>false</externalId>
+        <label>SourceId</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Subtotal</fullName>
     </fields>
     <fields>
