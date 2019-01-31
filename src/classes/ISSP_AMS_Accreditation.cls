@@ -4136,6 +4136,45 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             set{}
         }
 
+        public List<AMS_Accreditation_Contact__c> List_PreviousCompaniesOwners {
+
+            get{
+                List<AMS_Accreditation_Contact__c> cons = new List<AMS_Accreditation_Contact__c>();
+
+                for (AMS_Accreditation_Contact__c auxPrev : List_PreviousCompanies) {
+                    cons.add(auxPrev);
+                }
+
+                for (AMS_Accreditation_Contact__c auxPrev2 : List_PreviousOwners) {
+                    cons.add(auxPrev2);
+                }
+
+                return cons;
+
+            }
+            set{}
+        }
+
+        public List<AMS_Accreditation_Contact__c> List_CurrentCompaniesOwners {
+
+            get{
+                List<AMS_Accreditation_Contact__c> cons = new List<AMS_Accreditation_Contact__c>();
+                
+                for (AMS_Accreditation_Contact__c auxPrev : List_CurrentCompanies) {
+                    cons.add(auxPrev);
+                }
+
+                for (AMS_Accreditation_Contact__c auxPrev2 : List_CurrentOwners) {
+                    cons.add(auxPrev2);
+                }
+
+                return cons;
+
+            }
+            set{}
+        }
+
+
     public List<AMS_Accreditation_Contact__c> List_AgencyCompanies {
 
         get{

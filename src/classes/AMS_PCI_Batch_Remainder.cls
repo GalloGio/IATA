@@ -67,6 +67,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
         Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         String accountStatus = AMS_Utils.ACC_S0_TERMINATED;
         String reason = 'PCI DSS Compliant';        
+        Set<String> origins = new Set<String> {'Massive PCI Creation', 'PCI automatic renewal'};     
 
         List<Object> initLst = loadInitData();
         Map<String, EmailTemplate> mapTemplates = (Map<String, EmailTemplate>) initLst[0];
@@ -90,6 +91,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
         query += '(SELECT Subject, CreatedDate FROM EmailMessages WHERE Subject IN :subjects) ';
         query += 'FROM Case ';
         query += 'WHERE RecordTypeId = :recordTypeId AND Account.Status__c != :accountStatus AND IsClosed = false AND Reason1__c = :reason AND Account.ANG_IsNewGenAgency__c = false ';
+        query += ' AND Origin IN :origins ';
         query += 'AND (Account.ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:30 OR (Account.Is_PCI_compliant__c = null AND CreatedDate < LAST_N_DAYS:14))';
         query += 'AND Do_Not_Send_Notification__c = false'; //AMSU-200
         //query += 'AND (Account.ANG_PCI_compliance_expiry_date__c = NEXT_N_DAYS:30 OR (Account.Is_PCI_compliant__c = null AND CreatedDate = today))';
@@ -346,8 +348,8 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
         csvAttc.setBody(csvReport);
 
         Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-        message.subject = 'PCI Remainder report';
-        message.setPlainTextBody('PCI Remainder report - Check attachment with execution results');
+        message.subject = 'PCI Reminder report';
+        message.setPlainTextBody('PCI Reminder report - Check attachment with execution results');
         message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
         Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};        
         

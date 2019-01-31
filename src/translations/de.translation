@@ -3573,6 +3573,22 @@
         <name>IDCard_Attachments</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_BSP_Agent_Billing_Reports_Procedures --></label>
+        <name>IDCard_BSP_Agent_Billing_Reports_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Agent_Remittance_Procedures --></label>
+        <name>IDCard_BSP_Agent_Remittance_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Essentials_for_Travel_Agents --></label>
+        <name>IDCard_BSP_Essentials_for_Travel_Agents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Standard_Documents_Procedures --></label>
+        <name>IDCard_BSP_Standard_Documents_Procedures</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_Back --></label>
         <name>IDCard_Back</name>
     </customLabels>
@@ -3991,6 +4007,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label><!-- IDCard_IndustryEntrySuperior --></label>
         <name>IDCard_IndustryEntrySuperior</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Intro_to_the_BSP_System_Language --></label>
+        <name>IDCard_Intro_to_the_BSP_System_Language</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_IntroduccionAlBSPlink_Description --></label>
@@ -12543,7 +12563,7 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
     <customLabels>
         <label>Der Payment Link kann zur Zahlung Ihrer IATA Rechnungen mit Kreditkarte verwendet werden&lt;br/&gt;
 &lt;b&gt;Warnung!&lt;/b&gt;&lt;br/&gt;
-Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch die BPS / CASS berechnet werden. Bitte überprüfen Sie Ihre Rechnungsdaten, um sicherzustellen , dass der Betrag noch nicht bezahlt wurde, bevor Sie mit der Zahlung mit Kreditkarte fortfahren</label>
+Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch die BSP / CASS berechnet werden. Bitte überprüfen Sie Ihre Rechnungsdaten, um sicherzustellen , dass der Betrag noch nicht bezahlt wurde, bevor Sie mit der Zahlung mit Kreditkarte fortfahren</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>
