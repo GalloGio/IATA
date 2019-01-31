@@ -32,6 +32,10 @@ public with sharing class TaskTriggerHelper {
         
         List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name =: CASE_ACTION_CREATING_A_TASK AND Type_Of_Action__c =: CASE_ACTION_CREATING_A_TASK];
         
+        if(kpiReporting.size() == 0) {
+             System.debug('KPI Reporting  not present, but it should be! Exiting...');
+            return;
+        }
         String kpiReportingId = kpiReporting.get(0).Id;
         for(Task t : tasks) {
 
