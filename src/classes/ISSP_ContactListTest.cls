@@ -3,14 +3,11 @@ private class ISSP_ContactListTest {
 
     static testMethod void myUnitTest() {
 
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
-        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false);
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
@@ -28,8 +25,7 @@ private class ISSP_ContactListTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         ctrl.initialization();
-        //List <Contact> testContactList = ctrl.getContacts();
-        //System.AssertEquals(testContactList.size(), 1);
+
         System.AssertEquals(ctrl.isAdmin, true);
         ctrl.refresh();
         ctrl.getContactList();
@@ -42,11 +38,9 @@ private class ISSP_ContactListTest {
 
     static testMethod void myUnitTest_2() {
 
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         ISSP_ContactList ctrl = new ISSP_ContactList();
@@ -59,7 +53,7 @@ private class ISSP_ContactListTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         ctrl.initialization();
-        //List <Contact> testContactList = ctrl.getContacts();
+
         ctrl.refresh();
         ctrl.getContactList();
     }
@@ -67,11 +61,9 @@ private class ISSP_ContactListTest {
     static testMethod void myUnitTest_3() {
         ISSP_ContactListTest.createTestData();
         IECTestUtil.trgPortalUserAfterInserUpdate = true;
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id,DeveloperName FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
@@ -85,7 +77,6 @@ private class ISSP_ContactListTest {
         profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
         insert profileCS2;
 
-        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false);
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
@@ -102,8 +93,7 @@ private class ISSP_ContactListTest {
         cs.SOQL_Filter__c = 'WHERE Status__c = \'Active\' AND User_Portal_Status__c != \'Rejected\'';
         insert cs;
         ctrl.initialization();
-        //List <Contact> testContactList = ctrl.getContacts();
-        //System.AssertEquals(testContactList.size(), 1);
+
         System.AssertEquals(ctrl.isAdmin, true);
         ctrl.refresh();
         ctrl.getContactList();
@@ -114,22 +104,18 @@ private class ISSP_ContactListTest {
         test.stopTest();
         List <Contact> newContactList = [SELECT Id, User_Portal_Status__c FROM Contact WHERE Id = :newContactId];
         system.debug('XXXs newContactList ==> '+newContactList);
-        //System.AssertEquals(newContactList[0].User_Portal_Status__c, 'Approved User');
+
         ApexPages.StandardController sc = new ApexPages.StandardController(con);
         ISSP_Contact_User controller = new ISSP_Contact_User(sc);
     }
 
     static testMethod void myUnitTest_4() {
         ISSP_ContactListTest.createTestData();
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id,DeveloperName FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
-
-        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false);
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
@@ -178,7 +164,7 @@ private class ISSP_ContactListTest {
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false);
@@ -218,7 +204,7 @@ private class ISSP_ContactListTest {
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         List<Contact> cl = new List<Contact>();
@@ -287,7 +273,7 @@ private class ISSP_ContactListTest {
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -335,7 +321,7 @@ private class ISSP_ContactListTest {
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.Status__c = 'Active';
-        con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         insert con;
 
         IEC_Subscription_History__c product = new IEC_Subscription_History__c();
@@ -374,7 +360,7 @@ private class ISSP_ContactListTest {
         createTestData();
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -505,7 +491,7 @@ private class ISSP_ContactListTest {
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         ISSP_ContactList ctrl = new ISSP_ContactList();

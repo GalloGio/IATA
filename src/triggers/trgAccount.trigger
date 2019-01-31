@@ -43,8 +43,7 @@ trigger trgAccount on Account (before update, before insert) {
             
             // If necessary I query the countries and check again the accounts
             if(countryIds.size()>0){
-                Map<Id, IATA_ISO_Country__c> idToCountry = new Map<Id, IATA_ISO_Country__c>([SELECT Id, Name, OSCAR_Enabled__c FROM IATA_ISO_Country__c WHERE ID IN :countryIds]);
-
+                Map<Id, IATA_ISO_Country__c> idToCountry = new Map<Id, IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(countryIds));
 
                 // First trial: I note all the countries of the account which have a change in the locked fields
                 for (Account a : trigger.new){      

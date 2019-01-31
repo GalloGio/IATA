@@ -214,7 +214,7 @@
             
             <div class="container" style="width: 100%">
                 <div class="row">
-                    <section name="left-side-agency-accred" class="col-md-8" style="min-height: 350px;">
+                    <section name="left-side-agency-accred" class="col-md-7" style="min-height: 350px;">
                         <header>
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -240,7 +240,10 @@
                             </div>
                                     
                             <div class="col-md-5">
-                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', 'Apply for New Cargo Head Office', IF(NOT(namEnabled) ,$Label.ISSP_AMS_Apply_New_Travel_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
+                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(AND(isHOAccredited,con.Account.Location_Class__c=='R'), '','none')};"/>
                             </div>
                         </div>
                                 
@@ -251,8 +254,18 @@
                             </div>
                                     
                             <div class="col-md-5" >
+                                
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-bottom: 20px">
+                            <div class="col-md-7" style="display:{!IF(AND(con.Account.Category__c == 'IATA Passenger Sales Agent', isHOAccredited), '','none')};">
                                 <input style="display:{!IF(flagShowOptInOutButton,'','none')};" type="button" class="btn btn_iata_primary" onclick="optInOut();return false;" value="{!optInOutBtn}"/>
                                 <input style="display:{!IF(flagShowOptInOutButtonDisabled,'','none')};" type="button" class="btn btn_iata_primary" value="{!optInOutBtn}" disabled="true"/>
+                            </div>
+                                    
+                            <div class="col-md-5" >
+                                
                             </div>
                         </div>
 
@@ -267,7 +280,7 @@
                          </div>   
                     </section>
                         
-                    <section name="right-side-agency-changes" class="col-md-4" style="min-height: 350px;">
+                    <section name="right-side-agency-changes" class="col-md-5" style="min-height: 350px;">
                         <header>
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -296,7 +309,7 @@
                 </div>
                 
                 <div class="row">
-                    <section name="left-side-ongoing-apps" class="col-md-8" style="min-height: 350px; padding-top: 20px">
+                    <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px">
                         <header>
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -330,7 +343,7 @@
                             
                     </section>
                         
-                    <section name="right-side-other-forms" class="col-md-4" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                    <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isUserAccAccredited, '','none')}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
                         <header>
                             <div class="section-header">
                                 <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>

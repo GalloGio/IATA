@@ -78,6 +78,20 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Link to the case that is related with the log.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Link to the case that is related with the log.</inlineHelpText>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>ISSP Web Service Logs</relationshipLabel>
+        <relationshipName>ISSP_Web_Service_Logs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -384,6 +398,35 @@
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>SAP_syncCustomerWithSAP1</fullName>
+        <columns>NAME</columns>
+        <columns>Error_Code__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Input_Description__c</columns>
+        <columns>Account__c</columns>
+        <columns>Method__c</columns>
+        <columns>Response__c</columns>
+        <columns>Web_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>11/9/2018 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>Success__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Web_Service__c</field>
+            <operation>contains</operation>
+            <value>sap</value>
+        </filters>
+        <label>SAP syncCustomerWithSAP1</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>SIS</fullName>
         <columns>NAME</columns>
         <columns>OBJECT_ID</columns>
@@ -411,38 +454,6 @@
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Today_s_logs</fullName>
-        <booleanFilter>1 AND 2</booleanFilter>
-        <columns>NAME</columns>
-        <columns>OBJECT_ID</columns>
-        <columns>Contact__c</columns>
-        <columns>Error_Code__c</columns>
-        <columns>Error_Message__c</columns>
-        <columns>Finished__c</columns>
-        <columns>Input_Description__c</columns>
-        <columns>Login_Ip__c</columns>
-        <columns>Method__c</columns>
-        <columns>Started__c</columns>
-        <columns>Success__c</columns>
-        <columns>System__c</columns>
-        <columns>Web_Service__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CREATED_DATE</field>
-            <operation>equals</operation>
-            <value>TODAY</value>
-        </filters>
-        <filters>
-            <field>Method__c</field>
-            <operation>notEqual</operation>
-            <value>checkIpCountry</value>
-        </filters>
-        <label>Today&apos;s logs</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>X05_07_2018_logs</fullName>
         <booleanFilter>1 AND 2 and 3</booleanFilter>
         <columns>NAME</columns>
@@ -464,7 +475,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>10/8/2018 12:00 AM</value>
+            <value>10/15/2018 12:00 AM</value>
         </filters>
         <filters>
             <field>Method__c</field>

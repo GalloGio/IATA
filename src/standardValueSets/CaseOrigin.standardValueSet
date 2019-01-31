@@ -437,6 +437,11 @@
         <label>E-mail to Case - Finland</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - FoP notification</fullName>
+        <default>false</default>
+        <label>E-mail to Case - FoP notification</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - France</fullName>
         <default>false</default>
         <label>E-mail to Case - France</label>
@@ -1222,6 +1227,11 @@
         <label>Portal</label>
     </standardValue>
     <standardValue>
+        <fullName>Risk Monitoring Engine</fullName>
+        <default>false</default>
+        <label>Risk Monitoring Engine</label>
+    </standardValue>
+    <standardValue>
         <fullName>Voicemail</fullName>
         <default>false</default>
         <label>Voicemail</label>
@@ -1240,5 +1250,15 @@
         <fullName>Web SAF</fullName>
         <default>false</default>
         <label>Web SAF</label>
+    </standardValue>
+    <standardValue>
+        <fullName>PCI automatic renewal</fullName>
+        <default>false</default>
+        <label>PCI automatic renewal</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Massive PCI Creation</fullName>
+        <default>false</default>
+        <label>Massive PCI Creation</label>
     </standardValue>
 </StandardValueSet>

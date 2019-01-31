@@ -104,7 +104,7 @@ public class CountryProfileTriggerHandler{
         map<Id, String> mapNotificationsPerCountryProfileId = new map<Id, String>();
         List<Notification__c> lstNotificationsToInsert = new List<Notification__c>();
 
-        Id newsRtId = Schema.SObjectType.Comment__c.RecordTypeInfosByName.get('3. Country Profile News').RecordTypeId;
+        Id newsRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Country_Profile_News');
         // We need to do another loop as it's independent from history, and will be executed even if there are no changes to other fields.
         for(Country_Profile__c newProfile : newItems.values()){
             /* NEWS Update */
@@ -209,15 +209,13 @@ public class CountryProfileTriggerHandler{
 
     /*** Populate ISO Code on Country Profile from parent record ***/
     public static void PopulateIsoCode(List<Country_Profile__c> triggerNew){
-        List<Id> isoCountries = new List<Id>();
+        Set<Id> isoCountries = new Set<Id>();
 
         for(Country_Profile__c cp : triggerNew){
             isoCountries.add(cp.Country_Name__c);
         }
 
-        Map<Id,IATA_ISO_Country__c> parentAccounts = new Map<Id,IATA_ISO_Country__c>(
-                                                        [SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c
-                                                        WHERE ID IN: isoCountries]);
+        Map<Id,IATA_ISO_Country__c> parentAccounts = new Map<Id,IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(isoCountries));
 
         for (Country_Profile__c cp : triggerNew){
             IATA_ISO_Country__c parentAccount = parentAccounts.get(cp.Country_Name__c);

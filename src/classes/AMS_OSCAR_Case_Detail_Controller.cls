@@ -16,9 +16,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isNewGenProcess{get;set;}
     public Boolean isNewAE{get{return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
     public Boolean displayErrorMsg{get{return false;} set;}
-
+	public Boolean showStagingArea {get; set;}
+	
     //FM AMSU-1
-    public ID corrRT {get{return Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();}set;}
+    public ID corrRT {get{return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');}set;}
         
 
         //this flag will controll if picklist or multipicklist is displayed for Remittance Frequency 
@@ -207,21 +208,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         return true;
     }
 
-    //private Set<String> tocList{
-    //    get{
-    //        tocList = new Set<String>();
-
-    //        if(oscarObj.ANG_Type_Of_Change__c != null) tocList.addAll(oscarObj.ANG_Type_Of_Change__c.split(';'));
-
-    //        return tocList;
-    //    }
-    //    set;
-    //}
 
     private List<AMS_Operation__c> operationCodes{
         get{
             if(this.operationCodes == null)
-                this.operationCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, accreditationObj.Branch_Office_Country__c, accreditationObj.Location_Class__c);
+                this.operationCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'), accreditationObj.Branch_Office_Country__c, accreditationObj.Location_Class__c);
 
             return this.operationCodes;            
         } set;
@@ -326,7 +317,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get( oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c)));                 
                   
                 // for changes and corrections populate only with BSP attributes of operation codes related with the current account
-                }else if((oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION) && isEditable('Remittance_frequency__c')) {
+                }else if((oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION) && isEditable('Remittance_frequency__c')) {
 
                     if(!agencyOperations.isEmpty()){                     
                         for(AMS_Operation__c opCode: operationCodes) {
@@ -609,7 +600,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     }
     /*** AMSU-121 End ***/
 
-    public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c','Abbreviated_name__c'};
+    public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c'};
 
 
     // The extension constructor initializes the private member
@@ -633,6 +624,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }else{
             System.debug('## Could not fetch any Oscar or does not have an accreditation object');
         }
+        
+        this.showStagingArea = (oscarObj.Process__c != AMS_Utils.NGCHINACONVERSION);
 
     }
 
@@ -685,7 +678,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
                         ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c,
                         AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, STEP6__c, //FM AMSU-1
-                        Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c //AMSU-151
+                        Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c //AMSU-151 
                         FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;

@@ -57,6 +57,16 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String socialmediafortravelindustry_Description {get; set;}
   public String accfinmgmtforagencies_Description {get; set;}
 
+  //RN-INC445559 add more 5 courses
+  public String IDCard_BSP_Agent_Billing_Reports_Procedures{get; set;}
+  public String IDCard_BSP_Agent_Remittance_Procedures{get; set;}
+  public String IDCard_BSP_Essentials_for_Travel_Agents{get; set;}
+  public String IDCard_BSP_Standard_Documents_Procedures{get; set;}
+  public String IDCard_Intro_to_the_BSP_System_Language{get; set;}
+
+  
+  
+
   private ID_Card__c[] idCardTemp;
   private Contact associatedContact {get; set;}
   private ID_Card__c associatedIDCard {get; set;}
@@ -109,6 +119,16 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     socialmediafortravelindustry_Description = Label.Social_Media_Travel_Industry_Description;
     accfinmgmtforagencies_Description = Label.Acc_Fin_Mgmt_Agencies_Description;
 
+    //RN-INC445559 add more 6 courses
+    IDCard_BSP_Agent_Billing_Reports_Procedures = Label.IDCard_BSP_Agent_Billing_Reports_Procedures;
+    IDCard_BSP_Agent_Remittance_Procedures = Label.IDCard_BSP_Agent_Remittance_Procedures;
+    IDCard_BSP_Essentials_for_Travel_Agents = Label.IDCard_BSP_Essentials_for_Travel_Agents;
+    IDCard_BSP_Standard_Documents_Procedures = Label.IDCard_BSP_Standard_Documents_Procedures;
+    IDCard_Intro_to_the_BSP_System_Language = Label.IDCard_Intro_to_the_BSP_System_Language;
+    
+
+
+
     initialize();
 
     //knows what part of page to load
@@ -126,7 +146,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
                              i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c,
                              i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c,
                              i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c,
-                             i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c,
+                             i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c,
                              i.Applicable_Fee__c, i.Regional_Office__c, i.AgencyShare_Confirmation__c  From ID_Card_Application__c i
                              where i.Id = :applicationId limit 1];
       //Block Page if payment is done and case is created
@@ -425,7 +445,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
                           i.Sent_to_AIMS_on__c, i.Renewal_From_Replace__c, i.Related_Contact__c, i.Position__c, i.Photo__c, i.Photo_Flag__c, i.Phone__c, i.Payment_Type__c, i.Paid__c, i.OwnerId, i.Nature_of_ID_Card__c,
                           i.Name_on_ID_Card__c, i.Name, i.MustSyncWithAIMS__c, i.Middle_Initial__c, i.LastName__c, i.LastModifiedDate, i.LastModifiedById, i.Is_Active_Card__c, i.IsDeleted, i.Id,
                           i.ID_Card_Application__c, i.Hours_per_week__c, i.Gender__c, i.FirstName__c, i.Fee_Applicable__c, i.Email__c, i.Duties__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate,
-                          i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId, i.Card_Variation__c, i.Card_Variation_Code__c, i.Card_Status__c, i.Card_Code__c,
+                          i.CreatedById, i.Card_Variation__c, i.Card_Variation_Code__c, i.Card_Status__c, i.Card_Code__c,
                           i.Cancellation_Date__c, i.Blacklisted__c, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Agency_Name__c, i.Agency_IATA_Code__c From ID_Card__c i
                           where i.VER_Number__c = : VER  ORDER BY i.Valid_To_Date__c DESC limit 1];
 
@@ -587,7 +607,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
                                    i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c, i.Last_Name__c, i.LastModifiedDate, i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c,
                                    i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c, i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c,
                                    i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c,
-                                   i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId,
+                                   i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById,
                                    i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c, i.AgencyShare_Confirmation__c From ID_Card_Application__c i where i.Id = : IDCardApplicationNR.Id limit 1];
 
             //Go to next part
@@ -671,7 +691,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
-          String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+          String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
           
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
@@ -731,7 +751,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
           update IDCardApplicationNR;
 
           //upgrade for payment: according to record type will redirect to payment or not.
-          String singleRT = IDCardWebService.getIdCardAppRT('Single_ID_Card_Operation');
+          String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
           if (IDCardApplicationNR.RecordTypeId != null && IDCardApplicationNR.RecordTypeId.equals(singleRT)) {
             Pagereference checkoutPage = Page.IDCard_CheckoutSingleApplication;
             checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationNR.Id));
@@ -1105,7 +1125,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
     Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(iataCode);
 
-    IATA_ISO_Country__c[] listCountries = [Select i.Name, i.AIMS_Area_Name__c, i.Id, i.ISO_Code__c, IATA_Regional_Office__c From IATA_ISO_Country__c i where i.AIMS_Area_Name__c = :theAccount.BillingCountry];
+    List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(theAccount.BillingCountry);
     if (listCountries == null || listCountries.size() == 0) {
       throw new IDCardApplicationException(string.format(Label.ID_Card_Invalid_ISO_Country, new string[] { theAccount.BillingCountry }));
     }

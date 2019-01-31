@@ -51,14 +51,11 @@ private class GlobalContactTriggerTest {
 
     static testMethod void myUnitTest() {
 
-        //ISSP_ObjectFactory.fiilIncludedFields();
-        //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
-        //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false);
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
@@ -94,7 +91,7 @@ private class GlobalContactTriggerTest {
         //Account acc =  (Account)ISSP_ObjectFactory.createSObject('Account',false,1);
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         //Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false);
@@ -134,7 +131,7 @@ private class GlobalContactTriggerTest {
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -193,7 +190,7 @@ private class GlobalContactTriggerTest {
 
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
@@ -241,7 +238,7 @@ private class GlobalContactTriggerTest {
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.Status__c = 'Active';
-        con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         insert con;
 
         IEC_Subscription_History__c product = new IEC_Subscription_History__c();
@@ -289,7 +286,7 @@ private class GlobalContactTriggerTest {
         con.Financial_Assessment_Contact__c = true;
         con.function__c = 'Aeropolitical;Cargo';
         con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-        con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         insert con;
 
         IEC_Subscription_History__c product = new IEC_Subscription_History__c();
@@ -312,15 +309,13 @@ private class GlobalContactTriggerTest {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
 
-        ID gdpContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('GDP Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
-        con.recordtypeid = gdpContactRecordTypeID;
         con.Status__c = 'Active';
         con.title = 'Monsieur';
         con.function__c = 'Aeropolitical;Cargo';
         con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-        con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         insert con;
 
         delete con;
@@ -338,61 +333,42 @@ private class GlobalContactTriggerTest {
             TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
             License_Cost_Center__c = 'ISF005CH01'
         );
+
+        User usr = [Select id from User where Id = :UserInfo.getUserId()];
+        System.RunAs(usr){
+            Test.startTest();
         
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        insert acc;
+            Account acc = ISSP_ObjectFactory.createNewAccount();
+            insert acc;
 
-        Account acc2 = ISSP_ObjectFactory.createNewAccount();
-        insert acc2;
+            Account acc2 = ISSP_ObjectFactory.createNewAccount();
+            insert acc2;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId= acc.Id;
-        con.Status__c = 'Active';
-        con.title = 'Monsieur';
-        con.function__c = 'Aeropolitical;Cargo';
-        con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-        con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
-        insert con;
+            Contact con = ISSP_ObjectFactory.createNewContact();
+            con.AccountId= acc.Id;
+            con.Status__c = 'Active';
+            con.title = 'Monsieur';
+            con.function__c = 'Aeropolitical;Cargo';
+            con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
+            con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+            insert con;
 
-        testUser.ContactId = con.id;
-        testUser.ContactKaviId__c = con.id;
-        insert testUser;
+            testUser.ContactId = con.id;
+            testUser.ContactKaviId__c = con.id;
+            insert testUser;
 
-        con.Preferred_Language__c = 'Italian';
-        con.Accountid = acc2.id;
-        con.User_Portal_Status__c = 'Deactivated';
-        con.status__c = 'Inactive';
-        con.Kavi_User__c = testUser.id;
-
-        /*Portal_Applications__c PA = new Portal_Applications__c(
-            Name = 'Treasury Dashboard'
-        );
-        insert PA;
-
-        Portal_Applications__c PA2 = new Portal_Applications__c(
-            Name = 'Standards Setting Workspace'
-        );
-        insert PA2;
-
-        Portal_Application_Right__c PAR = new Portal_Application_Right__c(
-            Contact__c = con.Id,
-            Portal_Application__c = PA.id
-        );
-        insert PAR;
-
-        Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
-            Contact__c = con.Id,
-            
-            Portal_Application__c = PA2.id
-        );
-        insert PAR2;*/
-
-        try{
-            update con;
-        }
-        catch(Exception e){
-            Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
-            //System.AssertEquals(expectedExceptionThrown, true);
+            con.Preferred_Language__c = 'Italian';
+            con.Accountid = acc2.id;
+            con.User_Portal_Status__c = 'Deactivated';
+            con.status__c = 'Inactive';
+            con.Kavi_User__c = testUser.id;
+            try{
+                update con;
+            }
+            catch(Exception e){
+                Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
+            }
+            Test.stopTest();
         }
     }
 
@@ -427,22 +403,24 @@ private class GlobalContactTriggerTest {
             TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
             License_Cost_Center__c = 'ISF005CH01'
         );
-        
 
-        Account acc = ISSP_ObjectFactory.createNewAccount();
-        insert acc;
+        User usr = [Select id from User where Id = :UserInfo.getUserId()];
+        System.RunAs(usr){
+
+            Account acc = ISSP_ObjectFactory.createNewAccount();
+            insert acc;
 
         Account acc2 = ISSP_ObjectFactory.createNewAccount();
         insert acc2;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId= acc.Id;
-        con.Status__c = 'Active';
-        con.function__c = 'Aeropolitical;Cargo';
-        con.title = 'Monsieur';
-        con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
-        con.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Contact' AND DeveloperName = 'Standard_Contact'][0].Id;
-        insert con;
+            Contact con = ISSP_ObjectFactory.createNewContact();
+            con.AccountId= acc.Id;
+            con.Status__c = 'Active';
+            con.function__c = 'Aeropolitical;Cargo';
+            con.title = 'Monsieur';
+            con.Membership_Function__c = 'Gen.Management;Commercial;Cargo;Finance;Aeropolitical;Environment';
+            con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+            insert con;
 
         testUser.ContactId = con.id;
         testUser.ContactKaviId__c = con.id;
@@ -454,43 +432,44 @@ private class GlobalContactTriggerTest {
         con.status__c = 'Inactive';
         con.Kavi_User__c = testUser.id;
 
-        Test.startTest();
-        list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
-        Portal_Applications__c PA = new Portal_Applications__c(
-            Name = 'Test'
-        );
-        listApps.add(PA);
+            Test.startTest();
+            list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
+            Portal_Applications__c PA = new Portal_Applications__c(
+                Name = 'Test'
+            );
+            listApps.add(PA);
 
-        Portal_Applications__c PA2 = new Portal_Applications__c(
-            Name = 'Standards Setting Workspace'
-        );
-        listApps.add(PA2);
-        insert listApps;
+            Portal_Applications__c PA2 = new Portal_Applications__c(
+                Name = 'Standards Setting Workspace'
+            );
+            listApps.add(PA2);
+            insert listApps;
 
-        list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>();
-        Portal_Application_Right__c PAR = new Portal_Application_Right__c(
-            Contact__c = con.Id,
-            Portal_Application__c = PA.id,
-            Right__c = 'Access Granted'
-        );
-        listAppRights .add(PAR);
+            list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>();
+            Portal_Application_Right__c PAR = new Portal_Application_Right__c(
+                Contact__c = con.Id,
+                Portal_Application__c = PA.id,
+                Right__c = 'Access Granted'
+            );
+            listAppRights .add(PAR);
 
-        Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
-            Contact__c = con.Id,
-            Portal_Application__c = PA2.id,
-            Right__c = 'Access Granted'
-        );
-        listAppRights .add(PAR2);
-        insert listAppRights ;
+            Portal_Application_Right__c PAR2 = new Portal_Application_Right__c(
+                Contact__c = con.Id,
+                Portal_Application__c = PA2.id,
+                Right__c = 'Access Granted'
+            );
+            listAppRights .add(PAR2);
+            insert listAppRights ;
 
-        try{
-            update con;
+            try{
+                update con;
+            }
+            catch(Exception e){
+                Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
+                //System.AssertEquals(expectedExceptionThrown, true);
+            }
+            Test.stopTest();
         }
-        catch(Exception e){
-            Boolean expectedExceptionThrown =  e.getMessage().contains('subscription') ? true : false;
-            //System.AssertEquals(expectedExceptionThrown, true);
-        }
-        Test.stopTest();
     }
 
     static testMethod void triggerTestAdd5() {
@@ -498,7 +477,6 @@ private class GlobalContactTriggerTest {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
 
-        ID gdpContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('GDP Contact');
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.Status__c = 'Active';
@@ -522,13 +500,13 @@ private class GlobalContactTriggerTest {
         }
 
     }
-    
+
     static testMethod void triggerTestIdCardAvailableService1() {
         Contact contact = new Contact();
         contact.FirstName = 'first875454';
         contact.LastName = 'last2343246';
         contact.ID_Card_Holder__c = true;
-        
+
         Test.startTest();
         insert contact;
         Test.stopTest();
@@ -539,7 +517,7 @@ private class GlobalContactTriggerTest {
         System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
         System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME));
     }
-    
+
     static testMethod void triggerTestIdCardAvailableService2() {
         Contact contact = new Contact();
         contact.FirstName = 'first55667';
@@ -547,7 +525,7 @@ private class GlobalContactTriggerTest {
         contact.email = 'test98329832@email.com';
         contact.ID_Card_Holder__c = false;
         insert contact;
-        
+
         contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
             FROM Contact
             WHERE id = :contact.Id];
@@ -566,7 +544,7 @@ private class GlobalContactTriggerTest {
         System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
         System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME), contact.Available_Services_Images__c);
     }
-    
+
     static testMethod void triggerTestIdCardAvailableService3() {
         Contact contact = new Contact();
         contact.FirstName = 'first123123';
@@ -574,19 +552,19 @@ private class GlobalContactTriggerTest {
         contact.email = 'test98329833@email.com';
         contact.ID_Card_Holder__c = true;
         insert contact;
-        
+
         contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
             FROM Contact
             WHERE id = :contact.Id];
         System.assertEquals(IdCardUtil.IDCARD_SERVICE_NAME, contact.Available_Services__c);
         System.assert(contact.Available_Services_Images__c.contains(IdCardUtil.IDCARD_SERVICE_NAME));
-        
+
         IDCardUtil.isFirstTime = true;
         Test.startTest();
         contact.ID_Card_Holder__c = false;
         update contact;
         Test.stopTest();
-
+        
         contact = [Select Id, Name, ID_Card_Holder__c, Available_Services__c, Available_Services_Images__c
             FROM Contact
             WHERE id = :contact.Id];

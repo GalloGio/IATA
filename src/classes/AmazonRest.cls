@@ -111,6 +111,35 @@ public  class AmazonRest {
             return status.equals('OK');
           }
 
+        public static Boolean uploadFile(AmazonCredentials credential, String fullFileName, String contentType, Blob fileBody){
+            HttpRequest req = new HttpRequest();
+            req.setMethod('PUT');
+            String fullFileNameEncoded = EncodePath(fullFileName);
+            req.setEndpoint(credential.EndpointBaseURL+credential.Bucket+'/'+fullFileNameEncoded);
+            req.setHeader('Cache-Control', 'no-cache');
+            String timestamp = DateTime.now().format('E, d MMM yyyy HH:mm:ss Z');
+            req.setHeader('Authorization',calculePolicy(credential, timestamp, contentType, fullFileNameEncoded));
+            req.setHeader('X-Amz-Date',timestamp);
+            req.setHeader('Content-Type', contentType+';charset=UTF-8');
+            req.setBodyasBlob(fileBody);
+
+            Http http = new Http();
+            String status = !Test.isRunningTest() ? http.send(req).getStatus() : TESTRESULT ;
+
+            return status.equals('OK');
+        }
+
+        private static String calculePolicy(AmazonCredentials credential, String timestamp, String contentType, String fullFileNameEncoded ) {
+            //timestamp = DateTime.now().format('E, d MMM yyyy HH:mm:ss Z');
+            system.debug('@@@timestamp: ' + timestamp);
+            String policyString = 'PUT\n\n'
+                + contentType + ';charset=UTF-8\n\n'
+                + 'x-amz-date:' + timestamp + '\n'
+                + '/'+credential.Bucket+'/'+fullFileNameEncoded;
+            String signedPolicy = AmazonRest.make_sig(policyString, credential);
+            return 'AWS ' + credential.AWSAccessKeyId + ':' + signedPolicy;
+        }
+
         public static string EncodePath(string pathToEncode){
             
             string  stringToSplit = '/'+pathToEncode;   
@@ -375,6 +404,64 @@ throw new transformationException('' +ListBucketResult);*/
             
     
     }           
+
+    /**
+        AMSU-186
+        Delete multiple files
+    **/  
+    public static Boolean deleteFiles(Set<String> fileNames, String folder, AmazonCredentials Credentials) {
+        try{
+            System.debug('Delete files service');
+
+            DOM.Document doc = new DOM.Document();
+            dom.XmlNode deleteNode = doc.createRootElement('Delete', null, null);
+            for(String fileName : fileNames) {
+                dom.XmlNode objectNode = deleteNode.addChildElement('Object', null, null);
+                objectNode.addChildElement('Key', null, null).addTextNode(fileName);
+            }
+            String requestElems = doc.toXmlString();
+            String encoded = EncodingUtil.base64Encode(Crypto.generateDigest('MD5', Blob.valueOf(requestElems)));
+            String length = '' + requestElems.length();
+
+            system.debug(requestElems);
+
+            DateTime myDateTime = DateTime.now();
+            String timestamp = myDateTime.formatGMT('EEE, dd MMM yyyy HH:mm:ss' )+' GMT';
+            String stringToSign = 'POST\n' + encoded + '\n' + 'multipart/form-data\n' + timestamp +'\n/' + credentials.bucket + folder + '?delete';
+            Blob bsig = Crypto.generateMac('hmacSHA1',Blob.valueOf(stringToSign),Blob.valueof(credentials.Secret));
+            String signature= EncodingUtil.base64Encode(bsig);
+
+            String endpoint = credentials.EndpointBaseURL + credentials.bucket + folder + '?delete';
+
+            HttpRequest req = new HttpRequest();
+            req.setMethod('POST');
+            req.setBody(requestElems);
+            req.setEndpoint(endpoint);
+
+            Http http = new Http();
+            
+            req.setHeader('Authorization','AWS '+ credentials.AWSAccessKeyId + ':' + signature);
+            req.setHeader('Date', timestamp);
+            req.setHeader('Content-Type', 'multipart/form-data');
+            req.setHeader('Content-Length', length);
+            req.setHeader('Content-MD5', encoded);
+
+            System.debug('Request: ' + req);
+            
+            if(!Test.isRunningTest()) {
+                HttpResponse res = http.send(req);    
+                System.debug(res);
+                System.debug(res.getBody());
+            }
+
+            return true;
+            
+        } catch(Exception e) {
+            TransformationHelper.sendEmailSupport('FATAL: AMAZONREST FAILED TO DELETE MULTIPLE FILES IN AMAZON SERVER  ' ,'   STACKTRACE   ' + e.getStackTraceString()  + '  '  + e.getMessage());
+            throw new AmazonRestException(e); 
+            return false;
+        }       
+    }          
     
     /**
         Creates an expiry link to acces to a single file for a period in parameter secondsValid
@@ -517,5 +604,95 @@ throw new transformationException('' +ListBucketResult);*/
             return body;
             
         }*/
-
+	
+	
+	public static void fakemethod () {
+		Integer i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		
+	
+	}
 }

@@ -39,7 +39,6 @@ public class TestUtilities {
         Accreditation__c[] accreditationsArray = new Accreditation__c[] {};
         for (Integer i = 0; i < accreditationsCount; i++) {
             accreditationsArray.add(new Accreditation__c(
-				Name = 'test' + String.valueOf(i),
 				Related_Account__c = accountsList[i].Id,
 				AIMS_ID__c = 'test' + String.valueOf(i)
 			));
@@ -52,7 +51,6 @@ public class TestUtilities {
         AMS_Inspection__c[] record = new AMS_Inspection__c[] {};
         for (Integer i = 0; i < accreditationsCount; i++) {
             record.add(new AMS_Inspection__c(
-				Name = 'test' + String.valueOf(i),
 				Agency__c = agenciesList[i].Id,
 				Accreditation_Endorsement_Status_code__c = '0',
 				Account__c = accountsList[i].Id

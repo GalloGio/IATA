@@ -507,7 +507,6 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
     </listViews>
     <listViews>
         <fullName>AMS_debug</fullName>
-        <columns>OBJECT_ID</columns>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
         <columns>Record_Type__c</columns>
@@ -519,14 +518,13 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Reason_Code__c</columns>
         <columns>Reason_Code_Description__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
-        <columns>LAST_UPDATE</columns>
         <columns>CREATED_DATE</columns>
         <columns>SETUP_OWNER_NAME</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CLO</value>
+            <value>RCR,CHO</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>

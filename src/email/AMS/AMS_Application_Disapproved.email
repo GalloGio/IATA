@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div style="font-size: 12pt;"><font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Dear {!Case.OwnerFullName},</font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial;"><font face="arial" style=""><span style="font-size: 12pt;">This is an automatic email to inform you that the application for case </span><a href="{!Case.Link}" style="font-size: 12pt;">{!Case.CaseNumber}</a><span style="font-size: 12pt;"> has been disapproved </span>by&nbsp;</font>{!User.Name}<font face="arial" style="">.</font><font face="arial" style="font-size: 12pt;">&nbsp;</font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><font face="arial"><br></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><font face="arial">Account name: <a href="{!Account.Link}">{!Case.Account}</a></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><font face="arial">Case: <a href="{!Case.Link}">{!Case.CaseNumber}</a></font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><font face="arial">Case area: {!Case.CaseArea__c}</font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><font face="arial">Reason: {!Case.Reason1__c}&nbsp;</font></div><div style="font-size: 12pt; color: rgb(0, 0, 0); font-family: arial;"><font face="arial">Country: {!Case.BSPCountry__c}&nbsp;</font></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>
