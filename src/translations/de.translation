@@ -12563,7 +12563,7 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
     <customLabels>
         <label>Der Payment Link kann zur Zahlung Ihrer IATA Rechnungen mit Kreditkarte verwendet werden&lt;br/&gt;
 &lt;b&gt;Warnung!&lt;/b&gt;&lt;br/&gt;
-Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch die BPS / CASS berechnet werden. Bitte überprüfen Sie Ihre Rechnungsdaten, um sicherzustellen , dass der Betrag noch nicht bezahlt wurde, bevor Sie mit der Zahlung mit Kreditkarte fortfahren</label>
+Bitte beachten Sie , dass viele IATA Rechnungen für akkreditierte Agenten durch die BSP / CASS berechnet werden. Bitte überprüfen Sie Ihre Rechnungsdaten, um sicherzustellen , dass der Betrag noch nicht bezahlt wurde, bevor Sie mit der Zahlung mit Kreditkarte fortfahren</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>

@@ -12600,7 +12600,7 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
     <customLabels>
         <label>Payment Link peut Être utilisé pour payer les factures IATA par carte de crédit&lt;br/&gt;
 &lt;b&gt;Attention!&lt;/b&gt;&lt;br/&gt;
-Veuillez noter que de nombreuses factures de IATA pour les agents accrédités sont collectés par le BPS / CASS. Vous devriez vérifier vos détails de la facture pour vous assurer qu&apos;il n&apos;a pas été déjà compensé avant de procéder au paiement par carte de crédit.</label>
+Veuillez noter que de nombreuses factures de IATA pour les agents accrédités sont collectés par le BSP / CASS. Vous devriez vérifier vos détails de la facture pour vous assurer qu&apos;il n&apos;a pas été déjà compensé avant de procéder au paiement par carte de crédit.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>
