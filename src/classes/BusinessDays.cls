@@ -138,8 +138,10 @@ throw new transformationException('updatedCase.First_Business_Day__c' +  updated
                     
                     //On the off-chance that the business hours on the case are null, use the default ones instead
                     Id hoursToUse = updatedCase.BusinessHoursId != null ? updatedCase.BusinessHoursId : defaultHours.Id;
-                    Id processRTId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('CS_Process_IDFS_ISS').getRecordTypeId();
-                    Id globalRT = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Cases_Global').getRecordTypeId();
+
+
+                    Id processRTId = RecordTypeSingleton.getInstance().getRecordType('Case', 'CS_Process_IDFS_ISS').Id;
+                    Id globalRT = RecordTypeSingleton.getInstance().getRecordType('Case', 'Cases_Global').Id;
                     //hoursToUse  = '01m200000000S6AAAU'; // germany
                     //The diff method comes back in milliseconds, so we divide by 3600000 to get hours.
                     Double timeSinceLastStatus = BusinessHours.diff(hoursToUse, updatedCase.Last_Status_Change__c, System.now()) / 3600000.0;

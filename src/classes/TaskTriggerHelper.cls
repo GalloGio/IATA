@@ -5,70 +5,40 @@
  */
 public with sharing class TaskTriggerHelper {
 
-    public static final String CASE_ACTION_CREATING_A_TASK = 'Creating a Task';
-
-    public static String cscRTId = [SELECT Id FROM RecordType WHERE sObjectType = 'FDS_KPI_Reporting__c' and DeveloperName = 'CSC' LIMIT 1].Id;
+    public static final String CASE_ACTION_CREATING_A_TASK = 'Creating a Task';    
     public static List<ISSP_KPI_Reporting__mdt> config = new List<ISSP_KPI_Reporting__mdt>();
-    public static Map<String, ISSP_KPI_Reporting__mdt> configToPointsMap = new Map<String, ISSP_KPI_Reporting__mdt>();
-    public static Map<String, ISSP_KPI_Reporting__mdt> configMap = new Map<String, ISSP_KPI_Reporting__mdt>();
-    public static List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name =: CASE_ACTION_CREATING_A_TASK AND Type_Of_Action__c =: CASE_ACTION_CREATING_A_TASK];
-    public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
-
+    
     public static void createKPIValues(Map<Id, Task> newMap, List<Task> newList, List<Task> oldList) {
-
-        List<String> caseCreateTaskRecordTypes = new List<String>();
-        Map<String, String> rtIdToDeveloperName = new Map<String, String>();
-        List<RecordType> recordTypes = [SELECT ID, DeveloperName FROM RecordType WHERE sObjectType = 'Case'];
-        KPI_Value__c valueToInsert = new KPI_Value__c();
-        Set<String> caseIds = new Set<String>();
-
-        for(Task t : newList){
-            caseIds.add(t.WhatId);
-        }
-
-        Map<Id, Case> idToCaseMap = new Map<Id, Case>([SELECT ID, RecordTypeId FROM Case WHERE Id IN: caseIds]);
-
-        List<Case> cases = [SELECT ID, RecordTypeId, RecordType.DeveloperName FROM Case WHERE Id IN: caseIds];
-        Set<Id> taskIds = new Set<Id>();
-
-        for(Task t : newList) {
-            taskIds.add(t.Id);
-        }
-
-        List<Task> tasks = [SELECT ID, WhatId, What.RecordType.DeveloperName, TaskSubType, What.RecordTypeId FROM Task WHERE ID IN: taskIds];
-
-        for(Case c : cases){
-            for(RecordType rt : recordTypes){
-                if(c.RecordTypeId == rt.Id){
-                    rtIdToDeveloperName.put(rt.Id, rt.DeveloperName);
-                }
-            }
-        }
-
+        List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+        Map<String, ISSP_KPI_Reporting__mdt> configToPointsMap = new Map<String, ISSP_KPI_Reporting__mdt>();
+        Map<String, ISSP_KPI_Reporting__mdt> configMap = new Map<String, ISSP_KPI_Reporting__mdt>();
         config = getKPIConfig(CASE_ACTION_CREATING_A_TASK);
-
+        List<Id> confRTs = new List<Id>();
+     
         if(config.size() > 0) {
             for(ISSP_KPI_Reporting__mdt setting : config){
+                confRTs.add(RecordTypeSingleton.getInstance().getRecordType('Case', setting.Case_Record_Type__c).Id);
+                configMap.put(setting.Case_Record_Type__c, setting);
                 configToPointsMap.put(setting.Action__c, setting);
             }
+        } else {
+            System.debug('KPI Reporting config not present, but it should be! Exiting...');
+            return;
         }
+        
+        List<Task> tasks = [SELECT ID, WhatId, What.RecordType.DeveloperName, TaskSubType, What.RecordTypeId 
+                            FROM Task WHERE RecordTypeId IN :confRTs AND ID IN :newList];
 
-        if(config.size() > 0) {
-            for(ISSP_KPI_Reporting__mdt setting : config){
-                caseCreateTaskRecordTypes.add(setting.Case_Record_Type__c);
-                configMap.put(setting.Case_Record_Type__c, setting);
-            }
-        }
-
-        String kpiReportingId = kpiReporting.size() > 0 ? kpiReporting.get(0).Id : createKPIReporting();
-
+        
+        List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name =: CASE_ACTION_CREATING_A_TASK AND Type_Of_Action__c =: CASE_ACTION_CREATING_A_TASK];
+        
+        String kpiReportingId = kpiReporting.get(0).Id;
         for(Task t : tasks) {
 
-            if(caseCreateTaskRecordTypes.contains(rtIdToDeveloperName.get(idToCaseMap.get(newMap.get(t.Id).WhatId).RecordTypeId)) &&
-            t.TaskSubType == configToPointsMap.get(CASE_ACTION_CREATING_A_TASK).Type_of_Task__c) {
+            if(t.TaskSubType == configToPointsMap.get(CASE_ACTION_CREATING_A_TASK).Type_of_Task__c) {
                 System.debug('LW criteria are met - if 1');
-
-                valueToInsert = createKPIReportingValue(t.WhatId, Integer.valueOf(configMap.get(t.What.RecordType.DeveloperName).Points__c), kpiReportingId);
+                String rtDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', t.What.RecordTypeId).developerName;
+                KPI_Value__c valueToInsert = createKPIReportingValue(t.WhatId, Integer.valueOf(configMap.get(rtDevName).Points__c), kpiReportingId);
                 kpiValuesToInsert.add(valueToInsert);
             }
         }
@@ -146,35 +116,7 @@ public with sharing class TaskTriggerHelper {
         return monthName;
     }
 
-    /**
-     * @description method used to return ID of existing FDS_KPI_Reporting record or to create new record.
-     *
-     * @return String - FDS_KPI_Reporting__c Id for KPI_Value__c
-     */
-    private static String createKPIReporting() {
-        List<FDS_KPI_Reporting__c> kpiReportingsToInsert = new List<FDS_KPI_Reporting__c>();
-        String returnMe = '';
-
-            FDS_KPI_Reporting__c newKPIReporting = new FDS_KPI_Reporting__c();
-            newKPIReporting.Type_Of_Action__c = CASE_ACTION_CREATING_A_TASK;
-            newKPIReporting.Name = CASE_ACTION_CREATING_A_TASK;
-            newKPIReporting.RecordTypeId = cscRTId;
-
-            kpiReportingsToInsert.add(newKPIReporting);
-
-        try{
-            if(kpiReportingsToInsert.size() > 0 ){
-                insert kpiReportingsToInsert;
-            }
-
-            returnMe = [SELECT Id FROM FDS_KPI_Reporting__c WHERE Name =: CASE_ACTION_CREATING_A_TASK AND Type_Of_Action__c =: CASE_ACTION_CREATING_A_TASK LIMIT 1].Id;
-        } catch (DmlException e) {
-            System.debug('DML Exception: ' + e.getMessage());
-        }
-
-        return returnMe;
-    }
-
+    
     public static KPI_Value__c createKPIReportingValue(String caseId, Integer points, String kpiReportingId){
         KPI_Value__c valueToAdd = new KPI_Value__c();
 

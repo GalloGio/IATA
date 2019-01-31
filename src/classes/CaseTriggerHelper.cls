@@ -1,183 +1,219 @@
-/**
- * Class created as helper to keep logic separated from the CaseAfterTrigger.
- *
- * unit test class: FDSKPIReportingTest
- */
+/** 
+* IATA CS Portal extension | Vanja Djurdjevic 
+* Class created as helper to keep logic separated from the CaseAfterTrigger.
+*
+* unit test class: FDSKPIReportingTest
+*/
 public with sharing class CaseTriggerHelper {
-
-    public static String cscRTId = [SELECT Id FROM RecordType WHERE sObjectType = 'FDS_KPI_Reporting__c' and DeveloperName = 'CSC' LIMIT 1].Id;
+    public static Boolean isDone = false;
+    
     public static final String CASE_STATUS_CLOSED = 'Closed';
     public static final String CASE_STATUS_ESCALATED_INTERNALLY = 'Escalated Internally';
-    public static final String CASE_ACTION_PUBLIC_COMMENT = 'Public Case Comment';
+    public static final String CASE_STATUS_REOPEN = 'Reopen';
+    
+    //public static final String CASE_ACTION_PUBLIC_COMMENT = 'Public Case Comment';
     public static final String CASE_ACTION_CASE_CLOSURE = 'Case Closure';
     public static final String CASE_ACTION_CASE_ESCALATION = 'Case Escalation';
     public static final String CASE_ACTION_CASE_REOPENING = 'Case Reopening';
-    public static final String CASE_ACTION_CREATING_A_TASK = 'Creating a Task';
+    //public static final String CASE_ACTION_CREATING_A_TASK = 'Creating a Task';
     public static final String CASE_ACTION_SEND_NOI = 'Send NOI';
-
-    public static List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI};
-
-
-    public static Boolean isDone = false;
-
-    public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
-
-
-    public static List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name IN: actionTypes AND Type_Of_Action__c IN: actionTypes];
-    public static Map<String, FDS_KPI_Reporting__c> actionToKPIReportingMap = new Map<String, FDS_KPI_Reporting__c>();
-
-    public static void createKPIValues(Map<Id, Case> oldMap, Map<Id, Case> newMap, List<Case> newList) {
-
-        KPI_Value__c valueToInsert = new KPI_Value__c();
-        Set<Id> caseIds = new Set<Id>();
-        List<Case> cases = new List<Case>();
-        List<ISSP_KPI_Reporting__mdt> configs = getKPIConfig(actionTypes);
-
-        //key1: type of action, key2: recordtype
-        Map<String, Map<String, ISSP_KPI_Reporting__mdt>> configsMap = new Map<String, Map<String, ISSP_KPI_Reporting__mdt>>();
-
-        for(Case c : newList){
-            caseIds.add(c.Id);
-        }
-
-        cases = [SELECT Id, RecordTypeId, RecordType.DeveloperName, Status, Reopening_reason__c, NOI_sent__c FROM Case WHERE Id IN: caseIds];
-
-        for(ISSP_KPI_Reporting__mdt cfg : configs) {
-            if(cfg.Action__c == CASE_ACTION_CASE_CLOSURE){
-                if(configsMap.containsKey(CASE_ACTION_CASE_CLOSURE)){
-                    configsMap.get(CASE_ACTION_CASE_CLOSURE).put(cfg.Case_Record_Type__c, cfg);
-                } else {
-                    configsMap.put(CASE_ACTION_CASE_CLOSURE, new Map<String, ISSP_KPI_Reporting__mdt>());
-                    configsMap.get(CASE_ACTION_CASE_CLOSURE).put(cfg.Case_Record_Type__c, cfg);
-                }
-            } else if(cfg.Action__c == CASE_ACTION_CASE_ESCALATION){
-                if(configsMap.containsKey(CASE_ACTION_CASE_ESCALATION)){
-                    configsMap.get(CASE_ACTION_CASE_ESCALATION).put(cfg.Case_Record_Type__c, cfg);
-                } else {
-                    configsMap.put(CASE_ACTION_CASE_ESCALATION, new Map<String, ISSP_KPI_Reporting__mdt>());
-                    configsMap.get(CASE_ACTION_CASE_ESCALATION).put(cfg.Case_Record_Type__c, cfg);
-                }
-            } else if(cfg.Action__c == CASE_ACTION_CASE_REOPENING){
-                if(configsMap.containsKey(CASE_ACTION_CASE_REOPENING)){
-                    configsMap.get(CASE_ACTION_CASE_REOPENING).put(cfg.Case_Record_Type__c, cfg);
-                } else {
-                    configsMap.put(CASE_ACTION_CASE_REOPENING, new Map<String, ISSP_KPI_Reporting__mdt>());
-                    configsMap.get(CASE_ACTION_CASE_REOPENING).put(cfg.Case_Record_Type__c, cfg);
-                }
-            } else if(cfg.Action__c == CASE_ACTION_SEND_NOI){
-                if(configsMap.containsKey(CASE_ACTION_SEND_NOI)){
-                    configsMap.get(CASE_ACTION_SEND_NOI).put(cfg.Case_Record_Type__c, cfg);
-                } else {
-                    configsMap.put(CASE_ACTION_SEND_NOI, new Map<String, ISSP_KPI_Reporting__mdt>());
-                    configsMap.get(CASE_ACTION_SEND_NOI).put(cfg.Case_Record_Type__c, cfg);
-                }
-            }
-        }
-
-        for(FDS_KPI_Reporting__c parent : kpiReporting){
-            actionToKPIReportingMap.put(parent.Type_Of_Action__c, parent);
-        }
-
-
-        String kpiReportingClosureId = actionToKPIReportingMap.containsKey(CASE_ACTION_CASE_CLOSURE) ? actionToKPIReportingMap.get(CASE_ACTION_CASE_CLOSURE).Id : createKPIReporting(CASE_ACTION_CASE_CLOSURE);
-        String kpiReportingEscalationId = actionToKPIReportingMap.containsKey(CASE_ACTION_CASE_ESCALATION) ? actionToKPIReportingMap.get(CASE_ACTION_CASE_ESCALATION).Id : createKPIReporting(CASE_ACTION_CASE_ESCALATION);
-        String kpiReportingReopeningId = actionToKPIReportingMap.containsKey(CASE_ACTION_CASE_REOPENING) ? actionToKPIReportingMap.get(CASE_ACTION_CASE_REOPENING).Id : createKPIReporting(CASE_ACTION_CASE_REOPENING);
-        String kpiReportingNOIId = actionToKPIReportingMap.containsKey(CASE_ACTION_SEND_NOI) ? actionToKPIReportingMap.get(CASE_ACTION_SEND_NOI).Id : createKPIReporting(CASE_ACTION_SEND_NOI);
-
-        List<String> oldStatuses = new List<String>();
-        for(Case c : cases){
-
-            //case closure
-            if(newMap.get(c.Id).Status == 'Closed' && configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(c.RecordType.DeveloperName)){
-                System.debug('+++ first matched');
-                oldStatuses = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(c.RecordType.DeveloperName).Status_From__c.split(',');
-                system.debug('LWLWLW: ' + oldStatuses);
-
-                if(oldStatuses.contains(oldMap.get(c.Id).Status)){
-                    valueToInsert = createKPIReportingValue(c, Integer.valueOf(configsMap.get(CASE_ACTION_CASE_CLOSURE).get(c.RecordType.DeveloperName).Points__c), kpiReportingClosureId);
-                    kpiValuesToInsert.add(valueToInsert);
-                }
-            } else
-             //case escalation
-                             System.debug('+++ scnd matched');
-
-             if(newMap.get(c.Id).Status == 'Escalated Internally' && configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(c.RecordType.DeveloperName)){
-                 oldStatuses = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(c.RecordType.DeveloperName).Status_From__c.split(',');
-
-                 if(oldStatuses.contains(oldMap.get(c.Id).Status)){
-                     valueToInsert = createKPIReportingValue(c, Integer.valueOf(configsMap.get(CASE_ACTION_CASE_ESCALATION).get(c.RecordType.DeveloperName).Points__c), kpiReportingEscalationId);
-                     kpiValuesToInsert.add(valueToInsert);
-                 }
-             } else
-			                System.debug('+++ 3rd matched');
-
-              //case reopening
-             if(oldMap.get(c.Id).Status == 'Reopen' && newMap.get(c.Id).Status == 'Closed' && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(c.RecordType.DeveloperName)){
-                 List<String> reopenReason = configsMap.get(CASE_ACTION_CASE_REOPENING).get(c.RecordType.DeveloperName).Reopening_Reason__c.split(',');
-				 System.debug('+++ passed initial condition');
-                 if(reopenReason.contains(c.Reopening_reason__c)){
-                     				 System.debug('+++ Reopening reason match');
-
-                     valueToInsert = createKPIReportingValue(c, Integer.valueOf(configsMap.get(CASE_ACTION_CASE_REOPENING).get(c.RecordType.DeveloperName).Points__c), kpiReportingReopeningId);
-                     kpiValuesToInsert.add(valueToInsert);
-                 }
-             }
-            //NOI sent
-            if(newMap.get(c.Id).NOI_sent__c != null && oldMap.get(c.Id).NOI_sent__c == null && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(c.RecordType.DeveloperName)){
-                valueToInsert = createKPIReportingValue(c, Integer.valueOf(configsMap.get(CASE_ACTION_SEND_NOI).get(c.RecordType.DeveloperName).Points__c), kpiReportingNOIId);
-                kpiValuesToInsert.add(valueToInsert);
-            }
+    
+    public static List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, 
+        CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI};
             
-           
-                
+            public static List<String> caseStatuses = new List<String>{CASE_STATUS_CLOSED,
+                CASE_STATUS_ESCALATED_INTERNALLY, CASE_STATUS_REOPEN};
+                    
+                    
+                    
+                    
+                    public static Map<Id, KPI_Value__c> typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
+    
+    public static void createKPIValues(Map<Id, Case> oldMap, Map<Id, Case> newMap, List<Case> newList) {
+        Map<String, Map<String, ISSP_KPI_Reporting__mdt>> configsMap = new Map<String, Map<String, ISSP_KPI_Reporting__mdt>>();
+        // initialize configs map
+        for(String at: actionTypes)
+            configsMap.put(at, new Map<String, ISSP_KPI_Reporting__mdt>());
+        
+        // get all configs since they are needed for filtering
+        List<ISSP_KPI_Reporting__mdt> configs = getKPIConfig(actionTypes);
+        if(configs.size() == 0) {
+            System.debug('CaseTriggerHelper: missing mdt config, exiting');
+            return;
         }
-
-        try{
-            if(kpiValuesToInsert.size() > 0 ){
-                
-                insert kpiValuesToInsert;
+        
+        List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+        Map<String, FDS_KPI_Reporting__c> actionToKPIReportingMap = new Map<String, FDS_KPI_Reporting__c>();
+        
+        List<FDS_KPI_Reporting__c> curKPIReportings = [SELECT Id, Type_Of_Action__c 
+                                                       FROM FDS_KPI_Reporting__c 
+                                                       WHERE Name IN: actionTypes AND Type_Of_Action__c IN: actionTypes];
+        
+        for(FDS_KPI_Reporting__c rep : curKPIReportings)
+            actionToKPIReportingMap.put(rep.Type_Of_Action__c, rep);
+        if(actionTypes.size() != actionToKPIReportingMap.size()) {
+            // a KPI reporting for an action type is missing, abort, they all should be present
+            System.debug('CaseTriggerHelper: KPI report for one of action types not present, aborting.');
+            return;
+        }
+        
+        String kpiReportingClosureId = actionToKPIReportingMap.get(CASE_ACTION_CASE_CLOSURE).Id;
+        String kpiReportingEscalationId = actionToKPIReportingMap.get(CASE_ACTION_CASE_ESCALATION).Id;
+        String kpiReportingReopeningId = actionToKPIReportingMap.get(CASE_ACTION_CASE_REOPENING).Id;
+        String kpiReportingNOIId = actionToKPIReportingMap.get(CASE_ACTION_SEND_NOI).Id;        
+        
+        
+        
+        Set<Id> allConsidered = new Set<Id>();
+        Set<Id> consideredForClosure = new Set<Id>();
+        Set<Id> consideredForEscInt = new Set<Id>();
+        Set<Id> consideredForReopen = new Set<Id>();
+        Set<Id> consideredForNOI = new Set<Id>();
+        
+        
+        
+        
+        for(ISSP_KPI_Reporting__mdt cfg : configs) {
+            if(cfg.Action__c == CASE_ACTION_CASE_CLOSURE) {
+                configsMap.get(CASE_ACTION_CASE_CLOSURE).put(cfg.Case_Record_Type__c, cfg);
+            } else if(cfg.Action__c == CASE_ACTION_CASE_ESCALATION) {
+                configsMap.get(CASE_ACTION_CASE_ESCALATION).put(cfg.Case_Record_Type__c, cfg);
+            } else if(cfg.Action__c == CASE_ACTION_CASE_REOPENING) {
+                configsMap.get(CASE_ACTION_CASE_REOPENING).put(cfg.Case_Record_Type__c, cfg);
+            } else if(cfg.Action__c == CASE_ACTION_SEND_NOI) {
+                configsMap.get(CASE_ACTION_SEND_NOI).put(cfg.Case_Record_Type__c, cfg);
             }
+        }
+        
+        
+        // filter out the cases that need to be treated
+        for(Case c: newList) {
+            // todo: RecordTypeSingleton has a bug in getRecordTypeById- ret type should be string, its RecordType
+            String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', c.RecordTypeId).DeveloperName;
+            // case closure
+            if(newMap.get(c.Id).Status == CASE_STATUS_CLOSED && 
+               configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName)) {
+                   List<String> oldStatuses = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Status_From__c.split(',');
+                   if(oldStatuses.contains(oldMap.get(c.Id).Status)){
+                       
+                       consideredForClosure.add(c.Id);
+                       allConsidered.add(c.Id);
+                   }         
+               }
+            
+            
+            if(newMap.get(c.Id).Status == CASE_STATUS_ESCALATED_INTERNALLY && 
+               configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName)) {
+                   
+                   List<String> oldStatuses = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_From__c.split(',');
+                   if(oldStatuses.contains(oldMap.get(c.Id).Status)){
+                       consideredForEscInt.add(c.Id);
+                       allConsidered.add(c.Id);
+                   }
+               }
+            
+            // case reopen
+            if(oldMap.get(c.Id).Status == CASE_STATUS_REOPEN && newMap.get(c.Id).Status == CASE_STATUS_CLOSED 
+               && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
+                   List<String> reopenReasons = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Reopening_Reason__c.split(',');
+                   if(reopenReasons.contains(c.Reopening_reason__c)) {
+                       consideredForReopen.add(c.Id);
+                       allConsidered.add(c.Id);
+                   }
+               }
+            
+            // NOI sent
+            if(newMap.get(c.Id).NOI_sent__c != null && oldMap.get(c.Id).NOI_sent__c == null 
+               && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(cRTDevName)) {
+                   consideredForNOI.add(c.Id);
+                   allConsidered.add(c.Id);
+               }
+        }
+        
+        // find registered case closures from past
+        List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c, CaseNumber__c FROM KPI_Value__c 
+                                               WHERE CaseNumber__c IN :allConsidered
+                                               AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE];
+        Map<Id, KPI_Value__c> typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
+        for(KPI_Value__c cc: claimingClosures)
+        {   // todo: assuming there are no dupes this should be fine, otherwise it's quite undeterministic
+            typeOfActionClosureMap.put(cc.CaseNumber__c, cc);
+        }
+        
+        // create new KPI values
+        
+        // closure
+        for(Id cId: consideredForClosure) {
+            String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
+            
+            KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), 
+                                                                 Integer.valueOf(configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue()), 
+                                                                 kpiReportingClosureId);
+            kpiValuesToInsert.add(valueToInsert);
+        }
+        
+        // case internal escalation
+        for(Id cId: consideredForEscInt) {
+            String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
+            KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Points__c.intValue()), 
+                                                                 kpiReportingEscalationId);
+            kpiValuesToInsert.add(valueToInsert);
+        }
+        // case reopen
+        for(Id cId: consideredForReopen) {
+            String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
+            KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue()),
+                                                                 kpiReportingReopeningId);
+            kpiValuesToInsert.add(valueToInsert);
+        }
+        
+        // NOI sent
+        for(Id cId: consideredForReopen) {
+            String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
+            KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_SEND_NOI).get(cRTDevName).Points__c.intValue()), 
+                                                                 kpiReportingNOIId);
+            kpiValuesToInsert.add(valueToInsert);
+            
+        }
+        
+        try{
+            if(kpiValuesToInsert.size() > 0 )
+                insert kpiValuesToInsert;
         } catch(DmlException e) {
             system.debug('LW insert error: ' + e.getMessage());
         }
-
+        
+        // todo: leftover from Lukasz's
         if(!Test.isRunningTest()){
             CaseTriggerHelper.isDone = true;
         }
     }
-
-
-
-
+    
     /**
-     * Retrieve ISSP_KPI_Reporting__mdt configration for specific type of action
-     *
-     * @param String - actionType
-     *
-     * @return List<ISSP_KPI_Reporting__mdt> - list of configs
-     */
+* Retrieve ISSP_KPI_Reporting__mdt configration for specific type of action
+*
+* @param String - actionType
+*
+* @return List<ISSP_KPI_Reporting__mdt> - list of configs
+*/
     public static List<ISSP_KPI_Reporting__mdt> getKPIConfig(List<String> actionTypes) {
-        String queryString = '';
-
-        queryString = 'SELECT ' +
-                'Id, Action__c, Case_Record_Type__c, Field_API_Name__c, Points__c, Reopening_Reason__c, Status_From__c, Status_To__c, Type_of_Task__c, Value_From__c, Value_To__c ' +
-                'FROM ' +
-                'ISSP_KPI_Reporting__mdt WHERE Action__c IN: actionTypes';
-
+        String queryString = 'SELECT ' +
+            'Id, Action__c, Case_Record_Type__c, Field_API_Name__c, Points__c, Reopening_Reason__c, Status_From__c, Status_To__c, Type_of_Task__c, Value_From__c, Value_To__c ' +
+            'FROM ' +
+            'ISSP_KPI_Reporting__mdt WHERE Action__c IN :actionTypes';
         return Database.query(queryString);
-
+        
     }
-
+    
     /**
-     * @description method used to coverts month number to Text
-     *
-     * @param month
-     *
-     * @return month name
-     */
+* @description method used to coverts month number to Text
+*
+* @param month
+*
+* @return month name
+*/
     public static String convertMonthNumberToText (Integer month) {
         String monthName = '';
-
         if(month == 1)
             monthName = 'January';
         else if (month == 2)
@@ -203,64 +239,28 @@ public with sharing class CaseTriggerHelper {
         else if (month == 12)
             monthName = 'December';
         else
-                monthName = 'incorrect month';
-
+            monthName = 'incorrect month';
+        
         return monthName;
-    }
-
-    /**
-     * @description method used to return ID of existing FDS_KPI_Reporting record or to create new record.
-     *
-     * @param String - actionType
-     *
-     * @return String - FDS_KPI_Reporting__c Id for KPI_Value__c
-     */
-    public static String createKPIReporting(String actionType) {
-        List<FDS_KPI_Reporting__c> kpiReportingsToInsert = new List<FDS_KPI_Reporting__c>();
-        String returnMe = '';
-
-        FDS_KPI_Reporting__c newKPIReporting = new FDS_KPI_Reporting__c();
-        newKPIReporting.Type_Of_Action__c = actionType;
-        newKPIReporting.Name = actionType;
-        newKPIReporting.RecordTypeId = cscRTId;
-
-        kpiReportingsToInsert.add(newKPIReporting);
-
-        try{
-            if(kpiReportingsToInsert.size() > 0 ){
-                insert kpiReportingsToInsert;
-            }
-
-            returnMe = [SELECT Id FROM FDS_KPI_Reporting__c WHERE Name =: actionType AND Type_Of_Action__c =: actionType LIMIT 1].Id;
-        } catch (DmlException e) {
-            System.debug('DML Exception: ' + e.getMessage());
-        }
-
-        return returnMe;
-    }
-
+    }  
+    
+    
     public static KPI_Value__c createKPIReportingValue(Case caseToProcess, Integer points, String kpiReportingId){
         KPI_Value__c valueToAdd = new KPI_Value__c();
-
+        
         valueToAdd.Name = 'Value_' + caseToProcess.Id + '_' + DateTime.now().hour()+'_'+DateTime.now().minute()+'_'+DateTime.now().second();
         valueToAdd.FDS_KPI_Reporting__c = kpiReportingId;
         valueToAdd.CaseNumber__c = caseToProcess.Id;
         valueToAdd.Month__c = convertMonthNumberToText(Integer.valueOf(Date.today().month()));
         valueToAdd.Year__c = String.valueOf(Date.today().year());
         valueToAdd.KPI_Value__c = points;
-        // IATA CS Portal extension | Vanja Djurdjevic 
-        // kpi correction for point award when re-closing someone else's case. That someone else
-        // should get points substracted, not the other agent initiating the action
-        List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c FROM KPI_Value__c WHERE
-                                                       CaseNumber__c=:caseToProcess.Id
-                                              		   AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE];
         
-        if(caseToProcess.Reopening_reason__c == 'same query' && claimingClosures.size() > 0) {
-            valueToAdd.Responsible__c = claimingClosures[0].Responsible__c;
+        if(caseToProcess.Reopening_reason__c == 'same query' && typeOfActionClosureMap.get(caseToProcess.Id) != null) {
+            valueToAdd.Responsible__c = typeOfActionClosureMap.get(caseToProcess.Id).Responsible__c;
             System.debug('+++modding responsible');
         } else {
             System.debug('+++first responsible by my user');
-        	valueToAdd.Responsible__c = UserInfo.getUserId();
+            valueToAdd.Responsible__c = UserInfo.getUserId();
         }
         return valueToAdd;
     }
