@@ -113,7 +113,7 @@
     <fields>
         <fullName>Approval_Comments__c</fullName>
         <externalId>false</externalId>
-        <label>Agreement Comments</label>
+        <label>Comments from Region</label>
         <length>16384</length>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>

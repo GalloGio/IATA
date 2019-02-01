@@ -19,7 +19,7 @@ private class AirlineSuspensionCaseTest {
         // Create an Airline HQ account
         Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
-                                RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
+                                RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member', ICH_Member__c=true);
         insert acct_hq;
 
         // Create an Airline BR account for the HQ above
@@ -33,6 +33,7 @@ private class AirlineSuspensionCaseTest {
                                 Services_Rendered_to_Airline__c = acct_br.Id, Services_Rendered_Status__c = 'Active');
         insert sr;
 
+        insert new AMPCoreGroups__c(Name='testgroup',Order__c=0);
         // FINISHED CREATING TEST DATA
 
         test.startTest();
@@ -83,8 +84,75 @@ private class AirlineSuspensionCaseTest {
 
 		controller.CreateCountrySuspensionCases();
         controller.CloseAllChildSuspensionCases();
+        controller.getGroupNamesOptions();
 
         test.stopTest();
+    }
+
+    static testMethod void testCreateAirlineSuspensionRecords1() {
+
+        // CREATE TEST DATA
+
+        // Create a new ISO Country
+        IATA_ISO_Country__c country_fr = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', Region__c = 'Europe');
+        insert country_fr;
+
+        // Create a Non-IATA Member Airline HQ account
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
+                                RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_fr.Id, Membership_status__c = 'Non-IATA member', ICH_Member__c=true);
+        insert acct_hq;
+
+        // FINISHED CREATING TEST DATA
+
+        test.startTest();
+        // create an airline suspension case
+        Id AirlineSuspension_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Suspension');
+        Case cs = new Case(RecordTypeId = AirlineSuspension_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'Airline Change', Status = 'Open',
+                        AccountId = acct_hq.Id);
+        insert cs;
+        test.stopTest();
+
+        // check that the corresponding airline suspension record has been created
+        List<Airline_Suspension__c> lstASrecords = [
+            SELECT Id,Participates_in_IATA_Governance_Groups__c
+            FROM Airline_Suspension__c WHERE Case__c =: cs.Id];
+        system.assertEquals(1,lstASrecords.size());
+        // for non iata member this is Not Applicable
+        system.assertEquals('Not Applicable',lstASrecords[0].Participates_in_IATA_Governance_Groups__c);
+    }
+
+    static testMethod void testCreateAirlineSuspensionRecords2() {
+
+        // CREATE TEST DATA
+
+        // Create a new ISO Country
+        IATA_ISO_Country__c country_fr = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', Region__c = 'Europe');
+        insert country_fr;
+
+        // Create an IATA Member Airline HQ account
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger',
+                                RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_fr.Id, Membership_status__c = 'IATA member');
+        insert acct_hq;
+
+        // FINISHED CREATING TEST DATA
+
+        test.startTest();
+        // create an airline suspension case
+        Id AirlineSuspension_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Suspension');
+        Case cs = new Case(RecordTypeId = AirlineSuspension_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'Airline Change', Status = 'Open',
+                        AccountId = acct_hq.Id);
+        insert cs;
+        test.stopTest();
+
+        // check that the corresponding airline suspension record has been created
+        List<Airline_Suspension__c> lstASrecords = [
+            SELECT Id,Participates_in_IATA_Governance_Groups__c
+            FROM Airline_Suspension__c WHERE Case__c =: cs.Id];
+        system.assertEquals(1,lstASrecords.size());
+        // for iata members this must be a list of groups, in this case no groups
+        system.assertEquals('None',lstASrecords[0].Participates_in_IATA_Governance_Groups__c);
     }
 
 }
