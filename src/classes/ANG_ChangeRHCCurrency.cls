@@ -130,7 +130,7 @@ public with sharing class ANG_ChangeRHCCurrency {
 
     public ANG_ChangeRHCCurrency() {
         this.objId = ApexPages.currentPage().getParameters().get('Id'); 
-        queryRHC();
+        this.rhc = Database.query('SELECT Id,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
         oldCurrency = rhc.CurrencyIsoCode;
         caseToUpdate = new case();
     }
