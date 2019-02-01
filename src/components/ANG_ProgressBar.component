@@ -18,14 +18,22 @@
 	  text-align: center;
 	  height: auto;
 	}
-	.ANG_progress .circle,
+    .ANG_progress .circle{
+        cursor: pointer;
+        margin-top: 10px;
+        display: inline-block;
+        background: #fff;
+        width: 40px; height: 40px;
+        border-radius: 40px;
+        border: 2px solid #C0C0C0;
+    }
 	.ANG_progress .bar {
 	  margin-top: 10px;
 	  display: inline-block;
 	  background: #fff;
 	  width: 40px; height: 40px;
 	  border-radius: 40px;
-	  border: 1px solid #848489;	 
+	  border: 1px solid #848489;
 	}
 	.ANG_progress .circle.done {
 	  margin-top: 10px;
@@ -43,12 +51,29 @@
 	  border-radius: 40px;
 	  border: 2px solid #f2a635;	  
 	}	
-
+    .ANG_progress .circle.done.selected {
+        -webkit-box-shadow: 0px 0px 6px 3px #58d152;
+        -moz-box-shadow: 0px 0px 6px 3px #58d152;
+        box-shadow: 0px 0px 6px 3px #58d152;
+    }
+    .ANG_progress .circle.inProgress.selected {
+        -webkit-box-shadow: 0px 0px 6px 3px #f2a635;
+        -moz-box-shadow: 0px 0px 6px 3px #f2a635;
+        box-shadow: 0px 0px 6px 3px #f2a635;
+    }.ANG_progress .circle.error.selected {
+        -webkit-box-shadow: 0px 0px 6px 3px #c81a1a;
+        -moz-box-shadow: 0px 0px 6px 3px #c81a1a;
+        box-shadow: 0px 0px 6px 3px #c81a1a;
+    }.ANG_progress .circle.notDone.selected {
+        -webkit-box-shadow: 0px 0px 6px 3px #C0C0C0;
+        -moz-box-shadow: 0px 0px 6px 3px #C0C0C0;
+        box-shadow: 0px 0px 6px 3px #C0C0C0;
+    }
 	.ANG_progress .bar {
 	  position: relative;
-	  width: 80px;
+	  width: {!IF(helper.progressNodes.size<9,'80px','60px')};
 	  height: 6px;
-	  margin: 0 1px 32px 1px;
+	  margin: 0 0px 32px 0px;
 	  border-left: none;
 	  border-right: none;
 	  border-radius: 0;
@@ -66,14 +91,15 @@
 	.ANG_progress .circle .title {
 	  color: #b5b5ba;
 	  font-size: 13px;
-	  line-height: 30px;
+	  line-height: 18px;
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 6px;
 	}
 	.centerInProgress {
-	  top: 5px !important;
-	  margin-left: -2px !important;
+	  top: 4px !important;
+	  margin-left: -1px !important;
 	}		
 	.centerOk {
 	  top: 5px !important;
@@ -82,7 +108,7 @@
 	.centerError {
 	  top: 5px !important;
 	  margin-left: -2px !important;
-	}		
+	}
 
 	/* Done / Active */
 	.ANG_progress .bar.done {
@@ -122,13 +148,12 @@
 	.ANG_progress .circle.notDone .label {
 	  margin-top: 2px;
 	  color: #FFF;
+	  background: #C0C0C0;
 	}	
 	.ANG_progress .circle.notDone .title {
 	  color: #444;
 	  white-space:nowrap;
 	}
-
-
 	.ANG_progress .circle.active .label {
 	  color: #FFF;
 	  background: #0c95be;
@@ -137,19 +162,34 @@
 	  color: #0c95be;
 	  white-space:nowrap;
 	}
+    .alert-secondary {
+        color: #383d41;
+        background-color: #e2e3e5;
+        border-color: #d6d8db;
+    }
   </style>
+
+  <script>
+    function showDescription(obj,nodenumber) {
+        $(".circle").removeClass("selected");
+        $(obj).addClass("selected");
+        $(".node-description").hide();
+        $(".node-" + nodenumber).show();
+    }
+  </script>
 
   <div class="row">
 	<div class="ANG_progress">
 	  <apex:repeat value="{! helper.progressNodes}" var="node">
+        <apex:variable var="selected" value="{!IF(node==helper.selectednode,'selected','')}"/>
 
 	  	<apex:outputPanel rendered="{! node.status == 'inProgress'}">
 	  	  <apex:outputPanel rendered="{! node.nodeNumber != 1}">
 	  	  	<span class="bar inProgress"></span>
 	  	  </apex:outputPanel>  	
-		  <div class="circle inProgress">
+		  <div class="circle inProgress {!selected}" onclick="showDescription(this,'{!node.nodeNumber}')">
 		  	<span class="label"><i class="glyphicon glyphicon-play centerInProgress"></i></span>
-		    <span class="title">{! node.title}</span>
+		    <apex:outputText styleclass="title" value="{!$Label[node.title]}" escape="false"/>
 		  </div>
 	  	</apex:outputPanel>
 
@@ -157,9 +197,9 @@
 	  	  <apex:outputPanel rendered="{! node.nodeNumber != 1}">
 	  	  	<span class="bar done"></span>
 	  	  </apex:outputPanel>  	
-		  <div class="circle done">
+		  <div class="circle done {!selected}" onclick="showDescription(this,'{!node.nodeNumber}')">
 		  	<span class="label"><i class="glyphicon glyphicon-ok centerOk"></i></span>
-		    <span class="title">{! node.title}</span>
+            <apex:outputText styleclass="title" value="{!$Label[node.title]}" escape="false"/>
 		  </div>
 	  	</apex:outputPanel>
 
@@ -167,9 +207,9 @@
 	  	  <apex:outputPanel rendered="{! node.nodeNumber != 1}">
 	  	  	<span class="bar done"></span>
 	  	  </apex:outputPanel>
-		  <div class="circle error">
+		  <div class="circle error {!selected}" onclick="showDescription(this,'{!node.nodeNumber}')">
 		  	<span class="label"><i class="glyphicon glyphicon-remove centerError"></i></span>
-		    <span class="title">{! node.title}</span>
+		    <apex:outputText styleclass="title" value="{!$Label[node.title]}" escape="false"/>
 		  </div>
 	  	</apex:outputPanel>
 
@@ -177,13 +217,27 @@
 	  	  <apex:outputPanel rendered="{! node.nodeNumber != 1}">
 	  	  	<span class="bar notDone"></span>
 	  	  </apex:outputPanel>
-		  <div class="circle notDone">
-		  	<span class="label"></span>
-		    <span class="title">{! node.title}</span>
+		  <div class="circle notDone {!selected}" onclick="showDescription(this,'{!node.nodeNumber}')">
+            <span class="label"></span>
+		    <apex:outputText styleclass="title" value="{!$Label[node.title]}" escape="false"/>
 		  </div>
 	  	</apex:outputPanel>
-
 	  </apex:repeat>
 	</div>
-  </div>	
+  </div>
+  <apex:repeat value="{! helper.progressNodes}" var="node">
+      <apex:outputPanel rendered="{!AND(node!=null,node.description!=null)}" style="{!IF(node==helper.selectednode,'','display:none')}" styleclass="node-description node-{!node.nodenumber}">
+          <apex:variable var="descriptionStyle" value="alert-{!CASE(node.status,
+              'inProgress','warning',
+              'error','danger',
+              'done','success',
+              'notDone','secondary',
+              'info')}"/>
+
+          <div class="alert {!descriptionStyle}" role="alert" style="margin-top: 1em;">
+              <apex:outputText style="font-weight: bold;" value="{!$Label[node.title]}" escape="false"/><br/>
+              <apex:outputText styleclass="title" value="{!$Label[node.description]}" escape="false"/>
+          </div>
+      </apex:outputPanel>
+  </apex:repeat>
 </apex:component>

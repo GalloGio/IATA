@@ -1,5 +1,6 @@
 public without sharing class ISSP_Case {
 
+    private static Id AP_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
     private static Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     private static Id AME_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
     private static Id AMERICAS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
@@ -704,10 +705,6 @@ public without sharing class ISSP_Case {
         //basto1p
         statusValMapped=getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,newCase.Status);
 
-        Map<String, String> objectsIds = new Map<String, String>();
-        objectsIds.put('AMS_OSCAR__C', newCase.OSCAR__c);
-        objectsIds.put('CASE', newCase.id);
-
         // If the process is null the use the reason on the casop.
         String process = '';
         if(newCase.Oscar__r.Process__c == null || (newCase.Oscar__r.Process__c != null && newCase.Oscar__r.Process__c == '')) {
@@ -715,14 +712,11 @@ public without sharing class ISSP_Case {
         } else {
             process = newCase.Oscar__r.Process__c;
         }
-
-        progressBarHelper = new ANG_ProgressBarHelper(process, objectsIds);
-
-        for (ANG_ProgressNode node : progressBarHelper.progressNodes) {
-            if (node.titleTranslatable != null && node.titleTranslatable != '') {
-                node.title = getCustomLabel(node.titleTranslatable);
-            }
+        if (newCase.RecordtypeId == AP_RECORD_TYPE_ID && newCase.CaseArea__c!= 'SIS Membership') {
+            process = newCase.Recordtype.DeveloperName + '|Airline';
         }
+
+        progressBarHelper = new ANG_ProgressBarHelper(process, newCase.id);
     }
 
     @TestVisible private String getCustomLabel(String labelName) {
