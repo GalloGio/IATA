@@ -19,9 +19,9 @@
          }; 
     </script>
 
-    <apex:attribute name="trackedObjectId" type="String" assignTo="{!trackedObjId}" required="true" description="The record id that is being tracked" />
-    <apex:attribute name="trackedApiName" type="String" assignTo="{!trackedObjApiName}" required="true" description="The object type that is being tracked" />
-    <apex:attribute name="trackerApiName" type="String" assignTo="{!trackerObjApiName}" required="true" description="The object type that is used for tracking" />
+    <apex:attribute name="trackedObjectId" type="String" assignTo="{!trackedObjId}" required="true" description="The record id that is being tracked"/>
+    <apex:attribute name="trackedApiName" type="String" assignTo="{!trackedObjApiName}" required="true" description="The object type that is being tracked"/>
+    <apex:attribute name="trackerApiName" type="String" assignTo="{!trackerObjApiName}" required="true" description="The object type that is used for tracking"/>
 
     <apex:pageBlock >
         <apex:pageBlockTable value="{!historyRecords}" var="row" >

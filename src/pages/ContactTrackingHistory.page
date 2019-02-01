@@ -10,7 +10,7 @@
 			$Lightning.use("c:GenericHistoryViewerApp", function() {
 				$Lightning.createComponent("c:GenericHistoryViewer",
 					{ trackedObjectId : "{!Contact.Id}",
-					  trackerApiName : "Contact_Tracking_History__c",
+					  trackerApiName : "ANG_Contact_Tracking_History__c",
 					  trackedApiName : "Contact" },
 					"lightning"
 				);
