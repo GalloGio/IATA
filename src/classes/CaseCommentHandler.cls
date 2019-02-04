@@ -17,23 +17,25 @@ public with sharing class CaseCommentHandler {
         List<ISSP_KPI_Reporting__mdt> config = new List<ISSP_KPI_Reporting__mdt>();
         Map<String, ISSP_KPI_Reporting__mdt> rtToConfigMap = new Map<String, ISSP_KPI_Reporting__mdt>();
         Set<Id> recordTypesToProcess = new Set<Id>();
-        Set<String> ccIds = new Set<String>();
         
         config = getKPIConfig(CASE_COMMENT_ACTION);
+
+        if(config.size() == 0) {
+            System.debug('CaseCommentHandler: no KPI config, exiting');
+            return;
+        }
+
+
         for(ISSP_KPI_Reporting__mdt cfg : config){
             recordTypesToProcess.add(RecordTypeSingleton.getInstance().getRecordType('Case', cfg.Case_Record_Type__c).Id);
             rtToConfigMap.put(cfg.Case_Record_Type__c, cfg);
         }
         
-        List<CaseComment> fullCaseComments = [SELECT id, isPublished, ParentId, Parent.RecordTypeId 
-                                              FROM CaseComment WHERE ID IN: ccIds AND isPublished=True
+        List<CaseComment> fullCaseComments = [SELECT id, isPublished, ParentId, Parent.RecordType.DeveloperName
+                                              FROM CaseComment WHERE ID IN: listOfComments AND isPublished=True
                                               AND Parent.RecordTypeId IN :recordTypesToProcess];
         
-        
-        if(config.size() == 0) {
-            System.debug('CaseCommentHandler: no KPI config, exiting');
-            return;
-        }
+        if(fullCaseComments.isEmpty()) return;
         
         List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c 
                                                    FROM FDS_KPI_Reporting__c 
@@ -47,7 +49,7 @@ public with sharing class CaseCommentHandler {
         Id kpiReportingId = kpiReporting.get(0).Id;
         
         for (CaseComment cc : fullCaseComments) {
-            if (cc.isPublished && recordTypesToProcess.contains(cc.Parent.RecordType.DeveloperName)) {
+            if (rtToConfigMap.containsKey(cc.Parent.RecordType.DeveloperName)) {
                 createKPIReportingValue(cc, Integer.valueOf(rtToConfigMap.get(cc.Parent.RecordType.DeveloperName).Points__c), kpiReportingId);
             }
         }

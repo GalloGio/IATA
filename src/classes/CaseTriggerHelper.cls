@@ -30,6 +30,7 @@ public with sharing class CaseTriggerHelper {
                     public static Map<Id, KPI_Value__c> typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
     
     public static void createKPIValues(Map<Id, Case> oldMap, Map<Id, Case> newMap, List<Case> newList) {
+        if(isDone) return;
         Map<String, Map<String, ISSP_KPI_Reporting__mdt>> configsMap = new Map<String, Map<String, ISSP_KPI_Reporting__mdt>>();
         // initialize configs map
         for(String at: actionTypes)
@@ -49,6 +50,9 @@ public with sharing class CaseTriggerHelper {
                                                        FROM FDS_KPI_Reporting__c 
                                                        WHERE Name IN: actionTypes AND Type_Of_Action__c IN: actionTypes];
         
+        System.debug('+++ got shit 2: 123456789');
+
+        System.debug('+++ got shit: '+curKPIReportings);
         for(FDS_KPI_Reporting__c rep : curKPIReportings)
             actionToKPIReportingMap.put(rep.Type_Of_Action__c, rep);
         if(actionTypes.size() != actionToKPIReportingMap.size()) {
@@ -111,9 +115,14 @@ public with sharing class CaseTriggerHelper {
                        allConsidered.add(c.Id);
                    }
                }
-            
+
+
+            System.debug('@@@ config: '+configsMap.get(CASE_ACTION_CASE_REOPENING));
+            System.debug('@@@ config rt: '+configsMap.get(CASE_ACTION_CASE_REOPENING).get('Cases_Global'));
+            System.debug('@@@ old status: '+oldMap.get(c.Id).Status);
+            System.debug('@@@ new status: '+newMap.get(c.Id).Status);
             // case reopen
-            if(oldMap.get(c.Id).Status == CASE_STATUS_REOPEN && newMap.get(c.Id).Status == CASE_STATUS_CLOSED 
+            if(newMap.get(c.Id).Status == CASE_STATUS_REOPEN && oldMap.get(c.Id).Status == CASE_STATUS_CLOSED
                && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
                    List<String> reopenReasons = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Reopening_Reason__c.split(',');
                    if(reopenReasons.contains(c.Reopening_reason__c)) {
@@ -121,7 +130,9 @@ public with sharing class CaseTriggerHelper {
                        allConsidered.add(c.Id);
                    }
                }
-            
+           
+
+
             // NOI sent
             if(newMap.get(c.Id).NOI_sent__c != null && oldMap.get(c.Id).NOI_sent__c == null 
                && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(cRTDevName)) {
@@ -129,7 +140,11 @@ public with sharing class CaseTriggerHelper {
                    allConsidered.add(c.Id);
                }
         }
-        
+        // create new KPI values
+        if(allConsidered.size() == 0) {
+            System.debug('+++CaseTriggerHelper: no cases to consider');
+            return;
+        }
         // find registered case closures from past
         List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c, CaseNumber__c FROM KPI_Value__c 
                                                WHERE CaseNumber__c IN :allConsidered
@@ -140,8 +155,14 @@ public with sharing class CaseTriggerHelper {
             typeOfActionClosureMap.put(cc.CaseNumber__c, cc);
         }
         
-        // create new KPI values
         
+        System.debug('+++ consideredForClosure:'+consideredForClosure);
+                System.debug('+++ consideredForEscInt:'+consideredForEscInt);
+
+                System.debug('+++ consideredForReopen:'+consideredForReopen);
+
+                System.debug('+++ consideredForNOI:'+consideredForNOI);
+
         // closure
         for(Id cId: consideredForClosure) {
             String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
@@ -168,7 +189,7 @@ public with sharing class CaseTriggerHelper {
         }
         
         // NOI sent
-        for(Id cId: consideredForReopen) {
+        for(Id cId: consideredForNOI) {
             String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
             KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_SEND_NOI).get(cRTDevName).Points__c.intValue()), 
                                                                  kpiReportingNOIId);
@@ -183,10 +204,10 @@ public with sharing class CaseTriggerHelper {
             system.debug('LW insert error: ' + e.getMessage());
         }
         
-        // todo: leftover from Lukasz's
-        if(!Test.isRunningTest()){
+
+
             CaseTriggerHelper.isDone = true;
-        }
+
     }
     
     /**

@@ -319,24 +319,24 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /**********************************************************************************************************************************/
     
     /*Record type*/
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-	Id sidraRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
-	ID FSMcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
-	Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
-	Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
-	Id RT_ICCS_ASP_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('FDS ASP Management') ;
-    Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases') ;
-    ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
-    Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Suspension');
-	Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
-	Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Funds_Management');
-	Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
-	ID SISHelpDeskRecordtype = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
-	ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
-	Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-	Id OscarComRTId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('OSCAR Communication');
-    Id globalRT = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - Global');
-    /*Record type*/	
+    ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+	Id sidraRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+	ID FSMcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
+	Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
+	Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
+	Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management') ;
+    Id RT_ICC_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Invoicing_Collection_Cases') ;
+    ID RecId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
+    Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Suspension');
+	Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Deactivation');
+	Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Funds_Management');
+	Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DIP_Review_Process');
+	ID SISHelpDeskRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
+	ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
+	Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
+    Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+    
+/*Record type*/	
     
     /*Variables*/
     Boolean caseRecType = false;
@@ -369,8 +369,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	map<Id,IFAP_Quality_Issue__c> RelatedQualityIssues = new Map<Id,IFAP_Quality_Issue__c>();
 	private Map<Id,Account> sidraCasesAccounts;
     private Map<Id,Account> accountsToUpdate = new Map<Id,Account>();
-
-    //private List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+	
+	//private List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
 
     Set<Id> caseAccsSet = new Set<Id>();
     /*Maps, Sets, Lists*/
@@ -433,7 +433,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 
 			//START - Too many SOQL fix
-			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out')) from Account where Id in :acctIds]);
+			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out' and status != 'Closed_Non compliance')) from Account where Id in :acctIds]);
 			Set<Id> caseIds;
 
 			for (Account acct : acctsToUpdate.values()) {
@@ -479,7 +479,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			CaseChildHelper.CreateChildCase(Trigger.old, Trigger.new);
 		}  
 	}
-
+	
 	/**
 	 * KPI Reporting part created here as separated part of the trigger, because of terrible quality of code in this file.
 	 * Trigger is created without good practices, is unreadable, so here is separated part responsible for Case Status monitoring, and
@@ -495,9 +495,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	/**
 	 * END of separated part
 	 */
-
-
-
+	
 	/*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	
 	if(trigger.isInsert || trigger.isUpdate){	
@@ -572,7 +570,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			    }
 			    // Create a map of Product Assignments related to the trigger cases' accounts, with the key [ICCS Product Currency ID - Account Id - Bank Account ID]
 			    Map<String, Product_Assignment__c> mapProductAssignmentsPerKey = new Map<String, Product_Assignment__c>();
-			    List<Product_Assignment__c> lstPAs = [SELECT CurrencyIsoCode, Id, Account__c, ICCS_Product_Currency__c, Status__c, ICCS_Bank_Account__c, Notice_of_Assignment__c, Accelerated_Function__c, Amount__c 
+			    List<Product_Assignment__c> lstPAs = [SELECT CurrencyIsoCode, Id, Account__c, ICCS_Product_Currency__c, Status__c, ICCS_Bank_Account__c, Notice_of_Assignment__c, Amount__c 
 			    		FROM Product_Assignment__c WHERE Account__c IN :lstAccountIds];
 			    for (Product_Assignment__c pa : lstPAs) {
 			      	mapProductAssignmentsPerKey.put(String.valueOf(pa.ICCS_Product_Currency__c) + '-' + String.valueOf(pa.Account__c) + '-' + String.valueOf(pa.ICCS_Bank_Account__c), pa);
@@ -591,7 +589,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			      	if (c.RecordTypeId == RT_ICCS_Id && c.Status == 'Closed' && (Trigger.isInsert || (Trigger.isUpdate && Trigger.oldMap.get(c.Id).Status != 'Closed'))){
 			        	if (caseToBAccs.get(c.id) == null)
 			          		caseToBAccs.put(c.id, new List<ICCS_BankAccount_To_Case__c>());
-			        	if (c.CaseArea__c == 'ICCS – Assign Product') {
+			        	//INC441640: Removed validation for ICCS – Assign Product
+			        	/*if (c.CaseArea__c == 'ICCS – Assign Product') {
 			          		if (caseToBAccs.get(c.id).size() == 0)
 			            		c.addError('If the case area is "ICCS – Assign Product" is required at least one ICCS Bank Accounts.');
 			          		// Create one Product Assignment record for each Bank Account related to the case.
@@ -620,10 +619,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 					            pa.Amount__c = batc.Amount__c;
 					            //INC178224
 					            pa.CurrencyIsoCode = batc.CurrencyIsoCode;
-					            pa.Accelerated_Function__c = c.Accelerated_Function__c;
 			            		lstProdAssignments.add(pa);
 			          		} //for ICCS_BankAccount_To_Case__c
-			        	}else if (c.CaseArea__c == 'ICCS – Remove Product') {
+			        	}else*/ if (c.CaseArea__c == 'ICCS – Remove Product') {
 				        	// Identify the corresponding ICCS Product Currency
 				          	ICCS_Product_Currency__c tmpProdCurr = mapProductCurrencyPerKey.get(c.ICCS_Product__c + '-' + c.ICCS_Country__c + '-' + c.ICCS_Currencies__c);
 				          	// Take all the product assigment with key: ProductCurrency - AccountId   regardless to the bank account selected
@@ -662,7 +660,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				              		pa.Amount__c = batc.Amount__c;
 				              		//INC178224
 				              		pa.CurrencyIsoCode = batc.CurrencyIsoCode;
-				              		pa.Accelerated_Function__c = c.Accelerated_Function__c;
 				              		ProdAssignmentUpdated.add(pa.id);
 				              		lstProdAssignments.add(pa);
 			            		}else{
@@ -680,8 +677,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 					              	pa.Amount__c = batc.Amount__c;
 					              	//INC178224
 					              	pa.CurrencyIsoCode = batc.CurrencyIsoCode;
-				              		pa.Accelerated_Function__c = c.Accelerated_Function__c;
-			              			lstProdAssignments.add(pa);
+				              		lstProdAssignments.add(pa);
 			            		}
 			          		} //for ICCS_BankAccount_To_Case__c
 			          		// Inactivate all the ICCS_BankAccount_To_Case__c with this product-country-currency related to this case and I will reactivate only the ones specified by the case.
@@ -724,7 +720,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			            lstAccountsToUpdate.add( a );
 			        }
 			        // Set / unset the Collection Case Indicator
-			        if (c.RecordTypeId == RT_ICC_Id && c.CaseArea__c == 'Collection' && (c.Reason1__c == 'Debt Recovery' || c.Reason1__c == 'Annual Fees')) {
+			        if (c.RecordTypeId == RT_ICC_Id && c.CaseArea__c == 'Collection' && (c.Reason1__c == 'Debt Recovery' || c.Reason1__c == 'Annual Fees' || c.Reason1__c == 'Administrative Charges')) {
 			        	// TF - Open debts notification to Admins
 			        	if (Trigger.isInsert){
 			        		if (!ISSP_UserTriggerHandler.preventOtherTrigger){
@@ -741,12 +737,12 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			                	}
 			        		}
 			        	}
-			            if (c.IsClosed && c.Has_the_agent_paid_invoice__c != null && c.Has_the_agent_paid_invoice__c != 'Not paid') {
-			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = '');
-			                    lstAccountsToUpdate.add( a );
+			            if (c.IsClosed != true && c.Has_the_agent_paid_invoice__c != null && (c.Has_the_agent_paid_invoice__c == 'Not paid' || c.Has_the_agent_paid_invoice__c =='Partially unpaid')) {
+			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = 'Pending dues'); 
+			                    lstAccountsToUpdate.add( a );                            	
 			            }else{
-			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = 'Pending dues');
-			                    lstAccountsToUpdate.add( a );
+			                    Account a = new Account(Id = c.AccountId, Collection_Case_Indicator__c = '');
+			                    lstAccountsToUpdate.add( a ); 
 			            }
 			        }
 		    	} // if AccountId
@@ -790,7 +786,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			string airlineSuspension = 'Airline Suspension Process';
 			String airlineChange = 'Airline Change';
 			String separator = '%%%__%%%';
-			string APCaseRTID =Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId ;
+			Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
 			//date pretrasfomrationDate =  date.newinstance(2013, 11, 30);
 			list<case> casesToTrigger = new list<Case>();
 			List<Case> airlineChangeCasesToTrigger = new List<Case>();
@@ -806,7 +802,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 
 			if(!casesToTrigger.isEmpty()){
-			    map<string,id> AcccRtNamePerId = TransformationHelper.AccRtNamePerIds();
 			    set<String> ServicesToCheck = new set<String>();
 			    map<String,Case_Reason_Service__c> ServicesPerReason  = new map<String,Case_Reason_Service__c>();
 			    list<Case> USRRcases = new list<Case>();
@@ -835,7 +830,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		            }
 		        }
 		       	if(caseMap.size()>0){ //validation and at the same time change of recordtype of the accts if they were standard 
-		        	map<Id,Case> casesWithErrorOnAcct = ServiceRenderedCaseLogic.changeRTtoBranchAccts(caseIdPerAccID, AcccRtNamePerId, caseMap);
+		        	map<Id,Case> casesWithErrorOnAcct = ServiceRenderedCaseLogic.changeRTtoBranchAccts(caseIdPerAccID, caseMap);
 					for (Id idc : caseMap.keySet()) {
 		            	if(casesWithErrorOnAcct.get(idc) <> null){  
 		                	casesWithErrorOnAcct.get(idc).addError(' Errors during the validation of the Account related to the case: Wrong recordtype or not linked to a proper Headquarter ');
@@ -978,7 +973,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			for(Case newCaseObj : trigger.new){ 
 				isCaseMustBeDeleted = false;
 				//GM - IMPRO - START
-				//RecordType caseRecordType = [Select Id, Name from RecordType where Id=: newCaseObj.RecordTypeId];
 				// SIS email to case
 				if ((newCaseObj.Origin == 'E-mail to Case - IS Help Desk' || newCaseObj.Origin == 'E-mail to Case - SIS Help Desk') 
 						&& newCaseObj.RecordTypeid != null && newCaseObj.RecordTypeid == SISHelpDeskRecordtype) {
@@ -1254,6 +1248,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		/*ANG Triggers*/
 		new ANG_CaseTriggerHandler().onAfterUpdate();
 		/*ANG Triggers*/
+
+		ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Case', 'ANG_Case_Tracking_History__c'); //ACAMBAS - WMO-390
+
 	/*Trigger.isUpdate*/
 	}
 	/****************************************************************************************************************************************************/    

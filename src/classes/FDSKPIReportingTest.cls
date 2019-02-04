@@ -1,4 +1,3 @@
-
 @IsTest(SeeAllData=false)
 private class FDSKPIReportingTest {
 
@@ -8,8 +7,35 @@ private class FDSKPIReportingTest {
     public static final String CASE_ACTION_CASE_REOPENING = 'Case Reopening';
     public static final String CASE_ACTION_SEND_NOI = 'Send NOI';
     public static final String CASE_ACTION_CREATING_A_TASK = 'Creating a Task';
-
+    
+    private static void setupReportings() {
+        List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, 
+            CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI, CASE_COMMENT_ACTION, 
+            CASE_ACTION_CREATING_A_TASK};
+                List<FDS_KPI_Reporting__c> kpiReportingsToInsert = new List<FDS_KPI_Reporting__c>();
+        String cscRTId = [SELECT Id FROM RecordType WHERE sObjectType = 'FDS_KPI_Reporting__c' and DeveloperName = 'CSC' LIMIT 1].Id;
+        
+        for(String actionType: actionTypes) {
+            FDS_KPI_Reporting__c newKPIReporting = new FDS_KPI_Reporting__c();
+            newKPIReporting.Type_Of_Action__c = actionType;
+            newKPIReporting.Name = actionType;
+            newKPIReporting.RecordTypeId = cscRTId;
+            
+            kpiReportingsToInsert.add(newKPIReporting);
+        }
+        
+        try{
+            if(kpiReportingsToInsert.size() > 0 ){
+                insert kpiReportingsToInsert;
+            }
+            
+        } catch (DmlException e) {
+            System.debug('DML Exception: ' + e.getMessage());
+        }
+    }
+    
     private static void setup(){
+        setupReportings();
         Account a = ISSP_ObjectFactory.createNewAccount();
         a.BillingCity = 'test';
         a.Name = 'test';
@@ -32,6 +58,7 @@ private class FDSKPIReportingTest {
     }
 
     private static void setup2(){
+        setupReportings();
         Account a = ISSP_ObjectFactory.createNewAccount();
         a.BillingCity = 'test';
         a.Name = 'test';
@@ -60,6 +87,8 @@ private class FDSKPIReportingTest {
         caseOpened2.NOI_sent__c = null;
         insert caseOpened2;
     }
+    
+    
 
     static testMethod void testSetup() {
 
@@ -220,7 +249,9 @@ private class FDSKPIReportingTest {
         //for verification
         List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Case Closure'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
-
+        
+        System.debug('+++ kpi values: '+ kpiValues);
+        System.debug('+++ cases: ' + [SELECT Id, Status FROM Case]);
         //verify parent record
         System.assertEquals(CASE_ACTION_CASE_CLOSURE, kpiReportings.get(0).Type_Of_Action__c);
 
@@ -320,7 +351,7 @@ private class FDSKPIReportingTest {
     }
 
     static testMethod void testCaseReopenedKPIReporting(){
-
+        setupReportings();
         Account a = ISSP_ObjectFactory.createNewAccount();
         a.BillingCity = 'test';
         a.Name = 'test';
@@ -368,7 +399,7 @@ private class FDSKPIReportingTest {
     }
 
     static testMethod void testCaseReopenedKPIReporting2(){
-
+        setupReportings();
         Account a = ISSP_ObjectFactory.createNewAccount();
         a.BillingCity = 'test';
         a.Name = 'test';
@@ -427,6 +458,8 @@ private class FDSKPIReportingTest {
 
         try{
             caseToProcess.NOI_sent__c = Datetime.newInstance(2018,11,11,1,1,1);
+            CaseTriggerHelper.isDone = false;
+
             update caseToProcess;
         } catch(Exception e) {
             System.debug('LW ERROR: ' + e.getMessage());
@@ -460,9 +493,9 @@ private class FDSKPIReportingTest {
         for(Case cas : casesToProcess){
             cas.NOI_sent__c = Datetime.newInstance(2018,11,11,1,1,1);
         }
-
+         CaseTriggerHelper.isDone = false;
         update casesToProcess;
-        CaseTriggerHelper.isDone = true;
+       
         Test.stopTest();
 
         //for verification
