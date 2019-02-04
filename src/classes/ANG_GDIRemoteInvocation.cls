@@ -165,6 +165,7 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 				stagingFs.Financial_Institution__c = dfltFI.Id; 
 				stagingFs.TotalPrice = artifact.Amount__c;
 				opp.CurrencyISOCode = artifact.Remote_Invocation__r.CurrencyISOCode;
+				stagingFS.FS_Currency__c = artifact.CurrencyISOCode;
 				stagingFS.Amount__c = artifact.Amount__c;
 				stagingFS.Validity_Start_Date__c = artifact.Valid_From__c;
 				stagingFS.Expiry_Date__c = artifact.Valid_To__c;
