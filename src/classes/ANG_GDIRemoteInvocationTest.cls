@@ -75,6 +75,52 @@ public class ANG_GDIRemoteInvocationTest {
     }
 
     @isTest
+    public static void testInvalidRequestType(){
+        testSetup('USD',false);
+        test.startTest();
+
+        Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567', Source__c='IEP',
+                                                           RecordTypeId = RemoteInvocationTriggerHandler.RECTYPE_GDI,
+                                                            Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO,
+                                                            status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
+        
+        insert ri;
+
+        Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1234567', External_ID__c='001', Valid_From__c=system.Today(), AMOUNT__C = 1000);
+        insert artifact;
+        
+        ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+        update ri;
+
+        system.assertEquals('Failed', [select Status__c from Remote_Invocation__c limit 1].get(0).Status__c);
+        System.assertEquals([SELECT id FROM Opportunitylineitem].size(), 0); 
+        test.StopTest();
+    }
+
+    @isTest
+    public static void testMissingMandatoryFields(){
+        testSetup('USD',false);
+        test.startTest();
+
+        Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = '1234567', Source__c='GDI',
+                                                           RecordTypeId = RemoteInvocationTriggerHandler.RECTYPE_GDI,
+                                                            Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO,
+                                                            status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
+        
+        insert ri;
+
+        Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = ri.id, Internal_ID__c = '1234567', External_ID__c='001');
+        insert artifact;
+        
+        ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+        update ri;
+
+        system.assertEquals('Failed', [select Request_Result__c from Remote_Invocation_Artefact__c limit 1].get(0).Request_Result__c);
+        System.assertEquals([SELECT id FROM Opportunitylineitem].size(), 0); 
+        test.StopTest();
+    }
+
+    @isTest
     public static void testCreatingStagingFS() {
 
         testSetup('USD',false);

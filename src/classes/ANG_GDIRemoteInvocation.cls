@@ -15,16 +15,15 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
 			//let's see if the source and request type are consistent
 			if(ri.Source__c=='GDI'){
-				if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO){
 					setValidRemoteInvocation.add(ri);
 					currencyIsoCodeToFetch.add(ri.CurrencyISOCode);
-				}
-				else{
-					ri.Status__c = 'Failed';
-					ri.Status_detail__c = 'Invalid Request Type';
-					mapRemoteInvocationToUpdates.put(ri.id, ri);
-				}
+				
+			}else{
+				//ri.Status__c = 'Failed';
+				//ri.Status_detail__c = 'Invalid Request Type';
+				mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'Invalid Request Type'));
 			}
+			
 		}
 
 		//there is no consistent request. Update them with failure and exit
@@ -45,9 +44,10 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 		}
 		catch(Exception e){
 			for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
-				ri.Status__c = 'Failed';
+				/*ri.Status__c = 'Failed';
 				ri.Status_Detail__c = 'Exception while fetching products ' + e.getMessage();
-				mapRemoteInvocationToUpdates.put(ri.id, ri);
+				mapRemoteInvocationToUpdates.put(ri.id, ri);*/
+				mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'Exception while fetching products ' + e.getMessage()));
 			}
 			update mapRemoteInvocationToUpdates.values();
 			return;
@@ -64,9 +64,10 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 		for(Remote_Invocation__c ri: lsRI){
 			//Check if there is any artefact related to the remote invocation
 			if(ri.Remote_Invocation_Artefacts__r.size()==0){
-				ri.Status__c = 'Failed';
+				/*ri.Status__c = 'Failed';
 				ri.Status_detail__c = 'The Remote invocation does not have a match for a remote invocation artifact.';
-				mapRemoteInvocationToUpdates.put(ri.id, ri);
+				mapRemoteInvocationToUpdates.put(ri.id, ri);*/
+				mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'The Remote invocation does not have a match for a remote invocation artifact. '));
 			}else{
 				//Check to see if pricebook with given currency exists
 				if(!mapCurrencyISOCodePBE.containsKey(ri.CurrencyISOCode)){
