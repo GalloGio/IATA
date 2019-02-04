@@ -26,6 +26,21 @@ private class ANG_ExposeAccountInfo_Test {
 
         insert account;
 
+        Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Change_Code__c = 'IRR',
+                                                                                Account__c = account.Id);
+        Agency_Applied_Change_code__c aacc2 = new Agency_Applied_Change_code__c(Change_Code__c = 'DFE',
+                                                                                Account__c = account.Id);
+        Agency_Applied_Change_code__c aacc3 = new Agency_Applied_Change_code__c(Change_Code__c = 'RCR',
+                                                                                Account__c = account.Id);
+        Agency_Applied_Change_code__c aacc4 = new Agency_Applied_Change_code__c(Change_Code__c = 'IRW',
+                                                                                Account__c = account.Id);
+        Agency_Applied_Change_code__c aacc5 = new Agency_Applied_Change_code__c(Change_Code__c = 'LSP',
+                                                                                Account__c = account.Id);
+        Agency_Applied_Change_code__c aacc6 = new Agency_Applied_Change_code__c(Change_Code__c = 'DFW',
+                                                                                Account__c = account.Id);
+        
+        insert new List<Agency_Applied_Change_code__c>{aacc1, aacc2, aacc3, aacc4, aacc5, aacc6};
+
     }
     
     @isTest static void testAccountDetailsSuccess() {
