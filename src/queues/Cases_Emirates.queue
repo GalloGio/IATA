@@ -2,7 +2,7 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
-    <name>Cases – Emirates</name>
+    <name>Cases â€“ Emirates</name>
     <queueMembers>
         <roles>
             <role>APCustomerServiceManager</role>
