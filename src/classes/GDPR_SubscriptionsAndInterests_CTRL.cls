@@ -130,12 +130,10 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 		for(GDPR_Pardot_Interest_List__mdt aInterest : allInterests){
 			InterestsWrapper iw = new InterestsWrapper();
 			iw.label = aInterest.Pardot_label__c;
-			iw.selected = prospect.area_of_Interest == null || prospect.area_of_Interest.isEmpty() ? false : prospect.area_of_Interest.contains(aInterest.label);
+			iw.selected = prospect.area_of_Interest == null || prospect.area_of_Interest.isEmpty() ? false : prospect.area_of_Interest.contains(aInterest.Pardot_label__c);
 			iw.opted_out = isOptedOut;
 			iws.add(iw);
 		}
-		system.debug(iws);
-
 		return iws;
 	}
 
