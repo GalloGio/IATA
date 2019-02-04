@@ -70,10 +70,14 @@ private class ANG_ExposeAccountInfo_Files_test {
     }
 	
 	@isTest static void test_exposeAccountInfo_Files() {
-
 		RestResponse response = new RestResponse();
 		RestContext.response = response;
 
-		ANG_ExposeAccountInfo_Files.ANG_ExposeAccountInfo_Files(new Account(IATAcode__c = '12345678'), 'FinancialStatement','Agency','GDI');
+        Account a = [SELECT Name, Sector__c, IATACode__c, Category__c, Location_Class__c, Location_Type__c, ANG_Accreditation_Model__c,
+                        IATA_ISO_Country__c, RecordTypeId, BillingCountry, GDI_Status__c
+                    FROM Account
+                    WHERE Name = 'Main HE Account H1'];
+
+		ANG_ExposeAccountInfo_Files.ANG_ExposeAccountInfo_Files(a, 'FinancialStatement','Agency','GDI');
 	}
 }
