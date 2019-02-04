@@ -157,34 +157,4 @@ private class ISSP_TC_Accept_Test {
         PageReference pr1 = cttr.pageLoad();
 		Test.stopTest();        
     }
-
-    static testMethod void myUnitTest_6() {
-        User newUser = [SELECT Id, Alias, Email, Emailencodingkey, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId,
-                        Timezonesidkey, Username, PortalRole, CommunityNickname, ProfileId, IsActive
-                        FROM User
-                        WHERE Email = 'admin@admin.admin'];
-        
-        System.runAs(newUser){  
-            ISSP_TC_Accept cttr = new ISSP_TC_Accept();
-
-            system.setPassword(newUser.id, 'testpassword1');
-            
-            cttr.accept = false;
-            cttr.redirectChangePassword();
-            cttr.redirectTC_Accept();
-            cttr.docontinue();
-            cttr.accept = true;
-            cttr.docontinue();
-
-            Boolean show = cttr.showFinancialInstitution;
-
-            PageReference pageRef = Page.ISSP_TC_Accept;
-            Test.setCurrentPage(pageRef);
-            PageReference pr1 = cttr.pageLoad();
-            Boolean bget = cttr.getCountryRequirementPermission();
-
-            cttr.searchText ='test';
-            List<SelectOption> lsoLanguages = cttr.languages;
-        }
-    }
 }
