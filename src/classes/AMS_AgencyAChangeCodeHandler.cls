@@ -300,21 +300,22 @@ public class AMS_AgencyAChangeCodeHandler {
         List<AMS_OSCAR__c> oscarsToCopyData = new List<AMS_OSCAR__c>();
         List<AMS_OSCAR__c> oscarsToUpdateAppointments = new List<AMS_OSCAR__c>();
 
-        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
+        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c, Is_PCI_compliant__c,Account__r.Location_Type__c
+                            from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
 
         if(!oscarsToCopyData.isEmpty()){
             AMS_Utils.copyDataToAccount(oscarsToCopyData);
         
-            //moved to oscar trigger, appointment status changes needs to occur in situations without change code generation
-            /*for(AMS_OSCAR__C oscar : oscarsToCopyData)
-            {
-                 if( AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c))
-                     oscarsToUpdateAppointments.add(oscar);
-
+            //NEWGEN-4852 - Copy Parent Account (GE/HE) information to the staging area of AE in same BSP - Change Code FIN
+            List<ID> accIdList = new List<ID>();
+            for(AMS_OSCAR__C oscar : oscarsToCopyData){
+                if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || (oscar.Process__c == AMS_Utils.MCAE && oscar.Account__r.Location_Type__c == AMS_Utils.HE))
+                    accIdList.add(oscar.Account__c);
+            }
+            if(!accIdList.isEmpty()) {
+                System.debug('[ANG_OscarProcessHelper] Start Copying account information into Child staging area');
+                ID jobID = System.enqueueJob(new ANG_MulticountryCopyParentInfo(accIdList, 'FIN'));
             }       
-
-            if(!oscarsToUpdateAppointments.isEmpty())
-                AMS_Utils.UpdateInspectionsFromOscar(oscarsToUpdateAppointments);*/
 
         }else{
             System.debug('Nothing to migrate here.');
