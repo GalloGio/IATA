@@ -27,7 +27,7 @@ public with sharing class TaskTriggerHelper {
         }
         
         List<Task> tasks = [SELECT ID, WhatId, What.RecordType.DeveloperName, TaskSubType, What.RecordTypeId 
-                            FROM Task WHERE RecordTypeId IN :confRTs AND ID IN :newList];
+                            FROM Task WHERE What.RecordTypeId IN :confRTs AND ID IN :newList];
 
         
         List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name =: CASE_ACTION_CREATING_A_TASK AND Type_Of_Action__c =: CASE_ACTION_CREATING_A_TASK];

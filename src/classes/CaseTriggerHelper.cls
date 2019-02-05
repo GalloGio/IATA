@@ -122,7 +122,7 @@ public with sharing class CaseTriggerHelper {
             System.debug('@@@ old status: '+oldMap.get(c.Id).Status);
             System.debug('@@@ new status: '+newMap.get(c.Id).Status);
             // case reopen
-            if(newMap.get(c.Id).Status == CASE_STATUS_REOPEN && oldMap.get(c.Id).Status == CASE_STATUS_CLOSED
+            if(oldMap.get(c.Id).Status == CASE_STATUS_REOPEN  && newMap.get(c.Id).Status == CASE_STATUS_CLOSED
                && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
                    List<String> reopenReasons = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Reopening_Reason__c.split(',');
                    if(reopenReasons.contains(c.Reopening_reason__c)) {
