@@ -54,6 +54,36 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Adapted_to_customer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep adapted their approach to providing service to the customer based on the customer’s unique needs, personality and issues</inlineHelpText>
+        <label>Adapted to customers needs and issues</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Additional_questions_or_issues__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep asked if the customer if they have any additional questions or issues before ending the call, referring to their personal or company situation (e.g. I see you joined IATA recently. Is there any way I can assist with some of your doubts)</inlineHelpText>
+        <label>Asked for additional questions or issues</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Adressed_the_customer_appropriately__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep addresses the customer appropriately and writes the customer&apos;s name correctly</inlineHelpText>
+        <label>Adressed the customer appropriately</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Amount_Expected__c</fullName>
         <description>Agreed amount to be paid for an instalment</description>
         <externalId>false</externalId>
@@ -80,6 +110,46 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Asked_IATA_code_email_and_phone__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep asked for the caller&apos;s IATA code and verify email and phone number.</inlineHelpText>
+        <label>Asked IATA code, email and phone</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Asked_callers_name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep asked for the caller’s name</inlineHelpText>
+        <label>Asked callers name</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Asks_if_additional_confirmation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep asks the customer if they would like to get a written confirmation. In case the customer says yes: has this been done?</inlineHelpText>
+        <label>Asks if additional confirmation is requi</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Avoided_long_silences__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep avoided long silences during the call</inlineHelpText>
+        <label>Avoided long silences</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Case__c</fullName>
         <description>Lookup to master object</description>
         <externalId>false</externalId>
@@ -93,6 +163,46 @@
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Checked_account_offers_services__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep proactively checks the accounts and offers opportunities for additional services (i.e. portal accesses, admins, pending users…)</inlineHelpText>
+        <label>Checked account &amp; offers  services</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <description>Additional comments to the record</description>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Confident__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep remained confident throughout the call</inlineHelpText>
+        <label>Remained confident throughout the call</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Correctly_pronounced_caller_s_name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep used the proper pronunciation of the caller’s name</inlineHelpText>
+        <label>Correctly pronounced caller&apos;s name</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Currency__c</fullName>
@@ -118,6 +228,26 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Did_not_talk_over_the_customer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep did not interrupt or talk over the customer</inlineHelpText>
+        <label>Did not talk over the customer</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Documented_info_in_case__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep documented complete call information in the Salesforce case</inlineHelpText>
+        <label>Documented the info in the SF case</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Due_date__c</fullName>
         <description>Date and instalment needs to be paid</description>
         <externalId>false</externalId>
@@ -126,6 +256,16 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Effective_active_listening_skills__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep used effective active listening skills</inlineHelpText>
+        <label>Effective active listening skills</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Exchange_Rate__c</fullName>
@@ -141,6 +281,109 @@
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Finalized_with_a_WOW__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep finalized the call/case with a &quot;WOW&quot;</inlineHelpText>
+        <label>Finalized with a &quot;WOW&quot;</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Followed_up_with_customer_as_agreed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep followed up with the customer through the Customer Portal within the agreed upon timeframe</inlineHelpText>
+        <label>Followed up with customer as agreed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Friendly_polite_and_professional__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep was friendly, polite and professional</inlineHelpText>
+        <label>Was friendly, polite and professional</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Identified_themselves__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>The CS Rep identified themselves to the customer</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep identified themselves to the customer</inlineHelpText>
+        <label>Identified themselves</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Interaction_within_scripts_guide__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep adequately adapted their approach to interacting with the customer, within the scripts guidelines, when necessary</inlineHelpText>
+        <label>Interaction was within the scripts guide</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Knowledge_of_IATA__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Reps demonstrates accurate knowledge of the processes and products of IATA, and provides correct information and guidance to the customers.</inlineHelpText>
+        <label>Demonstrates accurate knowledge of IATA</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Mentioned_IATA__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep mentioned IATA</inlineHelpText>
+        <label>Mentioned IATA</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Name</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Case_Details</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Next_issue_avoidance__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Next Issue Avoidance: The CS Rep informed the customer of relevant supporting documentation or instructions to help avoid future issues</inlineHelpText>
+        <label>Next issue avoidance</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Offered_assistance__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep offered assistance to the caller</inlineHelpText>
+        <label>Offered assistance</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Payment_Status__c</fullName>
@@ -183,6 +426,177 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <fields>
+        <fullName>Pertinent_questions__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep asked pertinent questions to accurately diagnose the problem</inlineHelpText>
+        <label>Pertinent questions</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Professional_and_represents_IATA__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep remembers he is representing IATA in every single word used. The CS Rep uses a professional and customer centric language.</inlineHelpText>
+        <label>Was professional and represents IATA</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Proper_tone__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep maintained proper tone, pitch, volume and pace throughout the call</inlineHelpText>
+        <label>Proper tone, pitch, volume and pace</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Provided_reference__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep provided a reference number to the customer after resolving their issue</inlineHelpText>
+        <label>Provided reference number to customer</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Refrained_using_complicated_jargon__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep refrained from using complicated jargon and adapted their responses to the customer&apos;s need.</inlineHelpText>
+        <label>Refrained from using complicated jargon</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Request_fully_resolved_in_line__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep resolved the request fully in line with the customer&apos;s request. The case has not been closed before having provided a full resolution.</inlineHelpText>
+        <label>Request fully resolved in line</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SF_case_was_edited_correctly__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The Salesforce case was edited correctly. If the opportunity took place, has the CS Rep added some &quot;remarks&quot; about the customer in their contact detail?</inlineHelpText>
+        <label>SF case was edited correctly</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Score1__c</fullName>
+        <externalId>false</externalId>
+        <label>Score</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Summarized_at_the_end_of_the_call__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep summarized the call, indicated action items (if any) and ensure information is clear for the customer.</inlineHelpText>
+        <label>Summarized at the end of the call</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Summarized_customers_main_points__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep summarized the customer’s main points before troubleshooting or offering a solution</inlineHelpText>
+        <label>Summarized customers main points</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Thanked_Customer_for_calling__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Thank you for calling IATA. We are here for you for future occasions.</inlineHelpText>
+        <label>Thanked Customer for calling at the end</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Thanked_the_Customer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep thanked the customer</inlineHelpText>
+        <label>Thanked the Customer</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Took_ownership_of_problem__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep took ownership of the problem using the &quot;I&quot;, not the &quot;we&quot; or &quot;they&quot;.  If required, the CS Rep provided an apology for any dissatisfaction.</inlineHelpText>
+        <label>Took ownership of problem</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Used_courteous_words_and_phrases__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep used courteous words and phrases</inlineHelpText>
+        <label>Used courteous words and phrases</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Used_resources__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep used appropriate resources to address the issue and offers preferences</inlineHelpText>
+        <label>Used appropriate resources</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Validated_account_and_contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Data quality - The CS Rep took the time to validate account and contact details as email and phone number</inlineHelpText>
+        <label>Validated account and contact details</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Verified_email_and_phone_number__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>The CS Rep asked for the caller&apos;s IATA code and verify email and phone number.</inlineHelpText>
+        <label>Verified email and phone number</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Case Detail</label>
     <nameField>
         <displayFormat>CD-{00000000}</displayFormat>
@@ -192,6 +606,63 @@
     </nameField>
     <pluralLabel>Case Details</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Call_Monitoring</fullName>
+        <active>true</active>
+        <description>Used for checklist to monitor CS reps call cases</description>
+        <label>Call Monitoring</label>
+        <picklistValues>
+            <picklist>Payment_Status__c</picklist>
+            <values>
+                <fullName>Amount Received After Termination</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not received by due date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be confirmed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Case_Monitoring</fullName>
+        <active>true</active>
+        <label>Case Monitoring</label>
+        <picklistValues>
+            <picklist>Payment_Status__c</picklist>
+            <values>
+                <fullName>Amount Received After Termination</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not received by due date</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To be confirmed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>Repayment_Instalment</fullName>
         <active>true</active>
