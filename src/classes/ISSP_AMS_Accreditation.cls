@@ -289,6 +289,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public String currentMCFormId {get; private set;}
     public Boolean modifyForm {get; set;}
     public String mcformCountryISO {get; set;}
+    public Boolean mcAbleToSubmit {get; set;}
+    private Boolean submittingMCApplication {get; set;}
 
     public ISSP_AMS_Accreditation() {
         isNewCase = true;
@@ -319,6 +321,8 @@ public without sharing class ISSP_AMS_Accreditation {
         isMultiCountryNewAE = false;
         isMultiCountryStarted = false;
         modifyForm = false;
+        mcAbleToSubmit = false;
+        submittingMCApplication = false;
 
         newCase = new Case();
         newForm = new AMS_Pax_Accreditation_Form__c();
@@ -1943,7 +1947,9 @@ public without sharing class ISSP_AMS_Accreditation {
         newForm.Location_Type__c = newSFDCAccount.Location_Type__c;
         newForm.ISO_Country__c = newSFDCAccount.IATA_ISO_Country__c;
 
-        newCase.Account_Concerned__c = newSFDCAccount.Id;
+        if (!submittingMCApplication) {
+            newCase.Account_Concerned__c = newSFDCAccount.Id;
+        }
     }
 
     private void updateAccountByBranchApp(Account SFDCAccount) {
@@ -2889,6 +2895,22 @@ public without sharing class ISSP_AMS_Accreditation {
         return null;
     }
 
+    public void submitMultiCountryApplication() { //rui
+        AMS_Pax_Accreditation_Form__c heForm;
+        submittingMCApplication = true;
+
+        for (AMS_Pax_Accreditation_Form__c mcForm: multiCountryApplicationForms) {
+            if (mcform.HO_Account__c != null) {
+                createBranchAccount();
+            } else {
+                heForm = mcform;
+            }
+        }
+
+        //OSCARIntegration(accountId, heForm.Id, 'ANG.NEW.GE.STANDARD.1.0', newCase.Id);
+        //sendConfirmationEmail(newCase);
+    }
+
     private static void attachNOCFormToCase(Id caseId, Boolean isBankAccountChange) {
         PageReference pdfNOC = new Pagereference('/ISSP_AMS_PDF_NoC?caseId=' + caseId + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange);
         Blob bodyNOC;
@@ -3099,7 +3121,6 @@ public without sharing class ISSP_AMS_Accreditation {
         for(String fieldToCheck : confieldsToCheck) {
             con.put(fieldToCheck, AMS_Utils.replaceTabCharcter((String) con.get(fieldToCheck)));
         }
-    
     }
     /*** AMSU-112 End ***/
 
@@ -4454,7 +4475,7 @@ public without sharing class ISSP_AMS_Accreditation {
             personRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
         }
 
-        List<AMS_Accreditation_Contact__c> amscontacts = [SELECT Id, Name, Portal_administrator__c
+        List<AMS_Accreditation_Contact__c> amsContacts = [SELECT Id, Name, Portal_administrator__c
                                                        FROM AMS_Accreditation_Contact__c 
                                                        WHERE recordTypeId = :personRecordTypeId 
                                                             AND AMS_Pax_Accreditation_Form__c = :newForm.Id 
@@ -4992,44 +5013,50 @@ public without sharing class ISSP_AMS_Accreditation {
     private boolean validateFacilities() {
         Boolean errorFound = false;
 
-        if (facilityRecordTypeName == 'Office' && facilityInContext.Are_Consignments_made_ready__c == 'Yes' && isocountry.EACP_Country__c && facilityInContext.Any_functions_involved_in_preperations__c == null) {
-            facilityInContext.Any_functions_involved_in_preperations__c.addError(Label.ISSP_YouMustEnter);
-            errorFound = true;
-        }
+        if (isocountry.EACP_Country__c) {
+            if (facilityRecordTypeName == 'Office' && facilityInContext.Are_Consignments_made_ready__c == 'Yes' && facilityInContext.Any_functions_involved_in_preperations__c == null) {
+                facilityInContext.Any_functions_involved_in_preperations__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
+        } else {
+            if (facilityInContext.Is_the_office_warehouse_leased__c == 'Yes') {
+                if (facilityInContext.Name_of_lessor__c == null) {
+                    facilityInContext.Name_of_lessor__c.addError(Label.ISSP_YouMustEnter);
+                    errorFound = true;
+                }
 
-        if (facilityInContext.Is_the_office_warehouse_leased__c == 'Yes' && !isocountry.EACP_Country__c && facilityInContext.Name_of_lessor__c == null) {
-            facilityInContext.Name_of_lessor__c.addError(Label.ISSP_YouMustEnter);
-            errorFound = true;
-        }
+                if (facilityInContext.Duration_of_lease__c == null) {
+                    facilityInContext.Duration_of_lease__c.addError(Label.ISSP_YouMustEnter);
+                    errorFound = true;
+                }
 
-        if (facilityInContext.Is_the_office_warehouse_leased__c == 'Yes' && !isocountry.EACP_Country__c && facilityInContext.Duration_of_lease__c == null) {
-            facilityInContext.Duration_of_lease__c.addError(Label.ISSP_YouMustEnter);
-            errorFound = true;
-        }
+                if (facilityInContext.Date_lease_expires__c == null) {
+                    facilityInContext.Date_lease_expires__c.addError(Label.ISSP_YouMustEnter);
+                    errorFound = true;
+                }
 
-        if (facilityInContext.Is_the_office_warehouse_leased__c == 'Yes' && !isocountry.EACP_Country__c && facilityInContext.Date_lease_expires__c == null) {
-            facilityInContext.Date_lease_expires__c.addError(Label.ISSP_YouMustEnter);
-            errorFound = true;
-        }
+                if (facilityRecordTypeName == 'Office' && facilityInContext.Other_pertinent_details__c == null) {
+                    facilityInContext.Other_pertinent_details__c.addError(Label.ISSP_YouMustEnter);
+                    errorFound = true;
+                }
+            }
 
-        if (facilityRecordTypeName == 'Office' && facilityInContext.Is_the_office_warehouse_leased__c == 'Yes' && !isocountry.EACP_Country__c && facilityInContext.Other_pertinent_details__c == null) {
-            facilityInContext.Other_pertinent_details__c.addError(Label.ISSP_YouMustEnter);
-            errorFound = true;
-        }
+            if (facilityRecordTypeName == 'Warehouse' && facilityInContext.Is_the_warehouse_sub_contracted__c == 'Yes') {
+                if (facilityInContext.Name_of_sub_contractor__c == null) {
+                    facilityInContext.Name_of_sub_contractor__c.addError(Label.ISSP_YouMustEnter);
+                    errorFound = true;
+                }
 
-        if (facilityRecordTypeName == 'Warehouse' && facilityInContext.Is_the_warehouse_sub_contracted__c == 'Yes' && !isocountry.EACP_Country__c && facilityInContext.Name_of_sub_contractor__c == null) {
-            facilityInContext.Name_of_sub_contractor__c.addError(Label.ISSP_YouMustEnter);
-            errorFound = true;
-        }
+                if (facilityInContext.Date_agreement_expires__c == null) {
+                    facilityInContext.Date_agreement_expires__c.addError(Label.ISSP_YouMustEnter);
+                    errorFound = true;
+                }
 
-        if (facilityRecordTypeName == 'Warehouse' && facilityInContext.Is_the_warehouse_sub_contracted__c == 'Yes' && !isocountry.EACP_Country__c && facilityInContext.Date_agreement_expires__c == null) {
-            facilityInContext.Date_agreement_expires__c.addError(Label.ISSP_YouMustEnter);
-            errorFound = true;
-        }
-
-        if (facilityRecordTypeName == 'Warehouse' && facilityInContext.Is_the_warehouse_sub_contracted__c == 'Yes' && !isocountry.EACP_Country__c && facilityInContext.Duration_of_contract__c == null) {
-            facilityInContext.Duration_of_contract__c.addError(Label.ISSP_YouMustEnter);
-            errorFound = true;
+                if (facilityInContext.Duration_of_contract__c == null) {
+                    facilityInContext.Duration_of_contract__c.addError(Label.ISSP_YouMustEnter);
+                    errorFound = true;
+                }
+            }
         }
 
         if (errorFound) return false;
@@ -5040,19 +5067,16 @@ public without sharing class ISSP_AMS_Accreditation {
     private boolean validateNewAccModelHO(boolean isnewgenError){
         Boolean ngErrorFound = false;
 
-        //checking if IATAN question is answered
         if(newForm.IATA_Registered_IATAN_Agent__c == null && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH)){
             newform.IATA_Registered_IATAN_Agent__c.addError(Label.ISSP_AMS_Step5_IATAN_Travel_Agent);
             ngErrorFound = true;
         }
 
-        //checking if IATAN code field is fill
         if (newForm.IATA_Registered_IATAN_Agent__c == 'Yes' && newForm.IATAN_Agent_Account__c == null) {
             newForm.IATAN_Code__c.addError(Label.ISSP_AMS_Invalid_IATAN_Code);
             ngErrorFound = true;
         }
 
-        //checking if the Legal Name is fill
         if(hqAccount.Name == null){
             hqAccount.Name.addError(Label.ISSP_YouMustEnter);
             ngErrorFound = true;
@@ -5123,7 +5147,6 @@ public without sharing class ISSP_AMS_Accreditation {
             ngErrorFoundBR = true;
         }
 
-        //checking if IATAN question is answered
         if(newForm.IATA_Registered_IATAN_Agent__c == null){
             newform.IATA_Registered_IATAN_Agent__c.addError(Label.ISSP_AMS_Step5_IATAN_Travel_Agent);
             ngErrorFoundBR = true;
@@ -5134,7 +5157,6 @@ public without sharing class ISSP_AMS_Accreditation {
             ngErrorFoundBR = true;
         }
 
-        //checking if IATAN code field is fill
         if (newForm.IATA_Registered_IATAN_Agent__c == 'Yes' && newForm.IATAN_Agent_Account__c == null) {
             newForm.IATAN_Code__c.addError(Label.ISSP_AMS_Invalid_IATAN_Code);
             ngErrorFoundBR = true;
@@ -5188,12 +5210,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-            //NEWGEN-668
             if (getIsAccreditationModelNotNullOrLegacy() && newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
                 newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
             }
-            //END NEWGEN-668
 
             if (newForm.Notify_Change_Accreditation_Type__c == true) {
                 if (String.isEmpty(newForm.ANG_Accreditation_Model_to_Change__c)) {
@@ -5547,8 +5567,10 @@ public without sharing class ISSP_AMS_Accreditation {
                     if(validateNewAccModelBranch(true)) errorFound = true;
                 }
 
-                if (!validateBROfficeDetails() && !isMultiCountryNewAE) {
-                    errorFound = true;
+                if (!isMultiCountryNewAE) {
+                    if (!validateBROfficeDetails()) {
+                        errorFound = true;
+                    }
                 }
 
                 if (newForm.ISSP_AMS_VAT_Number_Input__c == null && isocountry.Hide_Tax_Number_VAT__c == false) {
@@ -6906,22 +6928,55 @@ public without sharing class ISSP_AMS_Accreditation {
 
     private List<AMS_Pax_Accreditation_Form__c> fetchMultiCountryApplicationForms() {
         List<AMS_Pax_Accreditation_Form__c> mCountryApplicationForms = [SELECT Id, Name, Status__c, HO_Account__c, Branch_Office_Country__r.Name, 
-                                                                            SAAM_Case__r.Subject, SAAM_Case__r.Id
+                                                                            SAAM_Case__r.Subject, SAAM_Case__r.Id, Branch_Office_Country__r.AMS_Settlement_System__c
                                                                         FROM AMS_Pax_Accreditation_Form__c
-                                                                        WHERE SAAM_Case__c = :newCase.Id];
+                                                                        WHERE SAAM_Case__c = :newCase.Id
+                                                                        ORDER BY Name ASC];
 
-        if (!mCountryApplicationForms.isEmpty()) mcApplicationFormsFound = true;
+        if (!mCountryApplicationForms.isEmpty()) {
+            mcApplicationFormsFound = true;
+
+            if (mCountryApplicationForms.size() > 1) {
+                checkSubmitMC(mCountryApplicationForms);
+            }
+        }
 
         return mCountryApplicationForms;
     }
 
+    private void checkSubmitMC(List<AMS_Pax_Accreditation_Form__c> mCountryApplicationForms) {
+        mcAbleToSubmit = true;
+
+        Boolean differentBSPs = false;
+
+        for (Integer i = 0; i < mCountryApplicationForms.size(); i++) {
+            if (mCountryApplicationForms[i].Status__c == 'InProgress') {
+                mcAbleToSubmit = false;
+                break;
+            } else if (i != 0 && !differentBSPs && mCountryApplicationForms[i].Branch_Office_Country__r.AMS_Settlement_System__c != mCountryApplicationForms[0].Branch_Office_Country__r.AMS_Settlement_System__c) {
+                differentBSPs = true;
+            }
+        }
+    }
+
     public void deleteMCForm() {
-        List<AMS_Pax_Accreditation_Form__c> formToDelete = [SELECT Id FROM AMS_Pax_Accreditation_Form__c WHERE Id = :mcFormIdToDelete LIMIT 1];
+        List<AMS_Pax_Accreditation_Form__c> formToDelete = [SELECT Id, Status__c, Branch_Office_Country__r.AMS_Settlement_System__c 
+                                                            FROM AMS_Pax_Accreditation_Form__c 
+                                                            WHERE Id = :mcFormIdToDelete LIMIT 1];
+
         if (!formToDelete.isEmpty()) {
             deleteFormsFuture(new Set<Id>{formToDelete[0].Id});
 
             Map<Id, AMS_Pax_Accreditation_Form__c> mCApplicationFormMap = new Map<Id, AMS_Pax_Accreditation_Form__c>(multiCountryApplicationForms);
             mCApplicationFormMap.remove(formToDelete[0].Id);
+
+            if (formToDelete[0].Status__c == 'InProgress') {
+                if (mCApplicationFormMap.values().size() == 1) {
+                    mcAbleToSubmit = false;
+                } else {
+                    checkSubmitMC(mCApplicationFormMap.values());
+                }
+            }
 
             multiCountryApplicationForms = new List<AMS_Pax_Accreditation_Form__c>(mCApplicationFormMap.values());
         }

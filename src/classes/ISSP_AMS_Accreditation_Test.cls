@@ -9,6 +9,8 @@ private class ISSP_AMS_Accreditation_Test {
 
         insert new List<ISSP_CS__c>{cs1, cs2, cs3};
 
+        insert new Portal_Applications__c(Name = 'IFAP');
+
         insert new aWSKey__c(Name = 'adevconf', Key__c = 'asd', Secret__c = 'asd', IAS_configuration_name__c = 'asdas', IAS_Access_Point__c = 'asd',
                     Bucket__c = 'asd', AWS_ENDPOINT_URL__c = 'asd', WS_Endpoint__c = 'apoint');
 
@@ -79,7 +81,15 @@ private class ISSP_AMS_Accreditation_Test {
         parentAccIcc.IATACode__c = '100';
         parentAccIcc.Status__c = 'Terminated';
 
-        insert new List<Account>{parentAccountTravel, parentAccountCargo, child, optOutAcc, parentAccIcc};
+        Account basicParent = ISSP_ObjectFactory.createNewAccount();
+        basicParent.BillingCity = 'test';
+        basicParent.Name = 'basicParent';
+        basicParent.Sector__c = 'Travel Agent';
+        basicParent.Location_Type__c = 'HO';
+        basicParent.RecordTypeId = rtIdBr;
+        basicParent.IATACode__c = '100';
+
+        insert new List<Account>{parentAccountTravel, parentAccountCargo, child, optOutAcc, parentAccIcc, basicParent};
 
         Account childAccIcc = ISSP_ObjectFactory.createNewAccount();
         childAccIcc.BillingCity = 'test2';
@@ -89,7 +99,17 @@ private class ISSP_AMS_Accreditation_Test {
         childAccIcc.Top_Parent__c = parentAccIcc.Id;
         childAccIcc.IATA_ISO_Country__c = country.Id;
         childAccIcc.RecordTypeId = rtIdBr;
-        insert childAccIcc;
+
+        Account basicChild = ISSP_ObjectFactory.createNewAccount();
+        basicChild.BillingCity = 'test2';
+        basicChild.Name = 'basicChild';
+        basicChild.Site = 'headSite';
+        basicChild.Sector__c = 'Travel Agent';
+        basicChild.Top_Parent__c = basicParent.Id;
+        basicChild.IATA_ISO_Country__c = country.Id;
+        basicChild.RecordTypeId = rtIdBr;
+
+        insert new List<Account>{childAccIcc, basicChild};
 
         Contact conTravel = ISSP_ObjectFactory.createNewContact();
         conTravel.AccountId = parentAccountTravel.Id;
@@ -107,11 +127,34 @@ private class ISSP_AMS_Accreditation_Test {
         conChildIcc.AccountId = childAccIcc.Id;
         conChildIcc.Email = 'conChildIcc@test11.com';
 
-        insert new List<Contact>{conTravel, conCargo, conChild, conChildIcc};
+        Contact conOptOut = ISSP_ObjectFactory.createNewContact();
+        conOptOut.AccountId = optOutAcc.Id;
+        conOptOut.Email = 'conOptOut@test11.com';
+
+        Contact conOptOutAdmin = ISSP_ObjectFactory.createNewContact();
+        conOptOutAdmin.AccountId = optOutAcc.Id;
+        conOptOutAdmin.Email = 'conOptOutAdmin@test11.com';
+        conOptOutAdmin.User_Portal_Status__c = 'Administrator';
+
+        Contact conBasicChild = ISSP_ObjectFactory.createNewContact();
+        conBasicChild.AccountId = basicChild.Id;
+        conBasicChild.Email = 'conBasicChild@test11.com';
+
+        insert new List<Contact>{conTravel, conCargo, conChild, conChildIcc, conOptOut, conOptOutAdmin, conBasicChild};
 
         User userIcc = ISSP_ObjectFactory.createPortalUser(conChildIcc);
         conChildIcc.OwnerId = userIcc.Id;
-        update conChildIcc;
+
+        User userOptOut = ISSP_ObjectFactory.createPortalUser(conOptOut);
+        conOptOut.OwnerId = userOptOut.Id;
+
+        User userOptOutAdmin = ISSP_ObjectFactory.createPortalUser(conOptOutAdmin);
+        conOptOutAdmin.OwnerId = userOptOutAdmin.Id;
+
+        User userBasicChild = ISSP_ObjectFactory.createPortalUser(conBasicChild);
+        conBasicChild.OwnerId = userBasicChild.Id;
+
+        update new List<Contact>{conChildIcc, conOptOut, conOptOutAdmin, conBasicChild};
 
         Case caseIcc = new Case(BSPCountry__c = 'Hong Kong (SAR), China',
                                 Reason1__c = 'Cargo',
@@ -124,8 +167,6 @@ private class ISSP_AMS_Accreditation_Test {
                                 IFAP_Country_ISO__c = 'tp',
                                 OwnerId = userIcc.Id);
         insert caseIcc;
-
-        System.debug('rui: ' + caseIcc);
 
         AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
         newForm.IsGSA__c = 'No';
@@ -151,46 +192,25 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_1() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -221,49 +241,30 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_17() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
+        Account parent;
+        Account child;
 
-        insert parent;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
         child.Top_Parent__c = null;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        update child;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
         insert new ISSP_CS__c(Name = 'DefaultNewAccountOwnerId', Value__c = newUser.Id);
-        con.OwnerId = newUser.Id;
-        update con;
 
         ISSP_Constant cons = new ISSP_Constant();
         Map<String, String> customSeting = ISSP_Constant.customSetingMap;
@@ -311,47 +312,25 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_2() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
+        Account parent;
+        Account child;
 
-        insert parent;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
-
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -383,46 +362,25 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_3() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -455,47 +413,25 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_4() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
+        Account parent;
+        Account child;
 
-        insert parent;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
-
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -526,16 +462,7 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_5() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
@@ -750,51 +677,32 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_NOC_1s() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Location_Type__c = 'BR';
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
+
         child.ParentId = parent.Id;
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        child.Location_Type__c = 'BR';
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName, 
+                            Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         parent.OwnerId = newUser.Id;
-        update parent;
+        update new List<Account>{parent, child};
 
         AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist2 = new  AMS_Accreditation_Country_CheckList__c();
         AMS_Acc_Checklist2.IATA_ISO_Country__c = country.id;
@@ -834,16 +742,14 @@ private class ISSP_AMS_Accreditation_Test {
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
-            newContact.Name = con.Name;
-            newContact.Salutation__c = con.Salutation;
-            newContact.First_name__c = con.FirstName;
-            newContact.Last_name__c = con.LastName;
-            newContact.Phone__c = con.Phone;
-            newContact.Email__c = con.Email;
-            newContact.Job_title__c = con.Title;
+            newContact.Name = newUser.Contact.Name;
+            newContact.Salutation__c = newUser.Contact.Salutation;
+            newContact.First_name__c = newUser.Contact.FirstName;
+            newContact.Last_name__c = newUser.Contact.LastName;
+            newContact.Phone__c = newUser.Contact.Phone;
+            newContact.Email__c = newUser.Contact.Email;
+            newContact.Job_title__c = newUser.Contact.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123';
-            newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             insert newContact;
 
@@ -933,48 +839,30 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_NOC_2s() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Location_Type__c = 'BR';
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
+
         child.ParentId = parent.Id;
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        child.Location_Type__c = 'BR';
+        update child;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName, 
+                            Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         parent.OwnerId = newUser.Id;
         update parent;
@@ -1019,13 +907,13 @@ private class ISSP_AMS_Accreditation_Test {
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
-            newContact.Name = con.Name;
-            newContact.Salutation__c = con.Salutation;
-            newContact.First_name__c = con.FirstName;
-            newContact.Last_name__c = con.LastName;
-            newContact.Phone__c = con.Phone;
-            newContact.Email__c = con.Email;
-            newContact.Job_title__c = con.Title;
+            newContact.Name = newUser.Contact.Name;
+            newContact.Salutation__c = newUser.Contact.Salutation;
+            newContact.First_name__c = newUser.Contact.FirstName;
+            newContact.Last_name__c = newUser.Contact.LastName;
+            newContact.Phone__c = newUser.Contact.Phone;
+            newContact.Email__c = newUser.Contact.Email;
+            newContact.Job_title__c = newUser.Contact.Title;
             newContact.Authorised_signatory__c = true;
             newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
@@ -1098,50 +986,32 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_NOC_3s() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         insert new ISSP_PDF_Per_Region__c(Name = 'Region');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
+
         child.Location_Type__c = 'BR';
         child.ParentId = parent.Id;
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        update child;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName, 
+                            Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         parent.OwnerId = newUser.Id;
         update parent;
@@ -1190,13 +1060,13 @@ private class ISSP_AMS_Accreditation_Test {
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
-            newContact.Name = con.Name;
-            newContact.Salutation__c = con.Salutation;
-            newContact.First_name__c = con.FirstName;
-            newContact.Last_name__c = con.LastName;
-            newContact.Phone__c = con.Phone;
-            newContact.Email__c = con.Email;
-            newContact.Job_title__c = con.Title;
+            newContact.Name = newUser.Contact.Name;
+            newContact.Salutation__c = newUser.Contact.Salutation;
+            newContact.First_name__c = newUser.Contact.FirstName;
+            newContact.Last_name__c = newUser.Contact.LastName;
+            newContact.Phone__c = newUser.Contact.Phone;
+            newContact.Email__c = newUser.Contact.Email;
+            newContact.Job_title__c = newUser.Contact.Title;
             newContact.Authorised_signatory__c = true;
             newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
@@ -1306,7 +1176,7 @@ private class ISSP_AMS_Accreditation_Test {
         child.BillingCity = 'test2';
         child.Name = 'test2';
         child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
+        child.Sector__c = 'Travel Agent';
         parent.Category__c = 'IATA Passenger Sales Agent';
         child.Top_Parent__c = parent.Id;
         child.ParentId = parent.Id;
@@ -1494,48 +1364,28 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_20() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Id rtIdOff = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Office');
         Id rtIdWar = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Warehouse');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName, 
+                            Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist = [SELECT Id, IATA_ISO_Country__c, Operation__c, License_required__c, 
                                                                         Registration_required__c, Statement_of_International_Sales__c
@@ -1570,16 +1420,14 @@ private class ISSP_AMS_Accreditation_Test {
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
-            newContact.Name = con.Name;
-            newContact.Salutation__c = con.Salutation;
-            newContact.First_name__c = con.FirstName;
-            newContact.Last_name__c = con.LastName;
-            newContact.Phone__c = con.Phone;
-            newContact.Email__c = con.Email;
-            newContact.Job_title__c = con.Title;
+            newContact.Name = newUser.Contact.Name;
+            newContact.Salutation__c = newUser.Contact.Salutation;
+            newContact.First_name__c = newUser.Contact.FirstName;
+            newContact.Last_name__c = newUser.Contact.LastName;
+            newContact.Phone__c = newUser.Contact.Phone;
+            newContact.Email__c = newUser.Contact.Email;
+            newContact.Job_title__c = newUser.Contact.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123';
-            newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
             newContact.Training_dangerous_goods_completed__c = 'Yes';
             insert newContact;
@@ -1672,46 +1520,26 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_17s() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName, 
+                            Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -1734,16 +1562,14 @@ private class ISSP_AMS_Accreditation_Test {
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
-            newContact.Name = con.Name;
-            newContact.Salutation__c = con.Salutation;
-            newContact.First_name__c = con.FirstName;
-            newContact.Last_name__c = con.LastName;
-            newContact.Phone__c = con.Phone;
-            newContact.Email__c = con.Email;
-            newContact.Job_title__c = con.Title;
+            newContact.Name = newUser.Contact.Name;
+            newContact.Salutation__c = newUser.Contact.Salutation;
+            newContact.First_name__c = newUser.Contact.FirstName;
+            newContact.Last_name__c = newUser.Contact.LastName;
+            newContact.Phone__c = newUser.Contact.Phone;
+            newContact.Email__c = newUser.Contact.Email;
+            newContact.Job_title__c = newUser.Contact.Title;
             newContact.Authorised_signatory__c = true;
-            newContact.Phone__c = '1123123';
-            newContact.Email__c = 'test@test.com';
             newContact.Registration_number__c = '123';
             newContact.Financial_interest__c = 100;
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
@@ -1793,46 +1619,26 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_5s() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName, 
+                            Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -1855,13 +1661,13 @@ private class ISSP_AMS_Accreditation_Test {
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
-            newContact.Name = con.Name;
-            newContact.Salutation__c = con.Salutation;
-            newContact.First_name__c = con.FirstName;
-            newContact.Last_name__c = con.LastName;
-            newContact.Phone__c = con.Phone;
-            newContact.Email__c = con.Email;
-            newContact.Job_title__c = con.Title;
+            newContact.Name = newUser.Contact.Name;
+            newContact.Salutation__c = newUser.Contact.Salutation;
+            newContact.First_name__c = newUser.Contact.FirstName;
+            newContact.Last_name__c = newUser.Contact.LastName;
+            newContact.Phone__c = newUser.Contact.Phone;
+            newContact.Email__c = newUser.Contact.Email;
+            newContact.Job_title__c = newUser.Contact.Title;
             newContact.Authorised_signatory__c = true;
             newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
@@ -2031,46 +1837,26 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_6() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName, 
+                            Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -2093,13 +1879,13 @@ private class ISSP_AMS_Accreditation_Test {
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
-            newContact.Name = con.Name;
-            newContact.Salutation__c = con.Salutation;
-            newContact.First_name__c = con.FirstName;
-            newContact.Last_name__c = con.LastName;
-            newContact.Phone__c = con.Phone;
-            newContact.Email__c = con.Email;
-            newContact.Job_title__c = con.Title;
+            newContact.Name = newUser.Contact.Name;
+            newContact.Salutation__c = newUser.Contact.Salutation;
+            newContact.First_name__c = newUser.Contact.FirstName;
+            newContact.Last_name__c = newUser.Contact.LastName;
+            newContact.Phone__c = newUser.Contact.Phone;
+            newContact.Email__c = newUser.Contact.Email;
+            newContact.Job_title__c = newUser.Contact.Title;
             newContact.Authorised_signatory__c = true;
             newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
@@ -2153,16 +1939,7 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_7() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
@@ -2379,49 +2156,28 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_8() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         country.ISO_Code__c = 'CN';
         update country;
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist2 = new AMS_Accreditation_Country_CheckList__c();
         AMS_Acc_Checklist2.IATA_ISO_Country__c = country.id;
@@ -2560,46 +2316,26 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_9() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'Travel Agent';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr;
-        parent.IATACode__c = '100';
-        insert parent;
+        Account parent;
+        Account child;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'Travel Agent';
-        child.Top_Parent__c = parent.Id;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr;
-        insert child;
+        for (Account a: [SELECT Id, BillingCity, Name, Sector__c, Location_Type__c, IATACode__c, IATA_ISO_Country__c, Site
+                        FROM Account
+                        WHERE Name = 'basicParent' 
+                            OR Name = 'basicChild']) {
+            if (a.Name == 'basicParent') parent = a;
+            else if (a.Name == 'basicChild') child = a;
+        }
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName, 
+                            Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title
+                        FROM User
+                        WHERE Contact.Email = 'conBasicChild@test11.com'];
 
         AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = [SELECT Id, AMS_Accreditation_Country_CheckList__c, Language__c,
                                                                             Location_type__c, Requirement_text__c, Sort_Order__c, Name
@@ -2627,13 +2363,13 @@ private class ISSP_AMS_Accreditation_Test {
             insert newForm;
 
             AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
-            newContact.Name = con.Name;
-            newContact.Salutation__c = con.Salutation;
-            newContact.First_name__c = con.FirstName;
-            newContact.Last_name__c = con.LastName;
-            newContact.Phone__c = con.Phone;
-            newContact.Email__c = con.Email;
-            newContact.Job_title__c = con.Title;
+            newContact.Name = newUser.Contact.Name;
+            newContact.Salutation__c = newUser.Contact.Salutation;
+            newContact.First_name__c = newUser.Contact.FirstName;
+            newContact.Last_name__c = newUser.Contact.LastName;
+            newContact.Phone__c = newUser.Contact.Phone;
+            newContact.Email__c = newUser.Contact.Email;
+            newContact.Job_title__c = newUser.Contact.Title;
             newContact.Authorised_signatory__c = true;
             newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
@@ -2801,7 +2537,7 @@ private class ISSP_AMS_Accreditation_Test {
 
             ctrl.isNoticeOfChange = true;
             ctrl.newCase.Reason1__c = 'idk';
-            ctrl.newCase.ContactId = con.id;
+            ctrl.newCase.ContactId = newUser.ContactId;
             ctrl.sendConfirmationEmail(ctrl.newCase);
 
             ctrl.isNoticeOfChange = false;
@@ -2823,16 +2559,7 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_10() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Account parent;
         Account child;
@@ -2893,16 +2620,7 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_11() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
@@ -2975,16 +2693,7 @@ private class ISSP_AMS_Accreditation_Test {
         ISSP_AMS_Contextual_Help__c Contextual_Help8 = new ISSP_AMS_Contextual_Help__c(Name = 'PORTAL_ADMIN', ISSP_AMS_HelpText_ar__c = 'test', ISSP_AMS_HelpText_de__c = 'test', ISSP_AMS_HelpText_en_US__c = 'test', ISSP_AMS_HelpText_es__c = 'test', ISSP_AMS_HelpText_fr__c = 'test', ISSP_AMS_HelpText_in__c = 'test', ISSP_AMS_HelpText_it__c = 'test', ISSP_AMS_HelpText_ja__c = 'test', ISSP_AMS_HelpText_ko__c = 'test', ISSP_AMS_HelpText_pt_BR__c = 'test', ISSP_AMS_HelpText_th__c = 'test', ISSP_AMS_HelpText_vi__c = 'test', ISSP_AMS_HelpText_zh_CN__c = 'test');
         ISSP_AMS_Contextual_Help__c Contextual_Help9 = new ISSP_AMS_Contextual_Help__c(Name = 'GROSS_SALES', ISSP_AMS_HelpText_ar__c = 'test', ISSP_AMS_HelpText_de__c = 'test', ISSP_AMS_HelpText_en_US__c = 'test', ISSP_AMS_HelpText_es__c = 'test', ISSP_AMS_HelpText_fr__c = 'test', ISSP_AMS_HelpText_in__c = 'test', ISSP_AMS_HelpText_it__c = 'test', ISSP_AMS_HelpText_ja__c = 'test', ISSP_AMS_HelpText_ko__c = 'test', ISSP_AMS_HelpText_pt_BR__c = 'test', ISSP_AMS_HelpText_th__c = 'test', ISSP_AMS_HelpText_vi__c = 'test', ISSP_AMS_HelpText_zh_CN__c = 'test');
 
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         country.Enable_Minor_Changes_from_Portal__c = true;
         update country;
@@ -3207,16 +2916,7 @@ private class ISSP_AMS_Accreditation_Test {
         ISSP_AMS_Contextual_Help__c Contextual_Help8 = new ISSP_AMS_Contextual_Help__c(Name = 'PORTAL_ADMIN', ISSP_AMS_HelpText_ar__c = 'test', ISSP_AMS_HelpText_de__c = 'test', ISSP_AMS_HelpText_en_US__c = 'test', ISSP_AMS_HelpText_es__c = 'test', ISSP_AMS_HelpText_fr__c = 'test', ISSP_AMS_HelpText_in__c = 'test', ISSP_AMS_HelpText_it__c = 'test', ISSP_AMS_HelpText_ja__c = 'test', ISSP_AMS_HelpText_ko__c = 'test', ISSP_AMS_HelpText_pt_BR__c = 'test', ISSP_AMS_HelpText_th__c = 'test', ISSP_AMS_HelpText_vi__c = 'test', ISSP_AMS_HelpText_zh_CN__c = 'test');
         ISSP_AMS_Contextual_Help__c Contextual_Help9 = new ISSP_AMS_Contextual_Help__c(Name = 'GROSS_SALES', ISSP_AMS_HelpText_ar__c = 'test', ISSP_AMS_HelpText_de__c = 'test', ISSP_AMS_HelpText_en_US__c = 'test', ISSP_AMS_HelpText_es__c = 'test', ISSP_AMS_HelpText_fr__c = 'test', ISSP_AMS_HelpText_in__c = 'test', ISSP_AMS_HelpText_it__c = 'test', ISSP_AMS_HelpText_ja__c = 'test', ISSP_AMS_HelpText_ko__c = 'test', ISSP_AMS_HelpText_pt_BR__c = 'test', ISSP_AMS_HelpText_th__c = 'test', ISSP_AMS_HelpText_vi__c = 'test', ISSP_AMS_HelpText_zh_CN__c = 'test');
 
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         country.Enable_Minor_Changes_from_Portal__c = true;
         update country;
@@ -3319,16 +3019,7 @@ private class ISSP_AMS_Accreditation_Test {
     @isTest static void ISSP_AMS_Accreditation_Test_14() {
         Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         country.Enable_Minor_Changes_from_Portal__c = true;
         update country;
@@ -3431,16 +3122,7 @@ private class ISSP_AMS_Accreditation_Test {
     @isTest static void ISSP_AMS_Accreditation_Test_15() {
         Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = fetchCountry();
 
         country.Enable_Minor_Changes_from_Portal__c = true;
         update country;
@@ -3540,16 +3222,11 @@ private class ISSP_AMS_Accreditation_Test {
         ISSP_AMS_Contextual_Help__c Contextual_Help8 = new ISSP_AMS_Contextual_Help__c(Name = 'PORTAL_ADMIN', ISSP_AMS_HelpText_ar__c = 'test', ISSP_AMS_HelpText_de__c = 'test', ISSP_AMS_HelpText_en_US__c = 'test', ISSP_AMS_HelpText_es__c = 'test', ISSP_AMS_HelpText_fr__c = 'test', ISSP_AMS_HelpText_in__c = 'test', ISSP_AMS_HelpText_it__c = 'test', ISSP_AMS_HelpText_ja__c = 'test', ISSP_AMS_HelpText_ko__c = 'test', ISSP_AMS_HelpText_pt_BR__c = 'test', ISSP_AMS_HelpText_th__c = 'test', ISSP_AMS_HelpText_vi__c = 'test', ISSP_AMS_HelpText_zh_CN__c = 'test');
         ISSP_AMS_Contextual_Help__c Contextual_Help9 = new ISSP_AMS_Contextual_Help__c(Name = 'GROSS_SALES', ISSP_AMS_HelpText_ar__c = 'test', ISSP_AMS_HelpText_de__c = 'test', ISSP_AMS_HelpText_en_US__c = 'test', ISSP_AMS_HelpText_es__c = 'test', ISSP_AMS_HelpText_fr__c = 'test', ISSP_AMS_HelpText_in__c = 'test', ISSP_AMS_HelpText_it__c = 'test', ISSP_AMS_HelpText_ja__c = 'test', ISSP_AMS_HelpText_ko__c = 'test', ISSP_AMS_HelpText_pt_BR__c = 'test', ISSP_AMS_HelpText_th__c = 'test', ISSP_AMS_HelpText_vi__c = 'test', ISSP_AMS_HelpText_zh_CN__c = 'test');
 
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
+                                            IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
+                                            IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
+                                    FROM IATA_ISO_Country__c
+                                    WHERE Name = 'testOptOut'];
 
         country.Enable_Minor_Changes_from_Portal__c = true;
         update country;
@@ -3879,178 +3556,7 @@ private class ISSP_AMS_Accreditation_Test {
         Test.stopTest();
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_02() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNoticeOfChange = true;
-            accr.isNewCase = true;
-            accr.newCase.Reason1__c = 'New BR / IP';
-            accr.hqAccount.Company_Type__c = 'A';
-
-            PageReference pageRef = accr.save();
-        }
-
-        Test.stopTest();
-    }
-
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_03() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNoticeOfChange = true;
-            accr.isNewCase = true;
-            accr.newCase.Reason1__c = 'New BR / IP';
-            accr.hqAccount.Company_Type__c = 'C';
-
-            PageReference pageRef = accr.save();
-        }
-
-        Test.stopTest();
-    }
-
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_04() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNoticeOfChange = true;
-            accr.isNewCase = true;
-            accr.newCase.Reason1__c = 'New BR / IP';
-            accr.hqAccount.Company_Type__c = 'E';
-
-            PageReference pageRef = accr.save();
-        }
-
-        Test.stopTest();
-    }
-
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_05() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNoticeOfChange = true;
-            accr.isNewCase = true;
-            accr.newCase.Reason1__c = 'New BR / IP';
-            accr.hqAccount.Company_Type__c = 'L';
-
-            PageReference pageRef = accr.save();
-        }
-
-        Test.stopTest();
-    }
-
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_06() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNoticeOfChange = true;
-            accr.isNewCase = true;
-            accr.newCase.Reason1__c = 'New BR / IP';
-            accr.hqAccount.Company_Type__c = 'O';
-
-            PageReference pageRef = accr.save();
-        }
-
-        Test.stopTest();
-    }
-
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_07() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNoticeOfChange = true;
-            accr.isNewCase = true;
-            accr.newCase.Reason1__c = 'New BR / IP';
-            accr.hqAccount.Company_Type__c = 'P';
-
-            PageReference pageRef = accr.save();
-        }
-
-        Test.stopTest();
-    }
-
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_08() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNoticeOfChange = true;
-            accr.isNewCase = true;
-            accr.newCase.Reason1__c = 'New BR / IP';
-            accr.hqAccount.Company_Type__c = 'R';
-
-            PageReference pageRef = accr.save();
-        }
-
-        Test.stopTest();
-    }
-
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_09() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNoticeOfChange = true;
-            accr.isNewCase = true;
-            accr.newCase.Reason1__c = 'New BR / IP';
-            accr.hqAccount.Company_Type__c = 'S';
-
-            PageReference pageRef = accr.save();
-        }
-
-        Test.stopTest();
-    }
-
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_10() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNoticeOfChange = true;
-            accr.isNewCase = true;
-            accr.newCase.Reason1__c = 'New BR / IP';
-            accr.hqAccount.Company_Type__c = 'T';
-
-            PageReference pageRef = accr.save();
-        }
-
-        Test.stopTest();
-    }
-
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_11() {
+    @isTest static void ISSP_AMS_Accreditation_Test_ICC_Basic() {
         Test.startTest();
 
         User testUser = icc_testUser();
@@ -4064,6 +3570,25 @@ private class ISSP_AMS_Accreditation_Test {
             accr.hqAccount.Company_Type__c = 'Z';
 
             PageReference pageRef = accr.save();
+
+            accr.hqAccount.Company_Type__c = 'T';
+            pageRef = accr.save();
+            accr.hqAccount.Company_Type__c = 'S';
+            pageRef = accr.save();
+            accr.hqAccount.Company_Type__c = 'R';
+            pageRef = accr.save();
+            accr.hqAccount.Company_Type__c = 'P';
+            pageRef = accr.save();
+            accr.hqAccount.Company_Type__c = 'O';
+            pageRef = accr.save();
+            accr.hqAccount.Company_Type__c = 'L';
+            pageRef = accr.save();
+            accr.hqAccount.Company_Type__c = 'E';
+            pageRef = accr.save();
+            accr.hqAccount.Company_Type__c = 'C';
+            pageRef = accr.save();
+            accr.hqAccount.Company_Type__c = 'A';
+            pageRef = accr.save();
         }
 
         Test.stopTest();
@@ -4135,16 +3660,11 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void testOptOut() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
+                                            IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
+                                            IATA_ISO_Country__c.CurrencyIsoCode
+                                    FROM IATA_ISO_Country__c
+                                    WHERE Name = 'testOptOut'];
 
         Account parent = [SELECT BillingCity, Name, Sector__c, Location_Type__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, 
                             ANG_FA_Opt_out__c, ANG_Accreditation_Model__c
@@ -4154,14 +3674,10 @@ private class ISSP_AMS_Accreditation_Test {
         parent.ANG_FA_Opt_out__c = false;
         update parent;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = parent.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conOptOut@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -4197,17 +3713,6 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void testOptOut2() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
-
         Account parent = [SELECT BillingCity, Name, Sector__c, Location_Type__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, 
                             ANG_FA_Opt_out__c, ANG_Accreditation_Model__c
                         FROM Account
@@ -4216,14 +3721,10 @@ private class ISSP_AMS_Accreditation_Test {
         parent.ANG_FA_Opt_out__c = false;
         update parent;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId= parent.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conOptOut@test11.com'];
 
         Test.startTest();
         
@@ -4235,30 +3736,10 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void testOptOut3() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
-
-        Account parent = [SELECT BillingCity, Name, Sector__c, Location_Type__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, 
-                            ANG_FA_Opt_out__c, ANG_Accreditation_Model__c
-                        FROM Account
-                        WHERE Name = 'optOutAcc'];
-
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId= parent.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conOptOut@test11.com'];
 
         Test.startTest();
         
@@ -4270,51 +3751,21 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void testOptOut4() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
-
-        Account parent = [SELECT BillingCity, Name, Sector__c, Location_Type__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, 
-                            ANG_FA_Opt_out__c, ANG_Accreditation_Model__c
-                        FROM Account
-                        WHERE Name = 'optOutAcc'];
-
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = parent.Id;
-        con.Email = 'Test@test11.com';
-        con.User_Portal_Status__c = 'Administrator';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conOptOutAdmin@test11.com'];
 
         Test.startTest();
+
         System.runAs(newUser) {
             optOutBasicTestContent();
         }
+
         Test.stopTest();
     }
 
     @isTest static void testOptOut5() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
-
         Account parent = [SELECT BillingCity, Name, Sector__c, Location_Type__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, 
                             ANG_FA_Opt_out__c, ANG_Accreditation_Model__c
                         FROM Account
@@ -4323,15 +3774,17 @@ private class ISSP_AMS_Accreditation_Test {
         parent.Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
         update parent;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId= parent.Id;
-        con.Email = 'Test@test11.com';
-        con.Financial_Assessment_Contact__c = true;
-        insert con;
+        Contact con = [SELECT Id, AccountId, Email, FirstName, LastName
+                    FROM Contact
+                    WHERE Email = 'conOptOut@test11.com'];
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
+        con.Financial_Assessment_Contact__c = true;
         update con;
+
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conOptOut@test11.com'];
 
         Test.startTest();
 
@@ -4343,17 +3796,6 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void testOptOut6() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
-
         Account parent = [SELECT BillingCity, Name, Sector__c, Location_Type__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, 
                             ANG_FA_Opt_out__c, ANG_Accreditation_Model__c
                         FROM Account
@@ -4362,16 +3804,17 @@ private class ISSP_AMS_Accreditation_Test {
         parent.Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
         update parent;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId= parent.Id;
-        con.Email = 'Test@test11.com';
-        con.User_Portal_Status__c = 'Administrator';
-        con.Financial_Assessment_Contact__c = true;
-        insert con;
+        Contact con = [SELECT Id, AccountId, Email, FirstName, LastName
+                    FROM Contact
+                    WHERE Email = 'conOptOutAdmin@test11.com'];
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
+        con.Financial_Assessment_Contact__c = true;
         update con;
+
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conOptOut@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -4381,30 +3824,21 @@ private class ISSP_AMS_Accreditation_Test {
     }
 
     @isTest static void testOptOut7() {
-        IATA_ISO_Country__c country;
-        IATA_ISO_Country__c country2;
-
-        for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
-                                                        IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
-                                                        IATA_ISO_Country__c.CurrencyIsoCode
-                                                  FROM IATA_ISO_Country__c]) {
-            if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
-            else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
-        }
+        IATA_ISO_Country__c country = [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
+                                            IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
+                                            IATA_ISO_Country__c.CurrencyIsoCode
+                                    FROM IATA_ISO_Country__c
+                                    WHERE Name = 'testOptOut'];
 
         Account parent = [SELECT BillingCity, Name, Sector__c, Location_Type__c, IATA_ISO_Country__c, RecordTypeId, IATACode__c, 
                             ANG_FA_Opt_out__c, ANG_Accreditation_Model__c
                         FROM Account
                         WHERE Name = 'optOutAcc'];
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId= parent.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
-
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+        User newUser = [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
+                            Username, PortalRole, CommunityNickname, ProfileId, IsActive
+                        FROM User
+                        WHERE Contact.Email = 'conOptOut@test11.com'];
 
         Test.startTest();
         System.runAs(newUser) {
@@ -4463,5 +3897,13 @@ private class ISSP_AMS_Accreditation_Test {
         ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
         ctrl.newCase = iccCase;
         return ctrl;
+    }
+
+    private static IATA_ISO_Country__c fetchCountry() {
+        return [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
+                    IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
+                    IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
+              FROM IATA_ISO_Country__c
+              WHERE Name = 'testOptOut'];
     }
 }
