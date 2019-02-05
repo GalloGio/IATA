@@ -51,7 +51,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Idetified_themselves__c</field>
+                <field>Identified_themselves__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -137,7 +137,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Was_professional_and_represents_IATA__c</field>
+                <field>Professional_and_represents_IATA__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -151,7 +151,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Refrained_from_using_complicated_jargon__c</field>
+                <field>Refrained_using_complicated_jargon__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -164,7 +164,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Documented_the_info_in_the_SF_case__c</field>
+                <field>Documented_info_in_case__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -174,7 +174,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Interaction_was_within_the_scripts_guide__c</field>
+                <field>Interaction_within_scripts_guide__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

@@ -49,7 +49,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Idetified_themselves__c</field>
+                <field>Identified_themselves__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -156,11 +156,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Asks_if_additional_confirmation_is_requi__c</field>
+                <field>Asks_if_additional_confirmation__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Thanked_Customer_for_calling_at_the_end__c</field>
+                <field>Thanked_Customer_for_calling__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -199,15 +199,15 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Refrained_from_using_complicated_jargon__c</field>
+                <field>Refrained_using_complicated_jargon__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Was_friendly_polite_and_professional__c</field>
+                <field>Friendly_polite_and_professional__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Documented_the_info_in_the_SF_case__c</field>
+                <field>Documented_info_in_case__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -230,7 +230,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Validated_account_and_contact_details__c</field>
+                <field>Validated_account_and_contact__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
