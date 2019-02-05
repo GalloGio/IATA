@@ -60,20 +60,13 @@ public with sharing class ISSP_PersonalInformation {
     public boolean isIATAAgencyCargoBR {get; private set;}
     public boolean isIATAAgencyTravelBR {get; private set;}
 
-    
-    public List<AccountTeamMember> portalAdmins { 
+    //WMO-386
+    public List<UserWrapper> listAdmins {
         get {
-            if(null == portalAdmins)
-                portalAdmins = new list<AccountTeamMember>();
-            return portalAdmins;
+            if(listAdmins == null) {
+                listAdmins = new List<UserWrapper>();
         }
-        set;
-    }
-    public map<ID, AccountTeamMember> portalAdminMap { 
-        get{
-            if(null == portalAdminMap)
-                portalAdminMap = new map<ID, AccountTeamMember>();
-            return portalAdminMap;
+            return listAdmins;
         }
         set;
     }
@@ -497,5 +490,26 @@ public with sharing class ISSP_PersonalInformation {
     **/
     public Boolean getPermissionForStandardAccount() {
         return this.bIsAdmin && getIsStandardAccount() && !getisVerifiedAccount();
+    }
+
+    //WMO-386
+    public class UserWrapper {
+        public String salutation {get;set;}
+        public String name {get;set;}
+        public String email {get;set;}
+        public String country {get;set;}
+        public String userRole {get;set;}
+        public Id accountId {get;set;}
+        public Id contactId {get;set;}
+
+        public UserWrapper(String salutation, String name, String email, String country, String userRole, Id accountId, Id contactId) {
+            this.salutation = salutation;
+            this.name = name;
+            this.email = email;
+            this.country = country;
+            this.userRole = userRole;
+            this.accountId = accountId;
+            this.contactId = contactId;
+        }
     }
 }
