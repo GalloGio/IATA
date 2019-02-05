@@ -207,6 +207,14 @@
                 });
                 return false;
             }
+
+            function submitMultiCountry() {
+
+            }
+
+            function discardMultiCountry() {
+                
+            }
             </script>
         <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
@@ -225,7 +233,7 @@
                 <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/>
                 <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
                 <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases"/>
-                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms">
+                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms, submitMC">
                     <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
                 </apex:actionFunction>
 
@@ -325,6 +333,16 @@
                                             </apex:column>
                                         </apex:pageBlockTable>
                                     </apex:pageBlock>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" id="submitMC">
+                                    <input type="button" class="btn btn_iata_primary" onClick="submitMultiCountry();" value="Submit Multicountry Application to IATA" disabled="{!mcAbleToSubmit}"/>
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="button" class="btn btn_iata_primary" onClick="discardMultiCountry();" value="Discard Application" style="float: right;"/>
                                 </div>
                             </div>
                         </section>
