@@ -2008,7 +2008,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG Multicountry Already Has Locations Only Allow AE Error</shortDescription>
-        <value>The hierarchy already has locations in this BSP. The agency can only be an AE in this BSP.</value>
+        <value>There cannot be an HE account in the same BSP of the GE account.</value>
     </labels>
     <labels>
         <fullName>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error</fullName>
