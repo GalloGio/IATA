@@ -205,14 +205,14 @@
                                             </apex:pageBlockSectionItem>
  
                                             <apex:pageBlockSectionItem >
-                                              <apex:outputLabel style="display:block;width:100px;" value="New IATA Code:"/>
-                                              <apex:selectList value="{!currentRecords[key].newIataCode}"  size="1" rendered="{!NOT(moreThan1000Iatacodes)}"  styleclass="drawRedBar">
-                                                    <apex:selectOptions value="{!IATAcodes}"/>
-                                                </apex:selectList>
+                                                <apex:outputpanel>
+                                                    <apex:outputLabel style="display:block;width:100px;" value="New IATA Code:"/>
+                                                    <apex:selectList value="{!currentRecords[key].newIataCode}"  size="1" rendered="{!NOT(moreThan1000Iatacodes)}"  styleclass="drawRedBar">
+                                                        <apex:selectOptions value="{!IATAcodes}"/>
+                                                    </apex:selectList>                                                                                                     
+                                                </apex:outputpanel>
+                                                <apex:inputText value="{!currentRecords[key].newIataCode}" rendered="{!moreThan1000Iatacodes}" styleclass="drawRedBar"/>
                                             </apex:pageBlockSectionItem>
-                                                <apex:inputText value="{!currentRecords[key].newIataCode}" rendered="{!moreThan1000Iatacodes}" styleclass="drawRedBar"/> 
-                                            
- 
  
  
                                             <apex:pageBlockSectionItem >
