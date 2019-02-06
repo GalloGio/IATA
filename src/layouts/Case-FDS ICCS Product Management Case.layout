@@ -3,6 +3,8 @@
     <customButtons>Close_Case_ICCS_PM</customButtons>
     <customButtons>Send_Email_to_Contact</customButtons>
     <customButtons>E2CP__New_Comment</customButtons>
+    <customButtons>Reset_New_interactions</customButtons>
+    <customButtons>Accept_Case</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>

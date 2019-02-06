@@ -194,6 +194,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>LVA_CountryLanguage__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>CNS_Country__c</field>
             </layoutItems>
             <layoutItems>
@@ -254,6 +258,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_GDI_Enabled__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Enable_NewGen_Pilot__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

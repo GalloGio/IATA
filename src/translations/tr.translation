@@ -3569,6 +3569,22 @@
         <name>IDCard_Attachments</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_BSP_Agent_Billing_Reports_Procedures --></label>
+        <name>IDCard_BSP_Agent_Billing_Reports_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Agent_Remittance_Procedures --></label>
+        <name>IDCard_BSP_Agent_Remittance_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Essentials_for_Travel_Agents --></label>
+        <name>IDCard_BSP_Essentials_for_Travel_Agents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Standard_Documents_Procedures --></label>
+        <name>IDCard_BSP_Standard_Documents_Procedures</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_Back --></label>
         <name>IDCard_Back</name>
     </customLabels>
@@ -3983,6 +3999,10 @@
     <customLabels>
         <label><!-- IDCard_IndustryEntrySuperior --></label>
         <name>IDCard_IndustryEntrySuperior</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Intro_to_the_BSP_System_Language --></label>
+        <name>IDCard_Intro_to_the_BSP_System_Language</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_IntroduccionAlBSPlink_Description --></label>
@@ -5640,6 +5660,14 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Office --></label>
         <name>ISSP_AMS_Apply_New_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2 --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
@@ -12533,7 +12561,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label>IATA faturalarını kredi kartıyla ödemek için Ödeme Linki kullanılabilir.&lt;br/&gt;
 &lt;b&gt;Uyarı!&lt;/b&gt;&lt;br/&gt;
-Akredite edilmiş acenteler için bir çok IATA faturası BPS/CASS yoluyla tahsil edilmektedir. Kredi kartıyla ödeme yapmadan önce fatura bilgilerinizi kontrol ederek faturanızın daha önceden ödenmemiş olduğundan emin olmalısınız.</label>
+Akredite edilmiş acenteler için bir çok IATA faturası BSP/CASS yoluyla tahsil edilmektedir. Kredi kartıyla ödeme yapmadan önce fatura bilgilerinizi kontrol ederek faturanızın daha önceden ödenmemiş olduğundan emin olmalısınız.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>
@@ -15661,6 +15689,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label><!-- OneId_FRED_Troubleshooting_Link --></label>
         <name>OneId_FRED_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_URL --></label>
+        <name>OneId_FRED_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
