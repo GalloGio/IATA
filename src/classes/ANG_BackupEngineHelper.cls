@@ -76,7 +76,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds '
 	};
 
-	private Set<String> headLocationTypesSet = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
+	private Set<String> headLocationTypesSet = new Set<String>{AMS_Utils.GE, AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
 
 	private Map<String,Set<String>> fieldsInEntity;
 
@@ -290,12 +290,17 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		Set<Id> accountIds = new Set<Id>();
 		
-		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
+		Account acct = [Select Id, Location_Type__c, ParentId, ANG_Accreditation_Model__c from Account where Id =:accountOscar];
 		Id accountId = acct.Id;
-		
-        if(!this.headLocationTypesSet.contains(acct.Location_Type__c)){
+
+		Boolean isMulticountry = acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
+		if(isMulticountry && acct.Location_Type__c != AMS_Utils.GE){
 			accountId = acct.ParentId;
-    	}
+		}
+		else if(!isMulticountry && !this.headLocationTypesSet.contains(acct.Location_Type__c)){
+			accountId = acct.ParentId;
+		}
 		
         for(Account acctToSearch: [Select Id from Account where ParentId =:accountId]){
 			accountIds.add(acctToSearch.Id);

@@ -30,6 +30,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					, 'Change_of_location_type_behavior__c'
 					, 'STEP6__c'
 					, 'Process__c'
+					, 'Account__r.ANG_Accreditation_Model__c'
 				};
 			}
 			return oscarFields;
@@ -50,6 +51,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					, 'Status__c'
 					, 'BillingCity'
 					, 'Category__c'
+ 					, 'IATA_ISO_Country__r.AMS_Settlement_System__c'
 				};
 			}
 			return accountFields;
@@ -72,7 +74,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					if(diffDestination(oscar.New_parent__c)) notes.add('The selected agencies will be transformed into AE and linked to the "New parent: '+newParent.Name+'('+ newParent.IATACode__c+')'+'", therefore they will automatically get the Accreditation type "'+newParent.ANG_Accreditation_Model__c+'".');
 					else notes.add('The selected agencies will be grouped into a new hierarchy, having as HE the "New parent: '+newParent.Name+'('+newParent.IATACode__c+')". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
 				}
-				if(tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to the full hierarchy');
+				if(isMulticountry && tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to all agencies in the same BSP');
+				else if(tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to the full hierarchy');
+
 				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) notes.add('Change of accreditation type must be applied to the full hierarchy unless you are also selecting change of Hierarchy');
 				if(tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT)){ notes.add('The conversion to GoLite must be applied to the full hierarchy'); }
 				else if(tocList.contains(AMS_Utils.CONVERTTOLEGACY)){ notes.add('The conversion to Domestic with Cash must be applied to the full hierarchy'); }
@@ -175,6 +179,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				errorMessages.put(
 					'Require Location Class Domestic',
 					'The conversion must be applied to a hierarchy of Domestic agents. Please proceed with a change of location type before processing the conversion.'
+				);
+
+				errorMessages.put(
+					'Agents must be in the same BSP',
+					'You cannot apply the change to agents in different BSPs at the same time. Please select agents in the same BSP.'
+				);
+
+				errorMessages.put(
+					'All agents from the same BSP not selected',
+					'VMFR must be applied to all agencies in the same BSP'
 				);
 				
 			}
@@ -320,6 +334,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 	
 	private Boolean existsLocClassDomesticError = false;
+	private Boolean isMulticountry = false;
+	private Map<Id, Integer> bspCountMap = new Map<Id, Integer>();
 	
 	public Map<Id, HierarchyItem> hierarchy{
 		get{
@@ -347,8 +363,22 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c ' + getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
 					Boolean main = (a.Id == oscar.Account__c);
 					Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
-					hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected , (a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
+					hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
 					
+					if(this.isMulticountry){
+
+						integer bspCount = this.bspCountMap.get(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+
+						if(bspCount == null){ 
+							bspCount = 0;
+						}
+
+						bspCount++;
+
+						this.bspCountMap.put(a.IATA_ISO_Country__r.AMS_Settlement_System__c, bspCount);
+
+					}
+
 					if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
 						// Requires that every account have location class "D" if the account status 
 						// is not one of the following: "Terminated", "Not in Operation", "Not Accredited" (pilotAccStatusNotRequireLocClassD)
@@ -475,6 +505,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		oscarId = stdController.getId();
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
+
+		this.isMulticountry = oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
 	}
 
 
@@ -495,6 +528,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		System.debug('Performing validations on the hierarchyValues:'+hierarchyValues);
 
+		if(this.isMulticountry){ runMulticountryAgencyChangesValidations(); }
+
 		if(tocList.contains(AMS_Utils.ANG_LOCATION) && !isJustOneAgencySelected()) errorChecks.put(AMS_Utils.ANG_LOCATION, true);
 
 		if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)){
@@ -502,7 +537,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			if(hasTopLocationType(oscar.Account__c)) errorChecks.put('Location Type on TOP Agency', true);				 
 		}
 		
-		if(tocList.contains(AMS_Utils.ANG_VMFR) && !isAllHierarchySelected()) errorChecks.put(AMS_Utils.ANG_VMFR, true);
+		if(!this.isMulticountry && tocList.contains(AMS_Utils.ANG_VMFR) && !isAllHierarchySelected()) errorChecks.put(AMS_Utils.ANG_VMFR, true);
 
 		if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && !tocList.contains(AMS_Utils.ANG_HIERARCHY) && !isAllHierarchySelected()) errorChecks.put(AMS_Utils.ANG_ACCREDITATION_TYPE, true);
 
@@ -725,6 +760,55 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		return hierarchies.size() == 1;
 	}
+
+	/**
+	* Runs several validations necessary for
+	* multicountry agency changes
+	*
+	*/
+	private void runMulticountryAgencyChangesValidations(){
+
+		Boolean isSingleBSPSelected = true;
+		Boolean allAgenciesFromSameBSPSelected = false;
+
+		Id firstItemBSP = null;
+
+		integer selectedCount = 0;
+
+		for(HierarchyItem item : hierarchyValues){
+
+			if(item.selected || item.main){
+				selectedCount++;
+				//Assigns the BSP related to the first selected account 
+				if(firstItemBSP == null){
+					firstItemBSP = item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
+				}
+				//If we found a selected account that has a different BSP than the one first found returns false 
+				else if(firstItemBSP != item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c){
+					isSingleBSPSelected = false;
+				}
+			}
+			
+		}
+		
+		allAgenciesFromSameBSPSelected = 
+			firstItemBSP != null && 
+			bspCountMap.get(firstItemBSP) == selectedCount;
+
+		if((tocList.contains(AMS_Utils.ANG_LEGAL_NAME) || tocList.contains(AMS_Utils.ANG_LEGAL_STATUS) || 
+				tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) || 
+				tocList.contains(AMS_Utils.ANG_OWNERSHIP) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) ||
+				tocList.contains(AMS_Utils.ANG_TRADE_NAME) || tocList.contains(AMS_Utils.ANG_VMFR)) && !isSingleBSPSelected 
+			){
+				errorChecks.put('Agents must be in the same BSP', true);
+		}
+
+		if(tocList.contains(AMS_Utils.ANG_VMFR) && !allAgenciesFromSameBSPSelected){
+			errorChecks.put('All agents from the same BSP not selected', true);
+		}
+
+	}
+
 
 	// ***********************************
 	// *********** wrappers **************
