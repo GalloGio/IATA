@@ -113,6 +113,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
             Company_Registration_ID__c,TAX_VAT_Registration_Number__c,Billing_File_Emrgcy_Contact_Number__c,Who_requested_to_join_TOU__c,Legal_Name_of_account__c,
             RecordTypeId, RecordType.DeveloperName, Do_you_want_to_add_Bank_Details__c, Data_Exporting_Organization_Name__c,Data_Exporting_Organization_Address__c,
             Data_Exporting_Organization_Phone__c,Data_Exporting_Organization_Fax__c,Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,
+            Data_Exporting_Organization_Email__c,
             Contact_Title__c,Contact_First_name__c,Contact_Last_name__c,Contact_email__c,Contact_number__c,
             Case__c, Case__r.CaseNumber, Case__r.BSPCountry__c, Case__r.Id, Case__r.RecordtypeId, Case__r.AccountId, Case__r.CaseArea__c, Case__r.Reason1__c, Case__r.Status, Case__r.Type,
             Case__r.Visible_on_ISS_Portal__c
