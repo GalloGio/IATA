@@ -136,21 +136,21 @@ public class Product_Svc
         List<Zuora.zObject> allErrors = new List<Zuora.zObject>(); 
         
         //-- ZuoraIds return bu Zuora in case of success
-        //Set<String> zuoraIds = new Set<String>();
+        Set<String> zuoraIds = new Set<String>();
 
         for(Zuora.zApi.SaveResult sr : results)
         {
-            if(!sr.Success)
+            if(sr.Success)
+                zuoraIds.add(sr.Id);
+            else
                 allErrors.addAll(sr.Errors);
-            //else
-            //    allErrors.addAll(sr.Errors);
         }
 
         //-- Update Products with Zuora Id
-        //if(!zuoraIds.isEmpty())
-        //{
-        //    ret = updateProducts(zuoraIds, products);
-        //}
+        if(!zuoraIds.isEmpty())
+        {
+            ret = updateProducts(zuoraIds, products);
+        }
         
         //-- Proccess Errors 
         if(!allErrors.isEmpty())
@@ -194,7 +194,7 @@ public class Product_Svc
             List<Zuora.zObject> zProducts = ZuoraUtil.zquery(zoql, 'Product', zuoraIds.size());
             
             for(Zuora.zObject o : zProducts)
-                zuoraIdByMaterialNumber.put((string) o.getValue('SAP_Material_Number__c'), (String) o.getValue('Id'));
+                zuoraIdByMaterialNumber.put((string) o.getValue('SAPProductMaterialNo__c'), (String) o.getValue('Id'));
             
             for(Product2 p : products)
             {
@@ -202,16 +202,16 @@ public class Product_Svc
                     productByCode.put(p.SAP_Material_Number__c, p);
             }
 
-            //for(String material_number : zuoraIdByMaterialNumber.keySet())
-            //{
-            //    if(productByCode.containsKey(material_number))
-            //    {
-            //        // Set Zuora Id of the Product
-            //        Product2 p = productByCode.get(material_number);
-            //            p.Zuora_Id__c = zuoraIdByMaterialNumber.get(material_number);
-            //        products2Update.add(p);
-            //    }
-            //}
+            for(String material_number : zuoraIdByMaterialNumber.keySet())
+            {
+                if(productByCode.containsKey(material_number))
+                {
+                    // Set Zuora Id of the Product
+                    Product2 p = productByCode.get(material_number);
+                    p.zqu__ZuoraId__c = zuoraIdByMaterialNumber.get(material_number);
+                    products2Update.add(p);
+                }
+            }
 
             //-- Update the products
             if(!products2Update.isEmpty()) update products2Update;
