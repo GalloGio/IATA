@@ -126,24 +126,24 @@ public without sharing class ANG_DGIStagingAreaCtrl {
     }
 
     public void accept(){ 
-
+        
+        addCertificate = true;
         try{
-            Case oscarCase = [Select id, ParentId from Case where OSCAR__c = :stagingFs.OSCAR_GDI__c];
-
-            stagingFs.Reception_Date__c = System.today();
-            update stagingFs;
-
-            if(hasAdendum)
-                performAcceptancewithAdendum(oscarCase);
-            else
-                createNewFinancialSecurity(oscarCase);
-
-            //set the status of the "Confirm Financial Security Information" in the GDI OSCAR as "Passed"
+            Case oscarCase = [Select id, ParentId, ownerid from Case where OSCAR__c = :stagingFs.OSCAR_GDI__c];
 
             AMS_OSCAR__c oscar = new AMS_OSCAR__c (Id =stagingFs.OSCAR_GDI__c);
             oscar.step50__c = 'Passed';
             oscar.status__c = 'Closed';
             update oscar;
+
+            stagingFs.Reception_Date__c = System.today();
+            update stagingFs;
+
+            //set the status of the "Confirm Financial Security Information" in the GDI OSCAR as "Passed"
+            if(hasAdendum)
+                performAcceptancewithAdendum(oscarCase);
+            else
+                createNewFinancialSecurity(oscarCase);
 
             opp = new Opportunity(Id=stagingFs.OpportunityId);
             opp.StageName='Closed Won';
@@ -151,7 +151,9 @@ public without sharing class ANG_DGIStagingAreaCtrl {
   
         }
         catch(Exception e){
-            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, e.getMessage()));
+
+            String errorMsg = (e.getMessage().substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ') == '' ? e.getMessage() : e.getMessage().substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ') );
+            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, errorMsg));
             System.debug(e.getStackTraceString());
         }
     }
