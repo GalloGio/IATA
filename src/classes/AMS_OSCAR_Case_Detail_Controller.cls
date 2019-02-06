@@ -540,7 +540,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 system.debug('applyChangeCodesWithDependencies() -> agenciesAffected : ' + agenciesAffected);
                 
                 //Checks if all Hierarchy was Selected
-                isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, this.accountHierarchyRelationships.get(oscarObj.Account__c), hierarchyAccountsMap);
+                isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, this.accountHierarchyRelationships.get(oscarObj.Account__c), this.hierarchyAccountsMap);
                 return isAllHierarchySelected;
                 //system.debug('applyChangeCodesWithDependencies() -> isAllHierarchySelected : ' + isAllHierarchySelected);
             }
@@ -612,15 +612,12 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 hierarchyAccountIds.add(relationship.Parent_Account__c);
                 hierarchyAccountIds.add(relationship.Child_Account__c);
             }
-            else {
-                
-                if(relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Parent_Account__r.Status__c != '' ){
-                    hierarchyAccountsMap.put(relationship.Parent_Account__c, new Account(id = relationship.Parent_Account__c, Status__c = relationship.Parent_Account__r.Status__c));
-                }
-                if(relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Child_Account__r.Status__c != '' ){
-                    hierarchyAccountsMap.put(relationship.Child_Account__c, new Account(id = relationship.Child_Account__c, Status__c = relationship.Child_Account__r.Status__c));
-                }
-
+            
+            if(relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Parent_Account__r.Status__c != '' ){
+                hierarchyAccountsMap.put(relationship.Parent_Account__c, new Account(id = relationship.Parent_Account__c, Status__c = relationship.Parent_Account__r.Status__c));
+            }
+            if(relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Child_Account__r.Status__c != '' ){
+                hierarchyAccountsMap.put(relationship.Child_Account__c, new Account(id = relationship.Child_Account__c, Status__c = relationship.Child_Account__r.Status__c));
             }
 
         }
