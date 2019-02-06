@@ -1557,8 +1557,8 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <description>Technical field. Used to match custom settings on Change Code generation.</description>
         <externalId>false</externalId>
         <formula>IF(Account__r.CNS_Agency__c,
-				&apos;CNS-&apos; + TEXT(Account__r.Location_Type__c) + &apos;-&apos;+TEXT(Account__r.Location_Class__c),
-				&apos;AMS&apos;
+                &apos;CNS-&apos; + TEXT(Account__r.Location_Type__c) + &apos;-&apos;+TEXT(Account__r.Location_Class__c),
+                &apos;AMS&apos;
 )</formula>
         <label>Business Process</label>
         <required>false</required>
@@ -3525,16 +3525,16 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                     <fullName>ANG.MAJOR.CHANGES.CHINA.1.0</fullName>
                     <default>false</default>
                     <label>ANG.MAJOR.CHANGES.CHINA.1.0</label>
-		</value>
-		<value>
+        </value>
+        <value>
                     <fullName>ANG.NEW.GE.STANDARD.1.0</fullName>
                     <default>false</default>
                     <label>ANG.NEW.GE.STANDARD.1.0</label>
                 </value>
-		<value>
-		    <fullName>ANG.MULTICOUNTRY.AE.1.0</fullName>
-		    <default>false</default>
-		    <label>ANG.MULTICOUNTRY.AE.1.0</label>
+        <value>
+            <fullName>ANG.MULTICOUNTRY.AE.1.0</fullName>
+            <default>false</default>
+            <label>ANG.MULTICOUNTRY.AE.1.0</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -42251,6 +42251,69 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Type_Of_Change__c</picklist>
+            <values>
+                <fullName>Accreditation type</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversion to Domestic with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversion to GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversion to International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hierarchy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal name</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location type</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location type to different legal entity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Major shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minor shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ownership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trade name</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VMFR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Agreement_result__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -59646,7 +59709,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
     </recordTypes>
-	<recordTypes>
+    <recordTypes>
         <fullName>ANG_Multicountry_AE</fullName>
         <active>true</active>
         <description>New Multicountry Entity Accreditation Record Type</description>
@@ -62932,28 +62995,28 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <fullName>AMS_PCI_Expiry_Date_Required</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-	OR(
-		TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
-		TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
-	),
-	OR(
-		AND(
-			OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
-			TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
-			RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
-			ISBLANK(ANG_PCI_compliance_expiry_date__c)
-		),
-		AND(
-			OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
-			RecordType.DeveloperName = &apos;NEW&apos;,
+    OR(
+        TEXT(Is_PCI_compliant__c) = &apos;Yes&apos;,
+        TEXT(Is_PCI_compliant__c) = &apos;Nil CC&apos;
+    ),
+    OR(
+        AND(
+            OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
+            TEXT(Process__c) == &apos;PCI.COMPLIANT.1.0&apos;,
+            RecordType.DeveloperName = &apos;CERTIFICATION&apos;,
+            ISBLANK(ANG_PCI_compliance_expiry_date__c)
+        ),
+        AND(
+            OR(Location_Class__c == &apos;P&apos;, Location_Class__c ==&apos;D&apos;), 
+            RecordType.DeveloperName = &apos;NEW&apos;,
             ISPICKVAL(STEP6__c, &apos;Passed&apos;),
-			ISBLANK(ANG_PCI_compliance_expiry_date__c),
-			OR(
-				TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
-				TEXT(Process__c) == &apos;NEW.BR&apos;
-			)
-		)	
-	)
+            ISBLANK(ANG_PCI_compliance_expiry_date__c),
+            OR(
+                TEXT(Process__c) == &apos;NEW.HO.1.0&apos;,
+                TEXT(Process__c) == &apos;NEW.BR&apos;
+            )
+        )   
+    )
 )</errorConditionFormula>
         <errorMessage>You must determine a PCI compliance expiry date</errorMessage>
     </validationRules>
@@ -63278,7 +63341,7 @@ window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);
         <requireRowSelection>true</requireRowSelection>
         <url>javascript:srcUp(&quot;/apex/OSCARWizzardFlowPage&quot;);</url>
     </webLinks>
-	<webLinks>
+    <webLinks>
         <fullName>Open_Account_Creator</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
