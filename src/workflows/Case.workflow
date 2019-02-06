@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+	<alerts>
+        <fullName>Case_changed</fullName>
+        <description>Case changed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>SuppliedEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>GDPR_Templates/Case_changed</template>
+    </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request</fullName>
         <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
@@ -7069,6 +7081,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+	<fieldUpdates>
+        <fullName>Change_owner_to_be_GDPR_Queue</fullName>
+        <field>OwnerId</field>
+        <lookupValue>GDPR</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Change owner to be GDPR Queue</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
     <fieldUpdates>
         <fullName>Status_Approved</fullName>
         <field>Status</field>
@@ -12423,6 +12445,30 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>Send a notification to the Contact when an FDS ICCS Bank Account Management case with an &quot;Update&quot; Case Area is closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+	<rules>
+        <fullName>Assign GDPR cases to queue</fullName>
+        <actions>
+            <name>Change_owner_to_be_GDPR_Queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>contains</operation>
+            <value>GDPR</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>GDPR Case Updated</fullName>
+        <actions>
+            <name>Case_changed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>NOT( ISNEW() ) &amp;&amp; RecordType__c = &apos;GDPR Request&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>ICCS%3A BA Update Set Status In progress When Doc Received</fullName>

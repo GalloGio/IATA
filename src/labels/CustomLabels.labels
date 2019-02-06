@@ -33628,4 +33628,43 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>IATA_GDPR_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA_GDPR_URL</shortDescription>
+        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/gdprportal</value>
+    </labels>
+    <labels>
+        <fullName>IATA_GDPR_White_Logo</fullName>
+        <categories>Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA GDPR White Logo</shortDescription>
+        <value>https://iata--gdprsalim--c.cs106.content.force.com/servlet/servlet.ImageServer?id=0150D000000EJAd&amp;oid=00D0D0000000PrE&amp;lastMod=1547018185000</value>
+    </labels>
+     <labels>
+        <fullName>TECH_GDPR_Community_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of the GDPR community in the URL</shortDescription>
+        <value>dataprivacy</value>
+    </labels>
+    <labels>
+        <fullName>TECH_GDPR_Network_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of GDPR  Network. Usually name of the community - Query on network objec</shortDescription>
+        <value>Data Privacy</value>
+    </labels>
+    <labels>
+        <fullName>OneId_URL_To_GDPR</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_URL_To_GDPR</shortDescription>
+        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/identity/s/login/?language=en_US&amp;serviceName=GDPR</value>
+    </labels>
 </CustomLabels>

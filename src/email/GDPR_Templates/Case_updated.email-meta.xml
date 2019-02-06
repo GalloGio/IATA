@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Case Updated</name>
+    <style>none</style>
+    <subject>Case Updated</subject>
+    <textOnly>Dear User,
+The status of your case has been updated.
+Best Regards 
+IATA Support team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

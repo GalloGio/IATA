@@ -47,7 +47,9 @@ private class PlatformEvents_Helper_Test {
         
         	delete con;
 
-        	undelete con;
+        	try {
+            	undelete con;
+       		} catch(Exception e){}
 
         test.stopTest();
     }

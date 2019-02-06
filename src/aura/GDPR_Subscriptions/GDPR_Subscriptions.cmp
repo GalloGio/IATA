@@ -1,0 +1,91 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" access="global" controller="GDPR_SubscriptionsAndInterests_CTRL">
+    
+    <ltng:require scripts="{!$Resource.GDPR_Helper}" />
+    
+    <aura:attribute name="subscriptions" type="Object[]"  />
+    <aura:attribute name="newsletters" type="Object[]"  />
+    <aura:attribute name="products" type="Object[]"  />
+
+    <aura:attribute name="initialSubscription" type="List"  />
+
+    <aura:attribute name="email" type="String"  /> 
+    <aura:attribute name="opted_out" type="Boolean"  default="true"/> 
+    <aura:attribute name="salesforceSynced" type="Boolean" default="false"/> 
+    <aura:attribute name="unsubscribe" type="Boolean" default="false"/>
+    <aura:attribute name="localLoading" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="EVT_GDPR_OptOutSync" type="c:EVT_GDPR_OptOutSync"/>
+    <aura:handler event="c:EVT_GDPR_OptOutSync" action="{!c.handleEVT_GDPR_OptOutSync}"/>
+    
+
+     <!-- Spinner DIV -->
+     <aura:if isTrue="{!v.localLoading}">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+
+
+    <h5>Yes I would like to receive</h5>
+    <p>Email Address: {!v.email}</p>
+    
+    <div class="slds-p-horizontal--small slds-size--1-of-1 ">
+            <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
+                    Newsletters
+                </div>
+            <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                <p><b>Subscribe to our Newsletters to receive the latest updates*</b> Mouseover each item to learn more.</p> 
+                </div>
+        <div class="slds-grid slds-wrap" >
+            <aura:iteration items="{!v.newsletters}" var="i">
+                <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" title="{!i.helpText}">
+                    <ui:inputCheckbox  aura:id="subscriptionsCbx" value="{!i.selected}" class="slds-p-horizontal--small cbx" disabled="{!v.opted_out}"/>
+                    <span class="label">{!i.label}</span>
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+
+    <div class="slds-p-horizontal--small slds-size--1-of-1 ">
+        <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
+            <a style="color: black;" onclick="{!c.redirectToSubscriptionTab}">Products and services</a>
+            </div>
+            <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                <p><b>Subscribe to any of our Products and Services.</b> Please click on the <a onclick="{!c.redirectToSubscriptionTab}">Interest’s tab</a> to personalize. Mouseover each item to learn more.</p> 
+            </div>
+    <div class="slds-grid slds-wrap" >
+           <aura:iteration items="{!v.products}" var="i">
+                <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2" title="{!i.helpText}">
+                    <ui:inputCheckbox  aura:id="subscriptionsCbx" value="{!i.selected}" class="slds-p-horizontal--small cbx" disabled="{!v.opted_out}"/>
+                    <span class="label">{!i.label}</span>
+                </div>
+            </aura:iteration>
+    </div>
+</div>
+
+<br /><br />
+<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+    <p>*You can unsubscribe from IATA Communication at any time by un-ticking a box. Note, unsubscribing from IATA Communication does not affect your receipt of operational emails that are necessary to your interaction with IATA, such as security updates, support and services, invoices, account management, and registration updates.</p>
+</div>
+
+<!-- Common footer with subscription tab-->
+
+<div class="slds-text-heading_large slds-m-vertical_large IATA_sectionEndSeparator"></div>
+
+<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+    <aura:if isTrue="{!!v.opted_out}">
+        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 positionRight">
+            <button class="btn btn-primary buttonSelectAllSpace" type="submit" onclick="{!c.selectAll}" >Select All</button>
+            <button class="btn btn-primary " type="submit" onclick="{!c.saveAll}" >Save All Changes</button>
+        </div>
+    </aura:if>
+</div>
+<br />
+
+
+
+<aura:if isTrue="{!v.salesforceSynced}">
+    <!-- Requesteed by IATA: Have the sub/unscribe feature as a component-->
+    <c:GDPR_Unsubscribe unsubscribe="{!v.opted_out}"/>
+</aura:if>
+
+</aura:component>

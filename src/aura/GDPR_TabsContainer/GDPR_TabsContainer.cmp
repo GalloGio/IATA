@@ -1,0 +1,28 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable,lightning:isUrlAddressable" access="global">
+	
+	<aura:attribute name="doDisplayTab" type="Boolean" default="false"/>
+    <aura:attribute name="tabId" type="String" default="1"/>    
+    <aura:attribute name="version" type="String" default="1" />
+    
+    <aura:handler event="c:EVT_GDPR_DisplayTab" action="{!c.handleApplicationEvent}"/>
+   
+    <aura:if isTrue="{!v.doDisplayTab}">
+        <lightning:tabset class="bar" aura:id="tabs" selectedTabId="{!v.tabId}">
+            <lightning:tab class="element first" label="PROFILE" id="1"> 
+                <c:IATA_ServiceList/>
+                <c:GDPR_UserInfo/>
+            </lightning:tab>
+            <lightning:tab class="element" label="SUBSCRIPTIONS" id="2">
+                <c:GDPR_Subscriptions/>
+            </lightning:tab>
+            <lightning:tab class="element" label="INTERESTS" id="3">
+                <c:GDPR_Interests/>    
+            </lightning:tab>  
+            <lightning:tab class="element" label="PRIVACY MANAGEMENT" id="4">
+                <c:GDPR_RequestList/>
+                <c:GDPR_RequestListDPO/>
+                <c:GDPR_WebToCase/>
+            </lightning:tab> 
+        </lightning:tabset>
+	</aura:if>
+</aura:component>

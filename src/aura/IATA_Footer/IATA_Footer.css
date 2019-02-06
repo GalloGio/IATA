@@ -1,0 +1,30 @@
+.THIS.bar{
+    margin-top: 70px; 
+    padding: 35px 60px;
+    margin: 0 auto;
+}
+
+.THIS .gdpr{
+    min-width: 55px;
+}
+
+.THIS .gdprTxt{
+    color: white; 
+    align-self: center;
+}
+
+@media (max-width: 600px) {
+    .THIS .logoDiv{
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .THIS .gdprTxt{
+        text-align: center;
+    }
+
+    .THIS h2 {
+        font-size:23px;
+    }
+}

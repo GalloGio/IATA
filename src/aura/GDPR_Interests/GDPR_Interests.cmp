@@ -1,0 +1,62 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,lightning:isUrlAddressable" access="global" controller="GDPR_SubscriptionsAndInterests_CTRL">
+    
+    <ltng:require scripts="{!$Resource.GDPR_Helper}" />
+
+    <aura:attribute name="interests" type="GDPR_SubscriptionsAndInterests_CTRL.InterestsWrapper[]"  />
+    <aura:attribute name="email" type="String"  />
+    <aura:attribute name="salesforceSynced" type="Boolean" default="false"/>
+    <aura:attribute name="unsubscribe" type="Boolean" default="false"/> 
+    <aura:attribute name="opted_out" type="Boolean"  default="true"/> 
+    <aura:attribute name="localLoading" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="EVT_GDPR_OptOutSync" type="c:EVT_GDPR_OptOutSync"/>
+    <aura:handler event="c:EVT_GDPR_OptOutSync" action="{!c.handleEVT_GDPR_OptOutSync}"/>
+    
+     <!-- Spinner DIV -->
+     <aura:if isTrue="{!v.localLoading}">
+        <lightning:spinner alternativeText="Loading" />
+    </aura:if>
+
+    <p>Email Address: {!v.email}</p>
+    
+    <div class="slds-p-horizontal--small slds-size--1-of-1 ">
+        <div class="slds-text-heading_large slds-m-vertical_large IATA_section">
+            Interests
+        </div>
+        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+         <p>Select your Products and Services interests* </p>
+         </div>
+        <div class="slds-grid slds-wrap" >
+            <aura:iteration items="{!v.interests}" var="i">
+                <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                    <ui:inputCheckbox  aura:id="interestsCbx" value="{!i.selected}" class="slds-p-horizontal--small cbx" disabled="{!v.opted_out}"/>
+                    <span class="label">{!i.label}</span>
+                    
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+
+<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+<p>*Selecting your interests personalizes your experience with IATA Products and Services Communication. Interests are not additional subscriptions.</p>
+</div>
+
+<!-- Common footer with subscription tab-->
+
+<div class="slds-text-heading_large slds-m-vertical_large IATA_sectionEndSeparator"></div>
+
+<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+    <aura:if isTrue="{!!v.opted_out}">
+        <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 positionRight">
+            <button class="btn btn-primary buttonSelectAllSpace" type="submit" onclick="{!c.selectAll}" >Select All</button>
+            <button class="btn btn-primary " type="submit" onclick="{!c.saveAll}" >Save All Changes</button>
+        </div>
+    </aura:if>
+</div>
+<br />
+<aura:if isTrue="{!v.salesforceSynced}">
+   <!-- Requesteed by IATA: Have the sub/unscribe feature as a component-->
+   <c:GDPR_Unsubscribe unsubscribe="{!v.opted_out}"/>
+</aura:if>
+</aura:component>

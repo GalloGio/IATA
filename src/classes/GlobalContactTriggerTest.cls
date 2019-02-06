@@ -149,8 +149,8 @@ private class GlobalContactTriggerTest {
         con2.User_Portal_Status__c = 'Active';
         insert con2;
         String newContactId2 = con2.Id;
-		
-		Test.startTest();
+        
+        Test.startTest();
 
         Portal_Applications__c app1 = new Portal_Applications__c(Name = 'MyTest', Critical_Service__c = true);
         insert app1;
@@ -320,7 +320,9 @@ private class GlobalContactTriggerTest {
 
         delete con;
 
-        undelete con;
+        try {
+            undelete con;
+        } catch(Exception e){}
     }
 
     static testMethod void triggerTestAdd2() {

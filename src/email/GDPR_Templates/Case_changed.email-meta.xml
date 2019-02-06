@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Case changed</name>
+    <style>none</style>
+    <subject>Case updated</subject>
+    <textOnly>Dear  {!Case.Case_Creator_Name__c},&lt;br/&gt;&lt;br/&gt;
+
+Your case with number {!Case.CaseNumber} has been updated.&lt;br/&gt;
+
+Best regards,&lt;br/&gt;
+
+IATA support team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -39,7 +39,8 @@ public without sharing class OneIdLightningLoginFormController {
         username = (null != username) ? username.trim() : username;
                                    
         try{
-            System.debug('Controller.login.Begin');            
+            System.debug('Controller.login.Begin');     
+            System.debug('serviceName'+serviceName);            
             list<User> userList = DAL_ISSP.getUserListByNameOrEmail(username);
             system.debug('userList: ' + userList);
             system.debug('username: ' + username);
@@ -61,13 +62,16 @@ public without sharing class OneIdLightningLoginFormController {
                      LightningRegistrationProcess.assignIdentityPermissionSet(oneUser.Id);
                 }
 
+                //Assign GDPR Permission set when user logs in. No matter the service
+                LightningRegistrationProcess.assignGDPRPermissionSet(oneUser.Id);
+
 //to developer Testing user frozen reactivate user reset password and send password email  - uncoment line below
 //oneUser.Portal_User_Frozen_Checkbox__c=true; 
                 
-                system.debug('user id: ' + oneUser.Id);
+                system.debug('user idX: ' + oneUser.Id);
                 system.debug('contact id: ' + oneUser.ContactId);
                 system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);                
-                
+                system.debug('serviceName: ' + serviceName);
                 
                 //sometimes, javascript from component is passing "undefined". Must be interpreted as NULL
                 if(String.isNotBlank(startUrl) && !startUrl.equalsIgnoreCase('undefined')){
@@ -84,6 +88,9 @@ public without sharing class OneIdLightningLoginFormController {
                 	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
                 	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
 			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+                } else if( String.isNotBlank(serviceName) && serviceName == Label.TECH_GDPR_Community_Name){
+                    //  GP-17: GDPR need a direct redirection to the GDPR portal not to OneId home page
+                    pageLink = '/apex/CommunitiesLanding?serviceName='+Label.TECH_GDPR_Community_Name;
                 }
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){

@@ -1,0 +1,4 @@
+<!--c:EVT_GDPR_DisplayTab-->
+<aura:event type="APPLICATION">
+    <aura:attribute name="activeTabId" type="String"/>
+</aura:event>
