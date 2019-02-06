@@ -71,7 +71,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
                                                        AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED,
                                                        AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S7_UNDERREVIEW, 'Review'};
 
-        Set<String> pciValues = new Set<String> {null, 'No'};
+        Set<String> pciValues = new Set<String> {'Yes'}; //WMO-413 hotfix
         String query = 'SELECT Id, Name, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c,' +
                        ' Abbreviated_address__c, Abbreviated_name__c, BillingState, BillingCity,' +
                        ' IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode, BillingStreet,' +
@@ -93,7 +93,7 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
             query += ' AND Location_Type__c = \'HO\'';
             query += ' AND Location_Class__c IN :locations';
             query += ' AND Status__c IN :availableStatus';
-            query += ' AND Is_PCI_compliant__c NOT IN :pciValues';
+            query += ' AND Is_PCI_compliant__c IN :pciValues';
             query += ' AND RecordtypeId = :AGENCY_RECORDTYPE';
             query += ' AND ANG_IsNewGenAgency__c = false';
             query += ' AND Id NOT IN (SELECT AccountId FROM Case WHERE RecordTypeId = :OSCARCOMMRTID AND Reason1__c = :reason AND IsClosed = false)';
