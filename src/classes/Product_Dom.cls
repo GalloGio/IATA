@@ -192,11 +192,13 @@ public class Product_Dom {
     }
 
     public static void sendProducts2Zuora(Map<Id, Product2> productById) {
-        //-- Send Products to Zuora
-        Integer zMax = (Test.isRunningTest()) ? 200 : Utility.getIntegerSetting('ZCALLOUT_MAX_PRODUCTS');
-        if (productById.size() > zMax)
+        //-- Send Products to Zuora 
+        Integer zMax = (Test.isRunningTest()) ? 200 : Utility.getIntegerSetting('ZCALLOUT_MAX_PRODUCTS');  
+        if(productById.size() > zMax)
             Database.executeBatch(new Product_Batch('saveZProducts', productById.values()), zMax);
-        else if (System.isFuture())
+        else if(System.isFuture())
+            Product_Svc.saveZProducts(productById.keySet());
+        else
             //Product_Svc.saveZProductsFuture(productById.keySet());
             System.enqueueJob(new Product_Svc.saveZProductsQueueable(productById.keySet()));
     }
