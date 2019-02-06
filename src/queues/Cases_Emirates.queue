@@ -5,17 +5,17 @@
     <name>Cases – Emirates</name>
     <queueMembers>
         <roles>
-            <role>APCustomerServiceManagerA</role>
-            <role>APCustomerServiceStaffA</role>
-            <role>AfricaMECSManagerA</role>
-            <role>AfricaMEFirstLevelCSStaffA</role>
-            <role>AfricaMESecondLevelCSStaffA</role>
-            <role>AmericasCustomerServiceManagerA</role>
-            <role>AmericasCustomerServiceStaffA</role>
-            <role>ChinaNAsiaCustomerServiceManagerA</role>
-            <role>ChinaNAsiaCustomerServiceStaffA</role>
-            <role>MADHubCSManagerA</role>
-            <role>MADHubCSstaffA</role>
+            <role>APCustomerServiceManager</role>
+            <role>APCustomerServiceStaff</role>
+            <role>AfricaMECSManager</role>
+            <role>AfricaMEFirstLevelCSStaff</role>
+            <role>AfricaMESecondLevelCSStaff</role>
+            <role>AmericasCustomerServiceManager</role>
+            <role>AmericasCustomerServiceStaff</role>
+            <role>ChinaNAsiaCustomerServiceManager</role>
+            <role>ChinaNAsiaCustomerServiceStaff</role>
+            <role>MADHubCSManager</role>
+            <role>MADHubCSstaff</role>
         </roles>
     </queueMembers>
     <queueSobject>

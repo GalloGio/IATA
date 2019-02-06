@@ -3731,18 +3731,6 @@
         <template>SIS_Help_Desk/SIS_Help_Desk_Escalated_Case_Notification_to_L2_Support_Team</template>
     </alerts>
     <alerts>
-        <fullName>SIS_Escalated_Case_Assignment_during_non_business_hours</fullName>
-        <description>SIS Escalated Case Assignment during non-business hours</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>guerreirom@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>sishelp@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>SIS_Help_Desk/SIS_Help_Desk_Case_Assignment</template>
-    </alerts>
-    <alerts>
         <fullName>SIS_Escalated_Case_notification_to_the_Customer</fullName>
         <description>SIS Escalated Case notification to the Customer</description>
         <protected>false</protected>
