@@ -1197,6 +1197,11 @@
         <label>Massive FOP Creation</label>
     </standardValue>
     <standardValue>
+        <fullName>Massive PCI Creation</fullName>
+        <default>false</default>
+        <label>Massive PCI Creation</label>
+    </standardValue>
+    <standardValue>
         <fullName>Monthly Report</fullName>
         <default>false</default>
         <label>Monthly Report</label>
@@ -1220,6 +1225,11 @@
         <fullName>Other</fullName>
         <default>false</default>
         <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>PCI automatic renewal</fullName>
+        <default>false</default>
+        <label>PCI automatic renewal</label>
     </standardValue>
     <standardValue>
         <fullName>Phone</fullName>
@@ -1255,15 +1265,5 @@
         <fullName>Web SAF</fullName>
         <default>false</default>
         <label>Web SAF</label>
-    </standardValue>
-    <standardValue>
-        <fullName>PCI automatic renewal</fullName>
-        <default>false</default>
-        <label>PCI automatic renewal</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Massive PCI Creation</fullName>
-        <default>false</default>
-        <label>Massive PCI Creation</label>
     </standardValue>
 </StandardValueSet>
