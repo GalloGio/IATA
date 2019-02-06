@@ -78,11 +78,6 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
-        <displayedFields>
-            <field>Email</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <label>TrackingHistory</label>
     </fieldSets>
     <fields>
