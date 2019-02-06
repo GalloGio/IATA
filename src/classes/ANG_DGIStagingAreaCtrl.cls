@@ -126,11 +126,12 @@ public without sharing class ANG_DGIStagingAreaCtrl {
     }
 
     public void accept(){ 
-        
+
         addCertificate = true;
         try{
-            Case oscarCase = [Select id, ParentId, ownerid from Case where OSCAR__c = :stagingFs.OSCAR_GDI__c];
+            Case oscarCase = [Select id, ParentId from Case where OSCAR__c = :stagingFs.OSCAR_GDI__c];
 
+            //set the status of the "Confirm Financial Security Information" in the GDI OSCAR as "Passed"
             AMS_OSCAR__c oscar = new AMS_OSCAR__c (Id =stagingFs.OSCAR_GDI__c);
             oscar.step50__c = 'Passed';
             oscar.status__c = 'Closed';
@@ -139,7 +140,6 @@ public without sharing class ANG_DGIStagingAreaCtrl {
             stagingFs.Reception_Date__c = System.today();
             update stagingFs;
 
-            //set the status of the "Confirm Financial Security Information" in the GDI OSCAR as "Passed"
             if(hasAdendum)
                 performAcceptancewithAdendum(oscarCase);
             else
