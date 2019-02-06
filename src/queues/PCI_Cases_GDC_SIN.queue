@@ -5,7 +5,7 @@
     <name>PCI Cases GDC SIN</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>APAgencyManagementStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>APAgencyManagementStaff</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>
