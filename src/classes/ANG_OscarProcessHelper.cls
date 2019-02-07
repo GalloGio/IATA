@@ -115,7 +115,7 @@ global class ANG_OscarProcessHelper {
             /*** INC456141 start ***/
             if((theAccount.Location_Type__c == 'HE' && theAccount.Location_Class__c == 'T') || (theAccount.Location_Type__c == 'AE' && theAccount.Location_Class__c == 'T')) {
             	isIATACodeGenerationRunning = false;
-            	return new String[]{'-1','TIDS accounts are not valid in NewGen Countries. Please either correct the location class or type from the Account.','-1'};
+            	return new String[]{'-1','Location type T does not match with location class HE/AE. Please either correct the location class or location type on the Account level to match T with HO/BR or P with HE/AE.','-1'};
             }
 
             if((theAccount.ANG_IsNewGenAgency__c == true && (theAccount.Location_Type__c == 'HO' || theAccount.Location_Type__c == 'BR'))) {
