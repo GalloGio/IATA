@@ -123,7 +123,7 @@ public with sharing class TaskTriggerHelper {
     
     public static KPI_Value__c createKPIReportingValue(String caseId, Integer points, String kpiReportingId){
         KPI_Value__c valueToAdd = new KPI_Value__c();
-a
+
         valueToAdd.Name = 'Value_' + caseId + '_' + DateTime.now().hour()+'_'+DateTime.now().minute()+'_'+DateTime.now().second();
         valueToAdd.FDS_KPI_Reporting__c = kpiReportingId;
         valueToAdd.CaseNumber__c = caseId;
