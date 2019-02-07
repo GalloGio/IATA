@@ -1295,6 +1295,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>alyacoubz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>armientoe@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1375,11 +1379,19 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>ozkanm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>paredesc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodriguezp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1392,10 +1404,6 @@
         </recipients>
         <recipients>
             <recipient>saremyt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>schuchardm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2940,7 +2948,15 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>alyacoubz@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>armientoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>badanovam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2965,6 +2981,10 @@
         </recipients>
         <recipients>
             <recipient>girondoe@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>guzmanro@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3012,11 +3032,31 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>naumenkoy@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>navar@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ogandoi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ozkanm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>paredesc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>rodriguezp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3041,6 +3081,14 @@
         </recipients>
         <recipients>
             <recipient>suwal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>taverasr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>theryg@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3669,18 +3717,6 @@
         <senderAddress>sishelp@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>SIS_Help_Desk/SIS_Help_Desk_Escalated_Case_Notification_to_L2_Support_Team</template>
-    </alerts>
-    <alerts>
-        <fullName>SIS_Escalated_Case_Assignment_during_non_business_hours</fullName>
-        <description>SIS Escalated Case Assignment during non-business hours</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>guerreirom@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>sishelp@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>SIS_Help_Desk/SIS_Help_Desk_Case_Assignment</template>
     </alerts>
     <alerts>
         <fullName>SIS_Escalated_Case_notification_to_the_Customer</fullName>

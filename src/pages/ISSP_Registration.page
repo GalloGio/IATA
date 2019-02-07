@@ -1,225 +1,272 @@
 <apex:page controller="ISSP_Registration" showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}" action="{!redirectID}">
-    
+  
+  <html>
   <head>
-      <title>{!CASE(communityName, 'CNS', 'CNS', 'IATA')}</title>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-PWSNSM3');
+    </script>
+    <!-- End Google Tag Manager -->
+    <script>
+      function getDevice() {
+        if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+            return "Tablet";
+        } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+            return "Mobile";
+        } else {
+            return "Desktop";
+        }
+      }      
+
+      window.dataLayer = window.dataLayer||[];
+      dataLayer.push({
+        "user": {
+          "loginStatus": "Logged Out",
+          "memberStatus": "No",
+        },
+        "page": {
+          "requestURI": window.location.pathname + window.location.search + "&ga_step=step1-account-registration",
+          "device": getDevice(),
+          "breadcrumb": "{!$Label.ISSP_Registration_RegistrationProcess}", 
+          "language": "{!lang}"
+        }                  
+      });
+
+      function lastStepPush() {
+        dataLayer.push({
+          "event": "VPV",
+          "page": {
+            "requestURI": window.location.pathname + window.location.search + "&ga_step=step4-account-registration"
+          }
+        });
+      }        
+
+
+    </script>
+
+    <title>{!CASE(communityName, 'CNS', 'CNS', 'IATA')}</title>
   </head>
  
-  <apex:outputPanel rendered="{!displayNewCaseForm}" >
-  </apex:outputPanel>
-  
-  <script>
-    window.onload = function() {
-      if (navigator.geolocation && typeof localStorage !== "undefined") {
-        if("{!sRefererCommunity}"=="iec") {
-          localStorage.setItem("geoCode", "auto");
-          navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+  <body>
+
+    <apex:outputPanel rendered="{!displayNewCaseForm}" >
+    </apex:outputPanel>
+
+    <script>
+      window.onload = function() {
+        if (navigator.geolocation && typeof localStorage !== "undefined") {
+          if("{!sRefererCommunity}"=="iec") {
+            localStorage.setItem("geoCode", "auto");
+            navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+          }
         }
+      };
+      
+      function geoSuccess(pos) {
+        var crd = pos.coords;
+        var lat = crd.latitude;
+        var lng = crd.longitude;
+        getGeoCode(lat, lng);
       }
-    };
-    
-    function geoSuccess(pos) {
-      var crd = pos.coords;
-      var lat = crd.latitude;
-      var lng = crd.longitude;
-      getGeoCode(lat, lng);
-    }
-    
-    function geoError(err) {
-      localStorage.setItem("geoCode", "auto");
-    }
-    
-    function getGeoCode(lat, lng) {
-      var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng;
-      try {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, false);
-        xhr.send(null);
-        
-        if(xhr.status == "200") {
-          var cObj = JSON.parse(xhr.response);
-            var cCode = "auto";
-            if(cObj.results) {
-            for(var i=0; i<cObj.results.length; i++) {
-                var cAddr = cObj.results[i];
-                for(var j=0; j<cAddr.address_components.length; j++) {
-                  var elem = cAddr.address_components[j];
-                  if(elem.types && elem.types.length == 2 && elem.types[0] == "country" && elem.types[1] == "political") {
-                    cCode = elem.short_name.toLowerCase();
-                    break;
-                  }
-                }
-                if(cCode != "auto") {
-                break;                    
-                }
-              }
-            }
-            localStorage.setItem("geoCode", cCode);   
-        } else {
-          console.log(xhr.status);
-          localStorage.setItem("geoCode", "auto");
-        } 
-      } catch(e) {
-        console.log(e);
+      
+      function geoError(err) {
         localStorage.setItem("geoCode", "auto");
       }
-    }
-  </script>
-  
-  <apex:outputPanel rendered="{!show90Days}" >
-      <script>
-        alert('{!$Label.ISSP_Frozen_User_Alert_Message}');
-        if ("{!sRefererCommunity}"=="iss")  window.location.replace('/ISSP_Login');
-        else if ("{!sRefererCommunity}"=="iec") {         
-          if (document.URL.indexOf("/iec")!=-1) window.location.replace('/iec/IEC_Home');
-          else window.location.replace('/IEC_Home');
+      
+      function getGeoCode(lat, lng) {
+        var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lng;
+        try {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', url, false);
+          xhr.send(null);
+          
+          if(xhr.status == "200") {
+            var cObj = JSON.parse(xhr.response);
+              var cCode = "auto";
+              if(cObj.results) {
+              for(var i=0; i<cObj.results.length; i++) {
+                  var cAddr = cObj.results[i];
+                  for(var j=0; j<cAddr.address_components.length; j++) {
+                    var elem = cAddr.address_components[j];
+                    if(elem.types && elem.types.length == 2 && elem.types[0] == "country" && elem.types[1] == "political") {
+                      cCode = elem.short_name.toLowerCase();
+                      break;
+                    }
+                  }
+                  if(cCode != "auto") {
+                  break;                    
+                  }
+                }
+              }
+              localStorage.setItem("geoCode", cCode);   
+          } else {
+            console.log(xhr.status);
+            localStorage.setItem("geoCode", "auto");
+          } 
+        } catch(e) {
+          console.log(e);
+          localStorage.setItem("geoCode", "auto");
         }
-      </script>
-  </apex:outputPanel>
+      }
+    </script>
+    
+    <apex:outputPanel rendered="{!show90Days}" >
+        <script>
+          alert('{!$Label.ISSP_Frozen_User_Alert_Message}');
+          if ("{!sRefererCommunity}"=="iss")  window.location.replace('/ISSP_Login');
+          else if ("{!sRefererCommunity}"=="iec") {         
+            if (document.URL.indexOf("/iec")!=-1) window.location.replace('/iec/IEC_Home');
+            else window.location.replace('/IEC_Home');
+          }
+        </script>
+    </apex:outputPanel>
 
-  <apex:composition template="{!templatename}">
-    <apex:define name="body">
-      <!-- FIRST LOG BOX  -->
-      <div class="registration_page" id="Registration">
-        <div class="{!CASE(communityName, 'CNS', 'logocns', 'logo')}"> </div>
-        <div class="col-md-6 col-md-push-3">
-          <div class="panel panel-default">
-            <div class="panel-heading2">
-              <h3 class="panel-title">{!$Label.ISSP_Registration_RegistrationProcess}</h3>
-            </div>
-            
-            <!-- MESSAGE BOX -->
-          <div class="panel panel-default" style="display:{!if(showConfirmMessage,'','none')}" id="confirmMessage">
-            <div class="panel-body">
-              <h4 class="list-group-item-heading">{!$Label.ISSP_Registration_Thank_you}</h4>
+    <apex:composition template="{!templatename}">
+      <apex:define name="body">
+        <!-- FIRST LOG BOX  -->
+        <div class="registration_page" id="Registration">
+          <div class="{!CASE(communityName, 'CNS', 'logocns', 'logo')}"> </div>
+          <div class="col-md-6 col-md-push-3">
+            <div class="panel panel-default">
+              <div class="panel-heading2">
+                <h3 class="panel-title">{!$Label.ISSP_Registration_RegistrationProcess}</h3>
+              </div>
               
-              <script>
-              var val = '{!showConfirmMessage}';
-              if (val == "true") { 
-                   setTimeout(function(){
-                         var url = document.URL;
-                         var first;
-                         var domain;
-                         if (url.indexOf(".org/")!=-1) { 
-                            domain = ".org/";
-                         }
-                         else if (url.indexOf(".com/")!=-1) {
-                            domain = ".com/";
-                         }
-                         else if (url.indexOf(".net/")!=-1) {
-                            domain = ".net/";
-                         }
-                         //alert("domain: " +domain);
-                         
-                         first=url.split(domain);
-                        
-                         var redir = first[0] + domain + '{!urlredirect}'; 
-                         if ('{!communityName}' !== undefined && '{!communityName}' !== '') { redir += '?CommunityName={!communityName}';}
-                         //if (redir.indexOf("iec/IEC_Login")!=-1 && domain == ".org/")
-                         if (redir.indexOf("IEC_Login")!=-1 && domain == ".com/")
-                            redir = "IEC_Login";
-                         location.href = redir;
-                         },
-                   5000);
-               }
-              </script>
-              <p class="list-group-item-text">{!$Label.ISSP_Registration_PleaseCheckYourMail}</p>
-              <p class="list-group-item-text">{!$Label.ISSP_Registration_Redirection}</p>
-            </div>
-          </div>
-          <!-- END MESSAGE BOX  -->
-          
-          
-          
-          
-          
-        
-        
-        
-            
-            <apex:form styleclass="login_box" forceSSL="true" rendered="{!(!showConfirmMessage)}">
-              <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
-                <strong>{!$Label.ISSP_Error} </strong>
-                <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
-                    <p><apex:outputText value="{!er}" escape="false" /></p>
-                </apex:repeat>
-              </div>
-              <div class="form-group">
-                <label for="email"><span class="required">*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
-                  <div class="hiddenerror" style="display: none;">
-                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Email}</p>
-                  </div>                  
-                <apex:inputField styleclass="form-control rec"  id="email" value="{!con.email}"/>
-              </div>
-              <div class="form-group" style="{!if(whichcountry=="CN",'display:none','')}">
-                 <div>
-                  <apex:panelGrid columns="1" id="reCAPTCHAGrid" style="margin-left: 45px;" >
-                            <c:IECreCAPTCHA cttr="{!reCAPTCHA}" lang="{!lang}"/>
-                 </apex:panelGrid>
-                 
-                 <!-- 
-                    <img src="//captchator.com/captcha/image/{!captchaId}" />
-                    <br/><br/>
-                    <apex:inputText value="{!captchaAnswer}" html-placeholder="{!$Label.ISSP_Enter_Value}" />
-                  -->
+              <!-- MESSAGE BOX -->
+            <div class="panel panel-default" style="display:{!if(showConfirmMessage,'','none')}" id="confirmMessage">
+              <div class="panel-body">
+                <h4 class="list-group-item-heading">{!$Label.ISSP_Registration_Thank_you}</h4>
                 
-                </div>
-              </div>
-              <!--
-              <div class="form-group" style="display:{!IF(reCAPTCHA.verified,'none','')}">
-                 <div>
-                  <c:ISSP_reCAPTCHA cttr="{!reCAPTCHA}"/>
-                </div>
-              </div>
-              -->
-              <!-- T&C Section is hidden, but checked/accepted by default -->
-              <!-- <div class="form-group" style="display:none"> -->
-              <div class="form-group" >
-                <div class="checkbox">
-                  <label>
-                    <apex:inputCheckbox value="{!accept}" selected="false"/>
-                    <a target="_blank" href="http://www.iata.org/customer-portal/Pages/terms.aspx">{!$Label.ISSP_Registration_acceptGeneralConditions}</a> 
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2" onClick="if(!validateNewUser())return false;" action="{!submitUser}" value="{!$Label.ISSP_Next}" id="next"/>
-              </div>
-            </apex:form> 
-          </div>
-          <!-- END FIRST LOG BOX  -->
-         
-        </div>
-      </div>
-    </apex:define>
-  </apex:composition>
-  
-  
-  
-  
-              <script>
-              
-                <!--alert("{!lang}"); -->
-              //in registration page
-                if ({!displayNewCaseForm})
-                    $("#NewCasePopUp").modal('show');
-                
-                function validateNewUser(){
-                  var flag = true;
-                  $('.rec').each(function (){
-                          $(this).parents('.form-group').removeClass('has-error');
-                          if(!$(this).val()){
-                              flag = false;
-                              $(this).parents('.form-group').addClass('has-error');
-                          }
+                <script>
+                var val = '{!showConfirmMessage}';
+                if (val == "true") {
+
+                  //GA - Last step of registration process - Thank you page
+                  lastStepPush();
+
+                     setTimeout(function(){
+                           var url = document.URL;
+                           var first;
+                           var domain;
+                           if (url.indexOf(".org/")!=-1) { 
+                              domain = ".org/";
+                           }
+                           else if (url.indexOf(".com/")!=-1) {
+                              domain = ".com/";
+                           }
+                           else if (url.indexOf(".net/")!=-1) {
+                              domain = ".net/";
+                           }
+                           //alert("domain: " +domain);
+                           
+                           first=url.split(domain);
                           
-                      }
-                  )
-                    
-                  return flag;
-                    
+                           var redir = first[0] + domain + '{!urlredirect}'; 
+                           if ('{!communityName}' !== undefined && '{!communityName}' !== '') { redir += '?CommunityName={!communityName}';}
+                           //if (redir.indexOf("iec/IEC_Login")!=-1 && domain == ".org/")
+                           if (redir.indexOf("IEC_Login")!=-1 && domain == ".com/")
+                              redir = "IEC_Login";
+                           location.href = redir;
+                           },
+                     5000);
+                 }
+                </script>
+                <p class="list-group-item-text">{!$Label.ISSP_Registration_PleaseCheckYourMail}</p>
+                <p class="list-group-item-text">{!$Label.ISSP_Registration_Redirection}</p>
+              </div>
+            </div>
+            <!-- END MESSAGE BOX  -->
+            
+              <apex:form styleclass="login_box" forceSSL="true" rendered="{!(!showConfirmMessage)}">
+                <div class="alert alert-danger" style="display:{!if(errorMessage.size==0,'none','')}">
+                  <strong>{!$Label.ISSP_Error} </strong>
+                  <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
+                      <p><apex:outputText value="{!er}" escape="false" /></p>
+                  </apex:repeat>
+                </div>
+                <div class="form-group">
+                  <label for="email"><span class="required">*</span>{!$ObjectType.Contact.fields.Email.Label}</label>
+                    <div class="hiddenerror" style="display: none;">
+                      <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_Email}</p>
+                    </div>                  
+                  <apex:inputField styleclass="form-control rec"  id="email" value="{!con.email}"/>
+                </div>
+                <div class="form-group" style="{!if(whichcountry=="CN",'display:none','')}">
+                   <div>
+                    <apex:panelGrid columns="1" id="reCAPTCHAGrid" style="margin-left: 45px;" >
+                              <c:IECreCAPTCHA cttr="{!reCAPTCHA}" lang="{!lang}"/>
+                   </apex:panelGrid>
+                   
+                   <!-- 
+                      <img src="//captchator.com/captcha/image/{!captchaId}" />
+                      <br/><br/>
+                      <apex:inputText value="{!captchaAnswer}" html-placeholder="{!$Label.ISSP_Enter_Value}" />
+                    -->
+                  
+                  </div>
+                </div>
+                <!--
+                <div class="form-group" style="display:{!IF(reCAPTCHA.verified,'none','')}">
+                   <div>
+                    <c:ISSP_reCAPTCHA cttr="{!reCAPTCHA}"/>
+                  </div>
+                </div>
+                -->
+                <!-- T&C Section is hidden, but checked/accepted by default -->
+                <!-- <div class="form-group" style="display:none"> -->
+                <div class="form-group" >
+                  <div class="checkbox">
+                    <label>
+                      <apex:inputCheckbox value="{!accept}" selected="false"/>
+                      <a target="_blank" href="http://www.iata.org/customer-portal/Pages/terms.aspx">{!$Label.ISSP_Registration_acceptGeneralConditions}</a> 
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2" onClick="if(!validateNewUser())return false;" action="{!submitUser}" value="{!$Label.ISSP_Next}" id="next"/>
+                </div>
+              </apex:form> 
+            </div>
+            <!-- END FIRST LOG BOX  -->
+           
+          </div>
+        </div>
+      </apex:define>
+    </apex:composition>
+    
+    
+    <script>
+    
+      <!--alert("{!lang}"); -->
+      //in registration page
+      if ({!displayNewCaseForm})
+          $("#NewCasePopUp").modal('show');
+      
+      function validateNewUser(){
+        var flag = true;
+        $('.rec').each(function (){
+                $(this).parents('.form-group').removeClass('has-error');
+                if(!$(this).val()){
+                    flag = false;
+                    $(this).parents('.form-group').addClass('has-error');
                 }
                 
-              </script>
-        
+            }
+        )
+          
+        return flag;
+          
+      }
+      
+    </script>
+
+  </body>
+
+  </html>
 
 </apex:page>

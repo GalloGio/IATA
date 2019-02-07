@@ -2309,6 +2309,18 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
         </valueSet>
     </fields>
     <label>Charge Request</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Local_Charge_Request__c</columns>
+        <columns>Airline_code_3digit__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>LCR - {0000}</displayFormat>
         <label>Charge Request Name</label>

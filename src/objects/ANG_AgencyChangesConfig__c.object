@@ -152,10 +152,10 @@
         <columns>SETUP_TYPE</columns>
         <columns>TC_Accreditation_Type__c</columns>
         <columns>TCA_Not_Applicable_Steps__c</columns>
-        <columns>TC_Legal_Name__c</columns>
         <columns>TC_Legal_Status__c</columns>
-        <columns>TC_Location__c</columns>
         <columns>TC_Ownership__c</columns>
+        <columns>TC_Location__c</columns>
+        <columns>TC_Legal_Name__c</columns>
         <columns>TC_Hierarchy__c</columns>
         <columns>TC_Location_Type__c</columns>
         <columns>TC_Major_Shareholding__c</columns>

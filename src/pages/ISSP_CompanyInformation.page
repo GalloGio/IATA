@@ -447,34 +447,34 @@
                 </div>
                 <!--- end row -->
                 <!-- Admin information for Active users -->
-                <apex:outputPanel rendered="{!AND(portalAdmins.size>0, theUserContact.User_Portal_Status__c != 'Pending Approval')}">
+                <apex:outputPanel rendered="{!AND(listAdmins.size>0, theUserContact.User_Portal_Status__c != 'Pending Approval')}">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 class="blueback">{!$Label.ISSP_Homepage_Portal_Delegates_Administrators}</h5>
                                 <table class="table table-hover">
                                     <div style="margin-left: 100px;">
-                                        <apex:repeat value="{!portalAdmins}" var="admin">
+                                        <apex:repeat value="{!listAdmins}" var="admin">
                                             <tr>
                                                 <td>
                                                     <apex:outputText value="({0}) {1} {2} ">
-                                                        <apex:param value="{!admin.TeamMemberRole}"/>
-                                                        <apex:param value="{!admin.User.Contact.Salutation}"/>
-                                                        <apex:param value="{!admin.User.Contact.Name}"/>
+                                                        <apex:param value="{!admin.userRole}"/>
+                                                        <apex:param value="{!admin.salutation}"/>
+                                                        <apex:param value="{!admin.name}"/>
                                                     </apex:outputText>
                                                 </td>
                                                 <td>
-                                                    <apex:outputField value="{!admin.User.Contact.Email}"/>
+                                                    <apex:outputText value="{!admin.email}"/>
                                                 </td>
                                                 <td>
                                                     <apex:outputText value=" {0}">
-                                                        <apex:param value="{!admin.User.Contact.Account.BillingCountry}"/>
+                                                        <apex:param value="{!admin.country}"/>
                                                     </apex:outputText>
                                                 </td>
                                             </tr>
                                             <!-- AEF -->
                                             <div style="display:none;">
-                                                <apex:outputField value="{!admin.User.Contact.AccountId}" />
+                                                <apex:outputText value="{!admin.accountId}" />
                                             </div>
                                         </apex:repeat>
                                     </div>
@@ -485,20 +485,20 @@
                     </div>
                 </apex:outputPanel>
                 <!-- Admin information for Pending Approval users -->
-                <apex:outputPanel rendered="{!AND(portalAdmins.size>0, theUserContact.User_Portal_Status__c == 'Pending Approval')}">
+                <apex:outputPanel rendered="{!AND(listAdmins.size>0, theUserContact.User_Portal_Status__c == 'Pending Approval')}">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 class="blueback">{!$Label.ISSP_Homepage_Portal_Delegates_Administrators}</h5>
                                 <table class="table table-hover">
                                     <div style="margin-left: 100px;">
-                                        <apex:repeat value="{!portalAdmins}" var="admin">
+                                        <apex:repeat value="{!listAdmins}" var="admin">
                                             <tr>
                                                 <td>
                                                     <apex:outputText value="({0}) {1} {2} ">
-                                                        <apex:param value="{!admin.TeamMemberRole}"/>
-                                                        <apex:param value="{!admin.User.Contact.Salutation}"/>
-                                                        <apex:param value="{!admin.User.Contact.Name}"/>
+                                                        <apex:param value="{!admin.userRole}"/>
+                                                        <apex:param value="{!admin.salutation}"/>
+                                                        <apex:param value="{!admin.name}"/>
                                                     </apex:outputText>
                                                 </td>
                                             </tr>
