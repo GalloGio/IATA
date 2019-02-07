@@ -149,7 +149,7 @@ public with sharing class CaseTriggerHelper {
         List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c, CaseNumber__c FROM KPI_Value__c 
                                                WHERE CaseNumber__c IN :allConsidered
                                                AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE];
-        Map<Id, KPI_Value__c> typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
+        typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
         for(KPI_Value__c cc: claimingClosures)
         {   // todo: assuming there are no dupes this should be fine, otherwise it's quite undeterministic
             typeOfActionClosureMap.put(cc.CaseNumber__c, cc);
