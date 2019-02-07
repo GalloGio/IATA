@@ -115,6 +115,7 @@
     </fields>
     <fields>
         <fullName>Review_Owner__c</fullName>
+        <description>Contains the names of 3 review owners: "Arnaud Francq", "Koen Karsbergen" and "Claudia falconi"</description>
         <externalId>false</externalId>
         <label>Review Owner</label>
         <required>false</required>

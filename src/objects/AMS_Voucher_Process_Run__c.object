@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object that logs information of a Voucher calculation process.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -85,6 +86,7 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
+        <description>Represents the Status of the Voucher Process: Either "Started" or "Ender"</description>
         <externalId>false</externalId>
         <label>Status</label>
         <required>true</required>

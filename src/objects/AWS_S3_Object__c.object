@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Access__c</fullName>
+        <description>Represents the type of access to the object: "FULL_CONTROL" for both read an write permissions, "public-read" for read only permissions, "WRITE" for write permissions</description>
         <externalId>false</externalId>
         <label>Access</label>
         <required>false</required>
@@ -84,6 +85,7 @@
     </fields>
     <fields>
         <fullName>Bucket_Name__c</fullName>
+        <description>Name of the AWS bucket</description>
         <externalId>false</externalId>
         <label>Bucket Name</label>
         <length>122</length>
@@ -95,6 +97,7 @@
     </fields>
     <fields>
         <fullName>Content_Type__c</fullName>
+        <description>Represents the type of the content. These are: image/gif, image/jpeg, image/png, jpg, gif, text/html, text/plain</description>
         <externalId>false</externalId>
         <label>Content Type</label>
         <required>false</required>
@@ -149,6 +152,7 @@
     </fields>
     <fields>
         <fullName>File_Name__c</fullName>
+        <description>Name of the File</description>
         <externalId>false</externalId>
         <label>File Name</label>
         <length>50</length>
@@ -160,6 +164,7 @@
     </fields>
     <fields>
         <fullName>Preview_Link__c</fullName>
+        <description>Link to open the resource in a new window</description>
         <externalId>false</externalId>
         <formula>HYPERLINK(&apos;https://s3.amazonaws.com/&apos;&amp; Bucket_Name__c &amp;&apos;/&apos;&amp; File_Name__c , 
 &apos;https://s3.amazonaws.com/&apos; &amp; Bucket_Name__c &amp;&apos;/&apos;&amp; File_Name__c )</formula>

@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Represents a shopping cart containing Cart Items for IEC</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -81,6 +82,7 @@
     </fields>
     <fields>
         <fullName>Total_Items_in_Cart__c</fullName>
+        <description>Sums the amount of items in IEC Shopping Cart</description>
         <externalId>false</externalId>
         <label>Total Items in Cart</label>
         <summarizedField>IEC_Cart_Item__c.Quantity__c</summarizedField>

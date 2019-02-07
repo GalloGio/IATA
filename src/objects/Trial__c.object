@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Contact__c</fullName>
+        <description>Related Contact</description>
         <externalId>false</externalId>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
@@ -98,6 +99,7 @@
     </fields>
     <fields>
         <fullName>Trial_Date__c</fullName>
+        <description>Beginning of trial date</description>
         <externalId>false</externalId>
         <label>Trial Date</label>
         <required>true</required>

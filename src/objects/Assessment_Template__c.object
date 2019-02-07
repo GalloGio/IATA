@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Country_ISO_Code__c</fullName>
+        <description>2-lettered Country Code</description>
         <externalId>false</externalId>
         <label>Country ISO Code</label>
         <length>2</length>
@@ -65,6 +66,7 @@
     </fields>
     <fields>
         <fullName>Country_Name__c</fullName>
+        <description>Country name</description>
         <externalId>false</externalId>
         <label>Country Name</label>
         <length>255</length>
@@ -75,6 +77,7 @@
     </fields>
     <fields>
         <fullName>Passenger_Cargo__c</fullName>
+        <description>Represents if the template is for Passangers ("P") or for Cargo ("C")</description>
         <externalId>false</externalId>
         <label>Passenger/Cargo</label>
         <required>false</required>

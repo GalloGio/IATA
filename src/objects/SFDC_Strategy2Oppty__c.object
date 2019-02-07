@@ -56,6 +56,7 @@
     <fields>
         <fullName>Opportunity_Name__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Opportunity</description>
         <externalId>false</externalId>
         <label>Opportunity Name</label>
         <referenceTo>Opportunity</referenceTo>
@@ -68,6 +69,7 @@
     <fields>
         <fullName>SFDC_Strategy__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Strategy</description>
         <externalId>false</externalId>
         <label>Strategy</label>
         <referenceTo>SFDC_Strategy__c</referenceTo>

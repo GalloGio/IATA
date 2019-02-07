@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Represents a non-compliant ISO country</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -55,6 +56,7 @@
     <fields>
         <fullName>Display_in_E_Com__c</fullName>
         <defaultValue>true</defaultValue>
+        <description>Flag that represents if the non-compliant country need to be displayed in E-Commerce app</description>
         <externalId>false</externalId>
         <label>Display in E-Com</label>
         <trackTrending>false</trackTrending>
@@ -62,6 +64,7 @@
     </fields>
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
+        <description>Related ISO Country</description>
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
@@ -74,6 +77,7 @@
     </fields>
     <fields>
         <fullName>Product__c</fullName>
+        <description>Related Product</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Product</label>

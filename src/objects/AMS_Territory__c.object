@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object is a child of the Appointment, it represents a limitation on the permission of selling tickets. The appointments are limited to their territories (if any).</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Appointment__c</fullName>
+        <description>Related Appointment(AMS)</description>
         <externalId>false</externalId>
         <label>Appointment (AMS)</label>
         <referenceTo>AMS_Inspection__c</referenceTo>
@@ -77,6 +79,7 @@
     <fields>
         <fullName>ISO_Country__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related ISO Country</description>
         <externalId>false</externalId>
         <label>ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
@@ -89,6 +92,7 @@
     <fields>
         <fullName>ISO_State__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related ISO State</description>
         <externalId>false</externalId>
         <label>ISO State</label>
         <lookupFilter>

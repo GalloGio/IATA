@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object stores the due dates, subject, related country and ID of a batch</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Country__c</fullName>
+        <description>ID of the related ISO Country</description>
         <externalId>false</externalId>
         <label>Country</label>
         <length>255</length>
@@ -65,6 +67,7 @@
     </fields>
     <fields>
         <fullName>Deadline_date__c</fullName>
+        <description>Due date for batch</description>
         <externalId>false</externalId>
         <label>Deadline date</label>
         <required>false</required>
@@ -84,6 +87,7 @@
     </fields>
     <fields>
         <fullName>Subject__c</fullName>
+        <description>Subject describing the aim of the batch</description>
         <externalId>false</externalId>
         <label>Subject</label>
         <length>255</length>

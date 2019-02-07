@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Represents multiple agency types used for IEC</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Agency_Program_Code__c</fullName>
+        <description>Holds a specific one letter value code for each Agency Program</description>
         <externalId>false</externalId>
         <label>Agency Program Code</label>
         <length>10</length>
@@ -64,6 +66,7 @@
     </fields>
     <fields>
         <fullName>Agency_Program__c</fullName>
+        <description>Represents the program of the Agency Type</description>
         <externalId>false</externalId>
         <label>Agency Program</label>
         <length>100</length>
@@ -74,6 +77,7 @@
     </fields>
     <fields>
         <fullName>Area_of_Activity__c</fullName>
+        <description>Represents the area of activity of the IEC Agency Type</description>
         <externalId>false</externalId>
         <label>Area of Activity</label>
         <length>100</length>

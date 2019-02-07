@@ -95,6 +95,7 @@
     </fields>
     <fields>
         <fullName>Help__c</fullName>
+        <description>Link to help for scripts</description>
         <externalId>false</externalId>
         <formula>(HYPERLINK(&quot;/servlet/servlet.FileDownload?file=015200000002o5K&quot;, &quot;Help for Scripts&quot;)) &amp; &quot; &quot; &amp; (IMAGE(&quot;/img/btn_help.gif&quot;, &quot;Help&quot;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

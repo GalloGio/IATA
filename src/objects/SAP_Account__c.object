@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Represents an account on SAP</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Related account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
@@ -85,6 +87,7 @@
     </fields>
     <fields>
         <fullName>SAP_Account_type__c</fullName>
+        <description>Represents the type of SAP Invoice type:  Cass Invoices, Passenger Invoices, Invoices, e-Commerce</description>
         <externalId>false</externalId>
         <label>Invoice Type</label>
         <required>false</required>

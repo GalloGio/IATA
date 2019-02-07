@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object is used to exclude Case subjects from Applications</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Application_Name__c</fullName>
+        <description>This is a picklist of applications that a case subject can be excluded from. "ANY" stands for all applications. "SIS" stands for SIS applications. "TTBS" stands for TTBS applications</description>
         <externalId>false</externalId>
         <label>Application Name</label>
         <required>false</required>

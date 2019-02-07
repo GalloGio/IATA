@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Country__c</fullName>
+        <description>Represents the name of the related ICCS Product Country</description>
         <externalId>false</externalId>
         <formula>ICCS_Product_Country__r.Country__r.Name</formula>
         <label>Country</label>
@@ -77,6 +78,7 @@
     <fields>
         <fullName>ICCS_Code__c</fullName>
         <caseSensitive>true</caseSensitive>
+        <description>Represents a unique code for ICCS currencies</description>
         <externalId>false</externalId>
         <label>ICCS Code</label>
         <length>32</length>
@@ -87,6 +89,7 @@
     </fields>
     <fields>
         <fullName>ICCS_Product_Country__c</fullName>
+        <description>Related ICCS Product Country</description>
         <externalId>false</externalId>
         <label>ICCS Product Country</label>
         <referenceTo>ICCS_Product_Country__c</referenceTo>
@@ -100,6 +103,7 @@
     </fields>
     <fields>
         <fullName>Product__c</fullName>
+        <description>Name of the Product that is related to the ICCS Product Country</description>
         <externalId>false</externalId>
         <formula>ICCS_Product_Country__r.Product__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -111,6 +115,7 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
+        <description>Represents the state of the currency. Can be "Active" or "Inactive". By default all currencies are active</description>
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>

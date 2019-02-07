@@ -88,6 +88,7 @@
     <fields>
         <fullName>GDP_Products_Account_View__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related GDP Products</description>
         <externalId>false</externalId>
         <label>GDP Products - Account View</label>
         <referenceTo>GDP_Products_Account_View__c</referenceTo>

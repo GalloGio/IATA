@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Results of test runs</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Comment__c</fullName>
+        <description>Comments</description>
         <externalId>false</externalId>
         <label>Comment</label>
         <length>32768</length>
@@ -63,6 +65,7 @@
     </fields>
     <fields>
         <fullName>ITS_Feedback__c</fullName>
+        <description>Feedback from ITS</description>
         <externalId>false</externalId>
         <label>ITS Feedback</label>
         <length>32768</length>
@@ -72,6 +75,7 @@
     </fields>
     <fields>
         <fullName>Result__c</fullName>
+        <description>Result of the UAT: "Pass" or "Fail"</description>
         <externalId>false</externalId>
         <label>Result</label>
         <required>false</required>
@@ -95,6 +99,7 @@
     </fields>
     <fields>
         <fullName>Sequence_Number__c</fullName>
+        <description>Related UAT's sequence number</description>
         <externalId>false</externalId>
         <formula>UAT_Scenario__r.Scenario_Sequence_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -108,6 +113,7 @@
     </fields>
     <fields>
         <fullName>UAT_ID__c</fullName>
+        <description>Related UAT</description>
         <externalId>false</externalId>
         <formula>CASESAFEID(UAT_Scenario__r.UAT__r.Id)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -119,6 +125,7 @@
     </fields>
     <fields>
         <fullName>UAT_Scenario__c</fullName>
+        <description>Related UAT Scenario</description>
         <externalId>false</externalId>
         <label>UAT Scenario</label>
         <referenceTo>UAT_Scenario__c</referenceTo>

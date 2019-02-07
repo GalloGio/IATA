@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Parent Account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>

@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Country_Profile__c</fullName>
+        <description>Related Country Profile</description>
         <externalId>false</externalId>
         <label>Country Profile</label>
         <referenceTo>Country_Profile__c</referenceTo>
@@ -68,6 +69,7 @@
     </fields>
     <fields>
         <fullName>Field__c</fullName>
+        <description>Represents the field name on Country Profile</description>
         <externalId>false</externalId>
         <label>Field</label>
         <length>100</length>
@@ -78,6 +80,7 @@
     </fields>
     <fields>
         <fullName>NewValue__c</fullName>
+        <description>Stores the new value of the represented field</description>
         <externalId>false</externalId>
         <label>NewValue</label>
         <length>32768</length>
@@ -87,6 +90,7 @@
     </fields>
     <fields>
         <fullName>OldValue__c</fullName>
+        <description>Stores the old value of the represented field</description>
         <externalId>false</externalId>
         <label>OldValue</label>
         <length>32768</length>

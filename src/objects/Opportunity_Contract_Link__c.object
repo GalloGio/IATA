@@ -57,6 +57,7 @@
     <fields>
         <fullName>Contract__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Contract</description>
         <externalId>false</externalId>
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>
@@ -69,6 +70,7 @@
     <fields>
         <fullName>Opportunity__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Opportunity</description>
         <externalId>false</externalId>
         <label>Opportunity</label>
         <referenceTo>Opportunity</referenceTo>

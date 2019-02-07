@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Recommends one product to another parent product</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Display_Order__c</fullName>
+        <description>Order in which to display the object</description>
         <externalId>false</externalId>
         <label>Display Order</label>
         <precision>18</precision>
@@ -66,6 +68,7 @@
     <fields>
         <fullName>Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>The parent product</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>
@@ -77,6 +80,7 @@
     </fields>
     <fields>
         <fullName>Recommended_Product_Number__c</fullName>
+        <description>Related Product's SAP Material Number</description>
         <externalId>false</externalId>
         <formula>Related_Product__r.SAP_Material_Number__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -88,6 +92,7 @@
     </fields>
     <fields>
         <fullName>Related_Product__c</fullName>
+        <description>Related Product</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Related Product</label>
@@ -99,6 +104,7 @@
     </fields>
     <fields>
         <fullName>Type__c</fullName>
+        <description>Type of the related product:"Associated" and "Substitution" products</description>
         <externalId>false</externalId>
         <label>Type</label>
         <required>false</required>

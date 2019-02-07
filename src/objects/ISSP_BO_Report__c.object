@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Report for Business Owners of ISSP, the report is being attached to this object</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Report_Date__c</fullName>
+        <description>Represents the date when the attachments were reported</description>
         <externalId>false</externalId>
         <label>Posted Date</label>
         <required>false</required>
@@ -62,6 +64,7 @@
     </fields>
     <fields>
         <fullName>Report_Date_format__c</fullName>
+        <description>Represents a text format of the same date. The format is MM/DD/YYYY</description>
         <externalId>false</externalId>
         <formula>CASE(
   MONTH( Report_Date__c),

@@ -56,6 +56,7 @@
     <fields>
         <fullName>Action_Case__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Case to take action</description>
         <externalId>false</externalId>
         <label>Action Case</label>
         <referenceTo>Case</referenceTo>
@@ -238,6 +239,7 @@
     </fields>
     <fields>
         <fullName>Complaint_Case__c</fullName>
+        <description>Case that hols the complaint</description>
         <externalId>false</externalId>
         <label>Complaint Case</label>
         <referenceTo>Case</referenceTo>

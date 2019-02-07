@@ -54,6 +54,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Log_Description__c</fullName>
+        <description>Description of the log</description>
         <externalId>false</externalId>
         <label>Log Description</label>
         <length>50</length>
@@ -64,6 +65,7 @@
     </fields>
     <fields>
         <fullName>New_Value__c</fullName>
+        <description>New Value</description>
         <externalId>false</externalId>
         <label>New Value</label>
         <length>18</length>
@@ -74,6 +76,7 @@
     </fields>
     <fields>
         <fullName>Old_Value__c</fullName>
+        <description>Old Value</description>
         <externalId>false</externalId>
         <label>Old Value</label>
         <length>18</length>
@@ -95,6 +98,7 @@
     <fields>
         <fullName>User__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related user who's logs are stored</description>
         <externalId>false</externalId>
         <label>User</label>
         <referenceTo>User</referenceTo>

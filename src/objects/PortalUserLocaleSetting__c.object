@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object for storing settings for a portal user</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -79,6 +80,7 @@
     </fields>
     <fields>
         <fullName>Default_Locale__c</fullName>
+        <description>Default local language</description>
         <externalId>false</externalId>
         <label>Default Locale</label>
         <required>false</required>
@@ -368,6 +370,7 @@
     </fields>
     <fields>
         <fullName>Time_Zone_S__c</fullName>
+        <description>Time zone of the portal user (SID)</description>
         <externalId>false</externalId>
         <label>Time Zone SID Key</label>
         <required>false</required>
@@ -1175,6 +1178,7 @@
     </fields>
     <fields>
         <fullName>Time_Zone__c</fullName>
+        <description>Time zone of the portal user</description>
         <externalId>false</externalId>
         <label>Time Zone</label>
         <required>false</required>
