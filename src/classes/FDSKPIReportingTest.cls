@@ -505,7 +505,34 @@ private class FDSKPIReportingTest {
 
     static testMethod void testCaseNOIKPIReporting2(){
 
-        setup2();
+       setupReportings();
+        Account a = ISSP_ObjectFactory.createNewAccount();
+        a.BillingCity = 'test';
+        a.Name = 'test';
+        insert a;
+
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId= a.Id;
+        contact.Email = 'test@test.com';
+        insert contact;
+
+        RecordType RT = [SELECT Id FROM RecordType WHERE sObjectType = 'Case' AND DeveloperName = 'SIDRA' LIMIT 1];
+
+        Case caseOpened = new Case();
+        caseOpened.Status = 'Action Needed';
+        caseOpened.RecordtypeId = RT.Id;
+        caseOpened.ContactId = contact.Id;
+        caseOpened.AccountId = contact.AccountId;
+        caseOpened.NOI_sent__c = null;
+        insert caseOpened;
+
+        Case caseOpened2 = new Case();
+        caseOpened2.Status = 'Action Needed';
+        caseOpened2.RecordtypeId = RT.Id;
+        caseOpened2.ContactId = contact.Id;
+        caseOpened2.AccountId = contact.AccountId;
+        caseOpened2.NOI_sent__c = null;
+        insert caseOpened2;
 
         Test.startTest();
 
