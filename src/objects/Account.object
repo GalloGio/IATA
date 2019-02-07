@@ -3944,6 +3944,18 @@ Airline_designator__c &amp;IATACode__c&amp;Site</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Amount_at_Risk__c</fullName>
+        <description>Theoretical Guarantee agent&apos;s should have</description>
+        <externalId>false</externalId>
+        <label>Amount at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>AnnualRevenue</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -15467,6 +15479,18 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_at_Risk__c</fullName>
+        <description>Agency risk management to keep track of Sales at Risk</description>
+        <externalId>false</externalId>
+        <label>Sales at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>SanctionNotice__c</fullName>
