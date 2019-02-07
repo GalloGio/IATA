@@ -295,10 +295,9 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		Boolean isMulticountry = acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
-		if(isMulticountry && acct.Location_Type__c != AMS_Utils.GE){
-			accountId = acct.ParentId;
-		}
-		else if(!isMulticountry && !this.headLocationTypesSet.contains(acct.Location_Type__c)){
+		if((isMulticountry && acct.Location_Type__c != AMS_Utils.GE) || 
+		   (!isMulticountry && !this.headLocationTypesSet.contains(acct.Location_Type__c))
+		){
 			accountId = acct.ParentId;
 		}
 		
