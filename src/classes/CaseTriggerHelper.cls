@@ -121,12 +121,12 @@ public with sharing class CaseTriggerHelper {
             System.debug('@@@ config rt: '+configsMap.get(CASE_ACTION_CASE_REOPENING).get('Cases_Global'));
             System.debug('@@@ old status: '+oldMap.get(c.Id).Status);
             System.debug('@@@ new status: '+newMap.get(c.Id).Status);
-            // case reopen
+            // case closure from reopen
             if(oldMap.get(c.Id).Status == CASE_STATUS_REOPEN  && newMap.get(c.Id).Status == CASE_STATUS_CLOSED
                && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
                    List<String> reopenReasons = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Reopening_Reason__c.split(',');
                    if(reopenReasons.contains(c.Reopening_reason__c)) {
-                       consideredForReopen.add(c.Id);
+                       consideredForClosure.add(c.Id);
                        allConsidered.add(c.Id);
                    }
                }
@@ -167,7 +167,7 @@ public with sharing class CaseTriggerHelper {
         for(Id cId: consideredForClosure) {
             String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
             
-            KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), 
+            KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), 
                                                                  Integer.valueOf(configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue()), 
                                                                  kpiReportingClosureId);
             kpiValuesToInsert.add(valueToInsert);
