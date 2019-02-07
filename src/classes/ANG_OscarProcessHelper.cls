@@ -112,7 +112,17 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1','In order to generate a IATA code you must first pass the Sanity Check.','-1'};
 
             }
+            /*** INC456141 start ***/
+            if((theAccount.Location_Type__c == 'HE' && theAccount.Location_Class__c == 'T') || (theAccount.Location_Type__c == 'AE' && theAccount.Location_Class__c == 'T')) {
+            	isIATACodeGenerationRunning = false;
+            	return new String[]{'-1','TIDS accounts are not valid in NewGen Countries. Please either correct the location class or type from the Account.','-1'};
+            }
 
+            if((theAccount.ANG_IsNewGenAgency__c == true && (theAccount.Location_Type__c == 'HO' || theAccount.Location_Type__c == 'BR'))) {
+            	isIATACodeGenerationRunning = false;
+            	return new String[]{'-1','NewGen Agencies cannot have location type = HO or BR.','-1'};
+            }
+            /*** INC456141 end ***/
             if(oscar.Process__c.containsIgnoreCase('NEW') && oscar.Account__r.Location_Type__c != 'HO' && oscar.Account__r.Location_Type__c != 'HE' && oscar.Account__r.Top_Parent__r.Status__c == AMS_Utils.ACC_S0_TERMINATED){
             	isIATACodeGenerationRunning = false;
             	System.debug('[ANG_OscarProcessHelper] IATA code generation is not allowed in hierarchies with HO/HE status Terminated.');
