@@ -382,11 +382,11 @@ private class FDSKPIReportingTest {
         }
 
         //for verification
-        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Case Reopening'];
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Case Closure'];
         List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
         //verify parent record
-        System.assertEquals(CASE_ACTION_CASE_REOPENING, kpiReportings.get(0).Type_Of_Action__c);
+        System.assertEquals(CASE_ACTION_CASE_CLOSURE, kpiReportings.get(0).Type_Of_Action__c);
 
         //verify child
         System.assertEquals(1, kpiValues.size());
@@ -454,7 +454,26 @@ private class FDSKPIReportingTest {
 
     static testMethod void testCaseNOIKPIReporting(){
 
-        setup();
+        setupReportings();
+        Account a = ISSP_ObjectFactory.createNewAccount();
+        a.BillingCity = 'test';
+        a.Name = 'test';
+        insert a;
+
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId= a.Id;
+        contact.Email = 'test@test.com';
+        insert contact;
+
+        RecordType RT = [SELECT Id FROM RecordType WHERE sObjectType = 'Case' AND DeveloperName = 'SIDRA' LIMIT 1];
+
+        Case caseOpened = new Case();
+        caseOpened.Status = 'Action Needed';
+        caseOpened.RecordtypeId = RT.Id;
+        caseOpened.ContactId = contact.Id;
+        caseOpened.AccountId = contact.AccountId;
+        caseOpened.NOI_sent__c = null;
+        insert caseOpened;
 
         Case caseToProcess = [SELECT Id, Status, RecordTypeId, Reason1__c, Reopening_reason__c, NOI_sent__c FROM Case LIMIT 1];
 
