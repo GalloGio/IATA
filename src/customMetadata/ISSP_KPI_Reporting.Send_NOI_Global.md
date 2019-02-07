@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Case_Record_Type__c</field>
-        <value xsi:type="xsd:string">Cases_Global</value>
+        <value xsi:type="xsd:string">SIDRA</value>
     </values>
     <values>
         <field>Field_API_Name__c</field>
