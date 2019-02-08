@@ -23539,6 +23539,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Sync Calendar</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_DownloadWarning</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_DownloadWarning</shortDescription>
+        <value>This operation may take few minutes. Please wait.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Opt_In</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>

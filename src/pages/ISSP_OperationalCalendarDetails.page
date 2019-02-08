@@ -12,7 +12,8 @@
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/dataTables.buttons.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.bootstrap.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/jszip.min.js')}"></script>
-<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.min.js')}"></script>
+<apex:includeScript value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.0.1.5.min.js')}"/>
+<!-- <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.min.js')}"></script> -->
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/vfs_fonts.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.html5.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.print.min.js')}"></script>
@@ -545,17 +546,12 @@
     }
 
     var generationCounter;
-    var totalNrFiles;
     var zipFile;
-    var percentage;
     function startDownload(opt, operations, remittance, countries, accountId, fileFormat) {
         generationCounter = null;
         zipFile = null;
-        percentage = 0;
-        totalNrFiles = 0;
         $('#downloadBtn').attr("disabled", true);
         $("#loading-download").show();
-        document.getElementById("loading-download-ptg").innerHTML = "0.00%";
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.createZipFile}',
             opt, operations, remittance, countries, accountId,
@@ -574,7 +570,6 @@
                         generationCounter = result.nrOfFiles;  
                     }
 
-                    totalNrFiles = generationCounter;
                     if(generationCounter == 0) {
                         alert("{!$Label.ISSP_FDS_NoResults}");
                         return;
@@ -662,7 +657,8 @@
             var metafile = buildPDFFile(file);
             var pdffile = pdfMake.createPdf(metafile);
             pdffile.getBuffer(function(buffer) {
-                addPDFFileToFolder(folder, new Blob([buffer], {type: 'application/pdf'}), file.fileName + ".pdf");
+                //addPDFFileToFolder(folder, new Blob([buffer], {type: 'application/pdf'}), file.fileName + ".pdf");
+                addPDFFileToFolder(folder, buffer, file.fileName + ".pdf");
             }); 
         });
     }
@@ -670,16 +666,9 @@
     function addPDFFileToFolder(folder, file, filename) {
         folder.file(filename, file);
         generationCounter--;
-        setPercentage();
         if(generationCounter == 0) {
             finishDownload();
         }
-    }
-
-    function setPercentage() {
-        var pctg = ((totalNrFiles - generationCounter) * 100) / totalNrFiles;
-        pctg = pctg.toFixed(2);
-        document.getElementById("loading-download-ptg").innerHTML = (pctg + "%");
     }
 
     function finishDownload() {
@@ -886,13 +875,7 @@
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">{!$Label.ISSP_FDS_PopupTitle}</h4>
                                 <div id="loading-download">
-                                    <div id="loading-download-bkg"></div>
-                                    <div id="#loading-download-ctn">
-                                        <apex:image value="{!URLFOR($Resource.ISSP_Loaders, 'loaders/IataLoadingImage.gif')}" />
-                                        <!-- <img src="{!URLFOR($Resource.)}"/> -->
-                                        <div id="loading-download-ptg">
-                                        </div>
-                                    </div>
+                                    {!$Label.ISSP_OperationalCalendar_DownloadWarning}
                                 </div>
                             </div>            
                             <div class="modal-body">

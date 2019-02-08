@@ -702,14 +702,14 @@ global without sharing class ISSP_OperationalCalendarController {
         queryStr += ' ORDER BY Settlement_Day__c';
 
         System.debug('queryStr: ' + queryStr);
-        List<Operational_Calendar__c> operationsCalendar = (List<Operational_Calendar__c>) Database.query(queryStr); 
+        //List<Operational_Calendar__c> operationsCalendar = (List<Operational_Calendar__c>) Database.query(queryStr); 
 
         Map<String,Map<String,FileWrapper>> mapFilesByFolder = new Map<String,Map<String,FileWrapper>>();
         Integer currentYear = Date.today().year();
 
-        System.debug('Operations: ' + operationsCalendar);
+        //System.debug('Operations: ' + operationsCalendar);
 
-        for(Operational_Calendar__c opc : operationsCalendar) {            
+        for(Operational_Calendar__c opc : Database.query(queryStr)) {            
             Schema.FieldSet fieldSchema = opc.Operation_Type__c.contains('BSP') ? bspFields : cassFields;
             List<Schema.FieldSetMember> fieldsList = fieldSchema.getFields();
             String orientation = fieldsList.size() > 6 ? 'landscape' : 'portrait';
