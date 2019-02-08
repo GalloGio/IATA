@@ -253,16 +253,17 @@ public class ANG_MulticountryHelper {
 
 
 	/**
-	 * Verifies if an MC HE account has an empty Remittance_frequency__c
+	 * Checks if an Multicountry account (GE or HE) 
+	 * has an empty Remittance_frequency__c
 	 * NEWGEN-4850
 	 * 
 	 * @param oscar: AMS_OSCAR__c
 	 * @return Boolean
 	 */
-	public static Boolean accountHEhasRemittenceFrequencyEmpty(AMS_OSCAR__c oscar){
-		return ((String.isEmpty(getPaxRemittanceFrequencyByID(oscar.AMS_Online_Accreditation__c)))
-			&& oscar.Location_Type__c == AMS_Utils.HE
-			&& oscar.Process__c == AMS_Utils.MCAE);
+	public static Boolean multicountryAccountHasRemittenceFrequencyEmpty(AMS_OSCAR__c oscar){
+		return ( String.isEmpty(getPaxRemittanceFrequencyByID(oscar.AMS_Online_Accreditation__c))
+			&& ((oscar.Location_Type__c == AMS_Utils.HE && oscar.Process__c == AMS_Utils.MCAE) 
+				|| oscar.Location_Type__c == AMS_Utils.GE));
 	}
 
 	/**
