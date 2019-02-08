@@ -283,10 +283,8 @@ public class AMS_AgencyAChangeCodeHandler {
         Id rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         Id newNGRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
-        //NEWGEN-4850
-        Id rtMC = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Multicountry_AE');
-
-        Set<Id> oscarRecordTypes = new Set<Id>{rtNew,newNGRT,rtMC};
+        //NEWGEN-4852
+        Set<Id> oscarRecordTypes = new Set<Id>{rtNew,newNGRT,AMS_Utils.RECTYPE_MCAE, AMS_Utils.RECTYPE_NEWGE};
 
         Set<Id> oscarIds = new Set<Id>();
 
@@ -312,9 +310,11 @@ public class AMS_AgencyAChangeCodeHandler {
                 if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || (oscar.Process__c == AMS_Utils.MCAE && oscar.Account__r.Location_Type__c == AMS_Utils.HE))
                     accIdList.add(oscar.Account__c);
             }
+            System.debug('[ANG_OscarProcessHelper] List of accounts to be copied: ' + accIdList);
             if(!accIdList.isEmpty()) {
-                System.debug('[ANG_OscarProcessHelper] Start Copying account information into Child staging area');
+                System.debug('[ANG_OscarProcessHelper] Call asynchronous process ANG_MulticountryCopyParentInfo for Change Code - FIN');
                 ID jobID = System.enqueueJob(new ANG_MulticountryCopyParentInfo(accIdList, 'FIN'));
+                System.debug('[ANG_OscarProcessHelper] Launching job ID: ' + jobID);
             }       
 
         }else{
