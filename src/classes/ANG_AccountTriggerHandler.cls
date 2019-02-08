@@ -69,7 +69,7 @@ public class ANG_AccountTriggerHandler {
 
 		//AND ( RecordType.DeveloperName = 'IATA_Agency', OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )
 		for(Account a : triggerNew){
-			if(a.RecordTypeID != RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency'))
+			if(a.RecordTypeID != RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'))
 				continue;
 
 			if(Trigger.isInsert || ( oldMap.get(a.Id).TradeName__c <> a.TradeName__c || oldMap.get(a.Id).Name <> a.Name || oldMap.get(a.Id).Short_Name__c <> a.Short_Name__c || oldMap.get(a.Id).IATACode__c <> a.IATACode__c)){
@@ -86,7 +86,7 @@ public class ANG_AccountTriggerHandler {
 	private void updateRiskStatus() {
 
 		List<Account> accs = new List<Account>();
-		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
+		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.GE, AMS_Utils.HO, AMS_Utils.AO};
 
 		for(Account acc : triggerNew){
 			if(topLocationTypes.contains(acc.Location_Type__c) && (Trigger.isInsert || hasChangedValuesAccount(oldMap.get(acc.Id), acc))){
@@ -285,6 +285,8 @@ public class ANG_AccountTriggerHandler {
 	public void updateRiskEventStatus (){
 		set<Id> inactiveAccsIdSet = new set<Id>();
 		set<Id> activeAccsIdSet = new set<Id>();
+		set<Id> inactivateAcctsSet = new set<Id>();
+
 		List<ANG_Agency_Risk_Event__c> riskEventsToInactiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> riskEventsToActiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> upsertRiskEventsList = new List<ANG_Agency_Risk_Event__c>();
@@ -295,14 +297,22 @@ public class ANG_AccountTriggerHandler {
 				inactiveAccsIdSet.add(a.id);
 			else if( oldMap.get(a.id).status__c != a.Status__c && oldMap.get(a.id).status__c == AMS_Utils.ACC_S0_TERMINATED)
 				activeAccsIdSet.add(a.id);
+			
+			/*When changing accreditation type from Cash to Cashless, any active Risk Event should be updated to status "Inactive_Cashless"*/
+			if(oldMap.get(a.id).ANG_Accreditation_Model__c == 'Cash' && a.ANG_Accreditation_Model__c == 'Cashless')
+				inactivateAcctsSet.add(a.id);
 		}
 
 		
 		//create set with modified Accs
 		set<id> accIdSet = new set<id>(activeAccsIdSet);
 		accIdSet.addAll(inactiveAccsIdSet);
+		accIdSet.addAll(inactivateAcctsSet);
 
-		//get all related risk Events 
+		//get all related risk Events
+		if(accIdSet.isEmpty()) 
+			return;
+			
 		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
 		
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
@@ -312,6 +322,8 @@ public class ANG_AccountTriggerHandler {
 				
 			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
 				re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+			}else if( inactivateAcctsSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c <> ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
+				re.ang_event_status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
 			}
 
 		}
@@ -569,7 +581,8 @@ public class ANG_AccountTriggerHandler {
 			accsIds.add(a.Id);
 
 		Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
-		List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
+		List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'),
+		 agOpMap.keySet());
 
 		Integer aux = 0;
 		for(AMS_Operation__c op: opCodes){

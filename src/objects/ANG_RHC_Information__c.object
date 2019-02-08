@@ -52,6 +52,36 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>Display_On_Currency</fullName>
+        <description>ANG_ChangeRHCCurrency page: controls the fields to be displayed</description>
+        <displayedFields>
+            <field>ANG_AccountId__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_IATA_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>CurrencyIsoCode</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_RHC_Amount__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_RHC_Amount_Provisional__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Display On Currency</label>
+    </fieldSets>
     <fields>
         <fullName>ANG_AccountId__c</fullName>
         <description>Holds the id of the account to wich the RHC record is related.</description>
@@ -160,7 +190,7 @@
         <fullName>ANG_IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>ANG_AccountId__r.IATACode__c</formula>
-        <label>ANG IATA Code</label>
+        <label>IATA Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -327,6 +357,51 @@
         <errorMessage>You are not allowed to confirm a new RHC amount for a terminated agent</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Change_the_RHC_currency</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Change the RHC currency</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/43.0/apex.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/support/console/43.0/integration.js&quot;)} 
+
+
+try{
+    var result = sforce.connection.query(&quot;Select ANG_AccountId__r.ANG_Accreditation_Model__c, ANG_AccountId__r.Location_Type__c From ANG_RHC_Information__c Where Id = &apos;{!ANG_RHC_Information__c.Id}&apos;&quot;);
+
+    var records = result.getArray(&quot;records&quot;);
+    var rhc;
+
+    if (records.length &gt; 0)
+        rhc = records[0];
+                else
+                    throw &apos;RHC record not found&apos;;
+    
+                if (rhc.ANG_AccountId__r.ANG_Accreditation_Model__c != &apos;Multicountry&apos; || rhc.ANG_AccountId__r.Location_Type__c != &apos;GE&apos;)
+                    throw &apos;This functionality is only available for GoGlobal agents&apos;;       
+                                
+    if (sforce.console.isInConsole()) {
+    
+        sforce.console.getEnclosingPrimaryTabId(openPrimarytab);   
+
+        function openPrimarytab(result) {
+            var primaryTabId = result.id;
+			sforce.console.openSubtab(primaryTabId , &apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;, true, &apos;RHC Currency&apos;, null);
+        };
+                                
+    } else {
+       window.open(&apos;/apex/ANG_ChangeRHCCurrency?id={!ANG_RHC_Information__c.Id}&apos;,&apos;_blank&apos;,&apos;height=450,width=600&apos;);
+    }
+                                                                
+                
+} catch (err) {
+    alert(err);
+}</url>
+    </webLinks>
     <webLinks>
         <fullName>Confirm_RHC</fullName>
         <availability>online</availability>

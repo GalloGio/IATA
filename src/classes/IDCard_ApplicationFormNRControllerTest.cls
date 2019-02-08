@@ -337,8 +337,8 @@ private class IDCard_ApplicationFormNRControllerTest {
     	
     	InitIDCard_ApplicationFormNRControllerTest();
     	
-    	Id rtacc = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        Id rtcon = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+        Id rtacc = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id rtcon = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c( Name = 'Australia',
                     ISO_Code__c = '12',
@@ -440,7 +440,8 @@ private class IDCard_ApplicationFormNRControllerTest {
                                                    
         cs = (list<Contact>)(database.query(query));
          
-        
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
+
         List<ID_Card_Application__c> idcs = new List<ID_Card_Application__c>();
         idcs.add(IDCardApplicationFactory.createIDCardApplication(cs.get(0), 'New'));
         idcs.add(IDCardApplicationFactory.createIDCardApplication(cs.get(1), 'New'));

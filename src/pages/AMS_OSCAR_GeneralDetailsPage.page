@@ -176,7 +176,7 @@
        </apex:outputPanel>
     </apex:outputPanel>
      
-    <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!accreditationObj != null}">
+    <apex:pageBlock mode="maindetail" tabStyle="AMS_Pax_Accreditation_Form__c" title="Account Detail" rendered="{!and(accreditationObj != null, showStagingArea)}">
 
     
         <apex:pageBlockButtons location="both">
@@ -217,7 +217,7 @@
             <apex:pageBlockSectionItem >&nbsp;</apex:pageBlockSectionItem>
 
             <apex:repeat value="{!accreditationFields}" var="field">
-                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.rendered, field.name != 'Remittance_frequency__c')}">
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.rendered, field.name != 'Remittance_frequency__c', field.name != 'Preferred_RHC_currency__c')}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
                     <apex:outputField value="{!accreditationObj[field.name]}" >
                         <apex:inlineEditSupport event="{!field.event}" showonEdit="saveButton,cancelButton" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" />
@@ -237,7 +237,7 @@
                 </apex:pageBlockSectionItem>
 
                  <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == true)}">
-                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>    
                     <apex:outputPanel >
                             <apex:outputLabel id="mRFLabel" value="{!remittanceFrequencyToShow}"/>
                             <apex:outputPanel id="multipick" style="display: none;">
@@ -250,6 +250,19 @@
                                 btn_up_down="true"
                                 readonly="{!IF(OR(NOT(field.inlineEdit),isCertificationOSCAR),'true','false')}"
                                 /> 
+                            </apex:outputPanel>   
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem> 
+
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Preferred_RHC_currency__c')}">
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
+                    <apex:outputPanel >
+                            <apex:outputLabel id="mRFLabel" value="{!accreditationObj[field.name]}"/>
+                            <apex:outputPanel id="multipick" style="display: none;">
+                               <apex:selectList value="{!accreditationObj[field.name]}" size="1" >
+                            <apex:selectOptions value="{!ItemsForPreferredRHC}"/>
+
+                        </apex:selectList>
                             </apex:outputPanel>   
                     </apex:outputPanel>
                 </apex:pageBlockSectionItem>
@@ -276,21 +289,21 @@
         });
 
         function remittanceFrequencyChange() {
-            if(!{!isNewAE}){
+            if(!({!isNewAE}||({!isNewMulticountryAE} && {!isAEAccount}))){
                 $('[id$=saveButton]')[0].style.display = '';
                 $('[id$=cancelButton]')[0].style.display = '';
-            }
+            }   
         }
 
         function showMultiPick() {
-            if(!{!isNewAE}){
+            if(!({!isNewAE}||{!isNewMulticountryAE})){
                 $('[id$=multipick]')[0].style.display = '';
                 $('[id$=mRFLabel]')[0].style.display = 'none';
             }
         }
 
         function showCPickList() {
-            if(!{!isNewAE}){
+            if(!({!isNewAE}||({!isNewMulticountryAE} && {!isAEAccount}))){
                 $('[id$=cPicklist]')[0].style.display = '';
                 $('[id$=outputRF]')[0].style.display = 'none';
             }
@@ -332,7 +345,9 @@
 
     </apex:form>
     
-    <hr/>
+    <apex:outputPanel rendered="{!showStagingArea}">
+    	<hr/>
+    </apex:outputPanel>
 
     <apex:detail id="detailInfo" subject="{!oscarObj}" relatedList="true"  title="false" rendered="{!IF(oscarObj != null, true, false)}" rerender="{!oscarObj}" inlineEdit="true" oncomplete="refreshTab()"/>
 

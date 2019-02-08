@@ -26,9 +26,7 @@ private class AMS_UpdateAccountStateTest {
         states.add(stt6);
         insert states;
 
-        Map<string, Id>  agenciesRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Agency__c'}).get('AMS_Agency__c');
-        
-        AMS_Agency__c a4 = new AMS_Agency__c(Country__c = ctry1.id, RecordTypeId = agenciesRT.get('PASSENGER'), Name='Test Agency4', IATAcode__c = '1234561', Chk_dgt__c = '8', Legal_Name_1__c = 'Test Agency4', Legacy_External_ID__c = '12345618', Legacy_System__c = 'AIMS',OwnerId = UserInfo.getUserId());
+        AMS_Agency__c a4 = new AMS_Agency__c(Country__c = ctry1.id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agency__c', 'PASSENGER'), Name='Test Agency4', IATAcode__c = '1234561', Chk_dgt__c = '8', Legal_Name_1__c = 'Test Agency4', Legacy_External_ID__c = '12345618', Legacy_System__c = 'AIMS',OwnerId = UserInfo.getUserId());
         insert a4;
 	}
 	
@@ -118,7 +116,7 @@ private class AMS_UpdateAccountStateTest {
 			Company_Type__c = 'A',
 			IATACode__c = '100',
 			IATA_ISO_Country__c = country.Id,
-			RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 		);
 
 		insert account;

@@ -1,10 +1,16 @@
 public with sharing class AMS_InspectionTriggerHandler {
 
+	/*AMSU-161 - begin*/
+	public static void handleBeforeInsert(List<AMS_Inspection__c> newValues) {
+		AMS_InspectionHelper.processGSA_GSSA_HASLagency(newValues);
+	}
+	/*AMSU-161 - end*/
 
 	public static void handleAfterInsert(List<AMS_Inspection__c> oldValues,List<AMS_Inspection__c> newValues) {
 
 		processAgency(cleanListWithoutAgencyId(oldValues),cleanListWithoutAgencyId(newValues));
 		enforce1To1RelationshipAppointmentMSO();
+		AMS_InspectionHelper.createTerritoryForAppointments(newValues); //AMSU-188
 	
 	}
 

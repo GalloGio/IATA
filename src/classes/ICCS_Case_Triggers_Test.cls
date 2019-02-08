@@ -32,15 +32,11 @@ private class ICCS_Case_Triggers_Test {
         insert pcr;
         
         // Create an Airline HQ account & a contact for it
-        //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
-        //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
-        //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
-        //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -57,9 +53,7 @@ private class ICCS_Case_Triggers_Test {
         test.startTest();
         
         // Create a Case for the Account
-        //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_ICCS_Process'];
-        //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
-        Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
+        Id ICCS_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
         insert cs;
@@ -289,15 +283,11 @@ private class ICCS_Case_Triggers_Test {
         insert pcr;
         
         // Create an Airline HQ account & a contact for it
-        //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
-        //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
-        //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
-        //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -314,9 +304,7 @@ private class ICCS_Case_Triggers_Test {
         test.startTest();
         
         // Create a Case for the Account
-        //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_ICCS_Process'];
-        //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
-        Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
+        Id ICCS_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
         Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
         insert cs;
@@ -336,6 +324,8 @@ private class ICCS_Case_Triggers_Test {
         system.assertEquals('Closed', cs.Status);
         system.assertEquals(true, cs.isClosed);
         
+		
+		/*
         List<Product_Assignment__c> lstPAs = [SELECT Id, Status__c FROM Product_Assignment__c];
         system.assertEquals(1, lstPAs.size());
         system.assertEquals('Active', lstPAs[0].Status__c);        
@@ -403,7 +393,7 @@ private class ICCS_Case_Triggers_Test {
         system.assertEquals(3, lstPAs.size());
         
         
-        
+        */
         // Create a product removal Case, close it and test that the Product Assignments have been inactivated
         /*Case cs3 = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS � Remove Product', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');
@@ -429,6 +419,7 @@ private class ICCS_Case_Triggers_Test {
         System.AssertEquals(3,lstCases.size()); // Check that the case was not inserted; 3 cases present, cs1, cs3 and cs4
         */
         test.stopTest();
+
     }
     
     
@@ -453,15 +444,11 @@ private class ICCS_Case_Triggers_Test {
         insert pcr;
         
         // Create an Airline HQ account & a contact for it
-        //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
-        //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
-        //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
-        //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -489,148 +476,6 @@ private class ICCS_Case_Triggers_Test {
         ProductAssignmentRelListCtrl page = new ProductAssignmentRelListCtrl(new ApexPages.StandardController(a));
         system.assertEquals(3,page.pas.size());
     }
-    
-    /*
-    static testMethod void test3() {
-        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-        User testUser = New User(
-
-            Alias = 'standt', Email='standarduser@testorg.com',
-            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-            LocaleSidKey='en_US', ProfileId = testProfile.Id,
-            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
-            License_Cost_Center__c = 'ISF005CH01'
-        );
-        insert testUser;
-    
-        // Create a new ISO Country
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
-        insert country;
-        
-        // Create a new Product
-        Product2 p = new Product2(Name = 'BSP', Family = 'ICCS');
-        insert p;
-        
-        // Create a new ICCS Product Country for this product
-        ICCS_Product_Country__c pct = new ICCS_Product_Country__c(Product__c = p.Id, Country__c = country.Id);
-        insert pct;
-        
-        // Create a new ICCS Product Currency for this ICCS Product Country
-        ICCS_Product_Currency__c pcr = new ICCS_Product_Currency__c(CurrencyIsoCode = 'USD', ICCS_Product_Country__c = pct.Id, ICCS_Code__c = 'BSPFR1', Status__c = 'Active');
-        insert pcr;
-        
-        // Create an Airline HQ account & a contact for it
-        //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
-        //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
-        Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
-        insert a;
-        
-        //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
-        //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
-        Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
-        insert c;
-        
-        // Create a new ICCS Bank Account for the airline
-        List<ICCS_Bank_Account__c> ba = new List<ICCS_Bank_Account__c>(); 
-        ba.add( new ICCS_Bank_Account__c(Name = 'QR1111', Account__c = a.Id, CurrencyIsoCode = 'USD', Status__c = 'Active', Description__c = 'asd'));
-        ba.add( new ICCS_Bank_Account__c(Name = 'QR2222', Account__c = a.Id, CurrencyIsoCode = 'USD', Status__c = 'Active', Description__c = 'asd'));
-        ba.add( new ICCS_Bank_Account__c(Name = 'QR3333', Account__c = a.Id, CurrencyIsoCode = 'USD', Status__c = 'Active', Description__c = 'asd'));
-        ba.add( new ICCS_Bank_Account__c(Name = 'QR4444', Account__c = a.Id, CurrencyIsoCode = 'USD', Status__c = 'Active', Description__c = 'asd'));
-        ba.add( new ICCS_Bank_Account__c(Name = 'QR5555', Account__c = a.Id, CurrencyIsoCode = 'USD', Status__c = 'Active', Description__c = 'asd'));
-        insert ba;
-        
-        //////////////////////////
-        test.startTest();
-        
-        // Create a Case for the Account
-        //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'IDFS_ICCS_Process'];
-        //Id ICCS_RT_Id = Schema.SObjectType.Case.RecordTypeInfosByName.get('FDS ICCS Product Management').RecordTypeId ;
-        Id ICCS_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
-        Case cs = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Assign Product', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');  
-        insert cs;
-        
-        List<Case> lstCases = [SELECT Id FROM Case];
-        System.AssertEquals(1,lstCases.size());
-         
-        //need to have a bank account when case status changes to Submitted
-        ICCS_BankAccount_To_Case__c batc = new ICCS_BankAccount_To_Case__c(Case__c=cs.id, ICCS_Bank_Account__c=ba[0].id, Split_Type__c=TOT);
-        insert batc;
-        
-        cs.ownerid = testUser.id;
-        cs.Status = 'Closed';
-        update cs;
-        
-        cs = [SELECT Id, Subject, Status, isClosed FROM Case WHERE Id = :cs.Id];
-        system.assertEquals('Closed', cs.Status);
-        system.assertEquals(true, cs.isClosed);
-        
-        List<Product_Assignment__c> lstPAs = [SELECT Id, Status__c FROM Product_Assignment__c];
-        system.assertEquals(1, lstPAs.size());
-        system.assertEquals('Active', lstPAs[0].Status__c);
-        
-        // Create a product update case, close it and check the product assignments have been changed        
-        Case cs4 = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Update Payment Instructions', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');
-        insert cs4;
-        
-        List<ICCS_BankAccount_To_Case__c> batcs = new List<ICCS_BankAccount_To_Case__c>();
-        batcs.add( new ICCS_BankAccount_To_Case__c(Case__c=cs4.id, ICCS_Bank_Account__c=ba[0].id, Split_Type__c=PER, Percentage__c=50));
-        batcs.add( new ICCS_BankAccount_To_Case__c(Case__c=cs4.id, ICCS_Bank_Account__c=ba[4].id, Split_Type__c=PER, Percentage__c=30));
-        
-        
-        boolean exceptionRaised = false;
-        try{insert batcs;}catch(Exception e){exceptionRaised = true;}
-        system.assertEquals(false,exceptionRaised);
-        
-        cs4.Status = 'Closed';
-        try{update cs4;}catch(Exception e){exceptionRaised = true;}
-        system.assertEquals(true,exceptionRaised); 
-        
-        exceptionRaised = false;
-        insert new ICCS_BankAccount_To_Case__c(Case__c=cs4.id, ICCS_Bank_Account__c=ba[3].id, Split_Type__c=BAL);       
-        
-        cs4.ownerid = testUser.id;
-        cs4.Status = 'Closed';
-        update cs4;
-
-        
-        lstPAs = [SELECT Id, Status__c FROM Product_Assignment__c WHERE Status__c = 'Inactive'];
-        system.assertEquals(0, lstPAs.size());
-        lstPAs = [SELECT Id, Status__c FROM Product_Assignment__c];
-        system.assertEquals(3, lstPAs.size());
-        
-        
-        
-        // Create a product removal Case, close it and test that the Product Assignments have been inactivated
-        Case cs3 = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Remove Product', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');
-        insert cs3;
-        
-        cs3.Status = 'Closed';
-        update cs3;
-        
-        lstPAs = [SELECT Id, Status__c FROM Product_Assignment__c WHERE Status__c = 'Inactive'];
-        system.assertEquals(3, lstPAs.size());
-        
-        
-        // Try to create a removal case with the same product combination and test that it is not inserted
-        /*exceptionRaised = false;
-        try {
-            Case cs2 = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS � Remove Product', Status = 'Open',
-                        ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'USD');
-            insert cs2;
-        } catch(Exception e) {exceptionRaised = true;}
-        
-        system.assertEquals(true,exceptionRaised); 
-        lstCases = [SELECT Id FROM Case WHERE RecordTypeId = :ICCS_RT_Id];
-        System.AssertEquals(3,lstCases.size()); // Check that the case was not inserted; 3 cases present, cs1, cs3 and cs4
-        *//*
-        test.stopTest();
-    }
-    */
     
     
     static testMethod void test4() {
@@ -662,15 +507,11 @@ private class ICCS_Case_Triggers_Test {
         insert pcr;
         
         // Create an Airline HQ account & a contact for it
-        //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
-        //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
-        //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
-        //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -678,11 +519,10 @@ private class ICCS_Case_Triggers_Test {
         ICCS_Bank_Account__c ba = new ICCS_Bank_Account__c(Name = 'QR1111', Account__c = a.Id, CurrencyIsoCode = 'USD', Status__c = 'Active', Description__c = 'asd');
         insert ba;
         
-        //////////////////////////
         test.startTest();
         
         // Create a Case for the Account
-        Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
+        Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
         Case cs = new Case(RecordTypeId = RT_ICCS_BA_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Update Bank Account', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Bank_Account__c = ba.Id, CurrencyIsoCode = 'EUR');  
         insert cs;
@@ -750,15 +590,11 @@ private class ICCS_Case_Triggers_Test {
         insert pcr;
         
         // Create an Airline HQ account & a contact for it
-        //RecordType RT_AirlineHQ = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'IATA_Airline'];
-        //Id AirlineHQ_RT_Id = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', RecordTypeId = AirlineHQ_RT_Id);
         insert a;
         
-        //RecordType RT_ContactStd = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Standard_Contact'];
-        //Id ContactStd_RT_Id = Schema.SObjectType.Contact.RecordTypeInfosByName.get('Standard').RecordTypeId ;
-        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact');
+        Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test@test.com', AccountId = a.Id, RecordTypeId = ContactStd_RT_Id);
         insert c;
         
@@ -766,10 +602,9 @@ private class ICCS_Case_Triggers_Test {
         ICCS_Bank_Account__c ba = new ICCS_Bank_Account__c(Name = 'QR1111', Account__c = a.Id, CurrencyIsoCode = 'USD', Status__c = 'Active', Description__c = 'asd');
         insert ba;
         
-        //////////////////////////
         test.startTest();
         
-        Id RT_ICCS_CD_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_CitiDirect');
+        Id RT_ICCS_CD_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_CitiDirect');
         
         // Create a Case for the Account
         

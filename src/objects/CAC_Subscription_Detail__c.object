@@ -60,7 +60,7 @@
         <inlineHelpText>Technical use to perform actions against the RDS Database directly in order to update service or suspend it</inlineHelpText>
         <label>Actions</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -144,7 +144,7 @@
         <relationshipLabel>CAC Subscription Details</relationshipLabel>
         <relationshipName>CAC_Subscription_Details</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -167,7 +167,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Is the Service Authorized Usage shared among the different web service of the same subscription</inlineHelpText>
         <label>Share Authorized Usage</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -224,7 +224,7 @@
         <relationshipLabel>CAC Subscription Details</relationshipLabel>
         <relationshipName>CAC_Subscription_Details</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -254,7 +254,7 @@
     </listViews>
     <nameField>
         <label>Subscription Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>CAC Subscription Details</pluralLabel>

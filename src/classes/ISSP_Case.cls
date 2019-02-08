@@ -1,15 +1,13 @@
 public without sharing class ISSP_Case {
 
-    private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
-    private static String AME_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Africa & Middle East').RecordTypeId;
-    private static String AMERICAS_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Americas').RecordTypeId;
-    private static String APAC_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Asia & Pacific').RecordTypeId;
-    private static String CHINA_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - China & North Asia').RecordTypeId;
-    private static String EUROPE_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Europe').RecordTypeId;
-    private static String IDFS_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Complaint (IDFS ISS)').RecordTypeId;
-    private static String INTER_DPC_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Inter DPCs').RecordTypeId;
-    //private static String AGENT_ACCREDITATION_PORTAL_SERVICE = 'Become an IATA Accredited Agent';
-    //private static String AIRLINE_PARTICIPATION_PORTAL_SERVICE = 'Join BSP / CASS';
+    private static Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+    private static Id AME_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
+    private static Id AMERICAS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
+    private static Id APAC_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ExternalCasesIDFSglobal');
+    private static Id CHINA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia');
+    private static Id EUROPE_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+    private static Id IDFS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ComplaintIDFS');
+    private static Id INTER_DPC_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
     private static String AIRLINE_PARTICIPATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AirlineParticipation__c;
     private static String AIRLINE_PARTICIPATION_CHANGE_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AirlineParticipation_MinorChange__c;
@@ -179,6 +177,11 @@ public without sharing class ISSP_Case {
                 return new PageReference('/ISSP_ModelA_Onboarding?caseId=' + caseId);
             }
 
+            //if case is a SIS Joining Form
+            if(newCase.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process' && newCase.Classification_SIS__c == 'SIS Membership'
+                    && newCase.Status == 'Draft' && !newCase.isClosed && !newCase.Owner.Name.StartsWith('Recycle Bin')){
+                return new PageReference('/ISSP_SISMembershipApplicationForm?id=' + caseId + '&step=2');
+            }
             // If Case is an ICCS Case, redirect to ICCS Service
 			Set<String> recordTypesSet = new Set<String>{
 				'FDS ASP Management',
@@ -255,7 +258,6 @@ public without sharing class ISSP_Case {
     }
 
     public ISSP_Case() {
-        System.debug('xx2 Controller ');
         newCase = new Case();
 
         showAP = false;
@@ -266,24 +268,19 @@ public without sharing class ISSP_Case {
         popContact();
 
         //TF - SP9-C5
-        ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
+        ID FDScaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
         String recordTypeId = ApexPages.currentPage().getParameters().get('recordTypeId');
 
         //AS - SP10; get the recordtyype name for new cases, esp. for SIS
         String recordTypeName;
         If(recordTypeId <> null) {
-            recordTypeName = [SELECT DeveloperName, Name FROM RecordType WHERE Id = :recordTypeId].Name;
+            recordTypeName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', recordTypeId).Name;
         }
 
         //get parameters
         String paramTopic = ApexPages.currentPage().getParameters().get('topic');
         String paramSubtopic = ApexPages.currentPage().getParameters().get('subtopic');
         if (paramTopic != null && paramSubtopic != null) {
-            //newCase.Description = Label.ISSP_F2CTopic + ' - '
-            //+ paramTopic.replace('+',' ') + '\n'
-            //+ Label.ISSP_F2CSubTopic + ' - '
-            //+ paramSubtopic.replace('+',' ');
-
             newCase.Type = EncodingUtil.urlDecode(paramSubtopic, 'UTF-8');
             caseTypeSelectionInit = EncodingUtil.urlDecode(paramSubtopic, 'UTF-8');
 
@@ -364,7 +361,7 @@ public without sharing class ISSP_Case {
         String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
         //Verify if user is a PWC profile
         if (profileName.startsWith('ISS Portal PwC')) {  isPWCProfile = true; }
-        if (profileName.startsWith('ISS Portal DPC') ) {  isDPCUser = true; }
+        if (profileName.startsWith('ISS Portal DPC Admin') ) {  isDPCUser = true; }
         if (profileName.startsWith('ISS Portal Agency') ) {  isAgencyUser = true; }
         if (profileName.startsWith('ISS Portal GSA') ) {  isGSAUser = true; }
 
@@ -394,11 +391,12 @@ public without sharing class ISSP_Case {
                 isEditMode = true;
 
 
-            //Survey Handle
+            //Survey Handle 
             mySurveyCompletedVariable  = false ;
+            //RN-INC428791 - remove live agent chat rt
             List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
                     FROM Instant_Surveys__c
-                    WHERE Relationship_to_Case__c = :newCase.Id]);
+                    WHERE Relationship_to_Case__c = :newCase.Id and recordType.developername != 'Live_Agent_Chat']);
             if (Survey_List != null && Survey_List.size() > 0) {
                 mySurveyCompletedVariable = true ;
             }
@@ -638,7 +636,7 @@ public without sharing class ISSP_Case {
                 Boolean isIATA = false;
                 if(whoToContact == 'IATA') isIATA = true;
                 if(!isIATA ) {
-                    newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                     newCase.Account_Concerned__c = whoToContact;
                 }
                 
@@ -661,8 +659,6 @@ public without sharing class ISSP_Case {
                     }
                 }
                 
-                
-                
                 List<Contact> lsContacts = new list<Contact>();
                 for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
                         FROM User
@@ -676,6 +672,7 @@ public without sharing class ISSP_Case {
                 JSONcontacts = JSON.serialize(lsContacts);
                 System.debug(lsAccounts);
                 newCase.ACCA_Owner__c = Userinfo.getUserId();
+                newCase.Status = 'Action Needed';
 
                 System.debug(profileRole);
 
@@ -757,77 +754,23 @@ public without sharing class ISSP_Case {
         String currentLanguage = UserInfo.getLanguage();
         List<SelectOption> options = new List<SelectOption>();
         list<IATA_ISO_Country__c> isoList;
-        /*list<IATA_ISO_Country__c> isoList = [select Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-        from IATA_ISO_Country__c
-        where Case_BSP_Country__c!=null
-        and Case_BSP_Country__c!=''
-        order by Name];*/
+ 
         if (currentLanguage == 'es') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_SP__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_SP__c');
         } else if (currentLanguage == 'ko') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Contry_KR__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Contry_KR__c');
         } else if (currentLanguage == 'zh_CN') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_ZH__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_ZH__c');
         } else if (currentLanguage == 'pt_BR') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_PT__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_PT__c');
         } else if (currentLanguage == 'fr') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_FR__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_FR__c');
         } else if (currentLanguage == 'ja') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_JP__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_JP__c');
         } else if (currentLanguage == 'it') {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by IATA_Country_IT__c];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'IATA_Country_IT__c');
         } else {
-            isoList = [select Region__c, Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,
-                       IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
-                       IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
-                       from IATA_ISO_Country__c
-                       where Case_BSP_Country__c != null
-                       and Case_BSP_Country__c != ''
-                       order by Name];
+            isoList = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByCaseBSPCountryNotNull(), 'Name');
         }
         options.add(new SelectOption('', '--None--'));
         for (IATA_ISO_Country__c iso : isoList) {
@@ -915,10 +858,10 @@ public without sharing class ISSP_Case {
             Boolean isIATA = false;
             if(whoToContact == 'IATA') isIATA = true;
             if(!isIATA ) {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('IATA_Service_Request');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -997,10 +940,10 @@ public without sharing class ISSP_Case {
             Boolean isIATA = false;
             if(whoToContact == 'IATA') isIATA = true;
             if(!isIATA ) {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('Inter_DPCs');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = DAL_ISSP.getRecordTypeId('IATA_Service_Request');
+                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -1854,5 +1797,18 @@ public without sharing class ISSP_Case {
             }
         }
         return listHistory;
+    }
+    
+    /**
+        Allowed values for Status field when a DPC user is using this page
+    **/
+    public list<SelectOption> getListDPCValidCaseStatus() {
+        set<String> setStatus = new set<String>{'Pending Feedback From Requestor','Action Needed'};
+        setStatus.add(this.newCase.Status);
+        list<SelectOption> listOptions = new list<SelectOption>();
+        for (String status: setStatus) {
+            listOptions.add(new SelectOption(status,status));
+        }
+        return listOptions;
     }
 }

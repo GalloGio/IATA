@@ -40,7 +40,7 @@
     //console.log(defaultOperationType);
     //console.log(defaultFrequency);
     $(document).ready(function() {
-        initFilters()
+        initFilters();
         initCalendar();
         refreshEvents();
         
@@ -108,7 +108,7 @@
         } else {
             $(".countryFilter").val(defaultCountry);
         }
-        updatePicklistsFromCountry();
+        updatePicklistsFromCountry(true);
         if ("{!$CurrentPage.parameters.ftype}">"") {
             $("#typeFilter").val("{!$CurrentPage.parameters.ftype}");
         } else {
@@ -322,7 +322,7 @@
         return value==null? "": value;
     }
     
-    function updatePicklistsFromCountry() {
+    function updatePicklistsFromCountry(isCalledFromInit) {
         var country = nvl($(".countryFilter").val());
         var operationType = nvl($("#typeFilter").val());
         var filter = country + ",";
@@ -330,9 +330,13 @@
         updatePicklist($("#typeFilter"), listValues,1,operationType);
         updatePicklist($("#frequencyFilter"), listValues,2,'');
         updatePicklist($("#currencyFilter"), listValues,3,'');
+        if (!isCalledFromInit) {
+            console.log('showDisclaimer1 ' + country+operationType);
+            showDisclaimer(country,operationType);
+        }
     }
     
-    function updatePicklistsFromType(position) {
+    function updatePicklistsFromType() {
         var country = nvl($(".countryFilter").val());
         var operationType = nvl($("#typeFilter").val());
         var filter = country + ",";
@@ -345,6 +349,8 @@
         }
         updatePicklist($("#frequencyFilter"), listValues,2,'');
         updatePicklist($("#currencyFilter"), listValues,3,'');
+        console.log('showDisclaimer2 ' + country+operationType);
+        showDisclaimer(country,operationType);
     }
     
     function updatePicklistsFromFrequency() {
@@ -423,7 +429,21 @@
         </div>
         <div class="col-sm-1"></div>
     </div>
-    
+
+    <apex:form id="disclaimer-form">
+        <apex:actionFunction action="{!findDisclaimerLabel}" name="showDisclaimer" rerender="disclaimer-form">
+            <apex:param name="selectedCountry" assignTo="{!selectedCountry}" value=""/>
+            <apex:param name="selectedType" assignTo="{!selectedType}" value=""/>
+        </apex:actionFunction>
+        <apex:outputPanel layout="block" styleclass="row" rendered="{!NOT(ISBLANK(disclaimerLabelName))}">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <div class="alert alert-warning">{!$Label[disclaimerLabelName]}</div>
+            </div>
+            <div class="col-sm-1"></div>
+        </apex:outputPanel>
+    </apex:form >
+
     <div id="rowCalendar" class="row">
         <div class="col-sm-2">
             <apex:form >

@@ -60,7 +60,7 @@ public with sharing class AMS_OSCAR_Automation {
                     
                         oscar.Sanity_check_deadline__c = Date.today() + 14;
 
-                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
+                    } else if (Oscar.Process__c == AMS_Utils.NEWHELITE || Oscar.Process__c == AMS_Utils.NEWHESTANDARD || Oscar.Process__c == AMS_Utils.NEWGESTANDARD || Oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE){
 
                         oscar.Sanity_check_deadline__c = Date.today() + 15;           
 
@@ -391,7 +391,7 @@ public with sharing class AMS_OSCAR_Automation {
 
             if (oscar != null) {
                 oscar.Local_Inspection_requested__c = Date.today();
-                oscar.Local_Inspection_deadline__c = Date.today() + 10;
+                oscar.Local_Inspection_deadline__c = Date.today() + 15;
                 res = True;
             }
 
@@ -515,7 +515,7 @@ public with sharing class AMS_OSCAR_Automation {
                 }
             }
 
-            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))
+            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION))
                 && !hasFRRequiredStep) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
@@ -646,7 +646,7 @@ public with sharing class AMS_OSCAR_Automation {
                 oscar.addError('Manager Approval cannot be granted if Sanity check step does not equals PASSED');
             } else {
                 
-                if (oscar != null && ((oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed') && oscar.STEP12__c != 'Failed') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES)) {
+                if (oscar != null && ((oscar.STEP15__c == 'Passed' || oscar.STEP25__c == 'Passed') && oscar.STEP12__c != 'Failed') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD  || oscar.Process__c == AMS_Utils.NEWGESTANDARD|| oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHANGES)) {
 
                     oscar.Approval_disapproval_date__c = Date.today();
                     oscar.Status__c = 'On Hold_Internal';
@@ -1170,6 +1170,20 @@ public with sharing class AMS_OSCAR_Automation {
             Boolean res = False;
 
             if (oscar != null) {
+
+                if(oscar.Process__c == AMS_Utils.NEWGESTANDARD){
+                    list<Account> acc = [SELECT ID, (SELECT ID FROM RHC_Informations__r) FROM ACCOUNT WHERE ID =:oscar.Account__c ];
+                    List<AMS_Pax_Accreditation_Form__c> pax = [SELECT Preferred_RHC_currency__c FROM AMS_Pax_Accreditation_Form__c WHERE ID =:oscar.AMS_Online_Accreditation__c];
+
+                    if(!acc[0].RHC_Informations__r.IsEmpty() && !pax.isEmpty() && !String.isBlank(pax[0].Preferred_RHC_currency__c)){
+                        acc[0].RHC_Informations__r[0].CurrencyIsoCode = pax[0].Preferred_RHC_currency__c;
+                        update acc[0].RHC_Informations__r;
+                    }
+                    else{
+                        oscar.addError('Please choose a preferred RHC currency');
+                    }
+                }
+
                 oscar.Bank_Guarantee_received__c = Date.today();
                 oscar.Financial_security_result__c = 'Valid';
                 res = True;

@@ -50,6 +50,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_EmailTemplate_NG__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Email_Template_Internal_Stakeholders__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -59,6 +63,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Create_Process_Case__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Block_Cut_Cash_Form_of_Payment__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

@@ -1,0 +1,23 @@
+<apex:page standardController="Case" extensions="CaseValidationDueDiligenceForAP" showHeader="false" sidebar="false" action="{!updateCase}">
+    <apex:form id="mainForm">
+        <apex:actionFunction name="updateCase" action="{!updateCase}" rerender="mainForm"/>
+        <script>
+            updateCase();
+
+            function refreshPage() {
+                window.top.location.href='/{!Case.Id}';
+            }
+            function showMessage(mesg){
+                if(mesg>"") {
+                    alert(mesg);
+                }
+            }
+        </script>
+        <apex:outputPanel rendered="{!doRefresh}">
+            <script>refreshPage();</script>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!NOT(doRefresh)}">
+            <script>showMessage("{!message}");</script>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

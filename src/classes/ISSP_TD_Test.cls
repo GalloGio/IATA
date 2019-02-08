@@ -1,9 +1,10 @@
 @isTest
 private class ISSP_TD_Test {
 
-    static testMethod void myUnitTest() {
+	@isTest
+    static void myUnitTest() {
     	
-    	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+    	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -64,12 +65,13 @@ private class ISSP_TD_Test {
 
     }
     
-    static testMethod void processPluginTest() {
+    @isTest
+    static void processPluginTest() {
     	ISSP_CS__c newCS = new ISSP_CS__c();
     	newCS.Name = 'TwoFA_Emails';
     	newCS.Value__c = 'test@test.com';
     	insert newCS;
-    	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+    	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
     	Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 		Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -121,12 +123,15 @@ private class ISSP_TD_Test {
     }
     
     static testMethod void myUnitTest_2() {
+
     	User thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
     	thisUser.TD_Team__c = true;
     	update thisUser;
     	thisUser = [ select Id from User where Id = :UserInfo.getUserId() ];
+
     	system.runAs(thisUser){
-	    	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
+    		Test.startTest();
+	    	String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
 	    	Account acc = ISSP_ObjectFactory.createNewAccount();
 			insert acc;
 			Contact contact = ISSP_ObjectFactory.createNewContact();
@@ -163,6 +168,7 @@ private class ISSP_TD_Test {
 	        update appRight;
 	        appRight.Right__c = 'Access Granted';
 	        update appRight;
+	        Test.stopTest();
     	}
     }
 }

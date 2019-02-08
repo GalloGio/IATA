@@ -104,20 +104,38 @@
 	<apex:outputText ><strong>{!$Label.ISSP_AMS_Step3_Office_FullAddress}</strong></apex:outputText>
 	<br></br><br></br>
 
-    <apex:pageBlockSection columns="1" rendered="{!AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}"> <!-- IF ACCOUNT IS NOT TERMINATED AND IS NOT ACCREDITED  -->
-   			<apex:outputField label="{!$ObjectType.Account.fields.BillingStreet.Label}" value="{!hqAccount.BillingStreet}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.billingcity.Label}" value="{!hqAccount.billingcity}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.billingstate.Label}" value="{!hqAccount.billingstate}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.billingpostalcode.Label}" value="{!hqAccount.billingpostalcode}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.billingcountry.Label}" value="{!hqAccount.billingcountry}"/>
+    <apex:pageBlockSection rendered="{!AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}"> <!-- IF ACCOUNT IS NOT TERMINATED AND IS NOT ACCREDITED  -->
+        <apex:outputField label="{!$ObjectType.Account.fields.BillingStreet.Label}" value="{!hqAccount.BillingStreet}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.ShippingStreet.Label}" value="{!hqAccount.ShippingStreet}"/>
+
+        <apex:outputField label="{!$ObjectType.Account.fields.billingcity.Label}" value="{!hqAccount.billingcity}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingcity.Label}" value="{!hqAccount.Shippingcity}"/>
+
+        <apex:outputField label="{!$ObjectType.Account.fields.billingstate.Label}" value="{!hqAccount.billingstate}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingstate.Label}" value="{!hqAccount.Shippingstate}"/>
+
+        <apex:outputField label="{!$ObjectType.Account.fields.billingpostalcode.Label}" value="{!hqAccount.billingpostalcode}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingpostalcode.Label}" value="{!hqAccount.Shippingpostalcode}"/>
+
+        <apex:outputField label="{!$ObjectType.Account.fields.billingcountry.Label}" value="{!hqAccount.billingcountry}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingcountry.Label}" value="{!hqAccount.Shippingcountry}"/>	
     </apex:pageBlockSection>
 
-    <apex:pageBlockSection columns="1" rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}"> <!-- IF ACCOUNT IS TERMINATED AND IS ACCREDITED  -->
-   			<apex:outputField label="{!$ObjectType.Account.fields.BillingStreet.Label}" value="{!newForm.Branch_Office_Street_name_number__c}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.billingcity.Label}" value="{!newForm.Branch_Office_City__c}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.billingstate.Label}" value="{!newForm.State_Province__c}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.billingpostalcode.Label}" value="{!newForm.Branch_Office_Postal_code__c}"/>
-            <apex:outputField label="{!$ObjectType.Account.fields.billingcountry.Label}" value="{!newForm.Branch_Office_Country__r.name}"/>
+    <apex:pageBlockSection rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}"> <!-- IF ACCOUNT IS TERMINATED AND IS ACCREDITED  -->
+        <apex:outputField label="{!$ObjectType.Account.fields.BillingStreet.Label}" value="{!newForm.Branch_Office_Street_name_number__c}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.ShippingStreet.Label}" value="{!newForm.shipping_street__c}"/>
+
+        <apex:outputField label="{!$ObjectType.Account.fields.billingcity.Label}" value="{!newForm.Branch_Office_City__c}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingcity.Label}" value="{!newForm.shipping_city__c}"/>
+
+        <apex:outputField label="{!$ObjectType.Account.fields.billingstate.Label}" value="{!newForm.State_Province__c}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingstate.Label}" value="{!newForm.shipping_state__c}"/>
+
+        <apex:outputField label="{!$ObjectType.Account.fields.billingpostalcode.Label}" value="{!newForm.Branch_Office_Postal_code__c}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingpostalcode.Label}" value="{!newForm.shipping_postal_code__c}"/>
+
+        <apex:outputField label="{!$ObjectType.Account.fields.billingcountry.Label}" value="{!newForm.Branch_Office_Country__r.name}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingcountry.Label}" value="{!newForm.shipping_country__c}"/>
     </apex:pageBlockSection>        
     
 

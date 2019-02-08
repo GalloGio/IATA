@@ -318,6 +318,14 @@
                 <behavior>Edit</behavior>
                 <field>Level_of_risk__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Clearance_level__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Date_of_last_clearance__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -541,6 +549,10 @@
         <relatedList>RelatedCaseList</relatedList>
         <sortField>CASES.CREATED_DATE_DATE_ONLY</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

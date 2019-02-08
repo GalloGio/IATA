@@ -153,132 +153,124 @@
     </style>
 
     <script>
+        var showProductComparisonLink = false;
+        var hideProductComparisonLink = false;
 
-            var showProductComparisonLink = false;
-            var hideProductComparisonLink = false;
+        setVarsProductComparisonLink('{!namEnabled}', '{!sectorValue}', '{!isHOAccredited}', '{!con.Account.Sector__c}');
 
-            setVarsProductComparisonLink('{!namEnabled}', '{!sectorValue}', '{!isHOAccredited}', '{!con.Account.Sector__c}');
-
-
-            $(function(){ $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); } );
-            var pilotList = {{!pilotList}};
-            var defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
-            var vOfficeType = '{!newCase.Reason1__c}';
-            console.log('vOfficeType '+vOfficeType);
-            console.log('Default country '+ defaultHQCountry);
-            var operationType = '{!sectorvalue}';
-            var hasPermission = true;
-
-            var isPilotCountry = pilotList[defaultHQCountry];
-            var isEUcountry = {!isEUcountry};
-
-            function setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector) {
-               if(namEnabled == 'true' && (sectorValue === 'Travel_Agent') && (isHOAccredited == 'false' || sector === 'Cargo Agent')) {
-                    showProductComparisonLink = true;
-                    hideProductComparisonLink = false;
-                } else {
-                    hideProductComparisonLink = true;
-                    showProductComparisonLink = false;
-                }
-            }
-
-            function setIsPilotCountry(isocode) {
-                isPilotCountry = pilotList[isocode];
-            }
-
-            function toggleCountries(v) {
-                if (v==undefined || v.indexOf('New BR Abroad')==-1){
-                    updateAmsCountry();
-                    $('#brcountry').show();
-                    $('#brabroadcountries').hide();
-                }
-                else{
-                    $('#brcountry').hide();
-                    $('#brabroadcountries').show();
-                }
-            }
-
-            function toggleOfficeTypes(officeSelect, ctrylistid) {
-                //var mySelectOptions = $('select[name="' + ctrylistid + '"] option');
-                //var mySelect = $('select[name="' + ctrylistid + '"]');
-                var officeTypeSel = $('select[name="' + officeSelect + '"]');
-                vOfficeType = officeTypeSel.val();
-                /**
-                mySelectOptions.each(function() {
-                  if(vOfficeType=='New BR Abroad') {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', false);
-                     } else {
-                        $(this).prop('disabled', true);
-                        mySelect.val('');
-                     }
-                  } else {
-                    if(this.value != defaultHQCountry) {
-                        $(this).prop('disabled', true);
-                     } else {
-                        $(this).prop('disabled', false);
-                        mySelect.val(defaultHQCountry);
-                     }
-                  }
-                });
-                **/
-            }
-
-            function isInArray(arr, val) {
-                for(var i=0; i<arr.length; i++) {
-                    if (arr[i] == val) return true;
-                }
-                return false;
-           }
-
-            function isChinaDomestic() {
-                var chinaAgentType;
-                var chinaAgentTypeId = '{!$Component.step1Form.step1Block.chinaagenttype}';
-
-                if(defaultHQCountry=='CN') {
-                    var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]');
-                    if(chinaAgentType.val() == 'Domestic') {
-                        console.log('in domestic');
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            function checkBranchAbroad(nextStep) {
-                var countriesNotAllowedList = JSON.parse('{!jsonCountriesNotAllowedList}');
-                defaultHQCountry = $('[id$=countrySelected]').val();
-                if (isInArray(countriesNotAllowedList, defaultHQCountry)){
-                    bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step1_Branch_Abroad_Not_Allowed)}", function(result) {
-                            if(result) {
-                                window.open('{!Portal_Login_URL}', '_blank');
-                            }
-                    });
-                    hasPermission = false;
-                }else {
-                    document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
-                    hasPermission = true;
-                }
-            }
-
-            function gotoStep1(myValue, nextStep) {
+        $(function() { 
+            $('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); 
+        });
+        
+        var pilotList = {{!pilotList}};
+        
+        var defaultHQCountry;
+        if ({!isMultiCountryNewAE}) {
+            defaultHQCountry = $('[id$=countrySelectedMC]').val();
+        } else {
             defaultHQCountry = '{!newCase.IFAP_Country_ISO__c}';
+        }
+
+        var vOfficeType = '{!newCase.Reason1__c}';
+
+        var operationType = '{!sectorvalue}';
+        var hasPermission = true;
+
+        var isPilotCountry = pilotList[defaultHQCountry];
+        var isEUcountry = {!isEUcountry};
+
+        function setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector) {
+           if(namEnabled == 'true' && (sectorValue === 'Travel_Agent') && (isHOAccredited == 'false' || sector === 'Cargo Agent')) {
+                showProductComparisonLink = true;
+                hideProductComparisonLink = false;
+            } else {
+                hideProductComparisonLink = true;
+                showProductComparisonLink = false;
+            }
+        }
+
+        function setIsPilotCountry(isocode) {
+            isPilotCountry = pilotList[isocode];
+        }
+
+        function toggleCountries(v) {
+            if (v==undefined || v.indexOf('New BR Abroad')==-1){
+                updateAmsCountry();
+                $('#brcountry').show();
+                $('#brabroadcountries').hide();
+            }
+            else{
+                $('#brcountry').hide();
+                $('#brabroadcountries').show();
+            }
+        }
+
+        function toggleOfficeTypes(officeSelect, ctrylistid) {
+            var officeTypeSel = $('select[name="' + officeSelect + '"]');
+            vOfficeType = officeTypeSel.val();
+        }
+
+        function isInArray(arr, val) {
+            for(var i=0; i<arr.length; i++) {
+                if (arr[i] == val) return true;
+            }
+            return false;
+        }
+
+        function isChinaDomestic() {
+            var chinaAgentType;
+            var chinaAgentTypeId = '{!$Component.step1Form.step1Block.chinaagenttype}';
+
+            if(defaultHQCountry=='CN') {
+                var chinaAgentType = $('select[name="' + chinaAgentTypeId + '"]');
+                if(chinaAgentType.val() == 'Domestic') {
+                    console.log('in domestic');
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function checkBranchAbroad(nextStep) {
+            var countriesNotAllowedList = JSON.parse('{!jsonCountriesNotAllowedList}');
+
+            if({!isMultiCountryNewAE}) {
+                defaultHQCountry = $('[id$=countrySelectedMC]').val();
+            } else {
+                defaultHQCountry = $('[id$=countrySelected]').val();
+            }
+
+            if (isInArray(countriesNotAllowedList, defaultHQCountry)){
+                bootbox.confirm("{!JSENCODE($Label.ISSP_AMS_Step1_Branch_Abroad_Not_Allowed)}", function(result) {
+                    if(result) {
+                        window.open('{!Portal_Login_URL}', '_blank');
+                    }
+                });
+                hasPermission = false;
+            } else {
+                document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
+                hasPermission = true;
+            }
+        }
+
+        function gotoStep1(myValue, nextStep) {
+            defaultHQCountry = ({!isMultiCountryNewAE}) ? $('[id$=countrySelectedMC]').val() : '{!newCase.IFAP_Country_ISO__c}';
+            
             if($('#brcountry').css('display') == 'none'){
                 checkBranchAbroad(nextStep);
             }
+
             if(hasPermission==true){
                 var $lists = $('select[name="' + '{!$Component.step1Form.step1Block.officetypelist}' + '"]');
                 vOfficeType = $lists.val();
                 var countriesMap = JSON.parse('{!jsonCountriesMap}');
                 var cargoAgentTypes = ["IATA Cargo Agent", "EACP Intermediary", "CASS Associate", "Courier", "Import Agent"];
-                console.log('no empty voffice '+vOfficeType);
+
                 if('{!isNoticeOfChange}'=='true' || vOfficeType=='')
                     isAllowedCountry = 't';
                 else{
                     var idx = vOfficeType.indexOf(' - ');
-
-                    console.log('vOfficeType goto '+vOfficeType);
 
                     if( (vOfficeType.substring(idx + 3).trim() == 'Legacy') || (vOfficeType.includes('Standard')) || (vOfficeType.includes('AE'))){
                         operationType = 'Travel_Agent';
@@ -286,26 +278,19 @@
                         operationType = 'Cargo_Agent';
                     }
 
-                    // NHO -
-                    console.log('vOfficeType.substring(0, idx) ' + operationType+'-'+vOfficeType.substring(0, idx));
-
                     var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];
 
                     var isAllowedCountry = false;
-                    console.log('countryList ' + countryList);
+
                     if(defaultHQCountry != null && countryList != undefined) {
                         var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3];
                     }
-                    console.log('isAllowedCountry ' + isAllowedCountry);
-                    ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
+
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';
                     var langSel = $('select[name="' + langId + '"]');
                     var vLang = langSel.val();
 
-                        //For pilot only English & Spanish HO applications for pilot countries alllowed
-
-                    if( $('input[name="' + myValue + '"][value=Travel_Agent]').prop("checked")) {
-                        console.log('Travel China Domestic: ' + isChinaDomestic());
+                    if($('input[name="' + myValue + '"][value=Travel_Agent]').prop("checked")) {
                         if(isAllowedCountry=='f' || isChinaDomestic() ) {
                             bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Pax)}", function(result) {
                                 if(result) {
@@ -322,27 +307,25 @@
                             document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
                             hasPermission = true;
                         }
-                } else {
-                    if(isAllowedCountry=='f' || isChinaDomestic()) {
-                        // temporary for CNS
-                        console.log('{!communityName}');
-                        if('{!communityName}'==='CNS') {
-                            bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
-                                if(result) {
-                                    window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
-                                    if(isChinaDomestic()) {
-                                        window.open('https://www.iata-asd.com', '_blank');
-                                    } else {
-                                        window.open('https://mycnsc.com/accreditation/step1', '_blank');
-                                    }
-                                }
-                            });
-
-                        } else {
-
-                        bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo)}", function(result) {
+                    } else {
+                        if(isAllowedCountry=='f' || isChinaDomestic()) {
+                            if('{!communityName}'==='CNS') {
+                                bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
                                     if(result) {
                                         window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
+                                        
+                                        if(isChinaDomestic()) {
+                                            window.open('https://www.iata-asd.com', '_blank');
+                                        } else {
+                                            window.open('https://mycnsc.com/accreditation/step1', '_blank');
+                                        }
+                                    }
+                                });
+                            } else {
+                                bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo)}", function(result) {
+                                    if(result) {
+                                        window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
+                                
                                         if(isChinaDomestic()) {
                                             window.open('https://www.iata-asd.com', '_blank');
                                         } else {
@@ -351,21 +334,20 @@
                                     }
                                 });
                             }
-                        hasPermission = false;
+                            hasPermission = false;
+                        } else {
+                            document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
+                            hasPermission = true;
                         }
-
-                    else {
-                        document.getElementById("{!$Component.step1Form.NextStep}").value = nextStep;
-                        hasPermission = true;
                     }
                 }
             }
+            console.log(hasPermission);
         }
-    }
 
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            })
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
         function resetStep1(v) {
             operationType = v ;
@@ -390,7 +372,6 @@
         }
 
         function getFileLink(fileName) {
-            // alert(''+fileName);
             $("#loading").show();
             setTimeout(function(){
             try{
@@ -422,7 +403,6 @@
     var vReqNo
 
     function resetUploadBar() {
-        //$('.uploadbar-' + vReqNo).css('width', '0%');
         $("#loading-" + vReqNo).hide();
     }
 
@@ -431,7 +411,7 @@
     }
 
     function redirectToPDF() {
-         window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
+        window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
     }
 
     </script>
@@ -440,8 +420,12 @@
       <script>
       function getCountryFromController() {
         $('#brcountry').text("{!amsAllLangCountryLabel}");
-        $('[id$=countrySelected]').val('{!con.Account.IATA_ISO_Country__r.ISO_Code__c}');
-        //$('[id$=countrySelected]').val('');
+
+        if({!isMultiCountryNewAE}) {
+            $('[id$=countrySelectedMC]').val('{!con.Account.IATA_ISO_Country__r.ISO_Code__c}');
+        } else {
+            $('[id$=countrySelected]').val('{!con.Account.IATA_ISO_Country__r.ISO_Code__c}');
+        }
       }
       </script>
     </apex:outputPanel>
@@ -458,9 +442,8 @@
     <div class="panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">
-                    {!IF(NOT(isNoticeOfChange), lblStep1Title,
-                    lblNoCRequest)
-                    }</h3>
+                    {!IF(NOT(isNoticeOfChange), lblStep1Title, lblNoCRequest)}
+                </h3>
             </div>
     <div class="panel-body" id="body-enquiries">
 
@@ -545,12 +528,12 @@
                     </div>
                 </div>
                 <apex:outputPanel id="optionsSetpA">
-                    <apex:actionRegion>
+                    <apex:actionRegion >
                         <div class="form-group">
                             <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label>
                             <div class="col-lg-9">
 
-                                <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%;float:left" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1">
+                                <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%;float:left" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, ''); if ({!isMultiCountryNewAE} == false) { toggleCountries(this.value); }" size="1">
                                     <apex:selectOptions value="{!OfficeTypes}" />
                                 </apex:selectList>
 
@@ -559,6 +542,8 @@
                                 </apex:outputPanel>
 
                                 <script>
+                                    if ({!isMultiCountryNewAE} == true) $('[id$=officetypelist]').prop('disabled', true);
+
                                     if(showProductComparisonLink) {
                                         $('[name$=ProductComparisonLink]').show();
                                     }
@@ -570,7 +555,7 @@
                         </div>
 
                         <!-- NEWGEN-1249-->
-                        <apex:outputpanel id="isSameLegal" rendered="{!AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent',isHOAccredited)}">
+                        <apex:outputpanel id="isSameLegal" rendered="{!OR(AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent', isHOAccredited), isMultiCountryNewAE)}">
                             <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
                                 <div class="form-group" id='isLegal'>
                                     <label for="isLegal" class="col-lg-3 control-label">{!$Label.ANG_AE_separate_Legal_Entity}</label>
@@ -611,35 +596,6 @@
 
 
                             <apex:outputpanel rendered="{!isNoticeOfChange}">
-                        <!--
-                                <apex:outputPanel rendered="{!isBankAccountChange==false}">
-                                    <div class="form-group">
-                                        <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Noc_Type_of_Change}:</label>
-                                        <div class="col-lg-9" style="top:7px">
-                                            <apex:panelGrid columns="8">
-                                                <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Is_change_bank_account_details__c==false,newForm.Is_change_legal_name__c==false,newForm.Is_change_location__c==false,newForm.Is_change_ownership_or_shareholding__c==false), 'requiredIndicator', '')}" value="{!newForm.Is_change_legal_name__c}" />
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Noc_Legal_Name}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                                <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Is_change_bank_account_details__c==false,newForm.Is_change_legal_name__c==false,newForm.Is_change_location__c==false,newForm.Is_change_ownership_or_shareholding__c==false), 'requiredIndicator', '')}" value="{!newForm.Is_change_location__c}" />
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_Noc_Location}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                                <apex:inputCheckbox styleClass="{!IF(AND(isValError, newForm.Is_change_bank_account_details__c==false,newForm.Is_change_legal_name__c==false,newForm.Is_change_location__c==false,newForm.Is_change_ownership_or_shareholding__c==false), 'requiredIndicator', '')}" value="{!newForm.Is_change_ownership_or_shareholding__c}" />
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_NoC_Ownership_Shareholding}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                            </apex:panelGrid>
-                                        </div>
-                                    </div>
-                                </apex:outputPanel>
-
-                                <apex:outputText rendered="{!isBankAccountChange}">
-                                    <div class="form-group">
-                                        <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Noc_Type_of_Change}:</label>
-                                        <div class="col-lg-9" style="top:7px">
-                                            <apex:panelGrid columns="2">
-                                                <apex:inputCheckbox value="{!newForm.Is_change_bank_account_details__c}" selected="true" disabled="true"/>
-                                                <apex:outputText escape="false" value="&nbsp;{!$Label.ISSP_AMS_NoC_Bank_acount_details}&nbsp;&nbsp;&nbsp;&nbsp;"/>
-                                            </apex:panelGrid>
-                                        </div>
-                                    </div>
-                                </apex:outputText>
-                                -->
 
                                 <apex:outputpanel >
                                     <div class="form-group">
@@ -694,19 +650,25 @@
                             <div class="form-group">
                                 <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
 
-                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;display:none">
-                                    <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
+                                <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
+                                    <apex:outputPanel rendered="{!isMultiCountryNewAE}">
+                                        <apex:selectList id="countrySelectedMC" required="false" styleClass="form-control" style="width:40%" value="{!mcformCountryISO}" size="1">
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
-                                    </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
+                                        </apex:selectList>
+                                    </apex:outputPanel>    
+                                    <apex:outputPanel rendered="{!NOT(isMultiCountryNewAE)}">
+                                        <apex:selectList id="countrySelected" required="false" styleClass="form-control" style="width:40%" value="{!newCase.IFAP_Country_ISO__c}" size="1">
+                                            <apex:selectOptions value="{!countryISOCodeList}"/>
+                                        </apex:selectList>
+                                    </apex:outputPanel>
                                 </div>
                                 <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
                                     <apex:outputText value="{!amsAllLangCountryLabel}"/>
                                 </div>
                             </div>
 
-                            <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
                             <apex:outputpanel id="langGSA">
-                            <apex:actionRegion>
+                            <apex:actionRegion >
                                 <apex:outputpanel rendered="{!NOT(AND(BEGINS(sectorValue,'Cargo_Agent'), NOT(isNoticeOfChange)))}">
                                     <div class="form-group">
                                     <label for="applylanguage" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Lang_Display}</label>
@@ -746,7 +708,7 @@
 
                     });
 
-                    toggleCountries($('[id$=officetypelist]').val());
+                    if ({!isMultiCountryNewAE} == false) toggleCountries($('[id$=officetypelist]').val());
 
                     //Disable country selection for the Pilot
                     //document.getElementById('{!$Component.step1Form.step1Block.countryconcerned}').disabled=true;
@@ -904,13 +866,22 @@
 
         <apex:variable var="cnt" value="{!0}" />
         <apex:repeat value="{!List_CountryReqments}" var="reqs" rendered="{!OR(BEGINS(sector, 'Cargo Agent'),AND(isNoticeOfChange,BEGINS(sector, 'Travel Agent')))}">
-        <apex:variable var="cnt" value="{!cnt+1}"/>
+        <apex:variable var="cnt" value="{!cnt+1}" />
             <c:ISSP_AMS_FormUpload reqCnt="{!cnt}"
             reqRequired="{!reqs.File_to_Upload__c}"
             reqName="{!reqs.Name}"
             reqDescription="{!reqs.Requirement_text__c}"
-            reqIdentifier="{!reqs.File_Identifier2__c}"
+            reqIdentifier="{!reqs.File_Identifier2__c}"  
+            rendered="{!NOT(ISBLANK(reqs.File_Identifier2__c))}" 
             />
+        <apex:outputPanel  rendered="{!(ISBLANK(reqs.File_Identifier2__c))}">
+            <div class = "well">
+            <apex:outputText style="font-weight:bold" value ="{!reqs.Name}" escape="false"/>
+            <br/> 
+            <apex:outputText value ="{!reqs.Requirement_text__c}" escape="false"/>
+            <br/>
+            </div>
+        </apex:outputPanel>
         </apex:repeat>
         
         <apex:pageBlock rendered="{!BEGINS(sectorValue,'Travel_Agent') && !isNoticeOfChange && NOT(isPartnership)}">
@@ -924,8 +895,8 @@
         </apex:pageBlock>
         
         <apex:outputPanel rendered="{!BEGINS(sectorValue,'Travel_Agent') && !isNoticeOfChange && isPartnership}">
-            <apex:pageBlock>
-                <apex:form>
+            <apex:pageBlock >
+                <apex:form >
                     <apex:outputText escape="false" value="{!$Label.ISSP_AP_Partnership_Download_PDF}"/>
                     <br/>
                     <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>&nbsp;
@@ -948,7 +919,7 @@
                 <apex:form id="PAXForm">
                 <apex:pageMessages />
                 <apex:pageBlock >
-                <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false" rendered="{!BEGINS(sectorValue, 'Travel_Agent')}">
+                <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false" rendered="{!AND(BEGINS(sectorValue, 'Travel_Agent'), NOT(isMultiCountry))}">
                     <div class="aplabel">
                         <apex:outputText escape="false" value="{!IF(amsOfficeType=='HO', $Label.ISSP_AMS_T_Cs1, $Label.ISSP_AMS_Pax_Branch_T_Cs)}"/>
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_T_Cs2}"/>
@@ -961,12 +932,12 @@
                     <apex:actionStatus id="buttonLoadingStep5PAX">
                     <apex:facet name="stop"><apex:outputPanel >
                     <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
+                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
                     <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5PAX"/>
                         </apex:outputPanel></apex:facet>
                     <apex:facet name="start"><apex:outputPanel >
                     <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
-                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
+                    <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true"/>
                     <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
                          </apex:outputPanel></apex:facet>
                     </apex:actionStatus>
@@ -1003,12 +974,12 @@
         <apex:actionStatus id="buttonLoadingStep5CGO">
              <apex:facet name="stop"><apex:outputPanel >
             <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5CGO"/>
-            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5CGO" reRender="CGOForm"/>
+            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}" status="buttonLoadingStep5CGO" reRender="CGOForm"/>
             <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5CGO"/>
             </apex:outputPanel></apex:facet>
             <apex:facet name="start"><apex:outputPanel >
            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
-            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
+            <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, IF(isMultiCountry, $Label.ISSP_ANG_Validate_Agency_Details, $Label.ISSP_AMS_Submit_IATA))}..." disabled="true"/>
             <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
            </apex:outputPanel></apex:facet>
           </apex:actionStatus>

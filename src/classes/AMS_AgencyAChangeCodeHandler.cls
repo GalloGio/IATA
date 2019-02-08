@@ -11,11 +11,14 @@ public class AMS_AgencyAChangeCodeHandler {
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
             verifyActiveAACCuniqueness(aacc);
         set<id> setIdAACC = new set<id>();
-        
-        Id irregRtId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities');
+        Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
          //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
         set<id> setIdAACCForNewApplicationPending = new set<id>();
+
+        /*** AMSU-198 ***/
+        List<Agency_Applied_Change_code__c> accToProcessPayment = new List<Agency_Applied_Change_code__c>();
+        Set<String> accPaymentDefault = new Set<String> {'DFE','DEF'};
 
         for(Agency_Applied_Change_Code__c aaccRecord : aacc) {
         	setIdAACC.add(aaccRecord.id);
@@ -26,6 +29,11 @@ public class AMS_AgencyAChangeCodeHandler {
             //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
             if(aaccRecord.Change_Code__c == 'NEW' && aaccRecord.AccountNewStatus__c == 'New application pending' && aaccRecord.Reason_Code__c == '21')
                 setIdAACCForNewApplicationPending.add(aaccRecord.id);
+
+            /*** AMSU-198 ***/
+            if(accPaymentDefault.contains(aaccRecord.Change_Code__c)) {
+                accToProcessPayment.add(aaccRecord);
+            }
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
 		system.debug('SALVES handleAfterInsert -->  processMinorChangesValidationFlag: ' + AMS_AccountTriggerHandler.processMinorChangesValidationFlag);
@@ -40,6 +48,17 @@ public class AMS_AgencyAChangeCodeHandler {
         //FM 22-09-2016 - Create "Agency Update" records
         if(!ANG_OscarProcessHelper.isIATACodeGenerationRunning)
             AMS_AgencyUpdateHelper.agencyUpdate( (List<SObject>) aacc);
+
+        /*** AMSU-198 ***/
+        if(!accToProcessPayment.isEmpty()) {
+            notifyAirlines(accToProcessPayment);
+        }
+
+    }
+    
+    /*** AMSU-198 ***/
+    public static void notifyAirlines(List<Agency_Applied_Change_code__c> aaccs) {
+        Database.executeBatch(new AMS_MajorDefaultCommunication(aaccs), 50);
     }
     
     public static void handleBeforeUpdate(List<Agency_Applied_Change_code__c> aacc){
@@ -51,7 +70,7 @@ public class AMS_AgencyAChangeCodeHandler {
         set<id> setIdAACC = new set<id>();
         //INC415109 - Account Reason cannot be empty when agency status becomes New application pending
         set<id> setIdAACCForNewApplicationPending = new set<id>();
-        Id irregRtId = AMS_Utils.getId('Agency_Applied_Change_code__c', 'Irregularities');
+        Id irregRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities');
         List<Agency_Applied_Change_code__c> aaccToBeProcessed = new List<Agency_Applied_Change_code__c>();
         for(Agency_Applied_Change_Code__c aaccRecord : aacc)
         {
@@ -261,10 +280,13 @@ public class AMS_AgencyAChangeCodeHandler {
         // this method aaplies only to change codes that have an OSCAR filled. That OSCAR must be of record type NEW and have process of type AMS_Utils.oscarAMSProcesses
         // when creating a change code of type FIN or DIS, it should copy the information from staging Area (AMS_Pax_Accreditation_Form__c) into Master Data (Account)
 
-        Id rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-        Id newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+        Id rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
+        Id newNGRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 
-        Set<Id> oscarRecordTypes = new Set<Id>{rtNew,newNGRT};
+        //NEWGEN-4850
+        Id rtMC = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Multicountry_AE');
+
+        Set<Id> oscarRecordTypes = new Set<Id>{rtNew,newNGRT,rtMC};
 
         Set<Id> oscarIds = new Set<Id>();
 
@@ -273,28 +295,27 @@ public class AMS_AgencyAChangeCodeHandler {
                 oscarIds.add(code.OSCAR__c);
             }
         }
-
+         
         //let's first find the OSCAR that need to be migrated
         List<AMS_OSCAR__c> oscarsToCopyData = new List<AMS_OSCAR__c>();
         List<AMS_OSCAR__c> oscarsToUpdateAppointments = new List<AMS_OSCAR__c>();
 
-        //aacclist = [SELECT ID, OSCAR__c, OSCAR__r.Account__c , OSCAR__r.AMS_Online_Accreditation__c from Agency_Applied_Change_code__c where id in :aaccIds and OSCAR__r.RecordTypeId = :rtNew and OSCAR__r.Process__c in ('NEW.HO.1.0','NEW.BR','NEW.BR.ABROAD') ];
-
-        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c, Is_PCI_compliant__c from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
+        oscarsToCopyData = [SELECT ID, Account__c, AMS_Online_Accreditation__c, RecordTypeId,Process__c, Is_PCI_compliant__c,Account__r.Location_Type__c
+                            from AMS_OSCAR__C where Id in :oscarIds and RecordTypeId in :oscarRecordTypes and Process__c in :AMS_Utils.oscarAMSProcesses];
 
         if(!oscarsToCopyData.isEmpty()){
             AMS_Utils.copyDataToAccount(oscarsToCopyData);
         
-            //moved to oscar trigger, appointment status changes needs to occur in situations without change code generation
-            /*for(AMS_OSCAR__C oscar : oscarsToCopyData)
-            {
-                 if( AMS_Utils.oscarProcessesWithAppointments.contains(oscar.Process__c))
-                     oscarsToUpdateAppointments.add(oscar);
-
+            //NEWGEN-4852 - Copy Parent Account (GE/HE) information to the staging area of AE in same BSP - Change Code FIN
+            List<ID> accIdList = new List<ID>();
+            for(AMS_OSCAR__C oscar : oscarsToCopyData){
+                if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || (oscar.Process__c == AMS_Utils.MCAE && oscar.Account__r.Location_Type__c == AMS_Utils.HE))
+                    accIdList.add(oscar.Account__c);
+            }
+            if(!accIdList.isEmpty()) {
+                System.debug('[ANG_OscarProcessHelper] Start Copying account information into Child staging area');
+                ID jobID = System.enqueueJob(new ANG_MulticountryCopyParentInfo(accIdList, 'FIN'));
             }       
-
-            if(!oscarsToUpdateAppointments.isEmpty())
-                AMS_Utils.UpdateInspectionsFromOscar(oscarsToUpdateAppointments);*/
 
         }else{
             System.debug('Nothing to migrate here.');

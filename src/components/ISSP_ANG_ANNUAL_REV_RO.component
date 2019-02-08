@@ -37,6 +37,8 @@
                 <apex:outputField value="{!ca.account.VAT_Number__c}" />
             </apex:pageBlockSectionItem>
 
+            <DSE:DS_DataQuality id="jqueryfix" FieldGroupName="" RecordRef="{!ca.fw.newform}"/>
+
         </apex:pageBlockSection>
 
 
@@ -54,18 +56,18 @@
                 </apex:outputpanel>
             </apex:facet-->
 
-            <apex:pageBlockSectionItem labelStyle="width:26%" rendered="{!OR(ca.account.BillingStreet != '', ca.account.BillingCity != '', ca.account.BillingPostalCode != '', ca.account.BillingCountry != '')}">
+            <apex:pageBlockSectionItem labelStyle="width:26%">
                 <apex:outputText value="<b>Billing Address:</b><br/>{0} <br/>{1}<br/>{2}<br/><br/>" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                     <apex:param value="{!ca.account.BillingStreet}" />
-                    <apex:param value="{!ca.account.BillingCity},&nbsp;{!ca.account.BillingPostalCode}" />
+                    <apex:param value="{!IF(ca.account.BillingCity != '', ca.account.BillingCity + ',&nbsp;', '')}{!ca.account.BillingPostalCode}" />
                     <apex:param value="{!IF(ca.account.BillingState!='',ca.account.BillingState + ',&nbsp;','')}{!ca.account.BillingCountry}" />
                 </apex:outputText>
             </apex:pageBlockSectionItem>
 
-            <apex:pageBlockSectionItem labelStyle="width:26%" rendered="{!OR(ca.account.ShippingStreet != '', ca.account.ShippingCity != '', ca.account.ShippingPostalCode != '', ca.account.ShippingCountry != '')}">
+            <apex:pageBlockSectionItem labelStyle="width:26%">
                 <apex:outputText value="<b>Shipping Address:</b><br />{0}<br />{1}<br />{2}<br /><br />" escape="false" label="{!$Label.ISSP_AMS_Step3_Office_FullAddress}">
                     <apex:param value="{!ca.account.ShippingStreet}" />
-                    <apex:param value="{!ca.account.ShippingCity},&nbsp;{!ca.account.ShippingPostalCode}" />
+                    <apex:param value="{!IF(ca.account.ShippingCity != '', ca.account.ShippingCity + ',&nbsp;', '')}{!ca.account.ShippingPostalCode}" />
                     <apex:param value="{!IF(ca.account.ShippingState!='',ca.account.ShippingState + ',&nbsp;','')}{!ca.account.ShippingCountry}" />
                 </apex:outputText>
             </apex:pageBlockSectionItem>

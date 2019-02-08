@@ -1,0 +1,104 @@
+<apex:page controller="ANG_ChangeRHCCurrency" showHeader="false" sidebar="false">
+
+
+    <apex:includeScript value="{!$Resource.jquery2_1_4}" />
+    <apex:includeScript value="/support/console/34.0/integration.js" />
+
+    <script>
+
+        function openPrimaryTab(tabId, tabName) {
+            var changeTab = function(result) {
+                if (result.success == false) {
+                    sforce.console.focusPrimaryTabByName(tabId);
+                }
+            };
+            sforce.console.openPrimaryTab(null, tabId, true, tabName, changeTab, tabId);
+        };
+
+        function closeTab() {
+            sforce.console.getEnclosingTabId(closeSubtab);
+        };
+
+        var closeSubtab = function closeSubtab(result) {
+            var tabId = result.id;
+            sforce.console.closeTab(tabId);
+        };
+
+        function openSubtab(subtabUrl, subTabTitle) {
+            // Use the results primary tab id and open a new subtab
+            var openSubtab = function(result) {
+                sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);
+            };
+            sforce.console.getEnclosingPrimaryTabId(openSubtab);
+        };
+
+		function refreshTab(){
+
+				if (sforce.console.isInConsole()) {
+						sforce.console.getEnclosingTabId(function(enclosingResult){
+								sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+										sforce.console.refreshPrimaryTabById(primaryResult.id,true,null);
+										closeTab();
+								});
+						});
+				} else {
+						// for inline Vf
+						window.top.location.href = '/'+redirectUrl
+						// for normal vf
+						// window.location.href = '/'+redirectUrl
+				}
+        };
+
+    </script>
+
+   <apex:form>
+      <apex:pageBlock id="infoBlock" mode="edit" tabStyle="ANG_RHC_Information__c" title="Current RHC" rendered="{!rhc != null}">
+			<apex:pageMessages />
+         <apex:pageBlockSection title="RHC Information" columns="2">
+            <apex:repeat value="{!displayFields}" var="field">
+               <apex:outputField value="{!rhc[field.name]}"/>
+            </apex:repeat>
+         </apex:pageBlockSection>
+      </apex:pageBlock>
+      <apex:pageBlock id="editSection" mode="edit" tabStyle="ANG_RHC_Information__c">
+
+	        <apex:pageBlockSection columns="2" rendered="{!caseToUpdate.Id <> null}" collapsible="false">
+            	
+				<script type="text/javascript">
+                    openSubtab('/{!rhc.Id}', '{!rhc.Name}');
+                    refreshTab();
+                </script>
+            
+			</apex:pageBlockSection>
+
+         <apex:pageBlockButtons location="bottom">
+            <apex:commandButton value="Save RHC Information" action="{!save}"  id="acceptButton" disabled="{!!isEdit}" rerender="infoBlock,editSection">
+            </apex:commandButton>
+            <apex:commandButton value="Cancel" id="cancel" onclick="closeTab()">
+            </apex:commandButton>
+         </apex:pageBlockButtons>
+         <apex:pageBlockSection columns="1">
+            <apex:pageBlockSectionItem >
+               <apex:outputLabel value="Perform change of currency" />
+               <apex:inputCheckbox value="{!isEdit}" id="editButton">
+                  <apex:actionsupport event="onchange" rerender="editSection" action="{!toggleEditMode}" />
+               </apex:inputCheckbox>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSection>
+         <apex:pageBlockSection columns="2" rendered="{!AND(isEdit, rhc != null)}">
+            <apex:pageBlockSectionItem labelStyleClass="field.styleClass" dataStyleClass="field.styleClass" >
+               <apex:outputLabel id="plLabel" value="Currency"/>
+               <apex:selectList id="currencyPL" value="{!rhc.CurrencyIsoCode}" multiselect="false" size="1" onchange="forecast(); rerenderInfo(); return false;">
+                  <apex:selectOptions value="{!plOptions}"/>
+               </apex:selectList>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem labelStyleClass="field.styleClass" dataStyleClass="field.styleClass" >
+               <apex:outputLabel value="Reception Case" />
+               <apex:inputField value="{!caseToUpdate.ParentId}" />
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSection>
+      </apex:pageBlock>
+      <apex:actionFunction name="rerenderInfo" rerender="infoBlock" />
+      <apex:actionFunction name="forecast" action="{!forecast}"/>
+   </apex:form>
+</apex:page>

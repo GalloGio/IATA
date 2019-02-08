@@ -28,6 +28,11 @@
     <customValue>
         <fullName>B</fullName>
         <default>false</default>
+        <label>Twice a week</label>
+    </customValue>
+    <customValue>
+        <fullName>T</fullName>
+        <default>false</default>
         <label>Every 3 days</label>
     </customValue>
     <customValue>

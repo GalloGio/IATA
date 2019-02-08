@@ -359,7 +359,9 @@ public class AMS_ChangeCodesHelper {
             
             if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
 
-            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE ) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE || oscar.RecordTypeId == AMS_Utils.RECTYPE_MCAE) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) 
+            	oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            
             if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
                 for(String status : AMS_Utils.AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
             }
@@ -474,6 +476,9 @@ public class AMS_ChangeCodesHelper {
         List<AMS_Oscar__c> oscars = new List<AMS_Oscar__c>();
 
         String identifier = oscar.Business_process__c + '-VR-';
+        //AMSU-161
+        if(oscar.Business_process__c == null && oscar.Current_Step__c == 'STEP31__c' && oscar.Documentation_remarks__c == 'OSCAR FOR VR by Appointment Termination' )
+            identifier = 'AMS-VR-';
 
         if(Test.isRunningTest()){
             AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-VRR', Change_Code__c = 'VRR', Account_status_change__c = null);
@@ -659,9 +664,11 @@ public class AMS_ChangeCodesHelper {
 
     public static Map<Id,List<Agency_Authorization__c>> fetchFormsOfPayment(Set<Id> accsIds){
 
-        Id aaRTId = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
+
+        if(accsIds.isEmpty()) return fOPs;
         for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c = 'Active']){
             if(fOPs.keySet().contains(fop.Account__c))
                 fOPs.get(fop.Account__c).add(fop);

@@ -63,6 +63,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Share_documentation_with_vendor__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Share_documentation_with_vendor__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -107,6 +111,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>AML_performed_date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_shared_documentation_with_vendor__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -55,20 +55,23 @@ public with sharing class ANG_RiskForecastPropertiesController {
                 riskOpt ='11';
         }
 
-        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRA){
+        if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRA){ 
 
             options.add(new SelectOption('SELECT Risk Option', 'SELECT Risk Option'));
 
             options.add(new SelectOption('2','Late/Short payment'));
             options.add(new SelectOption('3','Wrong currency payment'));
             options.add(new SelectOption('4','Payment Default'));
+
+            riskOpt = '1';
+
         }
 
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD && myCase.OSCAR__r.ANG_Change_Entity_Location__c){
 
             options.add(new SelectOption('8','Change of Entity\'s location'));
 
-            riskOpt = '1';
+            riskOpt = '1'; 
         }
 
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD && !myCase.OSCAR__r.ANG_Change_Entity_Location__c){
@@ -101,6 +104,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
         }
 
         if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NGOPTINOUT){
+
             options.add(new SelectOption('OptInOut', 'Opt-In/Opt-Out'));
             riskOpt = 'OptInOut';
         }

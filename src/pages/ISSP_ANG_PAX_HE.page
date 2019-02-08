@@ -440,6 +440,8 @@
         document.getElementById(ownerModalFields[3]).disabled = true;
         //replaceShippingTXT(document.body);
         console.log('vHQAccountId: ' + retAddressCompUrl());
+
+        if ({!modifyForm}) updateStatus();
     });
 
     function removeReq(){
@@ -761,6 +763,8 @@
              <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                     <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
              </apex:actionfunction>
+             <apex:actionFunction name="updateStatus" action="{!updateStatusMCForm}" rerender=""/>
+             
             <apex:pageBlock id="AMSBlock">
             <div class="alert alert-info" role="alert">
                 {!$Label.ISSP_AMS_Step3_Save_Anytime}
@@ -883,18 +887,46 @@
                    <apex:outputText ><strong>{!$Label.ISSP_AMS_Step3_Office_FullAddress}</strong></apex:outputText>
                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_PAX_Issuing_Address}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />                      
                                  
-                        <apex:pageBlockSection columns="1" id="billingAddressBlockSection">                  
-                            <DSE:DS_DataQuality id="BillingAddress"
-                                RecordRef="{!hqAccount}"
-                                FieldGroupName="Billing Address"
-                                Edit="true"
-                                FormGroupStyle="form-group"
-                                RowStyle="row"
-                                LabelStyle="label labelCol address-label" 
-                                InputStyle="address-input" 
-                                StatusStyle="address-status" 
-                                FormControlStyle="apcontainer">
-                            </DSE:DS_DataQuality>
+                        <apex:pageBlockSection columns="2" id="addressBlockSection">
+                            <apex:pageBlockSectionItem>    
+                                <DSE:DS_DataQuality id="BillingAddress"
+                                    RecordRef="{!hqAccount}"
+                                    FieldGroupName="Billing Address"
+                                    Edit="true"
+                                    FormGroupStyle="form-group"
+                                    RowStyle="row"
+                                    LabelStyle="label labelCol address-label" 
+                                    InputStyle="address-input" 
+                                    StatusStyle="address-status" 
+                                    FormControlStyle="apcontainer">
+                                </DSE:DS_DataQuality>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem>  
+                                <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
+                                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+                                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBillingAddress();" />
+                                    <br/>
+                                </apex:outputPanel>
+                                <apex:outputPanel>
+                                    <DSE:DS_DataQuality id="ShippingAddress"
+                                        RecordRef="{!hqAccount}"
+                                        FieldGroupName="Shipping Address"
+                                        Edit="true"
+                                        FormGroupStyle="form-group"
+                                        RowStyle="row"
+                                        LabelStyle="label labelCol address-label" 
+                                        InputStyle="address-input" 
+                                        StatusStyle="address-status" 
+                                        FormControlStyle="apcontainer">
+                                    </DSE:DS_DataQuality>
+                                
+
+                                    <apex:selectList id="ShippingCountryList" size="1" value="{!hqAccount.ShippingCountry}" style="width:100%" onchange="copyToADShippingBillingCntr();">
+                                        <apex:selectOptions value="{!countryList}"/>
+                                    </apex:selectList>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
                         </apex:pageBlockSection>    
                    
                        <script type="text/javascript">
@@ -912,6 +944,35 @@
                             document.onload = mandatoryLabels();
                             document.onload = showUpdateAgencyDialog();
                             document.onload = removeReq();
+
+            
+                            $( document ).ready(function() {
+                                $('[id$="ShippingCountryList"]').prependTo('#shippingcountry');
+                                var oldElemt = $('#shippingcountry > input');
+                                oldElemt.attr('style', 'display: none;');
+                                $('#shippingcountry').css("padding-right", 0);
+                                
+                                if ($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length > 0) {
+                                    $('[id$="ShippingCountryList"]').addClass('error');
+                                }
+
+                                $('[id$="shippingcountry"]').parent().prev().children().text(function () {
+                                    return "* " + $(this).text();
+                                });
+                         
+                                $('[id$="shippingstreet"]').parent().prev().children().text(function () {
+                                    return "* " + $(this).text();
+                                });
+                                
+                                $('[id$="shippingcity"]').parent().prev().children().text(function () {
+                                    return "* " + $(this).text();
+                                });
+                            });
+
+                            function copyToADShippingBillingCntr() {
+                                $('#shippingcountry > input').val($('[id$="ShippingCountryList"]').val());
+                                $('#shippingcountry > input').change();
+                            }
                         
                             var target = $j('.hophonestatusBox #recordstatuscontainer')[0],
                                 observer = new MutationObserver(function (mutations) {
@@ -963,6 +1024,32 @@
                                     mobileacct.val(natmobileacct.intlTelInput("getNumber"));
                                 } else {
                                     faxacct.val(natfaxacct.intlTelInput("getNumber"));
+                                }
+                            }
+
+                            $(".billingstreet").change(function () {
+                                copyBillingAddress();
+                            });
+                            $(".billingcity").change(function () {
+                                copyBillingAddress();
+                            });
+                            $(".billingpostalcode").change(function () {
+                                copyBillingAddress();
+                            });
+                            $(".billingstate").change(function () {
+                                copyBillingAddress();
+                            });
+
+                            function copyBillingAddress() {
+                                var checkBox = document.getElementById('copyCheckBoxBranch');
+                                if (checkBox.checked){
+                                    $(".shippingstreet").val($(".billingstreet").val());
+                                    $(".shippingcity").val($(".billingcity").val());
+                                    $(".shippingpostalcode").val($(".billingpostalcode").val());
+                                    $(".shippingstate").val($(".billingstate").val());
+
+                                    $('[id$="ShippingCountryList"]').val($(".billingcountry").val().toUpperCase());
+                                    $('#shippingcountry > input').val($(".billingcountry").val().toUpperCase());
                                 }
                             }
                         </script>
@@ -1072,18 +1159,45 @@
                 <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_PAX_Issuing_Address}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                 
                 <apex:pageblock >                
-                <apex:pageBlockSection columns="1" id="companySection">
-                    <DSE:DS_DataQuality id="BranchAddress"
-                        RecordRef="{!newForm}"
-                        FieldGroupName="Branch Address"
-                        Edit="true"
-                        FormGroupStyle="form-group"
-                        RowStyle="row"
-                        LabelStyle="label labelCol address-label" 
-                        InputStyle="address-input" 
-                        StatusStyle="address-status" 
-                        FormControlStyle="apcontainer">
-                    </DSE:DS_DataQuality>
+                    <apex:pageBlockSection columns="2" id="companySection">
+                        <apex:pageBlockSectionItem>  
+                            <DSE:DS_DataQuality id="BranchAddress"
+                                RecordRef="{!newForm}"
+                                FieldGroupName="Branch Address"
+                                Edit="true"
+                                FormGroupStyle="form-group"
+                                RowStyle="row"
+                                LabelStyle="label labelCol address-label" 
+                                InputStyle="address-input" 
+                                StatusStyle="address-status" 
+                                FormControlStyle="apcontainer">
+                            </DSE:DS_DataQuality>
+                        </apex:pageBlockSectionItem>
+
+                        <apex:pageBlockSectionItem>
+                            <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
+                                <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
+                                <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress();" />
+                                <br/>
+                            </apex:outputPanel>
+                            <apex:outputPanel>
+                                <DSE:DS_DataQuality id="ShippingAddress"
+                                    RecordRef="{!newForm}"
+                                    FieldGroupName="Shipping Address"
+                                    Edit="true"
+                                    FormGroupStyle="form-group"
+                                    RowStyle="row"
+                                    LabelStyle="label labelCol address-label" 
+                                    InputStyle="address-input" 
+                                    StatusStyle="address-status" 
+                                    FormControlStyle="apcontainer">
+                                </DSE:DS_DataQuality>
+                            
+                                <apex:selectList id="ShippingCountryList" size="1" value="{!newForm.Shipping_Country__c}" style="width:100%" onchange="copyToADShippingCntr();">
+                                    <apex:selectOptions value="{!countryList}"/>
+                                </apex:selectList>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>
                 </apex:pageblock>
              </apex:outputpanel>
@@ -1153,6 +1267,34 @@
                             faxacctTerm.val(natfaxacctTerm.intlTelInput("getNumber"));
                         }
                     }
+
+                    $(".branch_office_street_name_number__c").change(function () {
+                        copyBranchAddress();
+                    });
+                    $(".branch_office_city__c").change(function () {
+                        copyBranchAddress();
+                    });
+                    $(".branch_office_postal_code__c").change(function () {
+                        copyBranchAddress();
+                    });
+                    $(".state_province__c").change(function () {
+                        copyBranchAddress();
+                    });
+
+                    
+
+                    function copyBranchAddress() {
+                        var checkBox = document.getElementById('copyCheckBoxBranch');
+                        if (checkBox.checked){
+                            $(".shipping_street__c").val($(".branch_office_street_name_number__c").val());
+                            $(".shipping_city__c").val($(".branch_office_city__c").val());
+                            $(".shipping_postal_code__c").val($(".branch_office_postal_code__c").val());
+                            $(".shipping_state__c").val($(".state_province__c").val());
+                            
+                            $('[id$="ShippingCountryList"]').val($(".country__c").val().toUpperCase());
+                            $('#shipping_country__c > input').val($(".country__c").val().toUpperCase());
+                        }
+                    }
                 </script>           
         </apex:pageblock>
 
@@ -1161,7 +1303,33 @@
                 var vatNumber = $j('[id$=section1-vat-number]')[0];
                 if (vatNumber)
                     vatNumber.textContent = vatNumber.textContent + ' *'; 
+
+                $('[id$="ShippingCountryList"]').prependTo('#shipping_country__c');
+                var oldElemt = $('#shipping_country__c > input');
+                oldElemt.attr('style', 'display: none;');
+                $('#shipping_country__c').css("padding-right", 0);
+                
+                if ($('[id$="ShippingCountryList"]').parent().find('.errorMsg').length > 0) {
+                    $('[id$="ShippingCountryList"]').addClass('error');
+                }
+
+                $('[id$="shipping_country__c"]').parent().prev().children().text(function () {
+                    return "* " + $(this).text();
+                });
+         
+                $('[id$="shipping_street__c"]').parent().prev().children().text(function () {
+                    return "* " + $(this).text();
+                });
+                
+                $('[id$="shipping_city__c"]').parent().prev().children().text(function () {
+                    return "* " + $(this).text();
+                });
             });
+
+            function copyToADShippingCntr(){
+                $('#shipping_country__c > input').val($('[id$="ShippingCountryList"]').val());
+                $('#shipping_country__c > input').change();
+            }
         </script>
 
             <!-- ****************************************************************************** -->
@@ -1176,7 +1344,7 @@
                         </apex:outputpanel>
                         </apex:facet>
 
-                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought_Cash_Cashless}: {!IF(newCase.Reason1__c=='New HE standard', $Label.ISSP_AMS_Step3_Cash_Location, $Label.ISSP_AMS_Step3_Cashless_Location)}"/>
+                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought_Cash_Cashless}: {!IF(newCase.Reason1__c=='New HE standard', $Label.ISSP_AMS_Step3_Cash_Location, IF(newCase.Reason1__c == 'New HE multicountry', $Label.ISSP_AMS_Step3_Multicountry_Location, $Label.ISSP_AMS_Step3_Cashless_Location))}"/>
 
                     <apex:actionFunction name="setHeaderLabels" action="{!setPageLegalStatusLabels}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" reRender="contactList, newContact">
                         <apex:param name="setlegalstatus" assignTo="{!legalstatus}" value="" />

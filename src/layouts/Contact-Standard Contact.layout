@@ -6,9 +6,9 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SAP_Airline_Request</customButtons>
     <customButtons>SIS_Airline_Request</customButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
-    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -67,6 +67,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Available_Services__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Available_Services_Images__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Allow_Contact_LastName_Change__c</field>
             </layoutItems>
         </layoutColumns>
@@ -106,6 +114,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SIS_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ICH_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BIS_Contact_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>iiNet_User__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

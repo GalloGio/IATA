@@ -672,7 +672,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoReason() {
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
         
@@ -696,7 +696,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoValidReason() {
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
 
@@ -722,7 +722,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoOSCARReason() {
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
         
@@ -755,7 +755,7 @@ public class WSSidraLiteTest {
     public static void testCreateCaseOSCAR_OK1() {
         insert new AMS_Trigger_Execution_Manager__c(All__c = true);
 
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
 
@@ -779,7 +779,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK2() {
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
         
@@ -801,7 +801,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK3() {
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
         
@@ -823,7 +823,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK4() {
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
         
@@ -845,7 +845,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK5() {
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
         
@@ -867,7 +867,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK6() {
-        Id agencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
         insert account;
         

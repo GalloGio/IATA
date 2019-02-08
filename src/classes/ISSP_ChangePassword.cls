@@ -14,6 +14,16 @@ public without sharing class ISSP_ChangePassword {
     public Boolean passwordChanged{get;set;} 
     private List <User> userList{get;set;}        
     User provUser;
+    public Boolean fredAccessAlreadyGranted{
+    	get{
+    		if(fredAccessAlreadyGranted == null){
+    			List<PermissionSetAssignment> permissionSets = [select Id from PermissionSetAssignment where Assignee.Id =: UserInfo.getUserId() and PermissionSet.Name = 'FRED_SSO'];
+    			fredAccessAlreadyGranted = !permissionSets.isEmpty();
+    		}
+    		return fredAccessAlreadyGranted;
+    	}
+    	set;
+    }
 
      //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -64,7 +74,7 @@ public without sharing class ISSP_ChangePassword {
         try {                    
             // validate fields
             errorMessage = new list<string>();
- 
+              
             if (errorMessage.size() > 0) {
                 return null;
             }
@@ -253,6 +263,35 @@ public without sharing class ISSP_ChangePassword {
     	i = 0;
     	i = 0;
     	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+		i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+    	i = 0;
+		i = 0;
     	i = 0;
     	i = 0;
     	i = 0;

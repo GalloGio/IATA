@@ -24,6 +24,17 @@ public with sharing class AMS_AccreditationContactController {
     public boolean isNewProcess {get; set;}
     public boolean isChangeProcess {get; set;}
     public boolean isNewGenProcess {get; set;}
+    
+    public boolean isMCAEProcess{
+        get{
+		if(this.aoa == null)
+			return false;
+		else
+			return this.aoa.SAAM_Case__r.OSCAR__r.Process__c ==AMS_Utils.MCAE;
+    	}
+        set;
+    }
+    
     public List<AMS_Agency_Regulation__c> agRegList {get; set;} //AMSU-132
 
     public List<AgRegItemWrapper> agRegValuesForDisplay{ //AMSU-132
@@ -79,13 +90,13 @@ public with sharing class AMS_AccreditationContactController {
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person') => 'Person',
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Owner') => 'Person',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person') => 'Person',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner') => 'Person',
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company') => 'Company',
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner') => 'Company',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company') => 'Company',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner') => 'Company',
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff') => 'Trained Staff'
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff') => 'Trained Staff'
 
 
     };
@@ -105,7 +116,6 @@ public with sharing class AMS_AccreditationContactController {
         Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=edge');
         if(aoa == null)
         {
-            //String acCompanyRtId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
             
             List<AMS_Pax_Accreditation_Form__c> aoaList = [select id, Name, Account_Name__c, IATACode__c, Type_of_Operation__c, Shipping_Street__c, Shipping_Postal_Code__c, 
                             Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, 
@@ -174,10 +184,10 @@ public with sharing class AMS_AccreditationContactController {
          
         }
 
-        AcPersonRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
-        AcCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
-        AcCurrentCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
-        AcCurrentOwnerRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Owner');
+        AcPersonRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
+        AcCompanyRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
+        AcCurrentCompanyRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
+        AcCurrentOwnerRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
 
         forDeletion = new List<AMS_Accreditation_Contact__c>();
 
@@ -189,16 +199,21 @@ public with sharing class AMS_AccreditationContactController {
         blockOwnershipEdit = (aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO
                                 && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AO
                                 && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE
+                                && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.GE
                                 && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR
                                 && aoa.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES)
                             || typeOfChangeContainsOwnershipToIATA
                             || (aoa.SAAM_Case__r.OSCAR__r.CNS_process__c && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Class__c =='R');
 
-        if(aoa.ANG_IsNewGenAgency__c && (aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NEWAE || (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c != null && ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
+        if(aoa.ANG_IsNewGenAgency__c && (aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.MCAE || aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NEWAE || (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c != null && ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
             blockOwnershipEdit = false;
 
         if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c == null || !(ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
             blockOwnershipEdit = true;
+
+        if(aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHINACONVERSION){
+            blockOwnershipEdit = true;
+        }
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
@@ -338,13 +353,15 @@ public with sharing class AMS_AccreditationContactController {
             
         }
 
+        /*
         if(!isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
             return null;
         }
-
-        if(isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
+        */
+        //AMSU-180
+        if(!calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to at least 99.99% before saving.'));
             return null;
@@ -459,7 +476,7 @@ public with sharing class AMS_AccreditationContactController {
             // Save Company Ownership
             if(accountWrapper.size() > 0)
             {
-                Id standardAccountRtId = AMS_Utils.getId('Account', 'Standard_Account');
+                Id standardAccountRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
                 List<Account> accountInsertList = new List<Account>();
                 List<AMS_Accreditation_Contact__c> acUpsertList = new List<AMS_Accreditation_Contact__c>();
                 List<Account> acList = new List<Account>();
@@ -603,8 +620,7 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' &&
-         ((!isNewGenProcess && ownership != 100)||(isNewGenProcess && ownership < 99.99 )))
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && ownership < 99.99) //AMSU-180
         {
             return false;
         } else
@@ -1039,6 +1055,7 @@ public with sharing class AMS_AccreditationContactController {
                        (ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != null &&
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HO && 
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.HE &&
+                       ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.GE &&
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != AMS_Utils.AE && 
                        ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.COR && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c != AMS_Utils.AGENCYCHANGES));
 
@@ -1098,8 +1115,8 @@ public with sharing class AMS_AccreditationContactController {
             this.financialInterest = accountAc.Financial_Interest__c;
             this.registrationNumber = accountAc.Registration_Number__c;
             this.accountAc.Company__c = this.account.Id;
-            this.account.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
-            //AMS-1669 this.accountAc.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
+            this.account.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
             if(this.account.Legal_Name__c == null)
             {
                 this.account.Legal_Name__c = this.AccountAc.Name;
@@ -1272,5 +1289,70 @@ public with sharing class AMS_AccreditationContactController {
 
             this.trainedStaffWrapper.add(new TrainedStaffWrapper(ac));
         }
+    }
+    
+    public void cloneContactsFromParent(){
+		
+        if(this.aoa == null || this.aoa.Id == null){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Could not find Staging Area identifier.'));
+            return;
+        }
+
+        acWrapper = new List<AccreditationContactWrapper>();
+        accountWrapper = new List<AccountWrapper>();
+        trainedStaffWrapper = new List<TrainedStaffWrapper>();
+        
+        delete [Select Id from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c =:this.aoa.Id];
+
+		String result = ANG_MulticountryHelper.cloneOwnersFromParentAccount(this.aoa.Id);
+        
+        if(result != null){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, result));
+            return;
+        }
+
+        String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
+        String query = 'select ' + commaSeparatedFields + ', Company__r.Legal_Name__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Type_of_change__c from AMS_Accreditation_Contact__c where  RecordType.DeveloperName IN (\'Company\',\'Current_Company_Owner\',\'Current_Owner\',\'Person\', \'Trained_Staff\') and AMS_Pax_Accreditation_Form__c = \'' + this.aoa.Id + '\'';
+        acList = Database.query(query);
+
+        System.debug('acList is:'+acList);
+        
+        if(acList.isEmpty())
+            return;
+            
+        // Need to go over the list to get to know if any Companies belong to the ownership to get a map of Ac.Id and Account
+        Set<Id> accountsToLoadSet = new Set<Id>();
+        
+        for(AMS_Accreditation_Contact__c acTemp : acList)
+            if(accreditationContactRT.get(acTemp.RecordTypeId) == 'Company')
+                accountsToLoadSet.add(acTemp.Company__c);
+            
+            
+        Map<Id, Account> accList = new Map<Id, Account>();
+        
+        if(!accountsToLoadSet.isEmpty())
+            accList = new Map<Id, Account>([select Id, Email__c, Name, Legal_Name__c, IATACode__c, Phone_Number__c from Account where Id in :accountsToLoadSet]);
+
+        AccreditationContactWrapper wrapper;
+        AccountWrapper accWrapper;
+        
+        for(AMS_Accreditation_Contact__c ac : acList){
+            if(accreditationContactRT.get(ac.RecordTypeId) == 'Trained Staff')
+                trainedStaffWrapper.add(new TrainedStaffWrapper(ac));
+            else if(accreditationContactRT.get(ac.RecordTypeId) != 'Company'){
+                wrapper = new AccreditationContactWrapper(ac);
+                acWrapper.add(wrapper); 
+            } else
+            {
+                if(accList.get(ac.Company__c) != null)
+                    accWrapper = new AccountWrapper(ac, accList.get(ac.Company__c), accList.get(ac.Company__c).Id, false);
+                else
+                    accWrapper = new AccountWrapper(ac, new Account(), '', false);
+
+                accountWrapper.add(accWrapper); 
+            }
+        }
+
+        System.debug('acWrapper:'+acWrapper);
     }
 }

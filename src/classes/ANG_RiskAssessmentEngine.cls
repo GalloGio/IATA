@@ -192,10 +192,6 @@ public class ANG_RiskAssessmentEngine{
     }
 
 
-   /* public String forecastAssessment(){
-        return calculateRiskHistoryAssessment(forecastCalcMap,forecastAccount.Remittance_frequency__c,nrAdjustedRe);
-    }*/
-
     //============================ END PUBLIC METHODS ====================================================
 
     //============================ PRIVATE METHODS ====================================================

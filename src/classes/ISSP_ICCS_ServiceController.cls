@@ -36,7 +36,8 @@ public class ISSP_ICCS_ServiceController{
 		get{
 			if(participantId == null){
 				if(isAirline){
-					participantId = topAccount.Airline_designator__c + topAccount.IATACode__c;
+					Boolean iataCodeEmpty = topAccount.IATACode__c == '' || topAccount.IATACode__c == null;
+					participantId = topAccount.Airline_designator__c + (iataCodeEmpty? topAccount.Airline_Prefix__c : topAccount.IATACode__c);
 				}
 				if(isAgency){
 					participantId = topAccount.IATACode__c;
@@ -308,6 +309,10 @@ public class ISSP_ICCS_ServiceController{
 		coreRest = new ISSP_ICCS_CoreRest(this);
 		
 		currentComponent = ISSP_ICCS_Utils.Page.HOMEPAGE;
+
+		if(!Test.isRunningTest()){
+			checkLogginAs();
+        }
 		
 		if(!isActivePortalUser){
 			setMessage(Label.ICCS_Homepage_UnapprovedUser, false);
@@ -543,4 +548,18 @@ public class ISSP_ICCS_ServiceController{
 
 		setMessage(message, true);
     }
+
+
+	public void checkLogginAs(){
+		// check if the user is logged as an other user. In that case, the parentId would not be null)
+        Map<String,String> currentSessionAttributes = Auth.SessionManagement.getCurrentSession();
+        String parentId = currentSessionAttributes.get('ParentId');
+       	System.debug('Current session attributes: ' + parentId);
+		   if(parentId != null){
+			   portalUserRights = ISSP_ICCS_Utils.ICCS_ROLE_READ_ONLY;
+		   }
+        for(String key : currentSessionAttributes.keySet()){
+        	System.debug(key + ' : ' + currentSessionAttributes.get(key));
+		}
+	}
 }

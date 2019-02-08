@@ -50,12 +50,23 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Topic__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Topic</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>LVA_CallUsConfig</label>
     <listViews>
         <fullName>All_filtering_values</fullName>
         <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>NamespacePrefix</columns>
+        <columns>Topic__c</columns>
         <columns>IsoCountry__c</columns>
         <columns>Sector__c</columns>
         <columns>Business_Hours_Name__c</columns>

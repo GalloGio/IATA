@@ -3,6 +3,7 @@
     <customButtons>Detailed_Hierarchy_View</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
+    <customButtons>China_Pilot_Conversion_Wizard</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
@@ -109,6 +110,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Preferred_Language__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>PCI_DSS_Compliant__c</field>
             </layoutItems>
             <layoutItems>
@@ -151,6 +156,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSP_non_air__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -168,6 +177,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Identify_as_Key_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Multicountry_Key_Hierarchy__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Identify_as_Multicountry_Key_Hierarchy__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -348,6 +365,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Is_Branch_Abroad__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Opt_out_PCI_DSS__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -786,6 +807,8 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
+        <fields>ANG_Severity__c</fields>
+        <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_Threshold_Level__c</fields>
         <fields>ANG_Direction__c</fields>
         <fields>CREATED_DATE</fields>
@@ -841,6 +864,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Year__c</fields>
+        <fields>AmountLastYearSales__c</fields>
+        <fields>Amount_Currency__c</fields>
+        <fields>Number_Of_Vouchers__c</fields>
         <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -1,5 +1,5 @@
 public class AMS_AccountTriggerHandler {
-    
+
     public static Set<String> minorChangesAccountFields = new Set<String> {
                 'phone',
                 'fax',
@@ -22,14 +22,16 @@ public class AMS_AccountTriggerHandler {
     public static Integer runningVCU = 0;
 
     public static void handleBeforeInsert(List<Account> accs){
+
         Set<String> disallowedSources = new Set<String>();
         disallowedSources.add('AIMS1');
         disallowedSources.add('AIMS2');
         disallowedSources.add('AIMS3');
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
-
+        
         for(Account ag : accs){
+            validateCharacters(ag);//AMSU-179
             if(!disallowedSources.contains(ag.Source_System__c)){
                 if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
                     setCassNumberOnHO(ag);
@@ -39,13 +41,17 @@ public class AMS_AccountTriggerHandler {
                     }
                 }
             }
+
         }
+
     }
 
     public static void handleAfterInsert(List<Account> accs){
         //Operations assignment update:
         //we want to set all operation to a dedicated Operation based on their Countries
         List<Account> operationHelpercandidate = new List<Account>();
+
+        Set<Id> parentIdSet = new Set<Id>();
 
         for(Account ag: accs){
             if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent'){
@@ -54,7 +60,17 @@ public class AMS_AccountTriggerHandler {
                     operationHelpercandidate.add(ag);
                 }
             }
+
+            if(ANG_MulticountryHelper.shouldRunMulticountryValidations(ag)){
+                parentIdSet.add(ag.ParentId);
+            }
+
         }
+
+        //Ideally this would be done on BeforeInsert
+        //However, doing this on AfterInsert we only have to perform a single query
+        //This simplifies the necessary logic plus allows reusability for the AfterUpdate
+        ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
 
         if(operationHelpercandidate != null && operationHelpercandidate.size()>0){
             system.debug('[AMS_AgencyTrigger] updating Operation for '+operationHelpercandidate.size()+' Agencies');
@@ -65,6 +81,7 @@ public class AMS_AccountTriggerHandler {
     public static void handleBeforeUpdate(List<Account> accs, Map<Id,Account> oldMap){
         //resizeNumericString
         for(Account  ag: accs){
+            validateCharacters(ag);//AMSU-179
             if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
                 
                 if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric() && oldMap.get(ag.Id).Cass_number__c!=ag.Cass_number__c){
@@ -73,6 +90,7 @@ public class AMS_AccountTriggerHandler {
             }
             if(ag.Status__c!= null && ag.Status__c!=oldMap.get(ag.Id).Status__c)
                 ag.Date_Organisation_Status_attained__c = Date.today();
+        
         }
 
        System.debug('Start CASS verification');
@@ -98,6 +116,30 @@ public class AMS_AccountTriggerHandler {
         // copy information to related regulation objects if Is_your_firm_handling_Dangerous_Goods__c changed
         copyHandlingInformationToRegulations(accs, oldMap);
 
+        Set<Id> parentIdSet = new Set<Id>();
+
+        for(Account acct : accs){
+            if(ANG_MulticountryHelper.shouldRunMulticountryValidations(acct)){
+                parentIdSet.add(acct.ParentId);
+            }
+        }
+
+        //Ideally this would be done on BeforeUpdate
+        //However, doing this on AfterUpdate we only have to perform a single query
+        //This simplifies the necessary logic plus allows reusability for the AfterInsert 
+        ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
+
+    }
+
+    public static void validateCharacters(Account acc) {
+        Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        if(acc.RecordTypeId == agencyRT) {
+            List<String> errors = AMS_Utils.validateCharacters(acc, AMS_Utils.ACCOUNT_FIELDS_TO_VALIDATE);
+            if(!errors.isEmpty()) {
+                String error = String.join(errors, '\r\n');
+                acc.addError(error);
+            }
+        }
     }
 
     public static void handleAgenciesOperations(List<Account> accs, Map<Id,Account> oldMap){
@@ -199,7 +241,7 @@ public class AMS_AccountTriggerHandler {
 
     private static List<Account> filterValidAgencies(List<Account> accts){
 
-        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency') ;
+        ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 
         List<Account> toReturn = new List<Account>();
 
@@ -474,8 +516,8 @@ public class AMS_AccountTriggerHandler {
     public static void handleDDUpdates(List<Account> accs, Map<Id,Account> oldMap){
 
         Set<Id> accountsToCheck = new Set<Id>();
-        accountsToCheck.add(AMS_Utils.getId('Account', 'Standard_Account'));
-        accountsToCheck.add(AMS_Utils.getId('Account', 'IATA_Agency'));
+        accountsToCheck.add(RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'));
+        accountsToCheck.add(RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'));
 
 
         Set<String> closedStatus = new Set<String>{

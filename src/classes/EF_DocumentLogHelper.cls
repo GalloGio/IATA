@@ -54,7 +54,7 @@ public with sharing class EF_DocumentLogHelper
 		List<AmazonFile__c> attachmentsToInsert = new List<AmazonFile__c>();
 		AmazonFile__c af;
 		EF_Document_Log__c dl;
-		Id efFileRtId = AMS_Utils.getId('AmazonFile__c', 'EF_File');
+		Id efFileRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'EF_File');
 
 		List<Attachment> lsAttachments = [SELECT Id, Name, ParentId, ContentType, BodyLength, Body FROM Attachment WHERE Id IN :lsAttachmentIds];
 		EF_AttachmentListController c = new EF_AttachmentListController();

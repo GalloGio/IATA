@@ -1401,7 +1401,7 @@ public with sharing class TestDataGenerator
         mapping.add(new SFDC_SAP_Mapping__c(SFDC_Order_Type__c='Order', SFDC_Order_Source__c='Inbound call', SFDC_Order_Channel__c='Central Direct Sales'
                                           , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='03', SAP_Division__c='01'));
         mapping.add(new SFDC_SAP_Mapping__c(SFDC_Order_Type__c='Order', SFDC_Order_Source__c='Inbound call', SFDC_Order_Channel__c='eCommerce'
-                                          , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='02', SAP_Division__c='02'));
+                                          , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='03', SAP_Division__c='02'));
         mapping.add(new SFDC_SAP_Mapping__c(SFDC_Order_Type__c='Order', SFDC_Order_Source__c='Inbound call', SFDC_Order_Channel__c='Telesales'
                                           , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='04', SAP_Division__c='04'));
 
@@ -1426,6 +1426,7 @@ public with sharing class TestDataGenerator
             listCountry.add(new IATA_ISO_Country__c(Name='Mexico', ISO_Code__c='MX'));
             listCountry.add(new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US'));
             Database.upsert(listCountry, IATA_ISO_Country__c.ISO_Code__c, false);
+
         }
         catch (Exception e) {}
         
@@ -1445,9 +1446,11 @@ public with sharing class TestDataGenerator
         }
         catch (Exception e) {}
         
-        return [select Id, Name, ISO_Code__c, ISO_Code_Numeric__c, Region__c
-                     , (select Id, Name, ISO_Code__c from IATA_ISO_States__r)
-                from IATA_ISO_Country__c];
+        //Forcing the countries to be refetched
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
+        
+		return IATAIsoCountryDAO.getIsoCountries();
+		
     } //*** end of "generateISOCountryState"
     
     public static List<Term_And_Condition__c> generateTermAndConditions(Integer nb, Boolean doInsert)

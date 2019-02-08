@@ -25,20 +25,17 @@ public class PlatformEvents_Helper {
         
         try{
             Map<Id,sObject> InternalObjectMap = new map<id, sObject>();
-            Map<ID, Schema.RecordTypeInfo> mapRT = new Map<ID, Schema.RecordTypeInfo>(); 
-            
-            mapRT.putAll(Schema.getGlobalDescribe().get(ObjSource).getDescribe().getRecordTypeInfosById());
+            List<RecordType> rtList = RecordTypeSingleton.getInstance().getRecordTypesBySObject(ObjSource);
             
             if(ObjSource == 'Account'){
-            	mapRT.putAll(Schema.getGlobalDescribe().get('Account_Role__c').getDescribe().getRecordTypeInfosById());
+            	rtList.addAll(RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Role__c'));
             	InternalObjectMap = getAccountRoleToPublish(ObjectMap);
             }
             else if( ObjSource =='Contact'){
-            	mapRT.putAll(Schema.getGlobalDescribe().get('Account_Contact_Role__c').getDescribe().getRecordTypeInfosById());
+                rtList.addAll(RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Contact_Role__c'));
             	InternalObjectMap = getAccountContactRoleToPublish(ObjectMap);
             }
             else InternalObjectMap = ObjectMap;
-            
             
             List<SObject> lstSObjs = new list<SObject>();
             
@@ -48,7 +45,8 @@ public class PlatformEvents_Helper {
                 SObject sObj = Schema.getGlobalDescribe().get(PEObjName.get(string.valueOf(ObjId.getsobjecttype()))).newSObject();
                 for(string FieldSource:MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
-                        if(mapRT.size()>1) //master is there. check if there is anything else. if no other recortyoe but master, field "RecorDTypeId" doesn't exist....
+                        if(!rtList.isEmpty()) 
+                            //sObj.put(MapMapping.get(FieldSource) , RecordTypeSingleton.getInstance().getRecordTypeById(ObjSource, (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))).Name);
                             sObj.put(MapMapping.get(FieldSource) , RTName(string.valueOf(ObjId.getsobjecttype()), (Id)(InternalObjectMap.get(ObjId).get('RecordtypeId'))));
                         else
                             sObj.put(MapMapping.get(FieldSource), null);
@@ -130,6 +128,9 @@ public class PlatformEvents_Helper {
     private static Map<Id,sObject> getAccountRoleToPublish(Map<Id,sObject> mapAccnt){
     	map<id, sObject> mapToRet = new map<id, sObject>();
     	mapToRet.putAll(mapAccnt);
+
+        if(mapAccnt.keyset().isEmpty()) return mapToRet;
+
     	for(Account_Role__c AccntRole: [select id, RecordTypeId, Account__c from Account_Role__c where Account__c in:mapAccnt.keyset() and recordtypeId=:TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID]){
 //    		if(mapToRet.ContainsKey(accntRole.Account__c))
 //    			mapToRet.remove(accntRole.Account__c);

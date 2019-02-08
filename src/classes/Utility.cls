@@ -371,25 +371,6 @@ public without sharing class Utility {
     
 
     /****************************************************************************************************
-        Created by CGI, Thai 2015-08-24
-            Return map of name of record type and its ID
-    ****************************************************************************************************/
-    public static Map<String, Id> getRTmapName_Id(String strObjectName, List<String> listDevName) {
-        Map<String, Id> mapName_Id = new Map<String, Id>();
-        
-        //*** build query command
-        String SOQL = 'select Id, DeveloperName from RecordType where SObjectType = :strObjectName';
-        if (listDevName != null && listDevName.size() > 0)
-            SOQL += ' and DeveloperName in :listDevName';
-        
-        //*** build and return map of name of record type and its ID
-        for (RecordType rt : Database.query(SOQL))
-            mapName_Id.put(rt.DeveloperName, rt.Id);
-        return mapName_Id;
-    } //*** end of "getRTmapName_Id"
-
-
-    /****************************************************************************************************
         Created by CGI, David D 2015-08-24
             Return random String
     ****************************************************************************************************/
@@ -797,38 +778,6 @@ public without sharing class Utility {
             return UserInfo.getDefaultCurrency();
         }
     } //*** end of "getDefaultCurrency"
-    
-    /****************************************************************************************************
-        Created by CGI David D 2015-12-22
-            Get RecordType Id by Name
-    ****************************************************************************************************/
-    public static Id getRecordTypeId(String objectName, String recordTypeName)
-    {
-        try
-        {
-            return Schema.getGlobalDescribe().get(objectName).getDescribe().getRecordTypeInfosByName().get(recordTypeName).getRecordTypeId();
-        }
-        catch(Exception ex)
-        {
-            return null;
-        }
-    }
-    
-    /****************************************************************************************************
-        Created by CGI Kevin Ky 2015-12-29
-            Get RecordType Id by Name
-    ****************************************************************************************************/
-    public static map<String,Id> getRecordTypeIdByName(String sobjectType){
-        
-        map<String,Id> recordTypeName_Id = new map<String,Id>();
-
-        List<RecordType> lstRecordType = [SELECT id, Name from RecordType where sObjectType = :sobjectType and isActive = true];
-        for(RecordType rt : lstRecordType){
-            recordTypeName_Id.put(rt.Name.toLowerCase(),rt.Id);
-        }
-
-        return recordTypeName_Id;
-    }
     
     /****************************************************************************************************
         Created by CGI Thai 2016-03-23

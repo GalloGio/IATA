@@ -62,7 +62,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>TrackingHistory</fullName>
-        <description>used for tracking purposes</description>
+        <description>used for tracking purposes - do NOT include any fields which cause mixed dml operations (e.g. profile, role, ...)</description>
         <displayedFields>
             <field>ToU_accepted__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -2373,7 +2373,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filters>
             <field>FULL_NAME</field>
             <operation>contains</operation>
-            <value>Weydath</value>
+            <value>goh</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>

@@ -25,6 +25,7 @@ public with sharing class IFAP_BusinessRules {
     private static final string SCF = 'Sanity Check Failure';
     private static final string SUBMITTED = 'Submitted';
     private static final string CLOSEDOPTOUT = 'Closed Opt-out';
+    private static final String CLOSED_NON_COMPLIANCE = 'Closed_Non compliance';
 
 
     /**
@@ -38,8 +39,7 @@ public with sharing class IFAP_BusinessRules {
         // try to find the country base on the Billing country
         try {
 
-            IATA_ISO_Country__c[] associatedCountry = [Select i.Name, i.Id From IATA_ISO_Country__c i where Name = : accountMap.get(theCase.id).BillingCountry];
-            //IATA_ISO_Country__c[] associatedCountry = [Select i.Name, i.Id From IATA_ISO_Country__c i where Name =: accountMap.get(theCase.id).BillingCountry];
+            IATA_ISO_Country__c[] associatedCountry = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{accountMap.get(theCase.id).BillingCountry});
 
             // the country is valid if the country was found
             system.debug('\nassociatedCountry.size():' + associatedCountry.size());
@@ -125,7 +125,7 @@ public with sharing class IFAP_BusinessRules {
         IATA_ISO_Country__c country ;
         try {
 
-            country = [Select i.Name, i.Region__c, i.AIMS_Area_Name__c, i.AIMS_Area_ID__c, ISO_Code__c From IATA_ISO_Country__c i where Name = : accountMap.get(theCase.id).BillingCountry limit 1];
+            country = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{accountMap.get(theCase.id).BillingCountry})[0];
 
         } catch (Exception e) {
             theCase.IFAP_Area__c.addError('The account\'s country is not a valid IATA_ISO_Country: ' + accountMap.get(theCase.id).BillingCountry);
@@ -161,8 +161,7 @@ public with sharing class IFAP_BusinessRules {
         List<Case> cList = new List<Case>();
 
         // get the IFAP case recordtype (we get it from the singleton class)
-        //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
         BatchNumber__c batch = [Select Id, Name from BatchNumber__c where Id = : batchNumberId];
         Group g = [Select id, name from Group where type = 'Queue' and name = 'Cases - Agent Financial Review'];
@@ -248,29 +247,19 @@ public with sharing class IFAP_BusinessRules {
 
     public static Boolean CheckFinancialAssessmentContactExist(Contact theContact) {
 
-        // not sure if necessary to get contact record type..
-        // get the IFAP case recordtype
-        // RecordType ContactRecordType = [Select r.Id, r.Name from RecordType r where r.DeveloperName = 'IATAStandardContact' limit 1];
-        // RecordType ContactRecordTypeStandard = [Select r.Id, r.Name from RecordType r where r.DeveloperName = 'Standard' limit 1];
-
-
         // Check for the record type, the agent type (P/C) and for the financial assessment contact boolean field
-        //        //(theContact.RecordTypeId == ContactRecordType.Id || theContact.RecordTypeId == ContactRecordTypeStandard.Id ) &&
-        if (
-            theContact.Financial_Assessment_Contact__c == true &&
-            (theContact.Agent_Type__c == 'IATA Passenger Sales Agent' || theContact.Agent_Type__c == 'IATA Cargo Agent' || theContact.Agent_Type__c == 'CASS Associate')) {
+        if (theContact.Agent_Type__c == 'IATA Passenger Sales Agent' 
+            || theContact.Agent_Type__c == 'IATA Cargo Agent'
+            || theContact.Agent_Type__c == 'CASS Associate') {
 
-            List<Contact> AccountContacts = [Select Id, Financial_Assessment_Contact__c, AccountId From Contact Where AccountId = : theContact.AccountId And Id <>: theContact.Id];
-            system.debug('AccountContacts: ' + AccountContacts);
-            system.debug('theContact.AccountId: ' + theContact.AccountId);
-            system.debug('theContact.Id: ' + theContact.Id);
+            Integer countAccountContacts = [SELECT Count()
+                                            FROM Contact 
+                                            WHERE AccountId = : theContact.AccountId 
+                                                AND Id <>: theContact.Id 
+                                                AND Financial_Assessment_Contact__c = true];
 
-            if (AccountContacts.size() > 0) {
-                for (Contact aContact : AccountContacts) {
-                    if (aContact.Financial_Assessment_Contact__c == true) {
-                        return true;
-                    }
-                }
+            if (countAccountContacts > 0) {
+                return true;
             }
         }
         return false;
@@ -330,8 +319,8 @@ public with sharing class IFAP_BusinessRules {
 
             }
 
-            if (caseStatus == CLOSEDOPTOUT)
-                    return true;
+            if (caseStatus == CLOSEDOPTOUT || caseStatus == CLOSED_NON_COMPLIANCE)
+                return true;
 
             if (caseStatus == AGENT_NOTIFIED_EMAIL)
                 if (oldCaseStatus == ACTION_NEEDED || oldCaseStatus == AGENT_NOTIFIED_MAIL || oldCaseStatus == AGENT_TO_BE_NOTIFIED || oldCaseStatus == FINANCIAL_STATEMENTS_UPLOADED)
@@ -400,7 +389,7 @@ public with sharing class IFAP_BusinessRules {
             return true;
 
         /*// retreive template's ISO country*/
-        IATA_ISO_Country__c[] templateCountry = [Select i.Name, i.ISO_Code__c From IATA_ISO_Country__c i where i.Id = : emailTemplate.IATA_ISO_Country__r.Id];
+        IATA_ISO_Country__c[] templateCountry = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{emailTemplate.IATA_ISO_Country__r.Id});
 
         if (templateCountry.size() == 0)
             return false;
@@ -451,24 +440,24 @@ public with sharing class IFAP_BusinessRules {
     }
 
     public static Integer accountNbrClosedCase(String accountId, String financialYear) {
-        //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
         List<Case> cases = [Select c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId From Case c where c.AccountId = : accountId and c.Status = 'Closed' and c.IFAP_Financial_Year__c = : financialYear and c.RecordTypeId = : IFAPcaseRecordTypeID];
         return (cases == null ? 0 : cases.size());
     }
 
     public static Boolean isSAAMCase(String caseId) {
-        //ID ProcessISSPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SAAM');
-        ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
+        ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+        List<Case> theCase = new List<Case>();
 
-        List<Case> theCase = [select c.Id, c.Subject, c.RecordTypeId from Case c where c.Id = :caseId and c.RecordTypeId = :ProcessISSPcaseRecordTypeID];
+        if(caseId != null) {
+            theCase = [select c.Id, c.Subject, c.RecordTypeId from Case c where c.Id = :caseId and c.RecordTypeId = :ProcessISSPcaseRecordTypeID];
+        }
         return (theCase != null && theCase.size() > 0);
     }
 
     public static Boolean caseHasChildIFAPCases(String caseId) {
-        //ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review');
+        ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
         List<Case> childCases = [Select c.Status, c.RecordTypeId From Case c where c.ParentId = : caseId and c.RecordTypeId = : IFAPcaseRecordTypeID];
         return (childCases != null && childCases.size() > 0);
     }
@@ -557,8 +546,8 @@ public with sharing class IFAP_BusinessRules {
      */
     public static Boolean assignAssessmentTemplateToAccountsWhereMissing(Integer maxLimit) {
 
-        List<RecordType> accountRecordTypes = [Select r.Id, r.Name From RecordType r Where r.SobjectType  = 'Account' and r.Name = 'Standard Account'];
-        Account[] listAccountToAssign = [Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = :accountRecordTypes.get(0).Id limit :maxLimit];
+        Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+        Account[] listAccountToAssign = [Select a.Id, a.Name, a.Type, a.BillingCountry, a.Assessment_Template__c From Account a where a.Assessment_Template__c = null and a.RecordTypeId = :accountRecordTypeId limit :maxLimit];
 
         for (Account a : listAccountToAssign) {
             //Boolean result = setAssessmentTemplateToAccount(a);

@@ -39,6 +39,11 @@ public with sharing class ISSP_Homepage {
     public string UserLanguage {get; set;}
     public boolean iataCertificatesVisible {get; set;}
 
+    // Sidra Popup
+    public Boolean showSidraPopup {get; set;}
+    public String sidraCaseIdToShow {get; set;}
+    public Integer CookieValCount {get; set;}
+
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 
@@ -48,7 +53,7 @@ public with sharing class ISSP_Homepage {
         }
         Id profileId=userinfo.getProfileId();
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
-        isDPCUser = (profileName.startsWith('ISS Portal DPC'));
+        isDPCUser = (profileName.startsWith('ISS Portal DPC Admin'));
         isAdmin =(profileName.containsIgnoreCase('admin'));
         String profileId15 = String.ValueOf(UserInfo.getProfileId()).left(15);
         try {
@@ -71,6 +76,8 @@ public with sharing class ISSP_Homepage {
     }
 
     public void populateVariables(){
+        sidraCaseIdToShow='';
+        showSidraPopup=false;
         User user = [select Id,languagelocalekey,ContactId,ProfileId from User where Id =:Userinfo.getUserId()];
         system.debug('\n\n\n user:'+user+'\n\n\n');
         Cookie coo = ApexPages.currentPage().getCookies().get('lang');
@@ -110,7 +117,11 @@ public with sharing class ISSP_Homepage {
         }
 
         // MY OPEN CASES
-        caseList = [select Id from Case
+        caseList = [select Id, Outstanding_Amount__c, IRR_Approval_Rejection__c, Update_AIMS_IRR__c,
+                    IRR_Withdrawal_Approval_Rejection__c,
+                    Inform_Agent_DEF__c, REI_ApprovalRejectin__c,
+                    recordtype.Name, Status, DEF_Approval_Rejection__c
+                    from Case
                     WHERE is_Portal_user_equal_case_contact__c = 'true'
                     AND Visible_on_ISS_Portal__c = true
                     and CreatedDate >:date.newInstance(2014, 1, 13)
@@ -130,7 +141,12 @@ public with sharing class ISSP_Homepage {
             system.debug('IS PARTNER');
             system.debug('TOP PARENT: ' + topParentId);
             isPartner = true;
-            caseList_CompanyOpenCases = [select Id from Case where
+            caseList_CompanyOpenCases = [select Id, Outstanding_Amount__c,
+                    IRR_Approval_Rejection__c, Update_AIMS_IRR__c,
+                    IRR_Withdrawal_Approval_Rejection__c,
+                    Inform_Agent_DEF__c, REI_ApprovalRejectin__c,
+                    recordtype.Name, Status, DEF_Approval_Rejection__c
+                from Case where
                 (Contact.Account.Top_Parent__c=:topParentId OR Contact.AccountId=:topParentId)
                 AND Visible_on_ISS_Portal__c = true
                 and IsClosed = false
@@ -185,6 +201,30 @@ public with sharing class ISSP_Homepage {
                         and p.Hide_on_Homepage__c = false and id not in:appIdSet];
         //populateKBlist(user.languagelocalekey);
 
+
+        //WMO 359
+        if(ISSP_Constant.adminIdSet.contains(user.ProfileId) && caseList_CompanyOpenCases.size() > 0){
+            for(Case c: caseList_CompanyOpenCases){
+                if(c.status != 'Closed' && c.recordtype.Name =='SIDRA' && c.Outstanding_Amount__c > 10){
+                    if((c.IRR_Approval_Rejection__c == 'Approved' && c.Update_AIMS_IRR__c != null  && c.IRR_Withdrawal_Approval_Rejection__c != 'Approved' )
+                            || ( c.DEF_Approval_Rejection__c == 'Approved' && c.Inform_Agent_DEF__c != null && c.REI_ApprovalRejectin__c != 'Approved' )) {
+                        sidraCaseIdToShow = c.Id;
+                        showSidraPopup = checkCookies(sidraCaseIdToShow);
+                    }
+                }
+            }
+        }else if(caseList.size() > 0){
+            for(Case c: caseList){
+                if(c.status != 'Closed' && c.recordtype.Name =='SIDRA' && c.Outstanding_Amount__c > 10){
+                    if((c.IRR_Approval_Rejection__c == 'Approved' && c.Update_AIMS_IRR__c != null  && c.IRR_Withdrawal_Approval_Rejection__c != 'Approved' )
+                            || ( c.DEF_Approval_Rejection__c == 'Approved' && c.Inform_Agent_DEF__c != null && c.REI_ApprovalRejectin__c != 'Approved' )) {
+                        sidraCaseIdToShow = c.Id;
+                        showSidraPopup = checkCookies(sidraCaseIdToShow);
+                    }
+                }
+            }
+        }
+        //System.debug('####### FME ######'+sidraCaseIdToShow+' '+showSidraPopup);
     }
 
     public Pagereference isLogined (){
@@ -415,5 +455,46 @@ public with sharing class ISSP_Homepage {
         //return browser;
         return b;
     }set;}
+
+    /**
+        Returns true if current user is an Admin user according to ISSP_Constant class
+    **/
+    public Boolean getIsAdminUser() {
+        return ISSP_Constant.adminIdSet.contains(UserInfo.getProfileId());
+    }
+
+    // WMO 359
+    public Boolean checkCookies (Id sidraCaseid){
+
+        if (sidraCaseid == null )
+        {
+            return false;
+        }
+
+        Cookie cCookie = ApexPages.currentPage().getCookies().get('SIDRA' + UserInfo.getUserId() + sidraCaseid);
+        System.debug('###### cookie #####'+cCookie );
+
+        if (cCookie == null)
+        {
+            System.debug('###### cookie null #####'+cCookie );
+            cCookie = new Cookie('SIDRA' + UserInfo.getUserId() + sidraCaseid, '1', null, -1, false);
+            ApexPages.currentPage().setCookies(new Cookie[]{cCookie});
+            return true;
+        }
+        /*else
+        {
+            CookieValCount = Integer.valueOf(cCookie.getValue());
+            //System.debug('###### cookie count #####'+CookieValCount );
+            if(CookieValCount == 1)
+            {
+                cCookie = new Cookie('SIDRA' + UserInfo.getUserId() + sidraCaseid, '2', null, -1, false);
+                ApexPages.currentPage().setCookies(new Cookie[]{cCookie});
+                return true;
+            }
+        }*/
+        //System.debug('###### cookie count >1 #####' );
+        return false;
+
+    }
 
 }
