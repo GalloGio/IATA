@@ -8,39 +8,30 @@ public with sharing class ANG_ProgressBarHelper {
     public List<ANG_ProgressNode> progressNodes{get; set;}
     public ANG_ProgressNode selectedNode{get;set;}
 
-    public ANG_ProgressBarHelper(String recordType, Id sobjectId) {
+    public ANG_ProgressBarHelper(Case cse) {
+        this.progressNodes = new List<ANG_ProgressNode>();
 
-        recordType = '%' + recordType + '%';
+        ANG_ProgressBarSetting__mdt setting = getProgressBarSetting(cse);
+        if (setting==null) {
+            System.debug('ANG_ProgressBarHelper: No valid ANG_ProgressBarSetting__mdt found.');
+            return;
+        }
 
-        List<ANG_ProgressBarSetting__mdt> settings = [
-            SELECT MasterLabel,
-                RecordType__c,
-                Description__c,
-                ValueProgress__c,
-                ValueOk__c,
-                ValueError__c,
-                Is_Visible__c,
-                Order__c
-            FROM ANG_ProgressBarSetting__mdt
-            WHERE RecordType__c LIKE : recordType
-            ORDER BY Order__c ASC];
+        System.debug('ANG_ProgressBarHelper: Using setting ' + setting);
+        for(ANG_ProgressBarStep__mdt step : setting.Progress_Bar_Steps__r) {
 
-        progressNodes = new List<ANG_ProgressNode>();
-
-        for(ANG_ProgressBarSetting__mdt setting : settings) {
-
-            if(setting.Is_Visible__c==null || processStatus(setting.Is_Visible__c, sobjectId)) {
+            if(step.Is_Visible__c==null || processStatus(step.Is_Visible__c, cse.Id)) {
 
                 Boolean isDone = false;
                 Boolean isError = false;
-                Boolean isProgress = processStatus(setting.ValueProgress__c, sobjectId);
+                Boolean isProgress = processStatus(step.ValueProgress__c, cse.Id);
 
                 if(!isProgress) {
-                    isDone = processStatus(setting.ValueOk__c, sobjectId);
+                    isDone = processStatus(step.ValueOk__c, cse.Id);
                 }
 
                 if(!isProgress && !isDone) {
-                    isError = processStatus(setting.ValueError__c, sobjectId);
+                    isError = processStatus(step.ValueError__c, cse.Id);
                 }
 
                 String status;
@@ -55,8 +46,8 @@ public with sharing class ANG_ProgressBarHelper {
                 }
 
                 ANG_ProgressNode node =
-                    new ANG_ProgressNode(setting.MasterLabel, setting.Description__c, status, setting.Order__c);
-                progressNodes.add(node);
+                    new ANG_ProgressNode(step.MasterLabel, step.Description__c, status, Integer.ValueOf(step.Order__c));
+                this.progressNodes.add(node);
 
                 // Select first node in progress
                 if(this.selectedNode==null && status==PROGRESS) {
@@ -67,6 +58,39 @@ public with sharing class ANG_ProgressBarHelper {
         }
     }
 
+    /**
+        Finds the Progress bar setting matching the input case, if exists
+    **/
+    private ANG_ProgressBarSetting__mdt getProgressBarSetting(Case cse) {
+        list<ANG_ProgressBarSetting__mdt> listSetting =[
+            SELECT Id, Condition__c,
+                (SELECT MasterLabel,
+                    Description__c,
+                    ValueProgress__c,
+                    ValueOk__c,
+                    ValueError__c,
+                    Is_Visible__c,
+                    Order__c
+                FROM Progress_Bar_Steps__r
+                ORDER BY Order__c ASC)
+            FROM ANG_ProgressBarSetting__mdt
+            WHERE RecordType__c = :cse.RecordType.DeveloperName];
+
+        for (ANG_ProgressBarSetting__mdt setting: listSetting) {
+            String query = 'SELECT count(Id) FROM Case WHERE Id=\'' + cse.Id + '\'';
+            if (setting.Condition__c!=null) {
+                query+= ' AND ' + setting.Condition__c;
+            }
+            System.debug('Test Setting ' + setting + ' with query: ' + query);
+            List<sObject> listResult = Database.query(query);
+            if (!listResult.isEmpty()) return setting;
+        }
+        return null;
+    }
+
+    /**
+        Executes a condition for a specific step
+    **/
     private Boolean processStatus(String condition, Id sobjectId) {
         String query = 'SELECT Id'
         + ' FROM ' + sobjectId.getSobjectType()
@@ -74,6 +98,7 @@ public with sharing class ANG_ProgressBarHelper {
         if (!String.isEmpty(condition)) {
             query += ' AND (' + condition + ')';
         }
+
         try {
             List<sObject> listResult = Database.query(query);
             return !listResult.isEmpty();
@@ -82,4 +107,5 @@ public with sharing class ANG_ProgressBarHelper {
             return false;
         }
     }
+
 }

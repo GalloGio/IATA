@@ -705,18 +705,7 @@ public without sharing class ISSP_Case {
         //basto1p
         statusValMapped=getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,newCase.Status);
 
-        // If the process is null the use the reason on the casop.
-        String process = '';
-        if(newCase.Oscar__r.Process__c == null || (newCase.Oscar__r.Process__c != null && newCase.Oscar__r.Process__c == '')) {
-            process = newCase.Reason1__c;
-        } else {
-            process = newCase.Oscar__r.Process__c;
-        }
-        if (newCase.RecordtypeId == AP_RECORD_TYPE_ID && newCase.CaseArea__c!= 'SIS Membership') {
-            process = newCase.Recordtype.DeveloperName + '|Airline';
-        }
-
-        progressBarHelper = new ANG_ProgressBarHelper(process, newCase.id);
+        progressBarHelper = new ANG_ProgressBarHelper(newCase);
     }
 
     @TestVisible private String getCustomLabel(String labelName) {
