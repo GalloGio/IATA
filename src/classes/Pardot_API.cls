@@ -23,7 +23,6 @@ public without sharing class Pardot_API {
 
         try {
             String resp = Pardot_API.callout('POST', url, body, null);
-            System.debug(resp);
 			// Get API_KEY from XML
 			Dom.Document doc = new Dom.Document();
 			doc.load(resp);
@@ -46,14 +45,11 @@ public without sharing class Pardot_API {
         String body = '';
         try {
             String resp = Pardot_API.callout('GET', url, body, headers);
-            System.debug(resp);
 			// Get prospect information from XML
 			Dom.Document doc = new Dom.Document();
 			doc.load(resp);
 			Dom.XMLNode rsp = doc.getRootElement();
 			Dom.XMLNode prospectNode = rsp.getChildElement('prospect', null);
-			System.debug(prospectNode);
-			
 			// Prospect not found
 			if(prospectNode == null) return null;
 				
@@ -71,13 +67,9 @@ public without sharing class Pardot_API {
             prospect.salesforceId = prospectNode.getChildElement('salesforce_fid', null).getText();
             prospect.opted_out = prospectNode.getChildElement('opted_out', null).getText();
 
-         System.debug(prospect);
-
-            
             prospect.area_of_Interest = new list<String>();
             Dom.XMLNode areaNode = prospectNode.getChildElement('Area_of_Interest', null);
             if(areaNode != null) {
-                system.debug(areaNode);
                 if(areaNode.getChildElements().isEmpty()) // has only 1 interest
                     prospect.area_of_Interest.add(areaNode.getText());
                 else { // As multiple area of intere
@@ -88,9 +80,6 @@ public without sharing class Pardot_API {
                 }
             }
 
-            System.debug(prospect.area_of_Interest);
-
-            
             prospect.list_subscription = new list<List_Subscription>();
             Dom.XMLNode listSubNode = prospectNode.getChildElement('lists', null);
             for(Dom.XmlNode aListSubNode : listSubNode.getChildElements()) {
@@ -124,7 +113,6 @@ public without sharing class Pardot_API {
         String body = '';
         try {
             String resp = Pardot_API.callout('GET', url, body, headers);
-            System.debug(resp);
 			// Get prospect information from XML
 			Dom.Document doc = new Dom.Document();
 			doc.load(resp);
@@ -153,7 +141,6 @@ public without sharing class Pardot_API {
         String body = '';
         try {
             String resp = Pardot_API.callout('GET', url, body, headers);
-            System.debug(resp);
 			// Get prospect information from XML
 			Dom.Document doc = new Dom.Document();
 			doc.load(resp);
@@ -181,12 +168,6 @@ public without sharing class Pardot_API {
         		req.setHeader(aHeader, headers.get(aHeader));
         	}
         }
-        System.debug('@@@SMH CALLOUT Url: ' + url);
-        System.debug('@@@SMH CALLOUT Verb: ' + req.getMethod());
-        System.debug('@@@SMH CALLOUT Header x-dw-http-method-override: ' + req.getHeader('x-dw-http-method-override'));
-        System.debug('@@@SMH CALLOUT Header Authorization: ' + req.getHeader('Authorization'));
-        System.debug('@@@SMH CALLOUT Header Content-Type: ' + req.getHeader('Content-Type'));
-        System.debug('@@@SMH CALLOUT Body: ' + req.getBody());
         HttpResponse res = h.send(req);
         System.debug('@@@SMH CALLOUT Response: ' + res.getBody());
         return res.getBody();
@@ -221,7 +202,6 @@ public without sharing class Pardot_API {
         String body = '';
         try {
             String resp = Pardot_API.callout('GET', url, body, headers);
-            System.debug(resp);
 			// Get prospect information from XML
 			Dom.Document doc = new Dom.Document();
 			doc.load(resp);
@@ -253,7 +233,6 @@ public without sharing class Pardot_API {
         String body = '';
         try {
             String resp = Pardot_API.callout('GET', url, body, headers);
-            System.debug(resp);
 			// Get prospect information from XML
 			Dom.Document doc = new Dom.Document();
 			doc.load(resp);
@@ -285,7 +264,6 @@ public without sharing class Pardot_API {
         String body = '';
         try {
             String resp = Pardot_API.callout('GET', url, body, headers);
-            System.debug(resp);
 			// Get prospect information from XML
 			Dom.Document doc = new Dom.Document();
 			doc.load(resp);
