@@ -101,7 +101,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
         listAccount.add(acc);
     }
 
-    public void saveAccount() {
+    public boolean saveAccount() {
         try{
 	        For(Account acct : listAccount){
 	
@@ -119,12 +119,14 @@ public with sharing class ANG_MulticountryAccountCreatorController {
             
             if(Test.isRunningTest())
                 integer intTest =1/0;//exception for catch test coverage
-            	      
+
+			return true;	      
         }
         catch(Exception e){
 			hasErrors = true;
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, '' + e);
         	ApexPages.addMessage(myMsg);
+			return false;
         }
     }
 	
@@ -142,7 +144,8 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	
     public void submitHierarchy(){
 
-		saveAccount();
+		if(!saveAccount())
+			return;
 
     	hasErrors = false;
     	try{
