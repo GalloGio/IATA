@@ -85,14 +85,12 @@
 		            </apex:pageBlockTable>
 	            </div>
 	            
-	            <apex:pageBlockButtons location="bottom">
+				
+	            <apex:pageBlockButtons location="both"> 
 	                <apex:commandButton value="Add New Account" action="{!addAccount}" />
-	                <apex:commandButton value="Save/Update Accounts" action="{!saveAccount}" />
-	            </apex:pageBlockButtons>
+					<apex:commandButton value="Confirm and submit hierarchy" action="{!submitHierarchy}" oncomplete="if({!not(hasErrors)}) {refreshTab();} else {return;}" rerender="formId" />
+				</apex:pageBlockButtons>
 	            
-	            <apex:pageBlockButtons location="top">
-	                <apex:commandButton value="Confirm and submit hierarchy" action="{!submitHierarchy}" oncomplete="if({!not(hasErrors)}) {refreshTab();} else {return;}" rerender="formId" />
-	            </apex:pageBlockButtons>
 	        </apex:pageBlock>
         <apex:pageBlock rendered="{!!canbeedited}">
             <apex:pageMessage severity="Error" summary="This page cannot be accessed either because the Case is coming from the Portal or the user already submited the hierarchy." strength="1"/>
