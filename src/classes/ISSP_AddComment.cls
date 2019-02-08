@@ -55,8 +55,8 @@ public class ISSP_AddComment {
 
       //ACAMBAS - WMO-395 - End
 
-    } catch (DMLException e) {
-      ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error Adding Comment'));
+    } catch (Exception e) {
+      ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error Adding Comment: ' + e.getMessage()));
       return null;
     } finally {
       CaseComment = new CaseComment ();

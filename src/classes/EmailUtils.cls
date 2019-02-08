@@ -33,15 +33,10 @@ public class EmailUtils {
 
             system.debug('### sendEmailAlert - con.Preferred_Language__c: ' + con.Preferred_Language__c);
 
-
-            if(String.isBlank(con.Preferred_Language__c)) {
-                emailTemplateName += '_English';
-            } else {
+            if(!String.isBlank(con.Preferred_Language__c) && (templatesMap.containsKey(emailTemplateName + '_' + con.Preferred_Language__c))) {       
                 emailTemplateName += '_' + con.Preferred_Language__c;
-
-                if(!templatesMap.containsKey(emailTemplateName)) {
-                    emailTemplateName += '_English';  
-                }
+            } else {
+                emailTemplateName += '_English';
             }
 
             system.debug('### sendEmailAlert - emailTemplateName: ' + emailTemplateName);
@@ -49,8 +44,8 @@ public class EmailUtils {
             EmailTemplate template = templatesMap.get(emailTemplateName);
 
             if(template == null) {
-              //ERROR!!!
-              return;
+              throw new AMS_ApplicationException('Email template not found: ' + emailTemplateName);
+              //return;
             }
 
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
