@@ -159,17 +159,27 @@ public without sharing class ANG_DGIStagingAreaCtrl {
     }
 
     public void reject(){
-        
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c (Id =stagingFs.OSCAR_GDI__c);
-        oscar.step50__c = 'Failed';
-        oscar.status__c = 'Closed';
-        oscarObj.step50__c = 'Failed';
+        addCertificate = true;
+            AMS_OSCAR__c oscar = new AMS_OSCAR__c (Id =stagingFs.OSCAR_GDI__c);
+        try{
+            oscar.step50__c = 'Failed';
+            oscar.status__c = 'Closed';
+            oscarObj.step50__c = 'Failed';
+    
+            update oscar;
+    
+            opp = new Opportunity(Id=stagingFs.OpportunityId);
+            opp.StageName='Closed Lost';
+            update opp;
+        }
+        catch(Exception e){
 
-        update oscar;
-
-        opp = new Opportunity(Id=stagingFs.OpportunityId);
-        opp.StageName='Closed Lost';
-        update opp;
+            String errorMsg = (e.getMessage().substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ') == '' ? e.getMessage() : e.getMessage().substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ') );
+            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, errorMsg));
+            System.debug(e.getStackTraceString());
+            oscar.step50__c = 'Not Started';
+            oscarObj.step50__c = 'Not Started';
+        }
 
     }
 
