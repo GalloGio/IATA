@@ -27,8 +27,7 @@ public class ANG_MulticountryCopyParentInfo implements Queueable {
 										Account__r.Parent.Remittance_frequency__c
 									 FROM AMS_OSCAR__c
 									 WHERE
-									 	 Account__r.ParentId IN :listAccountID
-									 AND Process__c =: AMS_Utils.MCAE];
+									 	 Account__r.ParentId IN :listAccountID];
 
 		if(oscars.isEmpty()) return;
 
@@ -71,6 +70,8 @@ public class ANG_MulticountryCopyParentInfo implements Queueable {
 		else if(changeCode == 'FIN'){
 
 			for(AMS_OSCAR__c osc : oscars){
+				
+				System.debug('[ANG_MulticountryCopyParentInfo] Copying data from: ' + osc.Account__r.Parent.Name);
 
 				if(osc.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == osc.Account__r.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
 

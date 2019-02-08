@@ -249,7 +249,7 @@ global class ANG_OscarProcessHelper {
 
 			//NEWGEN-4852 - Copy Parent Account (GE/HE) information to the staging area of AE in same BSP - Change Code NEW
 			if(iataCodeGeneration && changecodeGeneration && (oscar.Process__c == AMS_Utils.NEWGESTANDARD || (oscar.Process__c == AMS_Utils.MCAE && oscar.Account__r.Location_Type__c == AMS_Utils.HE))){
-				System.debug('[ANG_OscarProcessHelper] Start Copying account information into Child staging area');
+				System.debug('[ANG_OscarProcessHelper] Call asynchronous process ANG_MulticountryCopyParentInfo for Change Code - NEW');
 				ID jobID = System.enqueueJob(new ANG_MulticountryCopyParentInfo(new List<ID>{theAccount.id}, 'NEW'));
 				System.debug('[ANG_OscarProcessHelper] JobID:' + jobID);
 			}
