@@ -64,4 +64,30 @@ public class GDPR_Helper_TEST {
     static void unknownUserTest(){
         GDPR_Helper.UserType ut1 = GDPR_Helper.doUserExists('marc.spector@iatatestfakeemail.com');
     }
+
+    @isTest
+    static void retrieveInofTest(){
+         Lead l = new Lead(FirstName = 'Marc', LastName = 'Spector', Salutation = 'Mr.',  Email = 'marc.spector@marvel.com', Company='Marvel');
+        INSERT l;
+
+        // Simulate Pardot prospect respons
+	   // Insert credential
+        Pardot_API__c pardotSetting = new Pardot_API__c();
+        pardotSetting.API_Version__c = '4';
+        pardotSetting.Password__c = 'fakePassword';
+        pardotSetting.User_Key__c = '111111111';
+        pardotSetting.Email__c = 'fake@fake.com';
+        pardotSetting.Assigned_User__c = '1111111';
+        insert pardotSetting;
+        Pardot_API_RequestMock_Test fakeResponse =  new Pardot_API_RequestMock_Test('MOCK_READ_PROSPECT');
+		Test.setMock(HttpCalloutMock.class, fakeResponse);
+
+		Test.startTest();
+        Individual i = [SELECT id FROM Individual LIMIT 1];
+
+        GDPR_Helper.retrieveUserInfo('', false);
+        GDPR_Helper.retrieveUserInfo(Comm_User_Helper.EncryptString(i.id), true);
+        Test.stopTest();
+
+    }
 }
