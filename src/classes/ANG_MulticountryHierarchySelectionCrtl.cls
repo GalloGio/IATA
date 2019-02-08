@@ -329,6 +329,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				List<Account> accountsToUpdate = fetchAccounts();
                 
 				if(!accountsToUpdate.isEmpty()){
+                    AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 					update accountsToUpdate;
 					createHierarchy(accountsToUpdate);
 					closeTab = true;
@@ -394,7 +395,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		for(List<HierarchyItem> itemsList: hierarchy.values()){
 			For(HierarchyItem item: itemsList)
-				toReturn.add(item.acc);
+				if(item.wasChanged)
+					toReturn.add(item.acc);
 		}
 
 		return new List<Account>(toReturn);
@@ -435,6 +437,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					if(!item.isTopParent){
 						item.acc.Top_Parent__c = acctIdGEinBSP;						
 						item.wasChanged = true;
+					}else{
+						item.acc.Top_Parent__c = null;
+						item.acc.ParentId = null;						
+						item.wasChanged = true;
 					}
 
 				}
@@ -450,14 +456,18 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			if(item.isHE){
 				item.acc.Location_type__c = AMS_Utils.HE;
 				item.wasChanged = true;
+				item.isTopParent = false;
 			}
 			if(item.isAE){
 				item.acc.Location_type__c = AMS_Utils.AE;
-				item.wasChanged = true;			
+				item.wasChanged = true;
+				item.isTopParent = false;
+			
 			}
 			if(!item.isHE && !item.isAE){
 				item.acc.Location_type__c = AMS_Utils.GE;
 				item.wasChanged = true;
+				item.isTopParent = true;
 			}
 		}
 	}
