@@ -63,10 +63,6 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Share_documentation_with_vendor__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Share_documentation_with_vendor__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
