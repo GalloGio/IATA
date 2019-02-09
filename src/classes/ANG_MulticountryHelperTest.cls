@@ -303,7 +303,7 @@ private class ANG_MulticountryHelperTest {
     }
 
 
-    @isTest static void testAccountHEhasRemittenceFrequencyEmpty() {
+    @isTest static void testmulticountryAccountHasRemittenceFrequencyEmpty() {
 
     	List<Account> accountLst = new List<Account>(
 			[SELECT Id 
@@ -341,7 +341,7 @@ private class ANG_MulticountryHelperTest {
 
 		Test.startTest();
 
-		Boolean hasRF = ANG_MulticountryHelper.accountHEhasRemittenceFrequencyEmpty(oscar2);
+		Boolean hasRF = ANG_MulticountryHelper.multicountryAccountHasRemittenceFrequencyEmpty(oscar2);
 
     	Test.stopTest();
     	
