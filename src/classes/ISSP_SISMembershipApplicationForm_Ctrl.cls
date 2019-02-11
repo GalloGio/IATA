@@ -248,16 +248,8 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         Get the file name for the output form, it depends on the sis type
     **/
     private String getFormFileName() {
-        if (getisISPA()) {
-             return 'Standard Agreement for SIS Participation - ' + this.account.Name;
-        }
-        if (getisISUA()) {
-             return 'Standard Participation Agreement For SIS e-Invoicing Services - Non Transportation - ' + this.account.Name;
-        }
-        if (getisTOU()) {
-             return 'Standard Participation Agreement for SIS e-Invoicing services – Invoice Receiver - ' + this.account.Name;
-        }
-        return '';
+        String filename = 'Agreement for SIS e-Invoicing services-' + this.account.Name;
+        return fileName.left(75).trim() + '.pdf';
     }
 
     /**

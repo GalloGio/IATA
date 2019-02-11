@@ -304,9 +304,6 @@
             <a class="link-highlighted" href="https://www.iata.org/services/finance/sis/Documents/ISPA-Attachment-A-Pricing-Schedule.pdf" target="#">Attachment A-Pricing Schedule</a>
             <div id="ISSP_SIS_Membership_ISPA_Section4_Subtitle2" class="strong-label"></div>
         </td></tr>
-        <script>
-            $('#ISSP_SIS_Membership_ISPA_Section4_Subtitle2').html('{!$Label.ISSP_SIS_Membership_ISPA_Section4_Subtitle2}');
-        </script>
 
         <apex:pageBlockSectionItem >
             <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.Is_AA_Member__c.label}"/>
@@ -396,7 +393,10 @@
             </apex:actionRegion>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem rendered="{!newForm.Is_AA_Member__c=='No'}"/>
-        <script>setRequired();</script>
+        <script>
+            setRequired();
+            $('#ISSP_SIS_Membership_ISPA_Section4_Subtitle2').html('{!$Label.ISSP_SIS_Membership_ISPA_Section4_Subtitle2}');
+        </script>
 
     </apex:pageBlockSection>
 
