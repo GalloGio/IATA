@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This metadata type controls when a notification of an agency default should be sent to airlines with services rendered on the agency country.
+
+A default record with master label as &quot;All&quot; must exist.
+
+Other records will require to have field &quot;Country Codes&quot; filled with countries iso codes, &quot;Active&quot; field must be set to true in order to activate the record.
+
+Visibility field controls whether a notifications is sent internally (public group &quot;AMS_Agency_Default_Notification&quot;), externally or both.
+
+Default Amount field defines the minimum value that triggers the notification process.</description>
     <fields>
         <fullName>Active__c</fullName>
         <defaultValue>false</defaultValue>
