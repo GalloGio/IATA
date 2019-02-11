@@ -672,15 +672,20 @@
     }
 
     function finishDownload() {
-        zipFile.generateAsync({type:"base64"})
+        zipFile.generateAsync({type:"blob"})
         .then(function(content) {            
+            if(window.navigator.msSaveBlob) {
+                navigator.msSaveBlob(content, "Operational Calendars.zip");
+            } else {
+                var bContent = URL.createObjectURL(content);
             var element = document.createElement('a');
-            element.setAttribute('href', "data:application/zip;base64," + content);
+                element.setAttribute('href', bContent);
             element.setAttribute('download', "Operational Calendars.zip");
             element.style.display = 'none';
             document.body.appendChild(element);
             element.click();
             document.body.removeChild(element);
+            }            
             $('#downloadBtn').attr("disabled", false);
             $("#loading-download").hide();
         });
