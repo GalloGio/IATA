@@ -64,14 +64,14 @@ public with sharing class ANG_GenericHistoryViewerController {
 
         Set<String> fieldsToSearch = new Set<String>();
 
-        for(SObject history : customHistoryRecords){
+        Map<String, Schema.SObjectField> objFieldsMap = Schema.getGlobalDescribe().get(trackedObjApiName).getDescribe().fields.getMap();
 
+        for(SObject history : customHistoryRecords) {
             fieldsToSearch.add(String.valueOf(history.get('Old_Value__c')));
-            fieldsToSearch.add(String.valueOf(history.get('New_Value__c')));
-        
+            fieldsToSearch.add(String.valueOf(history.get('New_Value__c')));      
         }
 
-        for(Sobject history : standardHistoryRecords){
+        for(Sobject history : standardHistoryRecords) {
             String tmpOld = history.get('OldValue') != null ? String.valueOf(history.get('OldValue')) : '<blank>';
             String tmpNew = history.get('NewValue') != null ? String.valueOf(history.get('NewValue')) : '<blank>';
 
@@ -82,12 +82,14 @@ public with sharing class ANG_GenericHistoryViewerController {
         Map<String,Boolean> isLookUpValueMap = fetchVlookups(fieldsToSearch);
 
         //add custom history to the list
-        for(SObject history : customHistoryRecords){
-                        
+        for(SObject history : customHistoryRecords) {
+
+            Boolean isFormulaField = objFieldsMap.get((String)history.get('ApiName__c')).getDescribe().isCalculated();
+                  
             String tmpOld = history.get('Old_Value__c') != null ? String.valueOf(history.get('Old_Value__c')) : '<blank>';
             String tmpNew = history.get('New_Value__c') != null ? String.valueOf(history.get('New_Value__c')) : '<blank>';
             
-            boolean isLookupValue = ( (tmpOld == null || tmpOld == '' || tmpOld == '<blank>') ? false : isLookUpValueMap.get(tmpOld)) || ((tmpNew == null || tmpNew == '' || tmpNew == '<blank>')? false : isLookUpValueMap.get(tmpNew));
+            boolean isLookupValue = !isFormulaField && (((tmpOld == null || tmpOld == '' || tmpOld == '<blank>') ? false : isLookUpValueMap.get(tmpOld)) || ((tmpNew == null || tmpNew == '' || tmpNew == '<blank>')? false : isLookUpValueMap.get(tmpNew)));
                     
             mergedHistoric.add(new GenericHistoryWrapper(
                                 trackedObjId,
@@ -100,14 +102,10 @@ public with sharing class ANG_GenericHistoryViewerController {
                                 true,String.valueOf(history.get('ApiName__c')),isLookupValue));
         }
 
-
-        Map<String, Schema.SObjectField> objFieldsMap = Schema.getGlobalDescribe().get(trackedObjApiName).getDescribe().fields.getMap();
-
         //add the standard history 
         //(2017/03/29 note: test classes do not create history record in the standard history table and
         //we cannot insert records in these tables, this is why this code is not covered)
-        for(Sobject history : standardHistoryRecords){
-
+        for(Sobject history : standardHistoryRecords) {
 
             String tmpOld = history.get('OldValue') != null ? String.valueOf(history.get('OldValue')) : '<blank>';
             String tmpNew = history.get('NewValue') != null ? String.valueOf(history.get('NewValue')) : '<blank>';
@@ -243,38 +241,45 @@ public with sharing class ANG_GenericHistoryViewerController {
             if(fieldAPIName == 'RecordType') {
                 fieldAPIName = 'RecordTypeId';
                 this.fieldAPIName = 'RecordTypeId';
-            }   
-            
-            if(fieldAPIName == 'Parent'){
+            }            
+            else if(fieldAPIName == 'Parent') {
                 fieldAPIName = 'ParentId';
                 this.fieldAPIName = 'ParentId';
             }
-
-            if(fieldAPIName == 'Owner'){
+            else if(fieldAPIName == 'Owner') {
                 fieldAPIName = 'OwnerId';
                 this.fieldAPIName = 'OwnerId';
             }
-
-            if(fieldAPIName == 'Contact'){
+            else if(fieldAPIName == 'Contact') {
                 fieldAPIName = 'ContactId';
                 this.fieldAPIName = 'ContactId';
             }
-
-            
-            if(isLookUpValueOld){
-                this.oldObj = idOfTheObject.getSObjectType().newSObject();
-                oldObj.put(String.valueOf(fieldAPIName), oldValue);
-
-                Id lookupId = String.valueOf(oldValue);
-                this.lookupObject = lookupId.getSObjectType().getDescribe().getName();
+            else if(fieldAPIName == 'Account') {
+                fieldAPIName = 'AccountId';
+                this.fieldAPIName = 'AccountId';
             }
-            
-            if(isLookUpValueNew){
-                this.newObj = idOfTheObject.getSObjectType().newSObject();    
-                newObj.put(String.valueOf(fieldAPIName), newValue);
 
-                Id lookupId = String.valueOf(newValue);
-                this.lookupObject = lookupId.getSObjectType().getDescribe().getName();
+            try {
+                if(isLookUpValueOld) {
+                    this.oldObj = idOfTheObject.getSObjectType().newSObject();
+                    oldObj.put(String.valueOf(fieldAPIName), oldValue);
+
+                    Id lookupId = String.valueOf(oldValue);
+                    this.lookupObject = lookupId.getSObjectType().getDescribe().getName();
+                }
+                
+                if(isLookUpValueNew) {
+                    this.newObj = idOfTheObject.getSObjectType().newSObject();    
+                    newObj.put(String.valueOf(fieldAPIName), newValue);
+
+                    Id lookupId = String.valueOf(newValue);
+                    this.lookupObject = lookupId.getSObjectType().getDescribe().getName();
+                }
+            }
+            catch(Exception e) {
+                if(isLookUpValueOld) this.isLookUpValueOld = false;
+                if(isLookUpValueNew) this.isLookUpValueNew = false;
+                system.debug('### GenericHistoryWrapper - Error: ' + e.getMessage());
             }
 
             this.fieldName = fieldName;

@@ -56,6 +56,11 @@ public class ANG_TrackingHistory {
 				Object newValue = newMap.get(sobjId).get(fieldAPIName);
 				Object oldValue = oldMap.get(sobjId).get(fieldAPIName);
 
+				if(sfield.getDescribe().isCalculated()) {
+					//Formula fields should be ignored
+					fieldsToIgnore.add(fieldAPIName);
+				}
+
 				if(newValue != oldValue && !trackedStandardFields.contains(fieldAPIName) && !fieldsToIgnore.contains(fieldAPIName)) {
 					SObject newHistRecord = createHistoryRecord(sobjId, fieldLabel, fieldAPIName, newValue, oldValue, masterDetailFieldName, trackingSObjType);
 					recordsToInsert.add(newHistRecord);	
