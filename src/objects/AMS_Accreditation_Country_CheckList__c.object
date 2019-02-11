@@ -56,9 +56,11 @@
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related ISO Country</description>
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>AMS Accreditation Country Checklists</relationshipLabel>
         <relationshipName>AMS_Accreditation_Country_Requirements</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>

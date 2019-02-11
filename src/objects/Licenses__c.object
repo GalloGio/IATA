@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Represents different licenses used by business units. The hidden name is identical to the name and is updated to be the same by an active workflow</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Business_Unit__c</fullName>
+        <description>Related Business Unit</description>
         <externalId>false</externalId>
         <label>Business Unit</label>
         <referenceTo>Business_Unit__c</referenceTo>
@@ -69,6 +71,7 @@
     <fields>
         <fullName>License_Name_Hidden__c</fullName>
         <caseSensitive>false</caseSensitive>
+        <description>The hidden name is identical to the name and is updated to be the same by an active workflow</description>
         <externalId>false</externalId>
         <label>(Hidden) License Name</label>
         <length>255</length>

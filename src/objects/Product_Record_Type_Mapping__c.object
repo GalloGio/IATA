@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object serves as a mapping of required record types for products</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>false</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -65,6 +66,7 @@
     </fields>
     <fields>
         <fullName>Record_Type_for_Product__c</fullName>
+        <description>This field represents the corresponding Record Type for a Product. It can be "Publication", "GDP", "Unclassified"</description>
         <externalId>false</externalId>
         <label>Record Type for Product</label>
         <required>false</required>

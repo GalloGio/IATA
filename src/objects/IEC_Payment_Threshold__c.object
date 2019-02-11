@@ -95,6 +95,7 @@
     </fields>
     <fields>
         <fullName>Payment_Type__c</fullName>
+        <description>Represents a payment option. 4 possible options are available: Credit Card, ICH, Bank Transfer, Bill me later</description>
         <externalId>false</externalId>
         <label>Payment Type</label>
         <required>false</required>

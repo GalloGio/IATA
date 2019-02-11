@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Junction object to relate Airport with Agency.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>AMS_2_GDP_Key__c</fullName>
+        <description>Key used within AMS and GDP. Has the format of (ID of the Account (Agency))-(Related Airport&apos;s Code)</description>
         <externalId>false</externalId>
         <formula>Account__c + &quot;-&quot; + Airport__r.Code__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -66,6 +68,7 @@
     <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
@@ -78,6 +81,7 @@
     <fields>
         <fullName>Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Agency (AMS)</description>
         <externalId>false</externalId>
         <label>Agency</label>
         <referenceTo>AMS_Agency__c</referenceTo>
@@ -89,6 +93,7 @@
     </fields>
     <fields>
         <fullName>Airport__c</fullName>
+        <description>Related Airport (AMS)</description>
         <externalId>false</externalId>
         <label>Airport</label>
         <referenceTo>AMS_Airport__c</referenceTo>
@@ -102,6 +107,7 @@
     </fields>
     <fields>
         <fullName>Last_synchronization__c</fullName>
+        <description>Last synchronization date of the Agency (Account)</description>
         <externalId>false</externalId>
         <label>Last synchronization</label>
         <required>false</required>

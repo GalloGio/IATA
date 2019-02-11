@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used to store both external address of users and/or internally ID of users within Salesforce. This information is used for Email Notifications</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>External_email_address__c</fullName>
+        <description>Represents the external address of the recepient</description>
         <externalId>false</externalId>
         <label>External email address</label>
         <required>false</required>
@@ -63,6 +65,7 @@
     </fields>
     <fields>
         <fullName>Internal_user__c</fullName>
+        <description>Related user on Salesforce</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Internal user</label>
@@ -75,6 +78,7 @@
     <fields>
         <fullName>Product__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Product</description>
         <externalId>false</externalId>
         <label>Product</label>
         <referenceTo>Product2</referenceTo>

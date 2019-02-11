@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Related Account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
@@ -69,6 +70,7 @@
     <fields>
         <fullName>Active__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Represents if the current service is active</description>
         <externalId>false</externalId>
         <label>Active</label>
         <trackTrending>false</trackTrending>
@@ -88,6 +90,7 @@
     </fields>
     <fields>
         <fullName>Service__c</fullName>
+        <description>Related Service</description>
         <externalId>false</externalId>
         <label>Service</label>
         <referenceTo>Service__c</referenceTo>

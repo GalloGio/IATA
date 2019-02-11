@@ -112,6 +112,7 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
     <fields>
         <fullName>Related_GDP_Product_Account_View__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related GDP Products - Account View</description>
         <externalId>false</externalId>
         <label>GDP Product Account View</label>
         <referenceTo>GDP_Products_Account_View__c</referenceTo>

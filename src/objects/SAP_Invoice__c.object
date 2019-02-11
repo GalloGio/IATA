@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Represents an invoice sent after the order is billed</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Clearance_Date__c</fullName>
+        <description>Clearance date of the invoice (not quite, but similar to issuance date)</description>
         <externalId>false</externalId>
         <label>Clearance Date</label>
         <required>false</required>
@@ -62,6 +64,7 @@
     </fields>
     <fields>
         <fullName>Invoice_Number__c</fullName>
+        <description>Represents the number of the invoice</description>
         <externalId>false</externalId>
         <label>Invoice Number</label>
         <length>20</length>
@@ -72,6 +75,7 @@
     </fields>
     <fields>
         <fullName>Order__c</fullName>
+        <description>Related order</description>
         <externalId>false</externalId>
         <label>Order</label>
         <referenceTo>Order</referenceTo>

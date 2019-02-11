@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object used to store all of the Airports of AIMS, Webstar and CAIMS.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>City__c</fullName>
+        <description>City where airport is located</description>
         <externalId>false</externalId>
         <label>City</label>
         <length>40</length>
@@ -64,6 +66,7 @@
     </fields>
     <fields>
         <fullName>Code__c</fullName>
+        <description>Code of the airport</description>
         <externalId>false</externalId>
         <label>Code</label>
         <length>10</length>
@@ -75,6 +78,7 @@
     <fields>
         <fullName>Country__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Country where airport is located</description>
         <externalId>false</externalId>
         <label>Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>

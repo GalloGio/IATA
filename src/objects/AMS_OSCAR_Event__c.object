@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object used to store all the actions for all the steps related to a Lifecycle Request (OSCAR). When a user or a process change a predefined set of fields, it creates an OSCAR Event, with previous value, actual value, user who made the change and its date. This is custom history tracking process. The set of fields that trigger this Oscar Event are defined on a custom setting (AMS_OSCAR_HistoryFields__c)</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -63,6 +64,7 @@
     </fields>
     <fields>
         <fullName>Action__c</fullName>
+        <description>Represents the status of actions: &quot;N\a&quot;, &quot;Not Ok&quot;, &quot;Ok&quot;</description>
         <externalId>false</externalId>
         <label>Action</label>
         <required>false</required>
@@ -92,6 +94,7 @@
     </fields>
     <fields>
         <fullName>New_Value__c</fullName>
+        <description>New value of field</description>
         <externalId>false</externalId>
         <label>New Value</label>
         <required>false</required>
@@ -101,6 +104,7 @@
     </fields>
     <fields>
         <fullName>OSCAR__c</fullName>
+        <description>Related OSCAR</description>
         <externalId>false</externalId>
         <label>OSCAR</label>
         <referenceTo>AMS_OSCAR__c</referenceTo>
@@ -115,6 +119,7 @@
     </fields>
     <fields>
         <fullName>Old_Value__c</fullName>
+        <description>Old value of field</description>
         <externalId>false</externalId>
         <label>Old Value</label>
         <required>false</required>
@@ -124,6 +129,7 @@
     </fields>
     <fields>
         <fullName>Related_Step__c</fullName>
+        <description>Represents a set of steps available with the field: &quot;B1&quot;, &quot;B2&quot;, &quot;B3.A&quot;, &quot;B3.B&quot;, &quot;B3.C&quot;, &quot;B3.D&quot;, &quot;B4&quot;, &quot;E1&quot;, &quot;E2&quot;, &quot;G1&quot;</description>
         <externalId>false</externalId>
         <label>Related Step</label>
         <required>false</required>

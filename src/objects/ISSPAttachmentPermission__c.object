@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Report for Business Owners of ISSP, the report is being attached to this object</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>AttachmentId__c</fullName>
+        <description>ID of the archived attachment</description>
         <externalId>false</externalId>
         <label>AttachmentId</label>
         <length>18</length>
@@ -65,6 +67,7 @@
     </fields>
     <fields>
         <fullName>ShowToPortalUsers__c</fullName>
+        <description>Flag that makes the attachment visible to portal users when set</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>ShowToPortalUsers</label>

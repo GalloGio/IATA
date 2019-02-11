@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object represents Managed Agencies used in ID Card application. Links a key contact and an account to a managed agency. Allows to filter out agencies by their delegate status.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Related account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
@@ -67,6 +69,7 @@
     </fields>
     <fields>
         <fullName>Contact__c</fullName>
+        <description>Related contact</description>
         <externalId>false</externalId>
         <inlineHelpText>Contact</inlineHelpText>
         <label>Contact</label>
@@ -82,6 +85,7 @@
     <fields>
         <fullName>Delegate__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Represents if the current agency is a delegate or not. The delegate are primary contacts used in IDCard application</description>
         <externalId>false</externalId>
         <label>Delegate</label>
         <trackTrending>false</trackTrending>

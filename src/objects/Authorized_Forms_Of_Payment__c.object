@@ -115,6 +115,7 @@ Mapped to &quot;Authority__c&quot; on AMS Agency Authorization (a8t) for Replica
     </fields>
     <fields>
         <fullName>Status_Code__c</fullName>
+        <description>Assignes a digit for the Status. 9 is assigned to "Active", 1 is assigned to "Inactive", 0 is the default value</description>
         <externalId>false</externalId>
         <formula>CASE(Status__c,
   &quot;Active&quot;,&quot;9&quot;,

@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Area_Concerned__c</fullName>
+        <description>Represents the Area that the KPI is related with. Can be &quot;Agency Management&quot;, &quot;Airline Suspension&quot;, &quot;CPS&quot;, &quot;Customer Service&quot;, &quot;DPC Management&quot;, &quot;Invoicing &amp; Collection&quot;, &quot;Quality&quot;, &quot;Remittance &amp; Settlement&quot;, &quot;SIS&quot;, &quot;ICH&quot;, &quot;ICCS&quot;, &quot;CNS&quot;.</description>
         <externalId>false</externalId>
         <label>Area Concerned</label>
         <required>false</required>
@@ -129,6 +130,7 @@
     </fields>
     <fields>
         <fullName>Definition__c</fullName>
+        <description>Definition of KPI. How is it calculated</description>
         <externalId>false</externalId>
         <label>Definition</label>
         <length>100000</length>
@@ -150,6 +152,7 @@
     </fields>
     <fields>
         <fullName>Value_Type__c</fullName>
+        <description>Represents the type of Value for the KPI. Either &quot;Percentage&quot; or &quot;Number&quot;</description>
         <externalId>false</externalId>
         <label>Value Type</label>
         <required>false</required>

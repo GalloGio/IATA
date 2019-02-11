@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used to define and store geological locations (identified by location specific IDs and filtered out by sub continent) of GDP Agencies</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
+        <description>Related IATA ISO Country</description>
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
@@ -66,6 +68,7 @@
     </fields>
     <fields>
         <fullName>Sub_Continent__c</fullName>
+        <description>Used to filter out Geo Details by sub continents</description>
         <externalId>false</externalId>
         <label>Sub Continent</label>
         <length>50</length>
@@ -76,6 +79,7 @@
     </fields>
     <fields>
         <fullName>System_ID__c</fullName>
+        <description>Used as location ID for GDP Agencies</description>
         <externalId>true</externalId>
         <inlineHelpText>Please enter the Country ISO Code this is used for external system mapping(External ID)</inlineHelpText>
         <label>System ID</label>

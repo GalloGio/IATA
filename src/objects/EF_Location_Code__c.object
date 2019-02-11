@@ -79,9 +79,11 @@
     <fields>
         <fullName>EF_Airline_Billing_Agreement__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related E&amp;F Airline Billing Agreement</description>
         <externalId>false</externalId>
         <label>E&amp;F Airline Billing Agreement</label>
         <referenceTo>EF_Billing_Agreement__c</referenceTo>
+        <relationshipLabel>Location Codes</relationshipLabel>
         <relationshipName>Location_Codes</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -100,6 +102,7 @@
     </fields>
     <fields>
         <fullName>Location_Code__c</fullName>
+        <description>Related E&amp;F Related Records</description>
         <externalId>false</externalId>
         <label>Location Code</label>
         <lookupFilter>
@@ -112,6 +115,7 @@
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>EF_Related_Records__c</referenceTo>
+        <relationshipLabel>Location Codes</relationshipLabel>
         <relationshipName>Location_Codes</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>

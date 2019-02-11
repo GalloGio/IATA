@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object is required to link a Cluster to an ISO Country</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Cluster__c</fullName>
+        <description>ID of the parent Cluster</description>
         <externalId>false</externalId>
         <label>Cluster</label>
         <referenceTo>Cluster__c</referenceTo>
@@ -68,6 +70,7 @@
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>ID of the linked ISO Country</description>
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>

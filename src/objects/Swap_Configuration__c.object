@@ -55,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Relationship_Type__c</fullName>
+        <description>Represents the type of relationship. It can either require to "Swap", "Upgrade", "Suggestion" Product Rate Plan Information</description>
         <externalId>false</externalId>
         <label>Relationship Type</label>
         <required>false</required>
@@ -83,6 +84,7 @@
     </fields>
     <fields>
         <fullName>Source_Product_Rate_Plan_Information__c</fullName>
+        <description>Source rate plan before swapping</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <inlineHelpText>Source rate plan before swapping</inlineHelpText>

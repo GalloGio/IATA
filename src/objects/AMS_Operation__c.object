@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object used to store the connection between a DPC system and a country.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -65,6 +66,7 @@
     </fields>
     <fields>
         <fullName>CASS_Operations__c</fullName>
+        <description>Represents types of CASS Operations. Can be either an &quot;EXP&quot;, an &quot;IMP&quot;, a &quot;Courier&quot; or a &quot;Local&quot; operation</description>
         <externalId>false</externalId>
         <label>CASS Operations</label>
         <required>false</required>
@@ -99,9 +101,11 @@
     </fields>
     <fields>
         <fullName>Country__c</fullName>
+        <description>Related ISO Country</description>
         <externalId>false</externalId>
         <label>Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Operations Codes</relationshipLabel>
         <relationshipName>DPC_Operations</relationshipName>
         <relationshipOrder>1</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
@@ -112,6 +116,7 @@
     </fields>
     <fields>
         <fullName>Market__c</fullName>
+        <description>Represents either the market is &quot;International&quot; or &quot;Domestic&quot;</description>
         <externalId>false</externalId>
         <label>Market</label>
         <required>false</required>
@@ -136,6 +141,7 @@
     </fields>
     <fields>
         <fullName>Settlement__c</fullName>
+        <description>Related ISS Operation</description>
         <externalId>false</externalId>
         <label>ISS Billing Environment</label>
         <referenceTo>AMS_Settlement_System__c</referenceTo>
