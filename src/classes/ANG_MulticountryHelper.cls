@@ -210,8 +210,6 @@ public class ANG_MulticountryHelper {
 
 		Map<Id, Account> acctWithRelshipsMap = fetchMulticountryAccounts(parentIdSet);
 
-		if(acctWithRelshipsMap.isEmpty()) return;
-
         Map<Id, Set<Id>> accountsHePerBspMap = aggregateHeadEntitiesForEachBSP(acctWithRelshipsMap.values());
         
         for(Account acct : accountLst){
