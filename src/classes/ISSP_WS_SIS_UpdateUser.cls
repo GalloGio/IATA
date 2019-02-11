@@ -79,10 +79,15 @@ global with sharing class ISSP_WS_SIS_UpdateUser {
                 Contact.Community__c
             FROM User
             WHERE FederationIdentifier = :inputData.FederationID ];
-        if (listUser.isEmpty()) {
+        if (listUser.isEmpty()) { 
             throw new ISSP_WS_SIS_Common.WSException('011','');
         }
-        User theUser = listUser[0];
+        User theUser;
+        for(User u: listUser){
+            if(u.FederationIdentifier.equals(inputData.FederationID)){
+                theUser = u;
+            }
+        }
         Contact theContact = theUser.Contact;
         if (theContact == null) {
             throw new ISSP_WS_SIS_Common.WSException('013', '');

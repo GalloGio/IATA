@@ -3571,6 +3571,22 @@
         <name>IDCard_Attachments</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_BSP_Agent_Billing_Reports_Procedures --></label>
+        <name>IDCard_BSP_Agent_Billing_Reports_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Agent_Remittance_Procedures --></label>
+        <name>IDCard_BSP_Agent_Remittance_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Essentials_for_Travel_Agents --></label>
+        <name>IDCard_BSP_Essentials_for_Travel_Agents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Standard_Documents_Procedures --></label>
+        <name>IDCard_BSP_Standard_Documents_Procedures</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_Back --></label>
         <name>IDCard_Back</name>
     </customLabels>
@@ -3989,6 +4005,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label><!-- IDCard_IndustryEntrySuperior --></label>
         <name>IDCard_IndustryEntrySuperior</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Intro_to_the_BSP_System_Language --></label>
+        <name>IDCard_Intro_to_the_BSP_System_Language</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_IntroduccionAlBSPlink_Description --></label>
@@ -12539,7 +12559,7 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
     <customLabels>
         <label>Payment Link có thể được sử dụng để trả hóa đơn IATA bằng thẻ Credit Card&lt;br/&gt;
 &lt;b&gt;Cảnh báo!&lt;/b&gt;&lt;br/&gt;
-Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều được thu thông qua BPS / CASS. Bạn nên kiểm tra các chi tiết trong hóa đơn để đảm bảo hoá đơn chưa được thanh toán trước khi bạn tiến hành trả bằng thẻ tín dụng.</label>
+Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều được thu thông qua BSP / CASS. Bạn nên kiểm tra các chi tiết trong hóa đơn để đảm bảo hoá đơn chưa được thanh toán trước khi bạn tiến hành trả bằng thẻ tín dụng.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>

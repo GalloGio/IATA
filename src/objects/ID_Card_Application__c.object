@@ -663,6 +663,36 @@ Completed: Process is complete</inlineHelpText>
                     <default>false</default>
                     <label>Acc. &amp; Fin. Mgmt for agencies -EN</label>
                 </value>
+                <value>
+                    <fullName>Intro to BSPLink - EN</fullName>
+                    <default>false</default>
+                    <label>Intro to BSPLink - EN</label>
+                </value>
+                <value>
+                    <fullName>BSP Agent Billing Reports &amp; Procedures - EN</fullName>
+                    <default>false</default>
+                    <label>BSP Agent Billing Reports &amp; Procedures - EN</label>
+                </value>
+                <value>
+                    <fullName>BSP Agent Remittance Procedures - EN</fullName>
+                    <default>false</default>
+                    <label>BSP Agent Remittance Procedures - EN</label>
+                </value>
+                <value>
+                    <fullName>BSP Essentials for Travel Agents - EN</fullName>
+                    <default>false</default>
+                    <label>BSP Essentials for Travel Agents - EN</label>
+                </value>
+                <value>
+                    <fullName>BSP Standard Documents &amp; Procedures - EN</fullName>
+                    <default>false</default>
+                    <label>BSP Standard Documents &amp; Procedures - EN</label>
+                </value>
+                <value>
+                    <fullName>Intro to the BSP System &amp; Language - EN</fullName>
+                    <default>false</default>
+                    <label>Intro to the BSP System &amp; Language - EN</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -743,6 +773,36 @@ Completed: Process is complete</inlineHelpText>
                     <fullName>Acc. &amp; Fin. Mgmt for agencies -EN</fullName>
                     <default>false</default>
                     <label>Acc. &amp; Fin. Mgmt for agencies -EN</label>
+                </value>
+                <value>
+                    <fullName>Intro to BSPLink - EN</fullName>
+                    <default>false</default>
+                    <label>Intro to BSPLink - EN</label>
+                </value>
+                <value>
+                    <fullName>BSP Agent Billing Reports &amp; Procedures - EN</fullName>
+                    <default>false</default>
+                    <label>BSP Agent Billing Reports &amp; Procedures - EN</label>
+                </value>
+                <value>
+                    <fullName>BSP Agent Remittance Procedures - EN</fullName>
+                    <default>false</default>
+                    <label>BSP Agent Remittance Procedures - EN</label>
+                </value>
+                <value>
+                    <fullName>BSP Essentials for Travel Agents - EN</fullName>
+                    <default>false</default>
+                    <label>BSP Essentials for Travel Agents - EN</label>
+                </value>
+                <value>
+                    <fullName>BSP Standard Documents &amp; Procedures - EN</fullName>
+                    <default>false</default>
+                    <label>BSP Standard Documents &amp; Procedures - EN</label>
+                </value>
+                <value>
+                    <fullName>Intro to the BSP System &amp; Language - EN</fullName>
+                    <default>false</default>
+                    <label>Intro to the BSP System &amp; Language - EN</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

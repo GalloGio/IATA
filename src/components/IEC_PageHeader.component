@@ -30,6 +30,62 @@
 
         window.location.href = prefix + '/IEC_Logout';
     }
+
+
+    function pushClickViewLoginOverlay(){
+        dataLayer.push({
+            "event": "VPV",
+            "page": {
+                "requestURI": window.location.pathname + window.location.search + "&ga_step=login-overlay"
+            }
+        });
+    }
+
+    function pushClickOnForgotPassword(){
+        dataLayer.push({
+            "event": "userAction",
+            "eventCategory": "Login",
+            "eventAction": "Forgot password",
+            "eventLabel": "Forgot password"
+        });
+    }
+
+    function pushClickGoToContactLink(){
+        dataLayer.push({
+            "event": "userAction",
+            "eventCategory": "Top Navigation",
+            "eventAction": "Contact link",
+            "eventLabel": "Contact link"
+        });
+    }
+
+    function pushClickViewShoppingCartOverlay(){
+        dataLayer.push({
+            "event": "userAction",
+            "eventCategory": "Top Navigation",
+            "eventAction": "Click on Cart",
+            "eventLabel": "Click on Cart"
+        });
+    }
+
+    function pushClickGoToIATALogoLink(){
+        dataLayer.push({
+            "event": "userAction",
+            "eventCategory": "Top Navigation",
+            "eventAction": "IATA Logo",
+            "eventLabel": "IATA Logo"
+        });
+    }
+
+    function pushClickViewProductsOverlay(){
+        dataLayer.push({
+            "event": "VPV",
+            "page": {
+                "requestURI": window.location.pathname + window.location.search + "&ga_step=open-category-menu"
+            }
+        });
+    }
+
 </script>
 
     <header class="page-header">
@@ -37,7 +93,7 @@
             <!-- Site Logo -->
             <apex:variable var="isHomePage" value="1" rendered="{!is_store_front}">
                 <h1 class="site-logo">
-                    <a href="{!$Site.BaseUrl}">
+                    <a href="{!$Site.BaseUrl}" onclick="pushClickGoToIATALogoLink();">
                         <!--[if lte IE 8]>
                             <img src="{!URLFOR($Resource.EcommerceAssets, pngLogo)}" alt="{!$Label.SiteTitle}" width="70" />
                         <![endif]--> 
@@ -51,7 +107,7 @@
 
             <apex:variable var="notHomePage" value="1" rendered="{!NOT(is_store_front)}">
                 <div class="site-logo">
-                    <a href="{!$Site.BaseUrl}">
+                    <a href="{!$Site.BaseUrl}" onclick="pushClickGoToIATALogoLink();">
                         <!--[if lte IE 8]>
                             <img src="{!URLFOR($Resource.EcommerceAssets, pngLogo)}" alt="{!$Label.SiteTitle}" width="70" />
                         <![endif]--> 
@@ -102,7 +158,7 @@
                     <apex:variable var="notLogged" value="0" rendered="{!loggedCustomer == null}">
                         <li class="menu sign-in">
                             <form action="{!$Site.BaseUrl}/IEC_Login?doLogin=true&retUrl={!currentPageName}" method="post">
-                                <a class="icon sign-in js-open-login" href="{!$Site.BaseUrl}/IEC_Login"><span class="text">{!$Label.SignIn}</span></a>
+                                <a class="icon sign-in js-open-login" onclick="pushClickViewLoginOverlay();" href="{!$Site.BaseUrl}/IEC_Login"><span class="text">{!$Label.SignIn}</span></a>
                                 <div class="group-container sign-in-container">
                                     <div class="group-title">Please log in</div>
                                     <p style="margin-bottom : 0; word-break: break-word; width: 350px;  white-space: pre-line;
@@ -123,7 +179,7 @@
                                     <input type="submit" class="button" value="Log in" />
 
                                     <!-- <button class="button">Log in</button> -->
-                                    <p style="margin-bottom : 0;">Forgot your password? <a class="text-link" href="{!$Site.BaseUrl}/IEC_ForgotPassword">Click here</a></p>
+                                    <p style="margin-bottom : 0;">Forgot your password? <a class="text-link" href="{!$Site.BaseUrl}/IEC_ForgotPassword" onclick="pushClickOnForgotPassword();">Click here</a></p>
                                     <p style="margin : 0;">No Account? <a class="text-link" href="#" onclick="signUpAction()">Register</a></p>
                                        
                                 </div>
@@ -135,13 +191,13 @@
                     </apex:variable>                    
                     
                     <apex:variable value="1" var="notDashBoardOrCheckout" rendered="{!AND(is_dashboard!=true,is_checkout!=true)}">
-                        <li class="menu contact"><a class="icon envelope" href="mailto:onlinestoresupport@iata.org" target="_blank"><span class="text">Contact</span></a></li>
+                        <li class="menu contact"><a class="icon envelope" href="mailto:onlinestoresupport@iata.org" target="_blank" onclick="pushClickGoToContactLink();"><span class="text">Contact</span></a></li>
 
 
                         <apex:variable value="1" var="isOldShoppingCart" rendered="{!NOT(newShoppingCart)}">
 
                             <li class="menu cart js-mini-cart">
-                                <a class="icon shopping-cart" href="{!$Site.BaseUrl}/IEC_ShoppingCart" style="background-color: red;">
+                                <a class="icon shopping-cart" href="{!$Site.BaseUrl}/IEC_ShoppingCart" style="background-color: red;" onclick="pushClickViewShoppingCartOverlay();">
                                     <span class="text">{!$Label.Cart}</span>
                                     <span class="number-of-items">({!cartContent.size})</span>
                                 </a>
@@ -176,7 +232,7 @@
                         <apex:variable value="1" var="isNewShoppingCard" rendered="{!newShoppingCart}">
                             <!-- NEW CART start -->
                             <li class="menu cart js-mini-cart">
-                                <a class="icon shopping-cart" href="{!$Site.BaseUrl}/IEC_ShoppingCart">
+                                <a class="icon shopping-cart" href="{!$Site.BaseUrl}/IEC_ShoppingCart" onclick="pushClickViewShoppingCartOverlay();">
                                     <span class="text">{!$Label.Cart}</span>
                                     <span class="number-of-items">({!storeCart.CartContent.size})</span>
                                 </a>
@@ -238,7 +294,7 @@
 
             <div class="nav-header">                    
                 <div class="site-logo">
-                    <a href="{!$Site.BaseUrl}">
+                    <a href="{!$Site.BaseUrl}" onclick="pushClickGoToIATALogoLink();">
                         <!--[if lte IE 8]>
                             <img src="{!URLFOR($Resource.EcommerceAssets, pngLogo)}" alt="{!$Label.SiteTitle}" width="70" />
                         <![endif]--> 
@@ -292,7 +348,7 @@
             <apex:variable var="isNotDashboard" value="1" rendered="{!is_dashboard != true}">
                 <ul class="nav nav-main" id="js-nav-main">
                     <li class="has-child"> 
-                        <a class="js-open-nav-content" href="#">{!$Label.Products}</a>
+                        <a class="js-open-nav-content" href="#" onclick="pushClickViewProductsOverlay();">{!$Label.Products}</a>
                         <div class="nav-content">
                             <div class="inner-wrapper">
                                 <apex:repeat value="{!categories}" var="cat">

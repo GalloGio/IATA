@@ -82,6 +82,22 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	public String selectedTopic{get;set;}
 	public String selectedTopicLabel{get;set;}
 
+	public String productBreadcrumb {
+        get{
+        	String prdbread = Label.Home + ' > ' + selectedCategory.getLabel() + ' > ' + selectedTopicLabel + ' > ' + ecomProduct.ProductName;
+        	return JSON.serialize(prdbread);
+    	} 
+        set;
+    }
+
+    public String productNameAndIdStr {
+        get{
+            String str = ecomProduct.ProductName + ' - ' + ecomProduct.ProductId;
+            return JSON.serialize(str);
+        }
+        set;
+    }
+
 	public String productWrapper {
 		get {
 			Map<String,Object> ecommObj = new Map<String,Object>();
