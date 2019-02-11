@@ -1,10 +1,10 @@
 global class Update_Contact_Available_Services_Batch implements Database.Batchable<sObject> {
 	
-	global final String query;
+	global String query;
 
 	
 	global Update_Contact_Available_Services_Batch() {
-		query = 'Select ContactId From User Where IsPortalEnabled = true AND Contact.Available_Services__c = null';
+        query = 'Select ContactId From User Where IsPortalEnabled = true AND Contact.Status__c = \'Active\'';
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
