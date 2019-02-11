@@ -16,6 +16,8 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 		for (String field : schemaFieldMapAccounts.keySet()){
 			fieldListAcct.add(field);
 		}
+
+		fieldListAcct.add('IATA_ISO_Country__r.Name');
 		
 		this.accountIds = accountIds;	
 
@@ -60,7 +62,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 	        fieldsOfObject.put('ContactId',c.ContactId);
 			fieldsOfObject.put('Reason1__c', 'New AE Multicountry');
 	        fieldsOfObject.put('Region__c',acct.Region_formula__c);
-	        fieldsOfObject.put('Subject', c.Subject);
+	        fieldsOfObject.put('Subject', 'New Associate Entity - GoGlobal - ' + acct.IATA_ISO_Country__r.Name);
 	        fieldsOfObject.put('Visible_on_ISS_Portal__c', c.Visible_on_ISS_Portal__c);
 	        fieldsOfObject.put('Origin', c.Origin);
 	        
