@@ -55,7 +55,7 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>s
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
             </layoutItems>
