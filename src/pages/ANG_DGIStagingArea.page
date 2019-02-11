@@ -224,6 +224,16 @@
                     <apex:outputField value="{!stagingFs.reason__c}" />
                 </apex:pageBlockSectionItem>
 
+                <apex:pageBlockSectionItem rendered="{!amazonFileEId <> null}">
+                    <apex:outputLabel value="Link for Attachment" />
+                    <a class="text-link view-details" href="{!amazonFileEId}" target="_new">Click here to download</a>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!amazonFileEId = null}">
+                    <apex:outputLabel value="Link for Attachment" />
+                    <apex:outputLabel style="color:red" value="No file was attached yet."/>
+                </apex:pageBlockSectionItem>
+                
             </apex:pageBlockSection>
         
             <apex:actionRegion>

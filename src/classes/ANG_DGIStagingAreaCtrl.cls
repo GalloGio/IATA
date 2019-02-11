@@ -1,5 +1,23 @@
 public without sharing class ANG_DGIStagingAreaCtrl {
 
+    public String amazonFileEId { get{
+
+        if(this.stagingFs != null){
+
+            List<AmazonFile__c> files = [Select Id, Full_Name_Unique__c from AmazonFile__c where sObject_Id__c = :this.stagingFs.Id LIMIT 1];
+
+            if(files.isEmpty())
+                return null;
+
+            String toReturn = AMS_OSCAR_Attachments.getExpiringLinkWS(files.get(0).Full_Name_Unique__c); 
+        	            
+            return toReturn;
+        }
+
+        return null;
+    }
+    set;}
+    
     public Boolean hasErrorMessages { get { return ApexPages.hasMessages(); } }
 
     private Opportunity opp{get;set;}
