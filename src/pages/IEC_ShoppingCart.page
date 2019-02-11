@@ -115,7 +115,7 @@
                         "event": "userAction",
                         "eventCategory": "Cart Page",
                         "eventAction": "Update Quantity",
-                        "eventLabel": "{!cartProducts}"
+                        "eventLabel": {!cartProducts}
                     });
                 }
 
@@ -124,7 +124,7 @@
                         "event": "userAction",
                         "eventCategory": "Cart Page",
                         "eventAction": "Click on Continue Shopping",
-                        "eventLabel": "{!cartProducts}"
+                        "eventLabel": {!cartProducts}
                     });
                 }
 

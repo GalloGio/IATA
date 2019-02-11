@@ -3572,6 +3572,22 @@
         <name>IDCard_Attachments</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_BSP_Agent_Billing_Reports_Procedures --></label>
+        <name>IDCard_BSP_Agent_Billing_Reports_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Agent_Remittance_Procedures --></label>
+        <name>IDCard_BSP_Agent_Remittance_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Essentials_for_Travel_Agents --></label>
+        <name>IDCard_BSP_Essentials_for_Travel_Agents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Standard_Documents_Procedures --></label>
+        <name>IDCard_BSP_Standard_Documents_Procedures</name>
+    </customLabels>
+    <customLabels>
         <label>Retour</label>
         <name>IDCard_Back</name>
     </customLabels>
@@ -4006,6 +4022,10 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
     <customLabels>
         <label>La demande de Carte n&apos;a pas été trouvée</label>
         <name>IDCard_IndustryEntrySuperior</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Intro_to_the_BSP_System_Language --></label>
+        <name>IDCard_Intro_to_the_BSP_System_Language</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_IntroduccionAlBSPlink_Description --></label>
@@ -12580,7 +12600,7 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
     <customLabels>
         <label>Payment Link peut Être utilisé pour payer les factures IATA par carte de crédit&lt;br/&gt;
 &lt;b&gt;Attention!&lt;/b&gt;&lt;br/&gt;
-Veuillez noter que de nombreuses factures de IATA pour les agents accrédités sont collectés par le BPS / CASS. Vous devriez vérifier vos détails de la facture pour vous assurer qu&apos;il n&apos;a pas été déjà compensé avant de procéder au paiement par carte de crédit.</label>
+Veuillez noter que de nombreuses factures de IATA pour les agents accrédités sont collectés par le BSP / CASS. Vous devriez vérifier vos détails de la facture pour vous assurer qu&apos;il n&apos;a pas été déjà compensé avant de procéder au paiement par carte de crédit.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>
