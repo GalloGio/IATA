@@ -78,7 +78,8 @@ public class ANG_MulticountryHelper {
 	public static Boolean shouldRunMulticountryValidations(Account account){
     	return ((account.Location_Type__c == AMS_Utils.HE || account.Location_Type__c == AMS_Utils.AE) && 
     			allowedLocationsSet.contains(account.Location_Class__c) &&
-    			account.ANG_IsNewGenAgency__c);
+    			account.ANG_IsNewGenAgency__c &&
+    			account.ParentId != NULL);
 	}
 
 	/**
@@ -199,8 +200,6 @@ public class ANG_MulticountryHelper {
 	public static void processMulticountryValidations(List<Account> accountLst, Set<Id> parentIdSet){
 
 		Map<Id, Account> acctWithRelshipsMap = fetchMulticountryAccounts(parentIdSet);
-
-		if(acctWithRelshipsMap.isEmpty()) return;
 
         Map<Id, Set<Id>> accountsHePerBspMap = aggregateHeadEntitiesForEachBSP(acctWithRelshipsMap.values());
         
