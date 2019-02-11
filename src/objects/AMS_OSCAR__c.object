@@ -3116,9 +3116,9 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <fields>
         <fullName>Notification_days__c</fullName>
         <externalId>false</externalId>
-        <formula>if(Change_effective_as_of__c - today() &gt; 60,&quot;90&quot;,
-if(Change_effective_as_of__c - today() &gt; 30,&quot;60&quot;,
-if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
+        <formula>if(DGR_Expiry_Date__c - today() &gt; 60,&quot;90&quot;,
+if(DGR_Expiry_Date__c - today() &gt; 30,&quot;60&quot;,
+if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Notification days</label>
         <required>false</required>
@@ -8171,6 +8171,24 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
         <filterScope>Queue</filterScope>
         <label>NewGen PCI - Europe</label>
         <queue>NewGen_PCI_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>PCI_Cases_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>PCI Cases</label>
+        <queue>PCI_Cases</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>PCI_Cases_GDC_SIN_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>PCI Cases GDC SIN</label>
+        <queue>PCI_Cases_GDC_SIN</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -35205,6 +35223,69 @@ if(Change_effective_as_of__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</f
             </values>
             <values>
                 <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Type_Of_Change__c</picklist>
+            <values>
+                <fullName>Accreditation type</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversion to Domestic with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversion to GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversion to International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hierarchy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal name</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legal status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location type</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location type to different legal entity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Major shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minor shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ownership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trade name</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VMFR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
