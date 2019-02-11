@@ -3,6 +3,7 @@
     <customButtons>Send_Email_to_Contact</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>E2CP__New_Comment</customButtons>
+    <customButtons>Accept_Case</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
