@@ -1127,6 +1127,6 @@ public with sharing class ISSP_PortalUserStatusChange {
     
     @future
     public static void updateUser(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
-        ISSP_PortalUserStatusChangeHelper.updateUserSync(conId, isActive, email, profileId, firstCommunity);
+        WithoutSharingOperations.updateUserSync(conId, isActive, email, profileId, firstCommunity);
     }    
 }
