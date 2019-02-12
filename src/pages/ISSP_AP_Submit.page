@@ -227,11 +227,12 @@
                 <!-- Counter Indemnity Agreement -->
                 <apex:pageBlockSection title="Counter Indemnity Agreement" columns="1"
                     rendered="{!
-                            AND(strAreaType=='Airline Joining',
-                                hqAccount.Sector__c=='Airline',
+                            AND(!isGSSAUser,
+                                strAreaType=='Airline Joining',
+                                accountToShowSections.Sector__c=='Airline',
                                 OR(
-                                    AND(isBSP,NOT(hqAccount.BSP_CI_Valid__c)),
-                                    AND(isCASS,NOT(hqAccount.CASS_CI_Valid__c))
+                                    AND(isBSP,NOT(accountToShowSections.BSP_CI_Valid__c)),
+                                    AND(isCASS,NOT(accountToShowSections.CASS_CI_Valid__c))
                                 )
                             )}">
                     <div class="aplabel">
@@ -249,10 +250,10 @@
                 <apex:pageBlockSection title="Form of Concurrence" columns="1"
                     rendered="{!AND(
                         strAreaType=='Airline Joining',
-                        hqAccount.Sector__c=='Airline',
+                        accountToShowSections.Sector__c=='Airline',
                         isBSP,
-                        NOT(hqAccount.BSP_FOC_Valid__c),
-                        hqAccount.Membership_status__c!='IATA Member'
+                        NOT(accountToShowSections.BSP_FOC_Valid__c),
+                        accountToShowSections.Membership_status__c!='IATA Member'
                     )}">
                     <div class="aplabel">
                         <p>
@@ -268,9 +269,10 @@
                 <!-- Form Of Application -->
                 <apex:pageBlockSection title="Form of Application" columns="1"
                     rendered="{!
-                            AND(strAreaType=='Airline Joining',
-                                hqAccount.Sector__c=='Airline',
-                                hqAccount.Membership_status__c!='IATA Member',
+                            AND(!isGSSAUser,
+                                strAreaType=='Airline Joining',
+                                accountToShowSections.Sector__c=='Airline',
+                                accountToShowSections.Membership_status__c!='IATA Member',
                                 isBSP
                             )}">
                     <div class="aplabel">
@@ -285,8 +287,8 @@
                 <apex:pageBlockSection title="Form of Application and Concurrence" columns="1"
                     rendered="{!
                             AND(strAreaType=='Airline Joining',
-                                hqAccount.Sector__c=='Airline',
-                                hqAccount.Membership_status__c!='IATA Member',
+                                accountToShowSections.Sector__c=='Airline',
+                                accountToShowSections.Membership_status__c!='IATA Member',
                                 isCASS
                             )}">
                     <div class="aplabel">

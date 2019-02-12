@@ -16,6 +16,7 @@ global without sharing class ISSP_APProcess {
     public string cassairlineid {get;set;}
     public Case newCase {get;set;}
     public Account hqAccount {get;set;}
+    public Account accountToShowSections {get;set;}
     public Contact con {get;set;}
     public AP_Process_Form__c newForm {get;set;}
     public AP_Country_Requierment__c countryRequirement {get;set;}
@@ -436,6 +437,7 @@ global without sharing class ISSP_APProcess {
                 isStep1 = true;
             }
         }
+        retrieveAccountToShowSections();
 
         populateCountriesMap();
         poupulateOptInOutOptions();
@@ -1609,9 +1611,27 @@ global without sharing class ISSP_APProcess {
         }
         return true;
     }
-    
+
     /**
-        Returns true if the hq account meets the conditions to show ICCS Joining section
+        Find the account to be used to show or hide sections in ISSP_AP_Submit.page
+        Basically for GSSA users the account must be the related contact account
+        and for non GSSA users the account concerned.
+    **/
+    public void retrieveAccountToShowSections() {
+        if(isGSSAUser && category <> 'IBCS consolidator') {
+            Id topParentId = this.con.Account.Top_Parent__c==null? this.con.AccountId: this.con.Account.Top_Parent__c;
+            this.accountToShowSections= [SELECT Id, BSP_CI_Valid__c, BSP_FOC_Valid__c, CASS_CI_Valid__c, Membership_status__c, Sector__c,
+                (SELECT Id FROM Authorized_Signatories_Packages__r)
+                FROM Account
+                WHERE Id = :topParentId ];
+        } else {
+            // hqaccount is a variable containing the top parent account from the account concerned field in contact
+            this.accountToShowSections = hqaccount;
+        }
+    }
+
+    /**
+        Returns true if the account meets the conditions to show ICCS Joining section
     **/
     public Boolean getShowJoinICCS() {
         return this.newForm.Airline_wish_to_join_ICCS__c=='Yes'
@@ -1688,10 +1708,11 @@ global without sharing class ISSP_APProcess {
         Find all related authorized signatories from the airline
     **/
     public list<Authorized_Signatory__c> getAuthorizedSignatories() {
+        if (accountToShowSections==null) return new list<Authorized_Signatory__c>();
         return [
             SELECT Id, Contact__r.Name
             FROM Authorized_Signatory__c
-            WHERE Authorized_Signatories_Package__c IN :hqAccount.Authorized_Signatories_Packages__r];
+            WHERE Authorized_Signatories_Package__c IN :accountToShowSections.Authorized_Signatories_Packages__r];
     }
 
 }

@@ -753,7 +753,7 @@ private class ISSP_APProcess_Test
             ctrl.APQueue('Airline Participation - Drafts');
             ctrl.goToFinalStep();
             ctrl.getChangeItems();
-
+            ctrl.retrieveAccountToShowSections();
 
             PageReference prSteps = ctrl.saveBSPFormAndGoForward();
             System.assert(prSteps.getUrl().endsWith('step=4'));
@@ -894,7 +894,7 @@ private class ISSP_APProcess_Test
         Id airlineBranchRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
         Id airlineHeadquartersRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
-        Account headquarter = new Account(Name = 'Emirates',
+        Account headquarter = new Account(Name = 'Emirates hq',
                                           Field_Head_Office__c = 'Headquarter',
                                           Airline_Designator__c = 'LH',
                                           IATACode__c = '220',
@@ -912,7 +912,7 @@ private class ISSP_APProcess_Test
 
         List<Account> airlines = new List<Account>();
 
-        Account branch1 = new Account(Name = 'Emirates',
+        Account branch1 = new Account(Name = 'Emirates br1',
                                           Field_Head_Office__c = 'Headquarter',
                                           Airline_Designator__c = 'LH',
                                           IATACode__c = '220',
@@ -927,7 +927,7 @@ private class ISSP_APProcess_Test
                                           RecordTypeId = airlineBranchRT,
                                           ParentId = headquarter.Id);
 
-        Account branch2 = new Account(Name = 'Emirates',
+        Account branch2 = new Account(Name = 'Emirates br2',
                                           Field_Head_Office__c = 'Headquarter',
                                           Airline_Designator__c = 'LH',
                                           IATACode__c = '220',
@@ -973,7 +973,11 @@ private class ISSP_APProcess_Test
 
         insert services;
 
-
+        // create a new Authorized Signatory
+        Authorized_Signatories_Package__c asp = new Authorized_Signatories_Package__c(Account__c = headquarter.Id);
+        insert asp;
+        Authorized_Signatory__c auths = new Authorized_Signatory__c(Authorized_Signatories_Package__c = asp.Id, Contact__c = con.Id);
+        insert auths;
 
         Test.startTest();
         System.runAs(newUser) {
@@ -995,6 +999,7 @@ private class ISSP_APProcess_Test
 
             System.assertEquals(countriesOut.size(), resultingCases.size());
             ctrl.getIsNewCountryProcess();
+            ctrl.retrieveAccountToShowSections();
             ctrl.getAuthorizedSignatories();
             ctrl.getDocumentGuide();
             ctrl.getDocumentCASSSpecification();
