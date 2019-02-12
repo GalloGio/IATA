@@ -65,6 +65,7 @@
     </fields>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Related Account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <lookupFilter>

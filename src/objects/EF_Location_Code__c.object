@@ -68,6 +68,7 @@
     <fields>
         <fullName>Contract__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related Contract</description>
         <externalId>false</externalId>
         <label>Contract</label>
         <referenceTo>Contract</referenceTo>

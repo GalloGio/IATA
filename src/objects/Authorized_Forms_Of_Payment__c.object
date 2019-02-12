@@ -55,6 +55,7 @@
     <fields>
         <fullName>AMS_GDP_Key__c</fullName>
         <caseSensitive>true</caseSensitive>
+        <description>External ID used for AMS to GDP integration</description>
         <externalId>true</externalId>
         <label>AMS GDP Key</label>
         <length>80</length>
@@ -103,6 +104,7 @@ Mapped to &quot;Authority__c&quot; on AMS Agency Authorization (a8t) for Replica
     <fields>
         <fullName>Related_GDP_Products_Account_View__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
+        <description>Related GDP Product - Account View</description>
         <externalId>false</externalId>
         <label>GDP Products - Account View</label>
         <referenceTo>GDP_Products_Account_View__c</referenceTo>

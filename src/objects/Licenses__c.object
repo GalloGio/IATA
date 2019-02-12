@@ -84,6 +84,7 @@
     <fields>
         <fullName>License_assigned_to__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>User assigned to whom the license is assigned to</description>
         <externalId>false</externalId>
         <inlineHelpText>Shows the name of the user that the license is assigned to</inlineHelpText>
         <label>License assigned to</label>
