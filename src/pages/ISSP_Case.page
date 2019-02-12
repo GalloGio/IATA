@@ -392,7 +392,7 @@
                                     <!-- <label class=" lbl col-lg-5 control-label" for="exampleInputEmail1"><span class="required"></span></label> -->
                                     
                                     <!-- ACAMBAS - WMO-399 - Start -->
-                                    <apex:inputField label="{!$Label.ISSP_Release_Version}" value="{!newCase.Applicable_to_Which_Version_s__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true"/>
+                                    <apex:inputField label="{!$Label.ISSP_Release_Version}" value="{!newCase.Applicable_to_Which_Version_s__c}" rendered="{!isDPCUser}" styleclass="form-control" required="false"/>
                                     <!-- ACAMBAS - WMO-399 - End -->
                                         
                                     <apex:inputfield value="{!newCase.Subject}" styleclass="form-control" required="true" />
