@@ -25,12 +25,12 @@
 
     <apex:pageBlock >
         <apex:pageBlockTable value="{!historyRecords}" var="row" >
-            <apex:column >
+            <apex:column width="10%">
                 <apex:facet name="header">Date</apex:facet>
                 <apex:outputText value="{!row.createdDate}" />
             </apex:column>
                         
-            <apex:column >
+            <apex:column width="15%">
                 <apex:facet name="header">User</apex:facet>
                 <a href="#" onClick="openTab('{!row.createdById}', '{!row.createdByName}'); return false">{!row.createdByName}</a>
             </apex:column>
