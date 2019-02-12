@@ -266,7 +266,7 @@ public with sharing class ISSP_PersonalInformation {
 	public Pagereference saveContact(){
         try {
         	isEditMode = false;
-        	update con;
+            WithoutSharingOperations.upsertContacts(new List<Contact>{con});
         	popContact();  
         	Pagereference homePage = Page.ISSP_Homepage;
         	homePage.setRedirect(true); 
