@@ -137,7 +137,8 @@ global class AMS_2_MDM_Schedule implements Schedulable {
             String sQueryPassenger = 'SELECT Change_Code__c, Account__c, Account__r.IATACode__c, Account__r.Location_Class__c, ' +
                         'Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c, ' +
                         'Account__r.IATA_ISO_Country__r.Iso_code__c, OSCAR__c, OSCAR__r.Oscar_Communication_Case_Id__c, ' +
-                        'Account__r.Special_remarks__c ' + //WMO-456
+                        'Account__r.Special_remarks__c, ' + //WMO-456
+                        'ANG_Accreditation_Model__c, ANG_IsNewGenAgency__c ' +
                     'FROM Agency_Applied_Change_code__c ' +
                         'where Change_Code__c <> null ' +
                         'and Account__r.IATACode__c <> null ' +

@@ -57,7 +57,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
         //WMO-456 added special remarks
         List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = new List<AMS_Change_Codes_Billable_Setup__c>();
-        for(AMS_Change_Codes_Billable_Setup__c bchangeCodeExclude : [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c, Location_Type_To_Exclude__c, Special_Remarks__c 
+        for(AMS_Change_Codes_Billable_Setup__c bchangeCodeExclude : [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c, Location_Type_To_Exclude__c, Special_Remarks__c, Accreditation_Model_To_Exclude__c
                                                                                 FROM AMS_Change_Codes_Billable_Setup__c]) {
 
             if(countryIsoCodes.contains(bchangeCodeExclude.Country_To_Exclude__c) || String.isNotBlank(bchangeCodeExclude.Special_Remarks__c)) 
@@ -121,7 +121,11 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
                     if(au.Change_Code__c == ccbs.Change_Code__c && (excludeByCountry || excludeSpecialRemarks)){  //FM AMSU-116 //WMO-456                        
                         bToSend = false;                            
                     }
-                    
+
+                    if( au.Change_Code__c == ccbs.Change_Code__c && 
+                        auxAccAccount.ANG_IsNewGenAgency__c && 
+                        auxAccAccount.ANG_Accreditation_Model__c == ccbs.Accreditation_Model_To_Exclude__c)
+                    bToSend = false;
                 }
 
                 if(bToSend){

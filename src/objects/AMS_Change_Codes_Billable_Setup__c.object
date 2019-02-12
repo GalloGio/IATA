@@ -4,6 +4,17 @@
     <description>table to contain exceptions at ISO country code + class + change code combinations, so we can track for instance CHL - C - AR --&gt; change code CHL is not billable for class C in Argentina.</description>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Accreditation_Model_To_Exclude__c</fullName>
+        <description>Account&apos;s Accreditation Model (Accreditation_Type__c) to exclude</description>
+        <externalId>false</externalId>
+        <label>Accreditation Model To Exclude</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Change_Code__c</fullName>
         <externalId>false</externalId>
         <label>Change Code</label>
