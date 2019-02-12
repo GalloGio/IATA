@@ -101,6 +101,11 @@
                     <default>false</default>
                     <label>TIP - IFG Report</label>
                 </value>
+                <value>
+                    <fullName>SAP PPA</fullName>
+                    <default>false</default>
+                    <label>SAP PPA</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -130,6 +135,11 @@
                     <fullName>GDI</fullName>
                     <default>false</default>
                     <label>GDI</label>
+                </value>
+                <value>
+                    <fullName>SAP</fullName>
+                    <default>false</default>
+                    <label>SAP</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -266,6 +276,52 @@ When MS sets “In Progress”, trigger to fire</description>
                 <fullName>GDI</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>IEP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initializing</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>SAP_PPA</fullName>
+        <active>true</active>
+        <label>SAP PPA</label>
+        <picklistValues>
+            <picklist>Request_Type__c</picklist>
+            <values>
+                <fullName>ANG_IEP_MODEL_A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP_IFG_REPORT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
             <values>
                 <fullName>IEP</fullName>
                 <default>false</default>

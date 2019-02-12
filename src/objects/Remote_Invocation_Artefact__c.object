@@ -147,6 +147,30 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Payment_type__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>PPA</fullName>
+                    <default>false</default>
+                    <label>PPA</label>
+                </value>
+                <value>
+                    <fullName>SPDR</fullName>
+                    <default>false</default>
+                    <label>SPDR</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Previous_Version__c</fullName>
         <description>Previous version</description>
         <externalId>false</externalId>
