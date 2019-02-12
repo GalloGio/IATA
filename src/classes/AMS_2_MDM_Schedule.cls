@@ -3,7 +3,7 @@ global class AMS_2_MDM_Schedule implements Schedulable {
     String localRegion = '';
     SET<String> setAIMSRegion = new SET<String>();
 
-    global static void start(){
+    global static void start(){ 
         // Cron EXP for hourly schedule
         String CRON_EXP = '0 0 * * * ?';
         AMS_2_MDM_Schedule sch = new AMS_2_MDM_Schedule();
@@ -136,8 +136,9 @@ global class AMS_2_MDM_Schedule implements Schedulable {
             //Ignore the "Active" field, since it only inform on the last change code used!
             String sQueryPassenger = 'SELECT Change_Code__c, Account__c, Account__r.IATACode__c, Account__r.Location_Class__c, ' +
                         'Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c, ' +
-                        'Account__r.IATA_ISO_Country__r.Iso_code__c, OSCAR__c, OSCAR__r.Oscar_Communication_Case_Id__c ' +
-                    'FROM Agency_Applied_Change_code__c ' +
+                        'Account__r.IATA_ISO_Country__r.Iso_code__c, OSCAR__c, OSCAR__r.Oscar_Communication_Case_Id__c, ' +
+                        'ANG_Accreditation_Model__c, ANG_IsNewGenAgency__c ' +
+                        'FROM Agency_Applied_Change_code__c ' +
                         'where Change_Code__c <> null ' +
                         'and Account__r.IATACode__c <> null ' +
                         'and Sent_to_external_system__c = false ' +
