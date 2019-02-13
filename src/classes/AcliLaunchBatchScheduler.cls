@@ -12,7 +12,7 @@ global class AcliLaunchBatchScheduler implements Schedulable {
             String fileContent = acliDoc.Body.tostring() ;
 
             AcliSyncBatch batch = new AcliSyncBatch(fileContent);
-            Database.executeBatch(batch, 10);
+            Database.executeBatch(batch, 1);
 
             delete acliDoc;
 
