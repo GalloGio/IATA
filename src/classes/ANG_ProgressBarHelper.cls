@@ -27,7 +27,8 @@ public with sharing class ANG_ProgressBarHelper {
                    Is_Visible__c,
                    Order__c
             FROM ANG_ProgressBarStep__mdt
-            WHERE Parent__c = :setting.Id];
+            WHERE Parent__c = :setting.Id
+            ORDER BY Order__c ASC];
 
         for(ANG_ProgressBarStep__mdt step : listSteps) {
             System.debug('ANG_ProgressBarHelper: Processing step ' + step);
