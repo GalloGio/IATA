@@ -96,8 +96,9 @@ private class AcliSyncBatchTest {
 
         test.startTest();
             // Schedule the test job
-            String jobId = System.schedule('AcliLaunchBatchScheduler', CRON_EXP, new AcliLaunchBatchScheduler());
-        test.stopTest();
+		AcliLaunchBatchScheduler scheduler = new AcliLaunchBatchScheduler();
+        scheduler.launchBatch();          
+		test.stopTest();
     }
 
     static testMethod void testBatch() {
