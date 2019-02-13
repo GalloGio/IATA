@@ -3031,7 +3031,7 @@ public class AMS_OSCARTriggerHandler {
                 Boolean isNewgenAccreditation = AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c);//ENHC0012583
                 Boolean isCorrection = oscar.Process__c == AMS_Utils.COR;
                 Boolean isChangeOfLocation = oscar.Process__c == AMS_Utils.AGENCYCHANGES && String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c.contains(AMS_Utils.Location);
-                if(isNewAccreditaion || isCorrection || isChangeOfLocation || isNewgenAccreditation) { //ENHC0012583 (|| isNewgenAccreditaion)
+                if(isNewAccreditaion || isCorrection || isChangeOfLocation || isNewgenAccreditation) { //ENHC0012583 (|| isNewgenAccreditation)
                 	allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
                 	validateShippingAddress(oscar, allOnlineAccr);
                 }
