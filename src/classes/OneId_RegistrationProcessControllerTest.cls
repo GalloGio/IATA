@@ -426,4 +426,105 @@ private class OneId_RegistrationProcessControllerTest {
          Test.stopTest();
      }
 
+    @isTest
+    public static void testRegistrationACLI() {
+
+        // Prepare test data
+
+        ISSP_CS__c setting = new ISSP_CS__c();
+        setting.Name = 'DefaultNewAccountOwnerId';
+        setting.Value__c = UserInfo.getUserId();
+        insert setting;
+
+        ISSP_CS__c setting2 = new ISSP_CS__c();
+        setting2.Name = 'IdentityPortal';
+        setting2.Value__c = 'customer-portal-iata.force.com';
+        insert setting2;
+
+        Id profileId = [ SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)' ][0].Id;
+
+        ISSP_CS__c setting3 = new ISSP_CS__c();
+        setting3.Name = 'ISS_Portal_Airline_User';
+        setting3.Value__c = profileId;
+        insert setting3;
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
+        insert country ;
+
+        Portal_Applications__c pa = new Portal_Applications__c(name = AcliAccount.PORTAL_SERVICE_NAME_ACLI);
+        insert pa;
+
+        ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
+                ACLI_IATA_Airlines_and_Location_Codes__c=String.valueOf(pa.id).substring(0, 15)
+        );
+        insert ipsi;
+
+        String serviceName = 'ISSP';
+
+        Test.startTest();
+
+        PortalType portalType = PortalType.PowerPartner;
+        User userWithRole = null;
+        Boolean doInsert = true;
+        Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Airline', Category__c='Passenger and Cargo',IATA_ISO_Country__c = country.Id,BillingCountry='Portugal',IATA_ISO_Shipping_Country__c=country.Id);
+
+        Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
+
+        OneId_RegistrationProcessController.registration(a,c,serviceName);
+
+        OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'FRED');
+
+        Test.stopTest();
+
+        List<User> aUser = [select id, profile.name from user where contactId = :c.id];
+
+        System.debug(aUser);
+    }
+
+    @isTest
+    public static void getCoverageOnOthersCode() {
+        insert new IATA_ISO_Country__c(ISO_Code__c='FR');
+        IATA_ISO_Country__c isoCountry = [select id from IATA_ISO_Country__c WHERE ISO_Code__c = 'FR'][0];
+        list<Account> accs = new list<Account>{
+                new Account(
+                        name= 'Air France',
+                        recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'IATA_Airline'][0].Id,
+                        IATA_ISO_Country__c = isoCountry.Id
+
+                ),
+                new Account(
+                        name= 'FR',
+                        recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'ICAO_Member_State'][0].Id,
+                        IATA_ISO_Country__c = isoCountry.Id
+
+                ),
+                new Account(
+                        name= 'Verifier1',
+                        recordTypeId = [SELECT Id FROM RecordType WHERE developerName = 'Verifiers'][0].Id,
+                        IATA_ISO_Country__c = isoCountry.Id
+
+                )
+        };
+        Insert accs;
+
+        // Insert an invitation
+        Invitation__c invitation = new Invitation__c(AccountId__c=accs[2].Id); // the verifier account inserted previously
+        insert invitation;
+
+        Test.startTest();
+
+        OneId_RegistrationProcessController.loadInvitationInfo(invitation.id);
+        OneId_AddressDoctor.AddressInfo add = new OneId_AddressDoctor.AddressInfo();
+        add.addressComplete = 'Rua da Treta, 22, ';
+        add.houseNumber = '22';
+        add.street = 'Rua da Treta';
+        add.postalCode = '1700-121';
+        String info = JSON.serialize(add);
+
+        Test.setMock(HttpCalloutMock.class, new OneId_AddressDoctorMockImpl());
+        OneId_RegistrationProcessController.checkAddress(info, 'PT');
+
+
+        Test.stopTest();
+    }
 }

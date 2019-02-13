@@ -520,13 +520,38 @@ public without sharing class OneId_RegistrationProcessController {
                     newRight.Portal_Application__c = appListId;
                     insert newRight;
                }
-            }else if(!isAlreadyContact){
+
+            //Start ACLI
+                // ACLI Requirement: The first user registering under a new airline account will get it automatically.
+            }else if(acc.Sector__c == 'Airline' && isNewAcc &&
+                        acc.RecordTypeId == Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId() ){
+
+                System.debug('Adding ACLI service');
+                con.Primary_Contact__c = true;
+                //con.User_Portal_Status__c = 'Approved Admin';
+
                 checkConAvailable(con);
-                system.debug('::: Is not a contact already: ' + con);
-            }else{
-                updateContactInFuture(String.valueOf(con.Id), con.Community__c, String.valueOf(con.User_Portal_Status__C), con.Email, con.AccountId);
-                system.debug('::: Is contact already UPDATING: ' + con);
-                //update con;
+
+                con.account=acc;
+
+                //ACLI Requirement: if first user on an Airline account then the user gets automatically the Coding Service
+                Id appListId;
+                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+                if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c)){
+                    appListId = serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c;
+
+                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+                    newRight.Contact__c = con.Id;
+                    newRight.Right__c = 'Access Granted';
+                    newRight.Portal_Application__c = appListId;
+                    insert newRight;
+                }
+
+
+            }
+            //End ACLI
+            else{
+                checkConAvailable(con);
             }
 
 
@@ -669,229 +694,99 @@ public without sharing class OneId_RegistrationProcessController {
         }
         return null;
     }
-  
-  
-  public static void increaseCodeCoverage(){
-      Integer i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-	  i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
-      i = 0;
+    
+    /* Manuel Conde commented this... 
+
+    public static void increaseCodeCoverage(){
+        Integer i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
+        i = 0;
     }
+
+     */
 
 }
