@@ -18,7 +18,19 @@ public with sharing class ANG_ProgressBarHelper {
         }
 
         System.debug('ANG_ProgressBarHelper: Using setting ' + setting);
-        for(ANG_ProgressBarStep__mdt step : setting.Progress_Bar_Steps__r) {
+        list<ANG_ProgressBarStep__mdt > listSteps = [
+            SELECT MasterLabel,
+                   Description__c,
+                   ValueProgress__c,
+                   ValueOk__c,
+                   ValueError__c,
+                   Is_Visible__c,
+                   Order__c
+            FROM ANG_ProgressBarStep__mdt
+            WHERE Parent__c = :setting.Id];
+
+        for(ANG_ProgressBarStep__mdt step : listSteps) {
+            System.debug('ANG_ProgressBarHelper: Processing step ' + step);
 
             if(step.Is_Visible__c==null || processStatus(step.Is_Visible__c, cse.Id)) {
 
@@ -63,21 +75,12 @@ public with sharing class ANG_ProgressBarHelper {
     **/
     private ANG_ProgressBarSetting__mdt getProgressBarSetting(Case cse) {
         list<ANG_ProgressBarSetting__mdt> listSetting =[
-            SELECT Id, Condition__c,
-                (SELECT MasterLabel,
-                    Description__c,
-                    ValueProgress__c,
-                    ValueOk__c,
-                    ValueError__c,
-                    Is_Visible__c,
-                    Order__c
-                FROM Progress_Bar_Steps__r
-                ORDER BY Order__c ASC)
+            SELECT Id, Condition__c
             FROM ANG_ProgressBarSetting__mdt
             WHERE RecordType__c = :cse.RecordType.DeveloperName];
 
         for (ANG_ProgressBarSetting__mdt setting: listSetting) {
-            String query = 'SELECT count(Id) FROM Case WHERE Id=\'' + cse.Id + '\'';
+            String query = 'SELECT Id FROM Case WHERE Id=\'' + cse.Id + '\'';
             if (setting.Condition__c!=null) {
                 query+= ' AND ' + setting.Condition__c;
             }
