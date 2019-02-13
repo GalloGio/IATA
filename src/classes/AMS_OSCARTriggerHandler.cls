@@ -3641,7 +3641,7 @@ public class AMS_OSCARTriggerHandler {
                 else
                     changeCodeId = 'GDI';
 
-                ANG_OscarProcessHelper.createChangeCodeForFOP(null, updatedOscar, new List<Account>(){oscarAccount} , changeCodeId);
+                ANG_OscarProcessHelper.createChangeCodeForFOP(null, updatedOscar, new List<Account>{oscarAccount} , changeCodeId);
             }
 
             if(bGenerateCC){
