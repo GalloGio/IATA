@@ -617,6 +617,26 @@ public class AMS_OSCARTriggerHandler {
             //NEWGE-4332
             if(updatedOSCAR.ANG_Share_documentation_with_vendor__c <> oldOSCAR.ANG_Share_documentation_with_vendor__c) updatedOSCAR.ANG_shared_documentation_with_vendor__c = (updatedOSCAR.ANG_Share_documentation_with_vendor__c ? Date.today() : null);
 
+            /*** NEWGEN-4995 Start ***/
+
+            if(oldOSCAR.Invoice_status__c <> updatedOSCAR.Invoice_status__c &&  updatedOSCAR.Invoice_status__c != null){
+                
+                updatedOSCAR.STEP9__c = updatedOSCAR.Invoice_status__c == 'Paid' ? AMS_Utils.PASSED : updatedOSCAR.Invoice_status__c == 'Outstanding' ? AMS_Utils.FAILED : oldOSCAR.Invoice_status__c;
+
+                // this was pulled from Automation on STEP 9 since when he reaches this part of the code, he already passed the automation
+                if(updatedOSCAR.STEP9__c == AMS_Utils.PASSED){
+                    if (updatedOSCAR.STEP17__c == 'Not Started' || updatedOSCAR.STEP17__c == 'Not Applicable' || updatedOSCAR.STEP17__c == 'Passed')
+                        updatedOSCAR.Process_Start_Date__c = Date.today();
+                
+                    if(oldOSCAR.Endorsement_Requested__c == false && updatedOSCAR.process__c == AMS_Utils.NGGDI){
+                        updatedOSCAR.Endorsement_Requested__c = true;
+                        updatedOSCAR.Endorsement_requested_date__c = Date.today();
+                        updatedOSCAR.step49__c = 'Passed';
+                    }
+                }
+
+            }
+            /*** NEWGEN-4995 End ***/
         }
 
         /*** AMSU-31 Start ***/
