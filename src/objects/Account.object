@@ -2944,7 +2944,7 @@
         <caseSensitive>true</caseSensitive>
         <description>The account&apos;s SAP ID as received in the ACLI file.</description>
         <externalId>false</externalId>
-        <label>ACLI SAP Id</label>
+        <label>ACLI Customer Number (SAP)</label>
         <length>10</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -3946,7 +3946,7 @@ Airline_designator__c &amp;IATACode__c&amp;Site</formula>
         <fullName>Airline_designator__c</fullName>
         <description>Field used for the airline designator code e.g. BA</description>
         <externalId>false</externalId>
-        <label>IATA Designator (2-character)</label>
+        <label>IATA Designator</label>
         <length>4</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -15256,7 +15256,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <fullName>SAP_Number__c</fullName>
         <description>E&amp;F CRM Project. Field needed because ACLI SAP can&apos;t be used.</description>
         <externalId>false</externalId>
-        <label>SAP Number</label>
+        <label>Customer Number (SAP)</label>
         <length>12</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -18666,12 +18666,12 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
   &apos;D&apos;, &apos;Non-Scheduled Cargo&apos;, 
   &apos;G&apos;, &apos;ULD&apos;, 
   &apos;H&apos;, &apos;CRS&apos;, 
-  &apos;K&apos;, &apos;Bus Company&apos;, 
+  &apos;K&apos;, &apos;Bus Line&apos;, 
   &apos;I&apos;, &apos;Scheduled Passenger and Cargo&apos;, 
   &apos;J&apos;, &apos;Non-Scheduled Passenger and Cargo&apos;, 
-  &apos;S&apos;, &apos;Miscellaneous/Others&apos;, 
-  &apos;F&apos;, &apos;Ferry Company&apos;, 
-  &apos;E&apos;, &apos;Railway Company&apos;, 
+  &apos;S&apos;, &apos;Miscellaneous&apos;, 
+  &apos;F&apos;, &apos;Cruise Line&apos;, 
+  &apos;E&apos;, &apos;Railway Line&apos;, 
   &apos;Z&apos;, &apos;Inactive&apos;,
   &apos;&apos;
 )</formula>
@@ -19068,7 +19068,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <fullName>duplicate_flag_indicato__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Duplicate flag indicator</label>
+        <label>Duplicate IATA Designator</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -93763,9 +93763,40 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
+        <fullName>ACLI_Customer_Number_Editability</fullName>
+        <active>true</active>
+        <description>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others</description>
+        <errorConditionFormula>AND(
+	ISCHANGED(ACLI_SAP_Id__c),
+	OR(
+		AND(
+			RecordType.DeveloperName != &apos;IATA_Airline&apos;,
+			RecordType.DeveloperName != &apos;Operator&apos;,
+			RecordType.DeveloperName != &apos;Others&apos;,
+			RecordType.DeveloperName != &apos;Standard_Account&apos;
+		),
+		AND(
+			OR(
+				RecordType.DeveloperName == &apos;Operator&apos;,
+				RecordType.DeveloperName == &apos;Others&apos;,
+				RecordType.DeveloperName == &apos;Standard_Account&apos;
+			),
+			NOT($Permission.ACLI_Customer_Number),
+			NOT($Permission.Airline_HQ_ACLI)
+		),
+		AND(
+			RecordType.DeveloperName == &apos;IATA_Airline&apos;,
+			NOT($Permission.Airline_HQ_ACLI)
+		)
+	)
+)</errorConditionFormula>
+        <errorDisplayField>ACLI_SAP_Id__c</errorDisplayField>
+        <errorMessage>The ACLI Customer Number can be modified only by the coding team and only for accounts with record type Airline Headquarter, Operator, Standard Account or Others</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>ACLI_SAP_ID_format_validation</fullName>
         <active>true</active>
-        <description>Validates that the ACLI SAP ID starts with &quot;00&quot; and has 10 characters</description>
+        <description>Validates that the ACLI Customer Number starts with &quot;00&quot; and has 10 characters</description>
         <errorConditionFormula>NOT(
   OR(
     ACLI_SAP_Id__c==&quot;&quot;,
@@ -93774,7 +93805,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
   )
 )</errorConditionFormula>
         <errorDisplayField>ACLI_SAP_Id__c</errorDisplayField>
-        <errorMessage>ACLI SAP ID has to start with &quot;00&quot; and be 10 characters long, please correct the format of the ID.</errorMessage>
+        <errorMessage>ACLI Customer Number has to start with &quot;00&quot; and be 10 characters long, please correct the format of the ID.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Account_Name_cannot_include_Ltd_or_Intl</fullName>
@@ -93830,6 +93861,101 @@ $User.Profile_Name__c = &apos;MER Membership&apos;
 ))</errorConditionFormula>
         <errorDisplayField>TradeName__c</errorDisplayField>
         <errorMessage>The trade name for Member airlines can only be updated by the account management team or membership.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_IATA_Membership_Status_1</fullName>
+        <active>true</active>
+        <description>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status.</description>
+        <errorConditionFormula>AND(
+	NOT(ISNEW()),
+	OR(
+		RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+		RecordType.DeveloperName=&apos;Operator&apos;
+	),
+	ISCHANGED(Membership_status__c),
+	NOT($Permission.Airline_HQ_MER_Membership)
+)</errorConditionFormula>
+        <errorDisplayField>Membership_status__c</errorDisplayField>
+        <errorMessage>For Airline HQ, only the profile MER Membership can update the field IATA Membership Status.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_IATA_Membership_Status_2</fullName>
+        <active>true</active>
+        <description>Only airlines can be IATA members.</description>
+        <errorConditionFormula>AND(
+	NOT(ISNEW()),
+	OR(
+		RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+		RecordType.DeveloperName=&apos;Operator&apos;
+	),
+	ISCHANGED(Membership_status__c),
+	$Permission.Airline_HQ_MER_Membership,
+	NOT(ISPICKVAL(Sector__c,&quot;Airline&quot;))
+)</errorConditionFormula>
+        <errorDisplayField>Membership_status__c</errorDisplayField>
+        <errorMessage>Only airlines can be IATA members.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_Read_Only_Fields</fullName>
+        <active>true</active>
+        <description>For Airline HQ, some fields can be updated only by the ACLI-SF daily process</description>
+        <errorConditionFormula>AND(
+	NOT(ISNEW()),
+	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+	NOT($Permission.Airline_HQ_ACLI),
+	OR(
+		ISCHANGED(Name_on_AOC__c),
+		ISCHANGED(IATACode__c),
+		ISCHANGED(Old_IATA_Code__c),
+		ISCHANGED(ICAO_designator__c),
+		ISCHANGED(Airline_designator__c),
+		ISCHANGED(Old_Airline_designator__c),
+		ISCHANGED(duplicate_flag_indicato__c),
+		ISCHANGED(BillingStreet),
+		ISCHANGED(BillingCity),
+		ISCHANGED(BillingState),
+		ISCHANGED(BillingPostalCode),
+		ISCHANGED(BillingCountry),
+		ISCHANGED(IATA_ISO_Country__c),
+		ISCHANGED(ACLI_Status__c),
+		ISCHANGED(Type_of__c),
+		ISCHANGED(Type_of_Service__c),
+		ISCHANGED(Airline_Prefix__c),
+		ISCHANGED(Old_Airline_Prefix__c),
+		ISCHANGED(ACLI_SAP_Id__c),
+		ISCHANGED(AOC_Expiry_Date__c),
+		ISCHANGED(Legal_name__c),
+		ISCHANGED(Area_of_Operation__c),
+		ISCHANGED(Membership_SITA__c),
+		ISCHANGED(MITA_Member__c)
+	)
+)</errorConditionFormula>
+        <errorMessage>The following fields can by updated only by the daily ACLI-SF process:
+Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-character), Old 2-letter Airline Designator Code, Duplicate flag indicator, ISO Country, ACLI Status</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HQ_Sector_Category</fullName>
+        <active>true</active>
+        <description>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team.</description>
+        <errorConditionFormula>AND(
+	NOT(ISNEW()),
+	RecordType.DeveloperName=&apos;IATA_Airline&apos;,
+	OR(
+		ISCHANGED(Sector__c),
+		ISCHANGED(Category__c)
+		
+	),
+	NOT($Permission.Airline_HQ_ACLI),
+	OR(
+		NOT($Permission.Airline_HQ_Account_Team_Management),
+		AND(
+			NOT(ISPICKVAL(Type_of__c,&quot;S&quot;)),
+			NOT(ISCHANGED(Type_of__c))
+		),
+		ISPICKVAL(ACLI_Status__c, &apos;Inactive Company&apos;)
+	)
+)</errorConditionFormula>
+        <errorMessage>For Airline HQ, the Sector and Category fields can be updated only if the Type of Operations Code is S, the Acli Status  is &apos;Active Company&apos; and only by the Account Management Team.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>BR_and_SA_Standard_Account_Parent_Id</fullName>

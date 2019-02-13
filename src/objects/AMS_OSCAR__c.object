@@ -51246,7 +51246,35 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <picklistValues>
             <picklist>Type_of_change__c</picklist>
             <values>
+                <fullName>Legal status</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Location</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Major Shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minor Shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Name</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ownership to IATA Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ownership to non-IATA Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VMFR</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

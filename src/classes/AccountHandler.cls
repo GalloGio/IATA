@@ -1,6 +1,14 @@
 public class AccountHandler{
 
 	/**
+		CODE BEFORE INSERT
+	
+	**/
+	public static void beforeInsert( list<Account> listNews){
+		setIataMembershipStatus(listNews);
+	}
+	
+	/**
 		CODE AFTER INSERT
 	**/
 	public static void afterInsert( list<Account> listNews) {
@@ -173,4 +181,13 @@ public class AccountHandler{
 
 	}
 	/*** AMSU-128 End ***/
+	
+	
+	public static void setIataMembershipStatus(list<Account> listAccount){
+		if(!Test.isRunningTest()){
+			for(Account acc : listAccount){
+				acc.Membership_Status__c = 'Non-IATA Member';
+			}
+		}
+	}
 }
