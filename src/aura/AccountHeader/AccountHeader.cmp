@@ -19,7 +19,7 @@
                 <div class="slds-media">
                     <div class="slds-media__figure">
                         <span class="slds-icon__container slds-icon-standard-account">
-                            <aura:if isTrue="{!v.account.Membership_status__c == 'IATA member'}" >
+                            <aura:if isTrue="{!and(and(v.account.RecordType.DeveloperName == 'IATA_Airline', v.account.Sector__c == 'Airline'), v.account.ACLI_Status__c == 'Active Company')}" >
                                 <img src="/resource/AMP_logo" />
                             </aura:if>
                         </span>
