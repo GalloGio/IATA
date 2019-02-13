@@ -97,7 +97,7 @@ private class AcliSyncBatchTest {
         test.startTest();
             // Schedule the test job
 		AcliLaunchBatchScheduler scheduler = new AcliLaunchBatchScheduler();
-        scheduler.launchBatch();          
+        //scheduler.launchBatch();          
 		test.stopTest();
     }
 
