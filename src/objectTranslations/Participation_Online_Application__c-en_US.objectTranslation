@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Participation Online Application</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Participation Online Applications</value>
+    </caseValues>
+    <fields>
+        <label><!-- AAO_Domestic --></label>
+        <name>AAO_Domestic__c</name>
+    </fields>
+    <fields>
+        <label><!-- AAO_International --></label>
+        <name>AAO_International__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC Bus Company --></label>
+        <name>AOC_Bus_Company__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC CRS --></label>
+        <name>AOC_CRS__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC Expiry Date --></label>
+        <name>AOC_Expiry_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC Ferry Company --></label>
+        <name>AOC_Ferry_Company__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC Issuing Authority Name --></label>
+        <name>AOC_Issuing_Authority_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC Non-Scheduled Cargo --></label>
+        <name>AOC_Non_Scheduled_Cargo__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC Non-Scheduled Passenger --></label>
+        <name>AOC_Non_Scheduled_Passenger__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC Railway Company --></label>
+        <name>AOC_Railway_Company__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC Scheduled Cargo --></label>
+        <name>AOC_Scheduled_Cargo__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC Scheduled Passenger --></label>
+        <name>AOC_Scheduled_Passenger__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC ULD --></label>
+        <name>AOC_ULD__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC country of issue --></label>
+        <name>AOC_country_of_issue__c</name>
+    </fields>
+    <fields>
+        <label><!-- AOC issue date --></label>
+        <name>AOC_issue_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Accounting_Code_Airline_Prefix_Purpose --></label>
+        <name>Accounting_Code_Airline_Prefix_Purpose__c</name>
+        <picklistValues>
+            <masterLabel>Accounting Code</masterLabel>
+            <translation><!-- Accounting Code --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounting Code &amp; Airline Prefix Code</masterLabel>
+            <translation><!-- Accounting Code &amp; Airline Prefix Code --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Prefix Code</masterLabel>
+            <translation><!-- Airline Prefix Code --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Authorization to provide transportation? --></label>
+        <name>Authorization_to_provide_transportation__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Authorized areas of operations --></label>
+        <name>Authorized_areas_of_operations__c</name>
+    </fields>
+    <fields>
+        <label><!-- Baggage Reason For Use 1 --></label>
+        <name>Baggage_Reason_For_Use_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Baggage Reason For Use 2 --></label>
+        <name>Baggage_Reason_For_Use_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Baggage Reason For Use 3 --></label>
+        <name>Baggage_Reason_For_Use_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Baggage Reason For Use 4 --></label>
+        <name>Baggage_Reason_For_Use_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Baggage Reason For Use 5 --></label>
+        <name>Baggage_Reason_For_Use_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing  City --></label>
+        <name>Billing_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing Contact --></label>
+        <name>Billing_Contact__c</name>
+        <relationshipLabel><!-- Participation Online Applications (Billing Contact) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Billing  Country --></label>
+        <name>Billing_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing  Postal/Zip code --></label>
+        <name>Billing_Postal_Zip_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing  State/Province --></label>
+        <name>Billing_State_Province__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing  Street address 1 --></label>
+        <name>Billing_Street_address_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Billing  VAT --></label>
+        <name>Billing_VAT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- Participation Online Applications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- City Name --></label>
+        <name>City_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Participation --></label>
+        <name>Date_of_Participation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date_when_airport_has_been_operational --></label>
+        <name>Date_when_airport_has_been_operational__c</name>
+    </fields>
+    <fields>
+        <label><!-- Does Metropolitan area currently exists? --></label>
+        <name>Does_Metropolitan_area_currently_exists__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Does the airline hold a ICAO Code? --></label>
+        <name>Does_the_airline_presently_hold_a_three__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Email of Airport Authority (Airport #1) --></label>
+        <name>Email_of_Airport_Authority_Airport_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email of Airport Authority (Airport #2) --></label>
+        <name>Email_of_Airport_Authority_Airport_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email of Airport Authority (Airport #3) --></label>
+        <name>Email_of_Airport_Authority_Airport_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email of Airport Authority (Airport #4) --></label>
+        <name>Email_of_Airport_Authority_Airport_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email of Airport Authority (Airport #5) --></label>
+        <name>Email_of_Airport_Authority_Airport_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Future plans to be a scheduled airline? --></label>
+        <name>Future_plans_to_be_a_scheduled_airline__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- GPS Coordinates --></label>
+        <name>GPS_Coordinates__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOB_Email --></label>
+        <name>HOB_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOB_First_Name --></label>
+        <name>HOB_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOB_Last_Name --></label>
+        <name>HOB_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOB_Phone --></label>
+        <name>HOB_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOB_Salutation --></label>
+        <name>HOB_Salutation__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOB_Title --></label>
+        <name>HOB_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOC_Email --></label>
+        <name>HOC_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOC_First_Name --></label>
+        <name>HOC_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOC_Last_Name --></label>
+        <name>HOC_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOC_Phone --></label>
+        <name>HOC_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOC_Salutation --></label>
+        <name>HOC_Salutation__c</name>
+    </fields>
+    <fields>
+        <label><!-- HOC_Title --></label>
+        <name>HOC_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- HQ  City --></label>
+        <name>HQ_City__c</name>
+    </fields>
+    <fields>
+        <label><!-- HQ  Country --></label>
+        <name>HQ_Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- HQ  Postal/Zip code --></label>
+        <name>HQ_Postal_Zip_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- HQ  State/Province --></label>
+        <name>HQ_State_Province__c</name>
+    </fields>
+    <fields>
+        <label><!-- HQ  Street Address 1 --></label>
+        <name>HQ_Street_address_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- HQ  VAT --></label>
+        <name>HQ_VAT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has airline assigned two char code --></label>
+        <name>Has_airline_assigned_two_char_code__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Has company assigned numeric code --></label>
+        <name>Has_company_assigned_numeric_code__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Has the airline been issued an AOC --></label>
+        <name>Has_the_airline_been_issued_an_AOC_Pick__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Has the airline the AOC in progress? --></label>
+        <name>Has_the_airline_the_AOC_in_progress__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Has the airline the approvals  of auth? --></label>
+        <name>Has_the_airline_the_approvals__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Has_the_airline_the_approvals_both --></label>
+        <name>Has_the_airline_the_approvals_both__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Has the company schedules published? --></label>
+        <name>Has_the_company_published_their_schedule__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Head Office Contact Details --></label>
+        <name>Head_Office_Contact_Details__c</name>
+        <relationshipLabel><!-- Participation Online Applications (Head Office Contact Details) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA ISO Country --></label>
+        <name>IATA_ISO_Country__c</name>
+        <relationshipLabel><!-- Participation Online Applications --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ICAO Code --></label>
+        <name>ICAO_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISSP_AMC_ESTIMATED_ANNUAL_BAGGAGE_TAGS --></label>
+        <name>ISSP_AMC_ESTIMATED_ANNUAL_BAGGAGE_TAGS__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISSP_AMC_ESTIMATED_ANNUAL_PASSENGERS --></label>
+        <name>ISSP_AMC_ESTIMATED_ANNUAL_PASSENGERS__c</name>
+    </fields>
+    <fields>
+        <label><!-- ISSP_AMC_Submitted_Date --></label>
+        <name>ISSP_AMC_Submitted_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Intermodal agreement Airline Code --></label>
+        <name>Intermodal_agreement_Airline_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Intermodal agreement Airline Name --></label>
+        <name>Intermodal_agreement_Airline_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Intermodal agreement with? --></label>
+        <name>Intermodal_agreement_with__c</name>
+    </fields>
+    <fields>
+        <label><!-- Intermodal agreement with an airline? --></label>
+        <name>Intermodal_agreement_with_an_airline__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- ULD participation IATA partnership prog? --></label>
+        <name>Is_ULD_participation_IATA_program__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is ULD in IATA Strategic Program? --></label>
+        <name>Is_the_ULD_company__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Is the Billing address  same as the HQ? --></label>
+        <name>Is_the_billing_address_same_the_HQ__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is the Billing contact same as the HOC? --></label>
+        <name>Is_the_billing_contact_same_the_HOC__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is this airport currently open? --></label>
+        <name>Is_this_airport_currently_open__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Legal Name --></label>
+        <name>Legal_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Code 1 --></label>
+        <name>Location_Code_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Code 2 --></label>
+        <name>Location_Code_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Code --></label>
+        <name>Location_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Name 1 --></label>
+        <name>Location_Name_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Name 2 --></label>
+        <name>Location_Name_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Name --></label>
+        <name>Location_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Type --></label>
+        <name>Location_Type__c</name>
+        <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation><!-- Airport --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bus Station</masterLabel>
+            <translation><!-- Bus Station --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ferry Port</masterLabel>
+            <translation><!-- Ferry Port --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Heliport</masterLabel>
+            <translation><!-- Heliport --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Metropolitan Area</masterLabel>
+            <translation><!-- Metropolitan Area --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off-line Point</masterLabel>
+            <translation><!-- Off-line Point --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Railway Station</masterLabel>
+            <translation><!-- Railway Station --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Location connected intermodally? --></label>
+        <name>Location_connected_intermodally__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Metro Location Name --></label>
+        <name>Metro_Location_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name of Airline --></label>
+        <name>Name_of_Airline__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name of Airport Authority (Airport #1) --></label>
+        <name>Name_of_Airport_Authority_Airport_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name of Airport Authority (Airport #2) --></label>
+        <name>Name_of_Airport_Authority_Airport_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name of Airport Authority (Airport #3) --></label>
+        <name>Name_of_Airport_Authority_Airport_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name of Airport Authority (Airport #4) --></label>
+        <name>Name_of_Airport_Authority_Airport_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name of Airport Authority (Airport #5) --></label>
+        <name>Name_of_Airport_Authority_Airport_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Name of Organization --></label>
+        <name>Name_of_Organization__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Planes Type 1 --></label>
+        <name>Number_of_Planes_Type_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Planes Type 2 --></label>
+        <name>Number_of_Planes_Type_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Planes Type 3 --></label>
+        <name>Number_of_Planes_Type_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of planes --></label>
+        <name>Number_of_planes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Numeric Code Type --></label>
+        <name>Numeric_Code_Type__c</name>
+        <picklistValues>
+            <masterLabel>Accounting</masterLabel>
+            <translation><!-- Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounting and Prefix</masterLabel>
+            <translation><!-- Accounting and Prefix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prefix</masterLabel>
+            <translation><!-- Prefix --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Off-Line Point Purpose --></label>
+        <name>Off_Line_Point_Purpose__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preference 1 --></label>
+        <name>Preference_of_Code_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preference 2 --></label>
+        <name>Preference_of_Code_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Preference 3 --></label>
+        <name>Preference_of_Code_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previously assigned IATA code --></label>
+        <name>Previously_assigned_IATA_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Previously_assigned_numeric_code --></label>
+        <name>Previously_assigned_numeric_code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Providing ticketing services to airline? --></label>
+        <name>Providing_ticketing_services_to_airline__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- IATA Airline Code --></label>
+        <name>Reciprocal_Two_Way_IATA_Airline_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Recommended Location Identifier --></label>
+        <name>Recommended_Loc_Identifier__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Email --></label>
+        <name>SIS_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS First Name --></label>
+        <name>SIS_First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Last Name --></label>
+        <name>SIS_Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Phone --></label>
+        <name>SIS_Phone__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Salutation --></label>
+        <name>SIS_Salutation__c</name>
+    </fields>
+    <fields>
+        <label><!-- SIS Title --></label>
+        <name>SIS_Title__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Done</masterLabel>
+            <translation><!-- Done --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Submitted_By --></label>
+        <name>Submitted_By__c</name>
+        <relationshipLabel><!-- Participation Online Applications (Submitted_By) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Terms &amp; Conditions Agreement --></label>
+        <name>Terms_Conditions_Agreement__c</name>
+    </fields>
+    <fields>
+        <label><!-- Time Zone --></label>
+        <name>Time_Zone__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other airlines in the airport? --></label>
+        <name>X1_other_airlines_in_the_airport__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other airlines in the airport? --></label>
+        <name>X2_other_airlines_in_the_airport__c</name>
+    </fields>
+    <fields>
+        <label><!-- Other airlines in the airport? --></label>
+        <name>X3_other_airlines_in_the_airport__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Accounting or Prefix Code --></label>
+        <name>Accounting_or_Prefix_Code</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Baggage Code --></label>
+        <name>Baggage_Code</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Designator Code --></label>
+        <name>Designator_Code</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Location Code --></label>
+        <name>Location_Code</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

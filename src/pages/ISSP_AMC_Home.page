@@ -1,0 +1,182 @@
+<!--
+    Class Name: 
+    Related Classes: ISSP_AMC_Home.cls
+
+    Copyright @Right IT Services
+
+    Purpose: Coding service landing page
+
+    VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
+    1.0         Manuel Conde        24-10-2018      INITIAL DEVELOPMENT
+ -->
+
+<apex:page controller="ISSP_AMC_Home" cache="false"
+           sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false"
+           standardStylesheets="false" language="{!displayLanguage}">
+    <html>
+
+    <head>
+        <style>
+               .titleHome{
+                color: #003B74;
+                font-weight: bold;
+                font-family: "Arial";
+                font-size: 4rem;
+            }
+        </style>
+    </head>
+    <c:ISSP_Header />
+    <c:Loading />
+
+    <body>
+    <script src="{!URLFOR($Resource.bootbox)}"/>
+    
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js "></script>
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    
+    <style>
+            .section-header {
+                background-color: rgb(43, 120, 228);
+                color: white;
+                line-height: 1.42857143;
+                padding: 8px;
+                vertical-align: top;
+                border-top: 1px solid #ddd;
+            }
+
+            .section-header>i {
+                color: black;
+                margin-right: 5px;
+            }
+
+            .section-body {
+                margin: 8px;
+            }
+
+            main {
+                background-color: white;
+            }
+
+            .tableFormat {
+                padding-left : 5px !important;
+                padding-right : 15px !important;
+                padding-bottom: 2px !important;
+                padding-top :  2px !important;
+                vertical-align: middle !important;
+            }
+
+            .last-updated {
+                display: block;
+                width: 100%;
+                text-align: center;
+                color: rgb(121, 118, 111);
+                font-size: 12px;
+            }
+
+            .borderless > thead > tr > th,
+            .borderless > tbody > tr > th,
+            .borderless > tfoot > tr > th,
+            .borderless > thead > tr > td,
+            .borderless > tbody > tr > td,
+            .borderless > tfoot > tr > td {
+                border-top: none;
+            }
+
+            input + label {
+                font-weight:normal;
+            }
+
+            .overlay {
+                display: none;
+                height: 100%;
+                left: 0;
+                position: fixed;
+                top: 0;
+                opacity: 0.3;
+                -moz-opacity: 0.3;
+                width: 100%;
+                -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                filter: alpha(opacity=30);
+                background: #000;
+                -khtml-opacity: 0.3;
+                z-index: 1000;
+            }
+
+            .loader {
+                background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                width: 32px;
+                height: 32px;
+                position: relative;
+                left: 50%;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+                color: white !important;
+                border: 1px solid white!important;
+                background-color: white!important;
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, white))!important;
+                background: -webkit-linear-gradient(top, white 0%, white 100%)!important;
+                background: -moz-linear-gradient(top, white 0%, white 100%)!important;
+                background: -ms-linear-gradient(top, white 0%, white 100%)!important;
+                background: -o-linear-gradient(top, white 0%, white 100%)!important;
+                background: linear-gradient(to bottom, white 0%, white 100%)!important;
+            }
+
+            #loading > div:nth-child(2){
+                position: fixed !important;
+            }
+
+        </style>
+        <script>
+            $(document).ready(function() {
+                $('#ongoingCasesTable').DataTable({
+                  'pageLength': 5,
+                  'bLengthChange': false
+                });
+            });
+        </script>
+
+    <div class="container">
+
+        <div class="row">
+            <c:ISSP_CustomNavigation communityName="{!communityName}" />
+        </div>
+
+        <div class="row container">
+            <div class="col-md-2 col-sm-2">
+                <img src="{!URLFOR($Resource.ISSP_AMC_logo)}" class="img-responsive" />
+            </div>
+            <div class="col-md-7 col-sm-7">
+                <div class="row">
+                    <strong class="titleHome">{!$Label.ISSP_AMC_HOME_LB0}</strong>
+                </div>
+                <div class="row">
+                    {!$Label.ISSP_AMC_IATA_CODES_BODY}
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3" id="compcodes">
+                <c:ISSP_AMC_Company_Codes />
+            </div>
+        </div>
+
+        <div class="row">
+            <c:ISSP_AMC_Apply_New_Code />
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                <c:ISSP_AMC_Application_And_Changes />
+            </div>
+            <div class="col-md-3">
+                <c:ISSP_AMC_FAQ categories="IATA_Codes_not_applicable_to_Agents" userLanguage="{!UserLanguage}" communityName="{!communityName}" />
+            </div>
+        </div>
+
+        <div class="row">
+            <c:ISSP_CustomFooter communityName="{!communityName}" />
+        </div>
+    </div>
+    </body>
+    </html>
+</apex:page>

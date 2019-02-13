@@ -1,0 +1,38 @@
+<apex:component >
+
+	<apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" />
+    <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="true" />
+
+	<div class="panel panel-primary">
+  		<div class="panel-heading" id="AUTHORIZED_AREAS_OPERATION">
+        	{!$Label.ISSP_AMC_Authorized_Areas_Operation}
+    	</div>
+
+    	<div class="panel-body">
+            <apex:outputPanel id="authorizedCB">
+                <div class="form-group">
+                    <div class="col-sm-3 col-md-offset-3">
+                        <div class="checkbox">
+                            <label class="{!IF(AND(hasError, AND(participation.AAO_Domestic__c == false, participation.AAO_International__c == false)), 'requiredSelectBox', '')}">
+                                <apex:inputCheckbox value="{!participation.AAO_Domestic__c}">
+                                    <apex:actionSupport event="onchange" rerender="authorizedCB" status="Loading"/>
+                                </apex:inputCheckbox>
+                                {!$Label.ISSP_AMC_Authorized_Areas_Operation_Domestic}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="checkbox">
+                            <label class="{!IF(AND(hasError, AND(participation.AAO_Domestic__c == false, participation.AAO_International__c == false)), 'requiredSelectBox', '')}">
+                                <apex:inputCheckbox value="{!participation.AAO_International__c}" >
+                                    <apex:actionSupport event="onchange" rerender="authorizedCB" status="Loading"/>
+                                </apex:inputCheckbox>
+                                {!$Label.ISSP_AMC_Authorized_Areas_Operation_International}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+		</div>
+	</div>
+</apex:component>

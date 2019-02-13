@@ -10366,6 +10366,2397 @@ IFG Customer Services</value>
         <value>Your password has not been changed over the last 90 days. For security reasons, please, change it now.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ACM_PREFIX</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ACM_PREFIX</shortDescription>
+        <value>Accounting or Prefix:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CATEGORY</shortDescription>
+        <value>Category:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_1</shortDescription>
+        <value>1.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_2</shortDescription>
+        <value>2.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_3</shortDescription>
+        <value>3.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNT</shortDescription>
+        <value>Account/Prefix:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNTING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNTING</shortDescription>
+        <value>Accounting Code for Passenger traffic purposes only</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNTING_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNTING_CODE</shortDescription>
+        <value>Accounting Code:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNTING_OR_PREFIX</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNTING_OR_PREFIX</shortDescription>
+        <value>Accounting or Prefix:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE</shortDescription>
+        <value>Accounting or Prefix Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE_DESC</fullName>
+        <categories>Page Text</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE_DESC</shortDescription>
+        <value>This code is meant for transport documents (e.g. the accounting code 076 at the beginning of a ticket number identifies it to be a traffic document of Middle East Airlines). The same number can be used for cargo documentation and is known as an &quot;airline prefix&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNT_PREFIX_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNT_PREFIX_CODE</shortDescription>
+        <value>Accounting Code &amp; Airline Prefix Code for passenger and cargo purposes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM</shortDescription>
+        <value>Account Settlement System (CASS)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM_QUESTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM_QUESTION</shortDescription>
+        <value>Will this airline be participating in the IATA Cargo Accounts Settlement
+Systems (CASS)?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM_QUESTION_YES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ACCOUNT_SETTLEMENT_SYSTEM_QUESTION_YES</shortDescription>
+        <value>In order to participate in CASS please contact our customer services portal at &quot;www.iata.org/customer&quot; using an enquiry.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ADD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ADD</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ADDRESS_INFO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ADDRESS_INFO</shortDescription>
+        <value>Address Information:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ADD_ANOTHER_AUTHORITY_BUTTON</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ADD_ANOTHER_AUTHORITY_BUTTON</shortDescription>
+        <value>Add Another Airport Authority</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ADD_DELETE_FROM_METROPOLITAN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ADD_DELETE_FROM_METROPOLITAN</shortDescription>
+        <value>Would you like to add or delete an airport from an existing metropolitan area?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ADD_ME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ADD_ME</shortDescription>
+        <value>Add Me</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AGREE_TERMS_AND_CONDITIONS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC AGREE TERMS AND CONDITIONS</shortDescription>
+        <value>You must agree with Terms and Conditions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRLINES_LOCATION_CODES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRLINES_LOCATION_CODES</shortDescription>
+        <value>IATA Airlines and Location Codes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRLINE_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRLINE_CODE</shortDescription>
+        <value>Airline Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRLINE_DESIGNATOR</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRLINE_DESIGNATOR</shortDescription>
+        <value>Airline Designator Code:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRLINE_DESIGNATORS</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRLINE_DESIGNATORS</shortDescription>
+        <value>Airline Designators</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRLINE_DESIGNATORS_DESC</fullName>
+        <categories>Page Text</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRLINE_DESIGNATORS_DESC</shortDescription>
+        <value>Airline as well as ralway, bus and ferry companies, computer reservations systems (CRSs) and ULD owners/leasing companies may be assigned an &lt;strong&gt;IATA two character designator code.&lt;/strong&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRLINE_DESIGNATOR_CHANGE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRLINE_DESIGNATOR_CHANGE</shortDescription>
+        <value>Airline Designator Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRLINE_ISSUED_AOC</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRLINE_ISSUED_AOC</shortDescription>
+        <value>Upload copy of a valid AOC (at least with 3 months of validity)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRLINE_NAME</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRLINE_NAME</shortDescription>
+        <value>Airline Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRPORT_GROUP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRPORT_GROUP</shortDescription>
+        <value>Which two airports would you like to group under a metropolitan area?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRPORT_HELIPORT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRPORT_HELIPORT</shortDescription>
+        <value>Airport / Heliport</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRPORT_LOCATION_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRPORT_LOCATION_NAME</shortDescription>
+        <value>Airport/Location Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRPORT_OPEN_QUESTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRPORT_OPEN_QUESTION</shortDescription>
+        <value>Is this airport currently open?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIRPORT_OPERATIONAL_QUESTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIRPORT_OPERATIONAL_QUESTION</shortDescription>
+        <value>Since what date has the airport been operational?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIR_OPERATOR_CERTIFICATE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIR_OPERATOR_CERTIFICATE</shortDescription>
+        <value>Air Operators&apos;s Certificate</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIR_OPERATOR_HELP</fullName>
+        <categories>Help Text</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIR_OPERATOR_HELP</shortDescription>
+        <value>Assignments will not be made until IATA has received a copy of a valid Air Operator Certificate (AOC) issued by the Civil
+Aviation Authority in the Country of Registry of the requesting company. In some countries, it may be known as a Licence or
+Permit to Operate and may be more than one document.
+
+The document(s) must specify the type of service the airline is authorized to operate, (scheduled or non-scheduled, passenger
+or cargo only or passenger and cargo), where these services may be performed (domestically, internationally or both) and the
+period of validity (i.e. 12 months from the date of issue or for an indefinite period).</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AIR_OPERATOR_QUESTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AIR_OPERATOR_QUESTION</shortDescription>
+        <value>Has the airline been issued an Air Operator Certificate?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AOC_EXPIRES</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AOC_EXPIRES</shortDescription>
+        <value>AOC Expires:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AOC_EXPIRES_CHANGE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AOC_EXPIRES_CHANGE</shortDescription>
+        <value>AOC Expires</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_APPLICATION_BTIC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_APPLICATION_BTIC</shortDescription>
+        <value>Application for Baggage Tag Issuer Codes (BTIC)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_APPLICATION_THREE_NUMERIC_ACCOUNTING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_APPLICATION_THREE_NUMERIC_ACCOUNTING</shortDescription>
+        <value>Application for Approval of an IATA Three Numeric Accounting</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_APPLY_NEW_CODE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_APPLY_NEW_CODE</shortDescription>
+        <value>Apply for a new code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_APPROVALS_BOTH_AUTHORITIES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_APPROVALS_BOTH_AUTHORITIES</shortDescription>
+        <value>Has the airline obtained the approvals of both airport authorities?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AREA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AREA</shortDescription>
+        <value>Area</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Airline_Issued_AOC_HELP_TEXT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Airline_Issued_AOC_HELP_TEXT</shortDescription>
+        <value>A valid AOC is mandatory for IATA Code assignment. If AOC is not available at this time, please upload a written confirmation from the Civil Aviation Authority of the state in which your company is established advising that the enterprise is substantially meeting the state&apos;s requirements for the issuance of a license to operate commercial air transport services</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Application_Approval_IATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Application_Approval_IATA</shortDescription>
+        <value>Application for Approval of an IATA Location Identifier Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AreasOfRoutesAndOperations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AreasOfRoutesAndOperations</shortDescription>
+        <value>Areas Of Routes And Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_AreasOfRoutesAndOperations_Routes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_AreasOfRoutesAndOperations_Routes</shortDescription>
+        <value>Routes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Authorization_Transportation_Services</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Authorization_Transportation_Services</shortDescription>
+        <value>Upload a valid authorization issued by a government body to provide transportation services</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Authorization_Transportation_Services_HELP_TEXT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Authorization_Transportation_Services_HELP_TEXT</shortDescription>
+        <value>A valid authorization issued by a government body to provide transportation services is mandatory for IATA Code assignment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Authorized_Areas_Operation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Authorized_Areas_Operation</shortDescription>
+        <value>Authorized Areas Of Operation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Authorized_Areas_Operation_Domestic</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Authorized_Areas_Operation_Domestic</shortDescription>
+        <value>Domestic</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Authorized_Areas_Operation_International</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Authorized_Areas_Operation_International</shortDescription>
+        <value>International</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BAGAGE_TAG_RANGE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BAGAGE_TAG_RANGE</shortDescription>
+        <value>Baggage Tag Range</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BAGAGE_TAG_RANGE_DESC</fullName>
+        <categories>Page Text</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BAGAGE_TAG_RANGE_DESC</shortDescription>
+        <value>Airlines and CRSs may reuest the assignment of a unique three-letter code to identify an airport (r.g. GVA = Genava), Bus, or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BAGGAGE_REASON_FOR_USE_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC BAGGAGE REASON FOR USE 1</shortDescription>
+        <value>I hereby declare that I require the baggage tag issuer code set as our company allows use of its departure control system by handling agents and wishes to discriminate between tags issued for its own purpose and those issued to handing agents</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BAGGAGE_REASON_FOR_USE_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC BAGGAGE REASON FOR USE 2</shortDescription>
+        <value>I hereby declare that I require the baggage tag issuer code set as our airline has more than one independent departure control system and wishes to distinguish between the systems</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BAGGAGE_REASON_FOR_USE_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC BAGGAGE REASON FOR USE 3</shortDescription>
+        <value>I hereby declare that I require the baggage tag issuer code set as the volume of baggage being tagged means the departure control system will run through the available serial numbers in three days or less</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BAGGAGE_REASON_FOR_USE_4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC BAGGAGE REASON FOR USE 4</shortDescription>
+        <value>I hereby declare that I require the baggage tag issuer code set as the airport(s) I operate to have an automated baggage system based on the licence plate and bar code technology</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BAGGAGE_REASON_FOR_USE_5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC BAGGAGE REASON FOR USE 5</shortDescription>
+        <value>I hereby declare that I require the baggage tag issuer code set as our non-airline company owns and operates its own departure control system</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BAGGAGE_TAG</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BAGGAGE_TAG</shortDescription>
+        <value>Baggage Tag Range Code:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BAGGAGE_TAG_RANGE_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BAGGAGE_TAG_RANGE_CODE</shortDescription>
+        <value>Baggage Tag Range Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BILLING_ADDRESS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BILLING_ADDRESS</shortDescription>
+        <value>Billing Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BILLING_CONTACT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BILLING_CONTACT</shortDescription>
+        <value>Billing Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BILLING_CONTACT_SAME_HEAD_OFFICE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BILLING_CONTACT_SAME_HEAD_OFFICE</shortDescription>
+        <value>Is the billing Contact the same as the above head office contact ?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BUSINESS_PHONE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BUSINESS_PHONE</shortDescription>
+        <value>Business Phone:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BUS_COMPANY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BUS_COMPANY</shortDescription>
+        <value>Bus Company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_BUS_RAILWAY_FERRY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_BUS_RAILWAY_FERRY</shortDescription>
+        <value>Bus / Railway / Ferry</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CAALETTEROPENINGDATE_TEXT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CAALETTEROPENINGDATE_TEXT</shortDescription>
+        <value>Letter from the CAA informing the official opening date of the location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CANCEL</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CANCEL</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CARGO_AIRLINES_DOCUMENTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CARGO_AIRLINES_DOCUMENTS</shortDescription>
+        <value>Upload at least one Cargo Airlines documents</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CARGO_TEXT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CARGO_TEXT</shortDescription>
+        <value>Cargo Airlines must upload at least one of the following documents:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CARGO_TEXT_FIVE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CARGO_TEXT_FIVE</shortDescription>
+        <value>Airlines who have a Universal Air Travel Plan (UATP) agreement as a contractor party.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CARGO_TEXT_FOUR</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CARGO_TEXT_FOUR</shortDescription>
+        <value>Airlines who have an authorized freight forwarder issuing airway bills on their behalf.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CARGO_TEXT_ONE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CARGO_TEXT_ONE</shortDescription>
+        <value>Signed a cargo reciprocal (two-way) interline traffic agreement with an airline holding a valid IATA airline code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CARGO_TEXT_THREE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CARGO_TEXT_THREE</shortDescription>
+        <value>Participate in the A4A Interline Traffic Agreement (ITA) - Cargo</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CARGO_TEXT_TWO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CARGO_TEXT_TWO</shortDescription>
+        <value>Participate in the IATA Cargo Accounts Settlement Systems (CASS)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CASE_NUMBER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CASE_NUMBER</shortDescription>
+        <value>Case Number</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CHECK_THE_REQUIREMENTS</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CHECK_THE_REQUIREMENTS</shortDescription>
+        <value>Check the requirements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CITY</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CITY_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CITY_NAME</shortDescription>
+        <value>City Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CLICK_HERE_TO_GET_THERE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC CLICK HERE TO GET THERE</shortDescription>
+        <value>Click here to get there!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CLOSE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CLOSE</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS_TEXT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS_TEXT</shortDescription>
+        <value>Confirmation of the commercial scheduled operations that will be performed in the location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COMPANY_CODES</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COMPANY_CODES</shortDescription>
+        <value>Your Company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COMPANY_CODES2</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COMPANY_CODES2</shortDescription>
+        <value>Codes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COMPANY_CODES3</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COMPANY_CODES3</shortDescription>
+        <value>Your company codes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COMPANY_INFO</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COMPANY_INFO</shortDescription>
+        <value>Change Company Info</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COMPANY_INFORMATION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COMPANY_INFORMATION</shortDescription>
+        <value>Company Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COMPANY_OPERATING_CERTIFICATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COMPANY_OPERATING_CERTIFICATE</shortDescription>
+        <value>Company Operating Certificate/Licence</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COMPANY_OPERATING_CERTIFICATE_QUESTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COMPANY_OPERATING_CERTIFICATE_QUESTION</shortDescription>
+        <value>Does the company have a Company Operating Certificate/Licence?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COMPLETE_APPLICATION_FORM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COMPLETE_APPLICATION_FORM</shortDescription>
+        <value>2. Complete Application Form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CONTACT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CONTACT</shortDescription>
+        <value>Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CONTACT_DATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CONTACT_DATA</shortDescription>
+        <value>Contact Data</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CONTACT_SALUTE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CONTACT_SALUTE</shortDescription>
+        <value>Contact Salute</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COORDINATES_FORMAT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COORDINATES_FORMAT</shortDescription>
+        <value>Please insert coordinates in the format XX XX XX N/S, XX XX XX W/E.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COUNTRY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COUNTRY</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_COUNTRY_ISSUE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_COUNTRY_ISSUE</shortDescription>
+        <value>Country of Issue</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CRS</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CRS</shortDescription>
+        <value>CRS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CRS_QUESTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CRS_QUESTION</shortDescription>
+        <value>Name of the airline in which you are providing services for?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_CURRENT_STRUCTURE_LOCATION_TEXT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CURRENT_STRUCTURE_LOCATION_TEXT</shortDescription>
+        <value>Visual proof (pictures) of the current structure of the location and signage</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Connected_Intermodally</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Connected_Intermodally</shortDescription>
+        <value>Is this location connected intermodally to an airline passenger ticket?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_DATE_ISSUE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_DATE_ISSUE</shortDescription>
+        <value>Date of Issue</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_DATE_OF_PARTICIPATION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_DATE_OF_PARTICIPATION</shortDescription>
+        <value>Date of participation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_DATE_TIME_OPENED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_DATE_TIME_OPENED</shortDescription>
+        <value>Date/Time Opened</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_DELETE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_DELETE</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_DESIGNATOR</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_DESIGNATOR</shortDescription>
+        <value>Designator:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_DESIGNATOR_APPROVAL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_DESIGNATOR_APPROVAL</shortDescription>
+        <value>Application for Approval of an IATA Designator Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_DOWNLOAD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC DOWNLOAD</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_DRAFT_SUBMITED_60_DAYS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_DRAFT_SUBMITED_60_DAYS</shortDescription>
+        <value>Draft changes must be submitted within 60 days, otherwise you will need to restart the change request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EMAIL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EMAIL</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_1</shortDescription>
+        <value>Email of Airport Authority (Airport #1)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_2</shortDescription>
+        <value>Email of Airport Authority (Airport #2)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_3</shortDescription>
+        <value>Email of Airport Authority (Airport #3)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_4</shortDescription>
+        <value>Email of Airport Authority (Airport #4)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_5</shortDescription>
+        <value>Email of Airport Authority (Airport #5)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ENTER_A_VALID_EMAIL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ENTER_A_VALID_EMAIL</shortDescription>
+        <value>Enter a valid email.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ENTITY_DATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ENTITY_DATA</shortDescription>
+        <value>Entity Data</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EXISTING_CASE_ERROR_MESSAGE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EXISTING_CASE_ERROR_MESSAGE</shortDescription>
+        <value>There is already an open case for this Account, with the case number:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EXPIRY_DATE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EXPIRY_DATE</shortDescription>
+        <value>Expiry Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_FERRY_COMPANY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_FERRY_COMPANY</shortDescription>
+        <value>Ferry Company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_FIELDS_IN_MESSAGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC FIELDS IN MESSAGE</shortDescription>
+        <value>Field(s) in</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_FIELD_IS_REQUIRED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC FIELD IS REQUIRED</shortDescription>
+        <value>field is required</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_FIRST_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_FIRST_NAME</shortDescription>
+        <value>First Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_FLEET_INFORMATION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_FLEET_INFORMATION</shortDescription>
+        <value>Fleet Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_FREIGHT_FORWARDER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_FREIGHT_FORWARDER</shortDescription>
+        <value>Freight Forwarder</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_FREIGHT_FORWARDER_QUESTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_FREIGHT_FORWARDER_QUESTION</shortDescription>
+        <value>Will this airline have a freight forwarder issue airway bills on their behalf?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_FREIGHT_FORWARDER_QUESTION_YES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_FREIGHT_FORWARDER_QUESTION_YES</shortDescription>
+        <value>To confirm the requirement, IATA should receive two letters. One letter should be from the freight forwarder which
+states &quot;XXX freight forwarder has been authorized to issue airway bills for XXX airline&quot; and one from the airline
+which states &quot;XXX airline has granted authority to XXX freight forwarder to issue airway bills on their behalf&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_GPS_COORDINATES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_GPS_COORDINATES</shortDescription>
+        <value>GPS Coordinates</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_HAS_OBTAINED_LETTER</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_HAS_OBTAINED_LETTER</shortDescription>
+        <value>Has airline obtained a letter from Civil Aviation Authority to stateAir Operating Certificate is a work in progress?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_HEAD_OFFICE_ADDRESS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_HEAD_OFFICE_ADDRESS</shortDescription>
+        <value>Head Office Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_HEAD_OFFICE_CONTACT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_HEAD_OFFICE_CONTACT</shortDescription>
+        <value>Head Office Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_HOME_LB0</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_HOME_LB0</shortDescription>
+        <value>IATA Codes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_HOME_LB0_CNS</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_HOME_LB0_CNS</shortDescription>
+        <value>IATA Codes for CNS</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_IATA_A4A_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_IATA_A4A_CODE</shortDescription>
+        <value>IATA/A4A Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_IATA_AIRLINE_CODE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_IATA_AIRLINE_CODE</shortDescription>
+        <value>IATA Airline Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_IATA_CODE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_IATA_CODE</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_IATA_CODES_BODY</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_IATA_CODES_BODY</shortDescription>
+        <value>IATA Codes are integral part of the travel industry, and essential for the identification of an airline, it&apos;s destsinations and it&apos;s traffic documents. They are also fundamental to the smooth running of hundreds of electronic applications which have been built arround these coding systems for passenger and cargo traffic purposes.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_IATA_CODE_VALIDATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_IATA_CODE_VALIDATION</shortDescription>
+        <value>Invalid code format!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ICAO_CODE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ICAO_CODE</shortDescription>
+        <value>ICAO Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ICAO_CODE_HELP</fullName>
+        <categories>Help Text</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ICAO_CODE_HELP</shortDescription>
+        <value>If the airline does not have the three-letter code ICAO code, please contact your local Civil Aviation Authority to request a code.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ICAO_CODE_QUESTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ICAO_CODE_QUESTION</shortDescription>
+        <value>Does the airlane presently hold a three-letter code assigned by ICAO throught the local Civil Aviation Authority?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ICAO_CODE_VALIDATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ICAO_CODE_VALIDATION</shortDescription>
+        <value>Invalid ICAO code! Three character from A to Z!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_INNOVATA_LLC</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_INNOVATA_LLC</shortDescription>
+        <value>INNOVATA LLC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_INTERMODAL_AGREEMENT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_INTERMODAL_AGREEMENT</shortDescription>
+        <value>Intermodal Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_INTERMODAL_AGREEMENT_INFO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_INTERMODAL_AGREEMENT_INFO</shortDescription>
+        <value>Confirmation of the agreement must be provided by an IATA airline code holder and signed by the Interline Manager or an equivalent and must specify which type(s) of interline services has been concluded, i.e. either Passenger Only, Cargo Only or both Passenger and Cargo.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_INTERMODAL_AGREEMENT_LOCATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC INTERMODAL AGREEMENT LOCATION</shortDescription>
+        <value>With whom do you have an intermodal agreement with for this location?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_INTERMODAL_AGREEMENT_MUST</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_INTERMODAL_AGREEMENT_MUST</shortDescription>
+        <value>In order to complete the application, an inter-modal agreement must be provided.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_INTERMODAL_AGREEMENT_QUESTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_INTERMODAL_AGREEMENT_QUESTION</shortDescription>
+        <value>Do you have an intermodal agreement with an airline?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_INVALID_DATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_INVALID_DATE</shortDescription>
+        <value>Invalid date!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_INVALID_EMAIL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC INVALID EMAIL</shortDescription>
+        <value>is invalid. Insert a valid e-mail.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ISO_COUNTRY</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ISO_COUNTRY</shortDescription>
+        <value>ISO Country:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LAST_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LAST_NAME</shortDescription>
+        <value>Last Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LEGAL_NAME</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LEGAL_NAME</shortDescription>
+        <value>Legal Name:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION</shortDescription>
+        <value>Location Identifier Code:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION_CODE</shortDescription>
+        <value>Location Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION_CODE_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION_CODE_1</shortDescription>
+        <value>Location code #1</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION_CODE_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION_CODE_2</shortDescription>
+        <value>Location code #2</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION_IDENTIFIER</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION_IDENTIFIER</shortDescription>
+        <value>Location Identifier</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION_IDENTIFIER_DESC</fullName>
+        <categories>Page Text</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION_IDENTIFIER_DESC</shortDescription>
+        <value>Airlines and CRSs may reuest the assignment of a unique three-letter code to identify an airport (r.g. GVA = Genava), Bus, or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION_NAME</shortDescription>
+        <value>Location Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION_NAME_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION_NAME_1</shortDescription>
+        <value>Location name #1</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION_NAME_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION_NAME_2</shortDescription>
+        <value>Location name #2</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_LOCATION_TYPE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_LOCATION_TYPE</shortDescription>
+        <value>Location Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Location_Identifier_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Location_Identifier_Code</shortDescription>
+        <value>Location Identifier Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_MANAGE_CODES</fullName>
+        <categories>Button Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_MANAGE_CODES</shortDescription>
+        <value>Manage My Codes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_MAP_NO_RESULTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_MAP_NO_RESULTS</shortDescription>
+        <value>No results found. Make sure to insert the correct coordinates.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_METROPOLITAN_AREA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_METROPOLITAN_AREA</shortDescription>
+        <value>Metropolitan Area</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_METROPOLITAN_AREA_QUESTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_METROPOLITAN_AREA_QUESTION</shortDescription>
+        <value>Does a metropolitan area currently exist for this area?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NAME_AIRLINE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NAME_AIRLINE</shortDescription>
+        <value>Name of Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NAME_AIRPORT_AUTHORITY_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NAME_AIRPORT_AUTHORITY_1</shortDescription>
+        <value>Name of Airport Authority (Airport #1)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NAME_AIRPORT_AUTHORITY_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NAME_AIRPORT_AUTHORITY_2</shortDescription>
+        <value>Name of Airport Authority (Airport #2)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NAME_AIRPORT_AUTHORITY_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NAME_AIRPORT_AUTHORITY_3</shortDescription>
+        <value>Name of Airport Authority (Airport #3)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NAME_AIRPORT_AUTHORITY_4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NAME_AIRPORT_AUTHORITY_4</shortDescription>
+        <value>Name of Airport Authority (Airport #4)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NAME_AIRPORT_AUTHORITY_5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NAME_AIRPORT_AUTHORITY_5</shortDescription>
+        <value>Name of Airport Authority (Airport #5)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NAME_ISSUING_AUTHORITY</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NAME_ISSUING_AUTHORITY</shortDescription>
+        <value>Name of Issuing Authority</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NAME_OF_ORGANIZATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NAME_OF_ORGANIZATION</shortDescription>
+        <value>Name of Organization</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NAME_SERVICE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NAME_SERVICE</shortDescription>
+        <value>Name of Aggregator/Reservation/Ticketing Service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NEGATIVE_APPROVALS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NEGATIVE_APPROVALS</shortDescription>
+        <value>In order to progress the request for the creation/addition/deletion of a metropolitan area the approvals of all airport authorities involved is required.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NO</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NON_SCHEDULED_AIRLINES_DOCUMENTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NON_SCHEDULED_AIRLINES_DOCUMENTS</shortDescription>
+        <value>Upload at least one Non-scheduled Airlines document</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NON_SCHEDULED_TEXT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NON_SCHEDULED_TEXT</shortDescription>
+        <value>Non-scheduled airlines must upload at least one of the following documents:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NON_SCHEDULED_TEXT_ONE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NON_SCHEDULED_TEXT_ONE</shortDescription>
+        <value>Signed a reciprocal (two-way) interline traffic agreement with an airline holding a valid IATA airline code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NON_SCHEDULED_TEXT_THREE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NON_SCHEDULED_TEXT_THREE</shortDescription>
+        <value>A4A Interline Traffic Agreement (ITA) - Passenger</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NON_SCHEDULED_TEXT_TWO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NON_SCHEDULED_TEXT_TWO</shortDescription>
+        <value>Certificate of Participating in an airline industry shared telecommunication facility using Societe Internationale de Telecommunications Aeronautiques (SITA) or Aeronautical Radio, Inc. (ARINC). Airlines requiring a twocharacter designator solely for telecommunications are eligible for a banded designator</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NOT_VALID_FOR_SUBMISSION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC NOT VALID FOR SUBMISSION</shortDescription>
+        <value>section is not valid for submission</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NO_AIR_OPERATOR_CERTIFICATION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NO_AIR_OPERATOR_CERTIFICATION</shortDescription>
+        <value>A new airline may be assigned a provisional airline designator code when written notification is received from the relevant Civil Aviation Authority that states an airline is substantially meeting the requirements for the instance of an Air Operating certificate. 
+A provisional assignment shall be valid for a non-renewable period of six (6) months, and is for internal use only.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NO_CODE_ASSIGNED</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NO_CODE_ASSIGNED</shortDescription>
+        <value>No code assigned</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NO_INFORMATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NO_INFORMATION</shortDescription>
+        <value>No information about this</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NUMBER_OF_PLANES</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NUMBER_OF_PLANES</shortDescription>
+        <value>Number of Planes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NUMERIC_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NUMERIC_CODE</shortDescription>
+        <value>Numeric Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_NUMERIC_CODE_VALIDATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_NUMERIC_CODE_VALIDATION</shortDescription>
+        <value>Invalid format! Three number code!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_OBTAINED_APPROVALS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_OBTAINED_APPROVALS</shortDescription>
+        <value>Has the airline obtained the approvals of all airport authorities under the metropolitan area?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_OFFICE_EMAIL</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_OFFICE_EMAIL</shortDescription>
+        <value>Office Email:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_OFF_LINE_POINT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_OFF_LINE_POINT</shortDescription>
+        <value>Off-line Point</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_OFF_LINE_POINT_PURPOSE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_OFF_LINE_POINT_PURPOSE</shortDescription>
+        <value>For what purpose is the Off-line Point required</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ONLY_ALPHANUM_ALLOWED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ONLY_ALPHANUM_ALLOWED</shortDescription>
+        <value>Only latin alphanumeric characters allowed!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_OTHER_AIRLINES_OPERATING_QUESTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_OTHER_AIRLINES_OPERATING_QUESTION</shortDescription>
+        <value>What other airlines will be operating to this airport?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PASSENGERS_TEXT_ONE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PASSENGERS_TEXT_ONE</shortDescription>
+        <value>Signed a passenger reciprocal (two-way) interline traffic agreement with an airline holding a valid IATA airline code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PASSENGERS_TEXT_THREE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PASSENGERS_TEXT_THREE</shortDescription>
+        <value>Participate in the A4A Interline Traffic Agreement (ITA) - Passenger</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PASSENGERS_TEXT_TWO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PASSENGERS_TEXT_TWO</shortDescription>
+        <value>Signed letter showing that is participating in the IATA Billing and Settlement Plan (BSP) or Airlines Reporting Corporation (ARC)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PASSENGERS_TEXT_ZERO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PASSENGERS_TEXT_ZERO</shortDescription>
+        <value>Passenger airlines must upload at least one of the following documents:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PASSENGER_AIRLINES_DOCUMENTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PASSENGER_AIRLINES_DOCUMENTS</shortDescription>
+        <value>Upload at least one Passenger Airlines Document</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PHONE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PHONE</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PLANNED_AIRLINES_QUESTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PLANNED_DATE_AIRLINES_QUESTION</shortDescription>
+        <value>What is the planned opening date for this airline?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_POSTAL_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_POSTAL_CODE</shortDescription>
+        <value>Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREFERENCE_OF_CODE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREFERENCE_OF_CODE</shortDescription>
+        <value>Preference of Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREFERENCE_ONE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREFERENCE_ONE</shortDescription>
+        <value>Preference 1</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREFERENCE_THREE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREFERENCE_THREE</shortDescription>
+        <value>Preference 3</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREFERENCE_TWO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREFERENCE_TWO</shortDescription>
+        <value>Preference 2</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREFIX_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREFIX_CODE</shortDescription>
+        <value>Airline Prefix Code for Cargo traffic purposes only</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREFIX_CODE1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREFIX_CODE1</shortDescription>
+        <value>Prefix Code:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREVIOUSLY_ASSIGNED_2CHAR_IATA_A4A_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREVIOUSLY_ASSIGNED_2CHAR_IATA_A4A_CODE</shortDescription>
+        <value>Has this company ever been assigned a two-character designator by IATA or A4A?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREVIOUSLY_ASSIGNED_IATA_A4A_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREVIOUSLY_ASSIGNED_IATA_A4A_CODE</shortDescription>
+        <value>Has this company ever been assigned a numeric code by IATA or A4A?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREVIOUS_IATA_CODE_QUESTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREVIOUS_IATA_CODE_QUESTION</shortDescription>
+        <value>Has the airline ever been assigned an IATA two character designator code?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PROVIDING_TICKETING_TO_AIRLINE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PROVIDING_TICKETING_TO_AIRLINE</shortDescription>
+        <value>Are you providing ticketing services for this airline?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PreviousIATACode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PreviousIATACode</shortDescription>
+        <value>Previous IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RAILWAY_COMPANY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RAILWAY_COMPANY</shortDescription>
+        <value>Railway Company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RAIL_FERRY_BUS</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RAIL_FERRY_BUS</shortDescription>
+        <value>Rail, Ferry or Bus</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RAIL_FERRY_BUS_INFO_ONE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RAIL_FERRY_BUS_INFO_ONE</shortDescription>
+        <value>Please note submitting a valid authorization issued by a government body to provide transportation services is a mandatory requirement for bus/rail/or a ferry company</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RAIL_FERRY_BUS_INFO_TWO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RAIL_FERRY_BUS_INFO_TWO</shortDescription>
+        <value>This confirmation is to be submitted to the IATA Code Administration Coordinator</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RAIL_FERRY_BUS_QUESTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RAIL_FERRY_BUS_QUESTION</shortDescription>
+        <value>Has the company been issued an Authorized to provide transportation services?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_REASONS_FOR_USE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC REASONS FOR USE</shortDescription>
+        <value>Reasons for Use</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RECIPROCAL_TWO_WAY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RECIPROCAL_TWO_WAY</shortDescription>
+        <value>Reciprocal (Two-Way)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RECIPROCAL_TWO_WAY_QUESTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RECIPROCAL_TWO_WAY_QUESTION</shortDescription>
+        <value>Does this airline have a reciprocal (two-way) interline traffic agreement(s) with an airline holding an IATA code?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RECIPROCAL_TWO_WAY_QUESTION_YES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RECIPROCAL_TWO_WAY_QUESTION_YES</shortDescription>
+        <value>Confirmation of the agreement must be provided by an IATA airline code holder and signed by the Interline Manager or an equivalent and must specify which type(s) of interline services has been concluded, i.e. either Passenger Only, Cargo Only or both Passenger and Cargo.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RECOMMENDED_LOCATION_IDENTIFIER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RECOMMENDED_LOCATION_IDENTIFIER</shortDescription>
+        <value>Recommended Location Identifier</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_REINSTATE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_REINSTATE</shortDescription>
+        <value>Reinstate</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_REQUESTOR_LOCATION_TYPE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_REQUESTOR_LOCATION_TYPE</shortDescription>
+        <value>Requestor and Location Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_REQUEST_BUTTON_LABEL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_REQUEST_BUTTON_LABEL</shortDescription>
+        <value>Request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_REQUIRED_TYPE_OF_OPERATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_REQUIRED_TYPE_OF_OPERATION</shortDescription>
+        <value>A Type of Operation is required.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_REQUIRES_AN_ANSWER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC REQUIRES AN ANSWER</shortDescription>
+        <value>section requires an answer</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_RESERVATIONS_TICKETING_SYSTEMS</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RESERVATIONS_TICKETING_SYSTEMS</shortDescription>
+        <value>For airlines authorized to operate on a scheduled basis, the planned schedules must be submitted to INNOVATA, LLC and/or, OAG Worldwide, or other schedule aggregators, reservations or ticketing systems.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_REVIEW_REQUIREMENTS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_REVIEW_REQUIREMENTS</shortDescription>
+        <value>3. Review Requirements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Recalled</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Recalled</shortDescription>
+        <value>(Recalled)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SAVE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SAVE</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULED_PUBLISHED_NO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULED_PUBLISHED_NO</shortDescription>
+        <value>For enterprises authorized to operate on a scheduled basis, the planned schedules must be submitted to a schedule aggregator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULED_PUBLISHED_YES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULED_PUBLISHED_YES</shortDescription>
+        <value>Please contact your schedule aggregator for them to create a case (in case is not yet created) to confirm that your scheduled operations are published.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_CONFIRMATION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_CONFIRMATION</shortDescription>
+        <value>Once the schedules have been received and verified, the company will provide confirmation to IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_EIGHT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_EIGHT</shortDescription>
+        <value>TTY: ATLDSXD</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_ELEVEN</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_ELEVEN</shortDescription>
+        <value>Tel: +44 (0)1582 695224</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_FIFTEEN</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_FIFTEEN</shortDescription>
+        <value>E-mail: databasecodes@oag.com</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_FIVE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_FIVE</shortDescription>
+        <value>Butford, Georgia</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_FOUR</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_FOUR</shortDescription>
+        <value>Fax: +1770 614 4902</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_FOURTEEN</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_FOURTEEN</shortDescription>
+        <value>United Kingdom, LU1 3LU</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_NINE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_NINE</shortDescription>
+        <value>OAG WORLDWIDE</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_ONE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_ONE</shortDescription>
+        <value>Alba Zuluoga</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_SEVEN</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_SEVEN</shortDescription>
+        <value>USA 30518</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_SIX</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_SIX</shortDescription>
+        <value>E-mail: supplier.codes@innovatallc.com</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_SIXTEEN</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_SIXTEEN</shortDescription>
+        <value>TTY: LONABCR</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_TEN</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_TEN</shortDescription>
+        <value>450 Capability Green</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_THIRTEEN</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_THIRTEEN</shortDescription>
+        <value>Fax: +44 (0)1582 695339</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_THREE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_THREE</shortDescription>
+        <value>4908 Golden Parkway, Suite 100</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_TWELVE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_TWELVE</shortDescription>
+        <value>Luton, Bedfordshire</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_INFO_TWO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_INFO_TWO</shortDescription>
+        <value>Tel: +1770 614 4900 ext.258</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_PUBLICATION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_PUBLICATION</shortDescription>
+        <value>Schedules Publication</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SCHEDULES_PUBLICATION_QUESTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SCHEDULES_PUBLICATION_QUESTION</shortDescription>
+        <value>Has the company published their schedules with a schedule aggregator?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SEARCH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SEARCH</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SEARCH_BILLING_CONTACT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SEARCH_BILLING_CONTACT</shortDescription>
+        <value>Search Billing Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SEARCH_EXISTING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SEARCH_EXISTING</shortDescription>
+        <value>search existing</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SEARCH_HOC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SEARCH_HOC</shortDescription>
+        <value>Search Head Office Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SECTOR</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SECTOR</shortDescription>
+        <value>Sector:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SELECT_TYPE_OF_LOCATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SELECT_TYPE_OF_LOCATION</shortDescription>
+        <value>1. Select Type of Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SELECT_TYPE_OF_OPERATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SELECT_TYPE_OF_OPERATION</shortDescription>
+        <value>1. Select Type of Operation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SIGNED_LETTER_METRO_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SIGNED_LETTER_METRO_1</shortDescription>
+        <value>Copy of signed letter issued by the Airport Authority approving the creation of this Metropolitan Area (Airport 1)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SIGNED_LETTER_METRO_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SIGNED_LETTER_METRO_2</shortDescription>
+        <value>Copy of signed letter issued by the Airport Authority approving the creation of this Metropolitan Area (Airport 2)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SIS_INFO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SIS_INFO</shortDescription>
+        <value>SIS User Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_STATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_STATE</shortDescription>
+        <value>State/Province</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_STATUS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_STATUS</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_STEP_1_OF_4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_STEP_1_OF_4</shortDescription>
+        <value>Step 1 of 4</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_STRATEGIC_PARTNERSHIP</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_STRATEGIC_PARTNERSHIP</shortDescription>
+        <value>Copy of the Certificate of IATA Strategic Partnership</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_STREET_ADDRESS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_STREET_ADDRESS</shortDescription>
+        <value>Street Address</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SUBJECT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SUBJECT</shortDescription>
+        <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SUBMITTED_BY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SUBMITTED_BY</shortDescription>
+        <value>Submitted By</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_SUBMIT_TO_IATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SUBMIT_TO_IATA</shortDescription>
+        <value>4. Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_Signed_Letter_CRS</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_Signed_Letter_CRS</shortDescription>
+        <value>Upload signed confirmation in letterhead from an airline holding a valid IATA Code that the CRS is providing services to the airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TELEPHONE_NUMBER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TELEPHONE_NUMBER</shortDescription>
+        <value>Telephone Number</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TELEPHONE_NUMBER_ERROR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TELEPHONE_NUMBER_ERROR</shortDescription>
+        <value>Telephone number can only contain numbers!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE</shortDescription>
+        <value>Official copy (and translation if documents are not in English) of Certificate of Incorporation/Registration (COI/COR)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE2File</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE2File</shortDescription>
+        <value>Official copy (and translation if documents are not in English) of Breakdown of shareholders and percentages</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TERMSCONDITIONS_DATE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TERMSCONDITIONS_DATE</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TERMSCONDITIONS_NAME</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TERMSCONDITIONS_NAME</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TERMS_AGREE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TERMS_AGREE</shortDescription>
+        <value>I understand and agree with the Terms and Conditions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TERMS_AND_CONDITIONS</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TERMS_AND_CONDITIONS</shortDescription>
+        <value>Terms and Conditions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TERMS_AND_CONDITIONS_TEXT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TERMS_AND_CONDITIONS_TEXT</shortDescription>
+        <value>This application is subject to the conditions and terms established by the Passenger Services Conference Resolutions, which governs the assignment of IATA codes. A copy of the specific Resolutions is available upon request.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_THREE_NUMERIC_ACCOUNTING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_THREE_NUMERIC_ACCOUNTING</shortDescription>
+        <value>Accounting or Prefix Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TIME_ZONE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TIME_ZONE</shortDescription>
+        <value>Time Zone</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TITLE</shortDescription>
+        <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TO_BE_UPLOADED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TO_BE_UPLOADED</shortDescription>
+        <value>The following files need to be uploaded:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TRADE_NAME</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TRADE_NAME</shortDescription>
+        <value>Trade Name:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TWO_CHARACTER_DESIGNATOR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TWO_CHARACTER_DESIGNATOR</shortDescription>
+        <value>Two-character Designator</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TYPE_ONE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TYPE_ONE</shortDescription>
+        <value>Type 1</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TYPE_OPERATION_NON_SCHEDULED_CARGO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TYPE_OPERATION_NON_SCHEDULED_CARGO</shortDescription>
+        <value>Non-Scheduled Cargo</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TYPE_OPERATION_NON_SCHEDULED_PASSENGER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TYPE_OPERATION_NON_SCHEDULED_PASSENGER</shortDescription>
+        <value>Non-Scheduled Passenger</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TYPE_OPERATION_SCHEDULED_CARGO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TYPE_OPERATION_SCHEDULED_CARGO</shortDescription>
+        <value>Scheduled Cargo</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TYPE_OPERATION_SCHEDULED_PASSENGER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TYPE_OPERATION_SCHEDULED_PASSENGER</shortDescription>
+        <value>Scheduled Passenger</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TYPE_THREE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TYPE_THREE</shortDescription>
+        <value>Type 3</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TYPE_TWO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TYPE_TWO</shortDescription>
+        <value>Type 2</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TrafficAgreement_Valid_IATA_Code</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TrafficAgreement_Valid_IATA_Code</shortDescription>
+        <value>Upload copy of Intermodal Traffic Agreement with an airline holding a valid IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_TrafficAgreement_Valid_IATA_Code_HELP_TEXT</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_TrafficAgreement_Valid_IATA_Code_HELP_TEXT</shortDescription>
+        <value>A valid Intermodal Traffic Agreement is a mandatory for IATA Code assignment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ULD</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ULD</shortDescription>
+        <value>ULD</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ULD_INFO</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ULD_INFO</shortDescription>
+        <value>Participation in IATA Strategic Partnership is a requirement for a non-ailine ULD Owner/Leasing Company requesting an IATA designator code. If a non-airline ULD Owner/Leasing Company is not a perticipant in the IATA Strategic Partnership please contact the Strategic Partnerships, team at pertnership@iata.org</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_ULD_QUESTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_ULD_QUESTION</shortDescription>
+        <value>Is the ULD company a participation in the IATA Strategic Partnership Program?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_UNTIL_IS_REVOKED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_UNTIL_IS_REVOKED</shortDescription>
+        <value>Until is Revoked</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_UPLOAD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC UPLOAD</shortDescription>
+        <value>Upload</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_UPLOAD_AIR_OPERATOR_CERTIFICATE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_UPLOAD_AIR_OPERATOR_CERTIFICATE</shortDescription>
+        <value>Copy of the Air Operator Certificate (AOC) issued by a government or a letter from Civil Aviation Authority</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_UPLOAD_FILES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC UPLOAD FILES</shortDescription>
+        <value>Upload Files</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_VAT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_VAT</shortDescription>
+        <value>VAT</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WC_ACCOUNTING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WC_ACCOUNTING</shortDescription>
+        <value>Withdraw: Accounting Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WC_BAGGAGE_TAG_RANGE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WC_BAGGAGE_TAG_RANGE</shortDescription>
+        <value>Withdraw: Baggage Tag Range Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WC_DESIGNATOR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WC_DESIGNATOR</shortDescription>
+        <value>Withdraw: Airline Designator Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WC_LOCATION_IDENTIFIER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WC_LOCATION_IDENTIFIER</shortDescription>
+        <value>Withdraw: Location Identifier Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WC_PREFIX</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WC_PREFIX</shortDescription>
+        <value>Withdraw: Prefix Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WEBSITE</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WEBSITE</shortDescription>
+        <value>Website:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WHICH_ADD_DELETE_METROPOLITAN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WHICH_ADD_DELETE_METROPOLITAN</shortDescription>
+        <value>Which location would you like to add/delete from the existing metropolitan area?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WITHDRAW</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WITHDRAW</shortDescription>
+        <value>Withdraw</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WITHDRAW_QUESTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WITHDRAW_QUESTION</shortDescription>
+        <value>Are you sure you want to Withdraw?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WITHOUT_CODES</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WITHOUT_CODES</shortDescription>
+        <value>Your company does not hold any codes yet</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_YEAR_CODE_HELD</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_YEAR_CODE_HELD</shortDescription>
+        <value>Year code was held</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_YES</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_YES</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_ACCR_Alert1</fullName>
         <language>en_US</language>
         <protected>false</protected>

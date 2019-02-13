@@ -1,0 +1,26 @@
+<apex:component >
+    <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+    <apex:actionStatus id="Redirect" stopText="">
+        <apex:facet name="start">
+            <apex:outputPanel >
+            <div id="redirect">
+            <div style="height:100%;width:100%;z-index:100; position:fixed;background:black;opacity:0.5; top:0; left:0;">
+            </div>
+            <div style="border:1px solid black; background:white; text-align:center;
+                        display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
+                        position: absolute; top:40%; left:45%; z-index:101;" >
+                <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>Work in Progress. <br/> In case of sucess you will be redirected
+            </div>
+            </div>
+            </apex:outputPanel>
+        </apex:facet>
+    </apex:actionStatus>
+<script>
+function startRedirect(){
+    $('[id*="Redirect"]').show();
+}
+function stopRedirect(){
+    $('[id*="Redirect"]').hide();
+}
+</script>
+</apex:component>

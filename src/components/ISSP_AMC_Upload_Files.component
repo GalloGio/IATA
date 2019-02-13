@@ -1,0 +1,692 @@
+<apex:component controller="ISSP_AMC_Upload_Files" allowDML="true">
+    <apex:attribute name="participation" description="Requirement" type="Participation_Online_Application__c" required="true" assignTo="{!participationBackend}"/>
+    <apex:attribute name="ISSP_AMC_CertificateIncorporationRegistration" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_BreakdownOfShareholders" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_ULD" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_Non_scheduled" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_Authorization_Transportation_Services" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_TrafficAgreement_Valid_IATA_Code" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_Signed_Letter_CRS" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_Passenger" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_Cargo" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_CurrentStructureLocation" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_CAALetterOpeningDate" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_CommercialScheduledOperations" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_Airline_Issued_AOC" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_Metropolitan_Area" description="Requirement" type="Boolean" required="false" />
+    <apex:attribute name="ISSP_AMC_Metropolitan_AirportB" description="Requirement" type="Boolean" required="false" />
+
+
+    <div class="panel panel-primary" id="UPLOAD_FILES">
+        <div class="panel-heading">
+            {!$Label.ISSP_AMC_UPLOAD_FILES}
+        </div>
+
+        <div class="panel-body">
+            <c:UploadFileToAmazonButton />
+
+            <apex:actionFunction name="saveToAmazon" action="{!saveToAmazon}" rerender="out" status="myStatus" oncomplete="stopLoading()">
+                <apex:param name="amazonFileId" assignTo="{!amazonFileId}" value="" />
+            </apex:actionFunction>
+
+            <apex:actionFunction name="refreshList" action="{!getUploadedFileInfo}" rerender="out" oncomplete="stopLoading()"/>
+
+            <apex:outputPanel id="out">
+
+                <apex:outputPanel rendered="{!ISSP_AMC_CertificateIncorporationRegistration}">
+
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE}" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!certificateIncorporationRegistration == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CertificateIncorporationRegistration'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!certificateIncorporationRegistration.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!certificateIncorporationRegistration.Id}', '{!certificateIncorporationRegistration.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm" >
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!certificateIncorporationRegistration.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!certificateIncorporationRegistration.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_BreakdownOfShareholders}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_TERMSANDCONDITIONSTEXTUPLOADFILE2File}" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!breakdownOfShareholders == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_BreakdownOfShareholders'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!breakdownOfShareholders.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!breakdownOfShareholders.Id}', '{!breakdownOfShareholders.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm" >
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!breakdownOfShareholders.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!breakdownOfShareholders.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_ULD}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_STRATEGIC_PARTNERSHIP}" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!uld == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_ULD'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!uld.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!uld.Id}', '{!uld.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!uld.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!uld.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_Signed_Letter_CRS}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_Signed_Letter_CRS}" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!signedLetterCrs == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Signed_Letter_CRS'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!signedLetterCrs.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!signedLetterCrs.Id}', '{!signedLetterCrs.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!signedLetterCrs.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!signedLetterCrs.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_Non_scheduled}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_NON_SCHEDULED_TEXT}"/>
+                                    <br/>
+                                    <ul>
+                                        <li> <apex:outputText value="{!$Label.ISSP_AMC_NON_SCHEDULED_TEXT_ONE}" /></li><br/>
+                                        <li> <apex:outputText value="{!$Label.ISSP_AMC_NON_SCHEDULED_TEXT_TWO}" /></li><br/>
+                                        <li> <apex:outputText value="{!$Label.ISSP_AMC_NON_SCHEDULED_TEXT_THREE}" /></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!nonScheduled == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Non_Scheduled'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!nonScheduled.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!nonScheduled.Id}', '{!nonScheduled.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!nonScheduled.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!nonScheduled.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_Authorization_Transportation_Services}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_Authorization_Transportation_Services} "/>
+                                    <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMC_Authorization_Transportation_Services_HELP_TEXT}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!authorizationTransportationServices == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Authorization_Transportation_Services'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!authorizationTransportationServices.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!authorizationTransportationServices.Id}', '{!authorizationTransportationServices.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!authorizationTransportationServices.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!authorizationTransportationServices.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_TrafficAgreement_Valid_IATA_Code}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_TrafficAgreement_Valid_IATA_Code} " />
+                                    <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMC_TrafficAgreement_Valid_IATA_Code_HELP_TEXT}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!trafficAgreementValidIATACode == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_TrafficAgreement_Valid_IATA_Code'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!trafficAgreementValidIATACode.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!trafficAgreementValidIATACode.Id}', '{!trafficAgreementValidIATACode.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!trafficAgreementValidIATACode.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!trafficAgreementValidIATACode.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_Passenger}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_PASSENGERS_TEXT_ZERO}" /><br/>
+                                        <ul>
+                                            <li> <apex:outputText value="{!$Label.ISSP_AMC_PASSENGERS_TEXT_ONE}" /></li><br/>
+                                            <li> <apex:outputText value="{!$Label.ISSP_AMC_PASSENGERS_TEXT_TWO}" /></li><br/>
+                                            <li> <apex:outputText value="{!$Label.ISSP_AMC_PASSENGERS_TEXT_THREE}" /></li>
+                                        </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!passengers == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Passenger'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!passengers.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!passengers.Id}', '{!passengers.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!passengers.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!passengers.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_Cargo}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_CARGO_TEXT}" /><br/>
+                                    <ul>
+                                        <li> <apex:outputText value="{!$Label.ISSP_AMC_CARGO_TEXT_ONE}" /></li><br/>
+                                        <li> <apex:outputText value="{!$Label.ISSP_AMC_CARGO_TEXT_TWO}" /></li><br/>
+                                        <li> <apex:outputText value="{!$Label.ISSP_AMC_CARGO_TEXT_THREE}" /></li><br/>
+                                        <li> <apex:outputText value="{!$Label.ISSP_AMC_CARGO_TEXT_FOUR}" /></li><br/>
+                                        <li> <apex:outputText value="{!$Label.ISSP_AMC_CARGO_TEXT_FIVE}" /></li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!cargos == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Cargo'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!cargos.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!cargos.Id}', '{!cargos.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!cargos.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!cargos.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+
+                <apex:outputPanel rendered="{!ISSP_AMC_CurrentStructureLocation}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_CURRENT_STRUCTURE_LOCATION_TEXT}" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!currentStructureLocation == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CurrentStructureLocation'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!currentStructureLocation.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!currentStructureLocation.Id}', '{!currentStructureLocation.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!currentStructureLocation.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!currentStructureLocation.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+
+                <apex:outputPanel rendered="{!ISSP_AMC_CAALetterOpeningDate}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_CAALETTEROPENINGDATE_TEXT}" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!caaLetterOpeningDate == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CAALetterOpeningDate'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!caaLetterOpeningDate.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!caaLetterOpeningDate.Id}', '{!caaLetterOpeningDate.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!caaLetterOpeningDate.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!caaLetterOpeningDate.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+
+                <apex:outputPanel rendered="{!ISSP_AMC_CommercialScheduledOperations}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS_TEXT}" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!commercialScheduledOperations == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CommercialScheduledOperations'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!commercialScheduledOperations.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!commercialScheduledOperations.Id}', '{!commercialScheduledOperations.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!commercialScheduledOperations.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!commercialScheduledOperations.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_Metropolitan_Area}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_SIGNED_LETTER_METRO_1}" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!metropolitanLetteAirportA == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Metropolitan_Area'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!metropolitanLetteAirportA.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!metropolitanLetteAirportA.Id}', '{!metropolitanLetteAirportA.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!metropolitanLetteAirportA.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!metropolitanLetteAirportA.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!ISSP_AMC_Metropolitan_AirportB}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_SIGNED_LETTER_METRO_2}" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!metropolitanLetteAirportB == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Metropolitan_AirportB'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!metropolitanLetteAirportB.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!metropolitanLetteAirportB.Id}', '{!metropolitanLetteAirportB.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!metropolitanLetteAirportB.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!metropolitanLetteAirportB.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!ISSP_AMC_Airline_Issued_AOC}">
+                    <div class="col-md-offset-1 col-md-12 col-sm-offset-0">
+                        <div class="form-group">
+                            <div class="col-md-9 list-group-item">
+
+                                <div class="col-md-8">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_AIRLINE_ISSUED_AOC} "/>
+                                    <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMC_Airline_Issued_AOC_HELP_TEXT}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                </div>
+                                <div class="col-md-4">
+                                    <apex:outputPanel rendered="{!airlineIssuedAOC == null}">
+                                        <div class="col-md-offset-2">
+                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_Airline_Issued_AOC'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
+                                            </a>
+                                        </div>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!airlineIssuedAOC.Id != null}">
+                                        <a title="Delete" escape="false" target="_blank" onclick="return deleteAttachment('{!airlineIssuedAOC.Id}', '{!airlineIssuedAOC.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/> {!$Label.ISSP_AMC_DELETE}
+                                        </a>
+
+                                        <a title="Download" escape="false" onclick="getS3LInk('{!airlineIssuedAOC.Full_Name_Unique__c}');" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <span class="glyphicon glyphicon-save" aria-hidden="true"/> {!$Label.ISSP_AMC_DOWNLOAD}
+                                        </a>
+                                    </apex:outputPanel>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div style="color:#3176b1" class="fileName">
+                                            {!airlineIssuedAOC.Name}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+
+
+
+            </apex:outputPanel>
+
+            <script>
+
+                function deleteAttachment(id, fullName) {
+                    if(!confirm("{!$Label.Ask_Delete_Attachment}")) {
+                        return false;
+                    }
+
+                    startLoading();
+                    
+                    ISSP_AMC_Upload_Files.deleteAttachment(id, fullName,function(result, event){
+                        if (!result) alert("{!$Label.Delete_Attachment_Error}");
+                            refreshList();
+                    }, {timeout: 120000} );
+
+                    return false;
+                }
+
+                function onAfterUpload(amazonFileId){
+                    if(amazonFileId != undefined && amazonFileId != ''){
+                        saveToAmazon(amazonFileId);
+                    }
+                }
+
+                function onStart(){
+                    startLoading();
+                }
+
+                function onStop(){
+                    stopLoading();
+                }
+
+                function callComponentRunClickActionMethod(objectId, amazonRecordTypeId, componentKey){
+                    let amazonFileModel = {
+                        RecordTypeId: amazonRecordTypeId,
+                        Description__c: componentKey,
+                        isPublic__c: {!isPublic}
+                    };
+                    //alert('id: ' + objectId + ' record: ' + amazonRecordTypeId + ' component key: ' + componentKey);
+                    runClickAction(objectId, "{!credentialName}", amazonFileModel, false);
+                }
+
+                function getS3LInk(fileName) {
+                    startLoading();
+
+                    ISSP_AMC_Upload_Files.getExpiringLink(fileName,function(result, event){
+                        var result2= result.replace("&amp;","&");
+                        var newWin = window.open(result2);
+                        if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                            alert('{!$Label.Check_popup_settings}');
+                        }
+                        stopLoading();
+                    }, {buffer: true, escape: false, timeout: 120000} );
+                }
+
+
+                </script>
+        </div>
+    </div>
+</apex:component>

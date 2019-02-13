@@ -1,0 +1,487 @@
+<!--
+  Class Name: ISSP_AMC_Requestor_Location_Type.component
+  Related Classes: ISSP_AMC_Requestor_Location_Type.cls
+
+  Copyright @Right IT Services
+
+  Purpose: Component Class for ISSP_AMC_Location_Identifier.page
+
+  VERSION   AUTHOR             DATE        DETAIL/CHANGE REFERENCE
+  1.0       DAVID BENTO     07/12/2018        INITIAL DEVELOPMENT
+-->
+<apex:component controller="ISSP_AMC_LocationAreaData">
+  <apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" assignTo="{!controllerParticipation}"/>
+  <apex:attribute name="countryList" description="List of Countries" type="SelectOption[]" required="true" />
+  <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="true" />
+  
+<script>    
+            $(document).ready(function(){
+              var charList = document.getElementsByClassName(' allchar');
+              for(var i=0; i<charList.length; i++){              
+                  if(charList[i].value != null && charList[i].value != ""){
+                      validateLatinChar(charList[i]);
+                  }
+              }
+              //geocodeLatLng(geocoder, map, infowindow);
+
+            });
+            
+            // variables used to create a Map using Google API
+            var map;
+            var geocoder;
+            var infowindow;
+            var markers = [];
+            var marker;
+
+            var msg = document.getElementsByClassName("errormessageloc"); // To display a error message
+
+            function resetMap(){
+              map = new google.maps.Map(document.getElementById('map'), {
+                //Get the Map div by ID, if it causes issues, get map by styleclass
+                zoom: 2,                              
+                streetViewControl: false,
+                draggable: false,
+                fullscreenControl: false,                   // Map options, more on google documentation
+                zoomControl: true,
+                timezone: true,
+                center: {
+                  lat: 25.020837158639694,
+                  lng: -1.345500964708663
+                }
+              });
+              geocoder = new google.maps.Geocoder;
+              infowindow = new google.maps.InfoWindow;
+            }
+            //Starts the map, necessary to change if coords already exist in draft
+            function initMap() {
+              var element = document.getElementsByClassName("formap");
+              var input = element[0].value; 
+
+                resetMap();
+
+              
+
+
+              //For more information: https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+              if((input != null) || (input.length() > 0)|| (input === "")){
+                changemap(false);
+              }
+
+
+              
+              
+
+            }
+
+
+            // Method to change the Map, according to coords inputed
+            function changemap(needToValidate){
+              geocodeLatLng(geocoder, map, infowindow, needToValidate);
+            }
+
+            
+            function geocodeLatLng(geocoder, map, infowindow, needToValidate) {
+              var element = document.getElementsByClassName("formap");
+
+              var input = element[0].value;           // Gets the input coordinates
+              locFilter = /([0-9]?\d(°|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|90(°|\s)0?0(’|')0?0"?)[NnSs],\s{1,}([0-9]?[0-9]?\d(°|\s)[0-9]?\d(’|')[0-9]?\d(\.\d{1,6})?"?|180(°|\s)0?0(’|')0?0"?)[EeWw]$/;
+
+              if(locFilter.test(input)){
+                console.log('PASSEI O FILTRO: ' + input);
+                if (input.includes('N') && input.includes('W')  || 
+                    input.includes('N') && input.includes('E') || 
+                    input.includes('S') && input.includes('W') ||
+                    input.includes('S') && input.includes('E')) {
+                  var dmsParsed = ParseDMS(input);      // Convert DMS coords to latlong
+
+                  var latlng = {
+                    lat: dmsParsed.Latitude,
+                    lng: dmsParsed.Longitude
+                  };
+
+                    
+                geocoder.geocode({
+                  'location': latlng
+                }, function(results, status) {
+                  if (status === 'OK') {
+                    if (results[0]) {
+                      console.log(results[0]);
+                        // Google checks if the coords is a valid location, not in the middle of the sea
+                      map.setZoom(8);
+                      deleteMarkers();              // Delete any existant marker   
+                      map.streetViewControl =false;
+                      marker = new google.maps.Marker({
+                        // Sets the marker on the coords
+                        position: latlng,
+                        map: map
+                      });
+
+                      timeZone(latlng.lat,latlng.lng);              //Get the timezone of the location
+                      
+                      markers.push(marker);
+                      infowindow.setContent(results[0].formatted_address);
+                      map.panTo(marker.position);
+                      infowindow.open(map, marker);
+
+                      msg[0].innerHTML ='';
+                      if(needToValidate == true){
+                        validateCoords(element[0]);
+                      } 
+                      //clears message when the coords are correct
+                      //validateCoords(element[0]);
+                      
+
+
+                    } 
+                    else {
+                      msg[0].innerHTML ='{!$Label.ISSP_AMC_MAP_NO_RESULTS}';
+                      validateCoords(element[0]); 
+                      resetMap();
+
+                    }
+                  } 
+                  else {
+                      msg[0].innerHTML ='{!$Label.ISSP_AMC_MAP_NO_RESULTS}';
+                      validateCoords(element[0]); 
+                      resetMap();                  
+                  }
+                });
+
+                }
+              }
+              else if(!input || input.length === 0){
+                console.log('NÃO PASSEI O FILTRO E NÃO TENHO INPUT: ' + input);
+                  msg[0].innerHTML ='';
+                  if(needToValidate == true){
+                    validateCoords(element[0]);
+                  }
+              }
+              else{
+                console.log('NÃO PASSEI O FILTRO: ' + input);
+                msg[0].innerHTML ='{!$Label.ISSP_AMC_COORDINATES_FORMAT}';
+                validateCoords(element[0]);
+                resetMap();
+
+              }
+            }
+
+            // Sets the map on all markers in the array. - It's only used to clear all Markers
+            function setMapOnAll(map) {
+              for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+              }
+            }
+            // Deletes all markers in the array by removing references to them.
+            function deleteMarkers() {
+              setMapOnAll(null);
+              markers = [];
+            }
+
+
+            /* Convert DMS to Lat Long */
+            function ParseDMS(input) {
+              var parts = input.split(/[^\d\w\.]+/);
+              var lat = parseFloat(ConvertDMSToDD(parts[0], parts[1], parts[2], parts[3]));
+              var lng = parseFloat(ConvertDMSToDD(parts[4], parts[5], parts[6], parts[7]));
+              return {
+                Latitude: lat,
+                Longitude: lng
+              }
+            }
+
+
+
+            function ConvertDMSToDD(degrees, minutes, seconds, direction) {
+              direction.toUpperCase();
+              var dd = Number(degrees) + Number(minutes) / 60 + Number(seconds) / (60 * 60);
+
+              if (direction == "S" || direction == "W") {
+                dd = dd * -1;
+              } // Don't do anything for N or E
+              return dd;
+            }
+
+            function timeZone(lat,lng){
+              var element = document.getElementsByClassName("formap");
+
+              //var input = element[0].value;
+
+                var targetDate = new Date() // Current date/time of user computer
+                var timestamp = targetDate.getTime()/1000 + targetDate.getTimezoneOffset() * 60 // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
+
+                var apicall = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat+','+lng + '&timestamp=' + timestamp + '&key={!mapKey}'
+                jQuery.getJSON(apicall,
+                function(data) {
+                  var element = document.getElementsByClassName("timeclass");
+                  element[0].value= data.timeZoneName;
+                });
+              }
+          
+          function cleanTimeZone(){
+            var element = document.getElementsByClassName("timeclass");
+            element[0].value = '';
+          }
+          function validateCoords(element){
+              var x = element.parentElement.classList;
+              var y = element.parentElement.children;
+              console.log('ENTREI NO VALIDATE');
+                if(msg[0].innerHTML !=''){
+                    element.value = "";
+                    x.add("has-error");
+                    x.add("has-feedback");
+                    for (i = 0; i < y.length; i++) {
+                      if(y[i].classList == "{!IF(AND(hasError, OR(participation.GPS_Coordinates__c == null, participation.GPS_Coordinates__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" || y[i].classList == ""){
+                        //y[i].classList.remove("{!IF(AND(hasError, OR(participation.GPS_Coordinates__c == null, participation.GPS_Coordinates__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                        y[i].classList.add("glyphicon");
+                        y[i].classList.add("glyphicon-remove"); 
+                        y[i].classList.add("form-control-feedback");
+                      }
+                      console.log('Y CLASS LIST 1::::' + y[i].classList.value);
+                      
+                    }
+                    console.log('X CLASS LIST 1::::' + x.value);
+
+                }
+                else{
+                  for (i = 0; i < y.length; i++) {
+                      if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                        //y[i].classList.add("{!IF(AND(hasError, OR(participation.GPS_Coordinates__c == null, participation.GPS_Coordinates__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                      }
+                      console.log('Y CLASS LIST 2::::' + y[i].classList.value);
+                    }
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                    console.log('X CLASS LIST 2::::' + x.value);
+                }
+              
+
+          }
+
+          //Country
+        function validateCountry(element) {
+            var x = element.parentElement.classList;
+            var y = element.parentElement.children;
+            if(element.value == "--None--"){
+                    //x.remove("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'has-error has-feedback', '')}");
+                    x.add("has-error");
+                    x.add("has-feedback");
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "{!IF(AND(hasError, OR(participation.IATA_ISO_Country__c == '--None--', participation.IATA_ISO_Country__c == null)), 'glyphicon glyphicon-remove form-control-feedback', '')}"){
+                            //y[i].classList.remove("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                            y[i].classList.add("glyphicon");
+                            y[i].classList.add("glyphicon-remove"); 
+                            y[i].classList.add("form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = "SELECT A COUNTRY";
+
+                        }                   
+                    }
+            }
+            else{
+                for (var i = 0; i < y.length; i++) {
+                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                        //y[i].classList.add("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                    }
+                    if(y[i].classList =="errormessage"){
+                        y[i].innerHTML = ""
+                    }
+                }
+                //x.add("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'has-error has-feedback', '')}");
+                x.remove("has-error");
+                x.remove("has-feedback");
+            }
+        }
+
+          //validate if latin chars are being used
+            function validateLatinChar(element, errorClass, parentClass) {
+                var w = element.parentElement.classList;
+                var t = element.parentElement.children;
+                filter = /([^A-Za-z0-9\s]+)/;
+                if(element.value  != null && element.value != ""){
+                    if (filter.test(element.value)) {
+                        w.remove("parentClass");
+                        w.add("has-error");
+                        w.add("has-feedback");
+                        for (var u = 0; u < t.length; u++) {
+                            if(t[u].classList == "errorClass"){
+                                t[u].classList.remove("errorClass");
+                                t[u].classList.add("glyphicon");
+                                t[u].classList.add("glyphicon-remove"); 
+                                t[u].classList.add("form-control-feedback");
+                            }
+                            if(t[u].classList =="errormessage"){
+                                t[u].innerHTML = "{!$Label.ISSP_AMC_ONLY_ALPHANUM_ALLOWED}";
+                                element.value="";
+                            }                   
+                        }
+                    } 
+                    else{
+                        for (var u = 0; u < t.length; u++) {
+                            if(t[u].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                                t[u].classList.add("errorClass");
+                                t[u].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                            }
+                            if(t[u].classList =="errormessage"){
+                                t[u].innerHTML = ""
+                            }
+                        }
+                        w.add("parentClass");
+                        w.remove("has-error");
+                        w.remove("has-feedback");
+                    }
+                }
+                else{
+                    for (var u = 0; u < t.length; u++) {
+                        if(t[u].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            t[u].classList.add("errorClass");
+                            t[u].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(t[u].classList =="errormessage"){
+                            t[u].innerHTML = ""
+                        }
+                    }
+                    w.add("parentClass");
+                    w.remove("has-error");
+                    w.remove("has-feedback");
+                }
+            }
+
+
+
+</script>  
+<style type="text/css">
+  .topright{
+            position: absolute;
+            top: 2%;
+            left: 64%;
+            padding: 3px;
+            text-align: center;
+            font-family: 'Roboto', 'Arial', 'sans-serif';
+            font-size: 16px;
+            height: 40px;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+            border-bottom-left-radius: 2px;
+            border-top-left-radius: 2px;
+            background-color: white;
+            font-weight: bold;
+            vertical-align: middle;
+            }
+  
+  .errorColor { 
+                    border-color: #a94442 !important;;
+                    display:block;
+                    
+                }
+
+  
+
+</style>
+        <div id="tudo" class="tabpanels-">
+                <div class="panel panel-primary" >
+                    <div class="panel-heading" id="AREA_DATA">
+                      {!$Label.ISSP_AMC_AREA}
+                    </div>                    
+                    <div class="panel-body">
+                            
+                        <div class="form-group">
+                            <label for="cityName" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CITY_NAME}</label>
+                            <div class="col-sm-3">
+                              <div class="{!IF(AND(hasError, OR(participation.City_Name__c == null, participation.City_Name__c == "")), 'has-error has-feedback', '')}">
+                                  <apex:inputText id="cityName" onchange="validateLatinChar(this)" styleClass="form-control allchar" value="{!participation.City_Name__c}"/>
+                                  <span class="{!IF(AND(hasError, OR(participation.City_Name__c == null, participation.City_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                  <span class="sr-only">(error)</span>
+                                  
+                                  <div style="color: #a94442" class="errormessage"></div>
+                              </div>
+                            </div>
+                            <label for="vat" class="col-sm-2 control-label">{!$Label.ISSP_AMC_COUNTRY}</label>
+                            <div class="col-sm-3">
+                              <div class="{!IF(AND(hasError, OR(participation.IATA_ISO_Country__c == '--None--', participation.IATA_ISO_Country__c == null)), 'has-error has-feedback', '')}">
+                                  <apex:selectList onblur="validateCountry(this)" size="1" styleClass="form-control" value="{!participation.IATA_ISO_Country__c}">
+                                    <apex:selectOptions value="{!countryList}"/>
+                                  </apex:selectList>
+                                  <span class="{!IF(AND(hasError, OR(participation.IATA_ISO_Country__c == '--None--', participation.IATA_ISO_Country__c == null)), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                  <span class="sr-only">(error)</span>
+                                  
+                                  <div style="color: #a94442" class="errormessage"></div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="locationName" class="col-sm-3 control-label">{!$Label.ISSP_AMC_AIRPORT_LOCATION_NAME}</label>
+                            <div class="col-sm-3">
+                              <div class="{!IF(AND(hasError, OR(participation.Location_Name__c == null, participation.Location_Name__c == "")), 'has-error has-feedback', '')}">
+                                  <apex:inputText id="locationName" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!participation.Location_Name__c}"/>
+                                  <span class="{!IF(AND(hasError, OR(participation.Location_Name__c == null, participation.Location_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                  <span class="sr-only">(error)</span>
+                                  
+                                  <div style="color: #a94442" class="errormessage"></div>
+                              </div>
+                            </div>
+                            <label for="stateName" class="col-sm-2 control-label">{!$Label.ISSP_AMC_STATE}</label>
+                            <div class="col-sm-3">
+                              <div class="{!IF(AND(hasError, OR(participation.State__c == null, participation.State__c == "")), 'has-error has-feedback', '')}">
+                                  <apex:inputText id="stateName" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!participation.State__c}"/>
+                                  <span class="{!IF(AND(hasError, OR(participation.State__c == null, participation.State__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                  <span class="sr-only">(error)</span>
+                                  
+                                  <div style="color: #a94442" class="errormessage"></div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="locationIdentifier" class="col-sm-3 control-label">{!$Label.ISSP_AMC_RECOMMENDED_LOCATION_IDENTIFIER}</label>
+                            <div class="col-sm-3">
+                              <div class="{!IF(AND(hasError, OR(participation.Recommended_Loc_Identifier__c == null, participation.Recommended_Loc_Identifier__c == "")), 'has-error has-feedback', '')}">
+                                  <apex:inputText id="locationIdentifier" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!participation.Recommended_Loc_Identifier__c}"/>
+                                  <span class="{!IF(AND(hasError, OR(participation.Recommended_Loc_Identifier__c == null, participation.Recommended_Loc_Identifier__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                  <span class="sr-only">(error)</span>
+                                  
+                                  <div style="color: #a94442" class="errormessage"></div>
+                              </div>
+                            </div>
+                            <label for="gpsCoordinates" class="col-sm-2 control-label">{!$Label.ISSP_AMC_GPS_Coordinates}
+                            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMC_COORDINATES_FORMAT}" 
+                              html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                            </label>
+                            
+                            <div class="col-sm-3"> 
+                              <div class="{!IF(AND(hasError, OR(participation.GPS_Coordinates__c == null, participation.GPS_Coordinates__c == "")), 'has-error has-feedback', '')}">                  
+                                <apex:inputText id="gpsCoordinates" onchange="changemap(true),cleanTimeZone()" styleClass="form-control formap" value="{!participation.GPS_Coordinates__c}"/>
+                                <span class="{!IF(AND(hasError, OR(participation.GPS_Coordinates__c == null, participation.GPS_Coordinates__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"></span>
+                                <span class="sr-only">(error)</span>
+
+                                <div style="color: #a94442" class="errormessageloc"></div>
+
+
+                              </div>
+                                
+                            </div>
+                            <!--<apex:outputLabel styleClass="col-md-12 control-label errormessage" style="text-align: right;padding-right: 3%; color:#a94442;" />-->
+                        </div>
+                        <div class="col-sm-12" style="position: relative;" >
+                                <div id="map" style="width: 100%;height: 500px;">
+                                  
+                                  
+                                </div>
+      
+                                <div class="col-md-4  topright">
+                                  <div class="col-md-4 control-label ">
+                                      <apex:outputText value="{!$Label.ISSP_AMC_TIME_ZONE}"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                      <apex:inputField id="timeZonetext" styleClass="form-control timeclass" value="{!participation.Time_Zone__c}" html-disabled="true" />
+                                    </div>
+                                </div>
+                                
+                                                                <!-- Replace the value of the key parameter with your own API key. -->
+                                <script async="true" src="https://maps.googleapis.com/maps/api/js?key={!mapKey}&callback=initMap">
+                                </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</apex:component>

@@ -1,0 +1,274 @@
+<!--
+    Component Name: ISSP_AMC_Change_Comp_Info.component
+    Related Classes: ISSP_AMC_Change_Comp_Info.cls
+
+    Copyright @Right IT Services
+
+    Purpose:
+
+    VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
+    1.0         Filipa Martins       06-11-2018      INITIAL DEVELOPMENT
+ -->
+
+<apex:component controller="ISSP_AMC_Change_Comp_Info" allowDML="true">
+    <!--<apex:attribute name="erro" type="String" description="error message" assignTo="{!erros}"/>-->
+    <head>
+        <style>
+            .line{
+                margin-top: 6%;
+            }
+
+            /*.textAlign{
+                text-align: center !important;
+            }*/
+
+             @media only screen  and (min-width: 1224px) {
+              .alignment {
+                text-align: right;
+              }
+            }
+
+            @media (max-width: 576px) {
+              .alignment {
+                text-align: left;
+              }
+            }
+        </style>
+    </head>
+
+    <c:Loading />
+
+    <div class="section-header col-md-12" style="text-align: center; background-color: #003F76">
+        <strong class="companyTitle" style="color: white">{!$Label.ISSP_AMC_COMPANY_INFORMATION}</strong><br/>
+    </div>
+
+    <div class="row" style="margin-top: 9%;">
+
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText value="{!$Label.ISSP_AMC_LEGAL_NAME}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasLegalName}">
+                <div class="col-md-6">
+                    <apex:inputText id="LegalName" style="margin-top: 3%;" styleClass="form-control" value="{!accountRecord.Legal_name__c}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasLegalName}">
+                <div class="col-md-6">
+                    <apex:outputText style="margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_TRADE_NAME}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasTradeName}">
+                <div class="col-md-6">
+                    <apex:inputText id="TradeName" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.TradeName__c}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasTradeName}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_AIRLINE_DESIGNATOR}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasDesignatorValue}">
+                <div class="col-md-6">
+                    <apex:inputText id="AirlineDesignator" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.Airline_designator__c}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasDesignatorValue}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_ACCOUNTING_CODE}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasAccountingCode}">
+                <div class="col-md-6">
+                    <apex:inputText id="AccountingCode" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.Accounting_Code__c}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasAccountingCode}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_PREFIX_CODE1}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasPrefixCode}">
+                <div class="col-md-6">
+                    <apex:inputText id="PrefixCode" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.Airline_Prefix__c}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasPrefixCode}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_SECTOR}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasSector}">
+                <div class="col-md-6">
+                    <apex:inputText id="Sector" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.Sector__c}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasSector}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasCategory}">
+                <div class="col-md-6">
+                    <apex:inputText id="Category" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.Category__c}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasCategory}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_BUSINESS_PHONE}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasBusinessPhone}">
+                <div class="col-md-6">
+                    <apex:inputText id="BusinessPhone" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.phone}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasBusinessPhone}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_OFFICE_EMAIL}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasOfficeEmail}">
+                <div class="col-md-6">
+                    <apex:inputText id="OfficeEmail" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.Email__c}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasOfficeEmail}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_WEBSITE}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasWebsite}">
+                <div class="col-md-6">
+                    <apex:inputText id="Website" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.Website}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasWebsite}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_ISO_COUNTRY}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasISOCountry}">
+                <div class="col-md-6">
+                    <apex:inputText id="ISOCountry" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!accountRecord.IATA_ISO_Country__r.Name}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasISOCountry}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_ADDRESS_INFO}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasAddressInfo}">
+                <div class="col-md-6">
+                    <apex:inputText id="AddressInformation" style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!address}" disabled="true"/>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasAddressInfo}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+
+        <div class="line">
+            <div class="col-md-4 col-md-offset-2 alignment" style="margin-top: 3%; margin-bottom: 3%;">
+                <apex:outputText style="margin-top: 5%;" value="{!$Label.ISSP_AMC_AOC_EXPIRES}"/>
+            </div>
+            <apex:outputPanel rendered="{!hasAOCExpirationDate}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%; margin-bottom: 3%;" styleClass="form-control" value="{0,date,dd/MMMMM/yyyy}" label="date" html-readOnly="true">
+                        <apex:param value="{!accountRecord.AOC_Expiry_Date__c}" />
+                    </apex:outputText>
+                </div>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!!hasAOCExpirationDate}">
+                <div class="col-md-6">
+                    <apex:outputText style="width: 100%; margin-top: 3%; margin-bottom: 3%;" styleClass="form-control" value="{!$Label.ISSP_AMC_NO_INFORMATION}" html-readOnly="true"/>
+                </div>
+            </apex:outputPanel>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <!--<div class="col-md-8 textAlign">
+            <apex:outputPanel id="errorMessage">
+                <apex:outputText style="color: red" value="{!erro}"/>
+            </apex:outputPanel>
+        </div>
+        <div class="col-md-4">
+            <apex:commandLink styleClass="btn btn-success" type="button" value="{!$Label.ISSP_AMC_SAVE}" status="counterStatus" action="{!createCase}" onclick="startLoading()" reRender="errorMessage" oncomplete="stopLoading()"/>
+            <apex:commandLink styleClass="btn btn-danger" type="button" value="{!$Label.ISSP_AMC_CANCEL}" status="counterStatus" action="{!clearMessage}" reRender="errorMessage" html-data-dismiss="modal"/>
+        </div>-->
+        <apex:commandLink styleClass="btn btn-default" type="button" value="{!$Label.ISSP_AMC_CLOSE}" status="counterStatus" action="{!clearMessage}" reRender="errorMessage" html-data-dismiss="modal"/>
+    </div>
+
+    <script>
+        $("#myModal2").on("hidden.bs.modal", function () {
+            $(".modal-body1").html("");
+        });
+    </script>
+</apex:component>

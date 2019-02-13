@@ -1,0 +1,95 @@
+<!--
+	Component Name: ISSP_AMC_Apply_New_Code.component
+	Related Classes: ISSP_AMC_Apply_New_Code.cls
+
+	Copyright @Right IT Services
+
+	Purpose: 
+
+	VERSION  	AUTHOR				DATE    		DETAIL/CHANGE REFERENCE
+ 	1.0		  	João Ferreira		25-10-2018   	INITIAL DEVELOPMENT
+ -->
+<apex:component controller="ISSP_AMC_Apply_New_Code" allowDML="true">
+
+	<div class="container">
+		<apex:form id="appnewcodeFrm">
+			<div class="row">
+				<section name="left-side-agency-accred" class="col-md-12">
+					<header>
+                        <div>
+                            <h2 class="subtitle">{!$Label.ISSP_AMC_APPLY_NEW_CODE}</h2>
+                            <div class="redFringe"></div>
+                        </div>
+                    </header>
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+	                <div class="row">
+	                    <div class="col-md-5">
+	                        <apex:commandButton styleClass="btn btn_iata_primary" action="{!navigateAirlineDesignators}" value="{!$Label.ISSP_AMC_AIRLINE_DESIGNATOR_CHANGE}" status="Loading" rerender="appnewcodeFrm"/>
+	                    </div>
+	                    <div class="col-md-7">
+	                        <apex:outputText value="{!$Label.ISSP_AMC_AIRLINE_DESIGNATORS_DESC}" escape="false"/>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-md-7 col-md-offset-5">
+	                        <apex:commandLink value="{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}"/>
+	                    </div>
+	                </div>
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+	                <div class="row">
+	                    <div class="col-md-5">
+	                        <apex:commandButton styleClass="btn btn_iata_primary" action="{!navigateAccountingOrPrefixCode}" value="{!$Label.ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE}" status="Loading" rerender="appnewcodeFrm"/>
+	                    </div>
+	                    <div class="col-md-7">
+	                        <apex:outputText value="{!$Label.ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE_DESC}" escape="false"/>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-md-7 col-md-offset-5">
+	                        <apex:commandLink value="{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}"/>
+	                    </div>
+	                </div>
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+	                <div class="row">
+	                    <div class="col-md-5">
+	                        <apex:commandButton styleClass="btn btn_iata_primary" action="{!navigateLocationIdentifier}" value="{!$Label.ISSP_AMC_Location_Identifier_Code}" status="Loading" rerender="appnewcodeFrm"/>
+	                    </div>
+	                    <div class="col-md-7">
+	                        <apex:outputText value="{!$Label.ISSP_AMC_LOCATION_IDENTIFIER_DESC}" escape="false"/>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-md-7 col-md-offset-5">
+	                        <apex:commandLink value="{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}"/>
+	                    </div>
+	                </div>
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+	                <div class="row">
+	                    <div class="col-md-5">
+	                        <apex:commandButton styleClass="btn btn_iata_primary" action="{!navigateBaggageTagRange}" value="{!$Label.ISSP_AMC_BAGGAGE_TAG_RANGE_CODE}" status="Loading" rerender="appnewcodeFrm"/>
+	                    </div>
+	                    <div class="col-md-7">
+	                        <apex:outputText value="{!$Label.ISSP_AMC_BAGAGE_TAG_RANGE_DESC}" escape="false"/>
+	                    </div>
+	                </div>
+	                <div class="row">
+	                    <div class="col-md-7 col-md-offset-5">
+	                        <apex:commandLink value="{!$Label.ISSP_AMC_CHECK_THE_REQUIREMENTS}"/>
+	                    </div>
+	                </div>
+	                <div class="col-md-12">
+            			<hr/>
+  					</div>
+	            </section>
+			</div>
+		</apex:form>
+	</div>
+</apex:component>

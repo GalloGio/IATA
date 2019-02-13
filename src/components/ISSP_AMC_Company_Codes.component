@@ -1,0 +1,150 @@
+<!--
+    Component Name: ISSP_AMC_Company_Codes.component
+    Related Classes: ISSP_AMC_Company_Codes.cls
+
+    Copyright @Right IT Services
+
+    Purpose:
+
+    VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
+    1.0         Filipa Martins       26-10-2018      INITIAL DEVELOPMENT
+ -->
+
+<apex:component controller="ISSP_AMC_Company_Codes">
+    <!--<apex:attribute name="erro" type="String" description="error message" assignTo="{!erros}"/>-->
+    <head>
+        <style>
+          .companyTitle{
+                font-weight: bold;
+                font-family: "Arial";
+                font-size: 1.5rem;
+            }
+
+           .recalled{
+            color:rgb(255,0,0);
+            }
+
+        </style>
+    </head>
+
+    <div style="margin-top: 20px;">
+
+            <div>
+                <div class="section-header" style="text-align: center; background-color: #003F76">
+                    <strong class="companyTitle">{!$Label.ISSP_AMC_COMPANY_CODES}</strong><br/>
+                    <strong class="companyTitle">{!$Label.ISSP_AMC_COMPANY_CODES2}</strong>
+                </div>
+            </div>
+
+
+        <div style="margin-top: 13px;">
+            <apex:outputPanel id="hasDesignator" rendered="{!hasDesignatorInfo}">
+                                {!$Label.ISSP_AMC_AIRLINE_DESIGNATOR}
+                            <strong style="color:#7697D3">
+                                <apex:outputText value="{!accountRecord.Airline_designator__c}"/>
+                            </strong><br/>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="hasAccountInfo" rendered="{!hasAccountingCodeInfo}">
+                        {!$Label.ISSP_AMC_ACCOUNTING_CODE}
+                        <strong style="color:#7697D3">
+                            <apex:outputText value="{!accountRecord.Accounting_Code__c}"/>
+                        </strong><br/>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="hasPrefixInfo" rendered="{!hasPrefixCodeInfo}">
+                        {!$Label.ISSP_AMC_PREFIX_CODE1}
+                        <strong style="color:#7697D3">
+                            <apex:outputText value="{!accountRecord.Airline_Prefix__c}"/>
+                        </strong><br/>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="hasBaggageInfo" rendered="{!hasBaggageCodeInfo}">
+                        {!$Label.ISSP_AMC_BAGGAGE_TAG}
+                        <strong style="color:#7697D3">
+                            <apex:outputText value="{!accountRecord.Baggage_Tag_Range_Code__c}"/>
+                        </strong><br/>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="hasExperyDate" rendered="{!hasExpiryDateInfo}">
+                        <p>{!$Label.ISSP_AMC_AOC_EXPIRES}
+                         <span style="color:#7697D3">
+                             <apex:outputText value="{0,date,dd/MMMMM/yyyy}" label="date">
+                                <apex:param value="{!accountRecord.AOC_Expiry_Date__c}" />
+                            </apex:outputText>
+                         </span></p>
+            </apex:outputPanel>
+
+
+            <apex:outputPanel id="thePanelFalse" rendered="{!!hasInfo}">
+                <apex:outputText style="color:#7697D3" value="{!$Label.ISSP_AMC_WITHOUT_CODES}"/>
+            </apex:outputPanel>
+        </div>
+
+        <apex:form >
+                    <ul class="list actions" style="list-style-type: none; padding:0px; margin:13px 0 0 0">
+                        <li>
+                            <button class="btn btn_iata_primary" type="button" data-toggle="modal" data-target="#myModal" style="width:100%;  margin:0px">
+                                    {!$Label.ISSP_AMC_MANAGE_CODES}
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btn btn_iata_primary" type="button" data-toggle="modal" data-target="#myModal2" style="width:100%; margin:10px 0 0 0">
+                                    {!$Label.ISSP_AMC_COMPANY_INFORMATION}
+                            </button>
+                            <!--<input type="button" class="btn btn_iata_primary" action="changeCompanyInfo()" value="{!$Label.ISSP_AMC_COMPANY_INFO}" style="width:100%; margin:10px 0 0 0"/>-->
+                        </li>
+                    </ul>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <c:ISSP_AMC_ManageMyCodes />
+                        </div>
+                        <!--<div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal2" role="dialog" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <c:ISSP_AMC_Change_Comp_Info />
+                        </div>
+                        <!--<div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </apex:form>
+
+
+
+    </div>
+    <script type="text/javascript">
+              function manageCodes() {
+                var myWindow = window.open("ISSP_AMC_ManageMyCodes", 'PopUp', "width=400,height=200");
+              }
+
+            function changeCompanyInfo() {
+                var myWindow = window.open("ISSP_AMC_Change_Comp_Info", 'PopUp', "width=400,height=200");
+            }
+
+            function man(){
+            }
+
+            function createContent(){
+            }
+    </script>
+</apex:component>

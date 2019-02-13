@@ -1,0 +1,64 @@
+<apex:component controller="ISSP_AMC_DeclarationBaggageTagCodes">
+	<apex:attribute name="participation" description="Requirement" type="Participation_Online_Application__c" required="true" assignTo="{!controllerParticipation}"/>
+    <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="false" />
+
+	<div class="panel panel-primary">
+  		<div class="panel-heading" id="BAGGAGEDECLARATIONS">
+            {!$Label.ISSP_AMC_REASONS_FOR_USE}
+    	</div>
+    	<div class="panel-body">
+            <apex:outputPanel id="baggageCheckboxes">
+                <div class="form-group" >
+                            <div class="col-md-12">
+                                <div class="col-md-offset-1 col-md-10 col-sm-offset-0" style="text-align: justify;">
+                                    <div class="form-group">
+                                         
+                                            <div class="checkbox">
+                                                <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
+                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_1__c}" >
+                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    </apex:inputCheckbox>
+                                                    <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_1}"/>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
+                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_2__c}">
+                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    </apex:inputCheckbox>
+                                                    <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_2}"/>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
+                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_3__c}">
+                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    </apex:inputCheckbox>
+                                                    <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_3}"/>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
+                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_4__c}">
+                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    </apex:inputCheckbox>
+                                                    <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_4}"/>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
+                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_5__c}">
+                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    </apex:inputCheckbox>
+                                                    <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_5}"/>
+                                                </label>
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+            </apex:outputPanel>
+		</div>
+	</div>
+</apex:component>

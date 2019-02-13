@@ -1,0 +1,532 @@
+<apex:component controller="ISSP_AMC_Metropolitan_Area">
+	<apex:attribute name="participation" description="Requirement" type="Participation_Online_Application__c" required="true" assignTo="{!controllerParticipation}"/>
+    <apex:attribute name="countryList" description="List of Countries" type="SelectOption[]" required="true" />
+    <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="true" />
+
+    <c:Loading />
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading" id="METROPOLITANAREA">
+            {!$Label.ISSP_AMC_METROPOLITAN_AREA}
+        </div>
+        <!--<apex:messages />-->
+        <div class="panel-body">
+            <apex:outputPanel id="aocPanel">
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-11">
+                        	<div class="col-md-8">
+                        		<label for="aocRadio">{!$Label.ISSP_AMC_METROPOLITAN_AREA_QUESTION}</label>
+                        	</div>
+                        	<div class="col-md-4">
+	                            <apex:selectRadio id="aocRadio" value="{!participation.Does_Metropolitan_area_currently_exists__c}" styleClass="{!IF(AND(hasError, participation.Does_Metropolitan_area_currently_exists__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
+	                                <apex:actionSupport event="onchange" rerender="aocPanel" oncomplete="rerenderValidation()" status="Loading" />
+	                                <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
+	                                <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
+	                            </apex:selectRadio>
+	                        </div>
+                    </div>
+                    <div class="col-md-12">&nbsp;</div>
+                    <div ><!-- class="form-group" -->
+                        <apex:outputPanel rendered="{!participation.Does_Metropolitan_area_currently_exists__c == 'Yes'}">
+                          		
+                          			<!--<div class="col-md-offset-1 col-md-11">
+                          			<div class="col-md-8">
+	                                    	<label for="addOrDelete">{!$Label.ISSP_AMC_ADD_DELETE_FROM_METROPOLITAN}</label>
+	                                    </div>
+	                                    <div class="col-md-3">
+				                            <apex:selectRadio id="addOrDelete" value="{!participation.Add_or_Delete_an_Airport__c}" style="width:125px;">
+				                                <apex:actionSupport event="onchange" rerender="aocPanel" status="Loading" />
+				                                <apex:selectOption itemValue="Delete" itemLabel="{!$Label.ISSP_AMC_ADD}" />
+				                                <apex:selectOption itemValue="Add" itemLabel="{!$Label.ISSP_AMC_DELETE}" />
+				                            </apex:selectRadio>
+				                        </div>
+                          			</div> -->
+									<div class="col-md-12">&nbsp;</div>
+                                	<div class="col-md-offset-1 col-md-11" >
+                                		<!-- {!$Label.ISSP_AMC_WHICH_ADD_DELETE_METROPOLITAN}-->
+				                        <div class="col-md-8">
+				                            <label for="op2" class="">{!$Label.ISSP_AMC_WHICH_ADD_DELETE_METROPOLITAN}</label>
+				                        </div>
+				                        <div class="col-md-12">&nbsp;</div>
+				                        <!--<div class="col-md-offset-1 col-md-9">
+				                        	<div class="col-md-3">
+				                            	<apex:outputText value="{!$Label.ISSP_AMC_LOCATION_NAME}"/>
+				                            </div>
+				                            <div class="col-md-6">
+				                            	<apex:inputText styleClass="form-control" id="it1" value="{!participation.Metro_Location_Name__c}"/>
+				                            </div>
+				                        </div>
+				                        <div class="col-md-12">&nbsp;</div> -->
+				                        <div class="col-md-offset-1 col-md-9"> 
+				                        	<div class="col-md-3">
+				                            	<apex:outputText value="{!$Label.ISSP_AMC_LOCATION_CODE}"/>
+				                            </div>  
+				                            <div class="col-md-6">
+				                            	<div class="{!IF(AND(hasError, OR(participation.Location_Code__c == null, participation.Location_Code__c == "")), 'has-error has-feedback', '')}">
+													<apex:inputText size="3" maxlength="3" id="it2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control codel" value="{!participation.Location_Code__c}" />
+													<span class="{!IF(AND(hasError, OR(participation.Location_Code__c == null, participation.Location_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+											        <span class="sr-only">(error)</span>
+									                
+									                <div style="color: #a94442" class="errormessage"></div>
+								            	</div>                        
+				                            </div>                      
+				                        </div>
+				                    </div>
+				                    <div class="col-md-12">&nbsp;</div>
+				                    <!--<apex:outputPanel >
+					                    <div >
+					                    	<div class="col-md-offset-1 col-md-11">
+		                                        <div class="col-md-8">
+		                                            <label for="approvals">{!$Label.ISSP_AMC_OBTAINED_APPROVALS}</label>
+		                                        </div>
+		                                        <div class="col-md-3" >
+							                        <apex:selectRadio id="approvals" value="{!participation.Has_the_airline_the_approvals__c}" style="width:100px;">
+							                            <apex:actionSupport event="onchange" rerender="aocPanel" oncomplete="rerenderValidation()" status="Loading" />
+							                            <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
+							                            <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
+							                        </apex:selectRadio>
+							                    </div> 
+						                	</div>
+						                    <div class="form-group">
+						                    	<apex:outputPanel rendered="{!participation.Has_the_airline_the_approvals__c == 'Yes'}">
+										            <div class="col-md-12">
+										            		<div class="col-md-12">&nbsp;</div>
+										            		<div class="col-md-9" > 
+											            		<div class="form-group">
+													            	<div class="col-md-5 col-md-offset-2 control-label">
+													                	<apex:outputText value="{!$Label.ISSP_AMC_NAME_AIRPORT_AUTHORITY_1}"/>
+													                </div>
+													                <div class="col-md-5">
+													                	<apex:inputText styleClass="form-control" value="{!participation.Name_of_Airport_Authority_Airport_1__c}"/>
+													                </div>
+													            </div>
+													            <div class="form-group">
+														            <div class="col-md-5 col-md-offset-2  control-label"> 
+														                <apex:outputText value="{!$Label.ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_1}"/> 
+														            </div>
+													                <div class="col-md-5">
+														                <div class="emailValidation">
+															                <apex:inputText id="input1" onchange="validateEmail(this)" styleClass="form-control allemails" value="{!participation.Email_of_Airport_Authority_Airport_1__c}"/>
+																	        <span class="invalidEmail" aria-hidden="true"> </span>
+																	        <span class="sr-only">(error)</span>
+															             
+															                <div style="color: #a94442" class="errormessage"></div>
+														            	</div>
+														            </div>
+														        </div>
+														    </div>
+														    
+														    <apex:outputPanel rendered="{!IF((cont>0), true, false)}">
+														    	<div class="col-md-12">&nbsp;</div>
+														    	<div class="col-md-9" > 
+														        <div class="form-group">
+														            <div class="col-md-5 col-md-offset-2 control-label">
+														                <apex:outputText value="{!$Label.ISSP_AMC_NAME_AIRPORT_AUTHORITY_2}" />
+														            </div>
+													                <div class="col-md-5">
+														                <apex:inputText styleClass="form-control" value="{!participation.Name_of_Airport_Authority_Airport_2__c}" />
+														            </div>
+														        </div>
+														        <div class="form-group">
+														            <div class="col-md-5 col-md-offset-2 control-label"> 
+														                <apex:outputText value="{!$Label.ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_2}" />
+														            </div>
+													                <div class="col-md-5"> 
+													                	<div class="emailValidation">
+															                <apex:inputText onchange="validateEmail(this)" styleClass="form-control allemails" value="{!participation.Email_of_Airport_Authority_Airport_2__c}"/>
+																	        <span class="invalidEmail" aria-hidden="true"> </span>
+																	        <span class="sr-only">(error)</span>
+															                
+															                <div style="color: #a94442" class="errormessage"></div>
+														            	</div>                
+														            </div>
+														        </div>
+														    </div>
+														    </apex:outputPanel>
+														    
+														    <apex:outputPanel rendered="{!IF((cont>1), true, false)}">
+														    	<div class="col-md-12">&nbsp;</div>
+														    	<div class="col-md-9"> 
+														        <div class="form-group">													            
+														            <div class="col-md-5 col-md-offset-2 control-label">
+														                <apex:outputText value="{!$Label.ISSP_AMC_NAME_AIRPORT_AUTHORITY_3}" />
+														            </div>
+													                <div class="col-md-5">
+														                <apex:inputText styleClass="form-control" value="{!participation.Name_of_Airport_Authority_Airport_3__c}" />
+														            </div>
+														        </div>
+														        <div class="form-group">
+														            <div class="col-md-5 col-md-offset-2 control-label"> 
+														                <apex:outputText value="{!$Label.ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_3}" />
+														            </div>
+													                <div class="col-md-5">                          
+														            	<div class="emailValidation">
+															                <apex:inputText onchange="validateEmail(this)" styleClass="form-control allemails" value="{!participation.Email_of_Airport_Authority_Airport_3__c}"/>
+															                <span class="invalidEmail" aria-hidden="true"> </span>
+															                <span class="sr-only">(error)</span>
+															                 
+															                <div style="color: #a94442" class="errormessage"></div>
+														            	</div>              
+														            </div>
+														        </div>
+														    </div>
+														    </apex:outputPanel>
+														   
+													        <apex:outputPanel rendered="{!IF((cont>2), true, false)}">
+													        	<div class="col-md-12">&nbsp;</div>
+													        	<div class="col-md-9">
+														        <div class="form-group">
+														            <div class="col-md-5 col-md-offset-2 control-label">
+														                <apex:outputText value="{!$Label.ISSP_AMC_NAME_AIRPORT_AUTHORITY_4}" rendered="{!IF((cont>2), true, false)}"/>
+														            </div>
+													                <div class="col-md-5">
+														                <apex:inputText styleClass="form-control" value="{!participation.Name_of_Airport_Authority_Airport_4__c}"/>
+														            </div>
+														        </div>
+														        <div class="form-group">
+														            <div class="col-md-5 col-md-offset-2 control-label"> 
+														                <apex:outputText value="{!$Label.ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_4}"/>
+														            </div>
+													                <div class="col-md-5">                         
+														                <div class="emailValidation">
+															                <apex:inputText onchange="validateEmail(this)" styleClass="form-control allemails" value="{!participation.Email_of_Airport_Authority_Airport_4__c}"/>
+															                <span class="invalidEmail" aria-hidden="true"> </span>
+															                <span class="sr-only">(error)</span>
+															                
+															                <div style="color: #a94442" class="errormessage"></div>
+														            	</div>                   
+														            </div>
+														        </div>
+														    </div>
+
+													        </apex:outputPanel>
+														    <apex:outputPanel rendered="{!IF((cont>3), true, false)}">
+															    <div class="col-md-12">&nbsp;</div>
+															    <div class="col-md-9">
+															        <div class="form-group">
+															            <div class="col-md-5 col-md-offset-2 control-label">
+															                <apex:outputText value="{!$Label.ISSP_AMC_NAME_AIRPORT_AUTHORITY_5}" />
+															            </div>
+														                <div class="col-md-5">
+															                <apex:inputText styleClass="form-control" value="{!participation.Name_of_Airport_Authority_Airport_5__c}" />
+															            </div>
+															        </div>
+															        <div class="form-group">
+															            <div class="col-md-5 col-md-offset-2 control-label"> 
+															                <apex:outputText value="{!$Label.ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_5}"/> 
+															            </div>
+														                <div class="col-md-5">                         
+															                <div class="emailValidation">
+																                <apex:inputText onchange="validateEmail(this)" styleClass="form-control allemails" value="{!participation.Email_of_Airport_Authority_Airport_5__c}"/>
+																                <span class="invalidEmail" aria-hidden="true"> </span>
+																                <span class="sr-only">(error)</span>
+																                
+																                <div style="color: #a94442" class="errormessage"></div>
+															            	</div>                
+															            </div>
+															        </div>
+															    </div>
+															</apex:outputPanel>
+
+											        </div>
+										            <div class="form-group col-md-11" style="display:flex; align-items:center; justify-content:center">
+										            	<apex:commandButton value="{!$Label.ISSP_AMC_ADD_ANOTHER_AUTHORITY_BUTTON}" oncomplete="rerenderValidation()"  action="{!showInputText}" disabled="{!IF((cont==4),true, false)}" reRender="aocPanel" styleClass="btn btn-primary btn-sm"/>
+										            </div>
+					                                  		
+						                    	</apex:outputPanel>
+	                                    	</div>
+	                                    	<div class="form-group">
+						                    	<apex:outputPanel rendered="{!participation.Has_the_airline_the_approvals__c == 'No'}">
+						                    		<div class="col-md-11">
+						                                <div class="form-group">
+					                                        <div class="col-sm-offset-1 col-md-offset-2 col-md-8">
+					                                            <div style="color:orange">
+					                                                {!$Label.ISSP_AMC_NEGATIVE_APPROVALS}
+					                                            </div>
+					                                        </div>
+						                                </div>
+						                            </div>
+						                    	</apex:outputPanel>
+	                                    	</div>
+	                                    </div>
+                                	</apex:outputPanel> -->
+                               
+                        </apex:outputPanel>
+                    </div>
+
+                        <apex:outputPanel rendered="{!participation.Does_Metropolitan_area_currently_exists__c == 'No'}">
+                                <div class="col-md-offset-1 col-md-11">
+                                    <div class="col-md-8">
+                                        <label for="op2">{!$Label.ISSP_AMC_AIRPORT_GROUP}</label>
+                                    </div>
+                                    <div class="col-md-12">&nbsp;</div>
+                                    <div class="form-group ">
+										<div class="col-md-10">
+											<!--<div class="control-label col-md-3">
+										    	<apex:outputText >{!$Label.ISSP_AMC_LOCATION_NAME_1}</apex:outputText>
+											</div>
+											<div class="col-md-4">
+										    	<apex:inputText styleClass="form-control" value="{!participation.Location_Name_1__c}"/>
+										    </div> -->
+											<div class="control-label col-md-3"> 
+											    <apex:outputText >{!$Label.ISSP_AMC_LOCATION_CODE_1}</apex:outputText>
+											</div>    
+											<div class="col-md-4">
+												<div class="{!IF(AND(hasError, OR(participation.Location_Code_1__c == null, participation.Location_Code_1__c == "")), 'has-error has-feedback', '')}">
+													<apex:inputText size="3" maxlength="3" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control codel" value="{!participation.Location_Code_1__c}" />
+													<span class="{!IF(AND(hasError, OR(participation.Location_Code_1__c == null, participation.Location_Code_1__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+											        <span class="sr-only">(error)</span>
+									                
+									                <div style="color: #a94442" class="errormessage"></div>
+								            	</div>                      
+											</div> 
+										</div>                 	
+									</div>
+									<div class="form-group ">
+										<div class="col-md-10">
+											<!--<div class="control-label col-md-3">
+										    	<apex:outputText >{!$Label.ISSP_AMC_LOCATION_NAME_2}</apex:outputText>
+											</div>
+											<div class="col-md-4">
+										    	<apex:inputText styleClass="form-control" value="{!participation.Location_Name_2__c}"/>
+										    </div> -->
+											<div class="control-label col-md-3"> 
+											    <apex:outputText >{!$Label.ISSP_AMC_LOCATION_CODE_2}</apex:outputText>
+											</div>    
+											<div class="col-md-4">
+												<div class="{!IF(AND(hasError, OR(participation.Location_Code_2__c == null, participation.Location_Code_2__c == "")), 'has-error has-feedback', '')}">
+													<apex:inputText size="3" maxlength="3" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control codel" value="{!participation.Location_Code_2__c}" />
+													<span class="{!IF(AND(hasError, OR(participation.Location_Code_2__c == null, participation.Location_Code_2__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+											        <span class="sr-only">(error)</span>
+									                
+									                <div style="color: #a94442" class="errormessage"></div>
+								            	</div>                      
+											</div> 
+										</div>                 	
+									</div>
+								</div>
+								<div class="col-md-12">&nbsp;</div>
+								<!--<div class="col-md-offset-1 col-md-11">
+                                    <apex:outputPanel >
+
+	                                        <div class="col-md-8">
+	                                            <label for="approvals2">{!$Label.ISSP_AMC_APPROVALS_BOTH_AUTHORITIES}</label>
+	                                        </div>
+	                                        <div class="col-md-3">
+						                        <apex:selectRadio id="approvals2" value="{!participation.Has_the_airline_the_approvals_both__c}" style="width:100px;">
+						                            <apex:actionSupport event="onchange" rerender="aocPanel" oncomplete="rerenderValidation()" status="Loading" />
+						                            <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
+						                            <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
+						                        </apex:selectRadio>
+						                    </div>
+						                    <div class="col-md-12">&nbsp;</div>
+						                    <div class="col-md-10 col-md-offset-1">
+						                    	<apex:outputPanel rendered="{!participation.Has_the_airline_the_approvals_both__c == 'Yes'}">
+								                    <div class="form-group">
+								                    	<div class="form-group">
+								                    		<div class="col-md-10">
+															<div class="control-label col-md-6">
+												                            {!$Label.ISSP_AMC_NAME_AIRPORT_AUTHORITY_1}
+																		</div>
+																		<div class="col-md-6">
+														    					<apex:inputText styleClass="form-control" value="{!participation.Name_of_Airport_Authority_Airport_1__c}"/>
+														    			</div> 
+
+															</div>
+								                    	</div>
+								                    	<div class="form-group">
+								                    		<div class="col-md-10">
+															<div class="control-label col-md-6">
+										                            {!$Label.ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_1}
+																</div>
+																<div class="col-md-6">
+												    					<div class="emailValidation">
+															                <apex:inputText onchange="validateEmail(this)" styleClass="form-control allemails" value="{!participation.Email_of_Airport_Authority_Airport_1__c}"/>
+															                <span class="invalidEmail" aria-hidden="true"> </span>
+															                <span class="sr-only">(error)</span>
+															                
+															                <div style="color: #a94442" class="errormessage"></div>
+														            	</div>
+												    			</div> 
+
+															</div>
+								                    	</div>
+								                    </div>
+								                    <div class="form-group">
+								                    	<div class="form-group">
+								                    		<div class="col-md-10">
+															<div class="control-label col-md-6">
+												                            {!$Label.ISSP_AMC_NAME_AIRPORT_AUTHORITY_2}
+																		</div>
+																		<div class="col-md-6">
+														    					<apex:inputText styleClass="form-control" value="{!participation.Name_of_Airport_Authority_Airport_2__c}" />
+														    			</div> 
+
+															</div>
+								                    	</div>
+								                    	<div class="form-group">
+								                    		<div class="col-md-10">
+																<div class="control-label col-md-6">
+										                            {!$Label.ISSP_AMC_EMAIL_AIRPORT_AUTHORITY_2}
+																</div>
+																<div class="col-md-6">
+												    					<div class="emailValidation">
+															                <apex:inputText onchange="validateEmail(this)" styleClass="form-control allemails" value="{!participation.Email_of_Airport_Authority_Airport_2__c}"/>
+															                <span class="invalidEmail" aria-hidden="true"> </span>
+															                <span class="sr-only">(error)</span>
+															                
+															                <div style="color: #a94442" class="errormessage"></div>
+														            	</div>
+												    			</div> 
+															</div>
+								                    	</div>
+								                    </div>                    
+						                    	</apex:outputPanel>
+	                                    	</div>
+	                                    	<div class="form-group">
+						                    	<apex:outputPanel rendered="{!participation.Has_the_airline_the_approvals_both__c == 'No'}">
+							                    	<div class="col-md-11">
+						                                <div class="form-group">
+						                                        <div class="col-sm-offset-1 col-md-offset-1 col-md-9">
+						                                            <div style="color:orange">
+						                                                {!$Label.ISSP_AMC_NEGATIVE_APPROVALS}
+						                                            </div>
+						                                        </div>
+						                                </div>
+						                            </div>
+						                    	</apex:outputPanel>
+	                                    	</div>
+                                	</apex:outputPanel>
+                                </div> -->
+                        </apex:outputPanel>  
+	                </div>
+	            </apex:outputPanel>
+        </div>
+    </div>
+
+    <script>
+    //VALIDATE EMAILS ON RERENDER
+    	/*function rerenderValidation(){
+    		var emailList = document.getElementsByClassName('allemails');
+    		for(var i=0; i<emailList.length; i++){  			
+    			if(emailList[i].value != null && emailList[i].value != ""){
+    				validateEmail(emailList[i]);
+    			}
+    		}
+    	}*/
+
+
+    //VALIDATE EMAILS
+        /*function validateEmail(element) {
+        	var x = element.parentElement.classList;
+			var y = element.parentElement.children;
+	        filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	        if(element.value  != null && element.value != ""){
+		        if (!filter.test(element.value)) {
+		        	x.remove("emailValidation");
+		        	x.add("has-error");
+		        	x.add("has-feedback");
+		        	for (var i = 0; i < y.length; i++) {
+		        		if(y[i].classList == "invalidEmail"){
+		        			y[i].classList.remove("invalidEmail");
+		        			y[i].classList.add("glyphicon");
+		        			y[i].classList.add("glyphicon-remove"); 
+		        			y[i].classList.add("form-control-feedback");
+		        		}
+		        		if(y[i].classList =="errormessage"){
+		        			y[i].innerHTML = "{!$Label.ISSP_AMC_ENTER_A_VALID_EMAIL}";
+
+		        		}	        		
+		        	}
+		        } 
+		        else{
+		        	for (var i = 0; i < y.length; i++) {
+		        		if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+		        			y[i].classList.add("invalidEmail");
+		        			y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+		        		}
+		        		if(y[i].classList =="errormessage"){
+		        			y[i].innerHTML = ""
+		        		}
+		        	}
+		        	x.add("emailValidation");
+		        	x.remove("has-error");
+		        	x.remove("has-feedback");
+		        }
+		    }
+		    else{
+	        	for (var i = 0; i < y.length; i++) {
+	        		if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+	        			y[i].classList.add("invalidEmail");
+	        			y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+	        		}
+	        		if(y[i].classList =="errormessage"){
+	        			y[i].innerHTML = ""
+	        		}
+	        	}
+	        	x.add("emailValidation");
+	        	x.remove("has-error");
+	        	x.remove("has-feedback");
+	        }
+
+		}*/
+
+		function validateLatinChar(element, errorClass, parentClass) {
+                console.log('ENTREI NA VALIDAÇÂO');
+                var x = element.parentElement.classList;
+                var y = element.parentElement.children;
+                filter = /([^A-Za-z0-9\s]+)/;
+                if(element.value  != null && element.value != ""){
+                    if (filter.test(element.value)) {
+                        x.remove("parentClass");
+                        x.add("has-error");
+                        x.add("has-feedback");
+                        console.log('ClassList: ' + x);
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "errorClass" || y[i].classList == "{!IF(AND(hasError, OR(participation.Location_Code__c == null, participation.Location_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" || y[i].classList == "{!IF(AND(hasError, OR(participation.Location_Code_1__c == null, participation.Location_Code_1__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" || y[i].classList == "{!IF(AND(hasError, OR(participation.Location_Code_2__c == null, participation.Location_Code_2__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}"){
+                                y[i].classList.remove("errorClass");
+                                y[i].classList.add("glyphicon");
+                                y[i].classList.add("glyphicon-remove"); 
+                                y[i].classList.add("form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                y[i].innerHTML = "{!$Label.ISSP_AMC_ONLY_ALPHANUM_ALLOWED}";
+                                element.value= "";
+                            }                   
+                        }
+                    } 
+                    else{
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                                y[i].classList.add("errorClass");
+                                y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                y[i].innerHTML = ""
+                            }
+                        }
+                        x.add("parentClass");
+                        x.remove("has-error");
+                        x.remove("has-feedback");
+                    }
+                }
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            y[i].classList.add("errorClass");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = ""
+                        }
+                    }
+                    x.add("parentClass");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                }
+            }
+    </script>
+
+
+</apex:component>

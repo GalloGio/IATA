@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Participation Application Requirement</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Participation Application Requirements</value>
+    </caseValues>
+    <fields>
+        <label><!-- ACLI Application Requirement --></label>
+        <name>ACLI_Application_Requirement__c</name>
+        <relationshipLabel><!-- Participation Application Requirements --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- ACLI Codes --></label>
+        <name>ACLI_Codes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requirement Fields --></label>
+        <name>ACLI_Requirement_Fields__c</name>
+        <picklistValues>
+            <masterLabel>AAO_Domestic__c</masterLabel>
+            <translation><!-- AAO_Domestic__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AAO_International__c</masterLabel>
+            <translation><!-- AAO_International__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_Bus_Company__c</masterLabel>
+            <translation><!-- AOC_Bus_Company__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_CRS__c</masterLabel>
+            <translation><!-- AOC_CRS__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_Expiry_Date__c</masterLabel>
+            <translation><!-- AOC_Expiry_Date__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_Ferry_Company__c</masterLabel>
+            <translation><!-- AOC_Ferry_Company__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_Issuing_Authority_Name__c</masterLabel>
+            <translation><!-- AOC_Issuing_Authority_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_Non_Scheduled_Cargo__c</masterLabel>
+            <translation><!-- AOC_Non_Scheduled_Cargo__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_Non_Scheduled_Passenger__c</masterLabel>
+            <translation><!-- AOC_Non_Scheduled_Passenger__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_Railway_Company__c</masterLabel>
+            <translation><!-- AOC_Railway_Company__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_Scheduled_Cargo__c</masterLabel>
+            <translation><!-- AOC_Scheduled_Cargo__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_Scheduled_Passenger__c</masterLabel>
+            <translation><!-- AOC_Scheduled_Passenger__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_ULD__c</masterLabel>
+            <translation><!-- AOC_ULD__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_country_of_issue__c</masterLabel>
+            <translation><!-- AOC_country_of_issue__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOC_issue_date__c</masterLabel>
+            <translation><!-- AOC_issue_date__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ARINC__c</masterLabel>
+            <translation><!-- ARINC__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounting_Code_Airline_Prefix_Purpose__c</masterLabel>
+            <translation><!-- Accounting_Code_Airline_Prefix_Purpose__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Add_or_Delete_an_Airport__c</masterLabel>
+            <translation><!-- Add_or_Delete_an_Airport__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline_has_reciprocal_2_W_agreement__c</masterLabel>
+            <translation><!-- Airline_has_reciprocal_2_W_agreement__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline_have_telecom_with_SITA_or_ARINC__c</masterLabel>
+            <translation><!-- Airline_have_telecom_with_SITA_or_ARINC__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Areas_of_Routes_and_Operations__c</masterLabel>
+            <translation><!-- Areas_of_Routes_and_Operations__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Authorization_to_provide_transportation__c</masterLabel>
+            <translation><!-- Authorization_to_provide_transportation__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Authorized_areas_of_operations__c</masterLabel>
+            <translation><!-- Authorized_areas_of_operations__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baggage_Reason_For_Use_1__c</masterLabel>
+            <translation><!-- Baggage_Reason_For_Use_1__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baggage_Reason_For_Use_2__c</masterLabel>
+            <translation><!-- Baggage_Reason_For_Use_2__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baggage_Reason_For_Use_3__c</masterLabel>
+            <translation><!-- Baggage_Reason_For_Use_3__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baggage_Reason_For_Use_4__c</masterLabel>
+            <translation><!-- Baggage_Reason_For_Use_4__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baggage_Reason_For_Use_5__c</masterLabel>
+            <translation><!-- Baggage_Reason_For_Use_5__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing_City__c</masterLabel>
+            <translation><!-- Billing_City__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing_Contact__c</masterLabel>
+            <translation><!-- Billing_Contact__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing_Country__c</masterLabel>
+            <translation><!-- Billing_Country__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing_Postal_Zip_code__c</masterLabel>
+            <translation><!-- Billing_Postal_Zip_code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing_State_Province__c</masterLabel>
+            <translation><!-- Billing_State_Province__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing_Street_address_1__c</masterLabel>
+            <translation><!-- Billing_Street_address_1__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Billing_VAT__c</masterLabel>
+            <translation><!-- Billing_VAT__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case__c</masterLabel>
+            <translation><!-- Case__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>City_Name__c</masterLabel>
+            <translation><!-- City_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Date_of_Participation__c</masterLabel>
+            <translation><!-- Date_of_Participation__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Date_when_airport_has_been_operational__c</masterLabel>
+            <translation><!-- Date_when_airport_has_been_operational__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Does_Metropolitan_area_currently_exists__c</masterLabel>
+            <translation><!-- Does_Metropolitan_area_currently_exists__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Does_the_airline_presently_hold_a_three__c</masterLabel>
+            <translation><!-- Does_the_airline_presently_hold_a_three__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email_of_Airport_Authority_Airport_1__c</masterLabel>
+            <translation><!-- Email_of_Airport_Authority_Airport_1__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email_of_Airport_Authority_Airport_2__c</masterLabel>
+            <translation><!-- Email_of_Airport_Authority_Airport_2__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email_of_Airport_Authority_Airport_3__c</masterLabel>
+            <translation><!-- Email_of_Airport_Authority_Airport_3__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email_of_Airport_Authority_Airport_4__c</masterLabel>
+            <translation><!-- Email_of_Airport_Authority_Airport_4__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email_of_Airport_Authority_Airport_5__c</masterLabel>
+            <translation><!-- Email_of_Airport_Authority_Airport_5__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Future_plans_to_be_a_scheduled_airline__c</masterLabel>
+            <translation><!-- Future_plans_to_be_a_scheduled_airline__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GPS_Coordinates__c</masterLabel>
+            <translation><!-- GPS_Coordinates__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOB_Email__c</masterLabel>
+            <translation><!-- HOB_Email__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOB_First_Name__c</masterLabel>
+            <translation><!-- HOB_First_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOB_Last_Name__c</masterLabel>
+            <translation><!-- HOB_Last_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOB_Phone__c</masterLabel>
+            <translation><!-- HOB_Phone__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOB_Salutation__c</masterLabel>
+            <translation><!-- HOB_Salutation__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOB_Title__c</masterLabel>
+            <translation><!-- HOB_Title__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOC_Email__c</masterLabel>
+            <translation><!-- HOC_Email__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOC_First_Name__c</masterLabel>
+            <translation><!-- HOC_First_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOC_Last_Name__c</masterLabel>
+            <translation><!-- HOC_Last_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOC_Phone__c</masterLabel>
+            <translation><!-- HOC_Phone__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOC_Salutation__c</masterLabel>
+            <translation><!-- HOC_Salutation__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HOC_Title__c</masterLabel>
+            <translation><!-- HOC_Title__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HQ_City__c</masterLabel>
+            <translation><!-- HQ_City__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HQ_Country__c</masterLabel>
+            <translation><!-- HQ_Country__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HQ_Postal_Zip_code__c</masterLabel>
+            <translation><!-- HQ_Postal_Zip_code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HQ_State_Province__c</masterLabel>
+            <translation><!-- HQ_State_Province__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HQ_Street_address_1__c</masterLabel>
+            <translation><!-- HQ_Street_address_1__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HQ_VAT__c</masterLabel>
+            <translation><!-- HQ_VAT__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Has_airline_assigned_two_char_code__c</masterLabel>
+            <translation><!-- Has_airline_assigned_two_char_code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Has_company_assigned_numeric_code__c</masterLabel>
+            <translation><!-- Has_company_assigned_numeric_code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Has_the_airline_been_issued_an_AOC_Pick__c</masterLabel>
+            <translation><!-- Has_the_airline_been_issued_an_AOC_Pick__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Has_the_airline_the_AOC_in_progress__c</masterLabel>
+            <translation><!-- Has_the_airline_the_AOC_in_progress__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Has_the_airline_the_approvals__c</masterLabel>
+            <translation><!-- Has_the_airline_the_approvals__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Has_the_airline_the_approvals_both__c</masterLabel>
+            <translation><!-- Has_the_airline_the_approvals_both__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Has_the_company_published_their_schedule__c</masterLabel>
+            <translation><!-- Has_the_company_published_their_schedule__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head_Office_Contact_Details__c</masterLabel>
+            <translation><!-- Head_Office_Contact_Details__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA_ISO_Country__c</masterLabel>
+            <translation><!-- IATA_ISO_Country__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICAO_Code__c</masterLabel>
+            <translation><!-- ICAO_Code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_ESTIMATED_ANNUAL_BAGGAGE_TAGS__c</masterLabel>
+            <translation><!-- ISSP_AMC_ESTIMATED_ANNUAL_BAGGAGE_TAGS__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_ESTIMATED_ANNUAL_PASSENGERS__c</masterLabel>
+            <translation><!-- ISSP_AMC_ESTIMATED_ANNUAL_PASSENGERS__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Submitted_By__c</masterLabel>
+            <translation><!-- ISSP_AMC_Submitted_By__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Submitted_Date__c</masterLabel>
+            <translation><!-- ISSP_AMC_Submitted_Date__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Intermodal_agreement_Airline_Code__c</masterLabel>
+            <translation><!-- Intermodal_agreement_Airline_Code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Intermodal_agreement_Airline_Name__c</masterLabel>
+            <translation><!-- Intermodal_agreement_Airline_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Intermodal_agreement_with__c</masterLabel>
+            <translation><!-- Intermodal_agreement_with__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Intermodal_agreement_with_an_airline__c</masterLabel>
+            <translation><!-- Intermodal_agreement_with_an_airline__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Is_ULD_participation_IATA_program__c</masterLabel>
+            <translation><!-- Is_ULD_participation_IATA_program__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Is_the_ULD_company__c</masterLabel>
+            <translation><!-- Is_the_ULD_company__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Is_the_billing_address_same_the_HQ__c</masterLabel>
+            <translation><!-- Is_the_billing_address_same_the_HQ__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Is_the_billing_contact_same_the_HOC__c</masterLabel>
+            <translation><!-- Is_the_billing_contact_same_the_HOC__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Is_this_airport_currently_open__c</masterLabel>
+            <translation><!-- Is_this_airport_currently_open__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legal_Name__c</masterLabel>
+            <translation><!-- Legal_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location_Code_1__c</masterLabel>
+            <translation><!-- Location_Code_1__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location_Code_2__c</masterLabel>
+            <translation><!-- Location_Code_2__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location_Code__c</masterLabel>
+            <translation><!-- Location_Code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location_Name_1__c</masterLabel>
+            <translation><!-- Location_Name_1__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location_Name_2__c</masterLabel>
+            <translation><!-- Location_Name_2__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location_Name__c</masterLabel>
+            <translation><!-- Location_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location_Type__c</masterLabel>
+            <translation><!-- Location_Type__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Location_connected_intermodally__c</masterLabel>
+            <translation><!-- Location_connected_intermodally__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name_of_Airline__c</masterLabel>
+            <translation><!-- Name_of_Airline__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name_of_Airport_Authority_Airport_1__c</masterLabel>
+            <translation><!-- Name_of_Airport_Authority_Airport_1__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name_of_Airport_Authority_Airport_2__c</masterLabel>
+            <translation><!-- Name_of_Airport_Authority_Airport_2__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name_of_Airport_Authority_Airport_3__c</masterLabel>
+            <translation><!-- Name_of_Airport_Authority_Airport_3__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name_of_Airport_Authority_Airport_4__c</masterLabel>
+            <translation><!-- Name_of_Airport_Authority_Airport_4__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name_of_Airport_Authority_Airport_5__c</masterLabel>
+            <translation><!-- Name_of_Airport_Authority_Airport_5__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name_of_Organization__c</masterLabel>
+            <translation><!-- Name_of_Organization__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number_of_Planes_Type_1__c</masterLabel>
+            <translation><!-- Number_of_Planes_Type_1__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number_of_Planes_Type_2__c</masterLabel>
+            <translation><!-- Number_of_Planes_Type_2__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number_of_Planes_Type_3__c</masterLabel>
+            <translation><!-- Number_of_Planes_Type_3__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number_of_planes__c</masterLabel>
+            <translation><!-- Number_of_planes__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Numeric_Code_Type__c</masterLabel>
+            <translation><!-- Numeric_Code_Type__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off_Line_Point_Purpose__c</masterLabel>
+            <translation><!-- Off_Line_Point_Purpose__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planned_Open_date_for_this_airline__c</masterLabel>
+            <translation><!-- Planned_Open_date_for_this_airline__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Preference_of_Code_1__c</masterLabel>
+            <translation><!-- Preference_of_Code_1__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Preference_of_Code_2__c</masterLabel>
+            <translation><!-- Preference_of_Code_2__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Preference_of_Code_3__c</masterLabel>
+            <translation><!-- Preference_of_Code_3__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Previously_assigned_IATA_code__c</masterLabel>
+            <translation><!-- Previously_assigned_IATA_code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Previously_assigned_numeric_code__c</masterLabel>
+            <translation><!-- Previously_assigned_numeric_code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Providing_ticketing_services_to_airline__c</masterLabel>
+            <translation><!-- Providing_ticketing_services_to_airline__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reciprocal_Two_Way_Airline_Name__c</masterLabel>
+            <translation><!-- Reciprocal_Two_Way_Airline_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reciprocal_Two_Way_IATA_Airline_Code__c</masterLabel>
+            <translation><!-- Reciprocal_Two_Way_IATA_Airline_Code__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recommended_Loc_Identifier__c</masterLabel>
+            <translation><!-- Recommended_Loc_Identifier__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SITA__c</masterLabel>
+            <translation><!-- SITA__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>State__c</masterLabel>
+            <translation><!-- State__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Submitted_By__c</masterLabel>
+            <translation><!-- Submitted_By__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terms_Conditions_Agreement__c</masterLabel>
+            <translation><!-- Terms_Conditions_Agreement__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Time_Zone__c</masterLabel>
+            <translation><!-- Time_Zone__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Until_is_Revoked__c</masterLabel>
+            <translation><!-- Until_is_Revoked__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Will_airline_have_freight_forwarder__c</masterLabel>
+            <translation><!-- Will_airline_have_freight_forwarder__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Will_airline_participating_in_IATA_CASS__c</masterLabel>
+            <translation><!-- Will_airline_participating_in_IATA_CASS__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>X1_other_airlines_in_the_airport__c</masterLabel>
+            <translation><!-- X1_other_airlines_in_the_airport__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>X2_other_airlines_in_the_airport__c</masterLabel>
+            <translation><!-- X2_other_airlines_in_the_airport__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>X3_other_airlines_in_the_airport__c</masterLabel>
+            <translation><!-- X3_other_airlines_in_the_airport__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Year_the_past_IATA_code_was_held__c</masterLabel>
+            <translation><!-- Year_the_past_IATA_code_was_held__c --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Component Key --></label>
+        <name>Component_Key__c</name>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Account_Settlement_System_CASS</masterLabel>
+            <translation><!-- ISSP_AMC_Account_Settlement_System_CASS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_AirOperatorCertificate</masterLabel>
+            <translation><!-- ISSP_AMC_AirOperatorCertificate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Airline_Issued_AOC</masterLabel>
+            <translation><!-- ISSP_AMC_Airline_Issued_AOC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_AreasOfRoutesAndOperations</masterLabel>
+            <translation><!-- ISSP_AMC_AreasOfRoutesAndOperations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Authorization_Transportation_Services</masterLabel>
+            <translation><!-- ISSP_AMC_Authorization_Transportation_Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Authorized_Areas_Operation</masterLabel>
+            <translation><!-- ISSP_AMC_Authorized_Areas_Operation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_BreakdownOfShareholders</masterLabel>
+            <translation><!-- ISSP_AMC_BreakdownOfShareholders --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_BusRailwayFerry</masterLabel>
+            <translation><!-- ISSP_AMC_BusRailwayFerry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_CAALetterOpeningDate</masterLabel>
+            <translation><!-- ISSP_AMC_CAALetterOpeningDate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_CRS</masterLabel>
+            <translation><!-- ISSP_AMC_CRS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Cargo</masterLabel>
+            <translation><!-- ISSP_AMC_Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_CertificateIncorporationRegistration</masterLabel>
+            <translation><!-- ISSP_AMC_CertificateIncorporationRegistration --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_CommercialScheduledOperations</masterLabel>
+            <translation><!-- ISSP_AMC_CommercialScheduledOperations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_CompanyPreviousIATACode</masterLabel>
+            <translation><!-- ISSP_AMC_CompanyPreviousIATACode --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_CurrentStructureLocation</masterLabel>
+            <translation><!-- ISSP_AMC_CurrentStructureLocation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_DeclarationBaggageTagCodes</masterLabel>
+            <translation><!-- ISSP_AMC_DeclarationBaggageTagCodes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_EntityContactData</masterLabel>
+            <translation><!-- ISSP_AMC_EntityContactData --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_EntityContactDataForBaggage</masterLabel>
+            <translation><!-- ISSP_AMC_EntityContactDataForBaggage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_FleetInformation</masterLabel>
+            <translation><!-- ISSP_AMC_FleetInformation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Freight_Forwarder</masterLabel>
+            <translation><!-- ISSP_AMC_Freight_Forwarder --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_ICAOCode</masterLabel>
+            <translation><!-- ISSP_AMC_ICAOCode --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Intermodal_Agreement</masterLabel>
+            <translation><!-- ISSP_AMC_Intermodal_Agreement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_LocationAirportHeliportForm</masterLabel>
+            <translation><!-- ISSP_AMC_LocationAirportHeliportForm --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_LocationAreaData</masterLabel>
+            <translation><!-- ISSP_AMC_LocationAreaData --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_LocationOfflinePoint</masterLabel>
+            <translation><!-- ISSP_AMC_LocationOfflinePoint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Metropolitan_AirportB</masterLabel>
+            <translation><!-- ISSP_AMC_Metropolitan_AirportB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Metropolitan_Area</masterLabel>
+            <translation><!-- ISSP_AMC_Metropolitan_Area --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Non_Scheduled</masterLabel>
+            <translation><!-- ISSP_AMC_Non_Scheduled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Passenger</masterLabel>
+            <translation><!-- ISSP_AMC_Passenger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_PreferenceOfCode</masterLabel>
+            <translation><!-- ISSP_AMC_PreferenceOfCode --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_PreviousIATACode</masterLabel>
+            <translation><!-- ISSP_AMC_PreviousIATACode --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_PreviousNumericIATACode</masterLabel>
+            <translation><!-- ISSP_AMC_PreviousNumericIATACode --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Rail_Ferry_Or_Bus</masterLabel>
+            <translation><!-- ISSP_AMC_Rail_Ferry_Or_Bus --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Reciprocal_Two_Way</masterLabel>
+            <translation><!-- ISSP_AMC_Reciprocal_Two_Way --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_SchedulesPublication</masterLabel>
+            <translation><!-- ISSP_AMC_SchedulesPublication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Signed_Letter_CRS</masterLabel>
+            <translation><!-- ISSP_AMC_Signed_Letter_CRS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_TermsAndConditions</masterLabel>
+            <translation><!-- ISSP_AMC_TermsAndConditions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_TrafficAgreement_Valid_IATA_Code</masterLabel>
+            <translation><!-- ISSP_AMC_TrafficAgreement_Valid_IATA_Code --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_ULD</masterLabel>
+            <translation><!-- ISSP_AMC_ULD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISSP_AMC_Upload_Files</masterLabel>
+            <translation><!-- ISSP_AMC_Upload_Files --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Display Order --></label>
+        <name>Display_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Location Type --></label>
+        <name>Location_Type__c</name>
+        <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation><!-- Airport --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bus Station</masterLabel>
+            <translation><!-- Bus Station --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ferry Port</masterLabel>
+            <translation><!-- Ferry Port --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Heliport</masterLabel>
+            <translation><!-- Heliport --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Metropolitan Area</masterLabel>
+            <translation><!-- Metropolitan Area --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Off-line Point</masterLabel>
+            <translation><!-- Off-line Point --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Railway Station</masterLabel>
+            <translation><!-- Railway Station --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- NOTE Custom Label --></label>
+        <name>NOTE_Custom_Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Requirement --></label>
+        <name>Requirement_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Title Custom Label --></label>
+        <name>Title_Custom_Label__c</name>
+    </fields>
+    <fields>
+        <label><!-- Type of Operation --></label>
+        <name>Type_of_Operation__c</name>
+        <picklistValues>
+            <masterLabel>Baggage</masterLabel>
+            <translation><!-- Baggage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bus Company</masterLabel>
+            <translation><!-- Bus Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CRS</masterLabel>
+            <translation><!-- CRS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ferry Company</masterLabel>
+            <translation><!-- Ferry Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Scheduled Cargo</masterLabel>
+            <translation><!-- Non-Scheduled Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Scheduled Passenger</masterLabel>
+            <translation><!-- Non-Scheduled Passenger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Railway Company</masterLabel>
+            <translation><!-- Railway Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled Cargo</masterLabel>
+            <translation><!-- Scheduled Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled Passenger</masterLabel>
+            <translation><!-- Scheduled Passenger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ULD</masterLabel>
+            <translation><!-- ULD --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type of Requirement --></label>
+        <name>Type_of_Requirement__c</name>
+        <picklistValues>
+            <masterLabel>Attachment</masterLabel>
+            <translation><!-- Attachment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VF Component</masterLabel>
+            <translation><!-- VF Component --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- isToShow --></label>
+        <name>isToShow__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

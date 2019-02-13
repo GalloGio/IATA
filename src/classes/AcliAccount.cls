@@ -1,5 +1,16 @@
 global  class AcliAccount  {
 
+    //ACLI Enhancements
+    //Portal Service Name
+    public static String PORTAL_SERVICE_NAME_ACLI  = 'NOT SET';
+
+    static {
+        ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+        if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes_Na__c)){
+            AcliAccount.PORTAL_SERVICE_NAME_ACLI = serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes_Na__c;
+        }
+    }
+
     private static final map<String,String> MAP_REASONS = new map<String,String>{
         'ACP' => '3 Digit Form',
         'DES' => 'Designator Form',

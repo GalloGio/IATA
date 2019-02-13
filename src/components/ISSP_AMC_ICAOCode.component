@@ -1,0 +1,124 @@
+<apex:component >
+
+    <apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" />
+    <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="true" />
+
+    <div class="panel panel-primary">
+        <div class="panel-heading" id="ICAO_CODE">
+            {!$Label.ISSP_AMC_ICAO_CODE}
+        </div>
+
+        <div class="panel-body">
+
+            <apex:outputPanel id="radioPanel">
+
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-11">
+                        <div class="col-md-8">
+                            <label for="twoCharacterRadio">{!$Label.ISSP_AMC_ICAO_CODE_QUESTION} <span class="asteriskRequiredField">*</span> <span><apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMC_ICAO_CODE_HELP}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /></span></label>
+                            
+                        </div>
+                        <div class="col-md-4">
+                            <apex:selectRadio id="twoCharacterRadio" value="{!participation.Does_the_airline_presently_hold_a_three__c}" styleClass="{!IF(AND(hasError, participation.Does_the_airline_presently_hold_a_three__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
+                                <apex:actionSupport event="onchange" rerender="radioPanel" status="Loading" />
+                                <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
+                                <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
+                            </apex:selectRadio>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <apex:outputPanel rendered="{!participation.Does_the_airline_presently_hold_a_three__c == 'Yes'}">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-2 col-sm-offset-0 control-label">
+                                    <apex:outputText value="{!$Label.ISSP_AMC_ICAO_CODE}"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText maxlength="3" id="ICAOCode" onchange="codeValidation3Character(this)" styleClass="form-control codejs" value="{!participation.ICAO_Code__c}" />
+                                        <span class="{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+
+            </apex:outputPanel>
+
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function(){
+            var codeList = document.getElementsByClassName('codejs');
+            for(var i=0; i<codeList.length; i++){              
+                if(codeList[i].value != null && codeList[i].value != ""){
+                    codeValidation3Character(codeList[i]);
+                }
+            }
+        });
+        //Two Character Code Validation
+        function codeValidation3Character(element) {
+            var x = element.parentElement.classList;
+            var y = element.parentElement.children;
+            filter = /^([a-zA-Z]{3})+$/;
+            filter2 = /^([a-zA-Z0-9]*\W+[a-zA-Z0-9]*)+$/;
+            if(element.value  != null && element.value != ""){
+                if (!filter.test(element.value) || filter2.test(element.value) || element.value.length != 3) {
+                    //x.remove("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'has-error has-feedback', '')}");
+                    x.add("has-error");
+                    x.add("has-feedback");
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}"){
+                            //y[i].classList.remove("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                            y[i].classList.add("glyphicon");
+                            y[i].classList.add("glyphicon-remove"); 
+                            y[i].classList.add("form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            element.value="";
+                            y[i].innerHTML = "{!$Label.ISSP_AMC_IATA_CODE_VALIDATION}";
+
+                        }                   
+                    }
+                } 
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            //y[i].classList.add("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = ""
+                        }
+                    }
+                    //x.add("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'has-error has-feedback', '')}");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                }
+            }
+            else{
+                for (var i = 0; i < y.length; i++) {
+                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                        //y[i].classList.add("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}");
+                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                    }
+                    if(y[i].classList =="errormessage"){
+                        y[i].innerHTML = ""
+                    }
+                }
+                //x.add("{!IF(AND(hasError, OR(participation.ICAO_Code__c == null, participation.ICAO_Code__c == "")), 'has-error has-feedback', '')}");
+                x.remove("has-error");
+                x.remove("has-feedback");
+            }
+        }
+    </script>
+
+</apex:component>

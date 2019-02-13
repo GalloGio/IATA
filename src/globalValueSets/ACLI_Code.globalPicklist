@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalPicklist xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Code types</description>
+    <globalPicklistValues>
+        <fullName>Designator Code</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Accounting or Prefix Code</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Location Code</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Baggage Code</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <masterLabel>ACLI Codes</masterLabel>
+    <sorted>false</sorted>
+</GlobalPicklist>

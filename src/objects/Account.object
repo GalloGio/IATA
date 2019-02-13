@@ -5678,6 +5678,17 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Baggage_Tag_Range_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Baggage Tag Range Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>BillingAddress</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>

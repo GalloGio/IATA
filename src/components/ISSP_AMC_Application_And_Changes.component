@@ -1,0 +1,102 @@
+<!--
+    Component Name: ISSP_AMC_Application_And_Changes.component
+    Related Classes: ISSP_AMC_Application_And_Changes.cls
+
+    Copyright @Right IT Services
+
+    Purpose:
+
+    VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
+    1.0         Filipa Martins       26-10-2018      INITIAL DEVELOPMENT
+ -->
+<apex:component controller="ISSP_AMC_Application_And_Changes">
+    <head>
+        <style>
+            .subtitle{
+                color: #00305b;
+                font-weight: bold;
+                font-family: "Arial";
+                font-size: 1.5em;
+            }
+
+            .redFringe{
+                background-color: #eb3014;
+                width: 44px;
+                float: left;
+                min-height: 6px;
+            }
+        </style>
+    </head>
+    <div>
+        <h2 class="subtitle">{!$Label.ISSP_AMS_Step0_Ongoing_Drafts}</h2>
+        <div class="redFringe"></div>
+    </div>
+    
+    <div class="panel-body" style="padding-top: 25px;">
+
+        <!-- NO RESULTS -->
+        <apex:outputPanel rendered="{!AMCDraftCases.size <= 0}">
+            <apex:outputText styleClass="bg-info" value="{!$Label.ISSP_AMS_No_Pending}"/>
+        </apex:outputPanel>
+        
+        <!-- WITH RESULTS -->
+        <apex:outputPanel rendered="{!AMCDraftCases.size > 0}">
+            <div class="table-responsive-md">
+                <table id="ongoingCasesTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">{!$Label.ISSP_AMC_CASE_NUMBER}</th>
+                            <th scope="col">{!$Label.ISSP_AMC_SUBJECT}</th>
+                            <th scope="col">{!$Label.ISSP_AMC_STATUS}</th>
+                            <th scope="col">{!$Label.ISSP_AMC_DATE_TIME_OPENED}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat var="caseItem" value="{!AMCDraftCases}">
+                            <tr>
+                                <td>
+                                    <!-- AIRLINE DESIGNATORS -->
+                                        <!-- DRAFT -->
+                                        <apex:outputLink value="/ISSP_AMC_Airline_Designators?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
+                                            {!caseItem.CaseNumber}
+                                        </apex:outputLink>
+                                    <!-- END: AIRLINE DESIGNATORS -->
+                                    <!-- ACCOUNTING OR PREFIX CODE -->
+                                        <!-- DRAFT -->
+                                        <apex:outputLink value="/ISSP_AMC_Accounting_Or_Prefix_Code?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
+                                            {!caseItem.CaseNumber}
+                                        </apex:outputLink>
+                                    <!-- END: ACCOUNTING OR PREFIX CODE -->
+                                    <!-- LOCATION IDENTIFIER -->
+                                        <apex:outputLink value="/ISSP_AMC_Location_Identifier?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open',caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
+                                            {!caseItem.CaseNumber}
+                                        </apex:outputLink>
+                                    <!-- END: LOCATION IDENTIFIER -->
+                                    <!-- BAGGAGE TAG RANGE -->
+                                        <!-- DRAFT -->
+                                        <apex:outputLink value="/ISSP_AMC_Baggage_Tag_Range?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
+                                            {!caseItem.CaseNumber}
+                                        </apex:outputLink>
+                                    <!-- END: BAGGAGE TAG RANGE -->
+
+                                    <!-- NOT OPEN -->
+                                    <apex:outputLink value="/ISSP_Case?caseId={!caseItem.Id}&mid=M1S2&retURL=%2FISSP_AMC_Home" rendered="{!OR(caseItem.Status != 'Open', NOT(OR(caseItem.Reason1__c == 'Designator Form', caseItem.Reason1__c == '3 Digit Form', caseItem.Reason1__c == 'Location ID Form', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')) )}" onclick="startLoading();">
+                                        {!caseItem.CaseNumber}
+                                    </apex:outputLink>
+                                </td>
+                                <td><apex:outputText value="{!caseItem.Subject}" /></td>
+                                <td><apex:outputText value="{!caseItem.Status}" /></td>
+                                <td>
+                                    <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                        <apex:param value="{!caseItem.CreatedDate}" />
+                                    </apex:outputText>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </div>
+        </apex:outputPanel>
+
+    </div>
+</apex:component>

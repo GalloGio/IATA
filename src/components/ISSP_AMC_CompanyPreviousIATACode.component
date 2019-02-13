@@ -1,0 +1,123 @@
+<apex:component >
+	<apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" />
+	<apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="false" />
+
+	<script>
+
+		$(document).ready(function(){
+            var codeList = document.getElementsByClassName('codejs');
+            for(var i=0; i<codeList.length; i++){              
+                if(codeList[i].value != null && codeList[i].value != ""){
+                    codeValidationCharacter(codeList[i]);
+                }
+            }
+        });
+	//Two Character Code Validation
+	    function codeValidationCharacter(element) {
+	        var x = element.parentElement.classList;
+	        var y = element.parentElement.children;
+	        filter = /^([0-9]{2})+$/;
+	        filter2 = /^([a-zA-Z0-9]*\W+[a-zA-Z0-9]*)+$/;
+	        if(element.value  != null && element.value != ""){
+	            if (filter.test(element.value) || filter2.test(element.value) || element.value.length != 2) {
+	                //x.remove("codeValid");
+	                x.add("has-error");
+	                x.add("has-feedback");
+	                for (var i = 0; i < y.length; i++) {
+	                    if(y[i].classList == "{!IF(AND(hasError, OR(participation.Previously_assigned_IATA_code__c == null, participation.Previously_assigned_IATA_code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}"){
+	                        //y[i].classList.remove("codeInvalid");
+	                        y[i].classList.add("glyphicon");
+	                        y[i].classList.add("glyphicon-remove"); 
+	                        y[i].classList.add("form-control-feedback");
+	                    }
+	                    if(y[i].classList =="errormessage"){
+	                    	element.value="";
+	                        y[i].innerHTML = "{!$Label.ISSP_AMC_IATA_CODE_VALIDATION}";
+
+	                    }                   
+	                }
+	            } 
+	            else{
+	                for (var i = 0; i < y.length; i++) {
+	                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+	                        //y[i].classList.add("codeInvalid");
+	                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+	                    }
+	                    if(y[i].classList =="errormessage"){
+	                        y[i].innerHTML = ""
+	                    }
+	                }
+	                //x.add("codeValid");
+	                x.remove("has-error");
+	                x.remove("has-feedback");
+	            }
+	        }
+	        else{
+	            for (var i = 0; i < y.length; i++) {
+	                if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+	                    //y[i].classList.add("codeInvalid");
+	                    y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+	                }
+	                if(y[i].classList =="errormessage"){
+	                    y[i].innerHTML = ""
+	                }
+	            }
+	            //x.add("codeValid");
+	            x.remove("has-error");
+	            x.remove("has-feedback");
+	        }
+	    }
+	</script>
+
+
+	<div class="panel panel-primary">
+  		<div class="panel-heading" id="BAGGAGETWOCHRACTERDESIGNATOR">
+        	{!$Label.ISSP_AMC_TWO_CHARACTER_DESIGNATOR}
+    	</div>
+
+    	<div class="panel-body">
+    		
+			<apex:outputPanel id="twoCharacterRadioPanel">
+
+				<div class="form-group">
+					<div class="col-md-offset-1 col-md-11">
+                    	<div class="col-md-8">
+    						<label for="twoCharacterRadio">{!$Label.ISSP_AMC_PREVIOUSLY_ASSIGNED_2CHAR_IATA_A4A_CODE}</label>
+    					</div>
+    					<div class="col-md-4">
+		    				<apex:selectRadio id="twoCharacterRadio" value="{!participation.Has_airline_assigned_two_char_code__c}" styleClass="{!IF(AND(hasError, participation.Has_airline_assigned_two_char_code__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
+		    					<apex:actionSupport event="onchange" rerender="twoCharacterRadioPanel" status="Loading" />
+								<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
+								<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
+							</apex:selectRadio>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<apex:outputPanel rendered="{!participation.Has_airline_assigned_two_char_code__c == 'Yes'}">
+                        <div class="col-md-12">
+                            <div class="form-group">
+								<div class="col-md-offset-2 col-md-2 col-sm-offset-0 control-label">
+									<apex:outputText value="{!$Label.ISSP_AMC_IATA_A4A_CODE}"/>
+								</div>
+								<div class="col-md-3">
+									<div class="{!IF(AND(hasError, OR(participation.Previously_assigned_IATA_code__c == null, participation.Previously_assigned_IATA_code__c == "")), 'has-error has-feedback', '')}">
+										<apex:inputText size="2" maxlength="2" id="IATACode" onchange="codeValidationCharacter(this)" styleClass="form-control codejs" value="{!participation.Previously_assigned_IATA_code__c}" />
+										<span class="{!IF(AND(hasError, OR(participation.Previously_assigned_IATA_code__c == null, participation.Previously_assigned_IATA_code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+								        <span class="sr-only">(error)</span>
+						                
+						                <div style="color: #a94442" class="errormessage"></div>
+					            	</div>              
+								</div>
+							</div>
+						</div>
+                        
+					</apex:outputPanel>
+            	</div>
+
+			</apex:outputPanel>
+
+		</div>
+	</div>
+</apex:component>

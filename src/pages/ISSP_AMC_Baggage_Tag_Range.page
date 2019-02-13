@@ -1,0 +1,534 @@
+<!--
+Page Name: ISSP_AMC_Airline_Designators.page
+Related Classes: ISSP_AMC_Airline_Designators.cls
+
+Copyright @Right IT Services
+
+Purpose: Apply to an Airline Designator code
+
+VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
+1.0         João Ferreira       30-10-2018      INITIAL DEVELOPMENT
+1.0         Miguel              
+-->
+<apex:page controller="ISSP_AMC_Baggage_Tag_Range" docType="html-5.0" cache="false" sidebar="false" showHeader="false" language="{!displayLanguage}" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" action="{!init}">
+    <html>
+
+        <c:ISSP_Header />
+        <apex:stylesheet value="{!URLFOR($Resource.BootstrapDatepicker, 'css/bootstrap-datepicker3.min.css')}" />
+        <script src="{!URLFOR($Resource.BootstrapDatepicker, 'js/bootstrap-datepicker.min.js')}"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js "></script>
+<!--
+        <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+        -->
+
+        <body>
+            <style>
+                .titleHome {
+                    color: #003B74;
+                    font-weight: bold;
+                    font-family: "Arial";
+                    font-size: 4rem;
+                }
+                .section-header {
+                    background-color: rgb(43, 120, 228);
+                    color: white;
+                    line-height: 1.42857143;
+                    padding: 8px;
+                    vertical-align: top;
+                    border-top: 1px solid #ddd;
+                }
+
+                .section-header>i {
+                    color: black;
+                    margin-right: 5px;
+                }
+
+                .section-body {
+                    margin: 8px;
+                }
+
+                main {
+                    background-color: white;
+                }
+
+                .tableFormat {
+                    padding-left : 5px !important;
+                    padding-right : 15px !important;
+                    padding-bottom: 2px !important;
+                    padding-top :  2px !important;
+                    vertical-align: middle !important;
+                }
+
+                .last-updated {
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    color: rgb(121, 118, 111);
+                    font-size: 12px;
+                }
+
+                .borderless > thead > tr > th,
+                .borderless > tbody > tr > th,
+                .borderless > tfoot > tr > th,
+                .borderless > thead > tr > td,
+                .borderless > tbody > tr > td,
+                .borderless > tfoot > tr > td {
+                    border-top: none;
+                }
+
+                input + label {
+                    font-weight:normal;
+                }
+
+                .overlay {
+                    display: none;
+                    height: 100%;
+                    left: 0;
+                    position: fixed;
+                    top: 0;
+                    opacity: 0.3;
+                    -moz-opacity: 0.3;
+                    width: 100%;
+                    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+                    filter: alpha(opacity=30);
+                    background: #000;
+                    -khtml-opacity: 0.3;
+                    z-index: 1000;
+                }
+
+                .loader {
+                    background: url('/img/loading32.gif') scroll no-repeat 0 0;
+                    width: 32px;
+                    height: 32px;
+                    position: relative;
+                    left: 50%;
+                }
+                .panel-primary{
+                    min-height:0px !important;
+                }
+                /* TABS */
+                .removeMarginBottom{
+                    margin-bottom: -7px !important;
+                }
+                .nav-tabs{
+                    margin-bottom: -8px !important;
+                    border-radius: 3px !important;
+                }
+                .nav-tabs > li > a{
+                    border: medium none;
+                    background-color: transparent !important;
+                    color: white;
+                    border-bottom-color: transparent !important;
+                    font-weight: bold;
+                }
+                .nav-tabs > :not(.active){
+                    background-color: darkgray !important;
+                }
+                .nav-tabs > .active{
+                    background-image: linear-gradient(to top,#e8e8e8 0,#f5f5f5 100%);
+                    background-repeat: repeat-x;
+                }
+                .nav-tabs > li:hover{
+                    background-image: linear-gradient(to top,#e8e8e8 0,#f5f5f5 100%);
+                    background-repeat: repeat-x;
+                }
+                .nav-tabs > li > a:hover{
+                    color: #555;
+                }
+
+                .titleBox{
+                    padding: 30px 15px;
+                    margin-bottom: 30px;
+                    color: inherit;
+                    background-color: rgb(0,66,124);
+                    color: white;
+                    font-size: large;
+                    font-weight: bold;
+                    border-radius: 6px;
+                }
+                .asteriskRequiredField {
+                    color: red; 
+                    font-size: large;
+                }
+                .errorColor {
+                    color: #a94442 !important;
+                }
+                .requiredSelectBox > input {
+                    box-shadow: 0 0 0 1pt #a94442;
+                }
+                .requiredSelectRadio > tbody > tr > td > input {
+                    box-shadow: 0 0 0 1pt #a94442;
+                }
+                .tabset > input[type="radio"] {
+                  position: absolute;
+                  left: -200vw;
+                }
+
+                .tabset .tab-panel {
+                  display: none;
+                  padding: 0px;
+                }
+
+                .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+                .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+                .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+                .tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+                .tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+                .tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+                  display: block;
+                }
+
+
+                .tabset > label {
+                  position: relative;
+                  display: inline-block;
+                  padding: 15px 15px 25px 0px;
+                  border: 1px solid transparent;
+                  border-bottom: 0;
+                  cursor: pointer;
+                }
+
+                .tabset > label::after {
+                  content: "";
+                  position: absolute;
+                  left: 0px;
+                  right: 15px;
+                  bottom: 10px;
+                  width: 22px;
+                  height: 4px;
+                  background: #8d8d8d;
+                }
+
+                .tabset > label:hover,
+                .tabset > input:focus + label {
+                  color: #06c;
+                }
+
+                .tabset > label:hover::after,
+                .tabset > input:focus + label::after,
+                .tabset > input:checked + label::after {
+                  background: #06c;
+                }
+
+                .tabset > input:checked + label {
+                  color: #06c;
+                }
+
+                .tab-panel {
+                  padding: 30px 0;
+                }
+                .input-daterange input{
+                    text-align: left;
+                }
+                html {
+                  scroll-behavior: smooth;
+                }
+                #loading > div:nth-child(2){
+                    position: fixed !important;
+                }
+                #redirect > div:nth-child(2){
+                    position: fixed !important;
+                }
+            </style>
+            
+            
+            <c:Loading /> 
+            <c:ISSP_AMC_Submit_Redirect />
+
+            <script>
+                
+
+                function navigateToStep(obj){
+
+                    var step = $(obj.getAttribute('step'));
+
+                    var isActive = $('[href="#' + step.selector + '"]')[0].parentElement.className == "active";
+
+                    if(isActive){
+                        var target = $(obj.getAttribute('goto'));
+
+                        if(target.length){
+                            $('html, body').stop().animate({
+                                scrollTop: target.offset().top
+                            }, 1000);
+                        }
+                    }
+                    else {
+                        $('[href="#' + step.selector + '"]').tab('show').on('shown.bs.tab', function(event){
+
+                            var target = $(obj.getAttribute('goto'));
+
+                            if(target.length){
+                                event.preventDefault();
+                                $('html, body').stop().animate({
+                                    scrollTop: target.offset().top
+                                }, 1000);
+                            }
+                        });
+                    }
+                }
+
+                $(document).ready(function() {
+
+                    $('.next').click(function(){
+
+                        var nextId = $(this).parents('.tab-pane').next().attr("id");
+                        $('[href="#'+nextId+'"]').tab('show');
+
+                        return false;
+                    });
+
+                    $('.previous').click(function(){
+
+                        var previousId = $(this).parents('.tab-pane').prev().attr("id");
+                        $('[href="#'+previousId+'"]').tab('show');
+
+                        return false;
+                    });
+
+                    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+                        //update progress
+                        var step = $(e.target).data('step');
+                        var percent = (parseInt(step) / 4) * 100;
+                        if(step) {
+                            $('.progress-bar').css({width: percent + '%'});
+                            $('.progress-bar').text("Step " + step + " of 4");
+                        } 
+
+                        //e.relatedTarget // previous tab
+
+                    });
+
+                    $('.first').click(function(){
+
+                        $('#myWizard a:first').tab('show');
+
+                    });
+                                    
+                    $('#showHobTable').DataTable();
+                    $('#showHocTable').DataTable();
+
+                });
+            </script>
+
+            <div class="container">
+
+                <div class="row">
+                    <c:ISSP_CustomNavigation communityName="{!communityName}" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>
+                            <a href="/ISSP_Homepage">
+                                <span class="glyphicon glyphicon-home" aria-hidden="true" />
+                            </a>
+                            <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true" />
+                            <a href="/ISSP_AMC_Home?MainNav=Services&subNav=Available&mid=M3S1">
+                                {!$Label.ISSP_AMC_AIRLINES_LOCATION_CODES}
+                            </a>
+                            <span class="glyphicon glyphicon-chevron-right small" aria-hidden="true" />
+                            <label style="font-weight: 500">{!$Label.ISSP_AMC_BAGAGE_TAG_RANGE}</label>
+                        </h4>
+                    </div>
+                </div>
+
+                <div id="myWizard">
+                    <div class="titleBox">
+                        {!$Label.ISSP_AMC_APPLICATION_BTIC}
+                    </div>
+
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 20%;">
+                            {!$Label.ISSP_AMC_STEP_1_OF_4}
+                        </div>
+                    </div>
+                    <div class="navbar removeMarginBottom">
+                        <div class="navbar-inner">
+                            <ul class="nav nav-tabs nav-justified">
+                                <li class="active"><a href="#step1" data-toggle="tab" data-step="1">{!$Label.ISSP_AMC_SELECT_TYPE_OF_OPERATION}</a></li>
+                                <li><a href="#step2" data-toggle="tab" data-step="2">{!$Label.ISSP_AMC_COMPLETE_APPLICATION_FORM}</a></li>
+                                <li><a href="#step3" data-toggle="tab" data-step="3">{!$Label.ISSP_AMC_REVIEW_REQUIREMENTS}</a></li>
+                                <li><a href="#step4" data-toggle="tab" data-step="4">{!$Label.ISSP_AMC_SUBMIT_TO_IATA}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <apex:form id="step1Frm" html-data-toggle="validator" styleClass="tab-content form-horizontal formValidator">
+
+                        <div class="tab-pane fade in active" id="step1">
+                            <apex:outputPanel id="step1Panel">
+                                <div class="well">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-11">
+                                            <div class="alert alert-warning" role="alert">
+                                                {!$Label.ISSP_AMC_DRAFT_SUBMITED_60_DAYS}
+                                            </div>
+                                            <apex:outputPanel id="errorMessageStep1">
+                                                <apex:outputPanel rendered="{!displayMessage}">
+                                                    <div class="alert alert-{!severity} alert-dismissible">
+                                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                        <apex:outputText id="step1message" value="{!message}" escape="false" />
+                                                    </div>
+                                                </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <apex:commandLink id="btnId" styleClass="btn btn-success" action="{!saveParticipation}" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4" status="Loading" onclick="startLoading()" oncomplete="stopLoading()" value="Save" >
+                                                <apex:param assignTo="{!step}" value="1"/>
+                                            </apex:commandLink>
+                                        </div>
+                                    </div>
+                                    
+                                    <c:ISSP_AMC_EntityContactDataForBaggage participation="{!participation}" hasError="{!hasError}" isSISUser="{!isSISUser}"/>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                        
+                        <div class="tab-pane fade tab-pane1" id="step2">
+                            <apex:outputpanel id="step2Panel">
+                                <div class="well">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-11">
+                                                <apex:outputPanel id="errorMessageStep2">
+                                                    <apex:outputPanel rendered="{!displayMessage}">
+                                                        <div class="alert alert-{!severity} alert-dismissible">
+                                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                            <apex:outputText id="step2message" value="{!message}" escape="false" />
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <apex:commandLink id="btnStep2Id" styleClass="btn btn-success" action="{!saveParticipation}" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4" status="Loading" onclick="startLoading()" oncomplete="stopLoading()" value="Save">
+                                                    <apex:param assignTo="{!step}" value="2"/>
+                                                </apex:commandLink>
+                                            </div>
+                                            <div class="col-sm-12">&nbsp;</div>    
+                                            <div class="col-sm-12">
+                                                
+                                                
+                                                <c:ISSP_AMC_CompanyPreviousIATACode participation="{!participation}" hasError="{!hasError}"/>
+
+                                                <c:ISSP_AMC_PreviousNumericIATACode participation="{!participation}" hasError="{!hasError}"/>
+                                                
+                                                <c:ISSP_AMC_DeclarationBaggageTagCodes participation="{!participation}" hasError="{!hasError}"/>
+
+                                                <c:ISSP_AMC_Upload_Files participation="{!participation}"
+                                                                        ISSP_AMC_Airline_Issued_AOC="true"
+                                                                        ISSP_AMC_CertificateIncorporationRegistration="true"
+                                                                        ISSP_AMC_BreakdownOfShareholders="true"                                   
+                                                />
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputpanel>
+                        </div>
+
+                        <div class="tab-pane fade tab-pane1" id="step3">
+                            <apex:outputPanel id="step3Panel">
+                                <div class="well">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-11">
+                                                <div class="alert alert-warning" role="alert">
+                                                    {!$Label.ISSP_AMS_Step2_Instructions}
+                                                </div>
+                                                <apex:outputPanel id="errorMessageStep3">
+                                                    <apex:outputPanel rendered="{!displayMessage}">
+                                                        <div class="alert alert-{!severity} alert-dismissible">
+                                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                            <apex:outputText id="step3message" value="{!message}" escape="false" />
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                                <!--<apex:pageMessages />-->
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <apex:commandLink id="btnStep3Id" styleClass="btn btn-success" action="{!saveParticipation}" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4" status="Loading" onclick="startLoading()" oncomplete="stopLoading()" value="Save" >
+                                                    <apex:param assignTo="{!step}" value="3"/>
+                                                </apex:commandLink>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <div class="panel panel-primary">
+                                                        <table class="table panel-primary">
+                                                            <thead class="panel-heading">
+                                                                <tr>
+                                                                    <td class="col-md-9 col-sm-1">{!$Label.ISSP_AMS_Step2_Check_List}</td>
+                                                                    <td class="col-md-2 col-sm-1" style="text-align: center;">Document Required?</td>
+                                                                    <td class="col-md-1 col-sm-1" style="text-align: center;">Status</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <apex:repeat value="{!appRequirementList}" var="requirementItem">
+                                                                    <tr style="display: {!IF(requirementItem.isToShow, '','none')}">
+                                                                        <th scope="row">{!requirementItem.requirementDescription}</th>
+                                                                        <td style="text-align: center;">
+                                                                            <span class="{!IF(requirementItem.requirementType == 'Attachment', 'glyphicon glyphicon-open', '')}" aria-hidden="true" style=" color: #003B74; font-size: 20px;" />
+                                                                        </td>
+                                                                        <td style="text-align: center;">
+                                                                            <span class="{!IF(requirementItem.requirementStatus == 'Done', 'glyphicon glyphicon-ok', 'glyphicon glyphicon-exclamation-sign')}" aria-hidden="true" style="color:{!IF(requirementItem.requirementStatus == 'Done', 'green', 'red')}; font-size: 20px;"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </apex:repeat>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+
+                        <div class="tab-pane fade tab-pane1" id="step4">
+                            <apex:outputPanel id="step4Panel">
+                                <div class="well">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="col-sm-12">
+                                                <apex:outputPanel id="errorMessageStep4">
+                                                    <apex:outputPanel rendered="{!displayMessage}">
+                                                        <div class="alert alert-{!severity} alert-dismissible">
+                                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                            <apex:outputText id="step4message" value="{!message}" escape="false" />
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                
+                                                <c:ISSP_AMC_TermsAndConditions participation="{!participation}" hasError="{!hasError}" />
+                                            </div>
+                                            <div class="col-sm-11">
+                                                &nbsp;
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <apex:commandLink id="btnStep4Id" styleClass="btn btn-success" action="{!saveParticipation}" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4, step2Panel, step1Panel,step4Panel" status="Redirect" value="Submit">
+                                                    <apex:param assignTo="{!step}" value="Submit"/>
+                                                </apex:commandLink>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+
+                    </apex:form>  
+                </div>
+                
+                <c:ISSP_CustomFooter communityName="{!communityName}"/>
+                
+            </div>
+        </body>
+    </html>
+</apex:page>

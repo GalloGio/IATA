@@ -1,0 +1,10 @@
+diff a/src/pages/ISSP_AMC_Location_Identifier.page b/src/pages/ISSP_AMC_Location_Identifier.page	(rejected hunks)
+@@ -583,7 +583,7 @@
+                                                     &nbsp;
+                                                 </div>
+                                                 <div class="col-sm-1">
+-                                                    <apex:commandLink id="btnStep4Id" styleClass="btn btn-success" action="{!saveParticipation}" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4,step2Panel,step1Panel,step4Panel" status="Redirect" value="Submit" onclick="startRedirect()" oncomplete="rerenderMap(),stopLoading()" >
++                                                    <apex:commandLink id="btnStep4Id" styleClass="btn btn-success" action="{!saveParticipation}" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4,step2Panel,step1Panel,step3Panel,step4Panel" status="Redirect" value="Submit" onclick="startRedirect()" oncomplete="rerenderMap(),stopLoading()" >
+                                                         <apex:param assignTo="{!step}" value="Submit" />
+                                                     </apex:commandLink>
+                                                 </div>

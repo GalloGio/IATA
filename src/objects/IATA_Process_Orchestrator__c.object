@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>IATA_Process_Orchestrator_Record_Page1</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Associated_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Associated Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>IATA Processes Orchestrator</relationshipLabel>
+        <relationshipName>IATA_Processes_Orchestrator</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Orchestrator_Process__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>IATA Orchestrator Process</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>IATA_Process_Orchestrator__c.RecordType.DeveloperName</field>
+                <operation>equals</operation>
+                <value>Orchestrator</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>IATA_Process_Orchestrator__c</referenceTo>
+        <relationshipLabel>IATA Orchestrator Processes</relationshipLabel>
+        <relationshipName>IATA_Orchestrator_Processes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Process_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Process Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Process_Step_Name__c</fullName>
+        <description>Holds the name of a given step in a Business Process Name</description>
+        <externalId>false</externalId>
+        <label>Process Step Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Process_Step_Stage__c</fullName>
+        <externalId>false</externalId>
+        <label>Process Step Stage</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Processing_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Processing Order</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>RecordType.DeveloperName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Record Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Total_Actions_Pending_Customer__c &gt; 0 , &apos;Pending Customer&apos;, 
+IF( Total_Actions_Failed__c &gt; 0, &apos;Fail&apos;,
+IF( Total_Actions_Completed__c = Total_Number_of_Actions__c, &apos;Completed&apos;, 
+IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), &apos;Progressing&apos;, &apos;Not Started&apos;))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Actions_Completed_NB__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Actions Completed (NB)</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Actions_Completed__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Actions Completed</label>
+        <summaryFilterItems>
+            <field>IATA_Process_Orchestrator_Step_Action__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Completed</value>
+        </summaryFilterItems>
+        <summaryForeignKey>IATA_Process_Orchestrator_Step_Action__c.IATA_Process_Orchestrator__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Actions_Failed_NB__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Actions Failed (NB)</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Actions_Failed__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Actions Failed</label>
+        <summaryFilterItems>
+            <field>IATA_Process_Orchestrator_Step_Action__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Fail</value>
+        </summaryFilterItems>
+        <summaryForeignKey>IATA_Process_Orchestrator_Step_Action__c.IATA_Process_Orchestrator__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Actions_Pending_Customer__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Actions Pending Customer</label>
+        <summaryFilterItems>
+            <field>IATA_Process_Orchestrator_Step_Action__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Pending Customer</value>
+        </summaryFilterItems>
+        <summaryForeignKey>IATA_Process_Orchestrator_Step_Action__c.IATA_Process_Orchestrator__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Actions_Progressing__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Actions Progressing</label>
+        <summaryFilterItems>
+            <field>IATA_Process_Orchestrator_Step_Action__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Progressing</value>
+        </summaryFilterItems>
+        <summaryForeignKey>IATA_Process_Orchestrator_Step_Action__c.IATA_Process_Orchestrator__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Actions__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Actions</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Number_of_Actions__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Number of Actions</label>
+        <summaryFilterItems>
+            <field>IATA_Process_Orchestrator_Step_Action__c.Status__c</field>
+            <operation>notEqual</operation>
+            <value>Not Applicable</value>
+        </summaryFilterItems>
+        <summaryForeignKey>IATA_Process_Orchestrator_Step_Action__c.IATA_Process_Orchestrator__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <label>IATA Process Orchestrator</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_Orchestrator_Process__c</columns>
+        <columns>Process_Name__c</columns>
+        <columns>Total_Actions__c</columns>
+        <columns>Process_Step_Stage__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>IO-{000000}</displayFormat>
+        <label>IATA Process Orchestrator No</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>IATA Processes Orchestrator</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>IATA_Process_Step</fullName>
+        <active>true</active>
+        <description>Represents an IATA Process Step</description>
+        <label>IATA Process Step</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Orchestrator</fullName>
+        <active>true</active>
+        <description>Record Type to hold IATA Orchestrator Process</description>
+        <label>Orchestrator</label>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

@@ -1,0 +1,77 @@
+<apex:component controller="ISSP_AMC_TermsAndConditions">
+	<apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" assignTo="{!controllerParticipation}"/>
+	<apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="true" />
+	
+	<style>
+		@media only screen  and (min-width: 1224px) {
+              
+            }
+            @media (max-width: 768px){
+            	.termbox {
+	                margin-right: 13%;
+	                float: none !important;
+	            }
+            }
+					
+
+            .termbox {
+				float: left;
+            }
+	</style>
+	<div class="panel panel-primary" id="TERMSANDCONDITIONS">
+  		<div class="panel-heading">
+			{!$Label.ISSP_AMC_TERMS_AND_CONDITIONS}
+    	</div>
+
+    	<div class="panel-body">
+            <div class="col-sm-offset-1 col-sm-9">
+                <apex:outputText value="{!$Label.ISSP_AMC_TERMS_AND_CONDITIONS_TEXT}"/>
+			</div>
+			<div class="col-sm-11">&nbsp;</div>
+<!--			<div class="checkbox">
+				<label>
+					<apex:inputCheckbox value="{!participation.Terms_Conditions_Agreement__c}" />
+						{!$Label.ISSP_AMC_TERMS_AGREE}
+				</label>
+			</div>-->
+			<apex:outputPanel id="termsCheckBox">
+				<div class="col-sm-offset-2 checkbox termbox">
+	                <label class="control-label {!IF(AND(hasError, participation.Terms_Conditions_Agreement__c == false), 'requiredSelectBox', '')}">
+	                    <apex:inputCheckbox value="{!participation.Terms_Conditions_Agreement__c}" >
+	                        <apex:actionSupport event="onchange" rerender="termsCheckBox" status="Loading"/>
+	                    </apex:inputCheckbox>
+	                    <apex:outputLabel value="{!$Label.ISSP_AMC_TERMS_AGREE}" />
+	                </label>
+	            </div>
+			</apex:outputPanel>
+            <div class="col-sm-11">&nbsp;</div>
+            <div class="col-md-12">
+                <div class="col-sm-offset-1 col-md-10 ">
+                    <div class="form-group">
+							<div class="col-sm-6">
+								{!$Label.ISSP_AMC_TERMSCONDITIONS_NAME}
+								<!--<div class="emailValidation">
+					                <apex:inputText styleClass="form-control allemails" rendered="{!IF((controllerParticipation.Submitted_By__c==null),true,false)}"/>
+					                <span class="invalidName" aria-hidden="true"> </span>
+					                <span class="sr-only">(error)</span>
+					                
+					                rendered="{!IF((controllerParticipation.Submitted_By__c!=null),true,false)}"
+					                <div style="color: #a94442" class="errormessage"></div>
+				            	</div> -->
+								<apex:repeat value="{!userInformation}" var="con">
+									<apex:inputText id="nameAirline" styleClass="form-control" value="{!con.Contact.Name}" disabled="true" /> 
+								</apex:repeat>
+							</div>
+							<div class="col-sm-4">
+								{!$Label.ISSP_AMC_TERMSCONDITIONS_DATE}
+								<apex:outputText styleClass="form-control" value="{0,date,MM/dd/yy}" html-readOnly="true">
+								<!-- date and time   value="{0,date,MM/dd/yy HH:mm:ss z}" -->
+									<apex:param value="{!NOW()}" />
+								</apex:outputText>
+							</div>
+                    </div>
+                </div>
+            </div>
+		</div>
+    </div>
+</apex:component>

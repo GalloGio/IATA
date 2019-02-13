@@ -3,6 +3,27 @@
     <customSettingsType>Hierarchy</customSettingsType>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>ACLI_IATA_Airlines_and_Location_Codes_Na__c</fullName>
+        <externalId>false</externalId>
+        <label>ACLI IATA Airlines &amp; Location Codes Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACLI_IATA_Airlines_and_Location_Codes__c</fullName>
+        <description>Id for IATA Airlines and Location Codes Portal Service</description>
+        <externalId>false</externalId>
+        <label>ACLI IATA Airlines and Location Codes Id</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ASD__c</fullName>
         <externalId>false</externalId>
         <label>ASD</label>

@@ -1,0 +1,49 @@
+<apex:component controller="ISSP_AMC_DeclarationSubmittedBy">
+	<apex:attribute name="participation" description="Requirement" type="Participation_Online_Application__c" required="true" assignTo="{!controllerParticipation}"/>
+    
+
+	<div class="panel panel-primary">
+  		<div class="panel-heading" id="SUBMITTEDBY">
+            <!--DECLARATION by Airlines and Non-Airlines concerning Requirement for Baggage Tag Issuer Codes (BTIC) -->
+            {!$Label.ISSP_AMC_SUBMITTED_BY}
+    	</div>
+
+    	<div class="panel-body">
+            <apex:outputPanel id="aocPanel">
+
+
+                <div class="form-group" >
+                    <apex:outputPanel >
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="col-md-offset-1 col-md-10 col-sm-offset-0" style="text-align: justify;">
+                                    <div class="form-group">
+                                            
+											<div class="col-sm-7">
+												<apex:repeat value="{!userInformation}" var="con">
+													<apex:outputText id="nameAirline" styleClass="form-control" value="{!con.Contact.Name}" html-readOnly="true"/>
+												</apex:repeat>
+											</div>
+											<div class="col-sm-7">
+												<apex:repeat value="{!userInformation}" var="con">
+													<apex:outputText id="nameAirline" styleClass="form-control" value="{!con.Contact.Name}" html-readOnly="true"/>
+												</apex:repeat>
+											</div>
+											<div class="col-sm-7">
+												<apex:repeat value="{!userInformation}" var="con">
+													<apex:outputText id="nameAirline" styleClass="form-control" value="{!con.Contact.Title}" html-readOnly="true"/>
+												</apex:repeat>
+											</div>
+
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+            </apex:outputPanel>
+		</div>
+	</div>
+</apex:component>

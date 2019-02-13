@@ -1,0 +1,808 @@
+<!--
+Page Name: ISSP_AMC_EntityContactData.component
+Related Classes: ISSP_AMC_EntityContactData.cls
+
+Copyright @Right IT Services
+
+Purpose: Apply to an Airline Designator code - Entity and Contact Data
+
+VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
+1.0         João Ferreira       11-09-2018      INITIAL DEVELOPMENT
+-->
+<apex:component controller="ISSP_AMC_EntityContactData">
+    <apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" assignTo="{!controllerParticipation}"/>
+    <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="false" />
+    <apex:attribute name="isLocation" description="is Location Identifer Page" type="Boolean" required="false" />
+    <apex:attribute name="isSISUser" description="is SIS User" type="Boolean" required="true"/>
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            color: white !important;
+            border: 1px solid white!important;
+            background-color: white!important;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, white))!important;
+            background: -webkit-linear-gradient(top, white 0%, white 100%)!important;
+            background: -moz-linear-gradient(top, white 0%, white 100%)!important;
+            background: -ms-linear-gradient(top, white 0%, white 100%)!important;
+            background: -o-linear-gradient(top, white 0%, white 100%)!important;
+            background: linear-gradient(to bottom, white 0%, white 100%)!important;
+        }
+    </style>
+
+    <div class="tabset">
+        <!-- Contact Data Tab -->
+        <input type="radio" name="tabset" id="tab1" data-toggle="cdhome" checked="checked">
+            <label for="tab1">{!$Label.ISSP_AMC_CONTACT_DATA}</label>
+        </input>
+        
+        <!-- Entity Data Tab -->
+        <input type="radio" name="tabset" id="tab2" data-toggle="edhome">
+            <label for="tab2">{!$Label.ISSP_AMC_ENTITY_DATA}</label>
+        </input>
+
+        <div class="tab-panels">
+            <div id="cdhome" class="tab-panel">
+                <p></p>
+                <apex:outputPanel rendered="{!!isLocation}">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" id="HEADOFFICECONTACT">
+                        {!$Label.ISSP_AMC_CONTACT}
+                    </div>
+                    <div class="panel-body">
+                        <apex:outputPanel id="hocContact">
+                        
+                        <div class="form-group">
+                            <label for="nameOrganization1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE}</label>
+                            <div class="col-sm-3">
+                                <apex:selectList id="nameOrganization1" styleClass="form-control" size="1" value="{!controllerParticipation.HOC_Salutation__c}">
+                                    <apex:selectOptions value="{!salutationList}" />
+                                </apex:selectList>
+                            </div>
+                            <div class="col-sm-offset-3 col-sm-1">
+                                <apex:commandLink id="btnId" styleClass="btn btn-primary btn-sm " html-data-toggle="modal" html-data-target=".searchHocContact" reRender="fake">
+                                        <span class="glyphicon glyphicon-search"></span> {!$Label.ISSP_AMC_SEARCH_EXISTING}
+                                </apex:commandLink>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME}</label>
+                            <div class="col-sm-8">
+                                <div class="{!IF(AND(hasError, OR(participation.HOC_First_Name__c == null, participation.HOC_First_Name__c == "")), 'has-error has-feedback', '')}">
+                                    <apex:inputText id="firstName1" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control requiredTag allchar" value="{!controllerParticipation.HOC_First_Name__c}"/>
+                                    <span class="{!IF(AND(hasError, OR(participation.HOC_First_Name__c == null, participation.HOC_First_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                    <span class="sr-only">(error)</span>
+                                    
+                                    <div style="color: #a94442" class="errormessage"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME}</label>
+                            <div class="col-sm-8">
+                                <div class="{!IF(AND(hasError, OR(participation.HOC_Last_Name__c == null, participation.HOC_Last_Name__c == "")), 'has-error has-feedback', '')}">
+                                    <apex:inputText id="lastName1" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOC_Last_Name__c}"/>
+                                    <span class="{!IF(AND(hasError, OR(participation.HOC_Last_Name__c == null, participation.HOC_Last_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                    <span class="sr-only">(error)</span>
+                                    
+                                    <div style="color: #a94442" class="errormessage"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="title1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE}</label>
+                            <div class="col-sm-8">
+                                <div class="{!IF(AND(hasError, OR(participation.HOC_Title__c == null, participation.HOC_Title__c == "")), 'has-error has-feedback', '')}">
+                                    <apex:inputText id="title1" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOC_Title__c}"/>
+                                    <span class="{!IF(AND(hasError, OR(participation.HOC_Title__c == null, participation.HOC_Title__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                    <span class="sr-only">(error)</span>
+                                    
+                                    <div style="color: #a94442" class="errormessage"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TELEPHONE_NUMBER}</label>
+                            <div class="col-sm-8">
+                                <div class="{!IF(AND(hasError, OR(participation.HOC_Phone__c == null, participation.HOC_Phone__c == "")), 'has-error has-feedback', '')}">
+                                    <apex:inputText id="city1" onchange="telephoneValidation(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control alltelef" value="{!controllerParticipation.HOC_Phone__c}"/>
+                                    <span class="{!IF(AND(hasError, OR(participation.HOC_Phone__c == null, participation.HOC_Phone__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                    <span class="sr-only">(error)</span>
+                                    
+                                    <div style="color: #a94442" class="errormessage"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL}</label>
+                            <div class="col-sm-8">
+                                <div class="{!IF(AND(hasError, OR(participation.HOC_Email__c == null, participation.HOC_Email__c == "")), 'has-error has-feedback', '')}">
+                                    <apex:inputText id="email" onchange="validateEmail(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allemails" value="{!controllerParticipation.HOC_Email__c}"/>
+                                    <span class="{!IF(AND(hasError, OR(participation.HOC_Email__c == null, participation.HOC_Email__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                    <span class="sr-only">(error)</span>
+                                    
+                                    <div style="color: #a94442" class="errormessage"></div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <div class="checkbox">
+                                    <label>
+                                        
+                                        <apex:inputCheckbox id="chkbilling" value="{!controllerParticipation.Is_the_billing_contact_same_the_HOC__c}" >
+                                            <apex:actionSupport event="onchange" reRender="ebpPanel,ebpPageBlock" />
+                                        </apex:inputCheckbox>
+                                        
+                                        {!$Label.ISSP_AMC_BILLING_CONTACT_SAME_HEAD_OFFICE}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-6 col-sm-5">
+                                <apex:actionRegion >
+                                    <apex:commandLink styleClass="btn btn-primary btn-sm" action="{!addMeToHeadOfficeContact}" reRender="hocContact">
+                                        <span class="glyphicon glyphicon-user"></span> {!$Label.ISSP_AMC_ADD_ME}
+                                    </apex:commandLink>
+                                </apex:actionRegion>
+                                </div>
+                         </div>
+                        </apex:outputPanel>
+                    </div>
+                </div>
+                <apex:pageBlock id="ebpPageBlock">
+                <apex:outputPanel id="ebpPanel" rendered="{!!controllerParticipation.Is_the_billing_contact_same_the_HOC__c}">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" id="BILLINGCONTACT">
+                            {!$Label.ISSP_AMC_BILLING_CONTACT}
+                        </div>
+                        <div class="panel-body">
+                            <apex:outputPanel id="hobContact">
+                            <div class="form-group">
+                                <label for="nameOrganization2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE}</label>
+                                <div class="col-sm-3">
+                                    <apex:selectList id="nameOrganization2" styleClass="form-control" size="1" value="{!controllerParticipation.HOB_Salutation__c}">
+                                        <apex:selectOptions value="{!salutationList}" />
+                                    </apex:selectList>
+                                </div>
+                                <div class="col-sm-offset-3 col-sm-1">
+                                    <apex:commandLink styleClass="btn btn-primary btn-sm " html-data-toggle="modal" html-data-target=".searchHobContact" reRender="fake">
+                                        <span class="glyphicon glyphicon-search"></span> {!$Label.ISSP_AMC_SEARCH_EXISTING}
+                                    </apex:commandLink>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="legalName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.HOB_First_Name__c == null, participation.HOB_First_Name__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="legalName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOB_First_Name__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.HOB_First_Name__c == null, participation.HOB_First_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tradingName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.HOB_Last_Name__c == null, participation.HOB_Last_Name__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="tradingName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOB_Last_Name__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.HOB_Last_Name__c == null, participation.HOB_Last_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="streetAddress2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.HOB_Title__c == null, participation.HOB_Title__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="streetAddress2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOB_Title__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.HOB_Title__c == null, participation.HOB_Title__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="city2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TELEPHONE_NUMBER}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.HOB_Phone__c == null, participation.HOB_Phone__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="city2" onchange="telephoneValidation(this, 'glyphicon glyphicon-remove form-control-feedback')" styleClass="form-control alltelef" value="{!controllerParticipation.HOB_Phone__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.HOB_Phone__c == null, participation.HOB_Phone__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.HOB_Email__c == null, participation.HOB_Email__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="email2" onchange="validateEmail(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allemails" value="{!controllerParticipation.HOB_Email__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.HOB_Email__c == null, participation.HOB_Email__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-sm-offset-6 col-sm-5">
+                                    <apex:commandLink styleClass="btn btn-primary btn-sm" action="{!addMeToBillingContact}"    reRender="hobContact">
+                                        <span class="glyphicon glyphicon-user"></span> {!$Label.ISSP_AMC_ADD_ME}
+                                    </apex:commandLink>
+                                </div>
+                         </apex:outputPanel>
+                        
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                </apex:pageBlock>
+            </apex:outputPanel>
+                <apex:pageBlock id="ebpPageBlockSIS">
+                <apex:outputPanel id="ebpPanel" rendered="{!!isSISUser}">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" id="SISCONTACT">
+                            {!$Label.ISSP_AMC_SIS_INFO}
+                        </div>
+                        <div class="panel-body">
+                            <apex:outputPanel id="hobContact">
+                            <div class="form-group">
+                                <label for="nameOrganization2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE}</label>
+                                <div class="col-sm-3">
+                                    <apex:selectList id="nameOrganization2" styleClass="form-control" size="1" value="{!controllerParticipation.SIS_Salutation__c}">
+                                        <apex:selectOptions value="{!salutationList}" />
+                                    </apex:selectList>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="legalName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.SIS_First_Name__c == null, participation.SIS_First_Name__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="legalName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_First_Name__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.SIS_First_Name__c == null, participation.SIS_First_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tradingName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.SIS_Last_Name__c == null, participation.SIS_Last_Name__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="tradingName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Last_Name__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.SIS_Last_Name__c == null, participation.SIS_Last_Name__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="streetAddress2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.SIS_Title__c == null, participation.SIS_Title__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="streetAddress2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Title__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.SIS_Title__c == null, participation.SIS_Title__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="city2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TELEPHONE_NUMBER}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.SIS_Phone__c == null, participation.SIS_Phone__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="city2" onchange="telephoneValidation(this, 'glyphicon glyphicon-remove form-control-feedback')" styleClass="form-control alltelef" value="{!controllerParticipation.SIS_Phone__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.SIS_Phone__c == null, participation.SIS_Phone__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL}</label>
+                                <div class="col-sm-8">
+                                    <div class="{!IF(AND(hasError, OR(participation.SIS_Email__c == null, participation.SIS_Email__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="email2" onchange="validateEmail(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allemails" value="{!controllerParticipation.SIS_Email__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.SIS_Email__c == null, participation.SIS_Email__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div> 
+                                </div>
+                            </div>
+                         </apex:outputPanel>
+                        
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                </apex:pageBlock>
+            </div>
+
+            <div id="edhome" class="tab-panel">
+                <p></p>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{!$Label.ISSP_AMC_HEAD_OFFICE_ADDRESS}</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="nameOrganization" class="col-sm-3 control-label">{!$Label.ISSP_AMC_NAME_OF_ORGANIZATION}</label>
+                            <div class="col-sm-8">
+                                <apex:inputText id="nameOrganization" styleClass="form-control" value="{!controllerParticipation.Name_of_Organization__c}" disabled="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="legalName" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LEGAL_NAME}</label>
+                            <div class="col-sm-8">
+                                <apex:inputText id="legalName" styleClass="form-control" value="{!controllerParticipation.Legal_Name__c}"  disabled="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="streetAddress" class="col-sm-3 control-label">{!$Label.ISSP_AMC_STREET_ADDRESS}</label>
+                            <div class="col-sm-8">
+                                <apex:inputText id="streetAddress" styleClass="form-control" value="{!controllerParticipation.HQ_Street_address_1__c}"  disabled="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CITY}</label>
+                            <div class="col-sm-8">
+                                <apex:inputText id="city" styleClass="form-control" value="{!controllerParticipation.HQ_City__c}"  disabled="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="postalCode" class="col-sm-3 control-label">{!$Label.ISSP_AMC_POSTAL_CODE}</label>
+                            <div class="col-sm-3">
+                                <apex:inputText id="postalCode" styleClass="form-control" value="{!controllerParticipation.HQ_Postal_Zip_code__c}"  disabled="true"/>
+                            </div>
+                            <label for="vat" class="col-sm-2 control-label">{!$Label.ISSP_AMC_VAT}</label>
+                            <div class="col-sm-3">
+                                <apex:inputText id="vat" styleClass="form-control" value="{!controllerParticipation.HQ_VAT__c}"  disabled="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="country" class="col-sm-3 control-label">{!$Label.ISSP_AMC_COUNTRY}</label>
+                            <div class="col-sm-3">
+                                <apex:inputText id="country" styleClass="form-control" size="1" value="{!controllerParticipation.HQ_Country__c}"  disabled="true" />
+                            </div>
+                            <label for="stateProvince" class="col-sm-2 control-label">{!$Label.ISSP_AMC_STATE}</label>
+                            <div class="col-sm-3">
+                                <apex:inputText id="stateProvince" styleClass="form-control" value="{!controllerParticipation.HQ_State_Province__c}"  disabled="true"/>
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <label class="col-sm-3 control-label">Is the billing address the same as the above head office address ?</label>
+                            <div class="col-sm-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <apex:inputCheckbox />
+                                        Yes
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox">
+                                    <label>
+                                        <apex:inputCheckbox />
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{!$Label.ISSP_AMC_BILLING_ADDRESS}</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="bastreetAddress" class="col-sm-3 control-label">{!$Label.ISSP_AMC_STREET_ADDRESS}</label>
+                            <div class="col-sm-8">
+                                <apex:inputText id="bastreetAddress" styleClass="form-control" value="{!controllerParticipation.Billing_Street_address_1__c}"  disabled="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bacity" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CITY}</label>
+                            <div class="col-sm-8">
+                                <apex:inputText id="bacity" styleClass="form-control" value="{!controllerParticipation.Billing_City__c}"  disabled="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bapostalCode" class="col-sm-3 control-label">{!$Label.ISSP_AMC_POSTAL_CODE}</label>
+                            <div class="col-sm-3">
+                                <apex:inputText id="bapostalCode" styleClass="form-control" value="{!controllerParticipation.Billing_Postal_Zip_code__c}"  disabled="true"/>
+                            </div>
+                            <label for="bavat" class="col-sm-2 control-label">{!$Label.ISSP_AMC_VAT}</label>
+                            <div class="col-sm-3">
+                                <apex:inputText id="bavat" styleClass="form-control" value="{!controllerParticipation.Billing_VAT__c}"  disabled="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bacountry" class="col-sm-3 control-label">{!$Label.ISSP_AMC_COUNTRY}</label>
+                            <div class="col-sm-3">
+                                <apex:inputText id="bacountry" styleClass="form-control" value="{!controllerParticipation.Billing_Country__c}" disabled="true" />
+                            </div>
+                            <label for="bastateProvince" class="col-sm-2 control-label">{!$Label.ISSP_AMC_STATE}</label>
+                            <div class="col-sm-3">
+                                <apex:inputText id="bastateProvince" styleClass="form-control" value="{!controllerParticipation.Billing_State_Province__c}"  disabled="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="modal fade searchHocContact" id='searchHocModal' tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+           
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">{!$Label.ISSP_AMC_SEARCH_HOC}</h4>
+                </div>
+                <div class="modal-body">
+                    <apex:outputPanel >
+                    <apex:pageBlock >
+                    <div class="form-group">
+                        <label for="searchHocFirstName" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME}</label>
+                        <div class="col-sm-3">
+                            <apex:inputText id="searchHocFirstName" styleClass="form-control" value="{!searchHocFirstName}" />
+                        </div>
+                        <label for="searchHocLastName" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME}</label>
+                        <div class="col-sm-3">
+                            <apex:inputText id="searchHocLastName" styleClass="form-control" value="{!searchHocLastName}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="searchHocEmail" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL}</label>
+                        <div class="col-sm-6">
+                            <apex:inputText id="searchHocEmail" styleClass="form-control" value="{!searchHocEmail}"/>
+                        </div>
+                        <div class="col-sm-3">
+                            <apex:commandLink styleClass="btn btn-primary btn-sm" action="{!searchHeadOfficeContact}" reRender="searchHocContactRecord" oncomplete="showHocTable();">
+                                <span class="glyphicon glyphicon-search"></span> {!$Label.ISSP_AMC_SEARCH}
+                            </apex:commandLink>
+                        </div>
+                    </div>
+                    </apex:pageBlock>
+                    </apex:outputPanel>
+                    <hr></hr>
+                    <div style="overflow:auto;">
+                        
+                        <apex:outputPanel id="searchHocContactRecord">
+                        
+                        
+                        <div class="table-responsive">
+                        <table id="showHocTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>{!$Label.ISSP_AMC_TERMSCONDITIONS_NAME}</th>
+                                    <th>{!$Label.ISSP_AMC_TITLE}</th>
+                                    <th>{!$Label.ISSP_AMC_EMAIL}</th>
+                                    <th>{!$Label.ISSP_AMC_PHONE}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <apex:repeat value="{!contactList}" var="conRecordHoc" id="conRecordHoc">
+                                    <tr>
+                                        <td><apex:commandLink onComplete="closeHocModal()" value="{!conRecordHoc.Name}" action="{!selectHocContact}" reRender="hocContact">                                     
+                                            <apex:param value="{!conRecordHoc.Id}" name="currentAccount" assignTo="{!currentContactId}" />
+                                        </apex:commandLink></td>
+                                        <td>{!conRecordHoc.title}</td>
+                                        <td>{!conRecordHoc.email}</td>
+                                        <td>{!conRecordHoc.phone}</td>
+                                        
+                                    </tr>
+                                  
+                                </apex:repeat>
+                                
+                            </tbody>
+                            
+                        </table>
+                    
+                
+                        </div>
+                        </apex:outputPanel>
+                    
+                </div>
+                
+                </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">{!$Label.ISSP_AMC_CLOSE}</button>
+                  </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+            
+        </div><!-- /.modal -->
+
+        <div class="modal fade searchHobContact" id='searchHobModal' tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+           
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">{!$Label.ISSP_AMC_SEARCH_BILLING_CONTACT}</h4>
+                </div>
+                <div class="modal-body">
+                    <apex:pageBlock >
+                    <div class="form-group">
+                        <label for="searchHobFirstName" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME}</label>
+                        <div class="col-sm-3">
+                            <apex:inputText id="searchHobFirstName" styleClass="form-control" value="{!searchHobFirstName}" />
+                        </div>
+                        <label for="searchHobLastName" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME}</label>
+                        <div class="col-sm-3">
+                            <apex:inputText id="searchHobLastName" styleClass="form-control" value="{!searchHobLastName}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="searchHobEmail" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL}</label>
+                        <div class="col-sm-6">
+                            <apex:inputText id="searchHobEmail" styleClass="form-control allemails" value="{!searchHobEmail}"/>
+                        </div>
+                        <div class="col-sm-3">
+                            <apex:commandLink styleClass="btn btn-primary btn-sm" action="{!searchBillingContact}" reRender="searchHobContactRecord" oncomplete="showHobTable();">
+                                <span class="glyphicon glyphicon-search"></span> {!$Label.ISSP_AMC_SEARCH}
+                            </apex:commandLink>
+                        </div>
+                    </div>
+                    </apex:pageBlock>
+                    <hr></hr>
+                    <div style="overflow:auto;">
+                        
+                        <apex:outputPanel id="searchHobContactRecord">
+                        
+                        
+                        <div class="table-responsive">
+                        <table id="showHobTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>{!$Label.ISSP_AMC_TERMSCONDITIONS_NAME}</th>
+                                    <th>{!$Label.ISSP_AMC_TITLE}</th>
+                                    <th>{!$Label.ISSP_AMC_EMAIL}</th>
+                                    <th>{!$Label.ISSP_AMC_PHONE}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <apex:repeat value="{!contactList}" var="conRecordHob" id="conRecordHob">
+                                    <tr>
+                                        <td><apex:commandLink onComplete="closeHobModal()" value="{!conRecordHob.Name}" action="{!selectHobContact}" reRender="hobContact">                                     
+                                            <apex:param value="{!conRecordHob.Id}" name="currentAccount" assignTo="{!currentContactId}" />
+                                        </apex:commandLink></td>
+                                        <td>{!conRecordHob.title}</td>
+                                        <td>{!conRecordHob.email}</td>
+                                        <td>{!conRecordHob.phone}</td>
+                                        
+                                    </tr>
+                                  
+                                </apex:repeat>
+                                
+                            </tbody>
+                            
+                        </table>
+                    
+                
+                        </div>
+                        </apex:outputPanel>
+                    
+                </div>
+                
+                </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">{!$Label.ISSP_AMC_CLOSE}</button>
+                  </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+            
+        </div><!-- /.modal -->
+
+        <script>
+            $(document).ready(function(){
+                var emailList = document.getElementsByClassName('allemails');
+                var telefList = document.getElementsByClassName('alltelef');
+                var charList = document.getElementsByClassName('allchar');
+                for(var i=0; i<emailList.length; i++){              
+                    if(emailList[i].value != null && emailList[i].value != ""){
+                        validateEmail(emailList[i]);
+                    }
+                }
+                for(var i=0; i<telefList.length; i++){
+                    if(telefList[i].value != null && telefList[i].value != ""){
+                        telephoneValidation(telefList[i]);
+                    }
+                }
+                for(var i=0; i<charList.length; i++){
+                    if(charList[i].value != null && charList[i].value != ""){
+                        validateLatinChar(charList[i]);
+                    }
+                }
+
+            });
+
+            function closeHobModal(){
+                $('#searchHobModal').modal('toggle');
+            }
+            function closeHocModal(){
+                $('#searchHocModal').modal('toggle');
+            }
+            function showHobTable() {
+                $('#showHobTable').DataTable();
+            }
+            function showHocTable() {
+                $('#showHocTable').DataTable();
+            }
+
+            //validate if latin chars are being used
+            function validateLatinChar(element, errorClass, parentClass) {
+                console.log('ENTREI NA VALIDAÇÂO');
+                var x = element.parentElement.classList;
+                var y = element.parentElement.children;
+                filter = /([^A-Za-z0-9\s]+)/;
+                if(element.value  != null && element.value != ""){
+                    if (filter.test(element.value)) {
+                        x.remove("parentClass");
+                        x.add("has-error");
+                        x.add("has-feedback");
+                        console.log('ClassList: ' + x);
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "errorClass" || y[i].classList == ""){
+                                y[i].classList.remove("errorClass");
+                                y[i].classList.add("glyphicon");
+                                y[i].classList.add("glyphicon-remove"); 
+                                y[i].classList.add("form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                y[i].innerHTML = "{!$Label.ISSP_AMC_ONLY_ALPHANUM_ALLOWED}";
+                                element.value= "";
+                            }                   
+                        }
+                    } 
+                    else{
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                                y[i].classList.add("errorClass");
+                                y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                y[i].innerHTML = ""
+                            }
+                        }
+                        x.add("parentClass");
+                        x.remove("has-error");
+                        x.remove("has-feedback");
+                    }
+                }
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            y[i].classList.add("errorClass");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = ""
+                        }
+                    }
+                    x.add("parentClass");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                }
+            }
+
+
+            //validate email
+            function validateEmail(element, errorClass) {
+                var x = element.parentElement.classList;
+                var y = element.parentElement.children;
+                filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if(element.value  != null && element.value != ""){
+                    if (!filter.test(element.value)) {
+                        //x.remove("emailValidation");
+                        x.add("has-error");
+                        x.add("has-feedback");
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "errorClass" || y[i].classList == ""){
+                                //y[i].classList.remove("errorClass");
+                                y[i].classList.add("glyphicon");
+                                y[i].classList.add("glyphicon-remove"); 
+                                y[i].classList.add("form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                element.value= "";
+                                y[i].innerHTML = "{!$Label.ISSP_AMC_ENTER_A_VALID_EMAIL}";
+
+                            }                   
+                        }
+                    } 
+                    else{
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                                //y[i].classList.add("errorClass");
+                                y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                y[i].innerHTML = ""
+                            }
+                        }
+                        //x.add("emailValidation");
+                        x.remove("has-error");
+                        x.remove("has-feedback");
+                    }
+                }
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            //y[i].classList.add("errorClass");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = ""
+                        }
+                    }
+                    //x.add("emailValidation");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                }
+            }
+
+            //Telephone Validation
+            function telephoneValidation(element, errorClass) {
+                var t = element.parentElement.classList;
+                var w = element.parentElement.children;
+                filter = /^([0-9])+$/;
+                
+                if(element.value  != null && element.value != ""){
+                    if (!filter.test(element.value)) {
+                        //t.remove("phoneValidation");
+                        t.add("has-error");
+                        t.add("has-feedback");
+                        for (var i = 0; i < w.length; i++) {
+                            if(w[i].classList == "errorClass"  || w[i].classList == ""){
+                                //w[i].classList.remove("errorClass");
+                                w[i].classList.add("glyphicon");
+                                w[i].classList.add("glyphicon-remove"); 
+                                w[i].classList.add("form-control-feedback");
+                            }
+                            if(w[i].classList =="errormessage"){
+                                element.value= "";
+                                w[i].innerHTML = "{!$Label.ISSP_AMC_TELEPHONE_NUMBER_ERROR}";
+
+                            }                   
+                        }
+                    } 
+                    else{
+                        for (var i = 0; i < w.length; i++) {
+                            if(w[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                                //w[i].classList.add("errorClass");
+                                w[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                            }
+                            if(w[i].classList =="errormessage"){
+                                w[i].innerHTML = ""
+                            }
+                        }
+                        //t.add("phoneValidation");
+                        t.remove("has-error");
+                        t.remove("has-feedback");
+                    }
+                }
+                else{
+                    for (var i = 0; i < w.length; i++) {
+                        if(w[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            //w[i].classList.add("errorClass");
+                            w[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(w[i].classList =="errormessage"){
+                            w[i].innerHTML = ""
+                        }
+                    }
+                    //t.add("phoneValidation");
+                    t.remove("has-error");
+                    t.remove("has-feedback");
+                }
+            }
+        </script> 
+</apex:component>

@@ -1,0 +1,50 @@
+<apex:component >
+    <apex:attribute name="participation" description="Requirement" type="Participation_Online_Application__c" required="true" />
+    <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="true" />
+    <div class="panel panel-primary" id="ULD">
+        <div class="panel-heading">
+                {!$Label.ISSP_AMC_ULD}
+        </div>
+
+        <div class="panel-body">
+
+            <apex:outputPanel id="aocPanel">
+
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-11">
+                        <div class="col-md-8">
+                            <label for="aocRadio">{!$Label.ISSP_AMC_ULD_QUESTION}</label>
+                        </div>
+                        <div class="col-md-4">
+                            <apex:selectRadio id="aocRadio" value="{!participation.Is_ULD_participation_IATA_program__c}" styleClass="{!IF(AND(hasError, participation.Is_ULD_participation_IATA_program__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
+                                <apex:actionSupport event="onchange" rerender="aocPanel" status="Loading" />
+                                <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
+                                <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
+                            </apex:selectRadio>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <apex:outputPanel rendered="{!participation.Is_ULD_participation_IATA_program__c == 'Yes'}">
+                            
+                        </apex:outputPanel>
+                    </div>
+
+                    <div class="form-group">
+                        <apex:outputPanel rendered="{!participation.Is_ULD_participation_IATA_program__c == 'No'}">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-1 col-md-offset-1 col-md-9">
+                                        <div style="color:orange">
+                                                {!$Label.ISSP_AMC_ULD_INFO}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+                </div>
+            </apex:outputPanel>
+        </div>
+    </div>
+</apex:component>

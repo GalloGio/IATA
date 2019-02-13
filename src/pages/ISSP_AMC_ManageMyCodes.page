@@ -1,0 +1,72 @@
+<!--
+    Component Name: ISSP_AMC_ManageMyCodes.component
+    Related Classes: ISSP_AMC_ManageMyCodes.cls
+
+    Copyright @Right IT Services
+
+    Purpose:
+
+    VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
+    1.0         Filipa Martins       30-10-2018      INITIAL DEVELOPMENT
+ -->
+<apex:page controller="ISSP_AMC_ManageMyCodes" showHeader="false">
+    <c:ISSP_Header />
+    <div class="section-header col-md-6" style="text-align: center; background-color: #003F76">
+        <strong class="companyTitle" style="color: white">{!$Label.ISSP_AMC_COMPANY_CODES3}</strong><br/>
+    </div>
+            <div class="row">
+                <div class="col-md-2">
+                    {!$Label.ISSP_AMC_AIRLINE_DESIGNATOR}
+                        <apex:outputText style="margin-left: 5%" value="tp"/>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn_iata_primary" type="button" onclick="manageCodes()" style="width:100%;  margin:0px">
+                            {!$Label.ISSP_AMC_MANAGE_CODES}
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                        {!$Label.ISSP_ACM_PREFIX}
+
+                            <apex:outputText style="margin-left: 5%" value="No code assigned"/>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn_iata_primary" type="button" onclick="manageCodes()" style="width:100%;  margin:0px">
+                            {!$Label.ISSP_AMC_MANAGE_CODES}
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                        {!$Label.ISSP_AMC_LOCATION}
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                        .
+
+                    <apex:outputText style="margin-left: 5%" value="XXX"/>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn_iata_primary" type="button" onclick="manageCodes()" style="width:100%;  margin:0px">
+                            {!$Label.ISSP_AMC_MANAGE_CODES}
+                    </button>
+                </div>
+            </div>
+
+    <script type="text/javascript">
+              function manageCodes() {
+
+              }
+    </script>
+</apex:page>

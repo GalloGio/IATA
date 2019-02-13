@@ -1,0 +1,365 @@
+<apex:component controller="ISSP_AMC_LocationAirportHeliportForm" >
+    <apex:attribute name="participation" description="Requirement" type="Participation_Online_Application__c" required="true" />
+    <apex:attribute name="countryList" description="List of Countries" type="SelectOption[]" required="true" />
+    <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="true" />
+
+
+    <c:Loading />
+
+    <script>
+        /* 
+        function deletePreviousAfterRerender(){
+            var tests = document.getElementsByClassName('alldates');
+            for(var i=0; i<tests.length; i++){              
+                if(tests[i].value != null && tests[i].value != ""){
+                    tests[i].value = "";
+                }
+            }
+        }*/
+
+        $(document).ready(function(){
+
+
+
+            /*var charList = document.getElementsByClassName('allchar');
+            var dateList = document.getElementsByClassName('alldate');
+            for(var i=0; i<charList.length; i++){              
+                if(charList[i].value != null && charList[i].value != ""){
+                    validateLatinChar(charList[i]);
+                }
+            }
+            for(var i=0; i<dateList.length; i++){              
+                if(dateList[i].value != null && dateList[i].value != ""){
+                    dateValidationOptYes(dateList[i]);
+                }
+            }*/
+        });
+
+
+        //validate if latin chars are being used
+        function validateLatinChar(element, errorClass, parentClass) {
+            var x = element.parentElement.classList;
+            var y = element.parentElement.children;
+            filter = /([^A-Za-z0-9\s]+)/;
+            if(element.value  != null && element.value != ""){
+                if (filter.test(element.value)) {
+                    //x.remove("parentClass");
+                    x.add("has-error");
+                    x.add("has-feedback");
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "errorClass" || y[i].classList == ""){
+                            //y[i].classList.remove("errorClass");
+                            y[i].classList.add("glyphicon");
+                            y[i].classList.add("glyphicon-remove"); 
+                            y[i].classList.add("form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            element.value= "";
+                            y[i].innerHTML = "{!$Label.ISSP_AMC_ONLY_ALPHANUM_ALLOWED}";
+
+                        }                   
+                    }
+                } 
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            //y[i].classList.add("errorClass");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = ""
+                        }
+                    }
+                    //x.add("parentClass");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                }
+            }
+            else{
+                for (var i = 0; i < y.length; i++) {
+                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback" ){
+                        y[i].classList.add("errorClass");
+                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                    }
+                    if(y[i].classList =="errormessage"){
+                        y[i].innerHTML = ""
+                    }
+                }
+                x.add("parentClass");
+                x.remove("has-error");
+                x.remove("has-feedback");
+            }
+        }
+
+        //Validate Date
+        function dateValidationOptYes(element) {
+            var x = element.parentElement.classList;
+            var y = element.parentElement.children;
+            var elementDate = Date.parse(element.value);
+            var today = new Date();
+            var todayMS = Date.parse(today);
+            var dateLimit = -2208988800000;
+
+            if(element.value  != null && element.value != ""){
+                if (elementDate < dateLimit || element.value.length != 10 || elementDate > todayMS - 86400000) {
+                    //x.remove("parentClass");
+                    x.add("has-error");
+                    x.add("has-feedback");
+                    for (var i = 0; i < y.length; i++) {                        
+                        if(y[i].classList == "{!IF(AND(hasError, participation.Date_when_airport_has_been_operational__c == null), 'glyphicon glyphicon-remove form-control-feedback', '')}" || y[i].classList == ""){                           
+                            //y[i].classList.remove("errorClass");                            
+                            y[i].classList.add("glyphicon");                           
+                            y[i].classList.add("glyphicon-remove");                             
+                            y[i].classList.add("form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            element.value="";                        
+                            y[i].innerHTML = "{!$Label.ISSP_AMC_INVALID_DATE}";
+                        } 
+                    }
+                } 
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            //y[i].classList.add("errorClass");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = "";
+                        }
+                    }
+                    //x.add("parentClass");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                }
+            }
+            else{
+                for (var i = 0; i < y.length; i++) {
+                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                        //y[i].classList.add("errorClass");
+                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                    }
+                    if(y[i].classList =="errormessage"){
+                        y[i].innerHTML = "";
+                    }
+                }
+                //x.add("parentClass");
+                x.remove("has-error");
+                x.remove("has-feedback");
+
+            }
+        }
+
+
+        //Validate Date
+        /*
+        function dateValidationOptNo(element) {
+            var x = element.parentElement.classList;
+            var y = element.parentElement.parentElement.children;
+            var today = new Date();
+            var oneyearlater = new Date();
+            var todayMS = Date.parse(today);
+            var oneyearlaterMS = Date.parse(today) + 31556926000;
+            var elementDate = Date.parse(element.value);
+
+            if(element.value  != null && element.value != ""){
+                if (elementDate > oneyearlaterMS) {
+                    x.remove("validateDate");
+                    x.add("has-error");
+                    x.add("has-feedback");
+                    for (var i = 0; i < y.length; i++) {
+                        
+                        if(y[i].classList == "invalidDate"){
+                            y[i].classList.remove("invalidDate");
+                            y[i].classList.add("glyphicon-remove"); 
+                            y[i].classList.add("form-control-feedback");
+                            y[i].classList.add("glyphicon");  
+                        }
+                        
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = "Invalid date, must be within a year.";
+                        }                   
+                    }
+                }
+                else if (elementDate < todayMS - 86400000) {
+                    x.remove("validateDate");
+                    x.add("has-error");
+                    x.add("has-feedback");
+                    
+                    for (var i = 0; i < y.length; i++) {                        
+                        if(y[i].classList == "invalidDate"){                           
+                            y[i].classList.remove("invalidDate");                            
+                            y[i].classList.add("glyphicon");                           
+                            y[i].classList.add("glyphicon-remove");                             
+                            y[i].classList.add("form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){                            
+                            y[i].innerHTML = "Invalid past date.";
+                        }                   
+                    }
+                } 
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            y[i].classList.add("invalidDate");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = "";
+                        }
+                    }
+                    x.add("validateDate");
+                    x.remove("has-error");
+                    x.remove("has-feedback");
+                }
+            }
+            else{
+                for (var i = 0; i < y.length; i++) {
+                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                        y[i].classList.add("invalidDate");
+                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                    }
+                    if(y[i].classList =="errormessage"){
+                        y[i].innerHTML = "";
+                    }
+                }
+                x.add("validateDate");
+                x.remove("has-error");
+                x.remove("has-feedback");
+            }
+        }}*/
+
+    </script>
+
+    <apex:actionFunction name="refreshList" rerender="step3Frm" status="loading" oncomplete="stopLoading();" />
+
+    <div class="panel panel-primary" id="AIRPORTHELIPORT">
+        <div class="panel-heading">
+            {!$Label.ISSP_AMC_AIRPORT_HELIPORT} 
+        </div>
+
+        <div class="panel-body">
+
+            <apex:outputPanel id="aocPanel">
+                    <!--
+                    <div class="col-md-offset-1 col-md-11">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <label for="aocRadio">{!$Label.ISSP_AMC_AIRPORT_OPEN_QUESTION}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <apex:selectRadio styleClass="requiredSelectRadio" id="aocRadio" value="{!participation.Is_this_airport_currently_open__c}" style="width:100px">
+                                    <apex:actionSupport event="onchange" rerender="aocPanel" status="Loading" />
+                                    <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}"/>
+                                    <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"/>
+                                </apex:selectRadio>
+                            </div>
+                        </div>      
+                    </div> -->
+                    <div class="col-md-12">&nbsp;</div>
+                    <div class="col-md-offset-1 col-md-11">
+
+                        <!--<apex:outputPanel rendered="{!participation.Is_this_airport_currently_open__c == 'Yes'}"> -->
+
+                            <div class="form-group">                        
+                                <div class="col-md-5">
+                                    <label for="openDatePicker">{!$Label.ISSP_AMC_AIRPORT_OPERATIONAL_QUESTION}</label>
+                                    <apex:image value="/img/msg_icons/info16.png" title="If not yet operational, please insert when is the planned opening date." 
+                                    html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                </div>
+                                <div class="col-md-2 input-daterange input-group" id="openDatePicker" data-provide="datepicker" data-date-format="mm/dd/yyyy">
+                                    <div class="{!IF(AND(hasError, participation.Date_when_airport_has_been_operational__c == null), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="openDate" onblur="dateValidationOptYes(this)" styleClass="form-control alldate" value="{!participation.Date_when_airport_has_been_operational__c }" />
+                                        <span class="{!IF(AND(hasError, participation.Date_when_airport_has_been_operational__c == null), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span> 
+                                        <span class="sr-only">(error)</span>
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div> 
+                                        
+                                </div>                         
+                            </div>
+                        <!--</apex:outputPanel> -->
+                        <!--<apex:outputPanel rendered="{!participation.Is_this_airport_currently_open__c == 'No'}">
+                            <script>
+                                $(document).ready(function() {
+                                    rerenderDateOptNo();
+                                });
+                            </script>
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <label for="op2">{!$Label.ISSP_AMC_PLANNED_AIRLINES_QUESTION}</label>
+                                </div>
+                                <div class="col-md-2 input-daterange input-group" id="ops2" data-provide="datepicker">
+                                    <div class="validateDate">
+
+                                        <apex:inputField id="ops" type="text" onchange="dateValidationOptNo(this)" styleClass="form-control openDate2" value="{!participation.Planned_Open_date_for_this_airline__c}"/>
+                                                                                
+                                        <span class="invalidDate" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </apex:outputPanel> -->
+                    </div>
+                    <div class="col-md-offset-1 col-md-11"> 
+                        <div class="form-group">
+                            <label class="col-md-8" for="op2">{!$Label.ISSP_AMC_OTHER_AIRLINES_OPERATING_QUESTION}</label>
+                        </div>
+                    </div>
+                        <div class="col-md-offset-2 col-md-8">
+                            <div class="form-group">                           
+                                <div class="col-md-1 col-sm-offset-0 control-label">
+                                    {!$Label.ISSP_AMC_1}
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="{!IF(AND(hasError, OR(participation.X1_other_airlines_in_the_airport__c == null, participation.X1_other_airlines_in_the_airport__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="it1" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!participation.X1_other_airlines_in_the_airport__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.X1_other_airlines_in_the_airport__c == null, participation.X1_other_airlines_in_the_airport__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-2 col-md-8"> 
+                            <div class="form-group">
+                                <div class="col-md-1 col-sm-offset-0 control-label">
+                                    {!$Label.ISSP_AMC_2}
+                                </div> 
+                                <div class="col-md-7">
+                                    <div class="{!IF(AND(hasError, OR(participation.X2_other_airlines_in_the_airport__c == null, participation.X2_other_airlines_in_the_airport__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="it2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')"  styleClass="form-control allchar" value="{!participation.X2_other_airlines_in_the_airport__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.X2_other_airlines_in_the_airport__c == null, participation.X2_other_airlines_in_the_airport__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>                         
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <div class="col-md-offset-2 col-md-8">
+                            <div class="form-group">
+                                <div class="col-md-1 col-sm-offset-0  control-label">
+                                    {!$Label.ISSP_AMC_3}
+                                </div>
+                                <div class="col-md-7">  
+                                    <div class="{!IF(AND(hasError, OR(participation.X3_other_airlines_in_the_airport__c == null, participation.X3_other_airlines_in_the_airport__c == "")), 'has-error has-feedback', '')}">
+                                        <apex:inputText id="it3" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!participation.X3_other_airlines_in_the_airport__c}"/>
+                                        <span class="{!IF(AND(hasError, OR(participation.X3_other_airlines_in_the_airport__c == null, participation.X3_other_airlines_in_the_airport__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
+                                        <span class="sr-only">(error)</span>
+                                        
+                                        <div style="color: #a94442" class="errormessage"></div>
+                                    </div>                                 
+                                </div>
+                            </div>
+                        </div>
+                    
+
+            </apex:outputPanel>
+        </div>
+    </div>
+
+    
+</apex:component>
