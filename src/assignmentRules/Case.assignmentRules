@@ -2758,7 +2758,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>IATA Codes not applicable to Agents</value>
+                <value>IATA Codes (not applicable to Agents)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
@@ -4054,7 +4054,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>France,GUADELOUPE,Martinique</value>
+                <value>France,Guadeloupe,Martinique</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
