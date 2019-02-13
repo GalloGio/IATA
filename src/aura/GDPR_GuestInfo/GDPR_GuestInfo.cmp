@@ -57,7 +57,7 @@
                                 <a class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">I accept IATA privacy policy</a>
                                 <aura:if isTrue="{!v.submit &amp;&amp; !v.termsChecked}">
                                     <ul class="has-error uiInputDefaultError uiInput uiInputText uiInput--default uiInput--input">
-                                        <li class="form-element__help" >Please accept terms and conditions</li>
+                                        <li class="form-element__help" >Please accept IATA privacy policy</li>
                                     </ul>
                                 </aura:if>
                             </div>
