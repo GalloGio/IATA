@@ -957,9 +957,9 @@ global class ANG_OscarProcessHelper {
 			
 			System.debug('theOscar.SIDRA_lite_reason__c is ' + theOscar.SIDRA_lite_reason__c);
 
-			if(theOscar.SIDRA_lite_reason__c == null)
+			if(theOscar.SIDRA_lite_reason__c == null && memoTextTemp != null)
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','');
-			else
+			else if(memoTextTemp != null)
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','due to '+theOscar.SIDRA_lite_reason__c+'.');
 
 			changeCode.memoText = memoTextTemp;
