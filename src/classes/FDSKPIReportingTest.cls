@@ -7,10 +7,12 @@ private class FDSKPIReportingTest {
     public static final String CASE_ACTION_CASE_REOPENING = 'Case Reopening';
     public static final String CASE_ACTION_SEND_NOI = 'Send NOI';
     public static final String CASE_ACTION_CREATING_A_TASK = 'Creating a Task';
+    public static final String CASE_EMAIL_SEND_ACTION = 'Send Email';
+
     private static void setupReportings() {
         List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, 
             CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI, CASE_COMMENT_ACTION, 
-            CASE_ACTION_CREATING_A_TASK};
+            CASE_ACTION_CREATING_A_TASK, CASE_EMAIL_SEND_ACTION};
                 List<FDS_KPI_Reporting__c> kpiReportingsToInsert = new List<FDS_KPI_Reporting__c>();
         String cscRTId = [SELECT Id FROM RecordType WHERE sObjectType = 'FDS_KPI_Reporting__c' and DeveloperName = 'CSC' LIMIT 1].Id;
         
@@ -143,12 +145,45 @@ private class FDSKPIReportingTest {
         System.assertEquals('November', TaskTriggerHelper.convertMonthNumberToText(11));
         System.assertEquals('December', TaskTriggerHelper.convertMonthNumberToText(12));
         System.assertEquals('incorrect month', TaskTriggerHelper.convertMonthNumberToText(13));
-
+        
+        //EmailMessageKPIHandler
+		System.assertEquals('January', EmailMessageKPIHandler.convertMonthNumberToText(1));
+        System.assertEquals('February', EmailMessageKPIHandler.convertMonthNumberToText(2));
+        System.assertEquals('March', EmailMessageKPIHandler.convertMonthNumberToText(3));
+        System.assertEquals('April', EmailMessageKPIHandler.convertMonthNumberToText(4));
+        System.assertEquals('May', EmailMessageKPIHandler.convertMonthNumberToText(5));
+        System.assertEquals('June', EmailMessageKPIHandler.convertMonthNumberToText(6));
+        System.assertEquals('July', EmailMessageKPIHandler.convertMonthNumberToText(7));
+        System.assertEquals('August', EmailMessageKPIHandler.convertMonthNumberToText(8));
+        System.assertEquals('September', EmailMessageKPIHandler.convertMonthNumberToText(9));
+        System.assertEquals('October', EmailMessageKPIHandler.convertMonthNumberToText(10));
+        System.assertEquals('November', EmailMessageKPIHandler.convertMonthNumberToText(11));
+        System.assertEquals('December', EmailMessageKPIHandler.convertMonthNumberToText(12));
+        System.assertEquals('incorrect month', EmailMessageKPIHandler.convertMonthNumberToText(13));
     }
 
     static testMethod void testNewCommentKPIReporting() {
 
-        setup();
+        setupReportings();
+        Account a = ISSP_ObjectFactory.createNewAccount();
+        a.BillingCity = 'test';
+        a.Name = 'test';
+        insert a;
+
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId= a.Id;
+        contact.Email = 'test@test.com';
+        insert contact;
+
+        RecordType RT = [SELECT Id FROM RecordType WHERE sObjectType = 'Case' AND DeveloperName = 'SIDRA' LIMIT 1];
+
+        Case caseOpened = new Case();
+        caseOpened.Status = 'Action Needed';
+        caseOpened.RecordtypeId = RT.Id;
+        caseOpened.ContactId = contact.Id;
+        caseOpened.AccountId = contact.AccountId;
+        insert caseOpened;
+
 
         Test.startTest();
 
@@ -174,6 +209,61 @@ private class FDSKPIReportingTest {
         //verify parent record
         System.assertEquals(1, kpiReportings.size());
         System.assertEquals(CASE_COMMENT_ACTION, kpiReportings.get(0).Type_Of_Action__c);
+
+        //verify child
+        System.assertEquals(1, kpiValues.size());
+        System.assertEquals(kpiValues.get(0).Responsible__c, UserInfo.getUserId());
+        System.assertEquals(kpiValues.get(0).CaseNumber__c, caseId);
+        System.assertEquals(kpiValues.get(0).FDS_KPI_Reporting__c, kpiReportings.get(0).Id);
+        System.assertEquals(true, kpiValues.get(0).KPI_Value__c != null );
+
+
+    }
+
+     static testMethod void testNewEmailKPIReporting() {
+         setupReportings();
+         Account a = ISSP_ObjectFactory.createNewAccount();
+         a.BillingCity = 'test';
+         a.Name = 'test';
+         insert a;
+
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId= a.Id;
+        contact.Email = 'test@test.com';
+        insert contact;
+
+        RecordType RT = [SELECT Id FROM RecordType WHERE sObjectType = 'Case' AND DeveloperName = 'SIDRA' LIMIT 1];
+
+        Case caseOpened = new Case();
+        caseOpened.Status = 'Action Needed';
+        caseOpened.RecordtypeId = RT.Id;
+        caseOpened.ContactId = contact.Id;
+        caseOpened.AccountId = contact.AccountId;
+        insert caseOpened;
+        
+         Test.startTest();
+        Id caseId = [SELECT ID FROM Case LIMIT 1].Id;
+
+        try {
+            EmailMessage caseComment = new EmailMessage(
+                    ParentId=caseId,
+                    Incoming = false
+            );
+            insert caseComment;
+
+        } catch(Exception e) {
+            System.assert(false);
+        }
+
+        Test.stopTest();
+
+        //for verification
+        List<FDS_KPI_Reporting__c> kpiReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Type_Of_Action__c = 'Send Email'];
+        List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
+
+        //verify parent record
+        System.assertEquals(1, kpiReportings.size());
+        System.assertEquals(CASE_EMAIL_SEND_ACTION, kpiReportings.get(0).Type_Of_Action__c);
 
         //verify child
         System.assertEquals(1, kpiValues.size());

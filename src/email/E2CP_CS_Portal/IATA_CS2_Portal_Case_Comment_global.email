@@ -18,10 +18,8 @@
 <br/>
 {!$Label.Country_concerned_by_the_query}: {!relatedTo.Country_concerned_by_the_query__c}
 <br/><br/>
-<center><apex:outputText value=" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" /></center>
 <apex:outputField value="{!relatedTo.E2CP__Most_Recent_Public_Comment__c}"></apex:outputField>
 <br/>
-<center><apex:outputText value=" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" /></center>
 <br/>
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
 <apex:outputText value="{!$Label.ISSP_Email_YouCanAccess}" />
@@ -57,7 +55,7 @@ Financial and Distribution Services
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c && relatedTo.Groups__c = 'Default'}">
 <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
 <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
-IATA Customer Service center
+IATA Customer Service Center
 <br/>International Air Transport Association
 </span></b>
 </p>

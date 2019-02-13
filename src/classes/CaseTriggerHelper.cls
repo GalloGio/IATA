@@ -9,6 +9,8 @@ public with sharing class CaseTriggerHelper {
     
     public static final String CASE_STATUS_CLOSED = 'Closed';
     public static final String CASE_STATUS_ESCALATED_INTERNALLY = 'Escalated Internally';
+        public static final String CASE_STATUS_ESCALATED_EXTERNALLY = 'Escalated Externally';
+
     public static final String CASE_STATUS_REOPEN = 'Reopen';
     
     //public static final String CASE_ACTION_PUBLIC_COMMENT = 'Public Case Comment';
@@ -106,7 +108,7 @@ public with sharing class CaseTriggerHelper {
                }
             
             
-            if(newMap.get(c.Id).Status == CASE_STATUS_ESCALATED_INTERNALLY && 
+            if((newMap.get(c.Id).Status == CASE_STATUS_ESCALATED_EXTERNALLY || newMap.get(c.Id).Status == CASE_STATUS_ESCALATED_INTERNALLY) && 
                configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName)) {
                    
                    List<String> oldStatuses = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_From__c.split(',');
@@ -122,14 +124,14 @@ public with sharing class CaseTriggerHelper {
             System.debug('@@@ old status: '+oldMap.get(c.Id).Status);
             System.debug('@@@ new status: '+newMap.get(c.Id).Status);
             // case closure from reopen
-            if(oldMap.get(c.Id).Status == CASE_STATUS_REOPEN  && newMap.get(c.Id).Status == CASE_STATUS_CLOSED
-               && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
-                   List<String> reopenReasons = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Reopening_Reason__c.split(',');
-                   if(reopenReasons.contains(c.Reopening_reason__c)) {
-                       consideredForClosure.add(c.Id);
-                       allConsidered.add(c.Id);
-                   }
-               }
+            //if(oldMap.get(c.Id).Status == CASE_STATUS_REOPEN  && newMap.get(c.Id).Status == CASE_STATUS_CLOSED
+            //   && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
+            //       List<String> reopenReasons = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Reopening_Reason__c.split(',');
+             //      if(reopenReasons.contains(c.Reopening_reason__c)) {
+             //          consideredForClosure.add(c.Id);
+             //          allConsidered.add(c.Id);
+              //     }
+              // }
            
 
 
@@ -167,10 +169,29 @@ public with sharing class CaseTriggerHelper {
         for(Id cId: consideredForClosure) {
             String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
             
+            // sprint6 if a case is close as part of same query
+            // substract from original user while awarding the new one
+            
             KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), 
                                                                  Integer.valueOf(configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue()), 
                                                                  kpiReportingClosureId);
             kpiValuesToInsert.add(valueToInsert);
+			// if points were awarded to someone else substract them from original
+            if(newMap.get(cId).Reopening_reason__c == 'same query' && typeOfActionClosureMap.get(cId) != null
+              && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen') {
+                KPI_Value__c valueToAdd = new KPI_Value__c();
+
+
+        		valueToAdd.Responsible__c = typeOfActionClosureMap.get(cId).Responsible__c;
+                valueToAdd.Name = 'Value_' + cId + '_' + DateTime.now().hour()+'_'+DateTime.now().minute()+'_'+DateTime.now().second();
+                valueToAdd.FDS_KPI_Reporting__c = kpiReportingReopeningId;
+                valueToAdd.CaseNumber__c = cId;
+                valueToAdd.Month__c = convertMonthNumberToText(Integer.valueOf(Date.today().month()));
+                valueToAdd.Year__c = String.valueOf(Date.today().year());
+                valueToAdd.KPI_Value__c = Integer.valueOf(configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue());
+                 kpiValuesToInsert.add(valueToAdd);
+
+        } 
         }
         
         // case internal escalation
@@ -275,14 +296,10 @@ public with sharing class CaseTriggerHelper {
         valueToAdd.Month__c = convertMonthNumberToText(Integer.valueOf(Date.today().month()));
         valueToAdd.Year__c = String.valueOf(Date.today().year());
         valueToAdd.KPI_Value__c = points;
-        
-        if(caseToProcess.Reopening_reason__c == 'same query' && typeOfActionClosureMap.get(caseToProcess.Id) != null) {
-            valueToAdd.Responsible__c = typeOfActionClosureMap.get(caseToProcess.Id).Responsible__c;
-            System.debug('+++modding responsible');
-        } else {
-            System.debug('+++first responsible by my user');
+       
+
             valueToAdd.Responsible__c = UserInfo.getUserId();
-        }
+        
         return valueToAdd;
     }
 }
