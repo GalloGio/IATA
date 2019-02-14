@@ -189,6 +189,11 @@
                     <default>false</default>
                     <label>Case Reopening</label>
                 </value>
+                <value>
+                    <fullName>Send Email</fullName>
+                    <default>false</default>
+                    <label>Send Email</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -314,6 +319,10 @@
             </values>
             <values>
                 <fullName>Public Case Comment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Email</fullName>
                 <default>false</default>
             </values>
             <values>
