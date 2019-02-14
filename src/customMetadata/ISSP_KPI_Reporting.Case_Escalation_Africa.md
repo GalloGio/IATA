@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>Status_To__c</field>
-        <value xsi:type="xsd:string">Escalated Internally,Escalated Externally</value>
+        <value xsi:type="xsd:string">Escalated Internally</value>
     </values>
     <values>
         <field>Type_of_Task__c</field>

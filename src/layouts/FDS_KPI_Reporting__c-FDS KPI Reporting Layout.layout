@@ -27,10 +27,6 @@
                 <behavior>Edit</behavior>
                 <field>Value_Type__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Type_Of_Action__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

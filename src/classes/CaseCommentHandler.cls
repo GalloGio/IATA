@@ -4,6 +4,7 @@ public with sharing class CaseCommentHandler {
     List<FDS_KPI_Reporting__c> kpiReportingsToInsert = new List<FDS_KPI_Reporting__c>();
     List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
     
+    
     public static void doBeforeInsert(list<CaseComment> listComments) {
         
         // chck if the incoming casecomment comes from E2CP process
