@@ -49,7 +49,7 @@ global class ANG_OscarProcessHelper {
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
-					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,ANG_IsNewGenAgency__c ,
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
 					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
@@ -118,7 +118,17 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1','In order to generate a IATA code you must first pass the Sanity Check.','-1'};
 
             }
+            /*** INC456141 start ***/
+            if((theAccount.Location_Type__c == 'HE' && theAccount.Location_Class__c == 'T') || (theAccount.Location_Type__c == 'AE' && theAccount.Location_Class__c == 'T')) {
+            	isIATACodeGenerationRunning = false;
+            	return new String[]{'-1','Location type T does not match with location class HE/AE. Please either correct the location class or location type on the Account level to match T with HO/BR or P with HE/AE.','-1'};
+            }
 
+            if((theAccount.ANG_IsNewGenAgency__c == true && (theAccount.Location_Type__c == 'HO' || theAccount.Location_Type__c == 'BR'))) {
+            	isIATACodeGenerationRunning = false;
+            	return new String[]{'-1','NewGen Agencies cannot have location type = HO or BR.','-1'};
+            }
+            /*** INC456141 end ***/
             if(oscar.Process__c.containsIgnoreCase('NEW') && oscar.Account__r.Location_Type__c != 'HO' && oscar.Account__r.Location_Type__c != 'HE' && oscar.Account__r.Top_Parent__r.Status__c == AMS_Utils.ACC_S0_TERMINATED){
             	isIATACodeGenerationRunning = false;
             	System.debug('[ANG_OscarProcessHelper] IATA code generation is not allowed in hierarchies with HO/HE status Terminated.');

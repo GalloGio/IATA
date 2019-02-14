@@ -3503,12 +3503,13 @@ public class AMS_OSCARTriggerHandler {
                 !tocList.contains(AMS_Utils.OWNERSHIP_IATA)
                 && !tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)
                 && !tocList.contains(AMS_Utils.MAJ_SHAREHOLDING)
+                && !tocList.contains(AMS_Utils.MIN_SHAREHOLDING)
                 && !tocList.contains(AMS_Utils.NAME)
                 && !tocList.contains(AMS_Utils.LEGAL_STATUS)
                 && !tocList.contains(AMS_Utils.LOCATION)
                 && !tocList.contains(AMS_Utils.MIN_SHAREHOLDING)
             ){
-                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION+'\n-'+AMS_Utils.MIN_SHAREHOLDING);
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.MIN_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION+'\n-'+AMS_Utils.MIN_SHAREHOLDING);
             }
         }
 
@@ -3523,12 +3524,13 @@ public class AMS_OSCARTriggerHandler {
                 !tocList.contains(AMS_Utils.ANG_LEGAL_NAME)
                 && !tocList.contains(AMS_Utils.ANG_LEGAL_STATUS)
                 && !tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING)
+                && !tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING)
                 && !tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
                 && !tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)
                 && !tocList.contains(AMS_Utils.ANG_OWNERSHIP)
                 && !tocList.contains(AMS_Utils.ANG_LOCATION)
             ){
-                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.ANG_LEGAL_NAME+'\n-'+AMS_Utils.ANG_LEGAL_STATUS+'\n-'+AMS_Utils.ANG_MAJOR_SHAREHOLDING+'\n-'+AMS_Utils.ANG_LOCATION_TYPE+'\n-'+AMS_Utils.ANG_OWNERSHIP+'\n-'+AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY+'\n-'+AMS_Utils.ANG_LOCATION);
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.ANG_LEGAL_NAME+'\n-'+AMS_Utils.ANG_LEGAL_STATUS+'\n-'+AMS_Utils.ANG_MAJOR_SHAREHOLDING+'\n-'+AMS_Utils.ANG_MINOR_SHAREHOLDING+'\n-'+AMS_Utils.ANG_LOCATION_TYPE+'\n-'+AMS_Utils.ANG_OWNERSHIP+'\n-'+AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY+'\n-'+AMS_Utils.ANG_LOCATION);
             }
         }
 

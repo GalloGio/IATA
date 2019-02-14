@@ -2964,16 +2964,6 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>xx</fullName>
-                    <default>false</default>
-                    <label>xx</label>
-                </value>
-                <value>
-                    <fullName>yy</fullName>
-                    <default>false</default>
-                    <label>yy</label>
-                </value>
-                <value>
                     <fullName>Inactive Company</fullName>
                     <default>false</default>
                     <label>Inactive Company</label>
@@ -2982,6 +2972,11 @@
                     <fullName>Active Company</fullName>
                     <default>false</default>
                     <label>Active Company</label>
+                </value>
+                <value>
+                    <fullName>Not applicable</fullName>
+                    <default>false</default>
+                    <label>Not applicable</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3998,19 +3993,24 @@ Airline_designator__c &amp;IATACode__c&amp;Site</formula>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>International</fullName>
+                    <fullName>International only</fullName>
                     <default>false</default>
-                    <label>International</label>
+                    <label>International only</label>
                 </value>
                 <value>
-                    <fullName>Domestic</fullName>
+                    <fullName>Domestic only</fullName>
                     <default>false</default>
-                    <label>Domestic</label>
+                    <label>Domestic only</label>
                 </value>
                 <value>
                     <fullName>International and Domestic</fullName>
                     <default>false</default>
                     <label>International and Domestic</label>
+                </value>
+                <value>
+                    <fullName>Not applicable</fullName>
+                    <default>false</default>
+                    <label>Not applicable</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -6069,14 +6069,14 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Fuel Supplier</label>
                 </value>
                 <value>
+                    <fullName>GDS</fullName>
+                    <default>false</default>
+                    <label>GDS</label>
+                </value>
+                <value>
                     <fullName>General Aviation</fullName>
                     <default>false</default>
                     <label>General Aviation</label>
-                </value>
-                <value>
-                    <fullName>Global Distribution System</fullName>
-                    <default>false</default>
-                    <label>Global Distribution System</label>
                 </value>
                 <value>
                     <fullName>Governmental Aviation</fullName>
@@ -6536,7 +6536,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
-                <valueName>Global Distribution System</valueName>
+                <valueName>GDS</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
@@ -18693,14 +18693,9 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Scheduled</fullName>
+                    <fullName>Non-Scheduled only</fullName>
                     <default>false</default>
-                    <label>Scheduled</label>
-                </value>
-                <value>
-                    <fullName>Non-Scheduled</fullName>
-                    <default>false</default>
-                    <label>Non-Scheduled</label>
+                    <label>Non-Scheduled only</label>
                 </value>
                 <value>
                     <fullName>Scheduled and Non-Scheduled</fullName>
@@ -28373,12 +28368,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
             <values>
-                <fullName>xx</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>yy</fullName>
-                <default>false</default>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -28795,15 +28786,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International</fullName>
+                <fullName>Domestic only</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International and Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32522,7 +32513,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -33957,11 +33948,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Type_of_Service__c</picklist>
             <values>
-                <fullName>Non-Scheduled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Scheduled</fullName>
+                <fullName>Non-Scheduled only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -34523,15 +34510,19 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International</fullName>
+                <fullName>Domestic only</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International and Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35701,7 +35692,67 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Category__c</picklist>
             <values>
+                <fullName>ANSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Academic%2FResearch Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agency Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Aircraft Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Global Card Acquirer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Holding Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Point of Sale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Concessionaire</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airport Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Apartment %26 Villa Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bus Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Associate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Car Rental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Card Brand</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35709,11 +35760,183 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Casino</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caterer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Civil Aviation Authority</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consultancy Firm</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Courier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cruise Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ERSP Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engine Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Forwarder Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSSA Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Aviation</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Governmental Aviation</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Ground Handler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hotel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Head Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Local office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Regional Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IBCS consolidator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Individual Government</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inter-Governmental Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landmark</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Large Component OEM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lessor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSO Member Sales Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maintenance%2C Repair%2C Overhaul</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Military</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Museum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non Governmental Organization</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Passenger Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-IATA Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Equipment Manufacturer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Private Sector Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Park</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35722,6 +35945,50 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Passenger only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Processor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Railway Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Solutions Provider</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tour Operator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training Centre</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agency Association</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39050,7 +39317,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Airline</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Airline Supplier</fullName>
@@ -39082,6 +39349,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Governmental Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Holding Company</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -41043,11 +41314,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Type_of_Service__c</picklist>
             <values>
-                <fullName>Non-Scheduled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Scheduled</fullName>
+                <fullName>Non-Scheduled only</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -41163,12 +41430,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
             <values>
-                <fullName>xx</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>yy</fullName>
-                <default>false</default>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -41577,15 +41840,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International</fullName>
+                <fullName>Domestic only</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International and Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -44875,7 +45138,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -47110,11 +47373,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Type_of_Service__c</picklist>
             <values>
-                <fullName>Non-Scheduled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Scheduled</fullName>
+                <fullName>Non-Scheduled only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47226,12 +47485,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
             <values>
-                <fullName>xx</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>yy</fullName>
-                <default>false</default>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -47640,15 +47895,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International</fullName>
+                <fullName>Domestic only</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International and Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50921,7 +51176,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -53088,11 +53343,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Type_of_Service__c</picklist>
             <values>
-                <fullName>Non-Scheduled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Scheduled</fullName>
+                <fullName>Non-Scheduled only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53204,20 +53455,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
             <values>
-                <fullName>Active Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>xx</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>yy</fullName>
-                <default>false</default>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -53661,15 +53900,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International</fullName>
+                <fullName>Domestic only</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International and Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54955,6 +55194,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -54964,10 +55207,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59545,20 +59784,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Ex-IATA Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA member</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -62510,11 +62737,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Type_of_Service__c</picklist>
             <values>
-                <fullName>Non-Scheduled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Scheduled</fullName>
+                <fullName>Non-Scheduled only</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -62641,20 +62864,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
             <values>
-                <fullName>Active Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>xx</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>yy</fullName>
-                <default>false</default>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -63098,15 +63309,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International</fullName>
+                <fullName>Domestic only</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International and Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -64388,6 +64599,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -64397,10 +64612,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -68955,11 +69166,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Non-IATA member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -71800,11 +72007,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Type_of_Service__c</picklist>
             <values>
-                <fullName>Non-Scheduled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Scheduled</fullName>
+                <fullName>Non-Scheduled only</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71920,12 +72123,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
             <values>
-                <fullName>xx</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>yy</fullName>
-                <default>false</default>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -72334,15 +72533,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International</fullName>
+                <fullName>Domestic only</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International and Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73628,6 +73827,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -73637,10 +73840,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -75890,7 +76089,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -77724,11 +77923,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Type_of_Service__c</picklist>
             <values>
-                <fullName>Non-Scheduled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Scheduled</fullName>
+                <fullName>Non-Scheduled only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77840,12 +78035,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
             <values>
-                <fullName>xx</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>yy</fullName>
-                <default>false</default>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -78258,15 +78449,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International</fullName>
+                <fullName>Domestic only</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International and Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -79548,6 +79739,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -79557,10 +79752,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -82242,7 +82433,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -84164,11 +84355,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Type_of_Service__c</picklist>
             <values>
-                <fullName>Non-Scheduled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Scheduled</fullName>
+                <fullName>Non-Scheduled only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -84280,20 +84467,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>ACLI_Status__c</picklist>
             <values>
-                <fullName>Active Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive Company</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>xx</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>yy</fullName>
-                <default>false</default>
+                <fullName>Not applicable</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -84737,15 +84912,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Area_of_Operation__c</picklist>
             <values>
-                <fullName>Domestic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>International</fullName>
+                <fullName>Domestic only</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>International and Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International only</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -86031,6 +86206,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>GSA General Sales Agent</fullName>
                 <default>false</default>
             </values>
@@ -86040,10 +86219,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>General Aviation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -90621,20 +90796,8 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Membership_status__c</picklist>
             <values>
-                <fullName>Ex-IATA Member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IATA member</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Non-IATA member</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -93586,11 +93749,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <picklistValues>
             <picklist>Type_of_Service__c</picklist>
             <values>
-                <fullName>Non-Scheduled</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Scheduled</fullName>
+                <fullName>Non-Scheduled only</fullName>
                 <default>false</default>
             </values>
             <values>
