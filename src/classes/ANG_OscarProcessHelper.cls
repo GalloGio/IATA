@@ -49,7 +49,7 @@ global class ANG_OscarProcessHelper {
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
-					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,ANG_IsNewGenAgency__c ,
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
 					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
@@ -89,8 +89,8 @@ global class ANG_OscarProcessHelper {
 			updater.acctMap.put(theAccount.Id,theAccount);
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
 
-			/*** AMSU-162 ***/                                                       /************************ ENHC0012583 *************************/
-			if((AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)) && !isShippingAddressValid(theAccreditation)) {
+			/*** AMSU-162 ***/
+			if(AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) && !isShippingAddressValid(theAccreditation)) {
 				isIATACodeGenerationRunning = false;
 				System.debug('[ANG_OscarProcessHelper] Incomplete shipping address.');
 				return new String[]{'-1','Incomplete shipping address.','-1'};
