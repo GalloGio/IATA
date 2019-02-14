@@ -24829,6 +24829,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Related contacts</value>
     </labels>
     <labels>
+        <fullName>ISSP_Release_Version</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Release_Version</shortDescription>
+        <value>Release Version</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Relocate_Contact</fullName>
         <categories>ISSP, IFAP</categories>
         <language>en_US</language>
