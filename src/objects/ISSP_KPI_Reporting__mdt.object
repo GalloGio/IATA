@@ -43,6 +43,11 @@
                     <default>false</default>
                     <label>Case Reopening</label>
                 </value>
+                <value>
+                    <fullName>Send Email</fullName>
+                    <default>false</default>
+                    <label>Send Email</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -129,6 +134,11 @@
                     <fullName>Call</fullName>
                     <default>false</default>
                     <label>Call</label>
+                </value>
+                <value>
+                    <fullName>Send Email</fullName>
+                    <default>false</default>
+                    <label>Send Email</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
