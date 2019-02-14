@@ -28,7 +28,6 @@
         border: 2px solid #C0C0C0;
     }
 	.ANG_progress .bar {
-	  margin-top: 10px;
 	  display: inline-block;
 	  background: #fff;
 	  width: 40px; height: 40px;
@@ -36,7 +35,6 @@
 	  border: 1px solid #848489;
 	}
 	.ANG_progress .circle.done {
-	  margin-top: 10px;
 	  display: inline-block;
 	  background: #fff;
 	  width: 40px; height: 40px;
@@ -44,7 +42,6 @@
 	  border: 2px solid #58d152;	  
 	}	
 	.ANG_progress .circle.inProgress {
-	  margin-top: 10px;
 	  display: inline-block;
 	  background: #fff;
 	  width: 40px; height: 40px;
@@ -98,15 +95,12 @@
       margin-top: 6px;
 	}
 	.centerInProgress {
-	  top: 4px !important;
 	  margin-left: -1px !important;
 	}		
 	.centerOk {
-	  top: 5px !important;
 	  margin-left: -3px !important;
 	}	
 	.centerError {
-	  top: 5px !important;
 	  margin-left: -2px !important;
 	}
 
@@ -218,7 +212,7 @@
 	  	  	<span class="bar notDone"></span>
 	  	  </apex:outputPanel>
 		  <div class="circle notDone {!selected}" onclick="showDescription(this,'{!node.nodeNumber}')">
-            <span class="label"></span>
+            <span class="label"><i class="glyphicon"></i></span>
 		    <apex:outputText styleclass="title" value="{!$Label[node.title]}" escape="false"/>
 		  </div>
 	  	</apex:outputPanel>
