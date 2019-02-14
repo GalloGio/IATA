@@ -5,29 +5,26 @@
 * unit test class: FDSKPIReportingTest
 */
 public with sharing class CaseTriggerHelper {
+    
     public static Boolean isDone = false;
     
     public static final String CASE_STATUS_CLOSED = 'Closed';
     public static final String CASE_STATUS_ESCALATED_INTERNALLY = 'Escalated Internally';
+    public static final String CASE_STATUS_ESCALATED_EXTERNALLY = 'Escalated Externally';
     public static final String CASE_STATUS_REOPEN = 'Reopen';
     
-    //public static final String CASE_ACTION_PUBLIC_COMMENT = 'Public Case Comment';
     public static final String CASE_ACTION_CASE_CLOSURE = 'Case Closure';
     public static final String CASE_ACTION_CASE_ESCALATION = 'Case Escalation';
     public static final String CASE_ACTION_CASE_REOPENING = 'Case Reopening';
-    //public static final String CASE_ACTION_CREATING_A_TASK = 'Creating a Task';
     public static final String CASE_ACTION_SEND_NOI = 'Send NOI';
     
-    public static List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, 
-        CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI};
+    public static List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI};
+    public static List<String> caseStatuses = new List<String>{CASE_STATUS_CLOSED, CASE_STATUS_ESCALATED_INTERNALLY, CASE_STATUS_REOPEN};
             
-            public static List<String> caseStatuses = new List<String>{CASE_STATUS_CLOSED,
-                CASE_STATUS_ESCALATED_INTERNALLY, CASE_STATUS_REOPEN};
-                    
-                    
-                    
-                    
-                    public static Map<Id, KPI_Value__c> typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
+            
+            
+            
+
     
     public static void createKPIValues(Map<Id, Case> oldMap, Map<Id, Case> newMap, List<Case> newList) {
         if(isDone) return;
@@ -50,9 +47,7 @@ public with sharing class CaseTriggerHelper {
                                                        FROM FDS_KPI_Reporting__c 
                                                        WHERE Name IN: actionTypes AND Type_Of_Action__c IN: actionTypes];
         
-        System.debug('+++ got shit 2: 123456789');
 
-        System.debug('+++ got shit: '+curKPIReportings);
         for(FDS_KPI_Reporting__c rep : curKPIReportings)
             actionToKPIReportingMap.put(rep.Type_Of_Action__c, rep);
         if(actionTypes.size() != actionToKPIReportingMap.size()) {
@@ -92,8 +87,9 @@ public with sharing class CaseTriggerHelper {
         
         // filter out the cases that need to be treated
         for(Case c: newList) {
-            // todo: RecordTypeSingleton has a bug in getRecordTypeById- ret type should be string, its RecordType
+
             String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', c.RecordTypeId).DeveloperName;
+            
             // case closure
             if(newMap.get(c.Id).Status == CASE_STATUS_CLOSED && 
                configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName)) {
@@ -105,8 +101,8 @@ public with sharing class CaseTriggerHelper {
                    }         
                }
             
-            
-            if(newMap.get(c.Id).Status == CASE_STATUS_ESCALATED_INTERNALLY && 
+            // escalation
+            if((newMap.get(c.Id).Status == CASE_STATUS_ESCALATED_EXTERNALLY || newMap.get(c.Id).Status == CASE_STATUS_ESCALATED_INTERNALLY) && 
                configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName)) {
                    
                    List<String> oldStatuses = configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Status_From__c.split(',');
@@ -115,24 +111,7 @@ public with sharing class CaseTriggerHelper {
                        allConsidered.add(c.Id);
                    }
                }
-
-
-            System.debug('@@@ config: '+configsMap.get(CASE_ACTION_CASE_REOPENING));
-            System.debug('@@@ config rt: '+configsMap.get(CASE_ACTION_CASE_REOPENING).get('Cases_Global'));
-            System.debug('@@@ old status: '+oldMap.get(c.Id).Status);
-            System.debug('@@@ new status: '+newMap.get(c.Id).Status);
-            // case closure from reopen
-            if(oldMap.get(c.Id).Status == CASE_STATUS_REOPEN  && newMap.get(c.Id).Status == CASE_STATUS_CLOSED
-               && configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
-                   List<String> reopenReasons = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Reopening_Reason__c.split(',');
-                   if(reopenReasons.contains(c.Reopening_reason__c)) {
-                       consideredForClosure.add(c.Id);
-                       allConsidered.add(c.Id);
-                   }
-               }
-           
-
-
+            
             // NOI sent
             if(newMap.get(c.Id).NOI_sent__c != null && oldMap.get(c.Id).NOI_sent__c == null 
                && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(cRTDevName)) {
@@ -140,37 +119,49 @@ public with sharing class CaseTriggerHelper {
                    allConsidered.add(c.Id);
                }
         }
-        // create new KPI values
+
         if(allConsidered.size() == 0) {
             System.debug('+++CaseTriggerHelper: no cases to consider');
             return;
         }
+        
         // find registered case closures from past
         List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c, CaseNumber__c FROM KPI_Value__c 
-                                               WHERE CaseNumber__c IN :allConsidered
+                                               WHERE CaseNumber__c IN :consideredForClosure
                                                AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE];
-        typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
+        Map<Id, KPI_Value__c> typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
         for(KPI_Value__c cc: claimingClosures)
-        {   // todo: assuming there are no dupes this should be fine, otherwise it's quite undeterministic
+        {
             typeOfActionClosureMap.put(cc.CaseNumber__c, cc);
         }
         
-        
-        System.debug('+++ consideredForClosure:'+consideredForClosure);
-                System.debug('+++ consideredForEscInt:'+consideredForEscInt);
-
-                System.debug('+++ consideredForReopen:'+consideredForReopen);
-
-                System.debug('+++ consideredForNOI:'+consideredForNOI);
-
         // closure
         for(Id cId: consideredForClosure) {
             String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
             
+            // sprint6 if a case is close as part of same query
+            // substract from original user while awarding the new one
+            
             KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), 
-                                                                 Integer.valueOf(configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue()), 
+                                                                 configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue(), 
                                                                  kpiReportingClosureId);
             kpiValuesToInsert.add(valueToInsert);
+            // if points were awarded to someone else substract them from original
+            if(newMap.get(cId).Reopening_reason__c == 'same query' && typeOfActionClosureMap.get(cId) != null
+               && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen') {
+                   KPI_Value__c valueToAdd = new KPI_Value__c();
+                   
+                   
+                   valueToAdd.Responsible__c = typeOfActionClosureMap.get(cId).Responsible__c;
+                   valueToAdd.Name = 'Value_' + cId + '_' + System.now().format('hh_mm_ss');
+                   valueToAdd.FDS_KPI_Reporting__c = kpiReportingReopeningId;
+                   valueToAdd.CaseNumber__c = cId;
+                   valueToAdd.Month__c = System.now().format('MMMM');
+                   valueToAdd.Year__c = String.valueOf(Date.today().year());
+                   valueToAdd.KPI_Value__c = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue();
+                   kpiValuesToInsert.add(valueToAdd);
+                   
+               } 
         }
         
         // case internal escalation
@@ -204,85 +195,34 @@ public with sharing class CaseTriggerHelper {
             system.debug('LW insert error: ' + e.getMessage());
         }
         
-
-
-            CaseTriggerHelper.isDone = true;
-
+        
+        
+        CaseTriggerHelper.isDone = true;
+        
     }
     
-    /**
-* Retrieve ISSP_KPI_Reporting__mdt configration for specific type of action
-*
-* @param String - actionType
-*
-* @return List<ISSP_KPI_Reporting__mdt> - list of configs
-*/
+  
     public static List<ISSP_KPI_Reporting__mdt> getKPIConfig(List<String> actionTypes) {
-        String queryString = 'SELECT ' +
-            'Id, Action__c, Case_Record_Type__c, Field_API_Name__c, Points__c, Reopening_Reason__c, Status_From__c, Status_To__c, Type_of_Task__c, Value_From__c, Value_To__c ' +
-            'FROM ' +
-            'ISSP_KPI_Reporting__mdt WHERE Action__c IN :actionTypes';
-        return Database.query(queryString);
-        
+        return [SELECT Id, Action__c, Case_Record_Type__c, Field_API_Name__c, Value_To__c,
+                Points__c, Reopening_Reason__c, Status_From__c, Status_To__c, Type_of_Task__c, Value_From__c
+         FROM ISSP_KPI_Reporting__mdt
+         WHERE Action__c IN :actionTypes
+                ];
     }
     
-    /**
-* @description method used to coverts month number to Text
-*
-* @param month
-*
-* @return month name
-*/
-    public static String convertMonthNumberToText (Integer month) {
-        String monthName = '';
-        if(month == 1)
-            monthName = 'January';
-        else if (month == 2)
-            monthName = 'February';
-        else if (month == 3)
-            monthName = 'March';
-        else if (month == 4)
-            monthName = 'April';
-        else if (month == 5)
-            monthName = 'May';
-        else if (month == 6)
-            monthName = 'June';
-        else if (month == 7)
-            monthName = 'July';
-        else if (month == 8)
-            monthName = 'August';
-        else if (month == 9)
-            monthName = 'September';
-        else if (month == 10)
-            monthName = 'October';
-        else if (month == 11)
-            monthName = 'November';
-        else if (month == 12)
-            monthName = 'December';
-        else
-            monthName = 'incorrect month';
-        
-        return monthName;
-    }  
-    
+ 
     
     public static KPI_Value__c createKPIReportingValue(Case caseToProcess, Integer points, String kpiReportingId){
         KPI_Value__c valueToAdd = new KPI_Value__c();
         
-        valueToAdd.Name = 'Value_' + caseToProcess.Id + '_' + DateTime.now().hour()+'_'+DateTime.now().minute()+'_'+DateTime.now().second();
+        valueToAdd.Name = 'Value_' + caseToProcess.Id + '_' + System.now().format('hh_mm_ss');
         valueToAdd.FDS_KPI_Reporting__c = kpiReportingId;
         valueToAdd.CaseNumber__c = caseToProcess.Id;
-        valueToAdd.Month__c = convertMonthNumberToText(Integer.valueOf(Date.today().month()));
+        valueToAdd.Month__c = System.now().format('MMMM');
         valueToAdd.Year__c = String.valueOf(Date.today().year());
         valueToAdd.KPI_Value__c = points;
+        valueToAdd.Responsible__c = UserInfo.getUserId();
         
-        if(caseToProcess.Reopening_reason__c == 'same query' && typeOfActionClosureMap.get(caseToProcess.Id) != null) {
-            valueToAdd.Responsible__c = typeOfActionClosureMap.get(caseToProcess.Id).Responsible__c;
-            System.debug('+++modding responsible');
-        } else {
-            System.debug('+++first responsible by my user');
-            valueToAdd.Responsible__c = UserInfo.getUserId();
-        }
         return valueToAdd;
     }
 }
