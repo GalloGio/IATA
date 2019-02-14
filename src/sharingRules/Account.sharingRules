@@ -487,10 +487,16 @@
         <sharedTo>
             <group>MER_Membership</group>
         </sharedTo>
+        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
             <value>Airline Headquarters</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Operator</value>
         </criteriaItems>
         <criteriaItems>
             <field>Merged_Account__c</field>
