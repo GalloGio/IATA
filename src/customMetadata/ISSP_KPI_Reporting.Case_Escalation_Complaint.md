@@ -24,11 +24,11 @@
     </values>
     <values>
         <field>Status_From__c</field>
-        <value xsi:type="xsd:string">Open,Action Needed,In progress</value>
+        <value xsi:type="xsd:string">Reopen,Open,Action Needed,In progress</value>
     </values>
     <values>
         <field>Status_To__c</field>
-        <value xsi:type="xsd:string">Escalated Internally</value>
+        <value xsi:type="xsd:string">Escalated Internally,Escalated Externally</value>
     </values>
     <values>
         <field>Type_of_Task__c</field>
