@@ -54,9 +54,9 @@
             _amazonFileModel = amazonFileModel;
             var fileInput;
             if (multiple) {
-                fileInput = $("#file-field-multiple");
+                fileInput=$("#file-field-multiple").replaceWith($("#file-field-multiple").val('').clone(true));
             } else {
-                fileInput = $("#file-field-single");
+                fileInput=$("#file-field-single").replaceWith($("#file-field-single").val('').clone(true));
             }
             fileInput.bind("change", function() {
                 onStart();
