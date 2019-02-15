@@ -83,7 +83,7 @@ public with sharing class Faq2Case2Test {
     }
     
     static testMethod void testFaq2CaseBypassButtons() {
-		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
+		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account testAccount = new Account(
 			name= 'testAccount',
 			CNS_Account__c = true,
@@ -124,7 +124,7 @@ public with sharing class Faq2Case2Test {
     }
 
 	static testMethod void testCountryPicklistVisibility1() {
-		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
+		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account testAccount = new Account(
 			name= 'testAccount',
 			CNS_Account__c = true,
@@ -174,7 +174,7 @@ public with sharing class Faq2Case2Test {
 	}
 
 	static testMethod void testCountryPicklistVisibility2() {
-		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
+		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account testAccount = new Account(
 			name= 'testAccount',
 			CNS_Account__c = true,
@@ -239,7 +239,7 @@ public with sharing class Faq2Case2Test {
 	}
 
 	static testMethod void testCountryPicklistVisibility3() {
-		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
+		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account testAccount = new Account(
 			name= 'testAccount',
 			CNS_Account__c = true,

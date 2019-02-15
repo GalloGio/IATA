@@ -264,13 +264,13 @@ public class AMS_OSCARTriggerHandler {
             }
         }
 
-        Schema.RecordTypeInfo assessmentRT = Schema.SObjectType.AMS_Settlement_System__c.getRecordTypeInfosByName().get('BSP');
-        if(!oscarsToValidate.isEmpty() && assessmentRT != null) {
+        Id assessmentRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+        if(!oscarsToValidate.isEmpty() && assessmentRTId != null) {
             List<AMS_Operation__c> operations = [SELECT Id, Name, Country__c, Country__r.ISO_Code__c,
                                                     (SELECT Class_Type__c , Remittance_Frequency__c FROM BSP_Attributes__r WHERE Class_Type__c IN :locationsToCheck) 
                                                  FROM AMS_Operation__c
                                                  WHERE Country__r.ISO_Code__c IN :mapCountryClassAttributes.keySet() AND 
-                                                    Settlement__r.RecordtypeId = :assessmentRT.getRecordTypeId()]; 
+                                                    Settlement__r.RecordtypeId = :assessmentRTId]; 
 
             for(AMS_Operation__c operation : operations) {
                 for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
@@ -556,9 +556,6 @@ public class AMS_OSCARTriggerHandler {
             processFieldsTracking(oldOSCAR, updatedOscar);
 
             //ACAMBAS - NEWGEN-4445 - Start           
-            //ID chinaRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('ANG Agency Changes China').getRecordTypeId();
-
-            //if(updatedOscar.recordTypeID == chinaRT) {
             if(updatedOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
                 //If Perform Sanity Check passed
                 if(oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed') {

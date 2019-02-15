@@ -89,7 +89,7 @@ public class PlatformEvents_Helper {
     
     private static string RTName(string theObject, id RTId){
         if(RTId==null)  return null;
-        return Schema.getGlobalDescribe().get(theObject).getDescribe().getRecordTypeInfosById().get(RTId).getName();
+        return RecordTypeSingleton.getInstance().getRecordTypeById(theObject, RTId).Name;
     }
     
     private static map<string, string> getMappingMap(string sObj){

@@ -59,8 +59,8 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 		Set<String> countryCodes = this.accountIdsByCountry.keySet();
 		Set<Id> airlineRTIds = new Set<Id>();
-		airlineRTIds.add(Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId());
-		airlineRTIds.add(Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId());
+		airlineRTIds.add(RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'));
+		airlineRTIds.add(RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR'));
 		System.debug('countryCodes: ' + countryCodes);
 		String queryStr = 'SELECT Services_Rendered_to_Airline__c, Services_Rendered_to_Airline__r.ParentId, ISO_Country_Code__c ';
 		queryStr += 'FROM Services_Rendered__c WHERE Services_Rendered_to_Airline__r.RecordTypeId IN :airlineRTIds AND Services_Rendered_Type__c LIKE \'%BSP%\' AND ISO_Country_Code__c IN :countryCodes AND Services_Rendered_Status__c = \'Active\'';
@@ -149,7 +149,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 	}
 
 	private static Map<Id,Set<Contact>> getExecutiveContacts(Set<Id> accountIds) {
-		Id rtHeadquarter = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+		Id rtHeadquarter = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 		Map<Id,Set<Contact>> mapContacts = new Map<Id,Set<Contact>>();
 		List<Contact> contacts = [SELECT Id, AccountId, Name, Preferred_Language__c
 								  FROM Contact 

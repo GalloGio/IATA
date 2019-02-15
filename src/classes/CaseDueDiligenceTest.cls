@@ -1,8 +1,8 @@
 @isTest
 private class CaseDueDiligenceTest {
 
-    public static final Id RT_ICCS_ASP_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('IDFS_Airline_Participation_Process').getRecordTypeId();
-    public static final Id RT_CODING_ID = Schema.SObjectType.Case.RecordTypeInfosByDeveloperName.get('Airline_Coding_Application').getRecordTypeId();
+    public static final Id RT_ICCS_ASP_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','IDFS_Airline_Participation_Process');
+    public static final Id RT_CODING_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case','Airline_Coding_Application');
 
 
     static testMethod void testCaseBeforeUpdate() {
