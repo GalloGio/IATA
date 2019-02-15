@@ -3,7 +3,6 @@ public without sharing class OneId_RegistrationProcessController {
     public static Boolean isNewAcc = false;   
     public static Boolean createBranch = false;
     public static String languageString = 'English';
-    public static Boolean isAlreadyContact = false;
 
     @AuraEnabled
     public static String getHostURL(){
@@ -14,8 +13,8 @@ public without sharing class OneId_RegistrationProcessController {
     public static String getCommunityName(){
         return OneIdUtils.getCommunityUrlName();
     }
-	
-	@AuraEnabled
+    
+    @AuraEnabled
     public static String findLocation(String ipAddress){
 
         HttpRequest req = new HttpRequest();
@@ -31,7 +30,7 @@ public without sharing class OneId_RegistrationProcessController {
 
         }catch(Exception e){
             System.debug('Exception findLocation LightningRegistrationProcess...' + e);
-    		return e.getMessage();
+            return e.getMessage();
         }
     }    
 
@@ -74,64 +73,16 @@ public without sharing class OneId_RegistrationProcessController {
         @AuraEnabled
         Boolean isEmailAddressAvailable {get; set;}
         @AuraEnabled
-        Boolean isContactInserted {get; set;}
-        @AuraEnabled
         Boolean isServiceUser {get; set;}
         @AuraEnabled
         Boolean isServiceEligible {get; set;}
-        @AuraEnabled
-        Contact con {get;set;}
-        @AuraEnabled
-        Account acc {get;set;}
     }
 
     @AuraEnabled
     public static UserInformation getUserInformationFromEmail(String email, String serviceName) {
         UserInformation userInformation = new UserInformation();
-        List<Contact> conList = returnExistingContact(email); // Since the email is unique we didn't expect to receive more than one email
-        userInformation = getUserInformation(serviceName);
-        userInformation.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email, conList);
-
-        System.Debug('Information ::: Contact List : ' + conList + ' isEmailAddressAvailable ? ' + userInformation.isEmailAddressAvailable + ' Service Name : ' + serviceName);
-
-        if((!conList.isEmpty()) && userInformation.isEmailAddressAvailable){
-            //String UID = Comm_User_Helper.NewGuid();
-            //Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false);
-            //Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
-
-            if(serviceName != 'FRED'){
-	            isAlreadyContact = true;
-    	        Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName);
-            
-	            if(userCreated == true){
-		            userInformation.isContactInserted = true;
-   	    	        userInformation.isServiceEligible = true;
-	                userInformation.con = conList.get(0);
-            	    System.Debug('User CREATED with success!');
-            	}
-            	else {
-                	userInformation.isContactInserted = false;
-                	System.Debug('User NOT created!');
-            	}
-            }
-            else{
-                userInformation.isContactInserted = true;
-                userInformation.con = conList.get(0);
-                Account acc = [SELECT Name, RecordTypeId, RecordType.Name, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
-
-                if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
-                    userInformation.isServiceEligible = true;
-                }
-                else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
-                    userInformation.isServiceEligible = true;
-                }
-                else{
-                    userInformation.isServiceEligible = false;
-                }                
-                userInformation.acc = acc;                
-            }
-        }
-
+        userInformation.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email);
+        
         if(!userInformation.isEmailAddressAvailable){
             // Retrieve existing user information
             List<User> usrs = [SELECT Id, AccountId FROM User where Email =: email];
@@ -158,16 +109,14 @@ public without sharing class OneId_RegistrationProcessController {
                     }
                 }
             }
-            userInformation.isContactInserted = false;
         }
 
-        System.Debug('Retrieving user information .... userInformation : ' + userInformation);
         return userInformation;            
     }
 
     
     @AuraEnabled
-    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
+    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email) {
         // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
         Savepoint sp = Database.setSavepoint();
 
@@ -179,7 +128,7 @@ public without sharing class OneId_RegistrationProcessController {
                  Email = email,
                  Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
                  ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
-                 ContactId =  !conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+                 ContactId = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
                  TimeZoneSidKey = 'GMT',
                  LanguageLocaleKey = 'en_US',
                  EmailEncodingKey = 'UTF-8',
@@ -198,35 +147,6 @@ public without sharing class OneId_RegistrationProcessController {
             Database.rollback(sp);
             return false;
         }
-    }
-
-
-    @AuraEnabled
-    public static List<Contact> returnExistingContact(String email) {
-        
-        // Method to search contact that already exists in SALESFORCE
-        List<Contact> conList = [SELECT id, Preferred_Language__c, Salutation, FirstName, LastName, Email, Account.Id, Account.Sector__c, RecordTypeId, ISO_Country__c, IATA_ISO_Shipping_Country__c, Primary_Contact__c, User_Portal_Status__c, Status__c, BSP_CASS_Payment_contact__c, Invoicing_Contact__c, Title, Phone, MobilePhone, Fax, Membership_Function__c FROM Contact WHERE Email =: email];
-
-        return conList;
-
-    }
-
-    public static Account returnRelatedAcc(Id accID){
-        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
-    }
-
-
-    @future
-    public static void updateContactInFuture(String conId, String firstCommunity, String usPortalStatus, String email, String accId){
-        Contact conToUpdate = new Contact(
-            Id = conId,
-            Community__c = firstCommunity,
-            User_Portal_Status__c = usPortalStatus,
-            Email = email,
-            AccountId = accId
-            );
-        System.debug('::: Update Contact in future ... INFO : ' + conToUpdate);
-        checkConAvailable(conToUpdate);
     }
 
     @AuraEnabled
@@ -281,7 +201,7 @@ public without sharing class OneId_RegistrationProcessController {
         for (String name : contactFields) {
             SObjectField f = accountFields.get(name);
             if (f!=null){
-            	labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
+                labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
             }
         }
         return labels;
@@ -329,12 +249,8 @@ public without sharing class OneId_RegistrationProcessController {
 
     @AuraEnabled
     public static CountryInformation getISOCountries() {
-        List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
-        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
-            if (iso.Name != 'All Countries' &&  iso.Name != 'NO COUNTRY'){
-                countries.add(iso);
-            }
-        }
+        List<IATA_ISO_Country__c> countries = [select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c
+                                    where Name != 'All Countries' and Name != 'NO COUNTRY' order by Name];
         return new CountryInformation(countries);
     }
 
@@ -398,10 +314,10 @@ public without sharing class OneId_RegistrationProcessController {
                     con.User_Portal_Status__c = 'Active';
             }    
 
-            if(serviceName == 'FRED'){
-                //con.User_Portal_Status__c = 'Pending Approval';
+            /*if(serviceName == 'FRED'){
+                con.User_Portal_Status__c = ISSP_CONSTANT.NEW_CONTACT_STATUS;
                 con.Community__c = 'FRED Customer Portal';
-            }
+            }*/
 
         }else{ // account not found
             system.debug('account not found starting...');
@@ -412,7 +328,7 @@ public without sharing class OneId_RegistrationProcessController {
             system.debug('account not found --> sector ' + acc.Sector__c);
             system.debug('account not found --> category ' + acc.Category__c);            
             isNewAcc = true;
-            acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');                     
+            acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();                     
 
             if(serviceName == 'ISSP'){
                 con.User_Portal_Status__c ='Active';
@@ -466,25 +382,25 @@ public without sharing class OneId_RegistrationProcessController {
         system.debug('createContactAndAccount starting contact -->  ' + con);
         system.debug('createContactAndAccount starting account -- ' + acc);
         
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-        
-        if(con.RecordType == null){
-            con.RecordTypeId = rtId;
-        }
+        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];
+        if(con.RecordType == null) 
+            con.RecordTypeId = rt.Id;
         
         try {
             if(acc.Id == null) {
+                //acc.phone = null;
+                //acc.name = acc.Legal_name__c;
                 acc.Reason_for_creation__c = 'Created by customer';
                 //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
                 acc.ownerid = ISSP_Constant.newAccountOwnerId;
-                acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+                acc.recordtypeid = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
                 
                 if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
                     acc.Category_Other_Value__c = null;
                 
                 //Assign countries and states
                 if (!String.isBlank(acc.BillingCountry)) {
-                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
+                    List <Iata_Iso_Country__c> cn = [SELECT id FROM Iata_Iso_Country__c WHERE Name = :acc.BillingCountry LIMIT 1];
                     if (cn.size()!=0) {
                         acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
                     }
@@ -585,13 +501,65 @@ public without sharing class OneId_RegistrationProcessController {
             
             system.debug('aqui userID ' + u);
 
+            //User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);            
+            /*system.debug('aqui user ' + u);
+            if(servName == 'FRED') {
+                // JIRA ISI-51 + ISI-14: Self registration primary or secondary 
+                String profileID = '';
+                list<Profile> fredProfiles = [SELECT Id FROM profile WHERE name like '%Fred%' ORDER BY Name];
+                // Check if primary user exists on request account
+                list<User> primaryUsers = [SELECT ProfileId FROM User WHERE Contact.AccountId =: con.accountId AND Profile_Name__c like '%Primary%'];
+                if(primaryUsers.isEmpty()) {
+                   // Create primary as primary exists yet
+                   profileID = fredProfiles[0].Id;
+                } else {
+                    // Create secondary as primary exists
+                    profileID = fredProfiles[1].Id;
+                }
+                u.ProfileID = profileID;
+            }
+            
+            if(servName == 'ISSP' || servName == 'FRED')
+                u.Community__c = servName;
+
+            String password = Comm_User_Helper.generateRandomString(6) + '1a';
+            System.debug('password ' + password);
+            System.debug('con ' + con.accountId);
+            System.debug('u ' + u);
+            System.debug('servName ' + servName);
+            //String userId = Site.createPortalUser(u, con.accountId, password, false);
+            
+            System.debug('userId ' + userId);
+            
+            sendWelcomeEmail(con, u, password, servName);*/
+
             return u;
+            
 
         } catch (Exception e) {
             return e.getMessage() + '\nStack Trace:' + e.getStackTraceString() + ' \nline: ' + e.getLineNumber();
         }
 
     }
+
+    /*public static void sendWelcomeEmail(Contact con, User u, String password, String serviceName){
+        System.debug('sendWelcomeEmail starting... ');
+        String cleanUsername = u.userName.replace('+', Comm_User_Helper.plusReplacer);
+        String encodedPart ='c='+EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+u.UID__c), 'UTF-8');
+        String template = 'Identity_Portal_New_User';
+        string prefix = OneIdUtils.getSiteCompleteUrl();
+        String link = prefix + '/s/IdentityFirstLogin?' + encodedPart;
+
+        if(serviceName == Comm_User_Helper.ISSP){ // OneIdEnh CSP-ID002: change the login URL for the customer portal
+            template = 'Identity_Portal_ISSP_New_User';
+            link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?'+encodedPart;
+        } 
+
+        Map<String,String> emailWrap = new Map<String,String>();
+        
+        emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper(con, password, link, Comm_User_Helper.ONEIDENTITY, serviceName);
+        Comm_User_Helper.sendEmail(template, emailWrap, con, Comm_User_Helper.ONEIDENTITY);
+    }*/
 
     @future
     public static void updatePortalUseProfile(String userId){
@@ -645,28 +613,20 @@ public without sharing class OneId_RegistrationProcessController {
     @AuraEnabled
     public static void checkConAvailable (Contact con){
         
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');     
-        Contact [] ec = [Select id, email, AccountId, RecordType.Id, User_Portal_Status__c, Community__c, Invoicing_Contact__c, BSP_CASS_Payment_contact__c FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
-        System.debug('Contact Information : ' + con + ' Contact query: ' + ec);
+        RecordType rt = [Select Id From RecordType WHERE SObjectType ='Contact' AND DeveloperName='Standard_Contact'];        
+        Contact [] ec = [Select id, email, AccountId, RecordType.Id FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
+        System.debug('Record Type: ' + rt);
         
         if(ec.size() > 0){
             System.debug('Update Contact');
             con.Id = ec[0].Id;
-            con.RecordTypeId = rtId;
-            try {
-                database.update(con);
-            } catch(Exception e) {
-                System.debug('Update Contact FAILED ::: ' +  e.getMessage());
-            }
-            
+            con.RecordTypeId = rt.Id;
+            database.update(con);
         } else {
             System.debug('Insert new contact'); 
-            System.debug(con);
-            try {
-                database.insert(con);
-            } catch(Exception e) {
-                System.debug('Insert Contact FAILED ::: ' + e.getMessage());
-            }           
+            System.debug(con);           
+            database.insert(con);
+            
         }
     }
 

@@ -58,9 +58,11 @@
     <fields>
         <fullName>ACLI_Application_Requirement__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related ACLI Application Requirement</description>
         <externalId>false</externalId>
         <label>ACLI Application Requirement</label>
         <referenceTo>Participation_Application_Requirement__c</referenceTo>
+        <relationshipLabel>Participation Application Requirements</relationshipLabel>
         <relationshipName>ACLI_Application_Requirements</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -69,6 +71,7 @@
     </fields>
     <fields>
         <fullName>ACLI_Codes__c</fullName>
+        <description>Type of ACLI Code related to Requirement</description>
         <externalId>false</externalId>
         <globalPicklist>ACLI_Code</globalPicklist>
         <label>ACLI Codes</label>
@@ -79,6 +82,7 @@
     </fields>
     <fields>
         <fullName>ACLI_Requirement_Fields__c</fullName>
+        <description>Fields related to the Requirement</description>
         <externalId>false</externalId>
         <label>Requirement Fields</label>
         <picklist>
@@ -625,6 +629,7 @@
     </fields>
     <fields>
         <fullName>Component_Key__c</fullName>
+        <description>Component Key related to Requirement</description>
         <externalId>false</externalId>
         <label>Component Key</label>
         <picklist>
@@ -810,6 +815,7 @@
     </fields>
     <fields>
         <fullName>Display_Order__c</fullName>
+        <description>Display Order of Requirement</description>
         <externalId>false</externalId>
         <label>Display Order</label>
         <precision>5</precision>
@@ -822,6 +828,7 @@
     </fields>
     <fields>
         <fullName>Location_Type__c</fullName>
+        <description>Type of Location related to the Requirement</description>
         <externalId>false</externalId>
         <label>Location Type</label>
         <picklist>
@@ -864,6 +871,7 @@
     </fields>
     <fields>
         <fullName>NOTE_Custom_Label__c</fullName>
+        <description>Insert label to be translated</description>
         <externalId>false</externalId>
         <label>NOTE Custom Label</label>
         <length>60</length>
@@ -875,6 +883,7 @@
     </fields>
     <fields>
         <fullName>Requirement_Description__c</fullName>
+        <description>Description of the Requirement</description>
         <externalId>false</externalId>
         <label>Requirement</label>
         <length>1000</length>
@@ -885,6 +894,7 @@
     </fields>
     <fields>
         <fullName>Title_Custom_Label__c</fullName>
+        <description>Title Custom Label to be translated</description>
         <externalId>false</externalId>
         <label>Title Custom Label</label>
         <length>40</length>
@@ -896,6 +906,7 @@
     </fields>
     <fields>
         <fullName>Type_of_Operation__c</fullName>
+        <description>Type of Operation chosen by the portal user</description>
         <externalId>false</externalId>
         <label>Type of Operation</label>
         <picklist>
@@ -977,6 +988,7 @@
     <fields>
         <fullName>isToShow__c</fullName>
         <defaultValue>true</defaultValue>
+        <description>Check if Requirement is supposed to show</description>
         <externalId>false</externalId>
         <label>isToShow</label>
         <trackHistory>false</trackHistory>

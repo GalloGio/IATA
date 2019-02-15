@@ -721,6 +721,117 @@
         <label><!-- Other airlines in the airport? --></label>
         <name>X3_other_airlines_in_the_airport__c</name>
     </fields>
+    <layouts>
+        <layout>ACLI Accounting or Prefix Code Online Application Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>ACLI Baggage Code Online Application Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>ACLI Designator Code Online Application Layout</layout>
+        <sections>
+            <label><!-- Airport / Heliport --></label>
+            <section>Airport / Heliport</section>
+        </sections>
+        <sections>
+            <label><!-- Authorized Areas Operation --></label>
+            <section>Authorized Areas Operation</section>
+        </sections>
+        <sections>
+            <label><!-- Billing Address --></label>
+            <section>Billing Address</section>
+        </sections>
+        <sections>
+            <label><!-- Billing Contact --></label>
+            <section>Billing Contact</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Head Office Address --></label>
+            <section>Head Office Address</section>
+        </sections>
+        <sections>
+            <label><!-- Head Office Contact --></label>
+            <section>Head Office Contact</section>
+        </sections>
+        <sections>
+            <label><!-- ICAO Code --></label>
+            <section>ICAO Code</section>
+        </sections>
+        <sections>
+            <label><!-- Location Area --></label>
+            <section>Location Area</section>
+        </sections>
+        <sections>
+            <label><!-- Metropolitan Area --></label>
+            <section>Metropolitan Area</section>
+        </sections>
+        <sections>
+            <label><!-- Numeric Code --></label>
+            <section>Numeric Code</section>
+        </sections>
+        <sections>
+            <label><!-- Off-Line Point --></label>
+            <section>Off-Line Point</section>
+        </sections>
+        <sections>
+            <label><!-- Preference of Code --></label>
+            <section>Preference of Code</section>
+        </sections>
+        <sections>
+            <label><!-- Previous IATA Code --></label>
+            <section>Previous IATA Code</section>
+        </sections>
+        <sections>
+            <label><!-- Reasons for Use --></label>
+            <section>Reasons for Use</section>
+        </sections>
+        <sections>
+            <label><!-- SIS User Information --></label>
+            <section>SIS User Information</section>
+        </sections>
+        <sections>
+            <label><!-- Schedules Publication --></label>
+            <section>Schedules Publication</section>
+        </sections>
+        <sections>
+            <label><!-- Terms and Conditions --></label>
+            <section>Terms and Conditions</section>
+        </sections>
+        <sections>
+            <label><!-- Type of Operation --></label>
+            <section>Type of Operation</section>
+        </sections>
+        <sections>
+            <label><!-- ULD --></label>
+            <section>ULD</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>ACLI Location Code Online Application Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>ACLI Online Application Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <recordTypes>
         <label><!-- Accounting or Prefix Code --></label>
         <name>Accounting_or_Prefix_Code</name>

@@ -190,7 +190,7 @@ private class OneId_RegistrationProcessControllerTest {
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
             OneId_RegistrationProcessController.registration(a,c,serviceName);
-            OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@lls.com', OneId_RegistrationProcessController.returnExistingContact('xpto@lls.com'));
+            OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@registest.com');
             OneId_RegistrationProcessController.getAccountLabels();
             OneId_RegistrationProcessController.getSectors();
 
@@ -405,9 +405,9 @@ private class OneId_RegistrationProcessControllerTest {
          insert pa;
          
          ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
-             TIP_Portal_Service_Id__c=pa.id
+             TIP_Portal_Service_Id__c=String.valueOf(pa.id).substring(0, 15)
          );
-             
+         insert ipsi;
              
          String serviceName = 'ISSP';        
     
@@ -421,7 +421,7 @@ private class OneId_RegistrationProcessControllerTest {
              Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
 
              OneId_RegistrationProcessController.registration(a,c,serviceName);
-			 OneId_RegistrationProcessController.increaseCodeCoverage();
+			 //OneId_RegistrationProcessController.increaseCodeCoverage();
            
          Test.stopTest();
      }

@@ -10,7 +10,7 @@
     1.0         Filipa Martins      29-10-2018      INITIAL DEVELOPMENT
     2.0         Miguel                              
 */
-public class ISSP_AMC_DAO {
+public with sharing class ISSP_AMC_DAO {
     
     public static Account getAccountInfo() {
         Account accountInfo;
@@ -2098,7 +2098,7 @@ public class ISSP_AMC_DAO {
         system.debug('DB__DAO'+recordTypeId);
         List<Case> caseList = [
                     SELECT 
-                        id, CaseNumber, Status, Subject, CreatedDate, CaseArea__c, Reason1__c, 
+                        id, CaseNumber, ContactId, Status, Subject, CreatedDate, CaseArea__c, Reason1__c, 
                         (SELECT Id, Case__c  FROM Participation_Online_Applications__r )
                     FROM 
                         Case
@@ -2112,7 +2112,7 @@ public class ISSP_AMC_DAO {
                         Case_Group__c != 'Recycle Bin'
                 ];
 
-        system.debug('DB__DAO'+caseList);
+        system.debug('DB__Case List+ getOngoingApplicationsChanges  + '+caseList);
         return caseList;
     }
 

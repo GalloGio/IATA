@@ -383,6 +383,12 @@ public without sharing class ISSP_AMC_Integration {
 
     }
 
+    /*public class responseForm{
+        public String status            {get; set;}
+        public String requestId         {get; set;}
+        public String caseNumber        {get; set;}
+    }*/
+
     public class customException extends Exception {}
 
     public class ACLIResponse{
@@ -390,6 +396,10 @@ public without sharing class ISSP_AMC_Integration {
         public Boolean isSuccess {get; set;}
         public String errorCode {get; set;}
         public String errorDescription {get; set;}
+
+        /*public String status            {get; set;}
+        public String requestId         {get; set;}
+        public String caseNumber        {get; set;}*/
     }
 
     public static HttpResponse sendRequest(string theBody){
@@ -406,11 +416,16 @@ public without sharing class ISSP_AMC_Integration {
         Http http = new Http();
         HTTPResponse res;
 
+        //ACLIResponse acliResp = new ACLIResponse();
+
+
         try{
 
             res = http.send(req);
             system.debug('MC  --> ACLI Response: ' + res);
             system.debug('MC  --> ACLI Response body: ' + res.getBody());
+            //acliResp = (ACLIResponse)System.JSON.deserialize(res.getBody(), ACLIResponse.class);
+            //system.debug(acliResp);
 
         }catch(CalloutException e){
             system.debug('MC  --> ACLI exception: ' + e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage()));
@@ -431,6 +446,7 @@ public without sharing class ISSP_AMC_Integration {
 
         ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
 
+
         //log.Agency_Applied_Change_code__c = changeCodeId;
         log.Web_Service__c = req.getEndpoint(); //'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
         log.Input_Description__c= 'body:'+res.getBody();
@@ -443,6 +459,7 @@ public without sharing class ISSP_AMC_Integration {
 
         log.Error_Code__c = String.valueOf(res.getStatusCode());
         log.Error_Message__c = res.getStatus();
+
 
         if((res.getStatusCode() > ISSP_AMC_Integration.STATUSOKLOWER && res.getStatusCode() < ISSP_AMC_Integration.STATUSOKHIGHER )) log.Success__c = true;
         else log.Success__c = false;

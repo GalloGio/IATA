@@ -57,6 +57,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Account__c</fullName>
+        <description>Related Account</description>
         <externalId>false</externalId>
         <label>Account</label>
         <referenceTo>Account</referenceTo>
@@ -70,6 +71,7 @@
     </fields>
     <fields>
         <fullName>Code_Type__c</fullName>
+        <description>Type of Code</description>
         <externalId>false</externalId>
         <globalPicklist>ACLI_Code</globalPicklist>
         <label>Code Type</label>
@@ -79,6 +81,7 @@
     </fields>
     <fields>
         <fullName>Code_Value__c</fullName>
+        <description>Value of Code</description>
         <externalId>false</externalId>
         <label>Code Value</label>
         <length>255</length>

@@ -62,6 +62,7 @@
     <fields>
         <fullName>Associated_Case__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Case Associated</description>
         <externalId>false</externalId>
         <label>Associated Case</label>
         <referenceTo>Case</referenceTo>
@@ -75,6 +76,7 @@
     <fields>
         <fullName>IATA_Orchestrator_Process__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to IATA Process Orchestrator</description>
         <externalId>false</externalId>
         <label>IATA Orchestrator Process</label>
         <lookupFilter>
@@ -96,6 +98,7 @@
     </fields>
     <fields>
         <fullName>Process_Name__c</fullName>
+        <description>Name of process</description>
         <externalId>false</externalId>
         <label>Process Name</label>
         <length>100</length>
@@ -119,6 +122,7 @@
     </fields>
     <fields>
         <fullName>Process_Step_Stage__c</fullName>
+        <description>Name of the step stage about the process</description>
         <externalId>false</externalId>
         <label>Process Step Stage</label>
         <length>10</length>
@@ -130,6 +134,7 @@
     </fields>
     <fields>
         <fullName>Processing_Order__c</fullName>
+        <description>Order of processing</description>
         <externalId>false</externalId>
         <label>Processing Order</label>
         <precision>2</precision>
@@ -142,6 +147,7 @@
     </fields>
     <fields>
         <fullName>Record_Type__c</fullName>
+        <description>Record Type used</description>
         <externalId>false</externalId>
         <formula>RecordType.DeveloperName</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -154,12 +160,12 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
+        <description>Status about process</description>
         <externalId>false</externalId>
         <formula>IF( Total_Actions_Pending_Customer__c &gt; 0 , &apos;Pending Customer&apos;, 
 IF( Total_Actions_Failed__c &gt; 0, &apos;Fail&apos;,
 IF( Total_Actions_Completed__c = Total_Number_of_Actions__c, &apos;Completed&apos;, 
 IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), &apos;Progressing&apos;, &apos;Not Started&apos;))))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -169,6 +175,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
     </fields>
     <fields>
         <fullName>Total_Actions_Completed_NB__c</fullName>
+        <description>Total Actions that are completed (NB)</description>
         <externalId>false</externalId>
         <label>Total Actions Completed (NB)</label>
         <precision>2</precision>
@@ -181,6 +188,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
     </fields>
     <fields>
         <fullName>Total_Actions_Completed__c</fullName>
+        <description>Total Actions that are completed</description>
         <externalId>false</externalId>
         <label>Total Actions Completed</label>
         <summaryFilterItems>
@@ -196,6 +204,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
     </fields>
     <fields>
         <fullName>Total_Actions_Failed_NB__c</fullName>
+        <description>Total Actions that failed (NB)</description>
         <externalId>false</externalId>
         <label>Total Actions Failed (NB)</label>
         <precision>2</precision>
@@ -208,6 +217,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
     </fields>
     <fields>
         <fullName>Total_Actions_Failed__c</fullName>
+        <description>Total Actions that failed</description>
         <externalId>false</externalId>
         <label>Total Actions Failed</label>
         <summaryFilterItems>
@@ -223,6 +233,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
     </fields>
     <fields>
         <fullName>Total_Actions_Pending_Customer__c</fullName>
+        <description>Total Actions with status Pending Customer</description>
         <externalId>false</externalId>
         <label>Total Actions Pending Customer</label>
         <summaryFilterItems>
@@ -238,6 +249,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
     </fields>
     <fields>
         <fullName>Total_Actions_Progressing__c</fullName>
+        <description>Total Actions with status Progressing</description>
         <externalId>false</externalId>
         <label>Total Actions Progressing</label>
         <summaryFilterItems>
@@ -253,6 +265,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
     </fields>
     <fields>
         <fullName>Total_Actions__c</fullName>
+        <description>Number of total actions</description>
         <externalId>false</externalId>
         <label>Total Actions</label>
         <precision>2</precision>
@@ -265,6 +278,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
     </fields>
     <fields>
         <fullName>Total_Number_of_Actions__c</fullName>
+        <description>Total Number of Actions with status different from Not Applicable</description>
         <externalId>false</externalId>
         <label>Total Number of Actions</label>
         <summaryFilterItems>
@@ -283,6 +297,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>IATA_Orchestrator_Process__c</columns>
+        <columns>Associated_Case__c</columns>
         <columns>Process_Name__c</columns>
         <columns>Total_Actions__c</columns>
         <columns>Process_Step_Stage__c</columns>

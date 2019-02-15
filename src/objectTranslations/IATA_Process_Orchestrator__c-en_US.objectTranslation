@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>IATA Process Orchestrator</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>IATA Processes Orchestrator</value>
+    </caseValues>
+    <fields>
+        <label><!-- Associated Case --></label>
+        <name>Associated_Case__c</name>
+        <relationshipLabel><!-- IATA Processes Orchestrator --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA Orchestrator Process --></label>
+        <name>IATA_Orchestrator_Process__c</name>
+        <relationshipLabel><!-- IATA Orchestrator Processes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Process Name --></label>
+        <name>Process_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Process Step Name --></label>
+        <name>Process_Step_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Process Step Stage --></label>
+        <name>Process_Step_Stage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Processing Order --></label>
+        <name>Processing_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type --></label>
+        <name>Record_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Actions Completed (NB) --></label>
+        <name>Total_Actions_Completed_NB__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Actions Completed --></label>
+        <name>Total_Actions_Completed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Actions Failed (NB) --></label>
+        <name>Total_Actions_Failed_NB__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Actions Failed --></label>
+        <name>Total_Actions_Failed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Actions Pending Customer --></label>
+        <name>Total_Actions_Pending_Customer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Actions Progressing --></label>
+        <name>Total_Actions_Progressing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Actions --></label>
+        <name>Total_Actions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Total Number of Actions --></label>
+        <name>Total_Number_of_Actions__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- IATA Process Step --></label>
+        <name>IATA_Process_Step</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Orchestrator --></label>
+        <name>Orchestrator</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

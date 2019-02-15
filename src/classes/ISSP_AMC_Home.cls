@@ -13,6 +13,8 @@ public with sharing class ISSP_AMC_Home {
     public String displayLanguage {get; set;}
    
     public Contact con {get; set;}
+
+    public Boolean isThereASubmittedCase {get;set;}
     
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}

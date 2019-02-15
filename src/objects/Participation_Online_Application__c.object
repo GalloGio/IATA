@@ -78,6 +78,7 @@
     <fields>
         <fullName>AOC_Bus_Company__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Type of operation: Bus Company.</description>
         <externalId>false</externalId>
         <label>AOC Bus Company</label>
         <trackHistory>false</trackHistory>
@@ -87,6 +88,7 @@
     <fields>
         <fullName>AOC_CRS__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Type of Operation: CRS</description>
         <externalId>false</externalId>
         <label>AOC CRS</label>
         <trackHistory>false</trackHistory>
@@ -95,6 +97,7 @@
     </fields>
     <fields>
         <fullName>AOC_Expiry_Date__c</fullName>
+        <description>Date when the AOC expires</description>
         <externalId>false</externalId>
         <label>AOC Expiry Date</label>
         <required>false</required>
@@ -105,6 +108,7 @@
     <fields>
         <fullName>AOC_Ferry_Company__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Type of Operation: Ferry Company</description>
         <externalId>false</externalId>
         <label>AOC Ferry Company</label>
         <trackHistory>false</trackHistory>
@@ -113,6 +117,7 @@
     </fields>
     <fields>
         <fullName>AOC_Issuing_Authority_Name__c</fullName>
+        <description>Name of Authority who&apos;s Issuing</description>
         <externalId>false</externalId>
         <label>AOC Issuing Authority Name</label>
         <length>40</length>
@@ -125,6 +130,7 @@
     <fields>
         <fullName>AOC_Non_Scheduled_Cargo__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Type of Operation: Non-Scheduled Cargo</description>
         <externalId>false</externalId>
         <label>AOC Non-Scheduled Cargo</label>
         <trackHistory>false</trackHistory>
@@ -134,6 +140,7 @@
     <fields>
         <fullName>AOC_Non_Scheduled_Passenger__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Type of Operation: Non-Scheduled Passenger</description>
         <externalId>false</externalId>
         <label>AOC Non-Scheduled Passenger</label>
         <trackHistory>false</trackHistory>
@@ -143,6 +150,7 @@
     <fields>
         <fullName>AOC_Railway_Company__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Type of Operation: Railway Company</description>
         <externalId>false</externalId>
         <label>AOC Railway Company</label>
         <trackHistory>false</trackHistory>
@@ -152,6 +160,7 @@
     <fields>
         <fullName>AOC_Scheduled_Cargo__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Type of Operation: Scheduled Cargo</description>
         <externalId>false</externalId>
         <label>AOC Scheduled Cargo</label>
         <trackHistory>false</trackHistory>
@@ -161,6 +170,7 @@
     <fields>
         <fullName>AOC_Scheduled_Passenger__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Type of Operation: Scheduled Passenger</description>
         <externalId>false</externalId>
         <label>AOC Scheduled Passenger</label>
         <trackHistory>false</trackHistory>
@@ -170,6 +180,7 @@
     <fields>
         <fullName>AOC_ULD__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Type of Operation: ULD</description>
         <externalId>false</externalId>
         <label>AOC ULD</label>
         <trackHistory>false</trackHistory>
@@ -178,6 +189,7 @@
     </fields>
     <fields>
         <fullName>AOC_country_of_issue__c</fullName>
+        <description>Country of issue</description>
         <externalId>false</externalId>
         <label>AOC country of issue</label>
         <length>255</length>
@@ -189,6 +201,7 @@
     </fields>
     <fields>
         <fullName>AOC_issue_date__c</fullName>
+        <description>Date of Issue</description>
         <externalId>false</externalId>
         <label>AOC issue date</label>
         <required>false</required>
@@ -198,6 +211,7 @@
     </fields>
     <fields>
         <fullName>Accounting_Code_Airline_Prefix_Purpose__c</fullName>
+        <description>Type of code requested depending on type of operation chosen.</description>
         <externalId>false</externalId>
         <label>Accounting_Code_Airline_Prefix_Purpose</label>
         <picklist>
@@ -223,6 +237,7 @@
     </fields>
     <fields>
         <fullName>Authorization_to_provide_transportation__c</fullName>
+        <description>Is an authorization needed to provide transportation?</description>
         <externalId>false</externalId>
         <label>Authorization to provide transportation?</label>
         <picklist>
@@ -306,6 +321,7 @@
     </fields>
     <fields>
         <fullName>Billing_City__c</fullName>
+        <description>User&apos;s Account Billing  City</description>
         <externalId>false</externalId>
         <label>Billing  City</label>
         <length>40</length>
@@ -318,9 +334,11 @@
     <fields>
         <fullName>Billing_Contact__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>User&apos;s Account Billing Contact</description>
         <externalId>false</externalId>
         <label>Billing Contact</label>
         <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Participation Online Applications (Billing Contact)</relationshipLabel>
         <relationshipName>ACLI_Online_Applications1</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -329,6 +347,7 @@
     </fields>
     <fields>
         <fullName>Billing_Country__c</fullName>
+        <description>User&apos;s Account Billing  Country</description>
         <externalId>false</externalId>
         <label>Billing  Country</label>
         <length>40</length>
@@ -340,6 +359,7 @@
     </fields>
     <fields>
         <fullName>Billing_Postal_Zip_code__c</fullName>
+        <description>User&apos;s Account Billing  Postal/Zip code</description>
         <externalId>false</externalId>
         <label>Billing  Postal/Zip code</label>
         <length>40</length>
@@ -351,6 +371,7 @@
     </fields>
     <fields>
         <fullName>Billing_State_Province__c</fullName>
+        <description>User&apos;s Account Billing  State/Province</description>
         <externalId>false</externalId>
         <label>Billing  State/Province</label>
         <length>40</length>
@@ -362,6 +383,7 @@
     </fields>
     <fields>
         <fullName>Billing_Street_address_1__c</fullName>
+        <description>Billing  Street address option 1</description>
         <externalId>false</externalId>
         <label>Billing  Street address 1</label>
         <length>40</length>
@@ -373,6 +395,7 @@
     </fields>
     <fields>
         <fullName>Billing_VAT__c</fullName>
+        <description>User&apos;s Account Billing  VAT</description>
         <externalId>false</externalId>
         <label>Billing  VAT</label>
         <length>40</length>
@@ -385,6 +408,7 @@
     <fields>
         <fullName>Case__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Case related with the Participation</description>
         <externalId>false</externalId>
         <label>Case</label>
         <referenceTo>Case</referenceTo>
@@ -397,6 +421,7 @@
     </fields>
     <fields>
         <fullName>City_Name__c</fullName>
+        <description>User&apos;s Account City Name</description>
         <externalId>false</externalId>
         <label>City Name</label>
         <length>40</length>
@@ -408,6 +433,7 @@
     </fields>
     <fields>
         <fullName>Date_of_Participation__c</fullName>
+        <description>Date of Participation</description>
         <externalId>false</externalId>
         <label>Date of Participation</label>
         <required>false</required>
@@ -417,6 +443,7 @@
     </fields>
     <fields>
         <fullName>Date_when_airport_has_been_operational__c</fullName>
+        <description>Date since the airport has been operational</description>
         <externalId>false</externalId>
         <label>Date_when_airport_has_been_operational</label>
         <length>10</length>
@@ -450,6 +477,7 @@
     </fields>
     <fields>
         <fullName>Does_the_airline_presently_hold_a_three__c</fullName>
+        <description>If the airline already as an ICAO Code</description>
         <externalId>false</externalId>
         <label>Does the airline hold a ICAO Code?</label>
         <picklist>
@@ -471,6 +499,7 @@
     </fields>
     <fields>
         <fullName>Email_of_Airport_Authority_Airport_1__c</fullName>
+        <description>Email of Airport Authority number 1</description>
         <externalId>false</externalId>
         <label>Email of Airport Authority (Airport #1)</label>
         <required>false</required>
@@ -481,6 +510,7 @@
     </fields>
     <fields>
         <fullName>Email_of_Airport_Authority_Airport_2__c</fullName>
+        <description>Email of Airport Authority number 2</description>
         <externalId>false</externalId>
         <label>Email of Airport Authority (Airport #2)</label>
         <required>false</required>
@@ -491,6 +521,7 @@
     </fields>
     <fields>
         <fullName>Email_of_Airport_Authority_Airport_3__c</fullName>
+        <description>Email of Airport Authority number 3</description>
         <externalId>false</externalId>
         <label>Email of Airport Authority (Airport #3)</label>
         <required>false</required>
@@ -501,6 +532,7 @@
     </fields>
     <fields>
         <fullName>Email_of_Airport_Authority_Airport_4__c</fullName>
+        <description>Email of Airport Authority number 4</description>
         <externalId>false</externalId>
         <label>Email of Airport Authority (Airport #4)</label>
         <required>false</required>
@@ -511,6 +543,7 @@
     </fields>
     <fields>
         <fullName>Email_of_Airport_Authority_Airport_5__c</fullName>
+        <description>Email of Airport Authority number 5</description>
         <externalId>false</externalId>
         <label>Email of Airport Authority (Airport #5)</label>
         <required>false</required>
@@ -521,6 +554,7 @@
     </fields>
     <fields>
         <fullName>Future_plans_to_be_a_scheduled_airline__c</fullName>
+        <description>If it has plans to be a Scheduled Airline</description>
         <externalId>false</externalId>
         <label>Future plans to be a scheduled airline?</label>
         <picklist>
@@ -542,6 +576,7 @@
     </fields>
     <fields>
         <fullName>GPS_Coordinates__c</fullName>
+        <description>GPS Coordinates to be used on Map (Location Identifier Code request)</description>
         <externalId>false</externalId>
         <label>GPS Coordinates</label>
         <length>40</length>
@@ -553,6 +588,7 @@
     </fields>
     <fields>
         <fullName>HOB_Email__c</fullName>
+        <description>Head Officer Billing Contact Email</description>
         <externalId>false</externalId>
         <label>HOB_Email</label>
         <length>40</length>
@@ -564,6 +600,7 @@
     </fields>
     <fields>
         <fullName>HOB_First_Name__c</fullName>
+        <description>Head Officer Billing Contact First Name</description>
         <externalId>false</externalId>
         <label>HOB_First_Name</label>
         <length>40</length>
@@ -575,6 +612,7 @@
     </fields>
     <fields>
         <fullName>HOB_Last_Name__c</fullName>
+        <description>Head Officer Billing Contact Last Name</description>
         <externalId>false</externalId>
         <label>HOB_Last_Name</label>
         <length>80</length>
@@ -586,6 +624,7 @@
     </fields>
     <fields>
         <fullName>HOB_Phone__c</fullName>
+        <description>Head Officer Billing Contact Phone</description>
         <externalId>false</externalId>
         <label>HOB_Phone</label>
         <required>false</required>
@@ -595,6 +634,7 @@
     </fields>
     <fields>
         <fullName>HOB_Salutation__c</fullName>
+        <description>Head Officer Billing Contact Salutation</description>
         <externalId>false</externalId>
         <label>HOB_Salutation</label>
         <length>100</length>
@@ -606,6 +646,7 @@
     </fields>
     <fields>
         <fullName>HOB_Title__c</fullName>
+        <description>Head Officer Billing Contact Title</description>
         <externalId>false</externalId>
         <label>HOB_Title</label>
         <length>128</length>
@@ -617,6 +658,7 @@
     </fields>
     <fields>
         <fullName>HOC_Email__c</fullName>
+        <description>Head Officer Contact Email</description>
         <externalId>false</externalId>
         <label>HOC_Email</label>
         <length>40</length>
@@ -628,6 +670,7 @@
     </fields>
     <fields>
         <fullName>HOC_First_Name__c</fullName>
+        <description>Head Officer Contact First Name</description>
         <externalId>false</externalId>
         <label>HOC_First_Name</label>
         <length>40</length>
@@ -639,6 +682,7 @@
     </fields>
     <fields>
         <fullName>HOC_Last_Name__c</fullName>
+        <description>Head Officer Contact Last Name</description>
         <externalId>false</externalId>
         <label>HOC_Last_Name</label>
         <length>80</length>
@@ -650,6 +694,7 @@
     </fields>
     <fields>
         <fullName>HOC_Phone__c</fullName>
+        <description>Head Officer Contact Phone</description>
         <externalId>false</externalId>
         <label>HOC_Phone</label>
         <required>false</required>
@@ -659,6 +704,7 @@
     </fields>
     <fields>
         <fullName>HOC_Salutation__c</fullName>
+        <description>Head Officer Contact Salutation</description>
         <externalId>false</externalId>
         <label>HOC_Salutation</label>
         <length>100</length>
@@ -670,6 +716,7 @@
     </fields>
     <fields>
         <fullName>HOC_Title__c</fullName>
+        <description>Head Officer Contact Title</description>
         <externalId>false</externalId>
         <label>HOC_Title</label>
         <length>128</length>
@@ -681,6 +728,7 @@
     </fields>
     <fields>
         <fullName>HQ_City__c</fullName>
+        <description>Headquarters City</description>
         <externalId>false</externalId>
         <label>HQ  City</label>
         <length>40</length>
@@ -692,6 +740,7 @@
     </fields>
     <fields>
         <fullName>HQ_Country__c</fullName>
+        <description>Headquarters Country</description>
         <externalId>false</externalId>
         <label>HQ  Country</label>
         <length>40</length>
@@ -703,6 +752,7 @@
     </fields>
     <fields>
         <fullName>HQ_Postal_Zip_code__c</fullName>
+        <description>Headquarters Postal/Zip code</description>
         <externalId>false</externalId>
         <label>HQ  Postal/Zip code</label>
         <length>40</length>
@@ -714,6 +764,7 @@
     </fields>
     <fields>
         <fullName>HQ_State_Province__c</fullName>
+        <description>Headquarters State/Province</description>
         <externalId>false</externalId>
         <label>HQ  State/Province</label>
         <length>40</length>
@@ -725,6 +776,7 @@
     </fields>
     <fields>
         <fullName>HQ_Street_address_1__c</fullName>
+        <description>Headquarters Street Address 1</description>
         <externalId>false</externalId>
         <label>HQ  Street Address 1</label>
         <length>40</length>
@@ -736,6 +788,7 @@
     </fields>
     <fields>
         <fullName>HQ_VAT__c</fullName>
+        <description>Headquarters VAT</description>
         <externalId>false</externalId>
         <label>HQ  VAT</label>
         <length>40</length>
@@ -747,6 +800,7 @@
     </fields>
     <fields>
         <fullName>Has_airline_assigned_two_char_code__c</fullName>
+        <description>If the airline has been assigned a two char code</description>
         <externalId>false</externalId>
         <label>Has airline assigned two char code</label>
         <picklist>
@@ -768,6 +822,7 @@
     </fields>
     <fields>
         <fullName>Has_company_assigned_numeric_code__c</fullName>
+        <description>if the company has been assigned a numeric code</description>
         <externalId>false</externalId>
         <label>Has company assigned numeric code</label>
         <picklist>
@@ -789,6 +844,7 @@
     </fields>
     <fields>
         <fullName>Has_the_airline_been_issued_an_AOC_Pick__c</fullName>
+        <description>if the airline has been issued an AOC</description>
         <externalId>false</externalId>
         <label>Has the airline been issued an AOC</label>
         <picklist>
@@ -831,6 +887,7 @@
     </fields>
     <fields>
         <fullName>Has_the_airline_the_approvals__c</fullName>
+        <description>If the airline has the approvals  of auth</description>
         <externalId>false</externalId>
         <label>Has the airline the approvals  of auth?</label>
         <picklist>
@@ -852,6 +909,7 @@
     </fields>
     <fields>
         <fullName>Has_the_airline_the_approvals_both__c</fullName>
+        <description>If the airline has approvals</description>
         <externalId>false</externalId>
         <label>Has_the_airline_the_approvals_both</label>
         <picklist>
@@ -873,6 +931,7 @@
     </fields>
     <fields>
         <fullName>Has_the_company_published_their_schedule__c</fullName>
+        <description>If the company has published its schedules</description>
         <externalId>false</externalId>
         <label>Has the company schedules published?</label>
         <picklist>
@@ -895,9 +954,11 @@
     <fields>
         <fullName>Head_Office_Contact_Details__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Head Office Contact Details</description>
         <externalId>false</externalId>
         <label>Head Office Contact Details</label>
         <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Participation Online Applications (Head Office Contact Details)</relationshipLabel>
         <relationshipName>ACLI_Online_Applications</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -907,9 +968,11 @@
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>List of countries from IATA</description>
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Participation Online Applications</relationshipLabel>
         <relationshipName>ACLI_Online_Applications</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -918,6 +981,7 @@
     </fields>
     <fields>
         <fullName>ICAO_Code__c</fullName>
+        <description>ICAO Code</description>
         <externalId>false</externalId>
         <label>ICAO Code</label>
         <length>40</length>
@@ -929,6 +993,7 @@
     </fields>
     <fields>
         <fullName>ISSP_AMC_ESTIMATED_ANNUAL_BAGGAGE_TAGS__c</fullName>
+        <description>Estimated annual baggage tags</description>
         <externalId>false</externalId>
         <label>ISSP_AMC_ESTIMATED_ANNUAL_BAGGAGE_TAGS</label>
         <precision>18</precision>
@@ -941,6 +1006,7 @@
     </fields>
     <fields>
         <fullName>ISSP_AMC_ESTIMATED_ANNUAL_PASSENGERS__c</fullName>
+        <description>Estimated annual passengers</description>
         <externalId>false</externalId>
         <label>ISSP_AMC_ESTIMATED_ANNUAL_PASSENGERS</label>
         <precision>18</precision>
@@ -953,6 +1019,7 @@
     </fields>
     <fields>
         <fullName>ISSP_AMC_Submitted_Date__c</fullName>
+        <description>Submittted Date</description>
         <externalId>false</externalId>
         <label>ISSP_AMC_Submitted_Date</label>
         <required>false</required>
@@ -962,6 +1029,7 @@
     </fields>
     <fields>
         <fullName>Intermodal_agreement_Airline_Code__c</fullName>
+        <description>Intermodal agreement code for the airline</description>
         <externalId>false</externalId>
         <label>Intermodal agreement Airline Code</label>
         <length>40</length>
@@ -973,6 +1041,7 @@
     </fields>
     <fields>
         <fullName>Intermodal_agreement_Airline_Name__c</fullName>
+        <description>Intermodal agreement name for the airline</description>
         <externalId>false</externalId>
         <label>Intermodal agreement Airline Name</label>
         <length>40</length>
@@ -997,6 +1066,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Intermodal_agreement_with_an_airline__c</fullName>
+        <description>if there&apos;s an intermodal agreement with an airline</description>
         <externalId>false</externalId>
         <label>Intermodal agreement with an airline?</label>
         <picklist>
@@ -1018,6 +1088,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Is_ULD_participation_IATA_program__c</fullName>
+        <description>If ULD is participating IATA partnership program</description>
         <externalId>false</externalId>
         <label>ULD participation IATA partnership prog?</label>
         <picklist>
@@ -1039,6 +1110,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Is_the_ULD_company__c</fullName>
+        <description>If ULD is in IATA Strategic Program</description>
         <externalId>false</externalId>
         <label>Is ULD in IATA Strategic Program?</label>
         <picklist>
@@ -1061,6 +1133,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     <fields>
         <fullName>Is_the_billing_address_same_the_HQ__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Is the Billing address same as the HQ? Check if it is</description>
         <externalId>false</externalId>
         <label>Is the Billing address  same as the HQ?</label>
         <trackHistory>false</trackHistory>
@@ -1070,6 +1143,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     <fields>
         <fullName>Is_the_billing_contact_same_the_HOC__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Is the Billing contact same as the HOC? Check if it is</description>
         <externalId>false</externalId>
         <label>Is the Billing contact same as the HOC?</label>
         <trackHistory>false</trackHistory>
@@ -1100,6 +1174,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Legal_Name__c</fullName>
+        <description>Legal Name</description>
         <externalId>false</externalId>
         <label>Legal Name</label>
         <length>40</length>
@@ -1111,6 +1186,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Location_Code_1__c</fullName>
+        <description>Location Code number 1</description>
         <externalId>false</externalId>
         <label>Location Code 1</label>
         <length>40</length>
@@ -1122,6 +1198,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Location_Code_2__c</fullName>
+        <description>Location Code number 2</description>
         <externalId>false</externalId>
         <label>Location Code 2</label>
         <length>40</length>
@@ -1145,6 +1222,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Location_Name_1__c</fullName>
+        <description>Location Name number 1</description>
         <externalId>false</externalId>
         <label>Location Name 1</label>
         <length>40</length>
@@ -1156,6 +1234,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Location_Name_2__c</fullName>
+        <description>Location Name number 2</description>
         <externalId>false</externalId>
         <label>Location Name 2</label>
         <length>40</length>
@@ -1167,6 +1246,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Location_Name__c</fullName>
+        <description>Location Name</description>
         <externalId>false</externalId>
         <label>Location Name</label>
         <length>40</length>
@@ -1178,6 +1258,7 @@ Bus/Railway/Ferry for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Location_Type__c</fullName>
+        <description>Types of locations</description>
         <externalId>false</externalId>
         <label>Location Type</label>
         <picklist>
@@ -1242,6 +1323,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Metro_Location_Name__c</fullName>
+        <description>Metropolitan Area Location Name</description>
         <externalId>false</externalId>
         <label>Metro Location Name</label>
         <length>40</length>
@@ -1265,6 +1347,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Name_of_Airport_Authority_Airport_1__c</fullName>
+        <description>Name of Airport Authority number 1</description>
         <externalId>false</externalId>
         <label>Name of Airport Authority (Airport #1)</label>
         <length>40</length>
@@ -1276,6 +1359,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Name_of_Airport_Authority_Airport_2__c</fullName>
+        <description>Name of Airport Authority number 2</description>
         <externalId>false</externalId>
         <label>Name of Airport Authority (Airport #2)</label>
         <length>40</length>
@@ -1287,6 +1371,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Name_of_Airport_Authority_Airport_3__c</fullName>
+        <description>Name of Airport Authority number 3</description>
         <externalId>false</externalId>
         <label>Name of Airport Authority (Airport #3)</label>
         <length>40</length>
@@ -1298,6 +1383,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Name_of_Airport_Authority_Airport_4__c</fullName>
+        <description>Name of Airport Authority number 4</description>
         <externalId>false</externalId>
         <label>Name of Airport Authority (Airport #4)</label>
         <length>40</length>
@@ -1309,6 +1395,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Name_of_Airport_Authority_Airport_5__c</fullName>
+        <description>Name of Airport Authority number 5</description>
         <externalId>false</externalId>
         <label>Name of Airport Authority (Airport #5)</label>
         <length>40</length>
@@ -1320,6 +1407,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Name_of_Organization__c</fullName>
+        <description>Name of Organization</description>
         <externalId>false</externalId>
         <label>Name of Organization</label>
         <length>40</length>
@@ -1331,6 +1419,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Number_of_Planes_Type_1__c</fullName>
+        <description>Number of Planes of Type 1</description>
         <externalId>false</externalId>
         <label>Number of Planes Type 1</label>
         <precision>4</precision>
@@ -1343,6 +1432,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Number_of_Planes_Type_2__c</fullName>
+        <description>Number of Planes of Type 2</description>
         <externalId>false</externalId>
         <label>Number of Planes Type 2</label>
         <precision>4</precision>
@@ -1355,6 +1445,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Number_of_Planes_Type_3__c</fullName>
+        <description>Number of Planes of Type 3</description>
         <externalId>false</externalId>
         <label>Number of Planes Type 3</label>
         <precision>4</precision>
@@ -1367,6 +1458,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Number_of_planes__c</fullName>
+        <description>Number of planes of the airline</description>
         <externalId>false</externalId>
         <label>Number of planes</label>
         <precision>4</precision>
@@ -1379,6 +1471,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Numeric_Code_Type__c</fullName>
+        <description>Type of numeric code</description>
         <externalId>false</externalId>
         <label>Numeric Code Type</label>
         <picklist>
@@ -1404,6 +1497,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Off_Line_Point_Purpose__c</fullName>
+        <description>Purpose of Off-line Point</description>
         <externalId>false</externalId>
         <label>Off-Line Point Purpose</label>
         <required>false</required>
@@ -1413,6 +1507,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Preference_of_Code_1__c</fullName>
+        <description>Preference of code option 1</description>
         <externalId>false</externalId>
         <label>Preference 1</label>
         <length>40</length>
@@ -1424,6 +1519,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Preference_of_Code_2__c</fullName>
+        <description>Preference of code option 2</description>
         <externalId>false</externalId>
         <label>Preference 2</label>
         <length>40</length>
@@ -1435,6 +1531,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Preference_of_Code_3__c</fullName>
+        <description>Preference of code option 3</description>
         <externalId>false</externalId>
         <label>Preference 3</label>
         <length>40</length>
@@ -1446,6 +1543,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Previously_assigned_IATA_code__c</fullName>
+        <description>Previously assigned IATA code to the company</description>
         <externalId>false</externalId>
         <label>Previously assigned IATA code</label>
         <length>40</length>
@@ -1457,6 +1555,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Previously_assigned_numeric_code__c</fullName>
+        <description>Previously assigned numeric code to the company</description>
         <externalId>false</externalId>
         <label>Previously_assigned_numeric_code</label>
         <length>40</length>
@@ -1468,6 +1567,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Providing_ticketing_services_to_airline__c</fullName>
+        <description>Is it necessary to provide ticketing services to airline?</description>
         <externalId>false</externalId>
         <label>Providing ticketing services to airline?</label>
         <picklist>
@@ -1489,6 +1589,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Reciprocal_Two_Way_IATA_Airline_Code__c</fullName>
+        <description>IATA Airline Code related to the Account</description>
         <externalId>false</externalId>
         <label>IATA Airline Code</label>
         <length>40</length>
@@ -1500,6 +1601,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Recommended_Loc_Identifier__c</fullName>
+        <description>Recommended Location Identifier</description>
         <externalId>false</externalId>
         <label>Recommended Location Identifier</label>
         <length>40</length>
@@ -1511,6 +1613,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>SIS_Email__c</fullName>
+        <description>Simplified Invoicing and Settlement Email</description>
         <externalId>false</externalId>
         <label>SIS Email</label>
         <length>40</length>
@@ -1522,6 +1625,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>SIS_First_Name__c</fullName>
+        <description>Simplified Invoicing and Settlement First Name</description>
         <externalId>false</externalId>
         <label>SIS First Name</label>
         <length>40</length>
@@ -1533,6 +1637,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>SIS_Last_Name__c</fullName>
+        <description>Simplified Invoicing and Settlement Last Name</description>
         <externalId>false</externalId>
         <label>SIS Last Name</label>
         <length>80</length>
@@ -1544,6 +1649,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>SIS_Phone__c</fullName>
+        <description>Simplified Invoicing and Settlement Phone</description>
         <externalId>false</externalId>
         <label>SIS Phone</label>
         <required>false</required>
@@ -1553,6 +1659,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>SIS_Salutation__c</fullName>
+        <description>Simplified Invoicing and Settlement Salutation</description>
         <externalId>false</externalId>
         <label>SIS Salutation</label>
         <length>100</length>
@@ -1564,6 +1671,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>SIS_Title__c</fullName>
+        <description>Simplified Invoicing and Settlement Title</description>
         <externalId>false</externalId>
         <label>SIS Title</label>
         <length>128</length>
@@ -1575,6 +1683,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>State__c</fullName>
+        <description>State of location</description>
         <externalId>false</externalId>
         <label>State</label>
         <length>40</length>
@@ -1586,6 +1695,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
+        <description>Status</description>
         <externalId>false</externalId>
         <label>Status</label>
         <picklist>
@@ -1608,6 +1718,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     <fields>
         <fullName>Submitted_By__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Submitted By</description>
         <externalId>false</externalId>
         <label>Submitted_By</label>
         <referenceTo>Contact</referenceTo>
@@ -1621,6 +1732,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     <fields>
         <fullName>Terms_Conditions_Agreement__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Terms &amp; Conditions Agreement</description>
         <externalId>false</externalId>
         <label>Terms &amp; Conditions Agreement</label>
         <trackHistory>false</trackHistory>
@@ -1629,6 +1741,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>Time_Zone__c</fullName>
+        <description>Time Zone from map (Location Identifier)</description>
         <externalId>false</externalId>
         <label>Time Zone</label>
         <length>100</length>
@@ -1652,6 +1765,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>X2_other_airlines_in_the_airport__c</fullName>
+        <description>Location Code: What other airlines will be operating to this airport? number 2</description>
         <externalId>false</externalId>
         <label>Other airlines in the airport?</label>
         <length>40</length>
@@ -1663,6 +1777,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
     </fields>
     <fields>
         <fullName>X3_other_airlines_in_the_airport__c</fullName>
+        <description>Location Code: What other airlines will be operating to this airport? number 3</description>
         <externalId>false</externalId>
         <label>Other airlines in the airport?</label>
         <length>40</length>

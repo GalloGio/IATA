@@ -25,12 +25,12 @@ global class ISSP_AMC_Invocable {
             
             
             List<String> stageList = new List<String>();
-            stageList.add('STAGE A');
-            stageList.add('STAGE B');
-            stageList.add('STAGE C');
-            stageList.add('STAGE D');
-            stageList.add('STAGE E');
-            stageList.add('STAGE F');
+            stageList.add('STAGE_A');
+            stageList.add('STAGE_B');
+            stageList.add('STAGE_C');
+            stageList.add('STAGE_D');
+            stageList.add('STAGE_E');
+            stageList.add('STAGE_F');
             
             for(String stage : stageList){
                 IATA_Process_Orchestrator__c sp = new IATA_Process_Orchestrator__c();
@@ -38,7 +38,7 @@ global class ISSP_AMC_Invocable {
                 sp.recordTypeId=recordTypeId;
                 sp.IATA_Orchestrator_Process__c = theParent.id;     
                            
-                if(stage.equals('STAGE A')){
+                if(stage.equals('STAGE_A')){
                     sp.Process_Step_Name__c = 'Perform Sanity Check';
                     insert sp;
                     
@@ -87,7 +87,7 @@ global class ISSP_AMC_Invocable {
                    
                 }
                 
-                if(stage.equals('STAGE B')){
+                if(stage.equals('STAGE_B')){
                     sp.Process_Step_Name__c = 'Additional Confirmation';
                     insert sp;
                     
@@ -115,7 +115,7 @@ global class ISSP_AMC_Invocable {
                 
                              
 
-                if(stage.equals('STAGE C')){
+                if(stage.equals('STAGE_C')){
                     sp.Process_Step_Name__c = 'Coding Fee (With the option of not Applicable)';
                     insert sp;
                     
@@ -138,7 +138,7 @@ global class ISSP_AMC_Invocable {
                    
                 } 
 
-                if(stage.equals('STAGE E')){
+                if(stage.equals('STAGE_E')){
                     sp.Process_Step_Name__c = 'Finalization of Application';
                     insert sp;
                     
@@ -160,7 +160,7 @@ global class ISSP_AMC_Invocable {
                    
                 }                 
 
-                if(stage.equals('STAGE D')){
+                if(stage.equals('STAGE_D')){
                     sp.Process_Step_Name__c = 'Request for approval';
                     insert sp;
                     
@@ -180,7 +180,7 @@ global class ISSP_AMC_Invocable {
                     if(!actions.isEmpty()) insert actions;
                    
                 }            
-                if(stage.equals('STAGE F')){
+                if(stage.equals('STAGE_F')){
                     sp.Process_Step_Name__c = 'SIS Registration';
                     insert sp;
                     

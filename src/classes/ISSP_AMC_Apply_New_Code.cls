@@ -22,8 +22,28 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 	public Id caseBaggageApplicationId {get;set;}
 	public Id caseAccountingOrPrefixApplicationId {get;set;}
 	
+	public User userInformation {get;set;}
+
+	public User userInformation(){
+        id userId = UserInfo.getUserId();
+        userInformation = [SELECT Contact.Name 
+        FROM User 
+        WHERE Id = :userId
+        ];
+            
+        return userInformation;
+    }
+
+    public User contactInformation {get;set;}
+  
+
+
 	public ISSP_AMC_Apply_New_Code(){
 		AMCDraftCases = ISSP_AMC_DAO.getOngoingApplicationsChanges();
+
+		system.debug('AMCDraftCases' + AMCDraftCases);
+		system.debug('Contact no Portal ' + DAL_ISSP.getContact(userInformation().ContactId));
+
 		for(Case eachExistingCase : AMCDraftCases){
 			for(Participation_Online_Application__c participation : eachExistingCase.Participation_Online_Applications__r){
 				if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_DESIGNATOR_FORM) {
@@ -34,6 +54,7 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 						if(eachExistingCase.Status != 'Closed'){
 							caseDesignatorApplicationId = eachExistingCase.Id;
 						}
+						
 					}
 				} else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM) {
 					if(eachExistingCase.Status == 'Open'){
@@ -67,10 +88,20 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 		}
 	}
 	
+	public Boolean isThereASubmittedCase {get;set;}
+
 	public PageReference navigateAirlineDesignators() {
 		String caseUrl;
 		if(caseDesignatorApplicationId != null){
-			caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+			isThereASubmittedCase = true;
+
+			system.debug('There is  a case!'+isThereASubmittedCase);
+			// pop-up
+			// Your Airline already have a case of this type created. Press this link to view (ONLY IF IT HAS PERMISSIONS)
+				//caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+			
+
+			
 		}
 		else {
 			String participationId = designatorApplicationId == null ? '' : 'participationId=' + designatorApplicationId + '&';
