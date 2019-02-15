@@ -249,8 +249,10 @@ public class ANG_RiskEventGenerator {
 			if(re.ANG_Issued_Date__c == null) re.ANG_Issued_Date__c = System.today();
 			if(re.ANG_OscarId__c != null) oscars.put(re.ANG_OscarId__c, null);
 
+			Integer randomKey = AMS_Utils.getRandomNumber();
+			
 			// sets the Unique Key (this field is also set on the generate method to match the upsert and on a workflow rule if source id is empty)
-			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+(re.ANG_TargetAgency__c == 'Selected Accounts' ? String.valueOf(Id.valueOf(re.ANG_AccountId__c)) : '')+re.ANG_Risk_ID__c;
+			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+(re.ANG_TargetAgency__c == 'Selected Accounts' ? String.valueOf(Id.valueOf(re.ANG_AccountId__c)) : String.valueOf(randomKey))+re.ANG_Risk_ID__c;
 		}
 
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c, Limit_Cash_conditions__c, ANG_Delay_Cash_Condition__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
