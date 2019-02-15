@@ -1,51 +1,93 @@
 global class WrapperAttach implements Comparable {
 
+
     public static final String AMAZON_BASE_FOLDER = '';
+
     public static final String CREDENTIAL_NAME = 'GenericAttach';
+
     public static final AmazonCredentials CREDENTIAL = AmazonCredentials.getCredentials(CREDENTIAL_NAME);
+
     public static final String CREDENTIAL_NAME_RECICLE_BIN = 'RecycleBin';
+
     public static final AmazonCredentials CREDENTIAL_RECICLE_BIN = AmazonCredentials.getCredentials(CREDENTIAL_NAME_RECICLE_BIN);
 
+    @AuraEnabled
     public Boolean isSelected {get; set;}
+    @AuraEnabled
     public Id id {get;set;}
+    @AuraEnabled
     public String filetype {get;set;}
+    @AuraEnabled
     public String name {get;set;}
+    @AuraEnabled
     public String description {get;set;}
+    @AuraEnabled
     public String internalComments {get;set;}
+    @AuraEnabled
     public String contentType {get;set;}
+    @AuraEnabled
     public Decimal size {get;set;}
+    @AuraEnabled
     public DateTime lastModified {get;set;}
+    @AuraEnabled
     public DateTime createdDate {get;set;}
+    @AuraEnabled
     public Id createdBy {get;set;}
+    @AuraEnabled
     public String fileIdentifier {get;set;}
+    @AuraEnabled
     public String fileIdentifierPick {get;set;}
+    @AuraEnabled
     public String reviewStatus {get;set;}
+    @AuraEnabled
     public String source {get;set;}
+    @AuraEnabled
     public String recordTypeId {get;set;}
+    @AuraEnabled
     public String recordTypeDeveloperName {get;set;}
     //public Contact createdByContact {get;set;}
+    @AuraEnabled
     public String createdByName {get;set;}
+    @AuraEnabled
     public String viewURL {get;set;}
+    @AuraEnabled
     public String fullName {get;set;}
+    @AuraEnabled
     public Boolean isPublic {get;set;}
 
+    @AuraEnabled
     public String efCategory { get; set; }
+    @AuraEnabled
     public String efSubcategory { get; set; }
+    @AuraEnabled
     public String efSAPNumber { get; set; }
+    @AuraEnabled
     public Date efDocumentDate { get; set; }
+    @AuraEnabled
     public Date efExpiryDate { get; set; }
+    @AuraEnabled
     public Boolean efExpired { get; set; }
+    @AuraEnabled
     public Boolean efSkipValidation { get; set; }
+    @AuraEnabled
     public Boolean efPrivate { get; set; }
 
+    @AuraEnabled
     public ISSPAttachmentPermission__c permission {get;set;}
+    @AuraEnabled
     public Attachment fileAttachment {get;set;}
+    @AuraEnabled
     public Archived_Attachment__c fileArchived {get;set;}
+    @AuraEnabled
     public AmazonFile fileAmazon {get;set;}
 
     /*** AMSU-139 ***/
+    @AuraEnabled
     public String updatedBy {get;set;}
+    @AuraEnabled
     public DateTime updatedDate {get;set;}
+    
+    public WrapperAttach(){}
 
     public WrapperAttach(Attachment file, ISSPAttachmentPermission__c permission) {
         this.isSelected = false;
