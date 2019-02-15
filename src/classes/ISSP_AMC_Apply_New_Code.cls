@@ -35,7 +35,8 @@ public with sharing class ISSP_AMC_Apply_New_Code {
     }
 
     public User contactInformation {get;set;}
-  
+  	
+  	public Boolean isThereASubmittedCase {get;set;}
 
 
 	public ISSP_AMC_Apply_New_Code(){
@@ -53,6 +54,8 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 					else {
 						if(eachExistingCase.Status != 'Closed'){
 							caseDesignatorApplicationId = eachExistingCase.Id;
+							/*system.debug('Statsu do Case é submitted' + isThereASubmittedCase);
+							isThereASubmittedCase = true;*/
 						}
 						
 					}
@@ -88,17 +91,14 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 		}
 	}
 	
-	public Boolean isThereASubmittedCase {get;set;}
+	
 
 	public PageReference navigateAirlineDesignators() {
 		String caseUrl;
 		if(caseDesignatorApplicationId != null){
-			isThereASubmittedCase = true;
-
-			system.debug('There is  a case!'+isThereASubmittedCase);
 			// pop-up
 			// Your Airline already have a case of this type created. Press this link to view (ONLY IF IT HAS PERMISSIONS)
-				//caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+				caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
 			
 
 			

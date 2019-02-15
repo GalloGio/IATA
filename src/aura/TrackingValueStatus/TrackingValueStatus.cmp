@@ -1,0 +1,81 @@
+<!--
+    Component: TrackingValueStatus
+    Related class: TrackingValueStatusController
+    
+    Copyright © IATA
+    
+    Purpose: This components presents the history of the status field
+    
+    VERSION AUTHOR   			DATE					DETAIL/CHANGE REFERENCE
+    1.0 - Daniela Cerqueira		12/02/2019				INITIAL DEVELOPMENT
+    -->
+
+<aura:component implements="lightning:availableForFlowScreens,force:hasRecordId,flexipage:availableForAllPageTypes"
+                access="global"
+                controller="TrackingValueStatusController">
+    
+    <aura:attribute name="title" type="String" default="Status History"/>
+    <aura:attribute name="ProcessOrchestratorStepAction" type="List"/>
+    <aura:attribute name="stage" type="String"/>
+    <aura:attribute name="processOrchestratorId" type="String" />
+    <aura:attribute name="totalSize" type="Integer"/>
+    
+    <!-- call doInit js function on component load to fetch list view details-->   
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    <aura:handler event="c:ISSP_AMC_RefreshProgressEvent" action="{!c.doInit}"/>
+    
+    <br/>
+    <div style="border: 2px solid  #005580; border-radius: 8px; margin-top: 20px;">
+        <lightning:card >
+            <aura:set attribute="title">
+                <lightning:icon iconName="standard:sales_path" size="small"/>
+                &emsp;{!v.title } ({!v.totalSize})
+            </aura:set>
+            <aura:if isTrue="{!v.totalSize != 0}">
+              
+                    <div class="slds-scrollable slds-table--header-fixed_container"  style="height:250px;">
+                        <table class="slds-table slds-table--header-fixed slds-table_bordered slds-table_edit slds-table_resizable-cols" >
+                            <thead>
+                                <tr class="slds-text-title_caps">
+                                    <th scope="col">
+                                        <div class=" slds-cell-fixed" title="Action Name">&nbsp;Action Name</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-cell-fixed" title="Previous Value">Previous Value</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-cell-fixed" title="Actual VAlue">Actual Value</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class=" slds-cell-fixed" title="Last Modified By">Last Modified By</div>
+                                    </th>
+                                </tr>
+                            </thead>                            
+                            <tbody>
+                            <aura:iteration items="{!v.ProcessOrchestratorStepAction}" var="ProcessOrchestrator"> 
+                                <tr class="slds-hint-parent">
+                                    <th data-label="action Name" scope="row">
+                                        <div class="slds-truncate" title="action Name">{!ProcessOrchestrator.Parent.Action_name__c}</div>
+                                    </th>
+                                    <th data-label="Previous Value" scope="row">
+                                        <div class="slds-truncate" title="Previous Value">{!ProcessOrchestrator.OldValue}</div>
+                                    </th>
+                                    <td data-label="Actual VAlue">
+                                        <div class="slds-truncate" title="Actual VAlue">{!ProcessOrchestrator.NewValue}</div>
+                                    </td>
+                                    <td data-label="Last Modified By">
+                                        <div class="slds-truncate" title="Last Modified By">{!ProcessOrchestrator.CreatedBy.Name}&nbsp;
+                                            <lightning:formattedDateTime value="{!ProcessOrchestrator.CreatedDate}" year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                                         minute="2-digit"  hour12="false"/>
+                                        </div>
+                                    </td>                      
+                                </tr>
+                            </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+
+            </aura:if>
+        </lightning:card>
+    </div>
+</aura:component>

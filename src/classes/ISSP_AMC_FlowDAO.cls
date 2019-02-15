@@ -121,7 +121,7 @@ public with sharing class ISSP_AMC_FlowDAO {
         //Id recordTypeId = getRecordTypesForObject('Case').get('Airline_Coding_Application').Id;
         List<Case> parentCases = [Select id, RecordTypeId, Type, Subject, ParentId, CaseArea__c, Region__c, 
                                         Reason, Status, BSPCountry__c, Description, Account.Name, Account.ACLI_SAP_Id__c,
-                                        ContactEmail, Coding_Application_Status__c, Priority, Origin
+                                        ContactEmail, AccountId, ContactId, Coding_Application_Status__c, Priority, Origin, Account.Site
                                         FROM Case WHERE id  =: caseId
                                         AND RecordType.DeveloperName = 'Airline_Coding_Application'];
 
@@ -135,8 +135,10 @@ public with sharing class ISSP_AMC_FlowDAO {
             relatedCase.Coding_Application_Status__c = parentCase.Coding_Application_Status__c;
             relatedCase.Priority = parentCase.Priority;
             relatedCase.Origin = parentCase.Origin;
+            //relatedCase.Account.Site = parentCase.Account.Site;
             //System.debug('FILIPA parent 1: ' + parentCase.Account.Name);
-            //relatedCase.Account.Name = parentCase.Account.Name;
+            relatedCase.AccountId = parentCase.AccountId;
+            relatedCase.ContactId = parentCase.ContactId;
             string descriptionB = 'Dear Team,' + '\n' + 'Please process DD for new applicant. Attached you will find usual documentation.' + '\n' + 'Thank you,' + '\n' + 'Coding Team';
             string descriptionC = 'Dear Colleagues,' + '\n' + 'Would you please raise a PPA for this customer with the following items (using current year price list):' + '\n' + 'Application Fee x 1' + '\n' + 'Assignment Fee x 1' + '\n' + 'BRgds,' + '\n' + 'Coding Team';
             //System.debug('FILIPA parent: ' + parentCase.Account.Name);

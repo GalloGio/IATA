@@ -400,7 +400,7 @@
                             <label for="vat" class="col-sm-2 control-label">{!$Label.ISSP_AMC_COUNTRY}</label>
                             <div class="col-sm-3">
                               <div class="{!IF(AND(hasError, OR(participation.IATA_ISO_Country__c == '--None--', participation.IATA_ISO_Country__c == null)), 'has-error has-feedback', '')}">
-                                  <apex:selectList onblur="validateCountry(this)" size="1" styleClass="form-control" value="{!participation.IATA_ISO_Country__c}">
+                                  <apex:selectList onblur="validateCountry(this)"  size="1" styleClass="form-control" value="{!participation.IATA_ISO_Country__c}">
                                     <apex:selectOptions value="{!countryList}"/>
                                   </apex:selectList>
                                   <span class="{!IF(AND(hasError, OR(participation.IATA_ISO_Country__c == '--None--', participation.IATA_ISO_Country__c == null)), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>

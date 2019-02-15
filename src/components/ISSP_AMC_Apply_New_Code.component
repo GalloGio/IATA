@@ -11,6 +11,8 @@
  -->
 <apex:component controller="ISSP_AMC_Apply_New_Code" allowDML="true">
 
+	<apex:attribute name="isThereASubmittedCase" description="is There A Submitted Case" type="Boolean" required="true"/>
+
 	<div class="container">
 		<apex:form id="appnewcodeFrm">
 			<div class="row">
@@ -88,8 +90,31 @@
 	                <div class="col-md-12">
             			<hr/>
   					</div>
+					
+					<!--
+					<apex:outputPanel id="existingCaseRedirect" rendered="{!IF(isThereASubmittedCase == true, true, false)}" >
+								Your Airline already have a case of this type created. Press this link to view (ONLY IF IT HAS PERMISSIONS)
+							<apex:commandLink  >	
+								Click here
+							</apex:commandLink>
+							
+							<script>
+        function showContent()
+        {
+            document.getElementById("existingCaseRedirect").style.display="block";
+        }
+    </script>
+	
+					</apex:outputPanel> -->
+				
+
 	            </section>
 			</div>
 		</apex:form>
 	</div>
+
+
+	
+
+
 </apex:component>
