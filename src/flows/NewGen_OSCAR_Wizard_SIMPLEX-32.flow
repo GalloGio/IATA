@@ -1715,6 +1715,13 @@
                     <elementReference>NewProcessHEValue</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>NewProcessGEValue</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>ChangeFieldsAccreditationType</targetReference>
             </connector>
