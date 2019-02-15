@@ -13,15 +13,18 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 		Id pb;
 
 		for(Remote_Invocation__c ri : remoteInvocationsIdToProcess){
-			//let's see if the source and request type are consistent
-			if(ri.Source__c=='GDI'){
+
+			if(ri.Request_Type__c == RemoteInvocationTriggerHandler.NEWGEN_GDI_ENDO){
+				//let's see if the source and request type are consistent
+				if(ri.Source__c=='GDI'){
 					setValidRemoteInvocation.add(ri);
 					currencyIsoCodeToFetch.add(ri.CurrencyISOCode);
-				
-			}else{
-				//ri.Status__c = 'Failed';
-				//ri.Status_detail__c = 'Invalid Request Type';
-				mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'Invalid Request Type'));
+				}
+				else{
+					//ri.Status__c = 'Failed';
+					//ri.Status_detail__c = 'Invalid Request Type';
+					mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'Invalid Request Type'));
+				}
 			}
 			
 		}
