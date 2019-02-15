@@ -1,43 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Test</description>
     <fieldOverrides>
         <field>BSPCountry__c</field>
         <formula>TEXT(Case.BSPCountry__c)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Cargo_Business__c</field>
-        <formula>TEXT( Case.Cargo_Business__c )</formula>
+        <formula>TEXT(Case.Cargo_Business__c)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Case_Language__c</field>
-        <formula>TEXT( Case.Case_Language__c  )</formula>
+        <formula>TEXT(Case.Case_Language__c)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>CaseArea__c</field>
         <formula>TEXT(Case.CaseArea__c )</formula>
     </fieldOverrides>
     <fieldOverrides>
+        <field>Complaint_Analysis__c</field>
+        <formula>Case.Complaint_Analysis__c</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Complaint_Category__c</field>
+        <formula>TEXT(Case.Complaint_Category__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Complaint_Entity_Originator__c</field>
+        <formula>TEXT(Case.Complaint_Entity_Originator__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Complaint_Reason__c</field>
+        <formula>TEXT(Case.Complaint_Reason__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Complaint_Sub_Category__c</field>
+        <formula>TEXT(Case.Complaint_Sub_Category__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Origin</field>
         <formula>TEXT(Case.Origin)</formula>
     </fieldOverrides>
     <fieldOverrides>
-        <field>Reason</field>
-        <formula>TEXT( Case.Reason)</formula>
+        <field>Reason1__c</field>
+        <formula>TEXT(Case.Reason1__c)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Region__c</field>
         <formula>TEXT(Case.Region__c)</formula>
     </fieldOverrides>
     <fieldOverrides>
+        <field>Reopening_reason__c</field>
+        <formula>TEXT(Case.Reopening_reason__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Root_Cause__c</field>
+        <formula>TEXT(Case.Root_Cause__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Status</field>
         <literalValue>Closed</literalValue>
     </fieldOverrides>
     <fieldOverrides>
-        <field>Type_of_customer__c</field>
-        <formula>TEXT(  Case.Type_of_customer__c)</formula>
+        <field>Type</field>
+        <literalValue>Complaint</literalValue>
     </fieldOverrides>
-    <label>Close the Case</label>
+    <fieldOverrides>
+        <field>Type_of_customer__c</field>
+        <formula>TEXT( Case.Type_of_customer__c)</formula>
+    </fieldOverrides>
+    <label>Close Case</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
@@ -53,28 +84,24 @@
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
-                <emptySpace>true</emptySpace>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Region__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>BSPCountry__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Origin</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>CaseArea__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
@@ -83,37 +110,40 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Service_Level__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <field>Complaint_Category__c</field>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Effective_time_spent__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <field>Complaint_Sub_Category__c</field>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Support_Evaluation_Grade__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <field>Complaint_Reason__c</field>
+                <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Complaint_Analysis__c</field>
+                <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Complaint_Closure__c</field>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
         <quickActionLayoutColumns>
             <quickActionLayoutItems>
-                <emptySpace>true</emptySpace>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>true</emptySpace>
-                <uiBehavior>Edit</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>true</emptySpace>
-                <uiBehavior>Edit</uiBehavior>
+                <emptySpace>false</emptySpace>
+                <field>Type</field>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Type_of_customer__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
@@ -126,16 +156,21 @@
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
-                <emptySpace>true</emptySpace>
-                <uiBehavior>Edit</uiBehavior>
+                <emptySpace>false</emptySpace>
+                <field>Case_Language__c</field>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Case_Language__c</field>
-                <uiBehavior>Edit</uiBehavior>
+                <field>Complaint_Entity_Originator__c</field>
+                <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Root_Cause__c</field>
+                <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
-    <successMessage>Case Closed</successMessage>
     <type>Update</type>
 </QuickAction>

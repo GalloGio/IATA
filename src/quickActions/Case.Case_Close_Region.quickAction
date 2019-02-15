@@ -17,8 +17,8 @@
         <formula>TEXT(Case.CaseArea__c )</formula>
     </fieldOverrides>
     <fieldOverrides>
-        <field>Complaint_Category__c</field>
-        <formula>TEXT(Case.Complaint_Category__c)</formula>
+        <field>Effective_time_spent__c</field>
+        <formula>Case.Effective_time_spent__c</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Origin</field>
@@ -29,8 +29,16 @@
         <formula>TEXT(Case.Reason1__c)</formula>
     </fieldOverrides>
     <fieldOverrides>
+        <field>Region__c</field>
+        <formula>TEXT(Case.Region__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
         <field>Reopening_reason__c</field>
         <formula>TEXT(Case.Reopening_reason__c)</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Service_Level__c</field>
+        <formula>TEXT( Case.Service_Level__c)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Status</field>
@@ -38,13 +46,13 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Type</field>
-        <literalValue>Complaint</literalValue>
+        <formula>TEXT(Case.Type)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Type_of_customer__c</field>
         <formula>TEXT( Case.Type_of_customer__c)</formula>
     </fieldOverrides>
-    <label>Close Case</label>
+    <label>Case Close</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
@@ -82,32 +90,22 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Reason1__c</field>
+                <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Service_Level__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Complaint_Category__c</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Complaint_Sub_Category__c</field>
+                <field>Effective_time_spent__c</field>
                 <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>Complaint_Reason__c</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Complaint_Analysis__c</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Complaint_Closure__c</field>
-                <uiBehavior>Required</uiBehavior>
+                <field>Support_Evaluation_Grade__c</field>
+                <uiBehavior>Edit</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
         <quickActionLayoutColumns>
@@ -134,16 +132,6 @@
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
                 <field>Case_Language__c</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Complaint_Entity_Originator__c</field>
-                <uiBehavior>Required</uiBehavior>
-            </quickActionLayoutItems>
-            <quickActionLayoutItems>
-                <emptySpace>false</emptySpace>
-                <field>Root_Cause__c</field>
                 <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
         </quickActionLayoutColumns>
