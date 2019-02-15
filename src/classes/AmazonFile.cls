@@ -1,6 +1,7 @@
 public class AmazonFile {
 
     private AmazonRest.S3File s3File;
+    @AuraEnabled
     public AmazonFile__c amazonFile{get;set;}
 
     public AmazonFile(AmazonRest.S3File s3File, AmazonFile__c aFile ) {
