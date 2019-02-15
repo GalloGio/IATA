@@ -43,17 +43,11 @@
 	          
 	            <apex:outputPanel layout="block" rendered="{!not(resetPassword) && NOT(isUserLoggedIn)}">
 	            	<div class="loginSection_centerUnique">
-                        <apex:outputText escape="false" style="font-size: larger; font-weight: bold;" value="Online Store is currently under maintenance.">
-                                    </apex:outputText>
-                                    <br/>
-  
-                                    
-                <!--
 					<h2 class="checkout-info__heading">Please log in</h2>
-					-->
+					
 					
 					<!-- p class="checkout-info__subHeading">All fields are required</p -->
-					<!--
+					
 					<h4 style="margin-bottom: 0px;">Email</h4>
 					<apex:inputText value="{!username}" id="username" rendered="{!sPrefillUsername == null || sPrefillUsername == ''}" styleClass="login__input" html-placeholder="Enter you email here" onKeyPress="return submitLoginEnter(event)"/><br/>                            
 					<apex:inputText value="{!sPrefillUsername}" id="preFillUsername" rendered="{!sPrefillUsername != null && sPrefillUsername != ''}" styleClass="login__input" onKeyPress="return submitLoginEnter(event)"/>                            
@@ -72,7 +66,6 @@
 	                	
 	                 <br/>       	
 	                <apex:commandButton action="{!login}" value="Login" styleClass="tab-container__anchor  customButton" rerender="{!componentIdToRerender}" />
--->
 	                </div>
 	            </apex:outputPanel>
 	            

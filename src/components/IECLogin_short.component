@@ -21,19 +21,15 @@
     	
     	</script>
         
-    
-        <apex:outputText escape="false" style="font-size: larger; font-weight: bold;" value="Online Store is currently under maintenance.">
-                                    </apex:outputText>
-                                    <br/>
-     <!--
-		<apex:actionFunction name="submitLoginShort" action="{!login}"/>
-         <h3>Please log in</h3>
+    <apex:actionFunction name="submitLoginShort" action="{!login}"/>
+        
+     <h3>Please log in</h3>
     
       <apex:inputText value="{!username}" id="username" styleClass="dropdown__input" html-placeholder="Enter your email address" onKeyPress="return submitLoginShortEnter(event)"/>
       <apex:inputSecret value="{!password}" id="txtHiddenPassword" styleClass="dropdown__input" html-placeholder="Enter your password" onKeyPress="return submitLoginShortEnter(event)"/>
-      -->
+      
       <!--  -<apex:commandButton action="{!login}" value="Log in" styleClass="customButton signin" style="height: 50px;"/> -->
-      <!--
+      
        <a href="#" class="customButton signin" onClick="submitLoginShort();">Log in</a>
         
        
@@ -44,7 +40,6 @@
         
         
         <a href="#" class="customButton signup" onClick="signUpAction();">No account yet? Sign up!</a>
-		-->
         </apex:form>
    
       
