@@ -1,14 +1,14 @@
 <apex:page controller="IEC_LoginController" language="{!language}" action="{!onLoadAction}"
-	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
-	
-	<!--[if lte IE 8]>
+  docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
+  
+  <!--[if lte IE 8]>
     <html lang="en" class="ie lte-ie8 no-svg">
-	<![endif]-->
-	<!--[if IE 9]>
-	    <html lang="en" class="ie ie9">
-	<![endif]-->
-	<!--[if !IE]><!-->
-	
+  <![endif]-->
+  <!--[if IE 9]>
+      <html lang="en" class="ie ie9">
+  <![endif]-->
+  <!--[if !IE]><!-->
+  
 
    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
    <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
@@ -17,205 +17,206 @@
 
     <script type="text/javascript">
 
-		if (!String.prototype.startsWith) {
-  			String.prototype.startsWith = function(searchString, position) {
-    		position = position || 0;
-    		return this.indexOf(searchString, position) === position;
-  			};
-		}    	
-		
-		var redirectUrl = '{!redirectUrl}';
-		var current = window.self.location.href;
-		var prefix = current.substr(0, current.lastIndexOf("/"));
+    if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function(searchString, position) {
+        position = position || 0;
+        return this.indexOf(searchString, position) === position;
+        };
+    }      
+    
+    var redirectUrl = '{!redirectUrl}';
+    var current = window.self.location.href;
+    var prefix = current.substr(0, current.lastIndexOf("/"));
 
-		if (redirectUrl != null && redirectUrl.length != 0) {
-			if (redirectUrl.startsWith("http://") || redirectUrl.startsWith("https://")) {
-				window.location.href = redirectUrl;
-			} else {
-				if (redirectUrl.substr(0, 1) != "/") {
-					prefix += "/";
-				}
+    if (redirectUrl != null && redirectUrl.length != 0) {
+      if (redirectUrl.startsWith("http://") || redirectUrl.startsWith("https://")) {
+        window.location.href = redirectUrl;
+      } else {
+        if (redirectUrl.substr(0, 1) != "/") {
+          prefix += "/";
+        }
 
-				window.location.href = prefix + redirectUrl;
-			}
-		}
+        window.location.href = prefix + redirectUrl;
+      }
+    }
 
-		function redirectAfterLogin(redirectUrl) {
-			var current = window.self.location.href;
-			var prefix = current.substr(0, current.lastIndexOf("/"));
+    function redirectAfterLogin(redirectUrl) {
+      var current = window.self.location.href;
+      var prefix = current.substr(0, current.lastIndexOf("/"));
 
-			if (redirectUrl != null && redirectUrl.length != 0) {
-				if (redirectUrl.startsWith("http://") || redirectUrl.startsWith("https://")) {
-					window.location.href = redirectUrl;
-				} else {
-					if (redirectUrl.substr(0, 1) != "/") {
-						prefix += "/";
-					}
+      if (redirectUrl != null && redirectUrl.length != 0) {
+        if (redirectUrl.startsWith("http://") || redirectUrl.startsWith("https://")) {
+          window.location.href = redirectUrl;
+        } else {
+          if (redirectUrl.substr(0, 1) != "/") {
+            prefix += "/";
+          }
 
-					window.location.href = prefix + redirectUrl;
-				}
-			}
-		}
+          window.location.href = prefix + redirectUrl;
+        }
+      }
+    }
     </script>
 
 
-	<html lang="{!language}">
-	<!--<![endif]-->
+  <html lang="{!language}">
+  <!--<![endif]-->
 
-		<head>
-
-			<!-- Google Tag Manager -->     
-	        <script>
-	            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	            })(window,document,'script','dataLayer','GTM-PWSNSM3');
-	        </script>
-	        <!-- End Google Tag Manager -->
-	        <script>
-	            function getDevice() {
-	                if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
-	                    return "Tablet";
-	                } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
-	                    return "Mobile";
-	                } else {
-	                    return "Desktop";
-	                }
-	            }
-
-	            window.dataLayer = window.dataLayer||[];
-				dataLayer.push({
-				    "page": {
-				        "requestURI": window.location.pathname + window.location.search,
-				        "device": getDevice(),
-				        "breadcrumb": "Login Page", 
-				        "language": "{!language}"
-				    }
-				});
-
-	        </script>
-			
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1"/>
-			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
-			<title>{!$Label.Login} - {!$Label.SiteTitle}</title>
+    <head>
+      <meta charset="UTF-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
+      <title>{!$Label.Login} - {!$Label.SiteTitle}</title>
 
 
-		</head>
+    </head>
 
-		<body data-media-size="" class="page-checkout">
+    <body data-media-size="" class="page-checkout">
 
-			<!-- Google Tag Manager (noscript) -->
-	        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
-	        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	        <!-- End Google Tag Manager (noscript) -->
+      <div id="js-breakpoint-finder">
+        <span class="device-xs screen-xsmall"/>
+        <span class="device-sm screen-small"/>
+        <span class="device-md screen-medium"/>
+        <span class="device-lg screen-large"/>
+        <span class="device-xl screen-xlarge"/>
+      </div>
 
-			<div id="js-breakpoint-finder">
-				<span class="device-xs screen-xsmall"/>
-				<span class="device-sm screen-small"/>
-				<span class="device-md screen-medium"/>
-				<span class="device-lg screen-large"/>
-				<span class="device-xl screen-xlarge"/>
-			</div>
+      <div id="js-app-container" class="app-container">
+        <!-- Page Header -->
+        <c:IEC_PageHeader is_checkout="true" />
 
-			<div id="js-app-container" class="app-container">
-				<!-- Page Header -->
-				<c:IEC_PageHeader is_checkout="true" />
+        <div id="js-page-container" class="page-container">
 
-				<div id="js-page-container" class="page-container">
+          <main class="main-content forgot-password">
 
-					<main class="main-content forgot-password">
+              <div class="reader-only" id="reader-main-content">Main Content</div>
+            <div class="section top-banner">
+              <div class="inner-wrapper">
+                <h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
+              </div>
+            </div>
 
-					    <div class="reader-only" id="reader-main-content">Main Content</div>
-						<div class="section top-banner">
-							<div class="inner-wrapper">
-								<h2 class="lead"><apex:outputText value="{!$Label.Welcome_Message}" escape="false" /></h2>
-							</div>
-						</div>
+              <div class="inner-wrapper">
 
-					    <div class="inner-wrapper">
+                  <h1 class="page-title" style="margin-bottom: 0;">{!$Label.Login}</h1>
 
-					        <h1 class="page-title" style="margin-bottom: 0;">{!$Label.Login}</h1>
-					         <p style="margin-top: 10px;">{!$label.IE_Warning} {!$label.ThankYou}</p>   
+                  <!--
+                   <p style="margin-top: 10px;">{!$label.IE_Warning} {!$label.ThankYou}</p>   
+                            
                             <apex:outputPanel id="errorMessage">
-					        
-						        <apex:outputPanel rendered="{!!hasConfirm}" layout="block">
-					                <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
-							        	<apex:pageMessages escape="false"/>
-						        	</apex:outputPanel>
-					            </apex:outputPanel>
-					            <apex:outputPanel styleClass="alert success" rendered="{!hasConfirm}" layout="block">
-	                                <apex:pageMessages escape="false"/>
-	                            </apex:outputPanel>
+                  
+                    <apex:outputPanel rendered="{!!hasConfirm}" layout="block">
+                          <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
+                        <apex:pageMessages escape="false"/>
+                      </apex:outputPanel>
+                      </apex:outputPanel>
+                      <apex:outputPanel styleClass="alert success" rendered="{!hasConfirm}" layout="block">
+                                  <apex:pageMessages escape="false"/>
+                              </apex:outputPanel>
 
                             </apex:outputPanel>
-                            
-				            
-					        <apex:form >
-					        <div class="form-login">
-					            <div class="field-group text">
-					                <label>
-					                    <span class="input-label">{!$Label.IFAP_Login_Username}:</span>
-					                    <!-- <input class="user-input text" type="text" /> -->
-					                    <apex:inputText value="{!username}" html-type="email" styleClass="user-input text" />
-					                </label>
-					            </div>
-					            <div class="field-group text">
-					                <label>
-					                    <span class="input-label">{!$Label.ISSP_Password}:</span>
-					                    <!-- <input class="user-input text" type="password" /> -->
-					                    <apex:inputSecret value="{!password}" styleClass="user-input text" />
-					                </label>
-					            </div>
+                            -->  
+                    
+                  <apex:form >
+                  <br/>
+                                 <br/>
+                                <apex:outputText escape="false" style="font-size: larger; font-weight: bold;" value="Online Store is currently under maintenance.">
+                                    </apex:outputText>
+                                    <br/>
+                                    <br/>
+   
+                                    <br/>
+                                    <br/>
+                                <br/>
+                                    <br/>
+                                <br/>
+                                    <br/>
+                                <br/>
+                                    <br/>
+                                <br/>
+                                    <br/>
+                                <br/>
+                                    <br/>
+                                <br/>
+                                    <br/>
+                                <br/>
+                                    <br/>
+                                <br/>
+                                    <br/>
+                             
+                                    <br/>
+                            <!--
+                  <div class="form-login">
+                      <div class="field-group text">
+                          <label>
+                              <span class="input-label">{!$Label.IFAP_Login_Username}:</span>
+                              -->
+                              <!-- <input class="user-input text" type="text" /> -->
+                              <!--
+                              <apex:inputText value="{!username}" html-type="email" styleClass="user-input text" />
+                          </label>
+                      </div>
+                      <div class="field-group text">
+                          <label>
+                              <span class="input-label">{!$Label.ISSP_Password}:</span>
+                              -->
+                              <!-- <input class="user-input text" type="password" /> -->
+                              <!-- 
+                              <apex:inputSecret value="{!password}" styleClass="user-input text" />
+                          </label>
+                      </div>
 
-					            <p>{!$Label.ISSP_ForgotYourPassword} &nbsp;
-					            	<!-- <a class="text-link" href="{!}$pages['forgot_password']['url'] ?>">Click here</a> -->
-					            	<apex:outputLink value="{!$Page.IEC_ForgotPassword}">{!$Label.Click_here}</apex:outputLink> | &nbsp;
-					            	<apex:outputLink value="#" onclick="signUpAction();">{!$Label.No_account_yet_Sign_up}</apex:outputLink>
-					            </p>
+                      <p>{!$Label.ISSP_ForgotYourPassword}  
+                        -->
+                        <!-- <a class="text-link" href="{!}$pages['forgot_password']['url'] ?>">Click here</a> -->
+                        <!--
+                        <apex:outputLink value="{!$Page.IEC_ForgotPassword}">{!$Label.Click_here}</apex:outputLink> |  
+                        <apex:outputLink value="#" onclick="signUpAction();">{!$Label.No_account_yet_Sign_up}</apex:outputLink>
+                      </p>
 
-					            <div class="footer-actions text-right">
-					                <!-- <button class="button" type="submit">Log in</button> -->
-					                <!-- <apex:actionStatus id="runStatus">
-	                                    <apex:facet name="start"><img src="{!$Resource.IEC_progress}" alt="x" />&nbsp;</apex:facet>
-	                                </apex:actionStatus>
-					                <apex:commandButton action="{!login}" value="Login" styleClass="button" reRender="errorMessage" status="runStatus" /> -->
+                      <div class="footer-actions text-right">
+                         -->
+                          <!-- <button class="button" type="submit">Log in</button> -->
+                          <!-- <apex:actionStatus id="runStatus">
+                                      <apex:facet name="start"><img src="{!$Resource.IEC_progress}" alt="x" /> </apex:facet>
+                                  </apex:actionStatus>
+                          <apex:commandButton action="{!login}" value="Login" styleClass="button" reRender="errorMessage" status="runStatus" /> -->
+                          <!--
+                          <apex:actionFunction name="doLogin" reRender="errorMessage" action="{!login}" status="loginStatus" oncomplete="redirectAfterLogin('{!redirectUrl}');" />
+                          <button class="button" type="button" onclick="doLogin();">
+                            {!$Label.Login}
+                    <apex:actionStatus id="loginStatus">
+                                      <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
+                                  </apex:actionStatus>
+                          </button>
+                      </div>
+                  </div>
 
-					                <apex:actionFunction name="doLogin" reRender="errorMessage" action="{!login}" status="loginStatus" oncomplete="redirectAfterLogin('{!redirectUrl}');" />
-					                <button class="button" type="button" onclick="doLogin();">
-				                		{!$Label.Login}
-										<apex:actionStatus id="loginStatus">
-			                                <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
-			                            </apex:actionStatus>
-				                	</button>
-					            </div>
-					        </div>
+                  <apex:actionFunction name="signUpAction" action="{!register}"/>
+                  -->
+                  </apex:form>
 
-					        <apex:actionFunction name="signUpAction" action="{!register}"/>
-					        </apex:form>
+              </div>
 
-					    </div>
+          </main>
 
-					</main>
+          <!-- Page Footer  -->
+          <c:Footer is_checkout="true" />
+        </div>
+      </div>
 
-					<!-- Page Footer  -->
-					<c:Footer is_checkout="true" />
-				</div>
-			</div>
+      <!-- Modal Box -->
+      <div class="modal-container is-hidden" id="js-modal">
+            <div class="overlay"></div>
+            <div class="modal-dialog" id="js-modal-dialog">
+            </div>
+        </div>
 
-			<!-- Modal Box -->
-			<div class="modal-container is-hidden" id="js-modal">
-        		<div class="overlay"></div>
-        		<div class="modal-dialog" id="js-modal-dialog">
-        		</div>
-    		</div>
+      <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
+      <script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
 
-			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
-			<script src="{!URLFOR($Resource.EcommerceAssets, 'js/script.js')}"></script>
+    </body>
 
-		</body>
-
-	</html>
+  </html>
 
 </apex:page>
