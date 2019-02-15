@@ -24,6 +24,10 @@ public with sharing class ANG_ProgressBarHelper {
                    ValueProgress__c,
                    ValueOk__c,
                    ValueError__c,
+                   IconProgress__c,
+                   IconOk__c,
+                   IconError__c,
+                   IconNotDone__c,
                    Is_Visible__c,
                    Order__c
             FROM ANG_ProgressBarStep__mdt
@@ -59,7 +63,7 @@ public with sharing class ANG_ProgressBarHelper {
                 }
 
                 ANG_ProgressNode node =
-                    new ANG_ProgressNode(step.MasterLabel, step.Description__c, status, Integer.ValueOf(step.Order__c));
+                    new ANG_ProgressNode(step, status);
                 this.progressNodes.add(node);
 
                 // Select first node in progress
