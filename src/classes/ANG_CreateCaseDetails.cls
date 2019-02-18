@@ -13,20 +13,19 @@
 
     Sample body
     [
-		{"caller"="GDI",
-		"paymentStatus"="Paid"
-		}
+		{"caller":"GDI","paymentStatus":"Paid"}
     ]
 ***********************************************************/
 
 @RestResource(urlMapping='/case-create-details/*')
 global without sharing class ANG_CreateCaseDetails {
     
+	public static final set<string> setValidPaymentStatus = new set<string>{'Paid','Outstanding','N/A'};	//Valid account type
+    public static final set<string> setValidRequest = new set<string>{ANG_RestServiceHelper.URIRequest_CasePaymentStatus};    //Valid type of request, part of URI
+    public static final set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_GDI};			//Valid caller
+
     @HttpPost
     global static void doPost(){
-		set<string> setValidPaymentStatus = new set<string>{'Paid;Outstanding;N/A'};	//Valid account type
-        set<string> setValidRequest = new set<string>{ANG_RestServiceHelper.URIRequest_CaseDetails};    //Valid type of request, part of URI
-        set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_GDI};			//Valid caller
 
         try{
             RestRequest req = RestContext.request;
@@ -43,17 +42,10 @@ global without sharing class ANG_CreateCaseDetails {
             string caseId = SplittedURI[2];   //get the case identifier code request URI
             string requestType = SplittedURI[3];    //get the payment status from the request URI
 
-            if(!setValidRequest.contains(requestType)){
+            if(!ANG_CreateCaseDetails.setValidRequest.contains(requestType)){
                 ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Wrong URI:'+requestType)), 400);
                 return;
             }
-
-			//payload
-			INT066_Payload payloadList = (INT066_Payload)System.JSON.deserialize(RestContext.request.requestBody.toString(), INT066_Payload.class);
-
-            //Retrieve parameter from the querystring
-            string Caller = payloadList.caller;	//Name of the caller (e.g. GDI) 
-            string paymentStatus = payloadList.paymentStatus; //e.g.: Paid
 
             /*** verification ***/
             if(caseId==null || caseId== ''){
@@ -61,87 +53,13 @@ global without sharing class ANG_CreateCaseDetails {
                 return;
             }
             
-            if(Caller==null || Caller== ''){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Caller not specified')), 400);
-                return;
-            }
+			if(requestType == ANG_RestServiceHelper.URIRequest_CasePaymentStatus){
 
-            if(paymentStatus==null || paymentStatus== ''){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Payment Status not specified')), 400);
-                return;
-            }
+				CasePaymentStatus casePaymentStatus = new CasePaymentStatus(req,caseId);
 
-            if(!setValidPaymentStatus.contains(paymentStatus)){
-            	ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Invalid Payment Status')), 400);
-                return;
-            }
-            
-            if(!setValidCaller.contains(Caller)){
-            	ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Invalid Caller')), 400);
-                return;
-            }
-
-            //Fetch the case given by the case Id
-            /* run the query, different based on caller/request type */
-            list<Case> lsCase;
-			AMS_OSCAR__c oscar;
-
-            if(Caller==ANG_RestServiceHelper.Caller_GDI){
-                if (requestType==ANG_RestServiceHelper.URIRequest_CaseDetails)
-                    lsCase = [SELECT Id, OSCAR__c FROM Case where Id =: caseId];
-            }
-
-			if(lsCase==null || lsCase.isEmpty()){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Case with Id' + caseId +' not found')), 404);
-                return;
-            }
-            
-            if(lsCase.size()>1){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'Multiple records found with Case Id ' + caseId) ), 409);
-                return;
-            }
-            
-            Case gdiCase = lsCase.get(0);
-            
-			//Perform Validations
-
-			if(gdiCase.OSCAR__c == null){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);
-				return;
-            }
-
-			List<AMS_OSCAR__c> oscarLst = [Select Id, Invoice_status__c from AMS_OSCAR__c where Id = :gdiCase.OSCAR__c];
-			
-			if(oscarLst.isEmpty()){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Oscar with Id' + caseId +' not found')), 404);
-                return;
+				if(casePaymentStatus.execute())
+	            	ANG_RestServiceHelper.GenerateResponse(json.serialize(new INT066_SuccessPayload(caseId)), 200);
 			}
-
-			oscar = oscarLst.get(0);
-
-			if(oscar == null){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);
-				return;
-            }
-
-			if(oscar.Invoice_status__c != null){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'The Oscar Record from the case Id ' +caseID+' already has the payment status filled with value ' + oscar.Invoice_status__c) ), 404);
-				return;
-            }
-
-			
-			/*	Perform actions
-			fetch the oscar associated to the case received
-			Set the values of field Invoice_status__c
-			Set other necessary fields (step passed, payment date, etc...)
-			send HTTPCode 200 as response
-			*/
-
-			oscar.Invoice_status__c = paymentStatus;
-			update oscar;
-
-            //return message, Id of Record Created (oscar)
-            ANG_RestServiceHelper.GenerateResponse(json.serialize(new INT066_SuccessPayload(oscar.Id)), 200);
 
         }catch(Exception e){
             ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('500', e.getMessage()) ), 500);
@@ -159,6 +77,87 @@ global without sharing class ANG_CreateCaseDetails {
 
 		String caller;
 		String paymentStatus;
+	}
+
+	private class CasePaymentStatus{
+		
+		private RestRequest req;
+		private String caseId;
+
+		public CasePaymentStatus(RestRequest req, String caseId){
+			this.req = req;
+			this.caseId = caseId;
+		}
+
+		public boolean execute(){
+			
+			//payload
+			INT066_Payload payloadList = (INT066_Payload)System.JSON.deserialize(req.requestBody.toString(), INT066_Payload.class);
+
+            //Retrieve parameter from the querystring
+            string caller = payloadList.caller;	//Name of the caller (e.g. GDI) 
+            string paymentStatus = payloadList.paymentStatus; //e.g.: Paid
+
+			if(caller==null || caller== '' || !setValidCaller.contains(caller)){
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Caller not specified or invalid:'+caller)), 400);
+                return false;
+            }
+
+            if(!ANG_CreateCaseDetails.setValidPaymentStatus.contains(paymentStatus)){
+            	ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Invalid Payment Status:'+paymentStatus)), 400);
+                return false;
+            }
+            
+            //Fetch the case given by the case Id
+            /* run the query, different based on caller/request type */
+            list<Case> lsCase;
+			AMS_OSCAR__c oscar;
+
+			lsCase = [SELECT Id, OSCAR__c FROM Case where Id =: caseId];
+
+			if(lsCase==null || lsCase.isEmpty()){
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Case with Id' + caseId +' not found')), 404);
+                return false;
+            }
+            
+            if(lsCase.size()>1){
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'Multiple records found with Case Id ' + caseId) ), 409);
+                return false;
+            }
+            
+            Case gdiCase = lsCase.get(0);
+            
+			//Perform Validations
+
+			if(gdiCase.OSCAR__c == null){
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);
+				return false;
+            }
+
+			List<AMS_OSCAR__c> oscarLst = [Select Id, Invoice_status__c from AMS_OSCAR__c where Id = :gdiCase.OSCAR__c];
+			
+			if(oscarLst.isEmpty()){
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Oscar with Id' + caseId +' not found')), 404);
+                return false;
+			}
+
+			oscar = oscarLst.get(0);
+
+			if(oscar == null){
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);
+				return false;
+            }
+
+			if(oscar.Invoice_status__c != null){
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'The Oscar Record from the case Id ' +caseID+' already has the payment status filled with value ' + oscar.Invoice_status__c) ), 404);
+				return false;
+            }
+
+			oscar.Invoice_status__c = paymentStatus;
+			update oscar;
+
+			return true;
+		}
 	}
 }
 
