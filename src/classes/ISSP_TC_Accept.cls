@@ -57,7 +57,8 @@ public  class ISSP_TC_Accept {
         //AMSU-142 (AMSU-26) - added accountId      
         //AMSU-201 - added Portal Status and Financial Assessment
         userList = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId, AccountId,
-                        Contact.Financial_Assessment_Contact__c, Contact.User_Portal_Status__c
+                        Contact.Financial_Assessment_Contact__c, Contact.User_Portal_Status__c,
+                        Contact.Account.RecordType.DeveloperName, Contact.Account.Location_Class__c
                                 FROM User WHERE Id =:UserInfo.getUserId()];
         if (!userList.isEmpty()){
             if (userList[0].LastPasswordChangeDate != null){
@@ -99,13 +100,32 @@ public  class ISSP_TC_Accept {
                 }
             }
 
-            //AMSU-201
-            User u = userList[0];
-            showFinancialSec = u.Contact.Financial_Assessment_Contact__c || u.Contact.User_Portal_Status__c == 'Approved Admin';
+            //WMO-412
+            calculateFinSecVisibility(userList[0]);
         }
         
         selectedLanguage = UserInfo.getLanguage();
         system.debug('IS BSP: ' + isBSP);
+    }
+
+    //WMO-412
+    private void calculateFinSecVisibility(User u) {
+        Set<String> typesToExclude = new Set<String> {'Manifestacion de Bienes', 'Others'};
+        Set<String> statusToInclude = new Set<String> {'Active', 'Close to Expiry Date', 'Expired', 'Encashment in progress'};
+        Date minRangeDate = Date.today().addDays(-7);
+        List<Financial_Security__c> finSecs = [SELECT Id FROM Financial_Security__c 
+						                       WHERE Security_Type__c NOT IN :typesToExclude 
+						   	                    AND Security_Status__c IN :statusToInclude
+						   	                    AND (Expiry_Date__c > :minRangeDate OR Unlimited_Security__c = true) 
+                                                AND Account__c = :u.Contact.AccountId 
+                                                AND Account__r.RecordType.DeveloperName = 'IATA_Agency'];        
+
+        Set<String> validClasses = new Set<String> {'P', 'D', 'C', 'R'};
+        Boolean isAllowedAgency = u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency';
+        Boolean isAllowedClass =  validClasses.contains(u.Contact.Account.Location_Class__c);
+        Boolean isAllowedContact = (u.Contact.Financial_Assessment_Contact__c || u.Contact.User_Portal_Status__c == 'Approved Admin');
+
+        showFinancialSec = isAllowedAgency && isAllowedClass && isAllowedContact && !finSecs.isEmpty();          
     }
     
     public PageReference redirectChangePassword(){
