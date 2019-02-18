@@ -31,6 +31,20 @@
         <value>Restricted Profile - automated process</value>
     </labels>
     <labels>
+        <fullName>AMP_Services_Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMP Services Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>AMS_Add_Certificate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>&gt;AMS_Add_Certificate</shortDescription>
+        <value>Submit more certificates</value>
+    </labels>
+    <labels>
         <fullName>AMS_AttchNotifyOwner</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -45,6 +59,13 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_DGR_Certificate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_DGR_Certificate</shortDescription>
+        <value>DGR Certificates</value>
+    </labels>
+    <labels>
         <fullName>AMS_Due_Diligence_Lock</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -57,6 +78,13 @@
         <protected>false</protected>
         <shortDescription>AMS Duplicate Username</shortDescription>
         <value>Please note that one of the contacts already exists into the account. Use &quot;Choose existing contact&quot; option from Manage owners/contacts section (OSCAR detail) in order to link the contact.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_Duplicated_DGR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_Duplicated_DGR</shortDescription>
+        <value>A similar certificate has already been submited. See details {0}here{1}</value>
     </labels>
     <labels>
         <fullName>AMS_File_UpdatedBy</fullName>
@@ -235,6 +263,14 @@
         <shortDescription>AMS_OSCAR_Action18</shortDescription>
         <value>Restore Forms of Payment</value>
     </labels>
+
+    <labels>
+        <fullName>AMS_OSCAR_Action20</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action20</shortDescription>
+        <value>Open related Financial Security</value>
+    </labels>
     <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
@@ -282,7 +318,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action7</shortDescription>
-        <value>Create SIDRA Lite</value>
+        <value>SIDRA Lite Action</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action8</fullName>
@@ -766,6 +802,41 @@
         <value>Notice of Termination</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP46</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP46</shortDescription>
+        <value>Request invoice</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP47</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP47</shortDescription>
+        <value>Issue billing document</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP48</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP48</shortDescription>
+        <value>Confirm payment received</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP49</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP49</shortDescription>
+        <value>Request endorsement details</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP50</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP50</shortDescription>
+        <value>Confirm Financial Security Information</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -860,6 +931,13 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <value>howj@iata.org</value>
     </labels>
     <labels>
+        <fullName>AMS_UploadFile_Certificate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_UploadFile_Certificate</shortDescription>
+        <value>Certificate</value>
+    </labels>
+	<labels>
         <fullName>ANG_AE_separate_Legal_Entity</fullName>
         <categories>ANG</categories>
         <language>en_US</language>
@@ -1263,6 +1341,94 @@ IATA Customer Service</value>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</shortDescription>
         <value>Portal Service Role</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Agreement</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Agreement</shortDescription>
+        <value>I agree</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Breadcrumb</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Breadcrumb</shortDescription>
+        <value>The list of Financial Institutions providing Financial Security Insurance in your country</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Navigate_Portal</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Navigate_Portal</shortDescription>
+        <value>Go to GDI Portal</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Display_Records</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Display_Records</shortDescription>
+        <value>Display records per page:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_First</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_First</shortDescription>
+        <value>First Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Last</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Last</shortDescription>
+        <value>Last Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Next</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Next</shortDescription>
+        <value>Next Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Previous</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Previous</shortDescription>
+        <value>Previous Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Terms_Conditions</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Terms_Conditions</shortDescription>
+        <value>By applying for your Financial Security to be provided to IATA by Euler Hermes, you consent to IATA sharing with Euler Hermes information it holds which is relevant to your financial standing, whether obtained directly from you when applying for IATA Accreditation or which IATA has maintained throughout your period of membership of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningError</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningError</shortDescription>
+        <value>Sorry, there was an issue setting up your GDI access. Try again and if the issue persists please contact Customer Support</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningWait</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningWait</shortDescription>
+        <value>Please wait. You&apos;ll be redirected to the GDI Portal in a few moments.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_HeadEntity</fullName>
@@ -2256,6 +2422,34 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>This course is for the travel professional with basic knowledge and skills in air journey pricing and ticketing who wants to be recognized as the company or office expert. You will gain confidence in pricing more complex journeys that apply exceptions to standard pricing principles. A key additional benefit are study units on ticket exchanges and reissues resulting in a refund or an additional collection for the new ticket price or a penalty fee collection... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/journey-pricing-ticketing-tttg15.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
     <labels>
+        <fullName>AgreementTemplateNotSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Agreement_Template_Not_Selected</shortDescription>
+        <value>You must select a template from the table</value>
+    </labels>
+	<labels>
+        <fullName>Agreement_Not_Allow_Automatic_Send</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Agreement Not Allow Automatic Send</shortDescription>
+        <value>The selected template does not allow an automatic send. You must edit the agreement before sending it.</value>
+    </labels>
+    <labels>
+        <fullName>Agreement_Not_Allowed_for_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Agreement Not Allowed for User</shortDescription>
+        <value>The user does not have permission to send this type of agreement.</value>
+    </labels>
+    <labels>
+        <fullName>Agreement_Should_Only_be_Created_by_Case_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Agreement Should Only be Created by Case Owner</shortDescription>
+        <value>The agreement should only be created by the case owner</value>
+    </labels>
+    <labels>
         <fullName>AirlineSuspensionContactId</fullName>
         <categories>0031100000uFe6s</categories>
         <language>en_US</language>
@@ -3021,6 +3215,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Actual Amount Blocked</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_AddCountry_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_AddCountry_Monthly_Survey</shortDescription>
+        <value>Add to Survey</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Airlines_Charges</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3047,6 +3248,20 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_All_Others_Country</shortDescription>
         <value>All Others Country</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Annual_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Annual_Survey</shortDescription>
+        <value>Annual Survey</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Annual_Surveys</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Annual_Surveys</shortDescription>
+        <value>Annual Surveys</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Attachments_Description</fullName>
@@ -3098,6 +3313,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Go back to currency center home</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Back_ReportingActions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Back_ReportingActions</shortDescription>
+        <value>Go Back To Reporting Actions</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Blocked_Funds</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3138,6 +3360,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_CASS_Profile</shortDescription>
         <value>CASS PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Cancel_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Cancel_Monthly_Survey</shortDescription>
+        <value>Cancel</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Countries</fullName>
@@ -3219,6 +3448,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Economic_Profile</shortDescription>
         <value>ECONOMIC PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Edit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Edit</shortDescription>
+        <value>Edit</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Exchange_Rates_Directory</fullName>
@@ -3305,6 +3541,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Issue Started</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Link</shortDescription>
+        <value>Link</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Manage_Notifications</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3326,6 +3569,20 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>You will receive a notification every time an update feed is posted for the countries checked in the list below.</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Monthly_Survey</shortDescription>
+        <value>Monthly Survey</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Monthly_Surveys</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Monthly_Surveys</shortDescription>
+        <value>Monthly Surveys</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Next_Action</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3338,6 +3595,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Number_of_Airlines_Reporting</shortDescription>
         <value># of Airlines Reporting the Issue</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Open</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Open</shortDescription>
+        <value>View</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Preferences_Save_Error</fullName>
@@ -3375,6 +3639,27 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>REPATRIATION PROCESS</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Reporting_And_Actions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Reporting_And_Actions</shortDescription>
+        <value>Reporting &amp; Actions</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Request_Update</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Request_Update</shortDescription>
+        <value>Request Update</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Save_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Save_Monthly_Survey</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Save_Preferences</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3410,6 +3695,20 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Subject</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Submit_Monthly_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Submit_Monthly_Survey</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Survey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Survey</shortDescription>
+        <value>Survey</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Treasury_Dashboard</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3422,6 +3721,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Unfollow</shortDescription>
         <value>Unfollow</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_UpcomingActions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_UpcomingActions</shortDescription>
+        <value>Upcoming Actions &amp; Events</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Update_Feeds</fullName>
@@ -3981,6 +4287,13 @@ Case description: {!Case.Description}
         <protected>false</protected>
         <shortDescription>Effective_Date</shortDescription>
         <value>Effective Date</value>
+    </labels>
+    <labels>
+        <fullName>Electronic_Signature_Not_Allowed_Prefix</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Electronic Signature Not Allowed Prefix</shortDescription>
+        <value>An electronic signature is not allowed for</value>
     </labels>
     <labels>
         <fullName>Email</fullName>
@@ -6567,14 +6880,14 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Footer</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D0D0000000O2q</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D2000000008TF</value>
     </labels>
     <labels>
         <fullName>IDCARD_VFEmailTemplate_Header</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D0D0000000O2q</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
@@ -6722,6 +7035,38 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>IDCard_Attachments</shortDescription>
         <value>ID Card Application Attachments</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Agent_Billing_Reports_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Agent_Billing_Reports_Procedures</shortDescription>
+        <value>Learn about the Agent reporting process in the Billing and Settlement Plan (BSP) and how to interpret billing reports. This course will enable travel agent users to understand the BSP Agent reporting process, show how to identify BSP Reporting documents and correct any discrepancies, if and when they occur. You will be shown the BSP reporting calendar for Travel Agents and the range of Billing Reports issued by BSP in the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-billing-agent-tttg46.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Agent_Remittance_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Agent_Remittance_Procedures</shortDescription>
+        <value>Examine the Agent Remittance process of the Billing and Settlement Plan (BSP), including the reporting calendar and debt identification. This module will familiarize you with the Agent BSP Remittance process; BSP Reporting calendar for Agents; and how to find, verify and timelines for the amount a travel agent owes to the BSP. You will also learn what to do if the amount due does not seem to be correct, the importance of timely remittance, and the consequences of failing to settle by the remittance date. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-agent-remittance-tttg47.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Essentials_for_Travel_Agents</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Essentials_for_Travel_Agents</shortDescription>
+        <value>BSP Essentials for Travel Agents is a training course providing essential knowledge of the Billing and Settlement Plan (BSP), specifically for travel agents. It is designed to raise the learner’s awareness of the BSP system and processes, and improve an Agent’s efficiency and level of knowledge. This course is intended to explain elements of the BSP system that are common to all parts of the world and is divided into five learning modules covering the fundamental components of the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-essentials-tttg49.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Standard_Documents_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Standard_Documents_Procedures</shortDescription>
+        <value>The course will enable travel agent users to understand ticketing authority, know the main standard traffic documents used in the BSP system, issue a virtual MPD, provide refunds, understand document enquiries and accept credit card payments for commercial transactions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-documents-procedures-tttg45.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Back</fullName>
@@ -7489,6 +7834,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_IndustryEntrySuperior</shortDescription>
         <value>Entry industry date must be superior to birth date</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Intro_to_the_BSP_System_Language</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Intro_to_the_BSP_System_Language</shortDescription>
+        <value>Learn how the IATA Billing and Settlement Plan (BSP) works and how it benefits a travel agency. This course will enable travel agent users to describe the BSP system and how it works; explain the benefits of being a BSP travel agency; identify BSP participants and explain their roles; identify the steps in reporting airline ticket transactions; find information on BSP procedures; and learn common BSP terms and definitions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-system-language-tttg43.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlBSPlink_Description</fullName>
@@ -12903,6 +13256,20 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Apply_New_Office</shortDescription>
         <value>Apply for a New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</shortDescription>
+        <value>Apply for New Travel Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</shortDescription>
+        <value>Apply for New Cargo Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Apply_New_Travel_Head_Entity</fullName>
@@ -21453,7 +21820,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Banner_img</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D0D0000000O2q&amp;lastMod=1433764815000</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D2000000008TF&amp;lastMod=1433764815000</value>
     </labels>
     <labels>
         <fullName>ISSP_Banner_link</fullName>
@@ -22450,11 +22817,32 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Currency Center</value>
     </labels>
     <labels>
+        <fullName>ISSP_CurrencyCenterReportingActions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reporting Actions Page</shortDescription>
+        <value>ISSP_CurrencyCenterReportingActions</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CurrencyCenter_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CurrencyCenter_Description</shortDescription>
         <value>The IATA Currency Center is a new, dynamic, web based information tool that provides currency information from an economic, financial markets and IATA perspective for different set of countries. In this first version you will find information related to blocked funds countries and watch list  countries. The onboarding of all other countries will follow!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CurrencyCenter_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CurrencyCenter Download</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CurrencyCenter_Last_Updated_On</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CurrencyCenter Last Updated On</shortDescription>
+        <value>Last updated on</value>
     </labels>
     <labels>
         <fullName>ISSP_Currency_Filter</fullName>
@@ -22494,7 +22882,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CustomFooter_Small</shortDescription>
-        <value>© International Air Transport Association (IATA) 2017. All rights reserved.</value>
+        <value>© International Air Transport Association (IATA) 2019. All rights reserved.</value>
     </labels>
     <labels>
         <fullName>ISSP_DDS_BTN_OPTOIN</fullName>
@@ -24559,6 +24947,30 @@ this is the tiess topic help</value>
         <value>Financial Assessment 3rd Deadline</value>
     </labels>
     <labels>
+        <fullName>ISSP_Financial_Insititutions</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions</shortDescription>
+        <value>Financial Institutions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Header</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Header</shortDescription>
+        <value>Financial Institution Insurance Providers</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Subheader</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Subheader</shortDescription>
+        <value>The following Financial Institutions provide Financial Security Insurance in your country</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IFAP_FSEC_Deadline</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -25911,6 +26323,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Sync Calendar</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_DownloadWarning</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_DownloadWarning</shortDescription>
+        <value>This operation may take few minutes. Please wait.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Opt_In</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -26171,7 +26591,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your password has now been changed. Please sign in again.</value>
+        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -26197,7 +26617,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <shortDescription>ISSP_Payment_Link_Description</shortDescription>
         <value>Payment Link can be used to pay IATA invoices by credit card.&lt;br/&gt;
 &lt;b&gt;Warning!&lt;/b&gt;&lt;br/&gt;
-Please note that many IATA invoices for accredited agents are collected through the BPS/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
+Please note that many IATA invoices for accredited agents are collected through the BSP/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
     </labels>
     <labels>
         <fullName>ISSP_Payment_Link_Description_CNS</fullName>
@@ -26553,6 +26973,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Previous</value>
     </labels>
     <labels>
+        <fullName>ISSP_FDS_Filters</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Filters</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PriceList</fullName>
         <categories>S11, Portal</categories>
         <language>en_US</language>
@@ -26584,6 +27012,62 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_ProductSubcategory</shortDescription>
         <value>Product Subcategory</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Agreement</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Agreement</shortDescription>
+        <value>Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Application_Approved</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Application_Approved</shortDescription>
+        <value>Application Approved</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Application_Review</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Application_Review</shortDescription>
+        <value>Application Review</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Financial_Security</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Financial_Security</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Payment</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Payment</shortDescription>
+        <value>Payment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_SanityCheck</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_SanityCheck</shortDescription>
+        <value>Sanity Check</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ProgressBar_Submitted</fullName>
+        <categories>ISSP ProgressBar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ProgressBar_Submitted</shortDescription>
+        <value>Submitted</value>
     </labels>
     <labels>
         <fullName>ISSP_Public</fullName>
@@ -27201,6 +27685,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Related contacts</value>
     </labels>
     <labels>
+        <fullName>ISSP_Release_Version</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Release_Version</shortDescription>
+        <value>Release Version</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Relocate_Contact</fullName>
         <categories>ISSP, IFAP</categories>
         <language>en_US</language>
@@ -27500,8 +27992,15 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership AutoBilling Helptext</shortDescription>
-        <value>As part of this service, IS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis IS will generate a Revenue Recognition File (File Format defined in the IS Participation Guide) containing the billing records of coupons included in the Auto-Billing Invoices.
-The Auto-Billed invoices are automatically closed and finalized by IS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, IS generates an Invoice Posting File which includes details of all Auto-Billed invoices.</value>
+        <value>As part of this service, SIS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis SIS will generate a Revenue Recognition File containing the billing records of coupons included in the Auto-Billing Invoices.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_AutoBilling_Helptext2</fullName>
+        <categories>ISSP SIS Membership2</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership AutoBilling Helptext2</shortDescription>
+        <value>This Revenue Recognition File along with the optional ISR data is forwarded to the billing entity. SIS allows the billing entity to correct/update the values of the Auto-Billing invoices though the IS-WEB. Any update made on IS-WEB is reported back to the billing entity in the next Revenue Recognition File. The Auto-Billed invoices are automatically closed and finalized by SIS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, SIS generates an IS-IDEC file for the billing entity called Invoice Posting File which includes details of all Auto-Billed invoices. The billing entity can use it to carry out any account postings for such invoices within its Revenue Accounting/General Ledger System.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_BankMandateDescription</fullName>
@@ -27510,7 +28009,7 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_BankMandateDescription</shortDescription>
         <value>Download this document and upload a signed version:
- &lt;a target=&quot;#&quot; href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Bank-Details-Form.pdf&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
+ &lt;a target=&quot;#&quot; href=&quot;https://iata--c.eu12.content.force.com/servlet/servlet.FileDownload?file=0151r000005g5rF&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext</fullName>
@@ -27566,7 +28065,9 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description ISPA</shortDescription>
-        <value>Joining SIS instantly connects you with more than 420 airlines and intermodal entities exchanging interline billing data electronically. SIS eliminates the paper from the interline billing and settlement processes increasing efficiency and reducing costs; it enables processing automation which helps reduce billing duplication and simplifies reconciliation.</value>
+        <value>Joining SIS instantly connects you with more than 420 airlines and intermodal entities exchanging interline billing data electronically. SIS eliminates the paper from the interline billing and settlement processes increasing efficiency and reducing costs; it enables processing automation which helps reduce billing duplication and simplifies reconciliation.
+&lt;br/&gt;
+Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/IS-Participation-Agreement.zip&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Description_ISUA</fullName>
@@ -27574,7 +28075,9 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description ISUA</shortDescription>
-        <value>By facilitating the exchange of billing data information and digital invoices, SIS enables airlines and aviation business partners such as ground handlers, maintenance companies, manufacturers, airports and others, to engage in business through a single channel, contributing to a simpler and more efficient environment.​​ Introduction to SIS e-Invoicing ​(&lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Introduction_to_SIS.pdf&quot; target=&quot;_blank&quot;&gt;pdf&lt;/a&gt;)</value>
+        <value>By facilitating the exchange of billing data information and digital invoices, SIS enables airlines and aviation business partners such as ground handlers, maintenance companies, manufacturers, airports and others, to engage in business through a single channel, contributing to a simpler and more efficient environment.​​ Introduction to SIS e-Invoicing ​(&lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Introduction_to_SIS.pdf&quot; target=&quot;_blank&quot;&gt;pdf&lt;/a&gt;)
+&lt;br/&gt;
+Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Standard_Participation_Agreement_for_SIS_e-Invoicing_Services-Non_transportation_ISUA.pdf&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Description_TOU</fullName>
@@ -27582,7 +28085,9 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description TOU</shortDescription>
-        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;http://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xls&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.</value>
+        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;http://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xls&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.
+&lt;br/&gt;
+Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Standard_Participation_Agreement_for_SIS_e-Invoicing_Services-Invoice_Receiver_TOU.pdf&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Digital_Signature_Application_Helptext</fullName>
@@ -27795,7 +28300,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section4_Subtitle2</shortDescription>
-        <value>The Value Determination and Auto Billing are optional services provided by SIS in conjunction with A&amp;A, and can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®.</value>
+        <value>The Value Determination and Auto Billing are optional services provided by SIS in conjunction with &lt;a href=&quot;https://www.atpco.net/&quot; target=&quot;#&quot;&gt;A&amp;A&lt;/a&gt;, and can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®. Subscribers to these services are restricted to &lt;a href=&quot;https://www.atpco.net/&quot; target=&quot;#&quot;&gt;A&amp;A&lt;/a&gt; members only.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section4_Title</fullName>
@@ -27811,7 +28316,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</fullName>
@@ -27827,7 +28332,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Title</shortDescription>
-        <value>Section 5 - iiNET</value>
+        <value>Section 5</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</fullName>
@@ -27835,7 +28340,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</shortDescription>
-        <value>After this application is reviewed, we will provide the set of documents needed to complete you ICH membership</value>
+        <value>After this application is reviewed, we will provide the set of documents needed to complete your ICH membership</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section6_Title</fullName>
@@ -27947,7 +28452,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section2_Subtitle1</shortDescription>
-        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
+        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section2_Title</fullName>
@@ -27987,7 +28492,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</fullName>
@@ -28003,7 +28508,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Title</shortDescription>
-        <value>Section 4 - iiNET</value>
+        <value>Section 4</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</fullName>
@@ -28339,7 +28844,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Who_requested_to_join_TOU</shortDescription>
-        <value>Who requested your Company to join SIS as TOU?</value>
+        <value>Who requested your Company to join SIS as Invoice Receiver?</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Your_Current</fullName>
@@ -30029,6 +30534,13 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Submission of the documents successfully completed!</value>
     </labels>
     <labels>
+        <fullName>Industry_Activities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Industry_Activities</shortDescription>
+        <value>Industry Activities</value>
+    </labels>
+    <labels>
         <fullName>InputRequiredMessage</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -31147,6 +31659,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Last name</value>
     </labels>
     <labels>
+        <fullName>Line_of_Business_LoB</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Line of Business (LoB)</shortDescription>
+        <value>Line of Business (LoB)</value>
+    </labels>
+    <labels>
         <fullName>LiveAgentButtonLanguage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -31393,6 +31912,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Add</value>
     </labels>
     <labels>
+        <fullName>MultiselectPicklist_AddAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_AddAll</shortDescription>
+        <value>Add All</value>
+    </labels>
+    <labels>
         <fullName>MultiselectPicklist_Down</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -31405,6 +31931,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>MultiselectPicklist_Remove</shortDescription>
         <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>MultiselectPicklist_RemoveAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MultiselectPicklist_RemoveAll</shortDescription>
+        <value>Remove All</value>
     </labels>
     <labels>
         <fullName>MultiselectPicklist_Up</fullName>
@@ -31420,6 +31953,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>My_Renewals</shortDescription>
         <value>Renewals &gt; Publications</value>
+    </labels>
+    <labels>
+        <fullName>NDC_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NDC Troubleshooting</shortDescription>
+        <value>https://ndcmatchmk-customer-portal-iata.cs106.force.com/identity/s/troubleshooting?serviceName=NDCMM</value>
     </labels>
     <labels>
         <fullName>New</fullName>
@@ -31563,6 +32103,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>No special characters</shortDescription>
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
+    </labels>
+    <labels>
+        <fullName>Not_Applicable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not Applicable</shortDescription>
+        <value>Not Applicable</value>
     </labels>
     <labels>
         <fullName>Notions_Essentl_Tarif_Billet_Description</fullName>
@@ -32338,6 +32885,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <value>https://fred.iata.org/contact</value>
     </labels>
     <labels>
+        <fullName>OneId_FRED_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_URL</shortDescription>
+        <value>Your password has now been changed. Please go to &lt;a href=&quot;https://fred-qa.iata.org&quot;&gt; FRED-QA.iata.org&lt;/a&gt; to sign in again.</value>
+    </labels>
+    <labels>
         <fullName>OneId_ForgotPassword</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -32566,6 +33120,27 @@ From there, you can request access to FRED+ by clicking the &quot;Request Access
         <protected>false</protected>
         <shortDescription>OneId_My available applications</shortDescription>
         <value>My available applications</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Sharepoint_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Sharepoint_URL</shortDescription>
+        <value>http://google.com</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Troubleshooting</shortDescription>
+        <value>Online Help</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NDCMM_Troubleshooting_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NDCMM_Troubleshooting_Link</shortDescription>
+        <value>/identity/s/troubleshooting?serviceName=NDCMM</value>
     </labels>
     <labels>
         <fullName>OneId_Name</fullName>
@@ -32995,6 +33570,13 @@ Please check your mailbox to finalize the registration process.</value>
         <shortDescription>Oneid_request_acess_to_a_new_service</shortDescription>
         <value>REQUEST ACCESS TO A NEW SERVICE</value>
     </labels>
+    <labels>
+        <fullName>Only_Allow_Broadcast_Tool_for_IATA_Members</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Only Allow Broadcast Tool for IATA Members</shortDescription>
+        <value>The chatter broadcast tool is only available for IATA Member Airlines.</value>
+    </labels>    
     <labels>
         <fullName>Only_one_subscription_can_be_purchased</fullName>
         <language>en_US</language>
@@ -36000,5 +36582,199 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_fees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_fees</shortDescription>
+        <value>GDI fees</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_ENDORSEMENT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>GDI Endorsement</value>
+    </labels>
+
+    <labels>
+        <fullName>AMS_OSCAR_GDI_FINANCIAL_SECURITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>fds
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+ 	<labels>
+        <fullName>IATA_GDPR_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA_GDPR_URL</shortDescription>
+        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/gdprportal</value>
+    </labels>
+    <labels>
+        <fullName>IATA_GDPR_White_Logo</fullName>
+        <categories>Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA GDPR White Logo</shortDescription>
+        <value>https://iata--gdprsalim--c.cs106.content.force.com/servlet/servlet.ImageServer?id=0150D000000EJAd&amp;oid=00D0D0000000PrE&amp;lastMod=1547018185000</value>
+    </labels>
+    <labels>
+        <fullName>TECH_GDPR_Community_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of the GDPR community in the URL</shortDescription>
+        <value>dataprivacy</value>
+    </labels>
+    <labels>
+        <fullName>TECH_GDPR_Network_Name</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name of GDPR  Network. Usually name of the community - Query on network objec</shortDescription>
+        <value>Data Privacy</value>
+    </labels>
+    <labels>
+        <fullName>OneId_URL_To_GDPR</fullName>
+        <categories>GDPR</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_URL_To_GDPR</shortDescription>
+        <value>https://gdprsalim-customer-portal-iata.cs106.force.com/identity/s/login/?language=en_US&amp;serviceName=GDPR</value>
+     </labels>
+    <labels>
+        <fullName>ISSP_FDS_CustomFilterBtn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CustomFilterBtn</shortDescription>
+        <value>Custom</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_DownloadOpts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_DownloadOpts</shortDescription>
+        <value>I want to download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_ChooseCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_ChooseCountries</shortDescription>
+        <value>All Operational Calendards for specific countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_AllCountries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountries</shortDescription>
+        <value>All Operational Calendars</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_AllCountriesWithServices</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_AllCountriesWithServices</shortDescription>
+        <value>All Countries where my airline participates</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FileFormat</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FileFormat</shortDescription>
+        <value>Format</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Operations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Operations</shortDescription>
+        <value>Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_OperationsSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_OperationsSelected</shortDescription>
+        <value>Selected Operations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Remittance</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Remittance</shortDescription>
+        <value>Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_RemittanceSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_RemittanceSelected</shortDescription>
+        <value>Selected Remittance Frequency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Countries</shortDescription>
+        <value>Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountriesSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountriesSelected</shortDescription>
+        <value>Selected Countries</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_Download</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_Download</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_PopupTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_PopupTitle</shortDescription>
+        <value>Filters</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_NoResults</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_NoResults</shortDescription>
+        <value>No results for your search.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_SelectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_SelectAll</shortDescription>
+        <value>Select All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_UnselectAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_UnselectAll</shortDescription>
+        <value>Unselect All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_CountryName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_CountryName</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FDS_FillAllFields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FDS_FillAllFields</shortDescription>
+        <value>Please fill all mandatory filters.</value>
     </labels>
 </CustomLabels>
