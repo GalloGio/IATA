@@ -34,10 +34,7 @@ public with sharing class ISSP_AMC_Apply_New_Code {
         return userInformation;
     }
 
-    public User contactInformation {get;set;}
-  	
-  	public Boolean isThereASubmittedCase {get;set;}
-
+    
 
 	public ISSP_AMC_Apply_New_Code(){
 		AMCDraftCases = ISSP_AMC_DAO.getOngoingApplicationsChanges();
@@ -50,12 +47,12 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 				if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_DESIGNATOR_FORM) {
 					if(eachExistingCase.Status == 'Open'){
 						designatorApplicationId = participation.Id;
+
 					}
 					else {
 						if(eachExistingCase.Status != 'Closed'){
+							
 							caseDesignatorApplicationId = eachExistingCase.Id;
-							/*system.debug('Statsu do Case é submitted' + isThereASubmittedCase);
-							isThereASubmittedCase = true;*/
 						}
 						
 					}
@@ -90,15 +87,84 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 			}
 		}
 	}
+
+	public Boolean isThereACase{get;set;}
+  	public Boolean 	displayPopupDeleteSection { get; set; }
+
+
+  	public Boolean isDesignator {get;set;}
+  	public Boolean isAccountingPrefix {get;set;}
+  	public Boolean isLocation {get;set;}
+  	public Boolean isBaggage {get;set;}
+
+    public void  closePopupDeleteSection() {
+		isThereACase = false;
+		system.debug('IS there a case '+isThereACase);
+	}
 	
-	
+	String caseUrl;
+	public PageReference redirectToCase(){
+		system.debug(isDesignator);
+		system.debug(isAccountingPrefix);
+		system.debug(isLocation);
+		system.debug(isBaggage);
+
+
+		if(isDesignator == true){
+
+			/*UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
+                FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :caseDesignatorApplicationId];
+            if (!recordAccess.hasReadAccess) {
+                
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,Label.ISSP_SIS_Membership_Application_no_access.replace('{0}',caseDesignatorApplicationId) ));
+                return null;
+            }
+            else{}*/
+            caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+           
+			
+		}
+		if(isAccountingPrefix == true){
+			caseUrl = '/ISSP_Case?caseId=' + caseAccountingOrPrefixApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+		}
+		if(isLocation == true){
+			caseUrl = '/ISSP_Case?caseId=' + caseLocationCodeApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+		}
+		if(isBaggage == true){
+			caseUrl = '/ISSP_Case?caseId=' + caseBaggageApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+			
+		}
+
+
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}
 
 	public PageReference navigateAirlineDesignators() {
+		if(caseDesignatorApplicationId != null){
+			isThereACase = true;
+			isDesignator = true;
+			return null;
+		}
+		else{
+			String participationId = designatorApplicationId == null ? '' : 'participationId=' + designatorApplicationId + '&';
+			caseUrl = '/ISSP_AMC_Airline_Designators?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';	
+		}
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}
+
+
+	/*public PageReference navigateAirlineDesignators() {
 		String caseUrl;
 		if(caseDesignatorApplicationId != null){
 			// pop-up
 			// Your Airline already have a case of this type created. Press this link to view (ONLY IF IT HAS PERMISSIONS)
-				caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+
+			isThereACase = true;
+				//caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
 			
 
 			
@@ -110,9 +176,26 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 		PageReference pr = new PageReference(caseUrl);
 		pr.setRedirect(true);
 		return pr;
-	}
+	}*/
+
 
 	public PageReference navigateAccountingOrPrefixCode(){
+		String caseUrl;
+		if(caseAccountingOrPrefixApplicationId != null){
+			isThereACase = true;
+			isAccountingPrefix = true;
+			return null;
+		}
+		else {
+			String participationId = accountingOrPrefixApplicationId == null ? '' : 'participationId=' + accountingOrPrefixApplicationId + '&';
+			caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';
+		}
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}
+
+	/*public PageReference navigateAccountingOrPrefixCode(){
 		String caseUrl;
 		if(caseAccountingOrPrefixApplicationId != null){
 			caseUrl = '/ISSP_Case?caseId=' + caseAccountingOrPrefixApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
@@ -124,7 +207,7 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 		PageReference pr = new PageReference(caseUrl);
 		pr.setRedirect(true);
 		return pr;
-	}
+	}*/
 
 
 	public List <ISSP_AMC_DAO.AplicationRequirements> appRequirementList;
@@ -139,7 +222,10 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 
 		String caseUrl;
 		if(caseLocationCodeApplicationId != null){
-			caseUrl = '/ISSP_Case?caseId=' + caseLocationCodeApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+			isThereACase = true;
+			isLocation = true;
+			return null;
+			//caseUrl = '/ISSP_Case?caseId=' + caseLocationCodeApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
 		}
 		else {
 			system.debug('DB:::'+locationCodeApplicationId);
@@ -163,8 +249,14 @@ public with sharing class ISSP_AMC_Apply_New_Code {
 
 	public PageReference navigateBaggageTagRange(){
 		String caseUrl;
+
+		system.debug('caseBaggageApplicationId'+caseBaggageApplicationId);
+
 		if(caseBaggageApplicationId != null){
-			caseUrl = '/ISSP_Case?caseId=' + caseBaggageApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+			isThereACase = true;
+			isBaggage = true;
+			return null;
+			//caseUrl = '/ISSP_Case?caseId=' + caseBaggageApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
 		}
 		else {
 
