@@ -5887,6 +5887,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         cntCASSContact = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                           WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND CASS_contact__c = true];
 
+        //VAT Number validation - error on top of the page
+        if (newForm.ISSP_AMS_VAT_Number_Input__c != null && isocountry.Hide_Tax_Number_VAT__c == false && newForm.INVALID_Tax_Number__c == true) {
+            newForm.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
+            errorFound = true;
+        }
+
         if (isNoticeOfChange && !isBankAccountChange) {
             if (newform.Is_change_legal_name__c && newForm.Notify_Change_Legal_Details__c) {
                 if(newForm.Account_Name__c == null) {

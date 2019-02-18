@@ -11368,23 +11368,23 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <label>Nominal yang dijaminkan (dikonversi)</label>
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <label>Detail</label>
         <name>ISSP_Financial_Securities_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <label>Penjaminan Keuangan</label>
         <name>ISSP_Financial_Securities_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <label>Ringkasan</label>
         <name>ISSP_Financial_Securities_Summary</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <label>Nominal yang dijaminkan</label>
         <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
@@ -13092,6 +13092,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label>Kontak terkait</label>
         <name>ISSP_Related_contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
     </customLabels>
     <customLabels>
         <label>Pindahkan ke akun lain</label>
