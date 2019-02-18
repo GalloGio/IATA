@@ -893,6 +893,12 @@ public without sharing class ISSP_Case {
                 upsert newCase;
 
                 if(isDPCUser && whoToContact != 'IATA') {
+                    //ACAMBAS - WMO-414 -Start
+                    CaseTeamMember teammember = new CaseTeamMember(ParentId = newCase.Id,
+                                                                   MemberId = UserInfo.getUserId(),
+                                                                   TeamRoleId = PARTNER_USER_ROLE);              
+                    insert teammember;  
+                    //ACAMBAS - WMO-414 -End
                     addListCCOthersToDPC(this.additionalRecipients);
                 }
                 /**
@@ -1005,6 +1011,12 @@ public without sharing class ISSP_Case {
                 **/
 
                 if(isDPCUser && whoToContact != 'IATA') {
+                    //ACAMBAS - WMO-414 -Start
+                    CaseTeamMember teammember = new CaseTeamMember(ParentId = newCase.Id,
+                                                                   MemberId = UserInfo.getUserId(),
+                                                                   TeamRoleId = PARTNER_USER_ROLE);              
+                    insert teammember;  
+                    //ACAMBAS - WMO-414 -End
                     addListCCOthersToDPC(this.additionalRecipients);
                 }
 
