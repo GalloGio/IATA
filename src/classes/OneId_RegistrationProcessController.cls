@@ -286,6 +286,39 @@ public without sharing class OneId_RegistrationProcessController {
     }
 
 
+    @AuraEnabled
+    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email) {
+        // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
+        Savepoint sp = Database.setSavepoint();
+
+        try {
+            User testingUser = new User(LastName = 'DUMMY',
+                 FirstName='DUMMY',
+                 Alias = 'DUMMY',
+                 CommunityNickname = 'DUMMY',
+                 Email = email,
+                 Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
+                 ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
+                 ContactId = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+                 TimeZoneSidKey = 'GMT',
+                 LanguageLocaleKey = 'en_US',
+                 EmailEncodingKey = 'UTF-8',
+                 LocaleSidKey = 'en_US',
+                 License_Cost_center__c = 'ISF005CH01'
+            );
+            system.debug(testingUser);
+            insert testingUser;
+
+            // Rollback to avoid creation of the user
+            Database.rollback(sp);
+            return true;
+
+        } catch(Exception e) {
+            System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
+            Database.rollback(sp);
+            return false;
+        }
+    }
     
     @AuraEnabled
     public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {

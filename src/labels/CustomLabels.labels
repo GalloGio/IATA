@@ -6567,14 +6567,14 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Footer</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D2000000008TF</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9X4&amp;oid=00D0D0000000O2q</value>
     </labels>
     <labels>
         <fullName>IDCARD_VFEmailTemplate_Header</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_VFEmailTemplate Header</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D2000000008TF</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002x9WL&amp;oid=00D0D0000000O2q</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode100</fullName>
@@ -6722,38 +6722,6 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>IDCard_Attachments</shortDescription>
         <value>ID Card Application Attachments</value>
-    </labels>
-    <labels>
-        <fullName>IDCard_BSP_Agent_Billing_Reports_Procedures</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_BSP_Agent_Billing_Reports_Procedures</shortDescription>
-        <value>Learn about the Agent reporting process in the Billing and Settlement Plan (BSP) and how to interpret billing reports. This course will enable travel agent users to understand the BSP Agent reporting process, show how to identify BSP Reporting documents and correct any discrepancies, if and when they occur. You will be shown the BSP reporting calendar for Travel Agents and the range of Billing Reports issued by BSP in the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-billing-agent-tttg46.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
-    </labels>
-    <labels>
-        <fullName>IDCard_BSP_Agent_Remittance_Procedures</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_BSP_Agent_Remittance_Procedures</shortDescription>
-        <value>Examine the Agent Remittance process of the Billing and Settlement Plan (BSP), including the reporting calendar and debt identification. This module will familiarize you with the Agent BSP Remittance process; BSP Reporting calendar for Agents; and how to find, verify and timelines for the amount a travel agent owes to the BSP. You will also learn what to do if the amount due does not seem to be correct, the importance of timely remittance, and the consequences of failing to settle by the remittance date. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-agent-remittance-tttg47.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
-    </labels>
-    <labels>
-        <fullName>IDCard_BSP_Essentials_for_Travel_Agents</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_BSP_Essentials_for_Travel_Agents</shortDescription>
-        <value>BSP Essentials for Travel Agents is a training course providing essential knowledge of the Billing and Settlement Plan (BSP), specifically for travel agents. It is designed to raise the learner’s awareness of the BSP system and processes, and improve an Agent’s efficiency and level of knowledge. This course is intended to explain elements of the BSP system that are common to all parts of the world and is divided into five learning modules covering the fundamental components of the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-essentials-tttg49.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
-    </labels>
-    <labels>
-        <fullName>IDCard_BSP_Standard_Documents_Procedures</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_BSP_Standard_Documents_Procedures</shortDescription>
-        <value>The course will enable travel agent users to understand ticketing authority, know the main standard traffic documents used in the BSP system, issue a virtual MPD, provide refunds, understand document enquiries and accept credit card payments for commercial transactions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-documents-procedures-tttg45.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Back</fullName>
@@ -7521,14 +7489,6 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_IndustryEntrySuperior</shortDescription>
         <value>Entry industry date must be superior to birth date</value>
-    </labels>
-    <labels>
-        <fullName>IDCard_Intro_to_the_BSP_System_Language</fullName>
-        <categories>IDCard</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_Intro_to_the_BSP_System_Language</shortDescription>
-        <value>Learn how the IATA Billing and Settlement Plan (BSP) works and how it benefits a travel agency. This course will enable travel agent users to describe the BSP system and how it works; explain the benefits of being a BSP travel agency; identify BSP participants and explain their roles; identify the steps in reporting airline ticket transactions; find information on BSP procedures; and learn common BSP terms and definitions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-system-language-tttg43.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlBSPlink_Description</fullName>
@@ -10396,11 +10356,32 @@ IFG Customer Services</value>
         <value>2.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_2DIGITS_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_2DIGITS_CODE</shortDescription>
+        <value>The code must have 2 digits and may include letters or letters and numbers.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_3</shortDescription>
         <value>3.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_3LETTERS_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_3LETTERS_CODE</shortDescription>
+        <value>The code must have 3 digits and only letters.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_3NUMBERS_CODE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_3NUMBERS_CODE</shortDescription>
+        <value>The code must have 3 digits and only numbers.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_ACCOUNT</fullName>
@@ -11083,7 +11064,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_COORDINATES_FORMAT</shortDescription>
-        <value>Please insert coordinates in the format XX XX XX N/S, XX XX XX W/E.</value>
+        <value>Please insert coordinates in the format dd°mm’ss.ss&quot;[N,S], dd°mm’ss.ss&quot;[W,E]</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_COUNTRY</fullName>
@@ -11245,6 +11226,13 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <protected>false</protected>
         <shortDescription>ISSP_AMC_ENTITY_DATA</shortDescription>
         <value>Entity Data</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EXISTING_CASE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EXISTING_CASE</shortDescription>
+        <value>Your company has already create a case to request the code. Click here to view the case.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_EXISTING_CASE_ERROR_MESSAGE</fullName>
@@ -12357,6 +12345,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Copy of signed letter issued by the Airport Authority approving the creation of this Metropolitan Area (Airport 2)</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_SIS_BUBBLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SIS_BUBBLE</shortDescription>
+        <value>Simplified Interline Settlement service: the service that enables electronic, billing and setlement for the air transport industry.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_SIS_INFO</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12908,20 +12903,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Apply_New_Office</shortDescription>
         <value>Apply for a New Head Office</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</shortDescription>
-        <value>Apply for New Travel Head Office</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</shortDescription>
-        <value>Apply for New Cargo Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Apply_New_Travel_Head_Entity</fullName>
@@ -21472,7 +21453,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Banner_img</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D2000000008TF&amp;lastMod=1433764815000</value>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002bSH8&amp;oid=00D0D0000000O2q&amp;lastMod=1433764815000</value>
     </labels>
     <labels>
         <fullName>ISSP_Banner_link</fullName>
@@ -25247,7 +25228,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP</shortDescription>
-        <value>Salutation</value>
+        <value>SALUTATION</value>
     </labels>
     <labels>
         <fullName>ISSP_MyProfile_SECTOR</fullName>
@@ -26190,7 +26171,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
+        <value>Your password has now been changed. Please sign in again.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -32357,13 +32338,6 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <value>https://fred.iata.org/contact</value>
     </labels>
     <labels>
-        <fullName>OneId_FRED_URL</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_FRED_URL</shortDescription>
-        <value>Your password has now been changed. Please go to &lt;a href=&quot;https://fred.iata.org&quot;&gt; FRED.iata.org&lt;/a&gt; to sign in again.</value>
-    </labels>
-    <labels>
         <fullName>OneId_ForgotPassword</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -35622,6 +35596,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>doubleHash</shortDescription>
         <value>##</value>
+    </labels>
+    <labels>
+        <fullName>i</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_RAIL_FERRY_BUS</shortDescription>
+        <value>Rail, Ferry or Bus</value>
     </labels>
     <labels>
         <fullName>idcard_replacementHeadText</fullName>

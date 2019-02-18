@@ -14,7 +14,7 @@
            sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false"
            standardStylesheets="false" language="{!displayLanguage}">
     <html>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <head>
         <style>
                .titleHome{
@@ -176,6 +176,7 @@
         <div class="row">
             <c:ISSP_CustomFooter communityName="{!communityName}" />
         </div>
+
     </div>
     </body>
     </html>

@@ -96,7 +96,7 @@
                       <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
                           <apex:outputPanel styleClass="Content" layout="black" > 
 	                           <center>
-	                           		<apex:outputLabel value="Your company has an application of this case Ongoing. Click here to view the case {!caseDesignatorApplicationId} " />
+	                           		<apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}" />
 	                           		<div>
 	                           			<apex:commandButton value="View Case" action="{!redirectToCase}" styleClass="btn btn_iata_primary"/>
 	                           			<apex:commandButton value="Cancel" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
