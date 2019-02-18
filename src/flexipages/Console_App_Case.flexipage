@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <componentInstances>
+            <componentName>force:detailPanel</componentName>
+        </componentInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>rightsidebar</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>recordActionDeployment</name>
+                <value>Coding</value>
+            </componentInstanceProperties>
+            <componentName>lbpm:actionList</componentName>
+        </componentInstances>
+        <name>leftsidebar</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Console App Case</masterLabel>
+    <pageTemplate>flexipage:recordHomeThreeColTemplateDesktop</pageTemplate>
+    <sobjectType>Case</sobjectType>
+    <type>RecordPage</type>
+</FlexiPage>
