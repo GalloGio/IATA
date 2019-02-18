@@ -78,6 +78,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    ID SIDRALiteCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite'); //ACAMBAS - WMO-384
     ID SIDRABRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_BR');
     ID sisHelpDeskCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
     Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
@@ -1258,6 +1259,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         c.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
                     }
                 }
+                //ACAMBAS - WMO-384 - Start
+                if((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == SIDRALiteCaseRecordTypeID) && !String.isEmpty(c.DEF_Approval_Rejection__c)) {
+                    c.DEF_Approval_Rejection_Date__c = DateTime.now();    
+                }
+                //ACAMBAS - WMO-384 - End  
             }
             map<String, CurrencyType> mapCurrencyTypePerCurrencyCode = new map<String, CurrencyType>();
             if (! setCurrencies.isEmpty()) {
@@ -1722,12 +1728,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
                 }     
+                Case aCaseOld = Trigger.oldMap.get(aCase.Id);   
                 if (aCase.RecordTypeId == caseSEDARecordTypeID) {
-                    Case aCaseOld = Trigger.oldMap.get(aCase.Id);
                     if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
                         aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
                     }
                 }
+                //ACAMBAS - WMO-384 - Start
+                if((aCase.RecordTypeId == SIDRAcaseRecordTypeID || aCase.RecordTypeId == SIDRALiteCaseRecordTypeID) && acase.DEF_Approval_Rejection__c != aCaseOld.DEF_Approval_Rejection__c) {
+                    aCase.DEF_Approval_Rejection_Date__c = DateTime.now();    
+                }
+                //ACAMBAS - WMO-384 - End 
             }
 
             if (accountIds.size() > 0) { // This list should be empty if all of the cases aren't related to the Sidra Small amount process
