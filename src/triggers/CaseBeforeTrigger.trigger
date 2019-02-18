@@ -90,6 +90,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
     //ID ProcesscaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
     ID EuropecaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+    ID GlobalcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
     ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
     ID AfricaMEcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
     ID AsiaPacificcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ExternalCasesIDFSglobal');
@@ -672,7 +673,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     if ((aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == ProcessISSPcaseRecordTypeID) || (aCase.RecordTypeId == EuropecaseRecordTypeID)
                             || (aCase.RecordTypeId == AmericacaseRecordTypeID) || (aCase.RecordTypeId == AfricaMEcaseRecordTypeID) || (aCase.RecordTypeId == AsiaPacificcaseRecordTypeID)
                             || (aCase.RecordTypeId == ChinaAsiacaseRecordTypeID) || (aCase.RecordTypeId == InternalcaseRecordTypeID) || (aCase.RecordTypeId == InvCollectioncaseRecordTypeID)
-                            || (aCase.RecordTypeId == CSProcesscaseRecordTypeID) || (aCase.RecordTypeId == SEDAcaseRecordTypeID) || (aCase.RecordTypeId == ISSPcaseRecordTypeID)) { //TF - SP9-C5
+                            || (aCase.RecordTypeId == CSProcesscaseRecordTypeID) || (aCase.RecordTypeId == SEDAcaseRecordTypeID) || (aCase.RecordTypeId == ISSPcaseRecordTypeID)
+                            || (aCase.RecordTypeId == GlobalcaseRecordTypeID)) { //TF - SP9-C5
                         system.debug('CORRECT RECORD TYPE');
                         system.debug('isInsert: ' + Trigger.isInsert);
                         system.debug('isUpdate: ' + Trigger.isUpdate);
@@ -743,7 +745,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 for (Account acc : lstMatchedAccounts) {
                     for (Case c : mapCasesPerWebIATACode.get(acc.Site)) {
                         if (c.AccountId != acc.Id) {
-                            if ( c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
+                            if ( c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == GlobalcaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
                                     || c.RecordTypeId == AsiaPacificcaseRecordTypeID || c.RecordTypeId == ChinaAsiacaseRecordTypeID || c.RecordTypeId == ISSPcaseRecordTypeID ) {
                                 // For these record types, set the Account Concerned field
                                 system.debug('FOUND AND SETTING Account Concerned');
@@ -794,7 +796,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             for (Account acc : lstMatchedAccounts) {
                                 for (Case c : mapCasesListPerAccountSite.get(acc.Site)) {
                                     if (c.AccountId != acc.Id) {
-                                        if (c.AccountId != null && (c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
+                                        if (c.AccountId != null && (c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == GlobalcaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
                                                                     || c.RecordTypeId == AsiaPacificcaseRecordTypeID || c.RecordTypeId == ChinaAsiacaseRecordTypeID || c.RecordTypeId == ISSPcaseRecordTypeID) ) {
                                             // For these record types, set the Account Concerned field
                                             system.debug('FOUND AND SETTING Account Concerned');
