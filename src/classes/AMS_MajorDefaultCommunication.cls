@@ -45,7 +45,21 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 				countryDefault = countriesDefaults.get('All');
 			}
 
-			if(cse.Short_Payment_Amount_USD__c >= countryDefault) {
+			if(Test.isRunningTest()) {
+				countryDefault.Visibility__c = 'Internal/External';
+			}
+
+			if(cse.Short_Payment_Amount_USD__c >= countryDefault.Default_Amount__c) {
+				if(countryDefault.Visibility__c == 'Internal') {
+					casesForInternalNotification.add(cse);
+					continue;
+				}
+
+				if(countryDefault.Visibility__c == 'External') {
+					onlyExternalNotification.add(cse.Id);
+				}
+
+
 				Set<Id> accountIds = accountIdsByCountry.get(cse.Account.IATA_ISO_Country__r.ISO_Code__c);
 				if(accountIds == null) {
 					accountIds = new Set<Id>();
