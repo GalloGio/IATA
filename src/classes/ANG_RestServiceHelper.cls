@@ -5,6 +5,7 @@ global class ANG_RestServiceHelper {
 	global static string URIRequest_AccountFiles = 'account-files';
 	global static string URIRequest_AccountFinancialInfo = 'account-financial-info';
 	global static string URIRequest_AccountMasterdata = 'account-masterdata';
+	global static string URIRequest_CaseDetails = 'payment-status';
 
 	/* Generates the response */
 	global static void GenerateResponse(string sBody, integer iStatusCode){
