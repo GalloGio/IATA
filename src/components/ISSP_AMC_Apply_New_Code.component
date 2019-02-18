@@ -11,7 +11,6 @@
  -->
 <apex:component controller="ISSP_AMC_Apply_New_Code" allowDML="true">
 
-	<apex:attribute name="isThereASubmittedCase" description="is There A Submitted Case" type="Boolean" required="true"/>
 
 	<div class="container">
 		<apex:form id="appnewcodeFrm">
@@ -91,21 +90,25 @@
             			<hr/>
   					</div>
 					
-					<!--
-					<apex:outputPanel id="existingCaseRedirect" rendered="{!IF(isThereASubmittedCase == true, true, false)}" >
-								Your Airline already have a case of this type created. Press this link to view (ONLY IF IT HAS PERMISSIONS)
-							<apex:commandLink  >	
-								Click here
-							</apex:commandLink>
-							
-							<script>
-        function showContent()
-        {
-            document.getElementById("existingCaseRedirect").style.display="block";
-        }
-    </script>
-	
-					</apex:outputPanel> -->
+					<apex:outputPanel id="popupDeleteSection" rendered="{!IF(isThereACase == true,true,false)}">
+						<div class="test">
+
+                      <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                          <apex:outputPanel styleClass="Content" layout="black" > 
+	                           <center>
+	                           		<apex:outputLabel value="Your company has an application of this case Ongoing. Click here to view the case {!caseDesignatorApplicationId} " />
+	                           		<div>
+	                           			<apex:commandButton value="View Case" action="{!redirectToCase}" styleClass="btn btn_iata_primary"/>
+	                           			<apex:commandButton value="Cancel" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
+
+	                           		</div>
+	                           		
+	                           	</center>
+                            </apex:outputPanel>
+                        </apex:outputPanel>         
+					</div>
+                    </apex:outputPanel>
+
 				
 
 	            </section>
@@ -113,7 +116,50 @@
 		</apex:form>
 	</div>
 
+<style type="text/css">
+.test {
+				background: radial-gradient(rgba(0, 0, 0,.8), rgba(0, 0, 0, .5)4%);
+		        position: fixed;
+		        z-index: 9998;
+		        margin: auto;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+			}
+	
+	.PopupBackground {
+				
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			/* bring your own prefixes */
+			transform: translate(-50%, -50%);
 
+	        position: fixed;
+	        z-index: 9998;
+	        margin: auto;
+			color: black;
+			text-align: center;
+			background-color: white;
+			border: 1px solid rgba(0,0,0,.2);
+		    border-radius: 6px;
+		    outline: 0;
+		    padding: 1%;
+	}
+
+
+	.content{
+        background-color: white;
+        border-width: 8px;
+        border-style: solid;
+        z-index: 9999;
+        padding:10px;
+        position: fixed;
+        margin: auto;
+        
+    }
+</style>
 	
 
 
