@@ -1,123 +1,70 @@
 @isTest
 public class howto_Controller_Test {
  
-	  static String siteName = 'PKB_TEST_' + String.valueOf(Crypto.getRandomInteger());    // use this to set the siteName prop of the pkb_Controller class
-	  static String publishStatus = 'draft'; // use this to set the pub status prop of the pkb_Controller
-	  static String lang = 'en_US';
-	  static PKB__c pkb;
-	  static SObject kavObj;
-	  static String objType;
-	  static PKB_Featured__c featured;
-	  static PKB_Featured__c keyword;
-	  static List<PKB_Article_Feedback_Deflection__c> pafds;
-	  class TestException extends Exception { }
+      static String siteName = 'PKB_TEST_' + String.valueOf(Crypto.getRandomInteger());    // use this to set the siteName prop of the pkb_Controller class
+      static String publishStatus = 'draft'; // use this to set the pub status prop of the pkb_Controller
+      static String lang = 'en_US';
+      static PKB__c pkb;
+      static SObject kavObj;
+      static String objType;
+      static PKB_Featured__c featured;
+      static PKB_Featured__c keyword;
+      static List<PKB_Article_Feedback_Deflection__c> pafds;
+      class TestException extends Exception { }
 
-	//static testMethod void testFaq2Case001() 
-	//{
-		//Account parent = ISSP_ObjectFactory.createNewAccount();
-        //parent.BillingCity = 'test';
-        //parent.Name = 'test';
-        //insert parent;
-        //System.debug('parent Id: ' + parent.Id);
+    
+    @isTest
+    static void test1() {
+        Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+        
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.IATACode__c = '100';
+        acc.RecordTypeId = recordTypeId;
+        insert acc;
+        
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = acc.Id;
+        con.LastName = 'test';
+        con.User_Portal_Status__c = 'Approved User';
+        con.Email = 'test.issp.interface@testisspinterface.com';
+        insert con;
+        
+        User thisUser = ISSP_ObjectFactory.createPortalUser(con);
+        
+        system.runAs(thisUser){
+            howto_controller controller = new howto_controller();
+            Set <String> stringSet = controller.feedbackSourceOptions;
+            Map<String,String> stringMap = howto_controller.getActivePicklistOptions('test', 'test');
+            List<Schema.PicklistEntry> stringList = howto_controller.getActivePicklistEntries('test', 'test');
+            //controller.deferred();
+            controller.recordArticleFeedback();
+            String myTest = controller.allSearchParams;
+        }
+    }
 
-        //Account child = ISSP_ObjectFactory.createNewAccount();
-        //child.BillingCity = 'test2';
-        //child.Name = 'test2';
-        //child.Site = 'headSite';
-		//child.sector__c = 'Airline';
-        //child.Top_Parent__c = parent.Id;
-        //insert child;
-        //System.debug('child Id: ' + child.Id);
-        //Contact con = ISSP_ObjectFactory.createNewContact();
- 
-        //con.AccountId= child.Id;
-		//con.Email = 'Test@test11.com';
-        //insert con;
-        //System.debug('con Id: ' + con.Id);
-		 //User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        //System.debug('newUser Id: ' + newUser.Id);
-        //con.OwnerId = newUser.Id;
-        //update con;
+    @isTest
+    static void test_searchString() {
 
-        //Test.startTest();
+        Test.startTest();
+        setupData();
+        setupSettingsData();
 
-        //System.runAs(newUser)
-        //{
-			////FAQ__kav faq1 = new FAQ__kav(Language='fr', UrlName='test111'  , IsVisibleInPkb=true, Title='test111');
-			////FAQ__kav faq2 = new FAQ__kav(Language='fr', UrlName='test222'  , IsVisibleInPkb=true, Title='test222');
-			////List<FAQ__kav> lstFaqs = new List<FAQ__kav>();
-			////lstFaqs.add(faq1);
-			////lstFaqs.add(faq2);
-			////insert lstFaqs ;	
-			//system.debug('SOS lstFaqs: ' + lstFaqs);
-			////TestObjectCreator.createFAQArticlesCategories(lstFaqs, groupName, catName);
-			////List<String> lstFormatArgs = new List<String> {'\'', 'fr', 'Draft', 'FAQ__kav'};
-			////String query = 'SELECT Title, UrlName, Id, KnowledgeArticleId, Language, PublishStatus FROM {3} WHERE Language = {0}{1}{0} AND PublishStatus = {0}{2}{0}';
-			////query = String.format(query, lstFormatArgs);
-			////lstFaqs = (List<FAQ__kav>)Database.query(query);
-			////for (FAQ__kav faq : lstFaqs)
-			////{
-				////KbManagement.PublishingService.publishArticle(faq.KnowledgeArticleId, true);
-			////}
-			//setupData();
-			//ApexPages.KnowledgeArticleVersionStandardController ctl =
-						//new ApexPages.KnowledgeArticleVersionStandardController(faq1);
-			//faq_controller controller = new faq_controller(ctl);
-			
-		//}
-		//Test.stopTest();
-	//}
-	
-	static testMethod void test1() {
-		String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
-    	
-    	Account acc = ISSP_ObjectFactory.createNewAccount();
-    	acc.IATACode__c = '100';
-    	acc.RecordTypeId = recordTypeId;
-		insert acc;
-		
-		Contact con = ISSP_ObjectFactory.createNewContact();
-    	con.AccountId = acc.Id;
-    	con.LastName = 'test';
-    	con.User_Portal_Status__c = 'Approved User';
-    	con.Email = 'test.issp.interface@testisspinterface.com';
-		insert con;
-		
-		User thisUser = ISSP_ObjectFactory.createPortalUser(con);
-		
-		system.runAs(thisUser){
-			howto_controller controller = new howto_controller();
-			Set <String> stringSet = controller.feedbackSourceOptions;
-			Map<String,String> stringMap = howto_controller.getActivePicklistOptions('test', 'test');
-			List<Schema.PicklistEntry> stringList = howto_controller.getActivePicklistEntries('test', 'test');
-			//controller.deferred();
-			controller.recordArticleFeedback();
-			String myTest = controller.allSearchParams;
-		}
-	}
+        Id kaId = (Id)kavObj.get('KnowledgeArticleId');
+        Id kavId = (Id)kavObj.get('Id');
+        
+        //How_To__kav faq1 = new How_To__kav(Language='fr', UrlName='test111'  , IsVisibleInPkb=true, Title='test111');
+        //insert faq1 ; 
 
-	static testMethod void test_searchString() {
-
-		Test.startTest();
-		setupData();
-		setupSettingsData();
-
-		Id kaId = (Id)kavObj.get('KnowledgeArticleId');
-		Id kavId = (Id)kavObj.get('Id');
-		
-		How_To__kav faq1 = new How_To__kav(Language='fr', UrlName='test111'  , IsVisibleInPkb=true, Title='test111');
-		insert faq1 ;	
-
-		ApexPages.KnowledgeArticleVersionStandardController ctl =
-							new ApexPages.KnowledgeArticleVersionStandardController(faq1);
-		howto_controller controller = new howto_controller(ctl);
-		
-		Test.stopTest();
-		
+        //ApexPages.KnowledgeArticleVersionStandardController ctl =
+        //                  new ApexPages.KnowledgeArticleVersionStandardController(faq1);
+        //howto_controller controller = new howto_controller(ctl);
+        
+        Test.stopTest();
+        
   }
 
 
-	static void setupData() {
+    static void setupData() {
     // create article of first type found in the objects that end with __kav
     List<String> kavNames = new List<String>(pkb_Controller.kavNames);
     if (kavNames.isEmpty()) return;
