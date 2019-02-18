@@ -48,7 +48,7 @@ public with sharing class CaseCommentHandler {
         Id kpiReportingId = kpiReporting.get(0).Id;
         
         for (CaseComment cc : fullCaseComments) {
-            if (rtToConfigMap.containsKey(cc.Parent.RecordType.DeveloperName)) {
+            if (UserInfo.getUserType() == 'Standard' && rtToConfigMap.containsKey(cc.Parent.RecordType.DeveloperName)) {
                 createKPIReportingValue(cc, Integer.valueOf(rtToConfigMap.get(cc.Parent.RecordType.DeveloperName).Points__c), kpiReportingId);
             }
         }
