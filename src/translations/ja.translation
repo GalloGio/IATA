@@ -11359,23 +11359,23 @@ and
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <label>合計保証金額（変換済）</label>
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <label>詳細</label>
         <name>ISSP_Financial_Securities_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <label>有価証券</label>
         <name>ISSP_Financial_Securities_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <label>概要</label>
         <name>ISSP_Financial_Securities_Summary</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <label>合計保証金額</label>
         <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
@@ -13081,6 +13081,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label>関連コンタクト</label>
         <name>ISSP_Related_contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
     </customLabels>
     <customLabels>
         <label>別のアカウントへ登録する</label>

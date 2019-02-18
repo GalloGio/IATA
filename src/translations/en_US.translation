@@ -13049,6 +13049,10 @@
         <name>ISSP_Related_contacts</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Relocate Contact --></label>
         <name>ISSP_Relocate_Contact</name>
     </customLabels>
