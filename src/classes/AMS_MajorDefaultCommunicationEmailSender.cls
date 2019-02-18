@@ -7,15 +7,13 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 	global ResultReport results {get;set;}
 	global Id orgEmailAddressId {get;set;}
 	global Blob emailExampleContent {get;set;}
-	global Set<Id> onlyExternalNotification {get;set;}
 	
-	global AMS_MajorDefaultCommunicationEmailSender(Set<Id> contactIds, Map<Id,List<Id>> mapContactToCase, Map<Id,EmailTemplate> mapContactToTemplate, Set<Id> onlyExternalNotification) {
+	global AMS_MajorDefaultCommunicationEmailSender(Set<Id> contactIds, Map<Id,List<Id>> mapContactToCase, Map<Id,EmailTemplate> mapContactToTemplate) {
 		this.contactIds = contactIds;
 		this.mapContactToCase = mapContactToCase;
 		this.mapContactToTemplate = mapContactToTemplate;
 		this.errors = new List<String>();
 		this.results = new ResultReport();
-		this.onlyExternalNotification = onlyExternalNotification;
 		this.orgEmailAddressId = [SELECT Id, Address, DisplayName FROM OrgWideEmailAddress WHERE Address = 'agencymanagement@iata.org'].Id;
 	}
 	
@@ -44,14 +42,14 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 			for(Id caseId : mapContactToCase.get(c.Id)) {
 				Case cse = mapCases.get(caseId);
 				EmailTemplate template = mapContactToTemplate.get(c.Id);			
-				Boolean notifiyInternalGroup = !onlyExternalNotification.contains(caseId);
+
 				if(c.Users.isEmpty()) {
 					Messaging.SingleEmailMessage mail = mailToContact(c, cse, template);
-					wrapper = new EmailMessageWrapper(null, mail, notifiyInternalGroup);
+					wrapper = new EmailMessageWrapper(null, mail);
 					wrapper.reportRow = initReportRow(c, cse);
 					notifications.add(mail);
 				} else {
-					wrapper = mailToUser(c.Users[0], c, cse, template, notifiyInternalGroup);
+					wrapper = mailToUser(c.Users[0], c, cse, template);
 					wrapper.reportRow = initReportRow(c, cse);
 					activities.add(wrapper.activity);
 					notifications.add(wrapper.mail);
@@ -68,19 +66,15 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 			}
 			Messaging.sendEmail(notifications);
 			for(EmailMessageWrapper w : emailWrapperLst) {
-				if(w.notifiyInternalGroup) {
 				results.rows.add(setExecutionStatus(w.reportRow, ''));
-			}
 			}
 
 			this.emailExampleContent = Blob.valueOf(wrapper.mail.getHTMLBody());
 		} catch(Exception e) {
 			for(EmailMessageWrapper w : emailWrapperLst) {
-				if(w.notifiyInternalGroup) {
 				results.rows.add(setExecutionStatus(w.reportRow, e.getMessage().escapeCSV()));
 			}
 		}
-	}
 	}
 
 	private static String initReportRow(Contact c, Case cse) {
@@ -104,7 +98,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 		return mail;
 	}
 
-	private static EmailMessageWrapper mailToUser(User u, Contact c, Case cse, EmailTemplate template, Boolean notifiyInternalGroup) {
+	private static EmailMessageWrapper mailToUser(User u, Contact c, Case cse, EmailTemplate template) {
 		Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, c.Id, cse.Id);
 		mail.setTargetObjectId(u.Id);
 		mail.setSaveAsActivity(false);
@@ -117,13 +111,11 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 		activity.Description = mail.getPlainTextBody();
 		activity.ActivityDate = Date.today();
 
-		return new EmailMessageWrapper(activity, mail, notifiyInternalGroup);
+		return new EmailMessageWrapper(activity, mail);
 	}
 	
 	global void finish(Database.BatchableContext BC) {
-		if(!this.results.rows.isEmpty()) {
 		notifyGroup(this.results, this.mapContactToCase, this.emailExampleContent);
-	}
 	}
 
 	public static void notifyGroup(ResultReport results, Map<Id,List<Id>> mapContactToCase, Blob emailExampleContent) {
@@ -145,7 +137,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 				exampleAttc.setFileName('Notification Example.html');
 	        	exampleAttc.setBody(emailExampleContent);
 
-	        	Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, u.Id, caseId);
+	        	Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, tmpContactId, caseId);
 				mail.setTargetObjectId(u.Id);
 				mail.setSaveAsActivity(false);
 				mail.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc, exampleAttc});
@@ -175,12 +167,10 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 		public Task activity {get;set;}
 		public String reportRow {get;set;} 
 		public Messaging.SingleEmailMessage mail {get;set;}
-		public Boolean notifiyInternalGroup {get;set;}
 
-		public  EmailMessageWrapper(Task activity, Messaging.SingleEmailMessage mail, Boolean notifiyInternalGroup) {
+		public  EmailMessageWrapper(Task activity, Messaging.SingleEmailMessage mail) {
 			this.activity = activity;
 			this.mail = mail;
-			this.notifiyInternalGroup = notifiyInternalGroup;
 		}
 	}	
 }
