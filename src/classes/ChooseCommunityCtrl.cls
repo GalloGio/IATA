@@ -42,4 +42,26 @@ public class ChooseCommunityCtrl {
         options.add(new SelectOption(Comm_User_Helper.CNS,'CNS Customer Portal'));
         return options;
     }
+
+    @AuraEnabled(cacheable=true)
+    public List<SelectOptionWrapper> getAvalaibleCommnuties() {
+        List<SelectOptionWrapper> options = new List<SelectOptionWrapper>();
+        options.add(new SelectOptionWrapper('--None--','--None--'));
+        options.add(new SelectOptionWrapper(Comm_User_Helper.IEC,'E-commerce'));
+        options.add(new SelectOptionWrapper(Comm_User_Helper.ISSP,'ISS Customer Portal'));
+        options.add(new SelectOptionWrapper(Comm_User_Helper.CNS,'CNS Customer Portal'));
+        return options;
+    }    
+
+    public class SelectOptionWrapper {
+        @AuraEnabled
+        public String label {get;set;}
+        @AuraEnabled
+        public String value {get;set;}
+           
+            public SelectOptionWrapper(String value, String label) {
+                this.value = value;
+                this.label = label;
+            }
+    }    
 }
