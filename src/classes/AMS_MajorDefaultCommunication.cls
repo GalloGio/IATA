@@ -4,11 +4,15 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 	global Set<Id> contactIds {get;set;}
 	global Map<Id,List<Id>> mapContactToCase {get;set;}
 	global Map<Id,EmailTemplate> mapContactToTemplate {get;set;}
+	global List<Case> casesForInternalNotification {get;set;} //WMO-398
+	global Set<Id> onlyExternalNotification {get;set;}
 
 	public AMS_MajorDefaultCommunication(List<Agency_Applied_Change_code__c> changeCodes) {
 		this.contactIds = new Set<Id>();
 		this.mapContactToCase = new Map<Id,List<Id>>();
 		this.mapContactToTemplate = new Map<Id,EmailTemplate>();
+		this.casesForInternalNotification = new List<Case>();
+		this.onlyExternalNotification = new Set<Id>();
 
 		Set<Id> caseIds = new Set<Id>();
 		for(Agency_Applied_Change_code__c ccode : changeCodes) {
@@ -17,22 +21,23 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 			}
 		}
 
-		List<Case> cases = [SELECT Id, AccountId, Account.IATA_ISO_Country__r.ISO_Code__c, Short_Payment_Amount_USD__c, Account.Name, BSPCountry__c
+		List<Case> cases = [SELECT Id, AccountId, Account.IATA_ISO_Country__r.ISO_Code__c, Short_Payment_Amount_USD__c, 
+								Account.Name, BSPCountry__c, ContactId
 							FROM Case
 							WHERE Id IN :caseIds AND BSP_CASS__c = 'BSP'];
 
-		Map<String,Double> countriesDefaults = new Map<String,Double>();
-		List<Default_Agency_Payment__mdt> defaults = [SELECT MasterLabel, Country_Codes__c, Default_Amount__c 
+		Map<String,Default_Agency_Payment__mdt> countriesDefaults = new Map<String,Default_Agency_Payment__mdt>();
+		List<Default_Agency_Payment__mdt> defaults = [SELECT MasterLabel, Country_Codes__c, Default_Amount__c, Visibility__c
 													  FROM Default_Agency_Payment__mdt
 													  WHERE Active__c = true];													  
 		for(Default_Agency_Payment__mdt def : defaults) {
 			if(def.MasterLabel != 'All') {
 				List<String> countryCodes = def.Country_Codes__c.split(';');
 				for(String countryCode : countryCodes) {
-					countriesDefaults.put(countryCode, def.Default_Amount__c);
+					countriesDefaults.put(countryCode, def);
 				}
 			} else {
-				countriesDefaults.put('All', def.Default_Amount__c);
+				countriesDefaults.put('All', def);
 			}
 		}
 
@@ -40,7 +45,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 		this.caseByAccounts = new Map<Id,Case>();
 		for(Case cse : cases) {
 			caseByAccounts.put(cse.AccountId, cse);
-			Double countryDefault = countriesDefaults.get(cse.Account.IATA_ISO_Country__r.ISO_Code__c);
+			Default_Agency_Payment__mdt countryDefault = countriesDefaults.get(cse.Account.IATA_ISO_Country__r.ISO_Code__c);
 			if(countryDefault == null) {
 				countryDefault = countriesDefaults.get('All');
 			}
@@ -66,8 +71,9 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 					accountIdsByCountry.put(cse.Account.IATA_ISO_Country__r.ISO_Code__c, accountIds);
 				}
 				accountIds.add(cse.AccountId);
-			}
+			
 		}
+	}
 	}
 
 	global Database.QueryLocator start(Database.BatchableContext BC) {
@@ -188,7 +194,30 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 
 	global void finish(Database.BatchableContext BC) {
 		if(!contactIds.isEmpty()) {
-			Database.executeBatch(new AMS_MajorDefaultCommunicationEmailSender(contactIds, mapContactToCase, mapContactToTemplate), 25);
+			Database.executeBatch(new AMS_MajorDefaultCommunicationEmailSender(contactIds, mapContactToCase, mapContactToTemplate, onlyExternalNotification), 25);
+		}
+
+		if(!casesForInternalNotification.isEmpty()) {
+			sendInternalTemplates(casesForInternalNotification);
+		}
+	}
+
+	public static void sendInternalTemplates(List<Case> cases) {
+		List<User> users = [SELECT Id FROM User WHERE Id IN (SELECT UserOrGroupId FROM GroupMember WHERE Group.DeveloperName  = 'AMS_Agency_Default_Notification')];
+		EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Internal_Major_default_notification'];
+		List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
+
+		for(Case cse : cases) {
+			for(User u : users) {
+				Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(template.Id, cse.Id, cse.ContactId);
+				mail.setTargetObjectId(u.Id);
+				mail.setSaveAsActivity(false);
+				mailsToSend.add(mail);
+			}
+		}
+
+		if(!mailsToSend.isEmpty()) {
+			Messaging.sendEmail(mailsToSend);
 		}
 	}
 }
