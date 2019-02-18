@@ -2706,9 +2706,9 @@ The SIS application will process the incoming invoices and supporting documents 
                     On behalf of the data exporter:
                 </p>
                 <table style="width: 90%; margin-left: 5%;">
-                    <tr><td>Name (written out in full):</td><td></td></tr>
-                    <tr><td>Position:</td><td></td></tr>
-                    <tr style="height: 4em;"><td>Address:</td><td></td></tr>
+                    <tr><td>Name (written out in full):</td><td>{!newForm.Data_Exporter_Signatory_Name__c}</td></tr>
+                    <tr><td>Position:</td><td>{!newForm.Data_Exporter_Signatory_Position__c}</td></tr>
+                    <tr style="height: 4em;"><td>Address:</td><td>{!newForm.Data_Exporting_Organization_Address__c}</td></tr>
                     <tr style="height: 4em;"><td>Other information necessary in order for<br/>the contact to be binding (if any):</td><td></td></tr>
                     <tr style="height: 4em;"><td>(Signature)</td><td></td></tr>
                     <tr style="height: 4em;"><td>(stamp of organisation)</td><td></td></tr>

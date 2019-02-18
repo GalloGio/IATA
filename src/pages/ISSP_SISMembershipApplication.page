@@ -114,8 +114,8 @@
                                         <apex:outputText value="{!wrapper.sisType[featureName]}" rendered="{!wrapper.sisType[featureName]!='Enabled'}"/>
                                         <apex:image value="/img/msg_icons/confirm24.png" rendered="{!wrapper.sisType[featureName]=='Enabled'}"/>
                                         <apex:outputPanel layout="block" rendered="{!AND(wrapper.sisType[featureName]=='Enabled',featureName=='Transaction_Fees__c')}">
-                                            <apex:outputLink value="https://www.iata.org/services/finance/sis/Documents/ISPA-Attachment-A-Pricing-Schedule.pdf" rendered="{!wrapper.sisType.DeveloperName!='ISPA'}" target="#">Prices</apex:outputLink>
-                                            <apex:outputLink value="https://www.iata.org/services/finance/sis/Documents/Attachment-D-Pricing-Schedule_ISUA.pdf" rendered="{!wrapper.sisType.DeveloperName!='ISUA'}" target="#">Prices</apex:outputLink>
+                                            <apex:outputLink value="https://www.iata.org/services/finance/sis/Documents/ISPA-Attachment-A-Pricing-Schedule.pdf" rendered="{!wrapper.sisType.DeveloperName=='ISPA'}" target="#">Prices</apex:outputLink>
+                                            <apex:outputLink value="https://www.iata.org/services/finance/sis/Documents/Attachment-D-Pricing-Schedule_ISUA.pdf" rendered="{!wrapper.sisType.DeveloperName=='ISUA'}" target="#">Prices</apex:outputLink>
                                         </apex:outputPanel>
                                     </small>
                                 </td>
