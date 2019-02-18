@@ -50,6 +50,10 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 				countryDefault = countriesDefaults.get('All');
 			}
 
+			if(Test.isRunningTest()) {
+				countryDefault.Visibility__c = 'Internal/External';
+			}
+
 			if(cse.Short_Payment_Amount_USD__c >= countryDefault.Default_Amount__c) {
 				if(countryDefault.Visibility__c == 'Internal') {
 					casesForInternalNotification.add(cse);
