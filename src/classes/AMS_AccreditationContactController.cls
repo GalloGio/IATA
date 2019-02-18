@@ -24,6 +24,46 @@ public with sharing class AMS_AccreditationContactController {
     public boolean isNewProcess {get; set;}
     public boolean isChangeProcess {get; set;}
     public boolean isNewGenProcess {get; set;}
+    public List<AMS_Agency_Regulation__c> agRegList {get; set;} //AMSU-132
+
+    public List<AgRegItemWrapper> agRegValuesForDisplay{ //AMSU-132
+        get{
+            
+            if(agRegValuesForDisplay == null) {
+                agRegValuesForDisplay = new List<AgRegItemWrapper>();
+
+                //FM AMSU-132 - Load Agency Regulations records associated with account
+                this.agRegList = [SELECT Id,Account__c,Certificate_Name__c,Expired__c,Expiry_Date__c,
+                            First_Name__c,Issuer__c,Last_Name__c,Name,OSCAR__c,OSCAR__r.Name,Type_Of_Certificate__c,
+                             Position__c, Issued_on__c, Validity__c, Air_cargo_transport_business_exp__c,
+                             IATA_FIATA_training_history__c, Training_dangerous_goods_completed__c, Registration_Number__c
+                            FROM AMS_Agency_Regulation__c 
+                            WHERE Account__c = :this.aoa.SAAM_Case__r.OSCAR__r.Account__c 
+                            AND Type_Of_Certificate__c = 'DGR'
+                            AND (Expiry_Date__c = LAST_N_YEARS:2 OR Expiry_Date__c > LAST_N_YEARS:2)];
+                
+                for(AMS_Agency_Regulation__c reg : this.agRegList){
+                    Boolean bExist = false;
+                    if(reg.OSCAR__c != null){
+                        agRegValuesForDisplay.add(new AgRegItemWrapper(reg, false, false, false));
+                    }else{
+                        agRegValuesForDisplay.add(new AgRegItemWrapper(reg, false, false, true));
+                    }
+                    
+                }
+            }
+            return agRegValuesForDisplay;
+        }
+        set;
+    }
+
+    public Boolean selectAll{ //AMSU-132
+        get{
+            if(selectAll == null) selectAll = false;
+            return selectAll;
+        }
+        set;
+    }
 
     //FM 09-10-2017 - AMSU-72 - get date format based on user regional settings
     date myDate = date.newInstance(2001, 12, 21);
@@ -39,13 +79,13 @@ public with sharing class AMS_AccreditationContactController {
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person') => 'Person',
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Owner') => 'Person',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person') => 'Person',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner') => 'Person',
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company') => 'Company',
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner') => 'Company',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company') => 'Company',
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner') => 'Company',
 
-            AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Trained_Staff') => 'Trained Staff'
+            RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff') => 'Trained Staff'
 
 
     };
@@ -65,14 +105,13 @@ public with sharing class AMS_AccreditationContactController {
         Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=edge');
         if(aoa == null)
         {
-            //String acCompanyRtId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
             
             List<AMS_Pax_Accreditation_Form__c> aoaList = [select id, Name, Account_Name__c, IATACode__c, Type_of_Operation__c, Shipping_Street__c, Shipping_Postal_Code__c, 
                             Shipping_City__c, Shipping_State__c, Shipping_Country__c, SAAM_Case__r.AccountId, SAAM_Case__r.OSCAR__r.Account__c, 
                             SAAM_Case__r.OSCAR__r.Account__r.Location_class__c, SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c, 
                             SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c, SAAM_Case__r.OSCAR__r.Process__c, SAAM_Case__r.OSCAR__r.Type_of_change__c,
                             SAAM_Case__r.OSCAR__r.Account__r.Sector__c, SAAM_Case__r.OSCAR__r.Account__r.Category__c,
-                            SAAM_Case__r.OSCAR__r.CNS_process__c, ANG_IsNewGenAgency__c,  SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c,
+                            SAAM_Case__r.OSCAR__r.CNS_process__c, ANG_IsNewGenAgency__c,  SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c, SAAM_Case__r.OSCAR__r.RecordTypeId,
                             SAAM_Case__r.OSCAR__c,SAAM_Case__r.OSCAR__r.AMS_Target_Agency__c //FM - AMSU-1
                             from AMS_Pax_Accreditation_Form__c where Id =: stdController.getRecord().id];
             this.aoa = aoaList.get(0);
@@ -134,10 +173,10 @@ public with sharing class AMS_AccreditationContactController {
          
         }
 
-        AcPersonRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
-        AcCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
-        AcCurrentCompanyRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
-        AcCurrentOwnerRt = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Current_Owner');
+        AcPersonRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
+        AcCompanyRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Company');
+        AcCurrentCompanyRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Company_Owner');
+        AcCurrentOwnerRt = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
 
         forDeletion = new List<AMS_Accreditation_Contact__c>();
 
@@ -159,6 +198,10 @@ public with sharing class AMS_AccreditationContactController {
 
         if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHANGES && (aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c == null || !(ANG_AgencyChangesHelper.containsChange(NGOWNEREDITABLECHANGES,aoa.SAAM_Case__r.OSCAR__r.ANG_Type_Of_Change__c.toLowerCase()))))
             blockOwnershipEdit = true;
+
+        if(aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NGCHINACONVERSION){
+            blockOwnershipEdit = true;
+        }
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
         isCargoAgency = aoa.SAAM_Case__r.OSCAR__r.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO;
@@ -249,6 +292,23 @@ public with sharing class AMS_AccreditationContactController {
             this.forDeletion.add(acToDelete);
         }
         
+        //AMSU-132
+        if(acToDelete.AgencyRegulation__c != null){
+            System.debug('this.agRegValuesForDisplay: ' + this.agRegValuesForDisplay);            
+
+            System.debug('acToDelete.AgencyRegulation__c: ' + acToDelete.AgencyRegulation__c);
+            for(AgRegItemWrapper agRegItem : this.agRegValuesForDisplay){
+                System.debug('agRegItem: ' + agRegItem);
+                if(agRegItem.agReg.id == acToDelete.AgencyRegulation__c){
+                    agRegItem.enable = true;
+                    agRegItem.selected = false;
+                    System.debug('agRegItem.enable: ' + agRegItem.enable);
+                    System.debug('agRegItem.selected: ' + agRegItem.selected);
+                }
+            }
+            System.debug('this.agRegValuesForDisplay: ' + this.agRegValuesForDisplay);  
+        }
+        
         this.trainedStaffWrapper.remove(this.toUnselect);
         return null;
     }
@@ -281,13 +341,15 @@ public with sharing class AMS_AccreditationContactController {
             
         }
 
+        /*
         if(!isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
             return null;
         }
-
-        if(isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
+        */
+        //AMSU-180
+        if(!calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to at least 99.99% before saving.'));
             return null;
@@ -344,7 +406,7 @@ public with sharing class AMS_AccreditationContactController {
 
         }
 
-        if(numberPortalAdmin > 1 && isNewGenProcess){
+        if(numberPortalAdmin > 1 /*&& isNewGenProcess AMSU-163*/){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'A maximum of 1 portal administrator is allowed on this page.'));
             return null;
         }
@@ -402,7 +464,7 @@ public with sharing class AMS_AccreditationContactController {
             // Save Company Ownership
             if(accountWrapper.size() > 0)
             {
-                Id standardAccountRtId = AMS_Utils.getId('Account', 'Standard_Account');
+                Id standardAccountRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
                 List<Account> accountInsertList = new List<Account>();
                 List<AMS_Accreditation_Contact__c> acUpsertList = new List<AMS_Accreditation_Contact__c>();
                 List<Account> acList = new List<Account>();
@@ -501,6 +563,38 @@ public with sharing class AMS_AccreditationContactController {
         return new PageReference('/' + ApexPages.currentPage().getParameters().get('Id'));
     }
     
+    //AMSU-132
+    public void doSelectAll(){
+        for(AgRegItemWrapper ar : agRegValuesForDisplay){
+            ar.selected = selectAll;
+        }
+    }
+
+    //AMSU-132
+    public PageReference saveImport(){
+        try {
+
+            List<AMS_Agency_Regulation__c> agRegListLocal = new List<AMS_Agency_Regulation__c>(); 
+            System.debug('before saveImport: agRegValuesForDisplay: ' + agRegValuesForDisplay);
+            for(AgRegItemWrapper ari : agRegValuesForDisplay){
+                System.debug('before saveImport: ari: ' + ari);
+                 if(ari.selected){ 
+                     ari.enable = false;
+                     agRegListLocal.add(ari.agReg);
+                 }
+            }
+
+            convertExistingAgencyRegulationsToAccContact(this.aoa.Id, agRegListLocal);
+            
+        } catch(Exception e) {
+            //DML Exceptions are sometimes displayed on the page
+            //if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+            System.debug(loggingLevel.ERROR, '____ [cls AMS_AccreditationContactController - save] error - ' + e.getMessage());
+        }
+        return null;
+    }
+    
+    
     public boolean calculateTotalOwnership()
     {
         ownership = 0;
@@ -514,8 +608,7 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' &&
-         ((!isNewGenProcess && ownership != 100)||(isNewGenProcess && ownership < 99.99 )))
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && ownership < 99.99) //AMSU-180
         {
             return false;
         } else
@@ -1009,8 +1102,8 @@ public with sharing class AMS_AccreditationContactController {
             this.financialInterest = accountAc.Financial_Interest__c;
             this.registrationNumber = accountAc.Registration_Number__c;
             this.accountAc.Company__c = this.account.Id;
-            this.account.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
-            //AMS-1669 this.accountAc.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company');
+            this.account.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
             if(this.account.Legal_Name__c == null)
             {
                 this.account.Legal_Name__c = this.AccountAc.Name;
@@ -1033,7 +1126,7 @@ public with sharing class AMS_AccreditationContactController {
         }
     }
 
-    //FM AMSU-1
+	//FM AMSU-1
     public AMS_OSCAR__c oscarObj { 
         get{ 
             if(this.oscarObj == null)
@@ -1135,5 +1228,53 @@ public with sharing class AMS_AccreditationContactController {
             }
         }
         private set;
+    }
+
+
+    // AMSU-132
+    public class AgRegItemWrapper{
+
+        public AMS_Agency_Regulation__c agReg { get; set; }
+        public Boolean main { get; set; }
+        public Boolean selected { get; set; }
+        public Boolean enable { get; set; }
+
+        public AgRegItemWrapper(AMS_Agency_Regulation__c ar, Boolean main, Boolean selected, Boolean enable){
+            this.agReg = ar;
+            this.main = main;
+            this.selected = selected;
+            this.enable = enable;
+        }
+    }
+    //AMSU-132
+    public void convertExistingAgencyRegulationsToAccContact(Id stagingId, List<AMS_Agency_Regulation__c> regulations){
+
+        List<AMS_Accreditation_Contact__c> accToInsert = new List<AMS_Accreditation_Contact__c>();
+
+        //create trained staff accreditation contact from the existing agency regulations
+        //in the accreditation contact we save the link to the agency regulation object.
+        for(AMS_Agency_Regulation__c reg  :regulations){
+
+            AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c();
+
+            ac.RecordTypeId = AMS_Utils.AccreditationContactTrainedStaffRT;
+            ac.Certificate_Name__c = reg.Certificate_Name__c;
+            ac.First_Name__c = reg.First_Name__c;
+            ac.Last_Name__c = reg.Last_Name__c;
+            ac.Position_trained_staff__c = reg.Position__c;
+            ac.Type_of_Certificate__c = reg.Type_of_Certificate__c;
+            ac.AMS_Pax_Accreditation_Form__c = stagingId;
+            ac.Certificate_Issued_on__c = reg.Issued_on__c;
+            ac.Certificate_Validity__c = reg.Validity__c;
+            ac.Valid_until__c = reg.Expiry_Date__c;
+            ac.Certificate_Issuer__c = reg.Issuer__c;
+            ac.AgencyRegulation__c = reg.Id;
+            ac.Air_cargo_transport_business_exp__c = reg.Air_cargo_transport_business_exp__c;
+            ac.IATA_FIATA_training_history__c = reg.IATA_FIATA_training_history__c;
+            ac.Training_dangerous_goods_completed__c = reg.Training_dangerous_goods_completed__c;
+            ac.Registration_number__c = reg.Registration_Number__c; 
+
+            this.trainedStaffWrapper.add(new TrainedStaffWrapper(ac));
+        }
     }
 }

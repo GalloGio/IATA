@@ -73,6 +73,20 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Use this lookup when the file is related to an account</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>AmazonFiles</relationshipLabel>
+        <relationshipName>AmazonFiles</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Additional_Information__c</fullName>
         <description>Additional information if the E&amp;F Category is Ad-Hoc Report or Miscellaneous</description>
         <externalId>false</externalId>
@@ -186,6 +200,11 @@
                     <default>false</default>
                     <label>Miscellaneous</label>
                 </value>
+                <value>
+                    <fullName>ICE POP</fullName>
+                    <default>false</default>
+                    <label>ICE POP</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -195,7 +214,7 @@
         <label>Description</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -614,6 +633,66 @@
                     <default>false</default>
                     <label>PCI_COMPLIANCE</label>
                 </value>
+                <value>
+                    <fullName>Form_K</fullName>
+                    <default>false</default>
+                    <label>Form K</label>
+                </value>
+                <value>
+                    <fullName>Membership_Agreement</fullName>
+                    <default>false</default>
+                    <label>Membership Agreement</label>
+                </value>
+                <value>
+                    <fullName>Form_A</fullName>
+                    <default>false</default>
+                    <label>Form A</label>
+                </value>
+                <value>
+                    <fullName>ASP</fullName>
+                    <default>false</default>
+                    <label>ASP</label>
+                </value>
+                <value>
+                    <fullName>Bank_Accounts</fullName>
+                    <default>false</default>
+                    <label>Bank Accounts</label>
+                </value>
+                <value>
+                    <fullName>AML</fullName>
+                    <default>false</default>
+                    <label>AML</label>
+                </value>
+                <value>
+                    <fullName>Join_Participation</fullName>
+                    <default>false</default>
+                    <label>Join Participation</label>
+                </value>
+                <value>
+                    <fullName>Deactivation</fullName>
+                    <default>false</default>
+                    <label>Deactivation</label>
+                </value>
+                <value>
+                    <fullName>NoA_Release</fullName>
+                    <default>false</default>
+                    <label>NoA Release</label>
+                </value>
+                <value>
+                    <fullName>Revised_Instructions</fullName>
+                    <default>false</default>
+                    <label>Revised Instructions</label>
+                </value>
+                <value>
+                    <fullName>Leave_Participation</fullName>
+                    <default>false</default>
+                    <label>Leave Participation</label>
+                </value>
+                <value>
+                    <fullName>ICE_POP</fullName>
+                    <default>false</default>
+                    <label>ICE_POP</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -634,9 +713,19 @@
         <externalId>false</externalId>
         <label>Internal Comments</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Original_Received__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to indicate if the document was received postal mail.</description>
+        <externalId>false</externalId>
+        <label>Original Received</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Owner_Email__c</fullName>
@@ -650,11 +739,23 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Remittance_Period__c</fullName>
+        <description>Remittance Period</description>
+        <externalId>false</externalId>
+        <label>Remittance Period</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Review_Status__c</fullName>
         <externalId>false</externalId>
         <label>Review Status</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -995,8 +1096,12 @@
     </listViews>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Case__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>CasesACCEuropeOffOnshore_AmazonFile</fullName>
@@ -1006,6 +1111,18 @@
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>files_by_case</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Case__c</field>
+            <operation>equals</operation>
+            <value>09737094</value>
+        </filters>
+        <label>files by case</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>AmazonFile Name</label>
@@ -1869,6 +1986,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>ICE POP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Meeting Minutes</fullName>
                 <default>false</default>
             </values>
@@ -1985,6 +2106,10 @@
             </values>
             <values>
                 <fullName>FIN_STATEMENTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICE_POP</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2226,6 +2351,98 @@
             </values>
             <values>
                 <fullName>Termination</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>ICCS_File</fullName>
+        <active>true</active>
+        <label>ICCS File</label>
+        <picklistValues>
+            <picklist>Category__c</picklist>
+            <values>
+                <fullName>Communications</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>File_Identifier_picklist__c</picklist>
+            <values>
+                <fullName>AML</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ASP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank_Accounts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deactivation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Form_A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Form_K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Join_Participation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Leave_Participation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Membership_Agreement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NoA_Release</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revised_Instructions</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Review_Status__c</picklist>
+            <values>
+                <fullName>Accepted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Portal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subcategory__c</picklist>
+            <values>
+                <fullName>Client</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

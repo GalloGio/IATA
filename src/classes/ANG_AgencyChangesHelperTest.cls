@@ -3,14 +3,13 @@ public class ANG_AgencyChangesHelperTest {
 
 	 @testSetup static void testSetup(){
 		
-
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
         insert ctry ;
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
         insert stt;
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account account = new Account();
 		account.Name = 'Main HE Account H1';
@@ -20,7 +19,7 @@ public class ANG_AgencyChangesHelperTest {
 		account.Location_Class__c = 'P';
 		account.Location_Type__c = 'HE';
 		account.ANG_Accreditation_Model__c = 'Cashless';
-
+		account.IATA_ISO_Country__c = ctry.Id;
 		account.ANG_IEP_HE_AccntNum__c = '1232132323';
 		account.ANG_IEP_Status__c = 'Suspended' ;
 		account.ANG_HE_CashCondition__c = true;
@@ -65,7 +64,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -79,17 +78,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		upsert relationsMap;
 		upsert accountsMap;
-/*
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
-
-        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
-
-		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = BR1.Id));
-		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = BR2.Id));
-		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = BR3.Id));
-		
-		insert agenciesinvolved;
-*/
 
 		List<AMS_Agencies_Hierarchy__c> hierarchies =  [Select Id from AMS_Agencies_Hierarchy__c];
 		
@@ -145,7 +133,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -154,7 +142,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		List<Account> accounts = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE2 H1'];
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -279,7 +267,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account destinationAccount = new Account();
 		destinationAccount.Name = 'Destination HE Account';
@@ -288,7 +276,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -321,7 +309,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -330,7 +318,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		List<Account> accounts = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE2 H1'];
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -407,7 +395,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account destinationAccount = new Account();
 		destinationAccount.Name = 'Destination HE Account';
@@ -416,7 +404,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -436,7 +424,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -446,7 +434,7 @@ public class ANG_AgencyChangesHelperTest {
 		List<Account> accounts = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE2 H1'];
 		List<Account> accounts2 = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE3 H1'];
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -524,7 +512,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account destinationAccount = new Account();
 		destinationAccount.Name = 'Destination HE Account';
@@ -533,7 +521,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -553,7 +541,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -563,7 +551,7 @@ public class ANG_AgencyChangesHelperTest {
 		List<Account> accounts = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE2 H1'];
 		List<Account> accounts2 = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE3 H1'];
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -642,7 +630,7 @@ public class ANG_AgencyChangesHelperTest {
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account destinationAccount = new Account();
 		destinationAccount.Name = 'Destination HE Account';
@@ -651,7 +639,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '12324353454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -683,7 +671,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -693,7 +681,7 @@ public class ANG_AgencyChangesHelperTest {
 		List<Account> accounts = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE2 H1'];
 		List<Account> accounts2 = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE3 H1'];
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -764,11 +752,11 @@ public class ANG_AgencyChangesHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = [Select Id,ANG_Enable_NewGen__c from IATA_ISO_Country__c];
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account newHeSingle = new Account();
 		newHeSingle.Name = 'Destination HE Account';
@@ -785,6 +773,7 @@ public class ANG_AgencyChangesHelperTest {
 		newHeSingle.ANG_HE_RiskStatus__c = 'Not Applicable';
 		newHeSingle.RecordTypeId = accountAgencyRT;
 		newHeSingle.ANG_Accreditation_Model__c = 'Cashless';
+		newHeSingle.IATA_ISO_Country__c = ctry.Id;
 
 		insert newHeSingle;
 
@@ -797,7 +786,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = newHeSingle.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = newHeSingle.Id;
@@ -866,11 +855,12 @@ public class ANG_AgencyChangesHelperTest {
 
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = [Select Id,ANG_Enable_NewGen__c from IATA_ISO_Country__c];
+
 
         IATA_ISO_State__c stt =[select id from  IATA_ISO_State__c];
 		
-		Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account newHeSingle = new Account();
 		newHeSingle.Name = 'Original HE Account';
@@ -887,6 +877,7 @@ public class ANG_AgencyChangesHelperTest {
 		newHeSingle.ANG_HE_RiskStatus__c = 'Not Applicable';
 		newHeSingle.RecordTypeId = accountAgencyRT;
 		newHeSingle.ANG_Accreditation_Model__c = 'Cashless';
+		newHeSingle.IATA_ISO_Country__c = ctry.Id;
 
 		insert newHeSingle;
 
@@ -897,7 +888,7 @@ public class ANG_AgencyChangesHelperTest {
 		destinationAccount.Category__c = 'IATA Passenger Sales Agent';
 		destinationAccount.Location_Class__c = 'P';
 		destinationAccount.Location_Type__c = 'HE';
-
+		destinationAccount.IATA_ISO_Country__c = ctry.Id;
 		destinationAccount.ANG_IEP_HE_AccntNum__c = '15520003454';
 		destinationAccount.ANG_IEP_Status__c = 'Open' ;
 		destinationAccount.ANG_HE_CashCondition__c = true;
@@ -914,7 +905,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = newHeSingle.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = newHeSingle.Id;
@@ -1024,7 +1015,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		Account he1 = [Select Id, Name, IATAcode__c, IATA_ISO_Country__c, Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Main HE Account H1'];
 
-        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+        ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he1.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
 
@@ -1033,7 +1024,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = he1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = he1.Id;
@@ -1084,7 +1075,7 @@ public class ANG_AgencyChangesHelperTest {
 		List<Account> accounts2 = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE3 H1'];
 		List<Account> accounts3 = [Select Id, Name, ParentId, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE1 H1'];
         
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -1165,7 +1156,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.assert(ae2 != null);
 		System.assert(ae3 != null);
 
-        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+        ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
 		insert oscar;
@@ -1173,7 +1164,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = he.Id;
@@ -1208,7 +1199,7 @@ public class ANG_AgencyChangesHelperTest {
 
         List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112345672', Phone__c='3424322342', Email__c='unique@email2.com', RecordTypeId=personAccreditationRT));
@@ -1221,7 +1212,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		// let's start !!
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -1275,7 +1266,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.assert(ae2 != null);
 		System.assert(ae3 != null);
 
-		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+		Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         
         List<AMS_Account_Role__c> accountRoles = new List<AMS_Account_Role__c>();
 
@@ -1285,7 +1276,7 @@ public class ANG_AgencyChangesHelperTest {
 
         insert accountRoles;
 
-        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+        ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
 
@@ -1294,7 +1285,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = he.Id;
@@ -1329,7 +1320,7 @@ public class ANG_AgencyChangesHelperTest {
 
         List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(0).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
         accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(1).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112345672', Phone__c='3424322342', Email__c='unique@email2.com', RecordTypeId=personAccreditationRT));
@@ -1342,7 +1333,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		// let's start !!
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -1396,7 +1387,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.assert(ae2 != null);
 		System.assert(ae3 != null);
 
-		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+		Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
         
         List<AMS_Account_Role__c> accountRoles = new List<AMS_Account_Role__c>();
 
@@ -1409,7 +1400,7 @@ public class ANG_AgencyChangesHelperTest {
 
         insert accountRoles;
 
-        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+        ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
 
@@ -1418,7 +1409,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = he.Id;
@@ -1453,7 +1444,7 @@ public class ANG_AgencyChangesHelperTest {
 
         List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(0).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
         accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(1).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112345672', Phone__c='3424322342', Email__c='unique@email2.com', RecordTypeId=personAccreditationRT));
@@ -1466,7 +1457,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		// let's start !!
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -1524,7 +1515,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.assert(ae2 != null);
 		System.assert(ae3 != null);
 
-		Id	formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		Id	formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
@@ -1532,7 +1523,7 @@ public class ANG_AgencyChangesHelperTest {
 
 	    insert toUpsert;
 
-        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+        ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
 
@@ -1541,14 +1532,14 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = he.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
                  // Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -1583,7 +1574,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		// let's start !!
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -1638,7 +1629,7 @@ public class ANG_AgencyChangesHelperTest {
 		he.ANG_Accreditation_Model__c = 'Cash';
 		update he;
 
-		Id	formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+		Id	formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
@@ -1649,7 +1640,7 @@ public class ANG_AgencyChangesHelperTest {
 
 	    insert toUpsert;
 
-        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+        ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
 
@@ -1658,14 +1649,14 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = he.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
                  // Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -1700,7 +1691,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		// let's start !!
 
-        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -1786,7 +1777,7 @@ public class ANG_AgencyChangesHelperTest {
 		Account a1 = [Select Id, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE1 H1'];
 		Account he1 = [Select Id, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Main HE Account H1'];
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
@@ -1794,7 +1785,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -1812,7 +1803,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		// let's start !!
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		// Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -1849,7 +1840,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -1867,6 +1858,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
 
 		update oscar;
@@ -1910,6 +1902,7 @@ public class ANG_AgencyChangesHelperTest {
 	@isTest static void test_getChangeCodes(){
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 		EF_AttachmentListController.runningForEF = false;
 		loadCredentials();
 
@@ -1973,12 +1966,12 @@ public class ANG_AgencyChangesHelperTest {
 		a1.ANG_Accreditation_Model__c = 'Cash';
 		he1.ANG_Accreditation_Model__c = 'Cashless';
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
 
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -1990,7 +1983,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -2008,7 +2001,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		// let's start !!
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		// Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -2046,7 +2039,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2055,6 +2048,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = 'Location type';
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
@@ -2077,15 +2071,6 @@ public class ANG_AgencyChangesHelperTest {
 		ANG_AgencyChangesHelper.AChangeStructure changesContainer = new ANG_AgencyChangesHelper.AChangeStructure();
 
 		ANG_AgencyChangesHelper.generateLNFChangeCode(oscar, new Map<Id, Agency_Applied_Change_code__c>{a1.Id => aacc1}, changesContainer);
-
-		Map<String, String> configCC = new Map<String, String>();
-		configCC.put('Manager approval','MA');
-		configCC.put('Manager disapproval','MD');
-		configCC.put('Application withdrawal','AW');
-
-		ANG_AgencyChangesConfigHelper.getManagerApprovalChangeCode(configCC);
-		ANG_AgencyChangesConfigHelper.getManagerDisapprovalChangeCode(configCC);
-		ANG_AgencyChangesConfigHelper.getWithdrawalChangeCode(configCC);
 
 		Test.stopTest();
 
@@ -2166,7 +2151,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		List<Case> cases = new List<Case>();
 
@@ -2205,7 +2190,7 @@ public class ANG_AgencyChangesHelperTest {
 		// let's start !!
 
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		// Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -2242,7 +2227,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2257,6 +2242,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar.AMS_Correction_change_code__c = 'COR';
   	    
@@ -2326,7 +2312,7 @@ public class ANG_AgencyChangesHelperTest {
 
         accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea2.Id, Company__c = he1.Id, First_name__c='NameToUse2', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique2@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2338,6 +2324,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar2.STEP6__c = 'Passed';
 		oscar2.Change_effective_as_of__c = System.today();
 		oscar2.Is_PCI_compliant__c = 'Yes';
+		oscar2.ANG_PCI_compliance_expiry_date__c = System.today();
 		oscar2.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar2.AMS_Correction_change_code__c = 'CAD';
   	    
@@ -2345,12 +2332,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		System.debug('Case Id is:'+oscarCase2.Id);
 
-		//Attachment att2 = new Attachment();
-		//att2.Name = 'Certificates '+oscarCase2.Id+'.pdf';
-		//att2.Body = pdfArchive;
-		//att2.ParentId = oscarCase2.Id;
-		//insert att2;
-		
 		update oscar2;
 
 		Test.stopTest();
@@ -2428,7 +2409,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		Id OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -2449,7 +2430,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		Test.startTest();
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		// Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -2486,7 +2467,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2499,6 +2480,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
 		oscar.AMS_Correction_change_code__c = 'LET';
   	    
@@ -2537,6 +2519,8 @@ public class ANG_AgencyChangesHelperTest {
 
 	@isTest static void testANGAccountHierarchyChange(){
 
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
 		loadCredentials();
@@ -2561,12 +2545,12 @@ public class ANG_AgencyChangesHelperTest {
 		a1.ANG_Accreditation_Model__c = 'Cash';
 		he1.ANG_Accreditation_Model__c = 'Cashless';
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
 
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -2578,7 +2562,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -2596,7 +2580,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		// let's start !!
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		// Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -2633,7 +2617,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2642,6 +2626,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');
@@ -2673,6 +2658,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		@isTest static void testANGAccountHierarchyChange2(){
 
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
 		loadCredentials();
@@ -2697,12 +2684,12 @@ public class ANG_AgencyChangesHelperTest {
 		a1.ANG_Accreditation_Model__c = 'Cash';
 		he1.ANG_Accreditation_Model__c = 'Cashless';
 
-		Id oscarRT = AMS_Utils.getId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
 
-		ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+		ID rtAgencyInvolved =RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
         List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
@@ -2714,7 +2701,7 @@ public class ANG_AgencyChangesHelperTest {
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
-		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
         oscarCase.AccountId = a1.Id;
@@ -2732,7 +2719,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		// let's start !!
 
-		ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('New Gen Changes').getRecordTypeId();
+		ID rtChangesStagingId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
 		// Create the Staging area for the Account
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
@@ -2769,7 +2756,7 @@ public class ANG_AgencyChangesHelperTest {
 		
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+        Id personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
         accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he1.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
 
@@ -2778,6 +2765,7 @@ public class ANG_AgencyChangesHelperTest {
         oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.ANG_PCI_compliance_expiry_date__c = Date.today();
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
   	    
 		Blob pdfArchive = Blob.valueOf('Test content');

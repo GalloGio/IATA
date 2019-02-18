@@ -26,6 +26,8 @@ private class IEC_Evt_Renew_ProcessPmt_Batch_Test {
 			[5] SUCCESS - Paid with ICH
 			[6] SUCCESS - Paid with Credit Card
 		*/
+
+        TestDataGenerator.generateISOCountryState();
 		
 	    /*****************************************
 	    **	Create Accounts

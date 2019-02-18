@@ -59,7 +59,6 @@
                 <div id="register">
 
 
-
                     <!-- code format -->
                     <div class="rightColumn">
 
@@ -69,7 +68,7 @@
                             </div>
                             <div class="content" style="height:231px;">
                                 <h2>Accepted formats are:</h2>
-                                <h3 class="newDim">Passengers Agency</h3>
+                                <h3 class="newDim">Passenger Agency</h3>
                                 <p>7 or 8 Digit Numeric Code</p>
                                 <h3 class="newDim">Cargo Agency</h3>
                                 <p>11 or 12 Digit Numeric Code</p>
@@ -323,7 +322,13 @@
                                           <td></td>
                                           <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
                                         </tr>
-                            
+                                        <tr>
+                                          <td>NewGen ISS Accreditation Model</td>
+                                          <td></td>
+                                          <td><img width="30" height="30" src="{!URLFOR($Resource.IECStyles,'img/')}code-check.png"/></td>
+                                        </tr>
+
+                                        
                                         <tr>
                                           <td height="40px;" colspan="3" style="background-color:#69D2BE; text-align:center; font-size:18px; font-weight:700; margin:0px; padding:0px; vertical-align:middle; color:#666;">
                                           ID Card Validation Results</td>

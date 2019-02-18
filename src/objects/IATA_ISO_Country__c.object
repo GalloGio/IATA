@@ -101,6 +101,32 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>AMS_Country_Configuration__c</fullName>
+        <description>Created by AMS Enhancements to be used instead of checkboxes for new country specific AMS configurations.</description>
+        <externalId>false</externalId>
+        <label>AMS Country Configuration</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>TIDS HO</fullName>
+                    <default>false</default>
+                    <label>TIDS HO</label>
+                </value>
+                <value>
+                    <fullName>TIDS BR</fullName>
+                    <default>false</default>
+                    <label>TIDS BR</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>AMS_Default_State__c</fullName>
         <description>Some countries don&apos;t have ISO State Mandatory.
 This field will store, for these countries a reference (text) to the &quot;Default&quot; state.
@@ -159,7 +185,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <relationshipLabel>IATA ISO Countries</relationshipLabel>
         <relationshipName>IATA_ISO_Countries</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -194,6 +220,37 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_IEP_Model__c</fullName>
+        <description>Defines the EasyPay Model to use by agencies from this country.</description>
+        <externalId>false</externalId>
+        <label>EasyPay Model</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Model A</fullName>
+                    <default>false</default>
+                    <label>Model A</label>
+                </value>
+                <value>
+                    <fullName>Model B</fullName>
+                    <default>true</default>
+                    <label>Model B</label>
+                </value>
+                <value>
+                    <fullName>Banking Model</fullName>
+                    <default>false</default>
+                    <label>Banking Model</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Portal_Service__c</fullName>
@@ -2120,6 +2177,16 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Enable_NewGen_Pilot__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag used to enable a country to NewGen pilot</description>
+        <externalId>false</externalId>
+        <label>Enable NewGen Pilot</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Enable_Notice_of_Change__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2342,6 +2409,18 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Informatica_Value__c</fullName>
+        <description>Country Name returned by the Address Doctor</description>
+        <externalId>false</externalId>
+        <label>Informatica Value</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>International_dialing_code_ISD__c</fullName>
         <externalId>false</externalId>
         <label>International dialing code ISD</label>
@@ -2440,6 +2519,29 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Postal_Code_Format_regEx__c</fullName>
+        <description>regEx to validate correct Postal Code format on online forms</description>
+        <externalId>false</externalId>
+        <inlineHelpText>regEx to validate correct Postal Code format on online forms</inlineHelpText>
+        <label>Postal Code Format regEx</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Postal_Code_Hint_Format__c</fullName>
+        <externalId>false</externalId>
+        <label>Postal Code Hint / Format</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Prevent_Portal_Trade_Name_Change__c</fullName>
@@ -2568,6 +2670,15 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>State_Province_Mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>State/Province Mandatory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sub_Region__c</fullName>
         <externalId>false</externalId>
         <label>Sub Region</label>
@@ -2650,6 +2761,17 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Tax_Number_VAT_field_mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</description>
+        <externalId>false</externalId>
+        <inlineHelpText>On Annual Revalidation form, checking this box will make Tax Number / VAT field mandatory</inlineHelpText>
+        <label>Tax Number / VAT field mandatory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Tax_Number_label__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>This is the label that will appear on all web forms that require customer input of their local tax number. The label will default to VAT if left empty for a country.</inlineHelpText>
@@ -2717,6 +2839,16 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>FRED ICAO Member State</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>That value does not exist or is not a valid ICAO Member State.</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>ICAO Member State</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Account</referenceTo>
         <relationshipLabel>ISO Country / Territory Name</relationshipLabel>
         <relationshipName>IATA_ISO_Countries</relationshipName>
@@ -2789,6 +2921,21 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
             <group>Account_management_team</group>
             <group>IDFSAllusersexcludingIWandACCA</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_The_Countries</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>LVA_CountryLanguage__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>AMS_Settlement_System__c</columns>
+        <columns>BSP_Country_free_text__c</columns>
+        <columns>BSP__c</columns>
+        <columns>AMS_Settlement_System_CASS__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Countries</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Americas_Countries</fullName>
@@ -2969,5 +3116,13 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <searchResultsAdditionalFields>Country_Manager__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>IEP_Model_required_for_Portal_Service</fullName>
+        <active>true</active>
+        <description>Makes ANG_IEP_Model__c mandatory when populating ANG_Portal_Service__c</description>
+        <errorConditionFormula>AND( ISBLANK(TEXT(ANG_IEP_Model__c)) ,  OR(ISCHANGED(ANG_Portal_Service__c),ISCHANGED(ANG_IEP_Model__c)) , NOT(ISBLANK(ANG_Portal_Service__c)))</errorConditionFormula>
+        <errorDisplayField>ANG_IEP_Model__c</errorDisplayField>
+        <errorMessage>EasyPay Model is required when enabling this country for the EasyPay Portal Service</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

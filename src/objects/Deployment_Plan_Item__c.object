@@ -792,6 +792,19 @@
         </valueSet>
     </fields>
     <label>Deployment Plan Item</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Deployment_Plan__c</columns>
+        <columns>Element__c</columns>
+        <columns>For_Deletion__c</columns>
+        <columns>Section__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Deployment Plan Item Name</label>
         <type>Text</type>

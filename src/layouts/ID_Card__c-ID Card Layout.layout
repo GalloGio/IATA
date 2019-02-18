@@ -71,7 +71,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Agency_Short_Name__c</field>
+                <field>EBC_Agency_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>

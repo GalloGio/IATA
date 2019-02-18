@@ -14,7 +14,9 @@ global class FinancialSecurityRenewalCaseBatch implements Database.Batchable<sOb
 		for (Financial_Security__c fs : scope) {
 			fs.Security_Status__c = 'Close to Expiry Date';
 		}
-		update scope;
+		//update scope;
+		RecordUpdater updater = new RecordUpdater(scope);
+    	updater.schedule(System.now().addSeconds(2));
 	}
 
 	global void finish(Database.BatchableContext BC) {

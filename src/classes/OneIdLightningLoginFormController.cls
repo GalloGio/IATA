@@ -75,15 +75,15 @@ public without sharing class OneIdLightningLoginFormController {
                     if(startUrl != 'mobileApp') pageLink = startUrl;
 
                     if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
-                       //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
-					   pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+			//pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
+			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP&startUrl=' + startUrl;
                     }
 
                 }else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
                 	 //pageLink = '/ISSP_Homepage';
                 	 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
                 	 //pageLink = '/identity/apex/CommunitiesLanding?serviceName=ISSP';
-					 pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
+			pageLink = '/apex/CommunitiesLanding?serviceName=ISSP';
                 }
                 
                 if (oneUser.Portal_User_Frozen_Checkbox__c){
@@ -100,16 +100,20 @@ public without sharing class OneIdLightningLoginFormController {
             if (relayState!=null)
                 pageLink = '/ISSP_Homepage?kaviURL='+ relayState.remove('https://').remove('http://');
             */
-            
-            
                 
             username=null != oneUser ? oneUser.Username : username;
             system.debug('pageLink: ' + pageLink);
             system.debug('Used Username: '+username);
             
+            //Login on the portal community using a portal URL
+            if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
+                 String s = startUrl != null ? startUrl : '/ISSP_Homepage';
+                 ApexPages.PageReference lgnPortal = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,s));
+            }
+            
             //login in siteCompleteUrl
             ApexPages.PageReference lgn = Site.login(username, password, pageLink);
-            
+
             system.debug('page reference return from login: '+lgn);
                         
             List<User> userListConfirmTempPassword = [SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate , Email, ContactId
@@ -120,7 +124,7 @@ public without sharing class OneIdLightningLoginFormController {
             
             if (userListConfirmTempPassword[0].UID__c != '' && userListConfirmTempPassword[0].UID__c != null){
                 String serviceNameParam = String.isEmpty(serviceName) ? '' : '?serviceName='+serviceName;
-                lgn = Site.login(username, password, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY).removeEnd('/s') + '/OneId_ChangePassword'+serviceNameParam);
+                lgn = Site.login(username, password, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/OneId_ChangePassword'+serviceNameParam));
             }
             
             //redirect to startUrl or some other page returned from the login 
@@ -150,6 +154,11 @@ public without sharing class OneIdLightningLoginFormController {
     
     public static void findLocationCaller(){        
         getFindLocation(true,'');
+    }
+
+    @AuraEnabled
+    public static OneId_RegistrationProcessController.UserInformation getUserInformationFromEmail(String email, String serviceName){
+        return OneId_RegistrationProcessController.getUserInformationFromEmail(email, serviceName);
     }
 
     @AuraEnabled
@@ -192,11 +201,9 @@ public without sharing class OneIdLightningLoginFormController {
                 if (saveLog){
                     insert newLog;
                 }
-
-                system.debug('country: ' + country);
-                List <IATA_ISO_Country__c> countryList =
-                    [SELECT Id, Name, Sanctioned_Country__c FROM IATA_ISO_Country__c
-                    WHERE ISO_Code__c = :country];
+                
+                List <IATA_ISO_Country__c> countryList = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{country});
+                    
                 if (!countryList.isEmpty()){
                     theCountry = countryList[0].Name;
                     if (countryList[0].Sanctioned_Country__c){
@@ -255,9 +262,7 @@ public without sharing class OneIdLightningLoginFormController {
             system.debug('ipLocator: ' + ipLocator);
             if (!ipLocator.isEmpty()){
                 country = ipLocator[0].Country_Code__c;
-                List <IATA_ISO_Country__c> countryList =
-                    [SELECT Id, Name, Sanctioned_Country__c FROM IATA_ISO_Country__c
-                    WHERE ISO_Code__c = :country];
+                List <IATA_ISO_Country__c> countryList = IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{country});
                 if (!countryList.isEmpty()){
                     theCountry = countryList[0].Name;
                     if (countryList[0].Sanctioned_Country__c){
@@ -480,6 +485,5 @@ public without sharing class OneIdLightningLoginFormController {
 			i=0;
 			i=0;
 		}
-
 	}
 }

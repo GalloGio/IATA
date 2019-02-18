@@ -35,6 +35,88 @@
     <!--<![endif]-->
 
         <head>
+            <!-- Google Tag Manager -->     
+            <script>
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PWSNSM3');
+            </script>
+            <!-- End Google Tag Manager -->
+            <script>
+                function getDevice() {
+                    if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+                        return "Tablet";
+                    } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+                        return "Mobile";
+                    } else {
+                        return "Desktop";
+                    }
+                }
+
+                window.dataLayer = window.dataLayer||[];
+                dataLayer.push({
+                    "user": {
+                        "email": "{!userDetails.userEmail}",
+                        "loginStatus": "{!userDetails.userLoginStatus}",
+                        "userId": "{!userDetails.userId}",   
+                        "zipCode": "{!userDetails.userZipCode}",
+                        "city": "{!userDetails.userCity}",
+                        "region": "{!userDetails.userRegion}",
+                        "country": "{!userDetails.userCountry}",
+                        "companyName": "{!userDetails.userCompany}",
+                        "userMemberStatus": "{!userDetails.userMemberStatus}",
+                        "userGender": "{!userDetails.userGender}"
+                    },
+                    "page": {
+                        "requestURI": window.location.pathname + window.location.search,
+                        "device": getDevice(),
+                        "breadcrumb": "Home > {!$Label.PageTitleShippingPayment}", 
+                        "language": "{!language}"
+                    },
+                    "ecommerce": {!productWrapper}
+                });
+
+                function updatePaymentMethodPush(paymentMehod){
+                    dataLayer.push({
+                        "event": "checkoutOption",
+                        "ecommerce": {
+                            "checkout_option": {
+                                "actionField": {"step": 2, "option": paymentMehod}
+                            }
+                        }
+                    });
+                }
+
+                function generateAQuotePush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Checkout Page",
+                        "eventAction": "Generate quote",
+                        "eventLabel": {!cartProducts}
+                    });
+                }
+
+                function autoRenewalPush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Checkout Page",
+                        "eventAction": "Purchase as auto renewal",
+                        "eventLabel": {!cartProducts}
+                    });
+                }
+
+                function editOrderPush(){
+                    dataLayer.push({
+                        "event": "userAction",
+                        "eventCategory": "Checkout Page",
+                        "eventAction": "Edit order",
+                        "eventLabel": {!cartProducts}
+                    });
+                }
+
+            </script>
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
@@ -47,7 +129,10 @@
         </head>
 
         <body data-media-size="" class="page-checkout" id="page-top">
-
+            <!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
             <div id="js-breakpoint-finder">
                 <span class="device-xs screen-xsmall"/>
                 <span class="device-sm screen-small"/>
@@ -141,7 +226,7 @@
                                                 <!-- Start shipping address section -->
                                                 <section class="group-container shipping-address">
                                                     <h2 class="group-title">{!$Label.Shipping_address}</h2>
-						                        	
+                                                    
                                                     <div class="shipping-address-container">
                                                         <div class="field-group output inline">
                                                             <span class="input-label">{!$Label.Address_Line_1}</span>
@@ -475,8 +560,8 @@
                                                 <!-- Billing Address -->
                                                 <section class="group-container billing-address">
                                                     <h2 class="group-title">
-                                                    	Billing address
-                                                    	<p style="font-size: 11px; margin:0px;">&#8203;</p>
+                                                        Billing address
+                                                        <p style="font-size: 11px; margin:0px;">&#8203;</p>
                                                     </h2>
                                                     <div class="field-group output inline">
                                                         <span class="input-label">{!$Label.Address_Line_1}</span>
@@ -517,8 +602,8 @@
                                                 <!-- Shipping Address -->
                                                 <section class="group-container shipping-address">
                                                     <h2 class="group-title">
-                                                    	Delivery address
-                                                    	<p style="color: #C90435; font-size: 11px; margin: 0px;">{!$Label.IEC_PO_BOX_MSG}</p>	
+                                                        Delivery address
+                                                        <p style="color: #C90435; font-size: 11px; margin: 0px;">{!$Label.IEC_PO_BOX_MSG}</p>   
                                                     </h2>
                                                     
                                                     <div class="field-group radio inline">
@@ -559,7 +644,7 @@
                                                         
                                                         <apex:outputPanel id="shippingFormValidationError">
                                                             <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
-                                                            	<strong>{!$Label.ISSP_Error} </strong>
+                                                                <strong>{!$Label.ISSP_Error} </strong>
                                                                 <apex:pageMessages escape="false"/>
                                                                 <script type="text/javascript">
                                                                     if ({!showNewAddress} == true)
@@ -589,7 +674,7 @@
                                                             </div>
                                                             <apex:outputPanel id="postalCode">
                                                             <div class="field-group text inline">
-                                                            	<apex:outputText value="{!unlockZipCode}"/>
+                                                                <apex:outputText value="{!unlockZipCode}"/>
                                                                 <label>
                                                                     <span class="input-label">{!$Label.Postal_code} <span style="{!if(newShipToAddress.isPostalCodeRequired,'','display: none;')}" class="required">*</span></span>
                                                                     <apex:inputText styleClass="user-input text" id="shippingPostalCode" html-placeholder="{!IF(unlockZipCode, '', 'N/A')}" disabled="{!IF(unlockZipCode, 'false', 'true')}" value="{!newShipToAddress.postalCode}" />{!newShipToAddress.isPostalCodeRequired}
@@ -713,7 +798,7 @@
                                             <h2 class="group-title">Your order</h2>
                                             <apex:outputPanel styleClass="table-container" id="yourOrder" layout="block">
                                                 <div class="header text-right table-actions">
-                                                    <apex:outputLink value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink>
+                                                    <apex:outputLink onclick="editOrderPush();" value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink>
                                                     <!-- <a href="{!$Site.BaseUrl}/IEC_ShoppingCart">Edit Order</a> -->
                                                 </div>
 
@@ -743,7 +828,7 @@
                                                                             <!-- <input class="user-input checkbox auto-renewal-item" type="checkbox" id="auto-renewal-{!itemCount}" />
                                                                             <apex:inputHidden value="{!item.isAutoRenew}" /> -->
                                                                             
-                                                                            <apex:inputCheckbox value="{!item.isAutoRenew}" id="auto" styleClass="user-input checkbox auto-renewal-{!itemCount} auto-renewal-item" />
+                                                                            <apex:inputCheckbox onclick="autoRenewalPush();" value="{!item.isAutoRenew}" id="auto" styleClass="user-input checkbox auto-renewal-{!itemCount} auto-renewal-item" />
 
                                                                             <label class="custom-checkbox auto-renewal-{!itemCount}" for=""><i class="icon"></i></label>
                                                                         </div>
@@ -938,7 +1023,7 @@
                                                 </table>
 
                                                 <div class="footer text-right table-actions">
-                                                    <apex:outputLink value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink>
+                                                    <apex:outputLink onclick="editOrderPush();" value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink>
                                                     <!-- <a href="{!$Site.BaseUrl}/IEC_ShoppingCart">Edit Order</a> -->
                                                 </div>
                                             </apex:outputPanel>
@@ -958,7 +1043,7 @@
                                                         <apex:variable var="pmCount" value="{!pmCount+1}"/>
                                                         <div class="radio-box">
                                                             <div class="custom-user-input radio">
-                                                                <input class="user-input radio pm" type="radio" name="payment-method" id="payment-method-{!pmCount}" value="{!pm}" />
+                                                                <input class="user-input radio pm" type="radio" name="payment-method" id="payment-method-{!pmCount}" value="{!pm}" onclick="updatePaymentMethodPush('{!pm}');"/>
                                                                 <label class="custom-radio" for="payment-method-{!pmCount}"><i class="icon"></i></label>
                                                             </div>
                                                             <label class="input-label" for="payment-method-{!pmCount}">{!pm}</label>
@@ -1049,7 +1134,8 @@
                                     <div class="footer-actions text-right">
                                         <apex:outputPanel id="displayButton">
                                             
-                                            <apex:outputPanel rendered="{!!hasError && !taxFreightCalculateWithError && !stopProcess && !isShipToError}">
+                                            <!--<apex:outputPanel rendered="{!!hasError && !taxFreightCalculateWithError && !stopProcess && !isShipToError}">-->
+                                            <apex:outputPanel >
                                                 <ul class="list actions">
                                                     <!--INC331542
                                                      <apex:variable value="1" var="notQuote" rendered="{!vfOrder.orderPreviousType != 'Quote'}"> -->
@@ -1231,7 +1317,7 @@
                                 <ul class="list actions">
                                     <li><button class="text-link" onclick="closeModal('#quote-modal')">Cancel</button></li>
                                     <li>
-                                        <button class="button secondary" onclick="generateQuote()">
+                                        <button class="button secondary" onclick="generateAQuotePush();generateQuote()">
                                             {!$Label.Generate_Quote}
                                             <apex:actionStatus id="quoteStatus">
                                                 <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
@@ -1244,20 +1330,20 @@
                 </div>
             </div>
             <div class="formError" id="addressStreetMSG" style="width: 170px; opacity: 0.87; position: absolute; top: 0px; left: 443.4px; right: initial; margin-top: -47px; display: none;">
-				<div class="formErrorContent"></div>
-				<div class="formErrorArrow">
-					<div class="line10"><!-- --></div>
-					<div class="line9"><!-- --></div>
-					<div class="line8"><!-- --></div>
-					<div class="line7"><!-- --></div>
-					<div class="line6"><!-- --></div>
-					<div class="line5"><!-- --></div>
-					<div class="line4"><!-- --></div>
-					<div class="line3"><!-- --></div>
-					<div class="line2"><!-- --></div>
-					<div class="line1"><!-- --></div>
-				</div>
-			</div>
+                <div class="formErrorContent"></div>
+                <div class="formErrorArrow">
+                    <div class="line10"><!-- --></div>
+                    <div class="line9"><!-- --></div>
+                    <div class="line8"><!-- --></div>
+                    <div class="line7"><!-- --></div>
+                    <div class="line6"><!-- --></div>
+                    <div class="line5"><!-- --></div>
+                    <div class="line4"><!-- --></div>
+                    <div class="line3"><!-- --></div>
+                    <div class="line2"><!-- --></div>
+                    <div class="line1"><!-- --></div>
+                </div>
+            </div>
 
 
             <script src="{!URLFOR($Resource.EcommerceAssets, 'js/vendor.min.js')}"></script>
@@ -1283,7 +1369,7 @@
                 </script>
             </apex:outputPanel>
 
-            <script type="text/javascript">            	
+            <script type="text/javascript">             
                 var setLabelFor = function(){
                     var total_items = $("#total_items").val();
                     for(i=1; i<=total_items; i++){
@@ -1543,24 +1629,24 @@
                     
                     
                     var elem = $('#addressStreetMSG').detach();
-					elem.insertBefore($("input[id*='shippingAddress1']"));
-					$("input[id*='shippingAddress1']").keyup(function() {
-						var valueField = $("input[id*='shippingAddress1']").val();
-						var pattern = new RegExp('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\s*\\d*\\b');  
-						if(valueField.length >= 70) {
-							$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_LimitCharacters}');						
-							$('#addressStreetMSG').show();
-						} else if (valueField.match(pattern)) {
-							$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_PO_BOX_MSG}');						
-							$('#addressStreetMSG').show();
-						} else if($('#addressStreetMSG').css('display') != 'none') {
-							$('#addressStreetMSG').hide();
-						}
-						 
-					});
-					$("input[id*='shippingAddress1']").blur(function() {
-						$('#addressStreetMSG').hide();
-					});                    
+                    elem.insertBefore($("input[id*='shippingAddress1']"));
+                    $("input[id*='shippingAddress1']").keyup(function() {
+                        var valueField = $("input[id*='shippingAddress1']").val();
+                        var pattern = new RegExp('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\s*\\d*\\b');  
+                        if(valueField.length >= 70) {
+                            $('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_LimitCharacters}');                     
+                            $('#addressStreetMSG').show();
+                        } else if (valueField.match(pattern)) {
+                            $('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_PO_BOX_MSG}');                      
+                            $('#addressStreetMSG').show();
+                        } else if($('#addressStreetMSG').css('display') != 'none') {
+                            $('#addressStreetMSG').hide();
+                        }
+                         
+                    });
+                    $("input[id*='shippingAddress1']").blur(function() {
+                        $('#addressStreetMSG').hide();
+                    });                    
 
                 });
 

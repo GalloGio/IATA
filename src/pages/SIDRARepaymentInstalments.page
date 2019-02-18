@@ -1,0 +1,83 @@
+<apex:page standardcontroller="Case" extensions="SIDRARepaymentInstalmentsController">
+    <apex:pageMessages ></apex:pageMessages>
+    
+    <script>
+        function confirmDeleteInstalment() {
+            return confirm('Are you sure you want to delete this Repayment Instalment ?');
+        }
+        function redirect(url) {
+            window.top.location=url;
+        }
+    </script>
+    
+    <apex:form id="mainform">
+        <apex:pageBlock >
+        
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!Save}" rendered="{! isEditMode }" rerender="mainform"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}" rendered="{! isEditMode }" rerender="mainform" immediate="true"/>
+                <apex:commandButton value="Edit" action="{!Edit}" rendered="{! AND(NOT(isEditMode),isUpdateable,lstRepaymentInstalments.size>0) }" rerender="mainform"/>
+                <apex:commandButton value="{!strAddNewLabel}" action="{!AddNewPaymentInstalment}" rendered="{! AND(NOT(isEditMode),isCreateable) }" rerender="mainform"/>
+            </apex:pageBlockButtons>
+            
+            <apex:variable value="{!1}" var="index" />
+            
+            <apex:pageBlockTable value="{! lstRepaymentInstalments }" var="ri" >
+                <apex:column headerValue="">
+                    <apex:commandLink action="{!DeleteRpi}" onclick="return confirmDeleteInstalment();"  value="Del" rendered="{!AND(isEditMode,isDeletable)}">
+                        <apex:param name="rpiIndexToDelete" value="{!index-1}" assignTo="{!rpiIndexToDelete}"/>
+                    </apex:commandLink>
+                    <apex:outputLink onclick="redirect('/{!ri.Id}');" rendered="{! NOT(isEditMode) }" >View</apex:outputLink>
+                </apex:column>
+                
+                <apex:column headerValue="Instalment #" style="width:10%;">
+                    <apex:outputlabel value="{!index}" />
+                    
+                    <apex:variable value="{!index+1}" var="index" />
+                </apex:column>
+                
+                <apex:column headerValue="Currency">
+                    <apex:outputField value="{!ri.Currency__c}" />
+                </apex:column>
+                
+                <apex:column headerValue="Amount">
+                    <apex:inputField value="{!ri.Amount_Expected__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Amount_Expected__c}" rendered="{! NOT(isEditMode) }" />
+                </apex:column>
+                
+                <apex:column headerValue="Due Date">
+                    <apex:inputField value="{!ri.Due_Date__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Due_Date__c}" rendered="{! NOT(isEditMode) }" />
+                </apex:column>
+                
+                <apex:column headerValue="Status">
+                    <apex:inputField value="{!ri.Payment_Status__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Payment_Status__c}" rendered="{! NOT(isEditMode) }" />
+                </apex:column>
+                
+                <apex:column headerValue="Amount Received (R&S)">
+                    <apex:inputField value="{!ri.Amount_Received__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Amount_Received__c}" rendered="{! NOT(isEditMode) }" />
+                </apex:column>
+                
+                <apex:column headerValue="Reception Date">
+                    <apex:inputField value="{!ri.Date_received__c}" rendered="{! isEditMode }" />
+                    <apex:outputField value="{!ri.Date_received__c}" rendered="{! NOT(isEditMode) }" />
+                </apex:column>
+            </apex:pageBlockTable>
+            
+            <apex:outputPanel rendered="{! NOT(isEditMode) }">
+                <p style="font-weight: bold;">Total instalment amount:  {!cs.Currency__c} 
+                    <apex:outputText value="{0, number, #,##0.00}">
+                        <apex:param value="{!totalAmount}" />
+                    </apex:outputText></p>
+                    
+                <p style="font-weight: bold;">Net balance:  {!cs.Currency__c} 
+                    <apex:outputText value="{0, number, #,##0.00}">
+                        <apex:param value="{!netBalance}" />
+                    </apex:outputText></p>
+            </apex:outputPanel>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

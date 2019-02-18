@@ -57,6 +57,17 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>CNS_Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Product_Account_View__r.CNS_Agency__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Shows if related GDP Account is CNS</inlineHelpText>
+        <label>CNS_Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Change_Code__c</fullName>
         <description>A=Added, C=Changed or D=Deleted</description>
         <externalId>false</externalId>
@@ -150,8 +161,8 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
         <columns>GDP_File_Description__c</columns>
         <columns>DeltaLastModifiedDate__c</columns>
         <columns>Change_Code__c</columns>
-        <columns>CREATEDBY_USER</columns>
         <columns>LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>DeltaLastModifiedDate__c</field>

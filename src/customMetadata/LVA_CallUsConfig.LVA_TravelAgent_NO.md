@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>AvailableHours__c</field>
-        <value xsi:type="xsd:string">9.00 - 14.00 from Monday to Friday</value>
+        <value xsi:type="xsd:string">09.00 - 17.00 From Monday to Friday</value>
     </values>
     <values>
         <field>Business_Hours_Name__c</field>
@@ -21,5 +21,9 @@
     <values>
         <field>Sector__c</field>
         <value xsi:type="xsd:string">Travel Agent</value>
+    </values>
+    <values>
+        <field>Topic__c</field>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

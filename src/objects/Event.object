@@ -53,6 +53,9 @@
         <fullName>ActivityDateTime</fullName>
     </fields>
     <fields>
+        <fullName>Attendees</fullName>
+    </fields>
+    <fields>
         <fullName>Description</fullName>
     </fields>
     <fields>
@@ -72,6 +75,9 @@
     </fields>
     <fields>
         <fullName>IsPrivate</fullName>
+    </fields>
+    <fields>
+        <fullName>IsRecurrence2</fullName>
     </fields>
     <fields>
         <fullName>IsReminderSet</fullName>

@@ -190,7 +190,7 @@ private class ANG_RiskEventMigrationHelperTest {
         		Status = 'Open', 
         		Assessment_Performed_Date__c= system.today(),
         		Financial_Review_Result__c='Satisfactory - New Financial Security',
-                RecordTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Review'),
+                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'IATA_Financial_Review'),
                 IFAP_Area__c='asda44'
                  );
         insert cFS;
@@ -199,7 +199,7 @@ private class ANG_RiskEventMigrationHelperTest {
 		Case caseSIdra = new Case(
 							BSP_CASS__c = 'BSP',
 							parentId=cFS.id,
-							RecordTypeid=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite'),
+							RecordTypeid=RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'SIDRA_Lite'),
 							Status = 'Open',
 							Origin = 'IATA Internal User',
 							Subject = 'subject');
@@ -279,11 +279,29 @@ private class ANG_RiskEventMigrationHelperTest {
 		insert a;
 		setAccs.add(a);
 
+		// criar Sidra Lite case com reason Late para adicionar ao Change code
+		Id SIDRALiteRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
+
+		Map<String,Object> fieldsOfObject = new Map<String,Object>();
+        fieldsOfObject.clear();
+		fieldsOfObject.put('RecordTypeid',SIDRALiteRecordTypeId);
+		fieldsOfObject.put('BSP_CASS__c','BSP');
+		fieldsOfObject.put('Status','Open');
+		fieldsOfObject.put('Origin','IATA Internal User');
+		fieldsOfObject.put('Subject','subject');
+		fieldsOfObject.put('IATAcode__c','webiata code');
+		fieldsOfObject.put('SIDRA_Lite_Reason__c','Late/Absence of notification of change');
+		fieldsOfObject.put('AccountId',a.Id);
+
+		Case caseSidraLite = ANG_EntityCreator.createCase(SIDRALiteRecordTypeId,a.Id,fieldsOfObject);
+		insert caseSidraLite;
+		
 		Agency_Applied_Change_code__c cc 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
 												Reason_Code__c = '60',
-												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCAC
+												Reason_Description__c = ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCAC,
+												SIDRA_Case__c = caseSidraLite.Id
 												);
 		insert cc;
 		
@@ -299,13 +317,14 @@ private class ANG_RiskEventMigrationHelperTest {
 		Agency_Applied_Change_code__c ccntw
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NTW,
-												PreviousReason__c = '60'
+												PreviousReason__c = '60',
+												SIDRA_Case__c = caseSidraLite.Id
 												);
 		insert ccntw;
 
 		helper = new ANG_RiskEventMigrationHelper(setAccs);
 		listRisks = helper.convertChangeCodesToRiskEvents();
-
+		
 		system.assertEquals(listRisks.size() , 1);
 		system.assertEquals(reMap.get(listRisks.get(0).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_UNREPORTED_CHANGE);
 		system.assertEquals(ANG_Risk_Helper.STATUS_WITHDRAWN,listRisks.get(0).ANG_Event_Status__c);
@@ -587,10 +606,6 @@ private class ANG_RiskEventMigrationHelperTest {
 		system.assertEquals(reMap.get(listRisks.get(1).ANG_Risk_Type__c).name, ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION);
 		system.assertEquals(listRisks.get(1).ANG_Event_Status__c, ANG_Risk_Helper.STATUS_WITHDRAWN);
 
-
-
-
-
 	}
 
 	@isTest
@@ -719,7 +734,8 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	}
 
-	static testMethod void testForecast() {
+	@isTest
+	static void testForecast() {
 		Account a = createAccount(true);
 		a.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
 		a.Status__c = AMS_Utils.ACC_S9_APPROVED;
@@ -741,7 +757,8 @@ private class ANG_RiskEventMigrationHelperTest {
 															CurrencyIsoCode = 'EUR', 
 															ISO_Code_Numeric__c = 620, 
 															ISO_Code__c = 'PT',
-															AIMS_Area_ID__c='1');
+															AIMS_Area_ID__c='1',
+															ANG_Enable_NewGen__c = true);
 		insert isoTest;
 		
 		Account c = new Account(
@@ -762,13 +779,14 @@ private class ANG_RiskEventMigrationHelperTest {
             
 
 	public static Case createCase(){
-		Id SIDRARecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+		Id SIDRARecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 		
 		Case c = new Case(RecordTypeid = SIDRARecordTypeId,
 							BSP_CASS__c = 'BSP',
 							Status = 'Open',
 							Origin = 'IATA Internal User',
 							Subject = 'subject',
+							Late_Payment_Date__c = Date.today(),
 							IATAcode__c	 = 'webiata code');
 
  		return c;

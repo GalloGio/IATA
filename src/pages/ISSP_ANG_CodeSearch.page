@@ -208,7 +208,7 @@
                         </td>
                       </tr>
 
-                      <tr style="display:{!IF(AND(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, isTravel),'','none')}">
+                      <tr style="display:{!IF(AND(agency.ANG_IsNewGenAgency__c, isTravel),'','none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
                         </td>
@@ -217,7 +217,7 @@
                         </td>
                       </tr>
 
-                      <tr style="display:{!IF(AND(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, isTravel),'','none')}">
+                      <tr style="display:{!IF(AND(agency.ANG_IsNewGenAgency__c, isTravel),'','none')}">
                         <td>
                           <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RISK_STATUS}"/>
                         </td>
@@ -245,13 +245,13 @@
                         </td>
                       </tr>
 
-                      <tr style="display: {!IF(AND(isTravel, agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, rhcAgencyInfo != null), '', 'none')};">
+                      <tr style="display: {!IF(AND(isTravel, agency.ANG_IsNewGenAgency__c, rhcAgencyInfo != null), '', 'none')};">
                         <td style="width: 20%;">
                           <apex:outputLabel value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_RHC}"/>
                         </td>
                         <td style="vertical-align: top !important;">
-                          <i style="display:{!IF(rhcAgencyInfo.ANG_CashCondition__c,'','none')}; margin-left: 15px; color: green;" class="glyphicon glyphicon-ok"></i>
-                          <i style="display:{!IF(NOT(rhcAgencyInfo.ANG_CashCondition__c),'','none')}; margin-left: 15px; color: red;" class="glyphicon glyphicon-remove"></i>
+                          <apex:outputText style="display:{!IF(rhcAgencyInfo.ANG_CashCondition__c,'','none')}; margin-left: 15px;" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC}"/>
+                          <apex:outputText style="display:{!IF(NOT(rhcAgencyInfo.ANG_CashCondition__c),'','none')}; margin-left: 15px;" value="{!$Label.ISSP_ANG_IATA_CODE_SEARCH_FORMULA}"/>
                         </td>
                       </tr>
 
@@ -260,12 +260,12 @@
                     <br/>
 
                   <!--<div name="right-side" class="col-md-4 col-sm-12">-->
-                    <div style="min-height: 225px; display:{!IF(AND(isTravel, afpWrapper != null, agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c),'','none')};">
+                    <div style="min-height: 225px; display:{!IF(AND(isTravel, afpWrapper != null, agency.ANG_IsNewGenAgency__c),'','none')};">
                       <c:AFP_Component wrapperClass="{!afpWrapper}"/>
                     </div>
                   <!--</div>-->
 
-                    <apex:outputPanel rendered="{!AND(agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c, isTravel)}">
+                    <apex:outputPanel rendered="{!AND(agency.ANG_IsNewGenAgency__c, isTravel)}">
 
                       <br></br>
 

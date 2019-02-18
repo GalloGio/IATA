@@ -7,6 +7,8 @@ public  class ISSP_IFAPCases {
     public list<String> successMessage {get; set;}
     public list<WrapperCase> setCon {get;set;}
     public List<CaseComment> List_CaseComment {get; set;}
+    //CNS
+    public String communityName {get;set;}
 
     public  ISSP_IFAPCases(){
       
@@ -40,6 +42,10 @@ public  class ISSP_IFAPCases {
                         FROM Case WHERE RecordType.Name IN ('IATA Financial Review')
                         AND toLabel(Status) NOT IN (:System.Label.ISSP_ClosedIFAPCasesStatus) and contactid =: conI ]);
                 }
+            }
+
+            if(ISSP_Utilities.isCNS()==true){
+                communityName = 'CNS';
             }
         
     }

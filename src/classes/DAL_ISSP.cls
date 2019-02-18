@@ -3,7 +3,7 @@ public with sharing class DAL_ISSP {
     public static User getUser(Id userId) {
         if (userId == null)
             return null;
-        List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,
+        List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,Contact.AccountId,
 		contact.IFG_Production__c, contact.IFG_PreProduction__c
         from User where Id =:userId];
         if (users.size() > 0)
@@ -48,7 +48,7 @@ public with sharing class DAL_ISSP {
 					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c,
 					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c,
                     Account.Location_Class__c, Account.CNS_Account__c,Account.IATA_ISO_Country__r.ANG_Portal_Service__c, Account.ANG_IEP_Status_FF__c, Account.Quality__c,Account.ANG_Accreditation_Model__c,Account.Legal_name__c,
-		            Authorized_Signatory__c, Account.ANG_FA_Opt_out__c, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c
+		            Authorized_Signatory__c, Account.ANG_FA_Opt_out__c, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account.Top_Parent__r.Legal_name__c, Account.Top_Parent__r.Name_on_AOC__c
                     from Contact where Id=:contactId];
         if (contacts.size() > 0)
             return contacts[0];
@@ -68,19 +68,11 @@ public with sharing class DAL_ISSP {
         
     }
     
-    
-    public static Id getRecordTypeId (String name) {
-        List<RecordType> recordTypes = [select id from RecordType where DeveloperName=:name];
-        if (recordTypes.size() > 0)
-            return recordTypes[0].Id;
-        return null;
-    }
-    
     public static Case getCase(String caseId) {
         List<Case> cases = [select  
                 (Select Id, IsPublished, CreatedDate From CaseComments),Product_Manager_ACR__c,ArchivedDate__c,Account.Type,Account.IATA_ISO_Country__c,account.IATA_ISO_Country__r.iso_code__c,
                 Id,Subject,Description,CaseArea__c, Country_concerned_by_the_query__c,CaseNumber,Portal_Case_Status__c,
-                ContactId, RecordType.Name, Type, Priority, Classification_SIS__c, Defect_Issue__c, Airline_Designator__c,
+                ContactId, RecordType.Name, RecordType.DeveloperName, Type, Priority, Classification_SIS__c, Defect_Issue__c, Airline_Designator__c,
                 Member_Code_Numeric__c, Contact.Name, Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Fax, Contact.FirstName, Contact.LastName ,
                 CreatedDate, ClosedDate, Region__c, IATA_Code__c, BSPCountry__c, Account.Name, Account.Status__c, SAAM_Deadline_Date__c,
                 Process_Approved__c, Process_Start_Date__c, Missing_Documents_A_B_received__c,Financial_Review_Type__c,Deadline_Date__c,FA_Second_Deadline_Date__c,
@@ -101,7 +93,7 @@ public with sharing class DAL_ISSP {
                 Outstanding_Amount__c,End_of_Grace_Period_Date__c,Total_Irregularities__c,Update_AIMS_IRR__c,Update_AIMS_IRRWITH__c,Update_AIMS_DEF__c,Reason_for_Default__c,
              	DEF_Withdrawal_Approval_Rejection__c,DEF_Withdrawal_Approval_Rejection_Date__c,Update_AIMS_REI_DEFWITH__c,Remittance_Date__c,Short_Payment_Amount__c,Billing_Amount__c,
                 Collected_amount__c, E2CP__AdditionalCC__c, Has_the_agent_paid_invoice__c, Account.Location_Type__c, Reason_for_Deadline__c, Cost_Centre__c, Action__c, Due_Date__c, 
-                Action_Person__c, Detailed_Description__c, Source_of_Case__c,
+                Action_Person__c, Detailed_Description__c, Source_of_Case__c, IsClosed,
                 OSCAR__c, Oscar__r.Process__c
                 FROM Case where Id=:caseId];
         if (cases.size() > 0)

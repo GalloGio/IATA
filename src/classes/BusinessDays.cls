@@ -112,10 +112,32 @@ public class BusinessDays {
             Case oldCase = TriggerOldMap.get(caseID);
 
             //if(updatedCase.BusinessHoursId <> oldCase.BusinessHoursId){
-            dateTime originalCreated = updatedCase.CreatedDate;
+            
+            
+            /*dateTime originalCreated = updatedCase.CreatedDate;
             dateTime createDatePlusOne = updatedCase.CreatedDate.addHours(1);
             dateTime result  =   businessHours.nextStartDate( updatedCase.businessHoursId, createDatePlusOne);
-            updatedCase.First_Business_Day__c   = createDatePlusOne.day() == result.day() ?  originalCreated : result;
+            updatedCase.First_Business_Day__c   = createDatePlusOne.day() == result.day() ?  originalCreated : result;*/
+
+            dateTime originalCreated = updatedCase.CreatedDate;
+            dateTime createdDatePlusOne = updatedCase.CreatedDate.addHours(1);
+
+            boolean isCreatedDateWithinBH = businessHours.isWithin(updatedCase.businessHoursId, originalCreated);
+            boolean isCreatedDatePlusOneWithinBH = businessHours.isWithin(updatedCase.businessHoursId, createdDatePlusOne);
+
+            //------- Covers the 4 scenarios: --------- 
+            //CD - True  && CD+1 - True  - Created date time
+            //CD - False && CD+1 - False - Next start date time
+            //CD - True  && CD+1 - False - Next start date time
+            //CD - False && CD+1 - True  - Next start date time 
+            if(isCreatedDateWithinBH && isCreatedDatePlusOneWithinBH){
+                updatedCase.First_Business_Day__c = originalCreated;
+            }
+            else {
+                updatedCase.First_Business_Day__c =  businessHours.nextStartDate( updatedCase.businessHoursId, createdDatePlusOne);
+            }
+
+
             //}
             /*    if(updatedCase.First_Business_Day__c.hour() == updatedCase.createdDate.addHours(1).hour())
                 throw new transformationException('updatedCase.First_Business_Day__c' +  updatedCase.First_Business_Day__c

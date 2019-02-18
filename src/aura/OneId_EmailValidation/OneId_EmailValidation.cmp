@@ -1,20 +1,17 @@
 <aura:component controller="OneId_RegistrationProcessController">
 
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:registerEvent name="StepCompletionNotification" type="c:OneId_StepCompletion_EVT"/>
-    
-    <aura:attribute name="showCaptcha" type="Boolean" default="true" />
-    <aura:attribute name="captchaOK" type="Boolean" default="false"/>
-    <aura:attribute name="vfHost" type="String" default=""/>
-    <aura:attribute name="commName" type="String" default=""/>
-    <aura:attribute name="language" type="string" default=""/>
-    <aura:attribute name="captchaIframeHeight" type="String" default="height: 512px;"/>
-    <aura:attribute name="userCountry" type="String"/>
-    <aura:attribute name="Terms" type="Boolean" />
-    <!-- <aura:attribute name="isUserCanBeCreated" type="Boolean" default="false"/> -->
+    <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
     
     <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
-    
+    <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
+    <aura:attribute name="Terms" type="Boolean" />
+    <aura:attribute name="serviceName" type="String" />
+   
+	<aura:attribute name="isEmailAddressAvailable" type="Boolean" default="true"/>
+	<aura:attribute name="isServiceUser" type="Boolean" />
+	<aura:attribute name="isServiceEligible" type="Boolean" />
+
     <div class="slds-grid slds-gutters slds-wrap ">
         <div class="slds-col slds-col--padded">
             <div class="slds-size--1-of-1 slds-m-bottom_large ">
@@ -22,14 +19,32 @@
                 <ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.contact.Email}" class="slds-input" required="true" />
             </div>
             
-            <div class="{!'slds-size--1-of-1 slds-m-bottom_medium '+(v.showCaptcha &amp;&amp; v.userCountry != 'CN'  ? '' : 'slds-hide')}">
-                <div class="form-group">
-                    <div class="captcha item" >
-                        <iframe aura:id="vfFrame" src="{!v.vfHost + '/'+v.commName+'/OneIdVfCAPTCHA?language=' + v.language}" class="iframe captchaIframe" height="60" style="{!v.captchaIframeHeight}" scrolling="no" frameborder="0" width="100%" allowtransparency="true" />
-                        <div aura:id="captchaError" class="captchaError hide">{!$Label.c.OneId_Please_check_reCaptcha}</div>
-                    </div>
-                </div>
-            </div>
+            <aura:if isTrue="{! and(v.serviceName=='FRED',v.isEmailAddressAvailable == false)}">
+                <ul class="has-error uiInputDefaultError uiInput uiInputEmail uiInput--default uiInput--input">
+                    <li class="form-element__help">
+                        <aura:if isTrue="{! v.isServiceUser}">
+                            <aura:unescapedHTML value="{! $Label.c.OneId_ExistingUserWithFredAccessError}"/>
+                            <br/>
+                            <a href="{!'/' + $Label.c.OneId_Community_Name + '/login'}">Login</a>
+                                                                
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{! v.isServiceEligible}">
+                                    <aura:unescapedHTML value="{! $Label.c.OneId_EligibleExistingUserError}"/>
+                                    <br/>
+                                    <a href="{!'/' + $Label.c.OneId_Community_Name + '/login'}">Login</a>
+                                    <aura:set attribute="else">
+                                        <aura:unescapedHTML value="{! $Label.c.OneId_UneligibleExistingUserError}"/>
+	                                    <br/>
+	                                    <a href="{! $Label.c.OneId_FRED_Troubleshooting_Link}" target="_blank">{! $Label.c.OneId_FRED_Troubleshooting_Link}</a>
+                                    </aura:set>
+                                </aura:if>                                
+                            </aura:set>
+                        </aura:if>
+                    </li>
+                </ul>
+                <br/>
+                &nbsp;
+            </aura:if>
             
             <div class="slds-size--1-of-1">
                 <ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" />

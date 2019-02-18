@@ -17,7 +17,7 @@ private class RCRMContractRevenueStreamControllerTest {
                 pm.LastName = 'Manager';
                 pm.Alias = 'pman';
                 pm.Email = 'pmanager@test.com';
-                pm.Username = 'pmanager@test.com';
+                pm.Username = DateTime.now().getTime() +'pmanager@test.com';
                 pm.CommunityNickname = 'pman';
                 pm.ProfileId = PMProfile.Id;
                 pm.TimeZoneSidKey = 'America/Mexico_City';
@@ -70,13 +70,13 @@ private class RCRMContractRevenueStreamControllerTest {
             insert standardPrice1;
             
             // Create an Airline HQ account
-            Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline');
+            Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
             Account a = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', RecordTypeId = AirlineHQ_RT_Id);
             insert a;
             
             
             // create a RCRM opportunity
-            Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Opportunity').get('RCRM_Opportunity');
+            Id RT_RCRM_Opportunity_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'RCRM_Opportunity');
             
             Opportunity oppRCRM_1;
             

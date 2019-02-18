@@ -66,7 +66,15 @@
     <apex:form >
         <apex:pageBlock >
         <apex:pageBlockSection columns="1" title="{!IF(newlabels,$Label.ISSP_AMS_NoC_Change_Type_and_Location_New,$Label.ISSP_AMS_NoC_Change_Type_and_Location)}" collapsible="false">
-                    <apex:panelGrid columns="2" columnClasses="colPanel1, colPanel2" width="100%">
+                    <apex:panelGrid columns="2" columnClasses="colPanel1, colPanel2" width="100%" rendered="{!OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy')}">
+                            <apex:outputText value="{!$Label.ISSP_AMS_NoC_Change_submitted_for}" />
+                            <apex:outputText value="{!CASE(newForm.Scope_of_Change__c, 'HO Only', $Label.ISSP_AMS_NoC_Head_Office + ' (' + hqAccount.IATACode__c + ')', 'HO - All Branches', $Label.ISSP_AMS_NoC_HO_All_Branches,'')}"/>
+                            <apex:outputtext rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATACode__c.Label}</apex:outputtext>
+                            <apex:outputText rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}" value="{!IF(newForm.Scope_of_Change__c=='HO - Selected Branches', accountConcerned.IATACode__c + ', ' + agencyCodesConcernedForPDF, agencyCodesConcernedForPDF)}"/>         
+                            <apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
+                            <apex:outputText value="{!amsAllLangCountryLabel}"/> 
+                    </apex:panelGrid>
+                    <apex:panelGrid columns="2" columnClasses="colPanel1, colPanel2" width="100%" rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}">
                             <apex:outputText value="{!$Label.ISSP_AMS_NoC_Change_submitted_for}" />
                             <apex:outputText value="{!CASE(newForm.Scope_of_Change__c, 'HO Only', $Label.ISSP_AMS_NoC_Head_Entity + ' (' + hqAccount.IATACode__c + ')', 'HO - All Branches', $Label.ISSP_AMS_NoC_HE_All_Branches,'')}"/>
                             <apex:outputtext rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATACode__c.Label}</apex:outputtext>

@@ -2,7 +2,7 @@
 private class ISSP_WS_DisableUserTest {
 
     private static final Profile AIRLINE_PORTAL_PROFILE = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'];
-    private static final RecordType IATA_AIRLINE_RT = [SELECT Id, DeveloperName FROM RecordType WHERE DeveloperName = 'IATA_Airline'];
+    private static final RecordType IATA_AIRLINE_RT = RecordTypeSingleton.getInstance().getRecordType('Account', 'IATA_Airline');
     private static ISSP_Portal_Service_Ids__c APP_IDS;
     private static list<String> LIST_APP_NAMES = new list<String>{'CASS01', 'CASS02', 'CASS03', 'CASS04', 'SIS', 'ASD', 'BSPLINK'};
 
@@ -166,7 +166,7 @@ private class ISSP_WS_DisableUserTest {
         checkLogs(true,'reactivateUser');
     }
     
-    static testMethod void reactivateUser_OK_AllApps() {
+    static testMethod void reactivateUser_OK_CASS01() {
         ISSP_WS_DisableUser.UserInputData inputData = createInputData();
         
         Account account = ISSP_ObjectFactory.createNewAccount();
@@ -185,37 +185,12 @@ private class ISSP_WS_DisableUserTest {
         System.assert(APP_IDS!=null);
         System.assert(APP_IDS.CASSLinkExport__c!=null);
         
-        list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>{
+        Portal_Application_Right__c appRight =
             new Portal_Application_Right__c(
                 Portal_Application__c = APP_IDS.CASSLinkExport__c,
                 Contact__c = contact.Id,
-                Right__c = 'Access Denied'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.CASSLinkImport__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Denied'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.CASSLinkRouteAnalyzer__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Denied'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.CNS_CassLink__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Denied'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.SIS__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Denied'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.ASD__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Denied'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.BSPLink__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Denied')
-        };
-        insert listAppRights;
+                Right__c = 'Access Denied');
+        insert appRight;
         
         User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
@@ -225,11 +200,243 @@ private class ISSP_WS_DisableUserTest {
         
         Test.startTest();
         inputData.fedId = user.FederationIdentifier;
-        for (String appname: LIST_APP_NAMES) {
-            inputData.services = appname;
-            ISSP_WS_DisableUser.ResponseOne response1 = ISSP_WS_DisableUser.reactivateUser(inputData);
-            System.assertEquals(true, response1.IsSuccess);
-        } 
+        inputData.services = 'CASS01';
+        ISSP_WS_DisableUser.ResponseOne response1 = ISSP_WS_DisableUser.reactivateUser(inputData);
+        System.assertEquals(true, response1.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void reactivateUser_OK_CASS02() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight =
+            new Portal_Application_Right__c(
+                Portal_Application__c = APP_IDS.CASSLinkImport__c,
+                Contact__c = contact.Id,
+                Right__c = 'Access Denied');
+        insert appRight;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'CASS02';
+        ISSP_WS_DisableUser.ResponseOne response1 = ISSP_WS_DisableUser.reactivateUser(inputData);
+        System.assertEquals(true, response1.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void reactivateUser_OK_CASS03() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight =
+            new Portal_Application_Right__c(
+                Portal_Application__c = APP_IDS.CASSLinkRouteAnalyzer__c,
+                Contact__c = contact.Id,
+                Right__c = 'Access Denied');
+        insert appRight;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'CASS03';
+        ISSP_WS_DisableUser.ResponseOne response1 = ISSP_WS_DisableUser.reactivateUser(inputData);
+        System.assertEquals(true, response1.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void reactivateUser_OK_CASS04() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight =
+            new Portal_Application_Right__c(
+                Portal_Application__c = APP_IDS.CNS_CassLink__c,
+                Contact__c = contact.Id,
+                Right__c = 'Access Denied');
+        insert appRight;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'CASS04';
+        ISSP_WS_DisableUser.ResponseOne response1 = ISSP_WS_DisableUser.reactivateUser(inputData);
+        System.assertEquals(true, response1.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void reactivateUser_OK_SIS() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight =
+            new Portal_Application_Right__c(
+                Portal_Application__c = APP_IDS.SIS__c,
+                Contact__c = contact.Id,
+                Right__c = 'Access Denied');
+        insert appRight;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'SIS';
+        ISSP_WS_DisableUser.ResponseOne response1 = ISSP_WS_DisableUser.reactivateUser(inputData);
+        System.assertEquals(true, response1.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void reactivateUser_OK_ASD() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight =
+            new Portal_Application_Right__c(
+                Portal_Application__c = APP_IDS.ASD__c,
+                Contact__c = contact.Id,
+                Right__c = 'Access Denied');
+        insert appRight;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'ASD';
+        ISSP_WS_DisableUser.ResponseOne response1 = ISSP_WS_DisableUser.reactivateUser(inputData);
+        System.assertEquals(true, response1.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void reactivateUser_OK_BSPLINK() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight =
+            new Portal_Application_Right__c(
+                Portal_Application__c = APP_IDS.BSPLink__c,
+                Contact__c = contact.Id,
+                Right__c = 'Access Denied');
+        insert appRight;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'BSPLINK';
+        ISSP_WS_DisableUser.ResponseOne response1 = ISSP_WS_DisableUser.reactivateUser(inputData);
+        System.assertEquals(true, response1.IsSuccess);
         Test.stopTest();
     }
     
@@ -446,7 +653,7 @@ private class ISSP_WS_DisableUserTest {
     }
 	*/
     
-    static testMethod void disableUser_OK_AllApps() {
+    static testMethod void disableUser_OK_CASS01() {
         ISSP_WS_DisableUser.UserInputData inputData = createInputData();
         
         Account account = ISSP_ObjectFactory.createNewAccount();
@@ -469,49 +676,261 @@ private class ISSP_WS_DisableUserTest {
         System.assert(APP_IDS!=null);
         System.assert(APP_IDS.CASSLinkExport__c!=null);
         
-        list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>{
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.CASSLinkExport__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Granted'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.CASSLinkImport__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Granted'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.CASSLinkRouteAnalyzer__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Granted'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.CNS_CassLink__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Granted'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.SIS__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Granted'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.ASD__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Granted'),
-            new Portal_Application_Right__c(
-                Portal_Application__c = APP_IDS.BSPLink__c,
-                Contact__c = contact.Id,
-                Right__c = 'Access Granted')
-        };
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            Portal_Application__c = APP_IDS.CASSLinkExport__c,
+            Contact__c = contact.Id,
+            Right__c = 'Access Granted');
         ISSP_UserTriggerHandler.preventTrigger = true;
         ISSP_UserTriggerHandler.preventSISIntegration = true;
-        insert listAppRights;
+        insert appRight;
         
         delete [SELECT Id FROM ISSP_Web_Service_Log__c];
         
         Test.startTest();
         inputData.fedId = user.FederationIdentifier;
-        for (String appname: LIST_APP_NAMES) {
-            inputData.services = appname;
-            ISSP_WS_DisableUser.ResponseOne response2 = ISSP_WS_DisableUser.disableUser(inputData);
-            System.assertEquals(true, response2.IsSuccess);
-        } 
+        inputData.services = 'CASS01';
+        ISSP_WS_DisableUser.ResponseOne response2 = ISSP_WS_DisableUser.disableUser(inputData);
+        System.assertEquals(true, response2.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void disableUser_OK_CASS02() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            Portal_Application__c = APP_IDS.CASSLinkImport__c,
+            Contact__c = contact.Id,
+            Right__c = 'Access Granted');
+        ISSP_UserTriggerHandler.preventTrigger = true;
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        insert appRight;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'CASS02';
+        ISSP_WS_DisableUser.ResponseOne response2 = ISSP_WS_DisableUser.disableUser(inputData);
+        System.assertEquals(true, response2.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void disableUser_OK_CASS03() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            Portal_Application__c = APP_IDS.CASSLinkRouteAnalyzer__c,
+            Contact__c = contact.Id,
+            Right__c = 'Access Granted');
+        ISSP_UserTriggerHandler.preventTrigger = true;
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        insert appRight;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'CASS03';
+        ISSP_WS_DisableUser.ResponseOne response2 = ISSP_WS_DisableUser.disableUser(inputData);
+        System.assertEquals(true, response2.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void disableUser_OK_CASS04() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            Portal_Application__c = APP_IDS.CNS_CassLink__c,
+            Contact__c = contact.Id,
+            Right__c = 'Access Granted');
+        ISSP_UserTriggerHandler.preventTrigger = true;
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        insert appRight;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'CASS04';
+        ISSP_WS_DisableUser.ResponseOne response2 = ISSP_WS_DisableUser.disableUser(inputData);
+        System.assertEquals(true, response2.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void disableUser_OK_SIS() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            Portal_Application__c = APP_IDS.SIS__c,
+            Contact__c = contact.Id,
+            Right__c = 'Access Granted');
+        ISSP_UserTriggerHandler.preventTrigger = true;
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        insert appRight;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'SIS';
+        ISSP_WS_DisableUser.ResponseOne response2 = ISSP_WS_DisableUser.disableUser(inputData);
+        System.assertEquals(true, response2.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void disableUser_OK_ASD() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            Portal_Application__c = APP_IDS.ASD__c,
+            Contact__c = contact.Id,
+            Right__c = 'Access Granted');
+        ISSP_UserTriggerHandler.preventTrigger = true;
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        insert appRight;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'ASD';
+        ISSP_WS_DisableUser.ResponseOne response2 = ISSP_WS_DisableUser.disableUser(inputData);
+        System.assertEquals(true, response2.IsSuccess);
+        Test.stopTest();
+    }
+    static testMethod void disableUser_OK_BSPLINK() {
+        ISSP_WS_DisableUser.UserInputData inputData = createInputData();
+        
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.RecordTypeId = IATA_AIRLINE_RT.Id;
+        insert account;
+        
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        contact.FirstName = 'firstname';
+        contact.LastName = 'lastname';
+        contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
+        contact.Email = 'test@email.com';
+        insert contact;
+        
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        insert user;
+
+        APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
+        System.assert(APP_IDS!=null);
+        System.assert(APP_IDS.CASSLinkExport__c!=null);
+        
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            Portal_Application__c = APP_IDS.BSPLINK__c,
+            Contact__c = contact.Id,
+            Right__c = 'Access Granted');
+        ISSP_UserTriggerHandler.preventTrigger = true;
+        ISSP_UserTriggerHandler.preventSISIntegration = true;
+        insert appRight;
+        
+        delete [SELECT Id FROM ISSP_Web_Service_Log__c];
+        
+        Test.startTest();
+        inputData.fedId = user.FederationIdentifier;
+        inputData.services = 'BSPLINK';
+        ISSP_WS_DisableUser.ResponseOne response2 = ISSP_WS_DisableUser.disableUser(inputData);
+        System.assertEquals(true, response2.IsSuccess);
         Test.stopTest();
     }
 

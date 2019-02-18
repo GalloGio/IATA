@@ -1,7 +1,7 @@
 @isTest
 public class AMS_OSCAR_SA_AgencyChangesTest {
 
-	private static id rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+	private static id rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
     private static String SECTORPAX = 'Travel Agent';
     private static String CATEGORYPAX = 'IATA Passenger Sales Agent';
     private static String LOCCLASSPAX = 'P';
@@ -67,7 +67,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
     private static AMS_OSCAR__C createOSCAR(Account oscarAccount, String typeOfChange, String changeLocTypeBehavior, Account targetAgency){
 
-        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+        ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         C1 = [SELECT Id FROM Contact WHERE Email = 'thecontact1@gmail.com'];
 
@@ -82,7 +82,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                                                Change_effective_as_of__c = date.today());
         insert oscar;
 
-        ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+        ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         Case theCommunicationCase = new Case(RecordTypeId = rtCommCase, Subject = '' + oscarAccount.Name, OSCAR__c = oscar.Id,
                                              AccountId = (oscarAccount.ParentId == null ? oscarAccount.Id : oscarAccount.ParentId), ContactId = C1.Id);
         insert theCommunicationCase;
@@ -111,13 +111,26 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.AMS_Target_Agency__c = targetAgencyId;
         update oscar;
 
+        /*** AMSU-180 ***/
+        AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
+            Name= 'test owner',
+            First_name__c= 'test',
+            Last_name__c = 'owner',
+            Email__c= 'owner.test@test.com',
+            Phone__c= '123456789',
+            Financial_interest__c= 100,
+            AMS_Pax_Accreditation_Form__c= stagingArea.Id,
+            RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner')
+        );
+        insert owner;
+
         return [SELECT Id, Account__c, Type_of_change__c,Change_effective_as_of__c FROM AMS_OSCAR__c LIMIT 1];
 
     }
 
     @testSetup static void setup() {
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name = 'Portugal', ISO_Code__c = 'PT', Region__c = 'Europe', ISS_Office_Location__c = 'Portugal');
         insert portugal;
@@ -195,53 +208,53 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Agency changes configuration settings
         List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeName', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeName', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = true, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeLocationType', TC_Location_type__c = true,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeLocation', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeLocation', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD'));
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeLocationInspection', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeLocationInspection', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = true,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CLI', TCA_Application_withdrawal__c = 'CWD'));
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeLocationInspectionAndOwnership', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeLocationInspectionAndOwnership', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = true,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = true,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CLI', TCA_Application_withdrawal__c = 'CWD'));
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeOwnershipIATA', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeOwnershipIATA', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = true,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD'));
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeLegal', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeLegal', TC_Location_type__c = false,
                            TC_Legal_status__c = true, TC_Location__c = false, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD'));
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeOwnershipNonIATA', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeOwnershipNonIATA', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = true, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD'));
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = true, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
 
-        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
+        customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'ChangeMix', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = true, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,

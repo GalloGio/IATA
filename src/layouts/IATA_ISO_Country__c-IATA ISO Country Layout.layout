@@ -194,7 +194,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>LVA_CountryLanguage__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>CNS_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Postal_Code_Format_regEx__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -230,6 +238,10 @@
                 <behavior>Edit</behavior>
                 <field>Due_diligence_mandatory__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Postal_Code_Hint_Format__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -247,6 +259,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_GDI_Enabled__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Enable_NewGen_Pilot__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -256,6 +272,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Airline_EasyPay_Opt_Out_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_IEP_Model__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -298,6 +318,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>State_Province_Mandatory__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Is_Non_Compliant__c</field>
             </layoutItems>
         </layoutColumns>
@@ -333,6 +357,10 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tax_Number_VAT_field_mandatory__c</field>
+            </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
@@ -420,6 +448,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ISO_Code__c</fields>
+        <fields>IEC_Valid_SAP__c</fields>
         <relatedList>IATA_ISO_State__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>

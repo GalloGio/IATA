@@ -280,6 +280,14 @@
                 <behavior>Edit</behavior>
                 <field>IEC_Zip_Postal_Code_required__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Postal_Code_Format_regEx__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Postal_Code_Hint_Format__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -408,6 +416,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ISO_Code__c</fields>
+        <fields>IEC_Valid_SAP__c</fields>
         <relatedList>IATA_ISO_State__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>

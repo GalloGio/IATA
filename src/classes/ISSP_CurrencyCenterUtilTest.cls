@@ -17,8 +17,8 @@ private class ISSP_CurrencyCenterUtilTest {
     @isTest static void testMethodsWithUsers() {
         Test.startTest();
 
-        Id conRtId = [SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Contact' AND SobjectType = 'Contact'].Id;
-        Id accRtId = [SELECT Id FROM RecordType WHERE DeveloperName ='Standard_Account' AND SobjectType = 'Account'].Id;
+        Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
         Set<String> customerUserTypes = new Set<String> {'CSPLiteUser','PowerPartner','PowerCustomerSuccess','CustomerSuccess'};
         Account acc = new Account (

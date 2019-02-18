@@ -128,15 +128,18 @@ global class UploadMultipleFileToAmazonButtonCtrl {
             );
 
             if(recordType != null) {
-                RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get(recordType.replaceAll('_', ' '));
-                if (rtInfo!=null) {
-                    amazonFile.RecordTypeId = rtInfo .getRecordTypeId();
+                Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', recordType);
+                if (rtId != null) {
+                    amazonFile.RecordTypeId =rtId;
                 }
             }
 
             if (parentId.startsWith('500')) {
                 amazonFile.Case__c = parentId;
-            }
+            }//Fix: use sObject_id__c field!
+            else
+                amazonFile.sObject_Id__c = parentId;
+            
             upsert amazonFile;
 
             return true;

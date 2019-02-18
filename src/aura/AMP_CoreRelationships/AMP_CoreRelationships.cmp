@@ -4,7 +4,7 @@
   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
   <aura:attribute name="Groups" type="LocalGovernance__c[]" access="private"/>
   <aura:attribute name="Participants" type="Participant__c[]" access="private"/>
-  <aura:attribute name="ParticipantWrappers" type="Object[]" access="private"/>
+  <aura:attribute name="ParticipantWrappers" type="AMP_WrapperParticipant[]" access="private"/>
   <aura:attribute name="representativesFound" type="Boolean" default="false" />
 
   <ltng:require styles="/resource/SLDS102/assets/styles/salesforce-lightning-design-system-ltng.css" />

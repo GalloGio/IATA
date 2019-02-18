@@ -1,37 +1,7 @@
 ({
-	getHostURL: function(component, event) {
-        var vfOrigin = component.get("c.getHostURL");
-        vfOrigin.setCallback(this, function(response) {
-            console.log('response ' + response.getReturnValue());
-            component.set("v.vfHost", 'https://' + response.getReturnValue());
-        });
-        $A.enqueueAction(vfOrigin);
-
-    },
-
-    getCommunityName: function(component, event) {
-        var commName = component.get("c.getCommunityName");
-        commName.setCallback(this, function(response) {
-            console.log('getCommunityName response ' + response.getReturnValue());
-            component.set("v.commName", response.getReturnValue());
-        });
-        $A.enqueueAction(commName);
-
-    },
-
-    notifyStepCompletion: function(component) {
-        var cmpEvent = component.getEvent("StepCompletionNotification");
-        cmpEvent.setParams({
-            "stepNumber" : 1,
-            "isComplete" : true,
-             });
-        cmpEvent.fire();
-    },
-
-    validateEmail :function(component) {
+	validateEmail :function(component) {
         var emailCmp = component.find("email");
         var emailValue = emailCmp.get("v.value");
-
         var regExpEmailformat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
         if($A.util.isEmpty(emailValue)) {
             emailCmp.set("v.errors", [{ message: $A.get("$Label.c.ISSP_EmailError")}]);
@@ -55,22 +25,77 @@
 
         var emailCmp = c.find("email");
         var emailValue = emailCmp.get("v.value");
-        var action = c.get("c.checkIsUsernameIsAvailableInGlobalSalesforce");
+        var serviceName = c.get("v.serviceName");
+
+        if(serviceName == null){
+            console.log('Warning : No service name provided!');
+        }
+
+        //check if username is available (insert + rollback)
+        var action = c.get("c.getUserInformationFromEmail");
         action.setParams({
-            "email":emailValue
+            "email":emailValue,
+            "serviceName": serviceName
         });
 
-        action.setCallback(this, function(a) {
-            var isUserCanBeCreated = a.getReturnValue();
+        action.setCallback(this, function(resp) {
+            var params = resp.getReturnValue();
+            console.log('Params received : ' + params);
+            c.set("v.isEmailAddressAvailable", params.isEmailAddressAvailable);
+            c.set("v.isServiceUser", params.isServiceUser);
+            c.set("v.isServiceEligible", params.isServiceEligible);
+            
+            if(params.isContactInserted){
+            	if(serviceName != 'FRED'){
+                	var e = c.getEvent("StepCompletionNotification");
+                	e.setParams({
+                	    "stepNumber" : 3,
+                	    "isComplete" : true,
+                	     });
+                	e.fire();
+                	
+                	emailCmp.set("v.errors", null);
+                	emailCmp.set("v.disabled", true);
+                	c.find("termsaccepted").set("v.disabled", true);
+            	}
+            	else{
+            		if(! params.isServiceEligible){
+                        emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+                        c.set("v.Terms", false);
+            		}
+            		else{
+	                    c.set("v.contact",params.con);
+	                    c.set("v.account",params.acc);
+	                    //notify parent component that step is completed
+	                    var e = c.getEvent("StepCompletionNotification");
+	                    e.setParams({
+	                        "stepNumber" : 1,
+	                        "isComplete" : true,
+	                         });
+	                    e.fire();
+	                    emailCmp.set("v.errors", null);
+	                    emailCmp.set("v.disabled", true);
+	                    c.find("termsaccepted").set("v.disabled", true);
+            		}
+            	}
+            }
+            else if(params.isEmailAddressAvailable && !params.isContactInserted){
+                //notify parent component that step is completed
+                var e = c.getEvent("StepCompletionNotification");
+                e.setParams({
+                    "stepNumber" : 1,
+                    "isComplete" : true,
+                     });
+                e.fire();
 
-            if(isUserCanBeCreated){
-                var country = c.get("v.userCountry");
-                var vfOrigin = c.get('v.vfHost');
-                var vfWindow = c.find("vfFrame").getElement().contentWindow;
-                vfWindow.postMessage({ action: "alohaCallingCAPTCHA",country : country }, vfOrigin);
                 emailCmp.set("v.errors", null);
-            }else{
-                emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+                emailCmp.set("v.disabled", true);
+                c.find("termsaccepted").set("v.disabled", true);
+            }
+            else{
+                if(c.get("v.serviceName") != 'FRED'){
+                    emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
+                }
                 c.set("v.Terms", false);
             }
             $A.util.toggleClass(spinner, "slds-hide");

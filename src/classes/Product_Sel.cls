@@ -782,7 +782,7 @@ public class Product_Sel extends Selector
                     + '      , (select IATA_ISO_Country__r.Name, Display_in_E_Com__c from Non_Compliance_Countries__r) '
                     + '     , IEC_Product_Information__c, IEC_Product_Rate_Plan_Information__c '
                     + '     , IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c '
-                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, imagefile__c '
+                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, imageFile__c '
                     + ' from Product2'
                     + ' where SAP_Material_Number__c != null '
                     + 'and Display_to_ECommerce__c = true ' 
@@ -1022,7 +1022,7 @@ public class Product_Sel extends Selector
                     + '      , (select IATA_ISO_Country__r.Name, Display_in_E_Com__c from Non_Compliance_Countries__r) '
                     + '     , IEC_Product_Information__c, IEC_Product_Rate_Plan_Information__c '
                     + '     , IEC_Product_Information__r.Related_Product_Category__r.Short_Description__c '
-                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, imagefile__c'
+                    + '     , IEC_Product_Information__r.Related_Product_Category__r.Long_Description__c, ImageFile__c '
                     + ' from Product2'
                     + ' where SAP_Material_Number__c != null and Display_to_ECommerce__c = true ' + Utility.getSeqTextSetting('ECommerce Products Filter', '')
                     + ((onlyParent) ? ' and IEC_Parent_Product__c = null' : '')

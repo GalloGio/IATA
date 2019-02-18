@@ -2206,68 +2206,8 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Class_number__c</fullName>
-        <externalId>false</externalId>
-        <label>Class number</label>
-        <length>100</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Company</fullName>
         <trackHistory>true</trackHistory>
-    </fields>
-    <fields>
-        <fullName>Company_A__c</fullName>
-        <externalId>false</externalId>
-        <label>Company (A)</label>
-        <length>100</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Company_B__c</fullName>
-        <externalId>false</externalId>
-        <label>Company (B)</label>
-        <length>100</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Company_Type__c</fullName>
-        <externalId>false</externalId>
-        <label>Company Type</label>
-        <length>40</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Confirm_Email_A__c</fullName>
-        <externalId>false</externalId>
-        <label>Confirm Email (A)</label>
-        <length>30</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Confirm_Email_B__c</fullName>
-        <externalId>false</externalId>
-        <label>Confirm Email (B)</label>
-        <length>100</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Contact_Role__c</fullName>
@@ -2339,19 +2279,9 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
-        <fullName>Country__c</fullName>
+        <fullName>Course_title__c</fullName>
         <externalId>false</externalId>
-        <label>Country</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Course_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Course Name</label>
+        <label>Course title</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
@@ -2389,26 +2319,6 @@ albam@iata.org</description>
     <fields>
         <fullName>CurrencyIsoCode</fullName>
         <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
-        <fullName>Current_Status__c</fullName>
-        <externalId>false</externalId>
-        <label>Current Status</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>DOB__c</fullName>
-        <externalId>false</externalId>
-        <label>DOB</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>DSE__DS_Account__c</fullName>
@@ -3812,16 +3722,6 @@ albam@iata.org</description>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Day_requested__c</fullName>
-        <externalId>false</externalId>
-        <label>Day requested</label>
-        <length>200</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Department__c</fullName>
         <externalId>false</externalId>
         <label>Department</label>
@@ -3836,34 +3736,6 @@ albam@iata.org</description>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
-        <fullName>Discount_preference__c</fullName>
-        <externalId>false</externalId>
-        <label>Discount preference</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>A: 50% / B: 0%</fullName>
-                    <default>false</default>
-                    <label>A: 50% / B: 0%</label>
-                </value>
-                <value>
-                    <fullName>A: 0% / B: 50%</fullName>
-                    <default>false</default>
-                    <label>A: 0% / B: 50%</label>
-                </value>
-                <value>
-                    <fullName>A: 25% / B: 25%</fullName>
-                    <default>false</default>
-                    <label>A: 25% / B: 25%</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>DoNotCall</fullName>
         <trackHistory>false</trackHistory>
     </fields>
@@ -3875,16 +3747,6 @@ albam@iata.org</description>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Duties__c</fullName>
-        <externalId>false</externalId>
-        <label>Duties</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ET_status__c</fullName>
@@ -3939,16 +3801,6 @@ albam@iata.org</description>
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Expiration__c</fullName>
-        <externalId>false</externalId>
-        <label>Expiration</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Fax</fullName>
         <trackHistory>false</trackHistory>
     </fields>
@@ -3964,75 +3816,12 @@ albam@iata.org</description>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>First_Name_A__c</fullName>
-        <externalId>false</externalId>
-        <label>First Name (A)</label>
-        <length>30</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>First_Name_B__c</fullName>
-        <externalId>false</externalId>
-        <label>First Name (B)</label>
-        <length>30</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>HasOptedOutOfEmail</fullName>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>HasOptedOutOfFax</fullName>
         <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
-        <fullName>Hours_week__c</fullName>
-        <externalId>false</externalId>
-        <label>Hours week</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>0-20 hours</fullName>
-                    <default>false</default>
-                    <label>0-20 hours</label>
-                </value>
-                <value>
-                    <fullName>20-24 hours</fullName>
-                    <default>false</default>
-                    <label>20-24 hours</label>
-                </value>
-                <value>
-                    <fullName>24-35 hours</fullName>
-                    <default>false</default>
-                    <label>24-35 hours</label>
-                </value>
-                <value>
-                    <fullName>35 hours or over</fullName>
-                    <default>false</default>
-                    <label>35 hours or over</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>IATA_Code__c</fullName>
-        <externalId>false</externalId>
-        <label>IATA Code</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Industry</fullName>
@@ -4046,65 +3835,6 @@ albam@iata.org</description>
         <length>30000</length>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
-        <visibleLines>5</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Interested_in__c</fullName>
-        <externalId>false</externalId>
-        <label>Interested in:</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>MultiselectPicklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Airport Development including ADRM</fullName>
-                    <default>false</default>
-                    <label>Airport Development including ADRM</label>
-                </value>
-                <value>
-                    <fullName>Passenger Facilitation</fullName>
-                    <default>false</default>
-                    <label>Passenger Facilitation</label>
-                </value>
-                <value>
-                    <fullName>Ground Operations Integrated Solutions</fullName>
-                    <default>false</default>
-                    <label>Ground Operations Integrated Solutions</label>
-                </value>
-                <value>
-                    <fullName>Baggage</fullName>
-                    <default>false</default>
-                    <label>Baggage</label>
-                </value>
-                <value>
-                    <fullName>Security</fullName>
-                    <default>false</default>
-                    <label>Security</label>
-                </value>
-                <value>
-                    <fullName>Timatic</fullName>
-                    <default>false</default>
-                    <label>Timatic</label>
-                </value>
-                <value>
-                    <fullName>Training courses</fullName>
-                    <default>false</default>
-                    <label>Training courses</label>
-                </value>
-                <value>
-                    <fullName>Simplified Interline Settlement (SIS)</fullName>
-                    <default>false</default>
-                    <label>Simplified Interline Settlement (SIS)</label>
-                </value>
-                <value>
-                    <fullName>Other</fullName>
-                    <default>false</default>
-                    <label>Other</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
@@ -4307,34 +4037,6 @@ albam@iata.org</description>
         <fullName>LastTransferDate</fullName>
     </fields>
     <fields>
-        <fullName>Last_Contact__c</fullName>
-        <externalId>false</externalId>
-        <label>Last Contact</label>
-        <length>20</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Last_Name_A__c</fullName>
-        <externalId>false</externalId>
-        <label>Last Name (A)</label>
-        <length>30</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Last_Name_B__c</fullName>
-        <externalId>false</externalId>
-        <label>Last Name (B)</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>TextArea</type>
-    </fields>
-    <fields>
         <fullName>LeadSource</fullName>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
@@ -4396,34 +4098,6 @@ albam@iata.org</description>
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Method_of_payment__c</fullName>
-        <externalId>false</externalId>
-        <label>Method of payment</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Credit card</fullName>
-                    <default>false</default>
-                    <label>Credit card</label>
-                </value>
-                <value>
-                    <fullName>Bank transfer</fullName>
-                    <default>false</default>
-                    <label>Bank transfer</label>
-                </value>
-                <value>
-                    <fullName>Clearing house</fullName>
-                    <default>false</default>
-                    <label>Clearing house</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>MobilePhone</fullName>
         <trackHistory>false</trackHistory>
     </fields>
@@ -4434,14 +4108,6 @@ albam@iata.org</description>
     <fields>
         <fullName>NumberOfEmployees</fullName>
         <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
-        <fullName>Order_number__c</fullName>
-        <externalId>false</externalId>
-        <label>Order number</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Other_Phone__c</fullName>
@@ -4491,6 +4157,7 @@ albam@iata.org</description>
     </fields>
     <fields>
         <fullName>PartnerAccountId</fullName>
+        <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -4502,16 +4169,6 @@ albam@iata.org</description>
         <externalId>false</externalId>
         <label>Phone - CCITT</label>
         <length>15</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Positions__c</fullName>
-        <externalId>false</externalId>
-        <label>Positions</label>
-        <length>50</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -4617,16 +4274,6 @@ albam@iata.org</description>
                 </value>
             </valueSetDefinition>
         </valueSet>
-    </fields>
-    <fields>
-        <fullName>Price__c</fullName>
-        <externalId>false</externalId>
-        <label>Price</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Product_associated__c</fullName>
@@ -4776,44 +4423,6 @@ albam@iata.org</description>
         </valueSet>
     </fields>
     <fields>
-        <fullName>SFGA__CorrelationID__c</fullName>
-        <defaultValue>&quot;none&quot;</defaultValue>
-        <deprecated>false</deprecated>
-        <description>The Correlation ID Field is used by Salesforce for Google AdWords for automatic correlation of web information with new leads created through a standard web-to-lead form</description>
-        <externalId>false</externalId>
-        <label>CorrelationID</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>SFGA__Correlation_Data__c</fullName>
-        <defaultValue>&quot;none&quot;</defaultValue>
-        <deprecated>false</deprecated>
-        <description>The Correlation Data field is designed for use by Salesforce for Google AdWords to store all relevant lead tracking information about a web generated lead</description>
-        <externalId>false</externalId>
-        <label>Correlation Data</label>
-        <length>32000</length>
-        <trackHistory>false</trackHistory>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
-        <fullName>SFGA__Web_Source__c</fullName>
-        <defaultValue>&quot;none&quot;</defaultValue>
-        <deprecated>false</deprecated>
-        <description>This field is designed for future use by Salesforce for Google AdWords as an alternative to the Lead Source field for web generated leads.</description>
-        <externalId>false</externalId>
-        <label>Web Source</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Sales_Process_aborted_del__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -4906,60 +4515,6 @@ albam@iata.org</description>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Sector__c</fullName>
-        <externalId>false</externalId>
-        <label>Sector</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>MultiselectPicklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Travel Agency</fullName>
-                    <default>false</default>
-                    <label>Travel Agency</label>
-                </value>
-                <value>
-                    <fullName>Tour Operator</fullName>
-                    <default>false</default>
-                    <label>Tour Operator</label>
-                </value>
-                <value>
-                    <fullName>Consolidator</fullName>
-                    <default>false</default>
-                    <label>Consolidator</label>
-                </value>
-                <value>
-                    <fullName>Hotel</fullName>
-                    <default>false</default>
-                    <label>Hotel</label>
-                </value>
-                <value>
-                    <fullName>Car Rental</fullName>
-                    <default>false</default>
-                    <label>Car Rental</label>
-                </value>
-                <value>
-                    <fullName>Cruise Line</fullName>
-                    <default>false</default>
-                    <label>Cruise Line</label>
-                </value>
-                <value>
-                    <fullName>Airline</fullName>
-                    <default>false</default>
-                    <label>Airline</label>
-                </value>
-                <value>
-                    <fullName>Other</fullName>
-                    <default>false</default>
-                    <label>Other</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-        <visibleLines>8</visibleLines>
-    </fields>
-    <fields>
         <fullName>Send_Notifications__c</fullName>
         <externalId>false</externalId>
         <label>Send Notifications</label>
@@ -5040,16 +4595,6 @@ albam@iata.org</description>
                 </value>
             </valueSetDefinition>
         </valueSet>
-    </fields>
-    <fields>
-        <fullName>Time_requested__c</fullName>
-        <externalId>false</externalId>
-        <label>Time requested</label>
-        <length>200</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Title</fullName>
@@ -5470,16 +5015,6 @@ albam@iata.org</description>
         </valueSet>
     </fields>
     <fields>
-        <fullName>UIR__c</fullName>
-        <externalId>false</externalId>
-        <label>UIR</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>URL__c</fullName>
         <externalId>false</externalId>
         <label>URL</label>
@@ -5487,17 +5022,6 @@ albam@iata.org</description>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Ver_num__c</fullName>
-        <externalId>false</externalId>
-        <label>Ver num</label>
-        <precision>10</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Web_form_Code__c</fullName>
@@ -5512,57 +5036,6 @@ albam@iata.org</description>
     <fields>
         <fullName>Website</fullName>
         <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
-        <fullName>What_sector_do_you_work_in__c</fullName>
-        <externalId>false</externalId>
-        <label>What sector do you work in?</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Airline</fullName>
-                    <default>false</default>
-                    <label>Airline</label>
-                </value>
-                <value>
-                    <fullName>Airport</fullName>
-                    <default>false</default>
-                    <label>Airport</label>
-                </value>
-                <value>
-                    <fullName>CAA &amp; ANS</fullName>
-                    <default>false</default>
-                    <label>CAA &amp; ANS</label>
-                </value>
-                <value>
-                    <fullName>Cargo &amp; DGR</fullName>
-                    <default>false</default>
-                    <label>Cargo &amp; DGR</label>
-                </value>
-                <value>
-                    <fullName>Ground Operations</fullName>
-                    <default>false</default>
-                    <label>Ground Operations</label>
-                </value>
-                <value>
-                    <fullName>Travel &amp; Tourism</fullName>
-                    <default>false</default>
-                    <label>Travel &amp; Tourism</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>Zip_code__c</fullName>
-        <externalId>false</externalId>
-        <label>Zip code</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>dgAI2__DG_Capture_Analytics__c</fullName>
@@ -5613,49 +5086,6 @@ albam@iata.org</description>
                     <fullName>Not Filled - Confidence Too Low</fullName>
                     <default>false</default>
                     <label>Not Filled - Confidence Too Low</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>industryfield__c</fullName>
-        <externalId>false</externalId>
-        <label>industryfield</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Tour operator/Travel Agency</fullName>
-                    <default>false</default>
-                    <label>Tour operator/Travel Agency</label>
-                </value>
-                <value>
-                    <fullName>Travel supplier</fullName>
-                    <default>false</default>
-                    <label>Travel supplier</label>
-                </value>
-                <value>
-                    <fullName>Airline</fullName>
-                    <default>false</default>
-                    <label>Airline</label>
-                </value>
-                <value>
-                    <fullName>Airport</fullName>
-                    <default>false</default>
-                    <label>Airport</label>
-                </value>
-                <value>
-                    <fullName>ATC</fullName>
-                    <default>false</default>
-                    <label>ATC</label>
-                </value>
-                <value>
-                    <fullName>Other</fullName>
-                    <default>false</default>
-                    <label>Other</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -5944,6 +5374,28 @@ albam@iata.org</description>
         <sharedTo>
             <group>MACSDirectSalesAll</group>
             <role>VPMACS</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Created_Today1</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>LEAD.COMPANY</columns>
+        <columns>LEAD.EMAIL</columns>
+        <columns>LEAD.STATUS</columns>
+        <columns>LEAD.CREATED_DATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LEAD.UNREAD</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>LEAD.CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Created Today</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>MACSAllIATACommercial</group>
         </sharedTo>
     </listViews>
     <listViews>
@@ -6536,40 +5988,6 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Discount_preference__c</picklist>
-            <values>
-                <fullName>A%3A 0%25 %2F B%3A 50%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 25%25 %2F B%3A 25%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 50%25 %2F B%3A 0%25</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Hours_week__c</picklist>
-            <values>
-                <fullName>0-20 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>20-24 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>24-35 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>35 hours or over</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Academic</fullName>
@@ -6613,45 +6031,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Specialized Media</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Interested_in__c</picklist>
-            <values>
-                <fullName>Airport Development including ADRM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Baggage</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations Integrated Solutions</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Facilitation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Simplified Interline Settlement %28SIS%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Timatic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training courses</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6868,21 +6247,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Professional</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Method_of_payment__c</picklist>
-            <values>
-                <fullName>Bank transfer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Clearing house</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Credit card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7112,41 +6476,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>North America</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Sector__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Car Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consolidator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cruise Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour Operator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agency</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7366,60 +6695,6 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
-            <picklist>What_sector_do_you_work_in__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAA %26 ANS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo %26 DGR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>industryfield__c</picklist>
-            <values>
-                <fullName>ATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour operator%2FTravel Agency</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel supplier</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>GDP</fullName>
@@ -7560,40 +6835,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Sales</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Discount_preference__c</picklist>
-            <values>
-                <fullName>A%3A 0%25 %2F B%3A 50%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 25%25 %2F B%3A 25%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 50%25 %2F B%3A 0%25</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Hours_week__c</picklist>
-            <values>
-                <fullName>0-20 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>20-24 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>24-35 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>35 hours or over</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7769,45 +7010,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel and Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Interested_in__c</picklist>
-            <values>
-                <fullName>Airport Development including ADRM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Baggage</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations Integrated Solutions</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Facilitation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Simplified Interline Settlement %28SIS%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Timatic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training courses</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8040,21 +7242,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Professional</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Method_of_payment__c</picklist>
-            <values>
-                <fullName>Bank transfer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Clearing house</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Credit card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8356,41 +7543,6 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Sector__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Car Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consolidator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cruise Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour Operator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agency</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Size_of_the_group__c</picklist>
             <values>
                 <fullName>15-20</fullName>
@@ -8582,60 +7734,6 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
-            <picklist>What_sector_do_you_work_in__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAA %26 ANS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo %26 DGR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>industryfield__c</picklist>
-            <values>
-                <fullName>ATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour operator%2FTravel Agency</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel supplier</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>IDFSIDOSalesLead</fullName>
@@ -8772,40 +7870,6 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Discount_preference__c</picklist>
-            <values>
-                <fullName>A%3A 0%25 %2F B%3A 50%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 25%25 %2F B%3A 25%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 50%25 %2F B%3A 0%25</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Hours_week__c</picklist>
-            <values>
-                <fullName>0-20 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>20-24 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>24-35 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>35 hours or over</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Industry</picklist>
             <values>
                 <fullName>Aerospace%2FDefence</fullName>
@@ -8929,45 +7993,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel and Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Interested_in__c</picklist>
-            <values>
-                <fullName>Airport Development including ADRM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Baggage</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations Integrated Solutions</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Facilitation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Simplified Interline Settlement %28SIS%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Timatic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training courses</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9176,21 +8201,6 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Method_of_payment__c</picklist>
-            <values>
-                <fullName>Bank transfer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Clearing house</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Credit card</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Name</picklist>
             <values>
                 <fullName>Admiral</fullName>
@@ -9420,41 +8430,6 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Sector__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Car Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consolidator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cruise Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour Operator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agency</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Size_of_the_group__c</picklist>
             <values>
                 <fullName>15-20</fullName>
@@ -9583,60 +8558,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel Partner</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>What_sector_do_you_work_in__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAA %26 ANS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo %26 DGR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>industryfield__c</picklist>
-            <values>
-                <fullName>ATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour operator%2FTravel Agency</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel supplier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9779,40 +8700,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Sales</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Discount_preference__c</picklist>
-            <values>
-                <fullName>A%3A 0%25 %2F B%3A 50%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 25%25 %2F B%3A 25%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 50%25 %2F B%3A 0%25</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Hours_week__c</picklist>
-            <values>
-                <fullName>0-20 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>20-24 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>24-35 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>35 hours or over</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9988,45 +8875,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel and Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Interested_in__c</picklist>
-            <values>
-                <fullName>Airport Development including ADRM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Baggage</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations Integrated Solutions</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Facilitation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Simplified Interline Settlement %28SIS%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Timatic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training courses</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10259,21 +9107,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Professional</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Method_of_payment__c</picklist>
-            <values>
-                <fullName>Bank transfer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Clearing house</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Credit card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10575,41 +9408,6 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Sector__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Car Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consolidator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cruise Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour Operator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agency</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Size_of_the_group__c</picklist>
             <values>
                 <fullName>15-20</fullName>
@@ -10801,60 +9599,6 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
-            <picklist>What_sector_do_you_work_in__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAA %26 ANS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo %26 DGR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>industryfield__c</picklist>
-            <values>
-                <fullName>ATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour operator%2FTravel Agency</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel supplier</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Marketing_leads</fullName>
@@ -10995,40 +9739,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Sales</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Discount_preference__c</picklist>
-            <values>
-                <fullName>A%3A 0%25 %2F B%3A 50%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 25%25 %2F B%3A 25%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 50%25 %2F B%3A 0%25</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Hours_week__c</picklist>
-            <values>
-                <fullName>0-20 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>20-24 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>24-35 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>35 hours or over</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11204,45 +9914,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel and Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Interested_in__c</picklist>
-            <values>
-                <fullName>Airport Development including ADRM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Baggage</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations Integrated Solutions</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Facilitation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Simplified Interline Settlement %28SIS%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Timatic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training courses</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11475,21 +10146,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Professional</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Method_of_payment__c</picklist>
-            <values>
-                <fullName>Bank transfer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Clearing house</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Credit card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11807,41 +10463,6 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Sector__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Car Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consolidator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cruise Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour Operator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agency</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Size_of_the_group__c</picklist>
             <values>
                 <fullName>15-20</fullName>
@@ -12033,60 +10654,6 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
-            <picklist>What_sector_do_you_work_in__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAA %26 ANS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo %26 DGR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>industryfield__c</picklist>
-            <values>
-                <fullName>ATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour operator%2FTravel Agency</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel supplier</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Strategic_Partnerships</fullName>
@@ -12219,40 +10786,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Sales</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Discount_preference__c</picklist>
-            <values>
-                <fullName>A%3A 0%25 %2F B%3A 50%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 25%25 %2F B%3A 25%25</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>A%3A 50%25 %2F B%3A 0%25</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Hours_week__c</picklist>
-            <values>
-                <fullName>0-20 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>20-24 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>24-35 hours</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>35 hours or over</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12428,45 +10961,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel and Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Interested_in__c</picklist>
-            <values>
-                <fullName>Airport Development including ADRM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Baggage</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations Integrated Solutions</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passenger Facilitation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Simplified Interline Settlement %28SIS%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Timatic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training courses</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12695,21 +11189,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Professional</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Method_of_payment__c</picklist>
-            <values>
-                <fullName>Bank transfer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Clearing house</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Credit card</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13007,41 +11486,6 @@ albam@iata.org</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Sector__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Car Rental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consolidator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cruise Line</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour Operator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel Agency</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Size_of_the_group__c</picklist>
             <values>
                 <fullName>15-20</fullName>
@@ -13230,60 +11674,6 @@ albam@iata.org</description>
             </values>
             <values>
                 <fullName>Travel Partner</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>What_sector_do_you_work_in__c</picklist>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CAA %26 ANS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo %26 DGR</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ground Operations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel %26 Tourism</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>industryfield__c</picklist>
-            <values>
-                <fullName>ATC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airline</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Airport</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tour operator%2FTravel Agency</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Travel supplier</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

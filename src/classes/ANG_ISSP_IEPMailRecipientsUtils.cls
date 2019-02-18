@@ -21,6 +21,15 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
     // NOTE: The set accountIDs needs the 15 digit ids.
     // Returns Users by account.
     //
+    public static Map<String, Set<Id>> getRecipientsPortalServices(Set<Id> accountIDs, Set<Id> portalServices) {
+        Set <String> portalServicesIdsStringSet = (Set <String>)JSON.deserialize(JSON.serialize(portalServices), Set <String>.class);
+        return getRecipients(accountIDs, null, portalServicesIdsStringSet, 'C');
+    }
+
+    //
+    // NOTE: The set accountIDs needs the 15 digit ids.
+    // Returns Users by account.
+    //
     public static Map<String, Set<Id>> getRecipients(Set<Id> accountIDs, Set<String> roles, Set<String> portalServices, String type) {
 
         Map<Id, String> topParents = new Map<Id, String>();
@@ -58,6 +67,13 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
                                Contact__c
                           From Portal_Application_Right__c
                          Where ANG_Portal_Service_Role__c in : roles
+                           And right__c = 'Access Granted'
+                           And contact__r.accountId in : accountIDsSet];
+        } else if (type == 'C') {
+            parList2 = [Select Account__c,
+                               Contact__c
+                          From Portal_Application_Right__c
+                         Where Portal_Application__c in : portalServices
                            And right__c = 'Access Granted'
                            And contact__r.accountId in : accountIDsSet];
         } else {
@@ -117,7 +133,7 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
     public static Set<String> getIEPDefaultRoles() {
         List<Connected_App_Roles__c> rolesAux = [SELECT Role__c 
                                                    FROM Connected_App_Roles__c 
-                                                  WHERE Connected_App__c = 'IATA EasyPay (EDENRED)' 
+                                                  WHERE (Connected_App__c = 'IATA EasyPay (EDENRED)' OR Connected_App__c = 'IATA EasyPay (MSTS)')
                                                     AND Default_User_Role__c = true];
         
         Set<String> roles = new Set<String>();
@@ -130,7 +146,7 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
     public static Set<String> getIEPRolesManageUserAccess() {
         List<Connected_App_Roles__c> rolesAux = [SELECT Role__c 
                                                    FROM Connected_App_Roles__c 
-                                                  WHERE Connected_App__c = 'IATA EasyPay (EDENRED)' 
+                                                  WHERE Connected_App__c = 'IATA EasyPay (EDENRED)'
                                                     AND Manage_User_Access__c = true];
 
         Set<String> roles = new Set<String>();

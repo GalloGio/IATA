@@ -91,6 +91,10 @@
                 <behavior>Edit</behavior>
                 <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Account_Role__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -158,15 +162,6 @@
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>SIS Information</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -254,8 +249,63 @@
                 <behavior>Edit</behavior>
                 <field>Level_of_risk__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Clearance_level__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Date_of_last_clearance__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>ICCS Membership</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ICCS_Membership_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accelerated_Settlement__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AFRD_Status__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Contact_ICCS_Email_Activity__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AFRD_Date__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>ICCS Suspend Button</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>30</height>
+                <page>ICCSSuspendAirlineButton</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -334,6 +384,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ACLI_SAP_Id__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
@@ -373,6 +427,9 @@
         <fields>SIS_Status__c</fields>
         <fields>SIS_Sub_Status__c</fields>
     </miniLayout>
+    <relatedLists>
+        <relatedList>RelatedAccountSalesTeam</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Issues__c</fields>
@@ -435,11 +492,17 @@
     <relatedLists>
         <customButtons>Mass_Update_Contracts</customButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
-        <fields>CONTRACT.NAME</fields>
+        <fields>Product_Family__c</fields>
         <fields>CONTRACT.START_DATE</fields>
         <fields>CONTRACT.END_DATE</fields>
-        <fields>EF_Status__c</fields>
+        <fields>CONTRACT_TERM</fields>
+        <fields>Current_Cycle_Start_Date__c</fields>
+        <fields>Current_Cycle_End_Date__c</fields>
+        <fields>Contract_Renewal_Cycle_in_months__c</fields>
+        <fields>Status_formula__c</fields>
         <relatedList>RelatedContractList</relatedList>
+        <sortField>CONTRACT.END_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
@@ -514,6 +577,7 @@
         <fields>Type__c</fields>
         <fields>LAST_UPDATE</fields>
         <fields>CREATED_DATE</fields>
+        <fields>Active__c</fields>
         <relatedList>Location__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
@@ -540,6 +604,23 @@
         <fields>LAST_UPDATE</fields>
         <fields>UPDATEDBY_USER</fields>
         <relatedList>Account_Domain__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>PP_Status__c</fields>
+        <fields>PP_Effective_from_Date__c</fields>
+        <fields>PP_Effective_to_Date__c</fields>
+        <relatedList>Partner_products__c.Provider__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Status__c</fields>
+        <fields>Provider_Code__c</fields>
+        <fields>Effective_From_Date__c</fields>
+        <fields>Effective_To_Date__c</fields>
+        <relatedList>Account_Role__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

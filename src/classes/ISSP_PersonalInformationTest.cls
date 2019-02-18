@@ -6,7 +6,7 @@ private class ISSP_PersonalInformationTest {
 		Account acc1 = ISSP_ObjectFactory.createNewAccount();
         acc1.IATACode__c = '258';
         acc1.Status__c = 'Under review';
-        acc1.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
         insert acc1;
 		Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
@@ -78,7 +78,7 @@ private class ISSP_PersonalInformationTest {
 		Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '132';
         acc.Sector__c = 'Cargo Agent';
-        acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
         Test.startTest();
         insert acc;
         Test.stopTest();
@@ -86,6 +86,7 @@ private class ISSP_PersonalInformationTest {
         acc1.IATACode__c = '258';
         acc1.Top_Parent__c = acc.Id;
         acc1.Status__c = 'Under review';
+        acc1.SIS_Status__c = 'Active';
         acc1.RecordTypeId = acc.RecordTypeId;
         insert acc1;
 
@@ -94,10 +95,18 @@ private class ISSP_PersonalInformationTest {
 		con.Senior_Contact_Email__c = 'senior@dev.com';
 		con.AccountId= acc.Id;
 		con.User_Portal_Status__c = 'Regional Administrator';
-		con.RecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
+		con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		
-		system.debug('contact >> ' + con);
-		insert con;
+		Contact con2 = ISSP_ObjectFactory.createNewContact();
+		con2.Senior_Contact_Email__c = 'senior2@dev.com';
+		con2.AccountId= acc.Id;
+		con2.SIS_Contact_Type__c = 'Super User';
+		con2.Status__c = 'Active';
+		con2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+		
+		system.debug('contact1 >> ' + con);
+		system.debug('contact2 >> ' + con2);
+		insert new List<Contact> {con, con2};
 		User newUser = new User(alias = 'dsfsdfds', 
 	                            email = con.email, 
 	                            emailencodingkey = 'UTF-8', 
@@ -152,7 +161,6 @@ private class ISSP_PersonalInformationTest {
 			List<SelectOption> paxBranches = ctrl.getPAXBranches();
 			ctrl.selectedBranchAccount = acc.Id;
 			ctrl.getBranchOffice();
-			List<AccountTeamMember> portalAdminsList = ctrl.portalAdmins;
 			ctrl.saveContact();
 			ctrl.saveAccount();
 			ctrl.saveAccountBR();
@@ -162,6 +170,61 @@ private class ISSP_PersonalInformationTest {
 			ctrl.getPermissionForStandardAccount();
 			ctrl.goToEmaDomVal();
 			ctrl.getAccountDomainValidRT();
+			ISSP_PersonalInformationWithoutSharing.getPortalAdmins(new List<Id> {acc.Id});
 		}
+	}
+
+	public static testMethod void test_companyInformationPage() {
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+        acc.SIS_Status__c = 'Active';
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');	
+        insert acc;
+
+        Contact con1 = ISSP_ObjectFactory.createNewContact();
+		con1.Senior_Contact_Email__c = 'senior@dev.com';
+		con1.AccountId= acc.Id;
+		con1.User_Portal_Status__c = 'Approved Admin';
+		con1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+
+		Contact con2 = ISSP_ObjectFactory.createNewContact();
+		con2.Senior_Contact_Email__c = 'senior@dev.com';
+		con2.AccountId= acc.Id;
+		con2.User_Portal_Status__c = 'Active';
+		con2.SIS_Contact_Type__c  = 'Super User';
+		con2.Status__c = 'Active';
+		con2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+
+		List<Contact> contacts = new List<Contact> {con1, con2};
+
+		insert contacts;
+
+		Profile p = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline Delegated Admin User'];
+
+		User newUser = new User(alias = 'dsfsdfds', 
+                        email = con1.email, 
+                        emailencodingkey = 'UTF-8', 
+                        firstname = con1.firstName, 
+                        lastname = con1.lastname, 
+                        languagelocalekey = 'en_US', 
+                        localesidkey = 'en_US', 
+                        contactId = con1.Id,
+                        timezonesidkey = 'Asia/Dubai',
+                        username = con1.email+'dfgdf',
+                        PortalRole = 'Manager',
+                        CommunityNickname = con1.email.substring(0, con1.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+                        ProfileId = p.Id,
+                        IsActive = true);
+    	insert newUser;
+    	con1.OwnerId = newUser.Id;
+    	con2.OwnerId = newUser.Id;
+    	update contacts;
+
+        Test.startTest();
+        System.runAs(newUser){
+	        ApexPages.currentPage().getParameters().put('confirm','yes');
+			ISSP_PersonalInformation ctrl = new ISSP_PersonalInformation();
+			ISSP_PersonalInformationWithoutSharing ctrlChild = new ISSP_PersonalInformationWithoutSharing(ctrl);
+		}
+        Test.stopTest();
 	}
 }

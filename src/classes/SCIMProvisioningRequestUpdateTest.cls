@@ -20,8 +20,7 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 
 		System.debug('basto1p - testConfigObjsInit SCIM_Prov_Connector__c conf=' + conf);
 
-		Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
-				'Service_Bundle');
+		Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
 
 		One_Id_Service_Provider_Config__c oi = new One_Id_Service_Provider_Config__c(
 				Service_Provider_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV,
@@ -31,7 +30,8 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 				Is_Active__c = true,
 				Portal_Visible__c = false,
 				RecordTypeid = recTypeId,
-				App_Picture_Url__c = 'oi');
+				App_Picture_Url__c = 'oi',
+				Customer_Type_Activation__c='Airline');
 		insert oi;
 
 		System.debug('basto1p - testConfigObjsInit One_Id_Service_Provider_Config__c oi=' + oi);
@@ -42,7 +42,8 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 						Is_Active__c = true,
 						Portal_Visible__c = false,
 						RecordTypeid = recTypeId,
-						Service_Bundle__c = oi.id);
+						Service_Bundle__c = oi.id,
+						Customer_Type_Activation__c='Airline');
 		insert rr;
 
 		System.debug('basto1p - testConfigObjsInit One_Id_Service_Provider_Config__c rr=' + rr);
@@ -58,24 +59,6 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 				);
 		insert r;
 
-		/*
-		List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 5];
-		One_Id_App_Config_Detail__c r =
-				new One_Id_App_Config_Detail__c (
-						One_Id_Service_Provider_Config__c=rr.id,
-						PermissionSet_SSO__c = psIds[0].name,
-						PermissionSet_Provisioning__c = psIds[1].name );
-		insert r;
-		*/
-
-		/*
-		// Creating the permission set
-		PermissionSet psProv = new PermissionSet(Label='IFG_Provisioning_ProdTest',Name='IFG_Provisioning_ProdTest');
-		insert psProv;
-
-		PermissionSet psSSO = new PermissionSet(Label='IFG_SSO_ProductionTest',Name='IFG_SSO_ProductionTest');
-		insert psSSO;
-		*/
 
 		////////////////////////////////////////
 		// Accounts SET
@@ -113,11 +96,7 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 		System.debug('basto1p - newUser3=' + newUser3);
 		con3.OwnerId = newUser3.Id;
 		update con3;
-/*
-		newUser3=[SELECT Id, FederationIdentifier FROM User WHERE ContactId=:con3.Id];
-		newUser3.FederationIdentifier='';//to be able to test fill federation ids
-		update newUser3;
-*/
+
 		//////////////////////////////
 		// Create SCIM application to handle access
 		/////////////////////////////
@@ -163,17 +142,6 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 			System.AssertEquals(ex.getExcepCode(), SCIMServProvManager.ERR_SCIM_REST_INVALID_ROW_RESULT_EX_1);
 		}
 
-		/*
-		//Test invalid row result because more than one contact exists for the given email
-		try {
-			SCIMProvisioningRequestUpdate.doPost('Test@test11.com', true, SCIMServProvManager.PRE_PROD_SRV_PROV);
-		}
-		catch(SCIMServProvManager.SCIMException ex)
-		{
-			System.AssertEquals(ex.getExcepCode(), SCIMServProvManager.ERR_SCIM_REST_INVALID_ROW_RESULT_EX_1);
-		}
-		*/
-
 		//Test invalid row result because contact exists but no permission access row exists for it
 		try {
 			SCIMProvisioningRequestUpdate.doPost('Test@test33.com', true, SCIMServProvManager.PRE_PROD_SRV_PROV);
@@ -188,8 +156,6 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 		Portal_Application_Right__c PortAccessRigthItem3= new Portal_Application_Right__c();
 		PortAccessRigthItem3.Contact__c=con3.Id;
 		PortAccessRigthItem3.Portal_Application__c=portApp.Id;
-		//PortAccessRigthItem3.Right__c=SCIMServProvManager.IATA_STS_ACCESS_DENIED;
-		//PortAccessRigthItem3.Technical_Provisioning_Status__c=SCIMServProvManager.TECH_STS_IATA_ACCESS_DENIED;
 		PortAccessRigthItem3.Right__c=SCIMServProvManager.IATA_STS_REQUESTED;
 		PortAccessRigthItem3.Technical_Provisioning_Status__c=SCIMServProvManager.TECH_STS_REQUESTED;
 		insert PortAccessRigthItem3;
@@ -290,21 +256,6 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 		and Portal_Application__r.SCIM_App_Name__c=:SCIMServProvManager.PRE_PROD_SRV_PROV];
 
 		System.AssertEquals(PortAccRightRow.Technical_Provisioning_Status__c, SCIMServProvManager.TECH_STS_EXT_ACCESS_GRANTED);
-		/*
-		/////////////////////////////////////////////////////////
-		// SET IATA DENIED
-		/////////////////////////////////////////////////////////
-		PortAccRightRow.Right__c = SCIMServProvManager.IATA_STS_ACCESS_DENIED;
-		update PortAccRightRow;
-
-		PortAccRightRow=
-		[SELECT Technical_Provisioning_Status__c FROM Portal_Application_Right__c
-				WHERE Contact__r.Id = :con3.Id
-		and Portal_Application__r.Provisioning_Type__c = :SCIMServProvManager.PROV_TYP_SCIM
-		and Portal_Application__r.SCIM_App_Name__c=:SCIMServProvManager.PRE_PROD_SRV_PROV];
-
-		System.AssertEquals(PortAccRightRow.Technical_Provisioning_Status__c, SCIMServProvManager.TECH_STS_IATA_ACCESS_DENIED);
-		*/
 	}
 
 	@IsTest
@@ -358,6 +309,7 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 				Provisioning_Type__c =:SCIMServProvManager.PROV_TYP_SCIM AND
 				SCIM_App_Name__c =:SCIMServProvManager.PRE_PROD_SRV_PROV];
 
+		Test.StartTest();
 		system.runAs(portalUser)
 		{
 			//INSERT access row in portal apllciation rights for contact 3
@@ -410,6 +362,7 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 			and Portal_Application__r.SCIM_App_Name__c=:SCIMServProvManager.PRE_PROD_SRV_PROV];
 			System.AssertEquals(PortAccRightRow.Technical_Provisioning_Status__c, SCIMServProvManager.TECH_STS_EXT_ACCESS_GRANTED);
 		}
+		Test.StopTest();
 	}
 
 	@IsTest
@@ -430,8 +383,6 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 
 		system.runAs(portalUser)
 		{
-			//ConnectedApplication capp = UserProvisioning.ConnectorTestUtil.createConnectedApp(CON_APP_PROV);
-
 			//INSERT access row in portal apllciation rights for contact 3
 			Portal_Application_Right__c PortAccessRigthItem4 = new Portal_Application_Right__c();
 			PortAccessRigthItem4.Contact__c = con3.Id;
@@ -453,87 +404,10 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 				SCIMServProvManager.TECH_STS_IATA_ACCESS_GRANTED);
 
 
-
 		//deleteProvRelatedPermissionSets
 	}
-	/*
-	@IsTest
-	static void testUserProvisioningRequestScenarios(){
-
-		//UserProvisioningTestUtils.createUserProvisioningRequest(CON_APP_PROV,'Create');
-		Contact con3=[SELECT Id FROM CONTACT WHERE FirstName = 'test3' AND Email = 'Test@test33.com'];
-
-		User portalUser=[SELECT alias, email,emailencodingkey,firstname,lastname,
-				languagelocalekey,localesidkey,contactId,FederationIdentifier,timezonesidkey,
-				Username,PortalRole,CommunityNickname,ProfileId,IsActive
-				FROM User WHERE contactId=:con3.Id];
-
-		Portal_Applications__c portApp=
-		[SELECT Id FROM Portal_Applications__c
-				WHERE
-				Name = 'My Test App' AND
-				Provisioning_Type__c =:SCIMServProvManager.PROV_TYP_SCIM AND
-				SCIM_App_Name__c =:SCIMServProvManager.PRE_PROD_SRV_PROV];
-
-		system.runAs(portalUser)
-		{
-			//ConnectedApplication capp = UserProvisioning.ConnectorTestUtil.createConnectedApp(CON_APP_PROV);
-
-			//INSERT access row in portal apllciation rights for contact 3
-			Portal_Application_Right__c PortAccessRigthItem4 = new Portal_Application_Right__c();
-			PortAccessRigthItem4.Contact__c = con3.Id;
-			PortAccessRigthItem4.Portal_Application__c = portApp.Id;
-			PortAccessRigthItem4.Right__c = SCIMServProvManager.IATA_STS_ACCESS_GRANTED;
-			PortAccessRigthItem4.Technical_Provisioning_Status__c = SCIMServProvManager.TECH_STS_IATA_ACCESS_GRANTED;
-			insert PortAccessRigthItem4;
 
 
-			// Build user provisioning account linked to the test user
-			UserProvAccount upa = new UserProvAccount(
-					salesforceUserId = portalUser.id,
-					//connectedAppId = capp.Id,
-					externalUserId = 'xxx-xxx-slb',
-					externalUserName = 'external@example.org',
-					externalFirstName = 'test',
-					externalLastName = '33',
-					linkState = 'Linked',
-					status = 'Active'
-			);
-			insert upa;
-
-			UserProvisioningRequest uprov = new UserProvisioningRequest();
-			uprov.AppName=CON_APP_PROV;//SCIMServProvManager.PRE_PROD_SRV_PROV;
-			//uprov.connectedAppId= capp.Id;
-			uprov.State='New';
-			uprov.Operation='Create';
-			uprov.ApprovalStatus='NotRequired';
-			uprov.SalesforceUserId=portalUser.Id;
-			insert uprov;
-
-			uprov.State='Failed';
-			//uprov.State='Completed';
-			update uprov;
-
-
-
-			/////////////////////////////////////////////////////////
-			// SET IATA DENIED
-			/////////////////////////////////////////////////////////
-			PortAccessRigthItem4.Right__c = SCIMServProvManager.IATA_STS_ACCESS_DENIED;
-			update PortAccessRigthItem4;
-
-			Portal_Application_Right__c PortAccRightRow=
-			[SELECT Technical_Provisioning_Status__c FROM Portal_Application_Right__c
-					WHERE Contact__r.Id = :con3.Id
-			and Portal_Application__r.Provisioning_Type__c = :SCIMServProvManager.PROV_TYP_SCIM
-			and Portal_Application__r.SCIM_App_Name__c=:SCIMServProvManager.PRE_PROD_SRV_PROV];
-
-			System.AssertEquals(PortAccRightRow.Technical_Provisioning_Status__c, SCIMServProvManager.TECH_STS_IATA_ACCESS_DENIED);
-
-		}
-
-	}
-*/
 	static void testSuccessCases(Boolean rspActiveFlag){
 		RestRequest req = new RestRequest();
 		RestResponse res = new RestResponse();

@@ -69,7 +69,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/SURVEY_a1Q20000000UD7AEAW</template>
+        <template>All/SURVEY_a1Q20000000UD7AEAW</template>
     </alerts>
     <fieldUpdates>
         <fullName>AIMS_Accounts_RT_Assignment</fullName>
@@ -96,15 +96,19 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
     </fieldUpdates>
     <fieldUpdates>
         <fullName>AccountIATAAirlineSetName</fullName>
-        <description>Set the name of an IATA Airline Account, first using Trade Name, and in second place Name_on_AOC__c</description>
+        <description>Set the name of an IATA Airline Account, first using Trade Name, in second place using Legal Name and in third place Name_on_AOC__c</description>
         <field>Name</field>
         <formula>IF(
   OR( ISNULL( TradeName__c ), TradeName__c == &apos;&apos;),
   IF (
+			OR( ISNULL( Legal_name__c ), Legal_name__c == &apos;&apos;),
+				IF (
     OR( ISNULL( Name_on_AOC__c ), Name_on_AOC__c == &apos;&apos;),
     Name,
     Name_on_AOC__c
   ),
+				Legal_name__c
+		),
   TradeName__c
 )</formula>
         <name>AccountIATAAirlineSetName</name>
@@ -219,32 +223,12 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIS_Assign_account_recordtype</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IATA_SIS_Account</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>SIS - Assign account recordtype</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIS_Update_Account_Site</fullName>
         <field>Site</field>
         <formula>Airline_designator__c +  Member_Code_Numeric__c</formula>
         <name>SIS - Update Account Site</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Update_Record_Owner</fullName>
-        <field>OwnerId</field>
-        <lookupValue>smitha@iata.org</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>SIS Update Record Owner</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -369,7 +353,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </actions>
         <active>true</active>
         <description>Set the name of an ACLI account (RT = Airline Headquarters ) using its Trade Name or AOC Name</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;IATA_Airline&apos;,   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
+        <formula>AND (   RecordType.DeveloperName = &apos;IATA_Airline&apos;,   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Legal_name__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -745,24 +729,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <value>SIS</value>
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS HelpDesk - Assign SIS recordtype when new account source system is SIS</fullName>
-        <actions>
-            <name>SIS_Assign_account_recordtype</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Update_Record_Owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Account.Source_System__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Send Irregularity Email</fullName>

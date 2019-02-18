@@ -60,6 +60,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	public boolean bSection4Show {get; set;}
 	public boolean bSection5Show {get; set;}
 	public boolean bSection6Show {get; set;}
+	public boolean bSection7Show {get; set;}
 	
 	// Boolean variables to dynamically show and hide the product features
 	public boolean bFeature1Show {get; set;}
@@ -80,6 +81,50 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	
 	public String selectedTopic{get;set;}
 	public String selectedTopicLabel{get;set;}
+
+	public String productBreadcrumb {
+        get{
+        	String prdbread = Label.Home + ' > ' + selectedCategory.getLabel() + ' > ' + selectedTopicLabel + ' > ' + ecomProduct.ProductName;
+        	return JSON.serialize(prdbread);
+    	} 
+        set;
+    }
+
+    public String productNameAndIdStr {
+        get{
+            String str = ecomProduct.ProductName + ' - ' + ecomProduct.ProductId;
+            return JSON.serialize(str);
+        }
+        set;
+    }
+
+	public String productWrapper {
+		get {
+			Map<String,Object> ecommObj = new Map<String,Object>();
+			Map<String,Object> detailObj = new Map<String,Object>();
+			Map<String,Object> actionObj = new Map<String,Object> {'list' => selectedCategory.getLabel() + ' > ' + selectedTopicLabel};
+			Map<String,Object> prodObj = new Map<String,Object>();
+
+			ecommObj.put('detail', detailObj);
+			detailObj.put('actionField', actionObj);
+			detailObj.put('products', new List<Object> {prodObj});
+
+			prodObj.put('id', ecomProduct.ProductNumber);
+			prodObj.put('name', ecomProduct.ProductName);
+			prodObj.put('category', ecomProduct.Portfolio);
+			prodObj.put('price', ecomProduct.unitPrice == null ? 0.00 : ecomProduct.unitPrice);    
+            prodObj.put('brand', ecomProduct.ProductCategory);        
+            prodObj.put('dimension1', ecomProduct.Edition);
+            prodObj.put('dimension2', ecomProduct.Language);
+            prodObj.put('dimension3', ecomProduct.InventoryStatus);
+            prodObj.put('dimension4', ecomProduct.AvailabilityDate);
+            prodObj.put('dimension5', ecomProduct.Media);
+            prodObj.put('dimension6', ecomProduct.EffectiveTo);
+
+			return JSON.serialize(ecommObj);
+		}
+		set;
+	}
 	
 
 	public IEC_ProductDetailController() 
@@ -208,6 +253,8 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			bSection4Show = pc.Section_4_Show__c;
 			bSection5Show = pc.Section_5_Show__c;
 			bSection6Show = pc.Section_6_Show__c;
+			bSection7Show = pc.Section_7_Show__c;
+			
 			// Determines which feature to show
 			bFeature1Show = !(String.isEmpty(sFeature1Description) || String.isEmpty(sFeature1Image));
 			bFeature2Show = !(String.isEmpty(sFeature2Description) || String.isEmpty(sFeature2Image));

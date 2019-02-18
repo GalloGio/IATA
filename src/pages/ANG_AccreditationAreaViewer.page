@@ -215,9 +215,9 @@
                 
 				<apex:pageblocktable value="{!accreditationContactFormList}" var="ac" id="pbTable">
 					
-						<apex:column styleClass="{!IF(ac.isNew,'new','editable')}" headerValue="Status"><apex:outputText value="{!IF(ac.isNew,'New Owner','Modified Owner')}" /> </apex:column>
-						<apex:column styleClass="{!IF(ac.changedFieldsMap['First_Name__c'],'editable','')}" value="{!ac.ac.First_name__c}"/>
-						<apex:column styleClass="{!IF(ac.changedFieldsMap['Last_Name__c'],'editable','')}" value="{!ac.ac.Last_name__c}"/>
+						<apex:column styleClass="{!IF(ac.isNew,'new','editable')}" headerValue="Status"><apex:outputText value="{!IF(ac.isNew,'New Owner',IF(accreditationObj.Confirm_Ownership_details_are_correct__c,'Old Owner','Modified Owner'))}" /> </apex:column>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['First_Name__c'],'editable','')}" value="{!ac.ac.First_Name__c}"/>
+						<apex:column styleClass="{!IF(ac.changedFieldsMap['Last_Name__c'],'editable','')}" value="{!ac.ac.Last_Name__c}"/>
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['Email__c'],'editable','')}" value="{!ac.ac.Email__c}"/>
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['Phone__c'],'editable','')}" value="{!ac.ac.Phone__c}"/>
 						<apex:column styleClass="{!IF(ac.changedFieldsMap['Agency_owner__c'],'editable','')}" value="{!ac.ac.Agency_owner__c}"/>

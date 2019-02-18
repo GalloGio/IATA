@@ -8,9 +8,11 @@
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
         </publicGroups>
         <users>
+            <user>lis@iata.org</user>
             <user>xusj@iata.org</user>
             <user>zhangt@iata.org</user>
             <user>pangxx@iata.org</user>
+            <user>tianz@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>

@@ -16,7 +16,8 @@ public with sharing class NewGenApp_AccountStatementTriggerHandler {
         for (Account_Statement__c st : updatedAccountStatements) {
         	// only get accounts were the Balance was changed and isn't zero.
 			if((oldAccountStatementsMap.get(st.Id).Balance__c != st.Balance__c) && (st.Balance__c != 0) && st.Balance__c != null){
-				NewGen_Account_Statement_Helper.sendPushNotification(usersPerAccount.get(st.Account__c), Label.NewGenApp_AccountStatementNotification, new List <String> { st.Name, String.valueOf(st.Balance__c) });            	
+				NewGen_Account_Statement_Helper.sendPushNotification(usersPerAccount.get(st.Account__c), Label.NewGenApp_AccountStatementNotification, 
+					new List <String> { st.Name, String.valueOf(st.Balance__c) }, NewGen_Account_Statement_Helper.NAVIGATE_TO_ICE_HOME);            	
 			}
         }
 	}

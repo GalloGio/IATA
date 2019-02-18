@@ -1,17 +1,15 @@
 public class ISSP_WS_KAVI {
 
 	public static Boolean preventTrigger;
-	//private static String AGENCY_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId;
-	//private static String BRANCH_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Branch').RecordTypeId;
-	//private static String HEADQUARTER_RECORD_TYPE_ID = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId;
+
 	private static String AGENCY_RECORD_TYPE_ID;
 	private static String BRANCH_RECORD_TYPE_ID;
 	private static String HEADQUARTER_RECORD_TYPE_ID;
 	static{
 		preventTrigger = false;
-		AGENCY_RECORD_TYPE_ID = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Agency');
-		BRANCH_RECORD_TYPE_ID = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline_BR');
-		HEADQUARTER_RECORD_TYPE_ID = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('IATA_Airline');
+		AGENCY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		BRANCH_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+		HEADQUARTER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	}
 
 	public static String CLIENT_KEY {       
@@ -142,7 +140,9 @@ public class ISSP_WS_KAVI {
 
 				@future(callout=true)
 				public static void createOrUpdateKaviUsersAccounts(String operation, Set<Id> newContactsIds){
-
+					//PS to grant access to all licenses
+					permissionset psID= [select id from permissionset where name = 'HL_UsersAccess'][0];
+					List<PermissionSetAssignment> listPsa = new List<PermissionSetAssignment>();
 					//New Code to Admit Internal Users
 					Map<Id,User> newUsersMap = new Map<Id,User>();
 					if (operation == 'create2'){
@@ -254,6 +254,28 @@ public class ISSP_WS_KAVI {
 					}
 				}
 
+	//RN-ENHC0012059 grant and remove the permission set to the user
+	@future(callout=true) 
+	public static void addUserPSA(Set<Id> contactKaviAdd, String action){					
+		permissionset psID= [select id from permissionset where name = 'HL_UsersAccess'][0];
+		List<PermissionSetAssignment> listPsa = new List<PermissionSetAssignment>();
+		List<PermissionSetAssignment> listRemovePsa = new List<PermissionSetAssignment>();
+		List<User> userGrantPS = [SELECT id from User where ContactID in:contactKaviAdd];
+		for(User u: userGrantPS){		
+			listPsa.add(new PermissionSetAssignment (PermissionSetId = psID.id, AssigneeId = u.id));
+		}
+		if(!listPsa.isEmpty()){ 
+			if(action == 'grant'){
+				insert listPsa;
+			}
+		}
+		if(action == 'remove'){
+			listRemovePsa = [SELECT id from PermissionSetAssignment where AssigneeId in:userGrantPS and PermissionSetId =:psID.id];
+            if(!listRemovePsa.isEmpty()){ 
+				delete listRemovePsa;
+            }
+		}
+	}
 
 
 				public static List<ISSP_Web_Service_Log__c> createOrUpdateKaviAccounts(Set<Id> newAccountsIds,Map<String,String> accountStatusMap){

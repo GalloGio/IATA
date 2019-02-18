@@ -11,10 +11,8 @@
 
 trigger trgICCSManageProductAssignment on Case (after insert, after update) {
   // Get the ICCS Case Record Type
-  //RecordType RT_ICCS = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Product_Management'];
-  Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
-  //RecordType RT_ICCS_BA = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Bank_Account_Management'];
-  Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
+  Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
+  Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Bank_Account_Management');
 
   Boolean ThereAreICCSProductManagementCases = false;
   Boolean ThereAreICCSBankAccountManagementCases = false;
@@ -97,7 +95,7 @@ trigger trgICCSManageProductAssignment on Case (after insert, after update) {
 
     // Create a map of Product Assignments related to the trigger cases' accounts, with the key [ICCS Product Currency ID - Account Id - Bank Account ID]
     Map<String, Product_Assignment__c> mapProductAssignmentsPerKey = new Map<String, Product_Assignment__c>();
-    List<Product_Assignment__c> lstPAs = [SELECT CurrencyIsoCode, Id, Account__c, ICCS_Product_Currency__c, Status__c, ICCS_Bank_Account__c, Notice_of_Assignment__c, Accelerated_Function__c, Amount__c  FROM Product_Assignment__c WHERE Account__c IN :lstAccountIds];
+    List<Product_Assignment__c> lstPAs = [SELECT CurrencyIsoCode, Id, Account__c, ICCS_Product_Currency__c, Status__c, ICCS_Bank_Account__c, Notice_of_Assignment__c, Amount__c  FROM Product_Assignment__c WHERE Account__c IN :lstAccountIds];
     for (Product_Assignment__c pa : lstPAs) {
       mapProductAssignmentsPerKey.put(String.valueOf(pa.ICCS_Product_Currency__c) + '-' + String.valueOf(pa.Account__c) + '-' + String.valueOf(pa.ICCS_Bank_Account__c), pa);
     }
@@ -159,8 +157,7 @@ trigger trgICCSManageProductAssignment on Case (after insert, after update) {
             pa.Amount__c = batc.Amount__c;
             //INC178224
             pa.CurrencyIsoCode = batc.CurrencyIsoCode;
-            pa.Accelerated_Function__c = c.Accelerated_Function__c;
-
+            
             lstProdAssignments.add(pa);
           }
         } else if (c.CaseArea__c == 'ICCS – Remove Product') {
@@ -213,8 +210,6 @@ trigger trgICCSManageProductAssignment on Case (after insert, after update) {
               pa.Amount__c = batc.Amount__c;
               //INC178224
               pa.CurrencyIsoCode = batc.CurrencyIsoCode;
-              
-              pa.Accelerated_Function__c = c.Accelerated_Function__c;
 
               ProdAssignmentUpdated.add(pa.id);
               lstProdAssignments.add(pa);
@@ -234,9 +229,7 @@ trigger trgICCSManageProductAssignment on Case (after insert, after update) {
               pa.Amount__c = batc.Amount__c;
               //INC178224
               pa.CurrencyIsoCode = batc.CurrencyIsoCode;
-              
-              pa.Accelerated_Function__c = c.Accelerated_Function__c;
-
+            
               lstProdAssignments.add(pa);
             }
           }

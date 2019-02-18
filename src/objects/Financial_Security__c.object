@@ -151,6 +151,16 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>Acknowledgment_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>check if a notification was sent regarding the FS</description>
+        <externalId>false</externalId>
+        <label>Acknowledgment sent</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Amount__c</fullName>
         <description>Amount with currency</description>
         <externalId>false</externalId>
@@ -236,6 +246,18 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>First_Call_Letter_required1__c</fullName>
+        <description>Takes the value from the Financial Institution through a WF</description>
+        <externalId>false</externalId>
+        <label>First Call Letter required</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>First_Call_Letter_required__c</fullName>
@@ -567,6 +589,11 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
                     <default>false</default>
                     <label>Pending to be Released</label>
                 </value>
+                <value>
+                    <fullName>Pending Validation</fullName>
+                    <default>false</default>
+                    <label>Pending Validation</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -751,9 +778,12 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004RhqP&quot;,&quot;Encas
 IF( ISPICKVAL( Security_Status__c , &quot;Pending to be Released&quot;),  
 IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DJop&quot;,&quot;Pending to be Released&quot;,30,30),
 
+IF( ISPICKVAL( Security_Status__c , &quot;Pending Validation&quot;),  
+IMAGE(&quot;/servlet/servlet.FileDownload?file=0151r000006DJop&quot;,&quot;Pending to be Released&quot;,30,30),
+
 IF(ISPICKVAL( Security_Status__c , &quot;Close to Expiry Date&quot;), 
 IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Requested&quot;,30,30), &quot;error&quot;
-))))))</formula>
+)))))))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status image</label>
         <required>false</required>
@@ -761,6 +791,16 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Two_months_passed_expiry__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used for flagging FS with first call letter required when two months of expiry date have passed. This info goes to the account and then to the case.</description>
+        <externalId>false</externalId>
+        <label>Two months passed expiry</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Unlimited_Security__c</fullName>
@@ -2536,7 +2576,7 @@ OR( ISPICKVAL(Reasonforrequest__c, &quot;&quot;) ,  ISBLANK( Reception_Date__c )
         <fullName>SARA_validity_start_date_mandatory</fullName>
         <active>true</active>
         <description>validity start date mandatory for all securities from 19 July 2012</description>
-        <errorConditionFormula>AND( isnull(Validity_Start_Date__c ),  ISNEW(), DATEVALUE(CreatedDate ) &gt; DATE(2012,07,18))</errorConditionFormula>
+        <errorConditionFormula>AND( isnull(Validity_Start_Date__c ), ISNEW(), DATEVALUE(CreatedDate ) &gt; DATE(2012,07,18))</errorConditionFormula>
         <errorDisplayField>Validity_Start_Date__c</errorDisplayField>
         <errorMessage>Please enter the validity start date for this security</errorMessage>
     </validationRules>

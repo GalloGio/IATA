@@ -52,6 +52,14 @@
       display: table;
       clear: both;
     }
+        
+    .loader {
+      background: url('/img/loading32.gif') scroll no-repeat 0 0;
+      width: 32px;
+      height: 32px;
+      position: relative;
+      left: 50%;
+    }
   </style>
 
   <script>
@@ -148,18 +156,27 @@
 
       	if(ok == 1) {
         		submitOptInOutServerName(optinOut, JSON.stringify(countries), effectiveDate);
-        		document.querySelector("[Id$='requestSentMsg']").style.display = '';
             document.querySelector("[Id$='submitOptInOutBtn']").disabled = true;
+            document.querySelector("[Id$='cancelBtn']").disabled = true;
             document.querySelector("[Id$='modalClose']").style.display = 'none';
-            setTimeout(closeAll, 5000);
+            document.querySelector("[Id$='load_scrl']").style.display = '';
+            setTimeout(loadingCaseCreation, 15000);
       	}
+    }
+
+    function loadingCaseCreation() {
+        document.querySelector("[Id$='requestSentMsg']").style.display = '';
+        document.querySelector("[Id$='load_scrl']").style.display = 'none';
+        setTimeout(closeAll, 5000);
     }
 
     function closeAll() {
         document.querySelector("[Id$='requestSentMsg']").style.display = 'none';
         document.querySelector("[Id$='submitOptInOutBtn']").disabled = false;
+        document.querySelector("[Id$='cancelBtn']").disabled = false;
         document.querySelector("[Id$='modalClose']").style.display = '';
         optInOut();
+        location.reload();
     }
 
   </script>
@@ -275,6 +292,7 @@
             <apex:pageBlock id="servicesRenderedPanel">
               <apex:outputPanel id="countryDatePanel" style="display: none">
                 <hr/>
+                <div id="load_scrl" class="loadingBox loader" style="display:none;"/> 
                 <div class="row">
                   <div class="customTable" style="margin-left: 15px;">
                   	<div>
@@ -322,7 +340,7 @@
         <div class="modal-footer">
           <div class="row">
             <div class="col-md-6">
-              <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
+              <button type="button" id="cancelBtn" class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
             </div>
             <div class="col-md-6">
               <button type="button" id="submitOptInOutBtn" onclick="submitOptInOut(); return false;" class="btn btn-success btn-block" style="display: none">Submit Request to IATA</button>

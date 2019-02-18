@@ -73,6 +73,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_PCI_compliance_expiry_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BSP_non_air__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -208,6 +212,10 @@
                 <field>Is_Branch_Abroad__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Opt_out_PCI_DSS__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>VAT_Number__c</field>
             </layoutItems>
@@ -222,6 +230,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Agent_Type_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Covered_Ownership__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -346,6 +358,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Level_of_risk__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Clearance_level__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Date_of_last_clearance__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -587,6 +607,22 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Owners</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>AMS_AccountOwners</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
     <miniLayout>
         <fields>Name</fields>
         <fields>ParentId</fields>
@@ -642,21 +678,6 @@
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>AMS_Agency_Regulation__c.Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>Active__c</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Unified_Owner_Name__c</fields>
-        <fields>Owner_Name__c</fields>
-        <fields>Owner_Account__c</fields>
-        <fields>Contact__c</fields>
-        <fields>Percentage__c</fields>
-        <fields>Termination_Date__c</fields>
-        <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>Contact_Name__c</fields>
@@ -736,9 +757,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>ANG_Severity__c</fields>
+        <fields>ANG_Agent_Sales__c</fields>
         <fields>ANG_RHC_Information__c</fields>
         <fields>CREATED_DATE</fields>
-        <fields>CURRENCY_ISO_CODE</fields>
         <fields>ANG_Direction__c</fields>
         <fields>ANG_Threshold_Level__c</fields>
         <relatedList>ANG_Risk_Alert__c.ANG_Account__c</relatedList>
@@ -759,6 +782,10 @@
         <relatedList>Account_Statement__c.Account__c</relatedList>
         <sortField>Remittance_Date__c</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AmazonFile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
@@ -844,6 +871,7 @@
         <fields>Type__c</fields>
         <fields>LAST_UPDATE</fields>
         <fields>CREATED_DATE</fields>
+        <fields>Active__c</fields>
         <relatedList>Location__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>

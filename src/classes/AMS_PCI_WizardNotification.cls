@@ -3,7 +3,8 @@ global class AMS_PCI_WizardNotification {
 	@InvocableMethod(label = 'Send PCI notification')
 	public static void sendNotification(List<Id> caseIds) {
 		Id caseId = caseIds[0];
-		Case cse = [SELECT Id, CaseNumber, IATA_Code__c, ContactId, Contact.Name, AccountId, Account.IATACode__c, Contact.Preferred_Language__c  FROM Case WHERE Id = :caseId];
+		//AMSU-177 -  added "Contact.Account.IATA_ISO_Country__r.BSP__c,"
+		Case cse = [SELECT Id, CaseNumber, IATA_Code__c, ContactId, Contact.Name, AccountId, Account.IATACode__c, Contact.Account.IATA_ISO_Country__r.BSP__c, Contact.Preferred_Language__c FROM Case WHERE Id = :caseId];
 
 		if(cse.contactId == null) {
 			return;
@@ -17,7 +18,8 @@ global class AMS_PCI_WizardNotification {
 			usr = users[0];
 		}
 
-		EmailTemplate template = getTemplate(cse.Contact.Preferred_Language__c);
+		//AMSU-177 -  added new BSP Parameter
+		EmailTemplate template = getTemplate(cse.Contact.Preferred_Language__c, cse.Contact.Account.IATA_ISO_Country__r.BSP__c);
 
 		if(template == null) {
 			return;
@@ -81,8 +83,10 @@ global class AMS_PCI_WizardNotification {
         insert emailMsg;           
 	}
 
-	public static EmailTemplate getTemplate(String lang) {
-		Set<String> devNames = new Set<String> {'AMS_PCI_Compliant_' + lang, 'AMS_PCI_Compliant_EN'};
+	//AMSU-177 -  added new BSP Parameter, and made necessary changes on  the method to use it
+	public static EmailTemplate getTemplate(String lang, String BSP) {
+		String filterBSP = BSP == 'No' ? 'NonBSP_' : '';
+		Set<String> devNames = new Set<String> {'AMS_PCI_Compliant_' + filterBSP + lang, 'AMS_PCI_Compliant_' + filterBSP + 'EN'};
 		List<EmailTemplate> templates = [SELECT Id, DeveloperName, HtmlValue, Body, Subject
 										 FROM EmailTemplate 
 										 WHERE DeveloperName IN :devNames];
@@ -92,7 +96,7 @@ global class AMS_PCI_WizardNotification {
 			mapTemplates.put(template.DeveloperName, template);
 		}
 
-		return mapTemplates.get('AMS_PCI_Compliant_' + lang) == null ? mapTemplates.get('AMS_PCI_Compliant_EN') : mapTemplates.get('AMS_PCI_Compliant_' + lang);
+		return mapTemplates.get('AMS_PCI_Compliant_' + filterBSP + lang) == null ? mapTemplates.get('AMS_PCI_Compliant_' + filterBSP + 'EN') : mapTemplates.get('AMS_PCI_Compliant_' + filterBSP + lang);
 	}
 
 	public static List<Attachment> getAttachments(Id templateId) {
@@ -100,7 +104,7 @@ global class AMS_PCI_WizardNotification {
 	}
 
 	public static List<User> getContactUser(Id contactId) {
-		return [SELECT Id, ContactId, Email FROM User WHERE ContactId = :contactId];
+		return [SELECT Id, ContactId, Email, Account.IATA_ISO_Country__r.BSP__c FROM User WHERE ContactId = :contactId];
 	}
 
 	public static List<Messaging.EmailFileAttachment> getAttachmentsLst(List<Attachment> attechments) {

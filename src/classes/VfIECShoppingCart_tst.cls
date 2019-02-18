@@ -61,7 +61,8 @@ public class VfIECShoppingCart_tst {
     }
     
     static testMethod void TestShoppingCart() {
-IFAP_BusinessRulesTest.createIsoCountry();
+
+        IFAP_BusinessRulesTest.createIsoCountry();
         //Set current page to Shopping Cart
         PageReference pgRef = Page.IECShoppingCart;
         Test.setCurrentPage(pgRef);

@@ -8,7 +8,7 @@ var dyn_functions = {
         
         var argList = args.split(", ");
 
-        var resultOscarData = sforce.connection.query("SELECT Id, AMS_Online_Accreditation__r.Location_Class__c, Account__r.Sector__c,AMS_Online_Accreditation__r.Link_agent_name__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+        var resultOscarData = sforce.connection.query("SELECT Id, AMS_Online_Accreditation__r.Location_Class__c, Account__r.Reason__c, Account__r.Sector__c,AMS_Online_Accreditation__r.Link_agent_name__c, Account__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
 
         var records = resultOscarData.getArray("records");
 
@@ -39,9 +39,18 @@ var dyn_functions = {
 
         }
 
-        var ifapPSR;
+        var ifapPSR = '';
 
-        if (records.length > 0 && resultExecution[0] == '0') { // IATA Code created
+        var checkIFAPContact;
+        if(records[0].Account__r.Reason__c == '12-APPLICATION DISAPPROVED' || records[0].Account__r.Reason__c == '11-APPLICATION WITHDRAWN') {
+            var queryStr = 'SELECT Id FROM Account ';
+            queryStr += 'WHERE Id IN (SELECT AccountId FROM Contact WHERE Financial_Assessment_Contact__c = true  AND AccountId = \''+ records[0].Account__c +'\')';
+            queryStr += ' AND Id IN (SELECT Account__c FROM Agency_Applied_Change_code__c WHERE Active__c = true AND Change_Code__c IN (\'DIS\', \'NWD\'))'
+            checkIFAPContact = sforce.connection.query(queryStr);
+            checkIFAPContact = checkIFAPContact.size > 0 ? false : true;
+        }
+
+        if (records.length > 0 && resultExecution[0] == '0' && checkIFAPContact) { // IATA Code created
             if(records[0].AMS_Online_Accreditation__r.Location_Class__c == 'P' || records[0].AMS_Online_Accreditation__r.Location_Class__c == 'C'){
                  var result4 = sforce.apex.execute("AMS_OSCAR_Webservice", "createIfapPortalServiceRight", {oscarId: argList[2]});
 
@@ -50,12 +59,14 @@ var dyn_functions = {
                 }else{
                     ifapPSR = 'Grant IFAP service access - Success!\n\r';
                 }
-            }else{
-            ifapPSR = '';
             }
         }
 
+        if(checkIFAPContact) {
         alert('\n\r ' + resultExecution[1] + ifapPSR);
+        } else {
+            alert('\n\r ' + resultExecution[1] );
+        }
 
     },
     issueInvoice:function (args) { 

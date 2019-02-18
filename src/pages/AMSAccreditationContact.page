@@ -2,6 +2,7 @@
 
 <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
     <apex:includeScript value="{!$Resource.jquerymin}"/>
+    <apex:includeScript value="/support/console/34.0/integration.js"/>
     <apex:stylesheet value="{!URLFOR($Resource.SLDS103, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
     <style>
         body
@@ -54,8 +55,17 @@
             resize: none;
         }
         
+        /*AMSU-132*/
+        .lookupHoverDetailOverridable{
+            z-index: 9005;
+        }
+        
+        /*AMSU-132*/
+        .slds-modal__header{
+            border-top: 2px solid #d8dde6;
+            background-color: #f4f6f9 !important;
+        }
     </style>
-    <apex:includeScript value="/support/console/20.0/integration.js"/>
     <script type="text/javascript">
         function setTabTitle() {
             //Set the current tab's title
@@ -85,7 +95,31 @@
                 closeTab();
             }
             
-        } 
+        }
+
+        //FM AMSU-132
+        var $j = jQuery.noConflict();
+
+        function showNewTrainedStaffDialog() {
+            $j(function() {
+                //$j( '#importNewTrainedStaffModal').modal('show');
+                //alert('aqui');
+                j$('#backdrop').addClass('slds-backdrop--open');
+                j$('#modal').addClass('slds-fade-in-open');
+          });
+        }
+
+        function closeTrainedStaffModal() {
+
+            $j(function() {
+                //$j( '#importNewTrainedStaffModal' ).modal('hide');
+                j$('#modal').removeClass('slds-fade-in-open');
+                j$('#backdrop').removeClass('slds-backdrop--open');
+                //refreshTab();
+          });
+
+        }
+        //FM AMSU-132 - END
     </script>
     <script>
         function saveServerJs()
@@ -93,6 +127,15 @@
             var saveBtn = document.getElementById('saveButton');
             saveBtn.disabled = true;
             saveServer();
+        }
+        
+        //AMSU-132
+        function saveServerImportJs()
+        {
+            var saveBtn = document.getElementById('saveButtonImport');
+            saveBtn.disabled = true;
+            saveServerImport();
+            
         }
         
         function onSaveCompleteJs()
@@ -185,11 +228,35 @@
             sforce.console.getEnclosingTabId(closeSubtab);
         }
         
+        //AMSU-132
+        function openSubtab(subtabUrl, subTabTitle)
+        {
+            // Use the results primary tab id and open a new subtab
+            var openSubtab = function(result)
+            {            
+                sforce.console.openSubtab(result.id, subtabUrl, true, subTabTitle, null);    
+            };
+            sforce.console.getEnclosingPrimaryTabId(openSubtab);
+        }
+
+
         var closeSubtab = function closeSubtab(result)
         {
             var tabId = result.id;
             sforce.console.closeTab(tabId);
         };
+       
+        //AMSU-132
+        function refreshTab(){
+                 console.log('refreshTab');
+                  if (sforce.console.isInConsole()) {
+                        sforce.console.getEnclosingTabId(function(enclosingResult){
+                                sforce.console.getEnclosingTabId(function(primaryResult){
+                                        sforce.console.refreshSubtabById(primaryResult.id,true,null);
+                                });
+                        });
+                }
+        }
        
         function handleContactPopupData(fieldId, newValue)
         {
@@ -214,6 +281,9 @@
                 
                 <!-- SERVER FUNCTIONS -->
                 <apex:actionFunction name="saveServer" action="{!onSave}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus" onComplete="onSaveCompleteJs();{!IF(successfulSave, 'closeTab()', '')}"/>
+                <!-- AMSU-132 -->
+                <apex:actionFunction name="saveServerImport" action="{!saveImport}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus" />
+
                 <apex:actionFunction name="cancelServer" action="{!onCancel}" immediate="true"/>
                 <apex:actionFunction name="addEmptyRowServer" action="{!addEmptyRow}" reRender="selected, accounts, trainedstaff,messages, messages2" status="loadingStatus" />
                 <apex:actionFunction name="cloneLastRowServer" action="{!cloneLastRow}" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
@@ -228,7 +298,8 @@
                 <apex:actionFunction name="removeFromAcListServer" action="{!removeFromAcList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
                     <apex:param value="" assignTo="{!toUnselect}" name="toUnselect" />
                 </apex:actionFunction>
-                <apex:actionFunction name="removeFromTsListServer" action="{!removeFromTsList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
+                <!--AMSU-132 added oncomplete-->
+                <apex:actionFunction name="removeFromTsListServer" action="{!removeFromTsList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus" oncomplete="refreshtrainedstaff()">
                     <apex:param value="" assignTo="{!toUnselect}" name="toUnselect" />
                 </apex:actionFunction>
                 <apex:actionFunction name="removeFromAccountListServer" action="{!removeFromAccountList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
@@ -290,7 +361,7 @@
                 
                 
                 <!-- MAIN GRID -->
-                <div class="myapp slds-has-cards" id="mainGrid">
+                <div class="myapp slds-has-cards" id="mainGrid" style="height: 100vh; width: 100vw;">
 
                     <!-- SELECTED CONTACTS -->
                     <div class="slds-grid">
@@ -418,11 +489,11 @@
                                                             <apex:inputField value="{!s.ac.Financial_Assessment_Contact__c}" id="financialAssessment" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
-                                                            <apex:outputPanel rendered="{!isNewGenProcess}">
+                                                            <!-- <apex:outputPanel rendered="{!isNewGenProcess}"> -->
                                                                 {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Portal_administrator__c.Label}&nbsp;&nbsp;
-                                                            </apex:outputPanel>
-                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" rendered="{!AND(s.blockEdit,isNewGenProcess)}" html-disabled=""/>
-                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" id="portalAdmin" rendered="{!AND(NOT(s.blockEdit), isNewGenProcess)}"/>
+                                                            <!-- </apex:outputPanel> -->
+                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" rendered="{!s.blockEdit}" html-disabled=""/>
+                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" id="portalAdmin" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
                                                         
                                                     </tr>
@@ -701,9 +772,10 @@
                                 <apex:outputPanel id="trainedstaff">
                                     <apex:outputPanel id="tstaff" rendered="{!trainedStaffWrapper.size > 0}">
                                     <div class="slds-card__body" id="test2">
-                                        <div class="slds-media__body">
-                                            <h2 class="slds-text-heading--small slds-truncate slds-box"><b>Agency Trained Staff:</b></h2>
+                                        <div class="slds-media__body slds-box">
+                                            <h2 class="slds-text-heading--small slds-truncate"><b>Agency Trained Staff:</b></h2>
                                         </div>
+                                       
                                         <apex:variable value="{!0}" var="trainedStaffIndex" />
                                         <apex:repeat id="tstRepeat" value="{!trainedStaffWrapper}" var="tsw">
                                             <table id="wt" class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
@@ -810,6 +882,10 @@
                                             |&nbsp;
                                             <a href="#" onClick="addEmptyTrainedStaffRow();return false;">Add Trained Staff<span class="slds-assistive-text">entity type</span></a>
                                         </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!AND(OR(isNewProcess,isChangeProcess,isCertificationOSCAR),OR(isCargoAgency,isCASSAssociate))}">
+                                            &nbsp;|&nbsp;
+                                            <a href="#" onClick="showNewTrainedStaffDialog();return false;">Select Other Trained Staff<span class="slds-assistive-text">entity type</span></a>
+                                        </apex:outputPanel>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         <div class="slds-button-group" role="group">
                                             <button onClick="saveServerJs();return false;" id="saveButton" class="slds-button slds-button--brand">Save</button>
@@ -829,6 +905,116 @@
                     </div>
                 </apex:outputPanel>
             </apex:form>
+
+            <!-- AMSU-132 -->
+            <apex:outputPanel id="newTrainedStaffOP" >    
+                <div class="slds" >
+                <apex:form id="newTrainedStaff">
+                <apex:actionFunction name="refreshtrainedstaff" reRender="trainedstaff2" />
+                <div class="slds-modal slds-modal--large slds-border_right slds-border_left slds-border_top" aria-hidden="false" role="dialog" id="modal">
+                <div class="slds-modal__container">
+                <div class="slds-modal__header slds-border_right slds-border_left">
+                    <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="closeTrainedStaffModal()">
+                      <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                        <use xlink:href="/assets/icons/action-sprite/svg/symbols.svg#close"></use>
+                      </svg>
+                      <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading--medium">Import Agency Regulation Certificates</h2>
+                  </div>
+                  <div class="slds-modal__content slds-p-around--large">
+                    <div>
+                        
+                        
+
+                            <apex:outputPanel id="trainedstaff2">
+                                <apex:outputPanel id="tstaff" rendered="{!agRegValuesForDisplay.size > 0}">
+                                <div class="slds-card__body" id="test2">
+
+                                    <table id="wt" class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="slds-row-action slds-size--1-of-12" scope="col">
+                                                    <apex:inputCheckbox value="{!selectAll}">
+                                                        <apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="trainedstaff2"/>
+                                                    </apex:inputCheckbox></th>
+                                                <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Agency_Regulation__c.Fields.Certificate_Name__c.Label}</th>
+                                                <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Agency_Regulation__c.Fields.First_Name__c.Label}</th>
+                                                <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Agency_Regulation__c.Fields.Last_Name__c.Label}</th>
+                                                <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Agency_Regulation__c.Fields.Expiry_Date__c.Label}</th>
+                                                <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Agency_Regulation__c.Fields.OSCAR__c.Label}</th>
+                                                
+                                            </tr>
+                                        </thead>
+
+                                    
+                                            <apex:repeat id="tstRepeat" value="{!agRegValuesForDisplay}" var="arl">
+                                        
+                                            <tbody>
+                                                    <tr class="slds-hint-parent">
+                                                    <td class="slds-size--1-of-12">
+                                                        <apex:outputPanel >
+                                                            <apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!arl.agReg.Id}" value="{!arl.selected}"
+                                                            rendered="{!arl.enable}"/>
+                                                        </apex:outputPanel>
+                                                    </td>
+
+                                                        <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Agency_Regulation__c.Fields.Certificate_Name__c.Label}">
+                                                            <apex:outputField html-class="slds-input inputPointer" value="{!arl.agReg.Certificate_Name__c}"/>
+                                                        </td>
+                                                        <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Agency_Regulation__cAMS_Agency_Regulation__c.Fields.First_Name__c.Label}">
+                                                            <apex:outputField html-class="slds-input inputPointer" value="{!arl.agReg.First_Name__c}"/>
+                                                        </td>
+                                                        <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Agency_Regulation__cAMS_Agency_Regulation__cAMS_Agency_Regulation__c.Fields.Last_name__c.Label}">
+                                                            <apex:outputField html-class="slds-input inputPointer" value="{!arl.agReg.Last_Name__c}"/>
+                                                        </td>
+                                                    
+                                                        <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Agency_Regulation__c.Fields.Expiry_Date__c.Label}">
+                                                            <apex:outputField value="{!arl.agReg.Expiry_Date__c}" html-class="slds-input inputPointer"/>
+                                                        </td>
+
+                                                        <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Agency_Regulation__c.Fields.OSCAR__c.Label}">
+                                                            <a href="javascript:openSubtab('/{!arl.agReg.OSCAR__c}','{!arl.agReg.OSCAR__r.Name}');">{!arl.agReg.OSCAR__r.Name}</a>
+                                                        </td>
+
+                                                    </tr>
+                                            </tbody>
+                                            </apex:repeat>
+                                        </table>
+                                    
+                                </div>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                    </div>
+                  </div>
+                  <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="closeTrainedStaffModal()">Cancel</button>
+                    <apex:commandButton action="{!saveImport}" styleClass="slds-button slds-button--brand" onComplete="closeTrainedStaffModal()" value="Continue" reRender="form, trainedstaff, trainedstaff2" />
+
+
+                  </div>
+                  
+                </div>
+                </div>
+                <div class="slds-backdrop" id="backdrop"></div>
+                </apex:form>
+                </div>
+                </apex:outputPanel>
+                <!-- Modal Toggle Script -->
+                <script>
+                j$ = jQuery.noConflict();
+
+                //Modal Open
+                j$('#toggleBtn').click(function(){
+                  j$('#backdrop').addClass('slds-backdrop--open');
+                  j$('#modal').addClass('slds-fade-in-open');
+                });
+
+                </script>
+            
+            <!--###### MODAL BOX Part END Here ######-->
+            <!-- AMSU-132 - END -->
+            
         </apex:outputPanel>
     </div>
     <style type="text/css">

@@ -571,4 +571,28 @@
         <label>Closed Opt-out</label>
         <closed>false</closed>
     </standardValue>
+    <standardValue>
+        <fullName>Input requested</fullName>
+        <default>false</default>
+        <label>Input requested</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Reconsideration</fullName>
+        <default>false</default>
+        <label>Pending Reconsideration</label>
+        <closed>false</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Closed_Disapproved</fullName>
+        <default>false</default>
+        <label>Closed_Disapproved</label>
+        <closed>true</closed>
+    </standardValue>
+    <standardValue>
+        <fullName>Return application to customer</fullName>
+        <default>false</default>
+        <label>Return application to customer</label>
+        <closed>false</closed>
+    </standardValue>
 </StandardValueSet>

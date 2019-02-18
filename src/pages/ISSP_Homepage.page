@@ -194,6 +194,7 @@
 
     <div class="container">
    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+        <c:ISSP_Notification attShowPopUp="{!showSidraPopup}" attRecordId="{!sidraCaseIdToShow}"/>
           <div class="row">
 <apex:variable var="Compatilitymode" value="{!if(isIE == 'IE'  || isIE == 'notIE','none','block')}" />
     <div style="display:{!Compatilitymode}"  class="col-md-12 col-xs-12 alert alert-warning" >
@@ -219,7 +220,7 @@
                                                         <span class="{!if(caseList_ReqMyInput.size>0,"badge redbadge","badge")}">{!caseList_ReqMyInput.size}</span> </a>
                                                     </li>
 
-                                                    <li style="display:{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User',"","none")   }">
+                                                    <li style="display:{!if(isAdminUser,'','none')   }">
 
                                                         <!-- <a href="/ISSP_CaseList?ListViewName=3_MyCompanyOpenCases&mid=M1S2" value="" >{!$Label.ISSP_Homepage_All_Company_Open_cases} -->
                                                         <a href="/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="" >{!$Label.ISSP_Homepage_All_Company_Open_cases}
@@ -273,10 +274,9 @@
                               </div>
 <!--------------------------------------------end recent cases Section -------------------------------------------->
               <!--------------------------------------------Admin task  Section------------------------------------------>
-              <apex:outputPanel layout="block" id="admintasks" styleClass="col-md-4 col-xs-12 makelarge" rendered="{!$Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User'}">
+              <apex:outputPanel layout="block" id="admintasks" styleClass="col-md-4 col-xs-12 makelarge" rendered="{!isAdminUser}">
 
-              <apex:outputPanel layout="block" styleClass="{!IF($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User'
-            || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User',
+              <apex:outputPanel layout="block" styleClass="{!IF(isAdminUser,
             'panel primary blueborder',
             'col-md-4 col-xs-12 primary blueborder'
             )}">
@@ -323,18 +323,12 @@
                 <!--------------------------------------------Notification Section------------------------------------------>
               <apex:outputPanel layout="block" id="Notifications" styleClass="col-md-4 col-xs-12 makelarge">
 
-              <apex:outputPanel layout="block" styleClass=" {!IF($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User'
-            || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User',
-            'panel blueborder',
-            'panel panel-primary'
-            )}">
+              <apex:outputPanel layout="block" styleClass=" {!IF(isAdminUser,'panel blueborder','panel panel-primary')}">
                             <div class="panel-heading panel-halfsize">
                                   <h3 class="panel-title"><span class="glyphicon glyphicon-envelope"></span> {!$Label.ISSP_Homepage_My_Notifications}</h3>
                             </div>
 
-                                  <div id="my_notification" class="{!IF($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User'
-                                                                     || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User' ,
-                                                                     'mygrid-wrapper-div' ,'mygrid-wrapper-div-BasicUser')}">
+                                  <div id="my_notification" class="{!IF(isAdminUser,'mygrid-wrapper-div' ,'mygrid-wrapper-div-BasicUser')}">
                                         <ul class="nav1">
                                             <apex:repeat value="{!myNotificationsList}" var="not">
                                                 <li id="{!not.Id}"  class="notification-style" style="border-left:6px solid {!not.Notificatin_color__c}">
@@ -555,7 +549,7 @@
                               </div>
   <!--------------------------------------------- end Carousel banner Section -------------------------------------------->
 <!---------------------------------------------key docs Section -------------------------------------------->
-                              <div class="col-md-4 bottomrow"  id="KeyDocuments">
+                              <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="KeyDocuments" rendered="{!NOT(OR(isOpCalendarAirlineUser,isOpCalendarAgencyUser))}">
                                     <div class="panel panel-primary">
                                           <div class="panel-heading">
                                                 <h3 class="panel-title"><span class="glyphicon glyphicon-book"></span> {!$Label.ISSP_Popular_FAQs}</h3>
@@ -599,12 +593,17 @@
                                                     &nbsp;<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
                                                 </div>
 
-
-
                                           </div>
                                     </div>
-                              </div>
+                              </apex:OutputPanel>
+                              
+<!--------------------------------------------OperationalCalendar Section------------------------------------------>
+                            <apex:OutputPanel layout="block" styleclass="col-md-4 bottomrow"  id="OperationalCalendar" rendered="{!OR(isOpCalendarAirlineUser,isOpCalendarAgencyUser)}">
+                                <c:ISSP_OperationalCalendarMini />
+                            </apex:OutputPanel>
+<!-------------------------------------------- end OperationalCalendar Section--------------------------------------->
                         </div>
+                        
 
   <!--------------------------------------------services Section -------------------------------------------->
       <div class="row show-grid" style="display:none">

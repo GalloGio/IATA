@@ -62,7 +62,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>TrackingHistory</fullName>
-        <description>used for tracking purposes</description>
+        <description>used for tracking purposes - do NOT include any fields which cause mixed dml operations (e.g. profile, role, ...)</description>
         <displayedFields>
             <field>ToU_accepted__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -699,6 +699,17 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <formula>ContactId</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>FedContactId</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Federation_ID__c</fullName>
+        <description>Shows the federation Id to the permission set manage external users</description>
+        <externalId>false</externalId>
+        <formula>FederationIdentifier</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Federation ID</label>
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
@@ -2362,7 +2373,7 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filters>
             <field>FULL_NAME</field>
             <operation>contains</operation>
-            <value>Weydath</value>
+            <value>goh</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>
@@ -3461,36 +3472,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <sharedTo>
             <role>VPMACS</role>
         </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>TD</fullName>
-        <columns>FULL_NAME</columns>
-        <columns>CORE.USERS.DIVISION</columns>
-        <columns>CORE.USERS.ACTIVE</columns>
-        <columns>CORE.USERS.LAST_LOGIN</columns>
-        <columns>CORE.USER_ROLE.NAME</columns>
-        <columns>CORE.PROFILE.NAME</columns>
-        <columns>CREATED_BY_NAME</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.NAME</columns>
-        <columns>License_Cost_Center__c</columns>
-        <columns>CORE.USERS.USERNAME</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>CORE.USERS.EMAIL</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Portal_User_Frozen_Checkbox__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>LAST_UPDATE</field>
-            <operation>equals</operation>
-            <value>YESTERDAY</value>
-        </filters>
-        <label>TD</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>TTBS_Users</fullName>

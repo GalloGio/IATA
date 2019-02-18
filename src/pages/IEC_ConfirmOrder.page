@@ -37,6 +37,60 @@
 	<!--<![endif]-->
 
 		<head>
+			<!-- Google Tag Manager -->     
+	        <script>
+	            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	            })(window,document,'script','dataLayer','GTM-PWSNSM3');
+	        </script>
+	        <!-- End Google Tag Manager -->
+	        <script>
+	            function getDevice() {
+	                if (navigator.userAgent.match(/Tablet|Nexus|iPad/i)) {
+	                    return "Tablet";
+	                } else if(navigator.userAgent.match(/Mobile|Windows Phone|Lumia|Android|webOS|iPhone|iPod|Blackberry|PlayBook|BB10|Opera Mini|\bCrMo\/|Opera Mobi/i) ) {
+	                    return "Mobile";
+	                } else {
+	                    return "Desktop";
+	                }
+	            }
+
+	            window.dataLayer = window.dataLayer||[];
+				dataLayer.push({
+				    "user": {
+				        "email": "{!userDetails.userEmail}",
+				        "loginStatus": "{!userDetails.userLoginStatus}",
+				        "userId": "{!userDetails.userId}",   
+				        "zipCode": "{!userDetails.userZipCode}",
+				        "city": "{!userDetails.userCity}",
+				        "region": "{!userDetails.userRegion}",
+				        "country": "{!userDetails.userCountry}",
+				        "companyName": "{!userDetails.userCompany}",
+				        "userMemberStatus": "{!userDetails.userMemberStatus}",
+				        "userGender": "{!userDetails.userGender}"
+				    },
+				    "page": {
+				        "requestURI": window.location.pathname + window.location.search,
+				        "device": getDevice(),
+				        "breadcrumb": "Home > {!$Label.PageTitleConfirmOrder}", 
+				        "language": "{!language}"
+				    }
+				    
+				});
+
+				function pushFinalOrderSubmit(){
+                    //console.log('pushFinalOrderSubmit');
+				    dataLayer.push({
+                        "event": "purchase",
+                    	"ecommerce": {!productWrapper}
+				    
+					});
+                }
+
+	        </script>
+
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
 			<apex:stylesheet value="{!URLFOR($Resource.EcommerceAssets, 'css/styles.min.css')}" />
@@ -46,7 +100,10 @@
 		</head>
 
 		<body data-media-size="" class="page-checkout" data-is-modal-open="false" id="page-top">
-
+	        <!-- Google Tag Manager (noscript) -->
+	        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWSNSM3"
+	        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	        <!-- End Google Tag Manager (noscript) -->
 			<div id="js-breakpoint-finder">
 				<span class="device-xs screen-xsmall"/>
 				<span class="device-sm screen-small"/>
@@ -468,7 +525,7 @@
 					                <ul class="list actions text-right">
 					                    <li><apex:outputLink value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink></li>
 					                    <li>
-											<apex:actionFunction name="submitOrder" reRender="errorBloc,frmConfirmOrder, stepBloc,ContinueShopping" action="{!submitOrder}" status="submitStatus" oncomplete="$(window).scrollTop(0);j$.unblockUI();" />
+											<apex:actionFunction name="submitOrder" reRender="errorBloc,frmConfirmOrder, stepBloc,ContinueShopping" action="{!submitOrder}" status="submitStatus" oncomplete="$(window).scrollTop(0);j$.unblockUI();pushFinalOrderSubmit();" />
 								        	<button class="button wide" type="button" onclick="submitOrder();blockme();" style="{!IF(stopProcess, 'display:none', '')}">
 						                		{!$Label.Submit_Order}
 												<apex:actionStatus id="submitStatus"> 

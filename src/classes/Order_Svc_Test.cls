@@ -1307,6 +1307,7 @@ private class Order_Svc_Test
         lstOrder[1].BillTo_Location__c = locBillTo.Id;
         lstOrder[1].ShipTo_Location__c = locShipTo.Id;
         insert lstOrder;
+        
         List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItem(lstOrder[0].Id, 1, false);
         lstOrderItem.addAll(TestDataGenerator.generateOrderItem(lstOrder[1].Id, 1, false));
         insert lstOrderItem;

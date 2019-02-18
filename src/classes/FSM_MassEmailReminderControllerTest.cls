@@ -1,6 +1,6 @@
 @isTest
 private class FSM_MassEmailReminderControllerTest {
-	private static final string CASE_RECORDTYPE_FSM = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
+	private static final string CASE_RECORDTYPE_FSM = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Security_Monitoring');
 	//Create County codes
 	private static list<IATA_ISO_Country__c> CreateCountryCodes(){
 		list<IATA_ISO_Country__c> lsISO = new list<IATA_ISO_Country__c>();
@@ -63,10 +63,10 @@ private class FSM_MassEmailReminderControllerTest {
 	}
 	
 	private static map<string, EmailTemplate__c> CreateTemplates(list<IATA_ISO_Country__c> lsISO){
-		Recordtype recordtypeFSM = [Select Id, DeveloperName From RecordType where developerName like 'FSM' and sObjectType = 'EmailTemplate__c'];
+		Id recordtypeFSMId = RecordTypeSingleton.getInstance().getRecordTypeId('EmailTemplate__c', 'FSM');
 		list<EmailTemplate__c> lsET = new list<EmailTemplate__c>();
 		for(IATA_ISO_Country__c iso:lsISO){
-			lsET.add(new EmailTemplate__c(RecordtypeId = recordtypeFSM.Id, Template_Language__c = 'English', IATA_ISO_Country__c = iso.Id, Agent_Type__c='All'));//, UniqueId__c = ('FSM_' + iso.ISO_CODE__c + '_English')));
+			lsET.add(new EmailTemplate__c(RecordtypeId = recordtypeFSMId, Template_Language__c = 'English', IATA_ISO_Country__c = iso.Id, Agent_Type__c='All'));//, UniqueId__c = ('FSM_' + iso.ISO_CODE__c + '_English')));
 		}
 		
 		insert lsET;

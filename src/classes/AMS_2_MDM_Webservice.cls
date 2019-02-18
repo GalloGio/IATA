@@ -36,6 +36,8 @@ global class AMS_2_MDM_Webservice {
     
     @future(callout=true)
     static void sendAgenciesContent(String GroupID, String ChunkSize , String ChunkKey, String ChunkTotal, List<String> ids){
+        /*** AMSU-158 ***/
+        List<String> listOfErrors = new List<String>();
         
         //Initiate Log
         Technical_Logs__c tlog = new Technical_Logs__c();
@@ -106,7 +108,8 @@ global class AMS_2_MDM_Webservice {
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
                     Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c, ANG_Accreditation_Model__c, Remittance_frequency__c,
                     ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c, 
-                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c, //AMSU-158
+					Expiry_Date__c //AMSU-207
                     FROM Account where id in :ids
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
 
@@ -242,6 +245,44 @@ global class AMS_2_MDM_Webservice {
         }catch (Exception ex) {
                 system.debug('Log writing error: ' + ex.getMessage());
         }    
+
+        /*** AMSU-158 ***/
+        try {
+            if(listOfErrors != null && !listOfErrors.isEmpty()) {
+            	sendCSVReport(listOfErrors);
+            }
+        } catch(Exception ex) {
+            System.debug('Error sending report: ' + ex.getMessage());
+        }
+    }
+
+    /*** AMSU-158 ***/
+    public static void sendCSVReport(List<String> listOfErrors) {
+        String body = 'Account Id, Reason';
+        
+        for(String error : listOfErrors) {
+            body += error + '\n';
+        }
+
+        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+        message.subject = 'XML Generator report - ' + listOfErrors.size() + ' errors';
+        message.setPlainTextBody('XML Generator errors - Check attachment with execution results - ' + DateTime.now());
+
+        if(!listOfErrors.isEmpty()) {
+            Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
+            Blob csvReport = Blob.valueOf(body);
+            csvAttc.setFileName('XML Generator errors report.csv');
+            csvAttc.setBody(csvReport);
+            message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
+        }        
+        
+        Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
+
+        if(!Test.isRunningTest() && !String.isBlank(Label.AMS_XML_GEN_ERROR_RECEIVER)) {
+            List<String> emailAddresses = Label.AMS_XML_GEN_ERROR_RECEIVER.split(';');
+            message.setToaddresses(emailAddresses);
+            Messaging.sendEmail(messages);
+        }
     }
     
    
@@ -317,7 +358,8 @@ global class AMS_2_MDM_Webservice {
                     Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c,
                     ANG_Accreditation_Model__c, Remittance_frequency__c,
                     ANG_RiskStatus__c, ANG_IEP_Status_FF__c,Segmentation__c,Purge_Flag__c,Is_Branch_Abroad__c,
-                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c
+                    IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.BSP_Country_free_text__c, Reason__c, //AMSU-158
+                    Expiry_Date__c //AMSU-207
                     FROM Account where id = :agencyId];
 
 /* EOF NEWGEN-801 */

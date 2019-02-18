@@ -18,8 +18,8 @@ private class AMS_AgencyAChangeCodeTest {
 
         Boolean isPax = true;
 
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-        IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', AIMS_Area_Name__c = 'ITALY', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
         
 
@@ -47,8 +47,8 @@ private class AMS_AgencyAChangeCodeTest {
     static void createCaseAndOSCAR(Account theAccount, Contact theContact){
 
         // Create the Staging area for the Account
-        ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+        ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
         Case theCommunicationCase = new Case(RecordTypeId = rtCommCase, Subject =  theAccount.Name, 
                                             AccountId = (theAccount.ParentId == null ? theAccount.Id : theAccount.ParentId), ContactId = theContact.Id  );
@@ -74,7 +74,7 @@ private class AMS_AgencyAChangeCodeTest {
             insert theStagingConts;
 
         // Create OSCAR and Communication Case
-        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
         
         AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = theAccount.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = theStagingAcc.Id );
         insert theOscar;
@@ -96,7 +96,7 @@ private class AMS_AgencyAChangeCodeTest {
 
         List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c, Location_Class__c, Is_NewGen__c  from AMS_OSCAR__c];
 
-        List<Account> accountLst = [SELECT ID, Status__c from Account ];
+        List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c from Account ];
 
         if(accreditationLst.isEmpty())
             System.assert(true,false);

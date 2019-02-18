@@ -515,7 +515,7 @@ public with sharing class AMS_OSCAR_Automation {
                 }
             }
 
-            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES))
+            if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCHINACONVERSION))
                 && !hasFRRequiredStep) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Passed';
@@ -1229,6 +1229,26 @@ public with sharing class AMS_OSCAR_Automation {
         }
     }
     
+    public class AMS_OSCAR_Step38_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step38_succeeded');
+            String[] result = ANG_OscarProcessHelper.processRestrictFOP(oscar.id, oscar.ANG_Restrict_Credit_Card__c, oscar.ANG_Restrict_Cash__c);
+            if ('0' != result[0]) oscar.addError(result[1]);
+           
+           return '0' == result[0];
+        }
+    }
+
+    public class AMS_OSCAR_Step39_succeeded implements IClassFactory {
+        public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+            system.debug('Start AUTOMATION AMS_OSCAR_Step39_succeeded');
+           String[] result = ANG_OscarProcessHelper.processRestoreFOP(oscar.id, oscar.ANG_Restore_Credit_Card__c, oscar.ANG_Restore_Cash__c);
+           if ('0' != result[0]) oscar.addError(result[1]);
+           
+           return '0' == result[0];
+        }
+    }
+
     public class AMS_OSCAR_Step41_failed implements IClassFactory {
         public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
             system.debug('Start AUTOMATION AMS_OSCAR_Step41_failed.processWork');

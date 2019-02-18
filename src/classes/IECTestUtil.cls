@@ -222,7 +222,6 @@ public without sharing class IECTestUtil {
         Contact contact = new Contact(
             RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Contact', 'Standard_Contact')
             , AccountId = oAccount.Id
-                                                             
             , FirstName = 'Test'
             , LastName = 'User'
             , Title = 'TestTitle'
@@ -234,10 +233,10 @@ public without sharing class IECTestUtil {
         Id ownerId = IECUserManager.getIECContactOwnerId();
         
         if(ownerId != null){
-            contact.OwnerId = ownerId;
+        	contact.OwnerId = ownerId;
         }
         
-        return contact;    
+        return contact;
         
     }
     

@@ -207,6 +207,15 @@ public without sharing virtual class IEC_Cart {
 		return cartInstance;
 	}
 
+	//RN-INC421212
+	public static IEC_Cart initializer(){
+		if (cartInstance == null) {
+			cartInstance = new IEC_Cart();
+		} 
+
+		return cartInstance;
+	}
+
 	/**
 		Get the Serialization String for a Cart Item.
 
@@ -653,6 +662,7 @@ public without sharing virtual class IEC_Cart {
 
 			for (EComProduct_DTO ecomProduct : ecomProducts) {
 				if (ecomProduct.PriceInfo == null) {
+
 					deleteItem(ecomProduct.ProductNumber);
 					continue;
 				}
@@ -678,6 +688,19 @@ public without sharing virtual class IEC_Cart {
 				oi_dto.setupFee = setupFee;
 				oi_dto.unitPrice = Order_Svc.getUnitPrice(ecomProduct.PriceInfo, oi_dto.quantity, customerType);
 				oi_dto.subTotal = (oi_dto.unitPrice != null) ? (oi_dto.unitPrice * quantity) + setupFee : setupFee;
+
+				//used for google analytics
+				oi_dto.productNameAnalytic = JSON.serialize(ecomProduct.ProductName);
+				oi_dto.productNumber = ecomProduct.ProductNumber;
+    			oi_dto.productCategory = ecomProduct.Portfolio;
+    			oi_dto.productBrand = ecomProduct.ProductCategory;
+				oi_dto.productEdition = ecomProduct.Edition;
+    			oi_dto.productLanguage = ecomProduct.Language;
+    			oi_dto.productInventoryStatus = ecomProduct.InventoryStatus;
+				oi_dto.productAvailabilityDate = ecomProduct.AvailabilityDate;
+    			oi_dto.productMedia = ecomProduct.Media;
+    			oi_dto.productEffectiveTo = ecomProduct.EffectiveTo;
+
 
 				orderItems.add(oi_dto);
 			}
@@ -774,8 +797,6 @@ public without sharing virtual class IEC_Cart {
 
 		if (cartItemList != null && cartItemList.isEmpty() == false) {
 			for (CartItem cartItem : cartItemList) {
-				System.debug('cartItem: ' + cartItem);
-
 				cartItemByProductNumberMap.put(cartItem.productNumber, cartItem);
 			}
 
@@ -801,6 +822,7 @@ public without sharing virtual class IEC_Cart {
 			}		
 
 			for (CartItem cartItem : cartItemList) {
+
 				Product2 product = productMap.get(cartItem.productNumber);
 				PricebookEntry pricebookEntry;
 				EComProduct_DTO ecomProduct = ecomProductByProductNumberMap.get(cartItem.productNumber);
@@ -826,6 +848,7 @@ public without sharing virtual class IEC_Cart {
 						orderItem.Coupon__c = cartItem.coupon;
 
 						orderItemList.add(orderItem);
+
 					}
 				}
 			}
@@ -925,6 +948,12 @@ public without sharing virtual class IEC_Cart {
 		System.debug('getCartOrder() returning: ' + pendingOrder);
 
 		return pendingOrder;
+	}
+
+	//RN-INC421212
+	public void setPendingOrder(Order pendingOrder){
+		pendingOrder = pendingOrder;
+
 	}
 
 	/**

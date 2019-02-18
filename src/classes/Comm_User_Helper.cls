@@ -5,6 +5,7 @@ global without sharing class Comm_User_Helper {
   public static final string IEC = 'IEC';
   public static final string CNS = 'CNS';
   public static final String ONEIDENTITY = 'IDENTITY';
+  public static final string FRED = 'FRED';
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
@@ -159,7 +160,7 @@ global without sharing class Comm_User_Helper {
         String link ;
         String cleanUsername = u.userName.replace('+', plusReplacer);
 
-        if(community == ISSP || community == CNS || community == ONEIDENTITY){
+        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED){
             
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
@@ -174,26 +175,33 @@ global without sharing class Comm_User_Helper {
             system.debug('USERID: ' + userId);
             if (userId != null) {
             
-                string encodedPart = EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
+                String encodedPart = 'c='+EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
+
                 String template ='';
                 Map<String,String> emailWrap = new Map<String,String>();
 
-               if(community == ISSP || community == ONEIDENTITY){
-                  if(community == ISSP){
-                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_First_Login?c=' + encodedPart;
-                      template = 'Identity_Portal_ISSP_New_User';
-                    }else{
-                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?c=' + encodedPart;
+                if(community == ISSP || community == ONEIDENTITY || community == FRED ){
+                    link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?' + encodedPart;
+
+                    if(community == ISSP){
+                        link += '&serviceName=ISSP';
+                        template = 'Identity_Portal_ISSP_New_User';
+                    }else if(community == FRED){
+                        template = 'Identity_Portal_FRED_New_User';            
+                        link += '&serviceName=FRED';
+                    }
+                    else {
                       template = 'Identity_Portal_New_User';
                     }
 
+                    system.debug('aqui link :::' + link);  
                     emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link,Comm_User_Helper.ONEIDENTITY, community); 
 
                 }else if(community == 'CNS'){
-                    link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&c='+encodedPart;
+                    link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&'+encodedPart;
                     template = 'ISSP_New_Member_Welcome_Email_2_CNS'; 
                     emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');                   
-                  }
+                }
                 Comm_User_Helper.sendEmail( template ,emailWrap, con, community);
                 permissionASS(new list<Id>{userId});
             }
@@ -214,19 +222,15 @@ global without sharing class Comm_User_Helper {
                                         userID =  u.id;}
 
 
-            string encodedPart =EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
+            string encodedPart ='c='+EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
 
-             link = Site.getBaseUrl()+ '/IECFirstLogin?c='+encodedPart;
+             link = Site.getBaseUrl()+ '/IECFirstLogin?'+encodedPart;
             
             //TO ask Tiago why not for the ISSP? 
             if (userId != null) {
                 permissionASS(new list<Id>{userId});
                 Comm_User_Helper.sendEmail( 'IEC_Portal_New_User_Login_Information_English_Text' , Comm_User_Helper.IEC_builMessageWrapper( con ,  password ,  link),  con, community);
             }
-
-    
-      
-
 
         }
         
@@ -288,7 +292,12 @@ global without sharing class Comm_User_Helper {
                 // Build the header image URL from the document information
               imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();            
             // If there is a service name, that should determine the community name
-            if(!String.isBlank(serviceName)) commName = serviceName;
+            if(!String.isBlank(serviceName)) {
+                communityName = serviceName;
+                if(serviceName == 'FRED'){
+                    communityName += '+';
+                }
+            }
             else communityName = 'Identity';
         }
         if(commName != ONEIDENTITY) communityName = portalName + ' Customer Portal';
@@ -552,8 +561,8 @@ global without sharing class Comm_User_Helper {
                  emailWrap = Comm_User_Helper.IEC_builMessageWrapper( con ,  password ,  link);
 
               }else if(Community == ISSP){
-                  string prefix = Site.getBaseUrl() == null || Site.getBaseUrl() == '' ? OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) : Site.getBaseUrl();
-                  link = prefix + '/ISSP_First_Login?'+encodedPart;
+                  string prefix = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY);
+                  link = prefix + '/IdentityFirstLogin?serviceName=ISSP&'+encodedPart;
                   template = 'Communities_Forgot_Password_Email3';
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
               }else if(Community.contains('CNS')){
@@ -567,17 +576,12 @@ global without sharing class Comm_User_Helper {
                   string prefix = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY);
                   String serviceNameParam = String.isNotEmpty(serviceName) ? '&serviceName='+serviceName : '';
                   link = prefix + '/IdentityFirstLogin?'+encodedPart+serviceNameParam;
-                  //template = 'Communities_Forgot_Password_Email3';
                   if(serviceName == ISSP){
                     template = 'Identity_Changed_ISSP_Password_Email_Custom';
                   }else{
-                  template = 'Identity_Changed_Password_Email_Custom';
+                    template = 'Identity_Changed_Password_Email_Custom';
                   }
-                  
-                  //system.debug('basto1p: password='+password);
-                  // OneIdEnh CSP-ID002: Change parameters according to service name
-                  if(serviceName == ISSP)
-                      link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_First_Login?'+encodedPart;
+                
                   // OneIdEnh CSP-ID002: Added service name to method call
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, ONEIDENTITY, ServiceName);
               }

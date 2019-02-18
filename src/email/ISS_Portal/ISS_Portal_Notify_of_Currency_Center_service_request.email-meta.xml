@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template sent to the customer that requests Currency Center portal service</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>ISS Portal Notify of Currency Center service request</name>
+    <style>freeForm</style>
+    <subject>Access to Service requested</subject>
+    <textOnly>Dear {!Portal_Application_Right__c.Contact__c}
+
+
+Thank you for your interest in IATA’s Currency Center. Your request is being reviewed; we will reply to you shortly with all the participation details.
+
+
+Access to the new IATA Currency Center provides airline currency information from an economic, financial markets and IATA perspective for different set of countries. In this first version you will find information related to blocked funds countries and watch list countries. The onboarding of all other countries is gradually being added.
+
+
+Key Features:
+
+• IATA Currency Center differentiates countries under 3 categories:
+
+1. Blocked Funds
+
+2. Watch List
+
+3. All Others
+
+· View Currency Information for all Blocked Funds Countries and Watch List Countries identified (All Other Countries category gradually being added).
+
+• Stay up to date with key information in countries where currency repatriation are being delayed or blocked and informed on IATA’s advocacy plans
+
+• View historical information
+
+• Access downloadable Country Report
+
+• Access IATA’s Economic Regional Monthly Reports
+
+· IATA Heat Map Overview and Report
+
+· Notifications in case of new update
+
+
+Regards,
+
+IATA Financial and Distribution Services</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

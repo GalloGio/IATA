@@ -7,7 +7,10 @@
 	<aura:attribute type="Boolean" name="changeSector" default="true"/>
 	<aura:attribute type="Boolean" name="changeCategory" default="true"/>
 	<aura:attribute type="Boolean" name="changeName" default="true"/>
-
+	
+	<!-- INTERNAL ATTRIBUTES -->
+	<aura:attribute type="Object[]" name="suggestions" access="private"/>
+	<aura:attribute type="String" name="suggestionsMode" access="private" default="hidden"/>
 	<aura:attribute type="Map" name="accountLabels" access="private"/>
 	<aura:attribute type="Map" name="sectors" access="private"/>
 	<aura:attribute type="Integer" name="validBilling" default="0" access="private"/>
@@ -20,7 +23,8 @@
 	<aura:handler name="init" value="{!this}" action="{!c.handleInit}"/>
 	<aura:handler name="change" value="{!v.country}" action="{!c.changedCountry}"/>
 	<aura:handler name="change" value="{!v.account.Sector__c}" action="{!c.sectorChanged}"/>
-
+	
+	<aura:registerEvent name="addressSelected" type="c:OneId_AddressSelected_EVT"/>
 	<aura:handler name="addressSelected" event="c:OneId_AddressSelected_EVT" action="{!c.setAddress}"/>
 
 	<aura:method name="validateRequiredFields"/>
@@ -91,6 +95,36 @@
 			</div>
 		</div>
 	</div>
+	
+	<aura:if isTrue="{!v.suggestionsMode != 'hidden'}">
+		<div aura:id="suggestionsModal">
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Address Suggestions</h2>
+					</header>
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"  style="height: auto;">
+						<div role="listbox">
+							<ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid suggestion-list" role="presentation">
+								<aura:iteration items="{!v.suggestions}" var="address" indexVar="i">
+									<li role="presentation" class="slds-listbox__item" onclick="{!c.suggestionSelected}" data-row-index="{!i}">
+										<div class="slds-media slds-listbox__option slds-p-horizontal_small" role="option" >                                        
+											<div class="slds-listbox__option-text slds-listbox__option-text_entity" title="{!address.street+(empty(address.locality) ? '' : ','+address.locality)+(empty(address.province) ? '' : ','+address.province)+(empty(address.postalCode) ? '' : ','+address.postalCode)}">{!address.street+(empty(address.locality) ? '' : ','+address.locality)+(empty(address.province) ? '' : ','+address.province)+(empty(address.postalCode) ? '' : ','+address.postalCode)}</div>
+										</div>                            
+									</li>
+								</aura:iteration>
+							</ul>
+						</div>
+					</div>
+					<footer class="slds-modal__footer">
+						<button class="slds-button slds-button_neutral" onclick="{!c.closeModal}">Cancel</button>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</div>
+		
+	</aura:if>
 
 	<div class="slds-grid slds-wrap slds-gutters slds-grid_pull-padded-small slds-p-horizontal_medium">
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds slds-order_2 slds-medium-order_1">
@@ -128,7 +162,7 @@
 			<div class="slds-form-element slds-m-bottom_small">
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.BillingStreet}</label>
 				<div class="slds-form-element__control">
-					<c:OneId_AddressDoctorSearch countryCode="{!v.country.ISO_Code__c}" type="Billing" />
+					<c:OneId_AddressDoctorSearch countryCode="{!v.country.ISO_Code__c}" type="Billing" inputValue="{!v.account.BillingStreet}" />
 				</div>
 			</div>
 			<div class="slds-form-element slds-m-bottom_small">
@@ -218,7 +252,7 @@
 			<div class="slds-form-element">
 				<label class="slds-form-element__label">{!v.accountLabels.Website}</label>
 				<div class="slds-form-element__control">
-					<input type="url" value="{!v.account.Website}" class="slds-input "/>
+					<ui:inputURL aura:id= "website" value="{!v.account.Website}" class="slds-input "/>
 				</div>
 			</div>
 		</div>
@@ -239,7 +273,7 @@
 				<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_Office_Phone}</label>
 				<div class="slds-form-element__control">
 					<ui:inputPhone aura:id="officePhone" value="{!v.account.Phone}" class="phoneFormat slds-input" required="true" updateOn="keyup" keyup="{!c.validateNumber}" />
-				</div>				
+				</div>
 			</div>
 		</div>
 
@@ -261,5 +295,5 @@
 			</div>
 		</div>
 	</div>
-
+	
  </aura:component>

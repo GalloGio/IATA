@@ -32,25 +32,18 @@ public class NewLocalGroupMeetingCtrlTest{
     }
 
     public static void initTestData(Integer NRECORDS){
-        //List<User> users = [SELECT Id FROM User WHERE isActive = true AND Profile.Name = 'System Administrator' LIMIT 2 ];
-        
 
-        //Test.startTest();
-
-        //System.runAs(testUser){
             isocs = new List<IATA_ISO_Country__c>();
             isocs.add(new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy'));
             insert isocs;
 
-            RecordType rtLG =
-                  [SELECT Id, DeveloperName FROM RecordType
-                  WHERE SObjectType = 'LocalGovernance__c' AND DeveloperName = 'Local_Groups' LIMIT 1];
+            Id rtLGId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c','Local_Groups');
 
-            lg = new LocalGovernance__c(Cargo_Passenger__c='BSP', Local_Governance_type__c='ALWG', Country__c=isocs[0].Id, Active__c=true, recordtypeId=rtLG.Id);
+            lg = new LocalGovernance__c(Cargo_Passenger__c='BSP', Local_Governance_type__c='ALWG', Country__c=isocs[0].Id, Active__c=true, recordtypeId=rtLGId);
             insert lg;
 
-            Id rtHQ =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
-            Id rtAG =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+            Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+            Id rtAG =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
             Account acc = new Account(Name='Lufthansa', RecordTypeId = rtHQ, IATA_ISO_Country__c = isocs[0].Id);
             insert acc;
 
@@ -73,7 +66,7 @@ public class NewLocalGroupMeetingCtrlTest{
             for(Integer i = 0; i<NRECORDS; i++)
                 parts.add(new Participant__c(Contact__c=conts[i].Id, Local_Governance__c=lg.Id));
             insert parts;
-        //}
+            
     }
 
     static TestMethod void testLocalMeetingCreation(){
@@ -173,7 +166,7 @@ public class NewLocalGroupMeetingCtrlTest{
             Test.startTest();
 
         	// Create a new Local Group
-        	NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c(RecordTypeId = Schema.SObjectType.LocalGovernance__c.getRecordTypeInfosByName().get('Local Groups').getRecordTypeId())));
+        	NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups'))));
 
             lgctrl.lg.Cargo_Passenger__c = 'BSP';
             lgctrl.lg.Local_Governance_type__c = 'ICAP';
@@ -298,8 +291,8 @@ public class NewLocalGroupMeetingCtrlTest{
             insert testAttachment;
             Event testEvent = new Event(WhatId = mctrl.lm.Id, ActivityDateTime=System.Now(), DurationInMinutes=60);
             insert testEvent;
-            RecordType rtT = [SELECT Id FROM RecordType WHERE SObjectType='Task' AND DeveloperName='Standard'];
-            Task testTask = new Task(WhatId = mctrl.lm.Id, RecordTypeId = rtT.Id);
+            Id rtTId = RecordTypeSingleton.getInstance().getRecordTypeId('Task','Standard');
+            Task testTask = new Task(WhatId = mctrl.lm.Id, RecordTypeId = rtTId);
             insert testTask;
 
             //deactivate the group

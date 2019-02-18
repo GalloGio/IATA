@@ -194,8 +194,8 @@
         
         var popupStatus = 0;
         
-       $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN").click(function() {
-            
+            $("#SocialMediaforTandTIndustry-EN,#ServingtheTandTCustomer-EN,#SellingIntlRailTransportation-EN,#Leserviceauclientvoyageur-FR,#IntrotoBSPLink-EN,#IntroalSistemayLenguajeBSP-ES,#IntroalBSPlink-ES,#InformesyprocedimientosdefacturacionBSP-ES,#DestinationGeography-EN,#GeographyinTravelPlanning-EN,#FundamentalsJourneyPricing-EN,#Repricing\\,ExchangeandReissue-EN,#TravelAgencyFees-EN,#AssistTravelersSpecialNeeds-EN,#Notionsessent\\'lentarifetbillet-FR,#Adv\\.SkillsJourneyPriceTicket-EN,#ServingtheTravelCustomer-EN,#SocialMediaforTravelIndustry-EN,#Acc\\.Fin\\.Mgmtforagencies-EN,#BSPAgentBillingReportsProcedures-EN,#BSPAgentRemittanceProcedures-EN,#BSPEssentialsforTravelAgents-EN,#BSPStandardDocumentsProcedures-EN,#IntrototheBSPSystemLanguage-EN").click(function() {
+        
             //Aligning our box in the middle
             var windowWidth = document.documentElement.clientWidth;
             var windowHeight = document.documentElement.clientHeight;
@@ -238,10 +238,45 @@
             }
             if ($(this).is("#Repricing\\,ExchangeandReissue-EN")) {
                 $("#popup_Content").html("{!repricingExchangeReissue_Description}");
-            }
+            } 
             if ($(this).is("#TravelAgencyFees-EN")) {
                 $("#popup_Content").html("{!travelAgencyFees_Description}");
-            }           
+            }
+            //RN-INC419676
+            if ($(this).is("#AssistTravelersSpecialNeeds-EN")) {
+                $("#popup_Content").html("{!assisttravelersspecialneeds_Description}");
+            }       
+            if ($(this).is("#Notionsessent\\'lentarifetbillet-FR")) {
+                $("#popup_Content").html("{!notionsessentlentarifetbillet_Description}");
+            } 
+            if ($(this).is("#Adv\\.SkillsJourneyPriceTicket-EN")) {
+                $("#popup_Content").html("{!advskillsjourneypriceticket_Description}");
+            }
+            if ($(this).is("#ServingtheTravelCustomer-EN")) {
+                $("#popup_Content").html("{!servingthetravelcustomer_Description}");
+            }
+            if ($(this).is("#SocialMediaforTravelIndustry-EN")) {
+                $("#popup_Content").html("{!socialmediafortravelindustry_Description}");
+            }
+            if ($(this).is("#Acc\\.Fin\\.Mgmtforagencies-EN")) {
+                $("#popup_Content").html("{!accfinmgmtforagencies_Description}"); 
+            }
+            //RN-INC445559             
+            if ($(this).is("#BSPAgentBillingReportsProcedures-EN")) {
+                $("#popup_Content").html("{!IDCard_BSP_Agent_Billing_Reports_Procedures}");
+            }
+            if ($(this).is("#BSPAgentRemittanceProcedures-EN")) {
+                $("#popup_Content").html("{!IDCard_BSP_Agent_Remittance_Procedures}");
+            }
+            if ($(this).is("#BSPEssentialsforTravelAgents-EN")) {
+                $("#popup_Content").html("{!IDCard_BSP_Essentials_for_Travel_Agents}");
+            }
+            if ($(this).is("#BSPStandardDocumentsProcedures-EN")) {
+                $("#popup_Content").html("{!IDCard_BSP_Standard_Documents_Procedures}");
+            }
+            if ($(this).is("#IntrototheBSPSystemLanguage-EN")) {
+                $("#popup_Content").html("{!IDCard_Intro_to_the_BSP_System_Language}");
+            }             
             
             //centering
             $("#popupLogin").css({

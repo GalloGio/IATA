@@ -10,10 +10,10 @@ public  class AccountTriggerHelper {
     //if(!SectorCatToIndType )
     for (Account a : triggerNew) {
 
-      if ( (a.Sector__c == null || a.Category__c == null)
+      if ( ((a.Sector__c == null || a.Category__c == null)
            ||
            trigger.isUpdate &&
-           ( a.industry <> triggeroldMap.get(a.id).industry || a.Type <> triggeroldMap.get(a.id).Type)
+           ( a.industry <> triggeroldMap.get(a.id).industry || a.Type <> triggeroldMap.get(a.id).Type)) && a.Type_of__c != 'S'
          ) {
         a.Sector__c =  (a.Sector__c == null) || trigger.isUpdate && ( a.industry <> triggeroldMap.get(a.id).industry) ? a.Industry : a.Sector__c;
         a.Category__c =  (a.Category__c == null) || trigger.isUpdate && ( a.Type <> triggeroldMap.get(a.id).Type ) ? a.Type : a.Category__c ;
@@ -32,7 +32,7 @@ public  class AccountTriggerHelper {
   public static void AccountNoDuplicateBranch (list<Account> triggerNew, map<Id, Account> triggerOldMap) {
 
 
-    ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+    ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
     map<Integer, Account> TriggerNewAcctsMap = new map<Integer, Account>();
 
     Integer i = 0;
@@ -91,7 +91,7 @@ public  class AccountTriggerHelper {
 
 
 
-      set<String> developerNames = new set<String> {'IATA_Agency' , 'IATA_Airline_BR', 'IATA_Airline', 'IATA_GSA', 'IATA_GSA_BR', 'IATA', 'Others', 'Standard_Account'};
+      set<String> developerNames = new set<String> {'IATA_Agency' , 'IATA_Airline_BR', 'IATA_Airline', 'IATA_GSA', 'IATA', 'Others', 'Standard_Account'};
       map<Id, String> developerNamePerRecordTypeIds = new map<Id, String>();
       set<id> recordTypeIds = new set<id>();
       map<integer, Account> AccountPerInteger = new map<integer, Account>();
@@ -102,8 +102,8 @@ public  class AccountTriggerHelper {
 
 
 
-      for (String rTName : developerNames) {
-        ID rT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get(rtName) ;
+      for (String rtName : developerNames) {
+        ID rT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', rtName);
         developerNamePerRecordTypeIds.put(rT, rTname);
         recordTypeIds.add(rT);
       }
@@ -121,15 +121,16 @@ public  class AccountTriggerHelper {
                   )
            ) {
 
-          if (IsoIDPerAccount.get(a.IATA_ISO_Country__c) == null)
+          if (IsoIDPerAccount.get(a.IATA_ISO_Country__c) == null){
             IsoIDPerAccount.put(a.IATA_ISO_Country__c, new list<Integer>());
+          }
           IsoIDPerAccount.get(a.IATA_ISO_Country__c).add(i);
           IataIDs.add(a.IATA_ISO_Country__c);
           AccountPerInteger.put(i, a);
           i++;
 
 
-        } else  if (a.BillingCountry  <> NULL &&
+        } else if (a.BillingCountry  <> NULL &&
                     recordTypeIds.contains(a.RecordTypeId) &&
                     a.BillingCountry <> null &&
                     a.Is_AIMS_Account__c &&
@@ -156,7 +157,11 @@ public  class AccountTriggerHelper {
 
       if (!AccountPerInteger.isEmpty() ) {
 
-        list<IATA_ISO_Country__c> isoCountries =  [SELECT Id, Name, AIMS_Area_Name__c FROM IATA_ISO_Country__c WHERE ID IN:IataIDs OR AIMS_Area_Name__c IN:billingNames];
+        list<IATA_ISO_Country__c> isoCountriesByID = IATAIsoCountryDAO.getIsoCountriesByIds(IataIDs);
+        list<IATA_ISO_Country__c> isoCountriesByAIMSAreaName = IATAIsoCountryDAO.getIsoCountriesByAIMSAreaName(billingNames);
+
+        Set<IATA_ISO_Country__c> isoCountries = new Set<IATA_ISO_Country__c>(isoCountriesByID);
+        isoCountries.addAll(isoCountriesByAIMSAreaName); 
 
         Map<Id, String> mapISOCountriesNamePerId = new   Map<Id, String>();
         Map<String, Id> IdPerMapISOCountriesName = new   Map<String, Id>();
@@ -198,21 +203,23 @@ public  class AccountTriggerHelper {
 
     //  throw new transformationException('' +triggerNew);
 
-    set<string> fieldsToCheck = new set<String> {    'Type',
-        'Area_of_Operation__c',
-        'Type_of_Service__c',
-        'BSP_CI_Valid__c',
-        'BSP_FOC_Valid__c',
-        'CASS_CI_Valid__c',
-        'CASS_FOC_Valid__c',
-        'Airline_designator__c',
-        'IATACode__c',
-        'TradeName__c'  , 'ACLI_Status__c'
-                                                };
+    set<string> fieldsToCheck = new set<String> {
+      'Type',
+      'Area_of_Operation__c',
+      'Type_of_Service__c',
+      'BSP_CI_Valid__c',
+      'BSP_FOC_Valid__c',
+      'CASS_CI_Valid__c',
+      'CASS_FOC_Valid__c',
+      'Airline_designator__c',
+      'IATACode__c',
+      'TradeName__c',
+      'ACLI_Status__c'
+    };
 
-    ID hqRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline') ;
-    ID brRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline_BR') ;
-    ID StandardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+    ID hqRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+    ID brRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+    ID StandardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
     map<Id, list<Account>> branchesPerParentIDs = new map<Id, list<Account>>();
     //      throw new transformationException('' +triggerisInsert  );
@@ -285,11 +292,9 @@ public  class AccountTriggerHelper {
         'TradeName__c',  'ACLI_Status__c', 'Airline_Prefix__c'
                                                 };
 
-    //  map<string,id> developerNamePerId = TransformationHelper.AccRtNamePerIds();
-
-    ID hqRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline') ;
-    ID brRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Airline_BR') ;
-    ID StandardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+    ID hqRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+    ID brRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+    ID StandardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 
     map<Id, Account> parentAcctPerIds = new map<Id, Account>();
@@ -328,8 +333,24 @@ public  class AccountTriggerHelper {
 
       }
 
-      if (!childrenTOUpdate.isEmpty())
-        update childrenTOUpdate;
+    if (!childrenTOUpdate.isEmpty()){
+        Integer enqueuedJobs=[select count() from asyncApexJob where JobType = 'BatchApex' and status in ('Processing', 'Preparing', 'Queued')];
+        if(enqueuedJobs == 0){
+        	System.enqueueJob(new AsyncDML_Util(childrenTOUpdate, AsyncDML_Util.DML_UPDATE, false));
+    	}
+        else{
+            Datetime now = Datetime.now().addSeconds(3);
+            String hour = String.valueOf(now.hour());
+            String min = String.valueOf(now.minute()); 
+            String ss = String.valueOf(now.second());
+            String day = String.valueOf(now.day());
+            String month = String.valueOf(now.month());
+            String year = String.valueOf(now.year());
+            //parse to cron expression
+            String nextFireTime = ss + ' ' + min + ' ' + hour + ' ' + day + ' ' + month + ' ? ' + year;
+            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), nextFireTime, new AsyncDML_Util_Schedulable(childrenTOUpdate, AsyncDML_Util.DML_UPDATE, false));
+        }
+    }
     }
 
   }

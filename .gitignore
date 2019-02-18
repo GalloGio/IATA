@@ -41,6 +41,7 @@ src/staticresources/IEC_carrousel01.resource
 src/staticresources/eBroadcastAssets.resource
 src/applications/standard__Platform.app
 src/applications/standard__LightningSalesConsole.app
+src/applications/standard__LightningService.app
 src/layouts/Macro-Macro Layout.layout
 src/objects/CampaignMember.object
 
@@ -307,6 +308,26 @@ src/workflows/ZMG_Send_Survey_Email_to_Case_Contact_after_Case_Closed.workflow
 src/workflows/Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application.workflow
 src/workflows/RequestsForAccessSIQ.workflow
 src/workflows/StreamActivityAccess.workflow
+src/queues/CasesAmericasemails.queue
+src/queues/E_F_Airline_Services.queue
+src/queues/E_F_Client_Services.queue
+src/queues/E_F_Data_Transformation.queue
+src/queues/E_F_Invoice_and_accounting.queue
+src/queues/Local_Office_New_Zealand.queue
+src/queues/ICH_Help_Desk_ICH_Finance.queue
+src/queues/ICH_Help_Desk_ICH_General.queue
+src/queues/ICH_Help_Desk_ICH_Membership.queue
+src/queues/ICH_Help_Desk_ICH_Operations.queue
+src/queues/CasesRS.queue
+src/queues/DistributionAirlineManagementHOI.queue
+src/queues/SISCustomerSupportA.queue
+src/queues/CasesRS.queue
+src/queues/ICH_Help_Desk_ICH_Finance.queue
+src/queues/ICH_Help_Desk_ICH_General.queue
+src/queues/ICH_Help_Desk_ICH_Membership.queue
+src/queues/ICH_Help_Desk_ICH_Operations.queue
+src/queues/Cases_Emirates.queue
+src/queues/PCI_Cases_GDC_SIN.queue
 *.sublime-project
 *.sublime-settings
 *.sublime-workspace
@@ -337,3 +358,4 @@ config/*
 out
 config/*
 README.md
+uncrustify.cfg

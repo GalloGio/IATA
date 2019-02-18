@@ -114,10 +114,30 @@ public class Product_Svc
         Created by CGI - David D
            Call saveZProducts in Future mode
     *****************************************************************************************************/
+    //UNUSED - replaced by saveZProductsQueueable
     @future(callout=true)
     public static void saveZProductsFuture(Set<Id> productIds)
     {
         String result = saveZProducts(productIds);
+    }
+
+    /****************************************************************************************************
+        INC375801 - Susana Alves
+           Call saveZProducts in queueable mode
+    *****************************************************************************************************/
+
+     public class saveZProductsQueueable implements Queueable, Database.AllowsCallouts {
+
+        private Set<Id> productIds;
+
+        public saveZProductsQueueable(Set<Id> productIds){
+            this.productIds = productIds;
+        }
+
+        public void execute(QueueableContext context) {
+
+            String result = saveZProducts(productIds);
+        }
     }
 
     /****************************************************************************************************
@@ -829,19 +849,16 @@ public class Product_Svc
 			Boolean bSkipProdCompliance = false;
 			
 			// First check compliance at the country level
-			for (IATA_ISO_Country__c oCountry :
-					[SELECT Is_Non_Compliant__c
-					FROM IATA_ISO_Country__c
-					WHERE Is_Non_Compliant__c = true
-						AND ISO_Code__c IN :setCountryCode]) {
-				bSkipProdCompliance = true;
-			
-				for (Id idProduct : lstProduct2Id) {
-					mapProduct2Id_Compliance.put(idProduct, false);
-		    	}
-		    	
-		    	break;
-			}
+			for (IATA_ISO_Country__c oCountry : IATAIsoCountryDAO.getIsoCountryByIsoCodes(setCountryCode)){
+				if(oCountry.Is_Non_Compliant__c == true){
+    				bSkipProdCompliance = true;
+    			
+    				for (Id idProduct : lstProduct2Id) {
+    					mapProduct2Id_Compliance.put(idProduct, false);
+    		    	}
+	    	        break;
+		        }
+            }
     		
     		// Second check compliance at the product level
 	    	if (!bSkipProdCompliance) {

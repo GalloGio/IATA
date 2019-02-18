@@ -1,0 +1,48 @@
+<apex:component controller="ISSP_ICCS_FileUploadController" allowDML="true">
+    <apex:attribute name="caseProcessesCtrl" 
+    				description="" 
+    				type="ISSP_ICCS_CaseProcessesController" 
+    				required="true" 
+    				assignTo="{! caseProcessesController}"/>
+
+    <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+
+    <div id="fileUploadPanel" class="white_content">
+        <apex:outputPanel id="panelToRerender">
+            <apex:form enctype="multipart/form-data">
+                <div style="display:inline-block;">
+                    <apex:outputPanel>
+                        <apex:outputlabel value="{! $Label.ICCS_Upload_Label} {! caseProcessesController.uploadType}" style="padding-right:15px;"/>
+                        
+                        <br/><br/>
+                        
+                        <apex:inputFile value="{! fileBody}" filename="{! fileName}" contentType="{! contentType}"/>
+                        
+                        <apex:outputPanel rendered="{! filenameExists}">
+	                        <br/>
+							<apex:outputText value="{! $Label.ICCS_File_Exists_Message}" style="color:#FF0000;"/>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel rendered="{! noFileUploaded}">
+	                        <br/>
+							<apex:outputText value="No File Uploaded" style="color:#FF0000;"/>
+						</apex:outputPanel>
+
+						<div class="btn">
+	                        <apex:commandButton value="Save" action="{! upload}"/>
+							<apex:commandButton value="{! $Label.ICCS_Cancel_Action}" action="{! cancel}" styleClass="dlt-btn"/>
+						</div>
+                    </apex:outputPanel>
+					<br/>
+                </div>
+            </apex:form>            
+
+            <apex:form>
+				<apex:actionFunction name="displayPanelAF" action="{! displayPanel}" rerender="panelToRerender"/>
+            </apex:form>
+        </apex:outputPanel>
+    </div>
+    
+    <div id="fileUploadBackground" class="black_overlay"></div>
+
+</apex:component>

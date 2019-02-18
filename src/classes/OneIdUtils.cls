@@ -24,16 +24,58 @@ public without sharing class OneIdUtils {
         System.debug('getCommunityUrlName() RESULT='+COMMUNITY_URL_NAME);
         return COMMUNITY_URL_NAME;
     }
+
+    private static Map<String, String> networks{
+        get{
+            if(networks == null){
+                networks = new Map<String, String>();
+                for(Network n : [SELECT Id, Name FROM Network]) networks.put(n.Name, String.valueOf(n.Id).substring(0, 15));
+            }
+            return networks;
+        }
+        set;
+    }
     
     @AuraEnabled
     public Static String getSiteCompleteUrl (){
         return getSiteCompleteUrl(Mode.CURRENT);
-    }
-    
+    }    
+   
     @AuraEnabled
-    public Static String getSiteCompleteUrl (Mode m){
+    public Static String getCommunityRedirection (Mode m, String startUrl){
+        String networdUrl = '/servlet/networks/switch?networkId=';
+        String sUrl = '';
+        
+        if(startUrl != '') sUrl = '&startURL='+EncodingUtil.urlEncode(startUrl, 'UTF-8');        
+
+        System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] Mode - ' + m);
+        if(m == Mode.CURRENT) COMMUNITY_COMPLETE_URL = Site.getBaseUrl();
+        else{            
+            String netMode;
+            
+            if(m == Mode.ISSP) netMode = 'IATA Portal';
+            if(m == Mode.IDENTITY) netMode = 'identity';
+            
+            String networkId = networks.get(netMode);
+            
+            System.debug('final url ' + networdUrl+networkId+sUrl);
+            
+            COMMUNITY_COMPLETE_URL = networdUrl+networkId+sUrl;
+
+        }
+        
+        if(String.isEmpty(COMMUNITY_COMPLETE_URL)){
+            COMMUNITY_COMPLETE_URL= getOrgUrl()+(String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
+        }
+        
+        System.debug('____ [cls OneIdUtils - getCommunityRedirection] final URL - ' + COMMUNITY_COMPLETE_URL);
+        
+        return COMMUNITY_COMPLETE_URL;
+    }
+
+     public static String getSiteCompleteUrl(Mode m){
         String identityPortal =String.ValueOF(ISSP_CS__c.getValues('IdentityPortal').value__c);
-    	String csPortal =String.ValueOF(ISSP_CS__c.getValues('Host').value__c);
+        String csPortal =String.ValueOF(ISSP_CS__c.getValues('Host').value__c);
         String defaultProtocol = 'https://';
         
         System.debug(loggingLevel.FINE, '____ [cls OneIdUtils - getSiteCompleteUrl] Mode - ' + m);
@@ -42,7 +84,6 @@ public without sharing class OneIdUtils {
         else if (m == Mode.ISSP && String.isNotEmpty(csPortal)) COMMUNITY_COMPLETE_URL = defaultProtocol+csPortal;
         else if (m == Mode.CURRENT) COMMUNITY_COMPLETE_URL = Site.getBaseUrl();
         
-
         if(String.isEmpty(COMMUNITY_COMPLETE_URL)){
             COMMUNITY_COMPLETE_URL= defaultProtocol+getOrgUrl()+(String.isEmpty(getCommunityUrlName()) ? '' : '/' + getCommunityUrlName());
         }
@@ -51,26 +92,6 @@ public without sharing class OneIdUtils {
         
         return COMMUNITY_COMPLETE_URL;
     }
-	
-	public static void fakemethod () {
-		Integer i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-	
-	}
-	
-	
+
+
 }

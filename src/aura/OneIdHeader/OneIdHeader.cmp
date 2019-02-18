@@ -18,21 +18,30 @@
 	<aura:if isTrue="{!v.loaded}">
 
 		<div class="oiHeader slds-grid slds-wrap slds-grid_align-spread slds-size_1-of-1">
+                     
+            <div id="headerBar" class="slds-col slds-size_1-of-1">&nbsp;</div>
 
 			<div class="slds-col slds-max-small-size_1-of-1" id="suiteBar">
 		        
 
                 <aura:if isTrue="{!v.blockLogo}">
-                    <a class="homeIcon" >
+                    <a class="homeIcon loginIcon" >
                         <span class="icon icon-logo"></span>
                         <span class="{!'subLogo' + v.serviceName}"></span>
                     </a>
                     <aura:set attribute="else">
-                        <a class="homeIcon" href="{!'/' + (empty(v.serviceName) ? $Label.c.OneId_Community_Name : v.serviceName)}">
+                        <a class="homeIcon loginIcon" href="{!'/' + (empty(v.serviceName) ? $Label.c.OneId_Community_Name : v.serviceName)}">
                             <span class="icon icon-logo"></span>
                             <span class="{!'subLogo' + v.serviceName}"></span>
                         </a>
                     </aura:set>
+                </aura:if>
+
+                <aura:if isTrue="{!equals(v.serviceName,'FRED')}">                        
+                    <a class="homeIcon" href="{!'/'+ $Label.c.OneId_Community_Name+'/login/?language=en_US&amp;serviceName='+v.serviceName}">
+                        <span class="icon icon-logo"></span>
+                        <span class="{!'subLogo' + v.serviceName}"></span>
+                    </a>
                 </aura:if>
 		    </div>
 
@@ -45,8 +54,7 @@
                     </lightning:select>
                 </aura:if>
             </div>
-
-			<div id="headerBar">&nbsp;</div>
+            
 		</div>
     	
         <aura:set attribute="else">

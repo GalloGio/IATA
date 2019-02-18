@@ -61,12 +61,17 @@ public class AMS_ChangeCodesHelper {
     
     public class ObjectChangesStruct {
 
+        public Account acc;
         public List<ObjectChange> changes{get;set;}
 
         public ObjectChangesStruct(List<ObjectChange> changes){
-
             this.changes = changes;
+        }
 
+
+        public ObjectChangesStruct(List<ObjectChange> changes, Account acc){
+            this.changes = changes;
+            this.acc = acc;
         }
 
     }
@@ -327,7 +332,7 @@ public class AMS_ChangeCodesHelper {
 
 
         //update Agency Status
-        String newVal = AMS_Utils.getIATAReadableStatus(changeCode.status);
+        String newVal = oscarAgency.CNS_Agency__c ? AMS_Utils.getCNSReadableStatus(changeCode.status) : AMS_Utils.getIATAReadableStatus(changeCode.status);
 
 
         System.debug('Change code status is ' + changeCode.status);
@@ -407,9 +412,9 @@ public class AMS_ChangeCodesHelper {
      generateChangeCodes for Agency Changes from a Custom Setting Mapping
     */
 
-    public static AMS_Utils.Container generateChangeCodes(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config, Map<Id, Account> accounts, Map<Id, Agency_Applied_Change_code__c> accountsPrevChangeCode, String action, Set<Id> allHierarchyAccountsToApplyCC) {
+    public static AMS_Utils.Container generateChangeCodes(AMS_OSCAR__c oscar, AMS_AgencyChangesConfig__c config, List<Account> accountsInvolved, String action) {
 
-        System.debug('AGENCY CHANGES: Accounts to apply change code: ' + allHierarchyAccountsToApplyCC);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] Accounts to apply change code: - ' + (new Map<Id, Account>(accountsInvolved).keySet()));
 
         List<AMS_OSCAR_JSON.ChangeCode> changeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
         List<Account> accts = new List<Account>();
@@ -418,25 +423,23 @@ public class AMS_ChangeCodesHelper {
         AMS_OSCAR_JSON.ChangeCode changeCode;
         String changeCodeIdentifier;
 
-        if (action == AMS_Utils.SANITYCHECK)
-            changeCodeIdentifier = AMS_AgencyChangesConfigHelper.getSanityCheckChangeCode(config.config);
-        else if (action == AMS_Utils.APPROVAL)
-            changeCodeIdentifier = AMS_AgencyChangesConfigHelper.getManagerApprovalChangeCode(config.config);
-        else if (action == AMS_Utils.WITHDRAWAL)
-            changeCodeIdentifier = AMS_AgencyChangesConfigHelper.getWithdrawalChangeCode(config.config);
+        if (action == AMS_Utils.SANITYCHECK) changeCodeIdentifier = config.TCA_Sanity_check__c;
+        else if (action == AMS_Utils.APPROVAL) changeCodeIdentifier = config.TCA_Manager_approval__c;
+        else if (action == AMS_Utils.WITHDRAWAL) changeCodeIdentifier = config.TCA_Application_withdrawal__c;
 
-        system.debug('AGENCY CHANGES: Change code to apply: ' + changeCodeIdentifier);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] Change code to apply - ' + changeCodeIdentifier);
+
         if (changeCodeIdentifier != null) {
 
             //in this case apply change code only to the account related to the oscar
             //if (allHierarchyAccountsToApplyCC == null)
             //  allHierarchyAccountsToApplyCC.add(oscar.Account__c);
 
-            for (Id acc : allHierarchyAccountsToApplyCC) {
-                Account accToUpdateStatus = accounts.get(acc);
-                if (accToUpdateStatus != null) {
+            for (Account acc : accountsInvolved) {
+                if (acc != null) {
 
-                    changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
+                    Agency_Applied_Change_code__c aacc = acc.Agencies_Applied_Change_codes__r.isEmpty() ? null : acc.Agencies_Applied_Change_codes__r[0];
+                    changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, oscar.Type_of_Change__c, acc.Status__c, aacc, action);
                     
                     if(changeCode != null) {
 
@@ -444,10 +447,10 @@ public class AMS_ChangeCodesHelper {
 
                         /*if (changeCode.status != null) {
                             system.debug('CHANGE ACCOUNT STATUS: ' + changeCode.status + ' CONVERT: ' + AMS_Utils.getIATAReadableStatus(changeCode.status));
-                            accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCode.status);
+                            acc.Status__c = AMS_Utils.getIATAReadableStatus(changeCode.status);
                         }*/
 
-                        accts.add(accToUpdateStatus);
+                        accts.add(acc);
                         oscars.add(oscar);
 
                     }
@@ -457,89 +460,71 @@ public class AMS_ChangeCodesHelper {
 
         }
 
-        system.debug('AGENCY CHANGES: changeCodes: ' + changeCodes);
-        system.debug('AGENCY CHANGES: Accounts: ' + accts);
-        system.debug('AGENCY CHANGES: oscars: ' + oscars);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] changeCodes: ' + changeCodes);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] Accounts: ' + accts);
+        System.debug(loggingLevel.FINE, '____ [cls AMS_ChangeCodesHelper - generateChangeCodes] oscars: ' + oscars);
 
         return new AMS_Utils.Container(changeCodes, accts, oscars);
     }
 
-    public static AMS_Utils.Container generateVRChangeCode(String step, AMS_Oscar__c oscar, Set<Id> accountsInvolved, Map<Id, Account> accounts, Map<Id, Agency_Applied_Change_code__c> accountsChangeCode) {
+    public static AMS_Utils.Container generateVRChangeCode(String step, AMS_Oscar__c oscar, List<Account> accounts) {
        
         List<AMS_OSCAR_JSON.ChangeCode> changeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
         List<Account> accountsToReturn = new List<Account>();
         List<AMS_Oscar__c> oscars = new List<AMS_Oscar__c>();
 
-        for(Id accId : accountsInvolved){
-            Account acc = accounts.get(accId);
-            Agency_Applied_Change_code__c lastChangeCode = accountsChangeCode.get(accId);
+        String identifier = oscar.Business_process__c + '-VR-';
+        //AMSU-161
+        if(oscar.Business_process__c == null && oscar.Current_Step__c == 'STEP31__c' && oscar.Documentation_remarks__c == 'OSCAR FOR VR by Appointment Termination' )
+            identifier = 'AMS-VR-';
+
+        if(Test.isRunningTest()){
+            AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-VRR', Change_Code__c = 'VRR', Account_status_change__c = null);
+            AMS_ChangeCodes__c cc2 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-NOT', Change_Code__c = 'NOT', Account_status_change__c = '6');
+            AMS_ChangeCodes__c cc3 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-CLO', Change_Code__c = 'CLO', Account_status_change__c = '0');
+            AMS_ChangeCodes__c cc4 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-REI', Change_Code__c = 'REI', Account_status_change__c = '9', Reason_Code__c = '91');
+            AMS_ChangeCodes__c cc5 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-NTW', Change_Code__c = 'NTW', Account_status_change__c = '9', Reason_Code__c = '91');
+            AMS_ChangeCodes__c cc6 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name='AMS-VR-VRW', Change_Code__c = 'VRW', Account_status_change__c = null);
+            upsert new List<AMS_ChangeCodes__c>{cc1, cc2, cc3, cc4, cc5, cc6};
+        }
+        
+        if(step == AMS_Utils.SANITYCHECK) identifier += 'VRR';             
+        else if(step == AMS_Utils.SUSPENSION) identifier += 'NOT';
+        else if(step == AMS_Utils.TERMINATION) identifier += 'CLO';
+        else if(step == AMS_Utils.WITHDRAWAL && oscar.Termination_result__c == AMS_Utils.PASSED) identifier += 'REI';
+        else if(step == AMS_Utils.WITHDRAWAL && oscar.Suspension_result__c == AMS_Utils.PASSED) identifier += 'NTW';
+        else if(step == AMS_Utils.WITHDRAWAL && oscar.Process__c == AMS_UTils.VOLRELINQUISH) identifier += 'VRW';
+
+        AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance(identifier);
+
+        if(config == null) return null;
+
+        for(Account acc : accounts){
+            Agency_Applied_Change_code__c lastChangeCode = acc.Agencies_applied_change_codes__r.isEmpty() ? null : acc.Agencies_applied_change_codes__r[0];
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-            if(step == AMS_Utils.SANITYCHECK){
-                changeCode.name = 'VRR';
-                changeCode.memoText = 'Advance notification for voluntary relinquishment by Agent by '+oscar.Change_Effective_as_of__c.format();
-                changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
+            changeCode.name = config.Change_Code__c;
+            changeCode.memoText = (config.Bulletin_Memo_Text__c + ' ' + config.Bulletin_Memo_Text2__c + ' ' + config.Bulletin_Memo_Text3__c).replaceAll('null', '').replaceAll('#DATE#', oscar.Change_Effective_as_of__c.format()).replaceAll('#CLASS#', acc.Location_Class__c == 'R' ? 'Cass Associate' : 'Agent').trim();
+            changeCode.publishedOnEBulletin = config.Published_in_bulletin__c;
 
-                // lastChangeCode can be null so,
+            if(String.isEmpty(config.Account_status_change__c)){
+                changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
                 changeCode.reasonCode = lastChangeCode == null? '' : lastChangeCode.Reason_Code__c;
-                changeCode.reasonDesc = lastChangeCode == null? '' : lastChangeCode.Reason_Description__c;                
-            }else if(step == AMS_Utils.SUSPENSION){
-                String accType = acc.Location_Class__c == 'R' ? 'Cass Associate' : 'Agent';
-
-                changeCode.name = 'NOT';
-                changeCode.memoText = accType + ' is served Notice of Termination pursuant to Voluntary Relinquishment';
-                changeCode.reasonCode = '62';
-                changeCode.reasonDesc = 'RELINQUISHMENT IN PROCESS';
-                changeCode.status ='6';
-            }else if(step == AMS_Utils.TERMINATION){
-                String accType = acc.Location_Class__c == 'R' ? 'Cass Associate' : 'Agent';
-
-                changeCode.name = 'CLO';
-                changeCode.memoText = 'Agent Terminated due to Voluntary Relinquishment';
-                changeCode.reasonCode = '02';
-                changeCode.reasonDesc = 'VOLUNTARY RELINQUISHMENT';
-                changeCode.status ='0';
-            }else if(step == AMS_Utils.WITHDRAWAL && oscar.Termination_result__c == AMS_Utils.PASSED){
-
-                changeCode.name = 'REI';
-                changeCode.memoText = 'Agent is re-entered on Agency List following the Agency Administrator\'s decision';
-                changeCode.reasonCode = '91';
-                changeCode.reasonDesc = 'ACCREDITED-MEET-STANDARDS';
-                changeCode.status ='9';
-            }else if(step == AMS_Utils.WITHDRAWAL && oscar.Suspension_result__c == AMS_Utils.PASSED){
-
-                changeCode.name = 'NTW';
-                changeCode.memoText = 'Voluntary relinquishment request cancelled by the Agent. Agent is retained back to IATA Agency List';
-
-                if(AMS_Utils.getIATANumericStatus(acc.Status__c) == '8'){ 
-                    changeCode.status ='8';
-
-                    // lastChangeCode can be null so,
-                    changeCode.reasonCode = lastChangeCode == null? '' : lastChangeCode.Reason_Code__c;
-                    changeCode.reasonDesc = lastChangeCode == null? '' : lastChangeCode.Reason_Description__c;  
-                }else{
-
-                    changeCode.reasonCode = '91';
-                    changeCode.reasonDesc = 'ACCREDITED-MEET-STANDARDS';
-                    changeCode.status ='9';
-                }
-
-            }else if(step == AMS_Utils.WITHDRAWAL && oscar.Process__c == AMS_UTils.VOLRELINQUISH){
-
-                changeCode.name = 'VRW';
-                changeCode.memoText = 'Voluntary Relinquishment Request withdrawn by Agent.';
-                changeCode.status = AMS_Utils.getIATANumericStatus(acc.Status__c);
-
-                // lastChangeCode can be null so,
+                changeCode.reasonDesc = lastChangeCode == null? '' : lastChangeCode.Reason_Description__c;
+            }else if(identifier == 'AMS-VR-NTW' && AMS_Utils.getIATANumericStatus(acc.Status__c) == '8'){ 
+                changeCode.status ='8';
                 changeCode.reasonCode = lastChangeCode == null? '' : lastChangeCode.Reason_Code__c;
                 changeCode.reasonDesc = lastChangeCode == null? '' : lastChangeCode.Reason_Description__c;  
+            }else{
+                changeCode.status = config.Account_status_change__c;
+                changeCode.reasonCode = config.Reason_Code__c;
+                changeCode.reasonDesc = config.Reason_Code_Description__c;
             }
 
             changeCodes.add(changeCode);
             accountsToReturn.add(acc);
             oscars.add(oscar);
         }
-
 
         return new AMS_Utils.Container(changeCodes, accountsToReturn, oscars);
     }
@@ -557,6 +542,9 @@ public class AMS_ChangeCodesHelper {
         codeToCreate.Change_Code__c = changeCodeConfig.Change_Code__c;
         codeToCreate.Bulletin_Information__c = changeCodeConfig.Bulletin_Memo_Text__c;
         codeToCreate.To_Publish_in_e_Bulletin__c = changeCodeConfig.Published_in_bulletin__c;
+        codeToCreate.Reason_Code__c = acc.Reason__c.left(2);
+        codeToCreate.Reason_Description__c = acc.Reason__c.right(acc.Reason__c.length()-3);
+        codeToCreate.AccountNewStatus__c = acc.Status__c;
         codeToCreate.Account__c = acc.Id;
         System.debug('## codeToCreate: '+codeToCreate);
 
@@ -607,7 +595,7 @@ public class AMS_ChangeCodesHelper {
             string sValue = null;
                 sValue = (string)NewAccountValues.get(sFieldToCheck);
 
-            if(sValue==null)	 return false;
+            if(sValue==null)     return false;
             setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
             if(setValues.contains(sValue.toUpperCase()))
                 return true;
@@ -674,9 +662,11 @@ public class AMS_ChangeCodesHelper {
 
     public static Map<Id,List<Agency_Authorization__c>> fetchFormsOfPayment(Set<Id> accsIds){
 
-        Id aaRTId = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
         Map<Id,List<Agency_Authorization__c>> fOPs = new Map<Id,List<Agency_Authorization__c>>();
+
+        if(accsIds.isEmpty()) return fOPs;
         for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c = 'Active']){
             if(fOPs.keySet().contains(fop.Account__c))
                 fOPs.get(fop.Account__c).add(fop);

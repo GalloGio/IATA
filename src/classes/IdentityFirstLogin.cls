@@ -45,15 +45,15 @@ public class IdentityFirstLogin {
                         
                         if(!test.isRunningTest()){
                             //ApexPages.PageReference lgn = Site.login(userName, passWord, '/identity/s/changePassword');
-                            aura.redirect(Site.login(userName, passWord, OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY).removeEnd('/s') + '/OneId_ChangePassword?'+serviceNameParam));
+                            aura.redirect(Site.login(userName, passWord, OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/OneId_ChangePassword?'+serviceNameParam)));
                         }
                     } else {
                         if(!test.isRunningTest()){
                             //ApexPages.PageReference lgn = new PageReference('/identity/s');
                             if(serviceName == 'ISSP'){
-                                aura.redirect(new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.ISSP) + '/ISSP_Home'));
+                                aura.redirect(new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP,'/ISSP_Home')));
                             }else{
-                                aura.redirect(new PageReference(OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '?'+serviceNameParam));
+                                aura.redirect(new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam)));
                             }
                         }
                     }

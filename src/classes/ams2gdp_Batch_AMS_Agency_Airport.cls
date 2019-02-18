@@ -26,23 +26,11 @@ global class ams2gdp_Batch_AMS_Agency_Airport implements Database.Batchable<sObj
 		processNextBatch = runNext;
 		extraIds = ids;
 
-		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
-
 		String fields = ' Id, Name, Airport__r.Code__c, Account__c ';
 
-		//-- Query conditions 
-		// String accreditation_condition = 'SELECT Related_Account__c '
-		// 	+	'FROM Accreditation__c '
-		// 	+	'WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\')'
-		// 	+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
-
-		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
-			, 'Account__r.IATACode__c != null'
-            , 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-            , 'Account__r.CNS_Agency__c = false'
-			, 'Account__r.CNS_Account__c = false'
-			// , 'Account__c IN ('+accreditation_condition+')'
-		}; 
+		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''}; 
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+ 
 
 		if(extraIds!=null && extraIds.size() > 0) {
 			 if(extraIds[0]=='none'){	
@@ -97,32 +85,6 @@ global class ams2gdp_Batch_AMS_Agency_Airport implements Database.Batchable<sObj
 			new List<String>{fields,String.join(conditions, ' AND ')}
 		);
 
-		/*String accreditation_condition = 'SELECT Related_Account__c '
-			+	'FROM Accreditation__c '
-			+	'WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\')'
-			+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
-
-
-		String batch_info_condition = ''; 
-		AMS_GDP_Batch__c batch_info = ams2gdp_Selector.getBatchInfo(batchName); 
-
-		if(batch_info != null)
-		{
-			batch_info_condition = String.format(' AND (LastModifiedDate >= {0} ', new List<String>{batch_info.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
-			
-			//-- Include failed records
-			if(String.isNotBlank(batch_info.Failed_Records__c))
-			{
-				batch_info_condition += ' OR Id IN (\'' + String.join(batch_info.Failed_Records__c.split(';'), '\' , \'') + '\') ';
-			}
-			batch_info_condition += ' )';
-		}
-
-		query = String.format('SELECT {0} '
-			+	'FROM AMS_Agency_Airport__c '
-			+ 	'WHERE (Account__r.RecordTypeId= {1} AND Account__r.IATACode__c != null AND Account__c IN ({2}) {3}) ',
-			new List<String>{fields,'\''+recordTypes.get('Agency')+'\'',accreditation_condition, batch_info_condition}
-		);*/
 	}
     
     global ams2gdp_Batch_AMS_Agency_Airport() 
