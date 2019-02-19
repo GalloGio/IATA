@@ -27228,6 +27228,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <errorDisplayField>Location_Type__c</errorDisplayField>
         <errorMessage>The Location Type can not be changed from HO to BR.</errorMessage>
     </validationRules>
+    <validationRules>
         <fullName>ISSP_AMS_T_C_Accepted_on_Submit</fullName>
         <active>false</active>
         <errorConditionFormula>Submitted_to_IATA__c ==TRUE &amp;&amp; Accept_terms_and_conditions__c == FALSE</errorConditionFormula>
