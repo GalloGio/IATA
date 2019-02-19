@@ -121,42 +121,31 @@ public class Product_Dom {
     }
 
     private void onAfterUpdate() {
-        Boolean isAcceptedPaymentMethodsUpdate = false;
-
         //On demand test run
         if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger Product') != 1) return;
-
-        if (Utility.getNumericSetting('Sandbox Reference Data Sync') == 1) {
-            return;
-        }
+        if (Utility.getNumericSetting('Sandbox Reference Data Sync') == 1) return;
 
         getData(true, true);
 
-        isAcceptedPaymentMethodsUpdate = true;
+        Boolean isAcceptedPaymentMethodsUpdate = true;
         for (Product2 product : newList) {
             Product2 oldProduct = oldMap.get(product.Id);
+
             String oldApm = oldProduct.Accepted_Payment_Methods__c;
+            if (oldApm == null) oldApm = '';
+
             String newApm = product.Accepted_Payment_Methods__c;
+            if (newApm == null) newApm = '';
 
-            if (oldApm == null) {
-                oldApm = '';
-            }
-
-            if (newApm == null) {
-                newApm = '';
-            }
-
-            if (newApm.equals(oldApm) == true) {
+            if (newApm.equals(oldApm)) {
                 isAcceptedPaymentMethodsUpdate = false;
                 break;
             }
         }
 
-        if (isAcceptedPaymentMethodsUpdate == false) {
+        if (!isAcceptedPaymentMethodsUpdate) {
             //Email notification
-            if (Test.isRunningTest() == false) {
-                Product_Svc.emailNotification(newList, oldMap, false);
-            }
+            if (!Test.isRunningTest()) Product_Svc.emailNotification(newList, oldMap, false);
 
             Map<Id, Product2> products2Send = getProductsToSend(oldMap, newMap);
             if (products2Send.size() > 0) {
@@ -166,6 +155,9 @@ public class Product_Dom {
             //Create PriceBookEntry for Phase 1 and 2 if not exist
             Product_Svc.createPriceBookEntry(newMap, oldMap, false);
         }
+
+        Product_Svc.propagateZuoraId(newMap, oldMap);
+
         /** Ecommerce Enhancements R2 **/
         Product_Svc.replicateProductAcceptedPaymentMethods(newList, oldMap);
     }

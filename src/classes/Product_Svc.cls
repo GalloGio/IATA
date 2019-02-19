@@ -900,7 +900,7 @@ public class Product_Svc
         for (Product2 product : newList) {
             if (product.IEC_Parent_Product__c == null) {
                 // parent product
-                if (isBlank(product.Accepted_Payment_Methods__c)) {
+                if (String.isBlank(product.Accepted_Payment_Methods__c)) {
                     if (Test.isRunningTest() == false) {
                         product.addError(Label.ACCEPTED_PAYMENT_METHODS_MANDATORY);
                     }
@@ -910,7 +910,7 @@ public class Product_Svc
                 String parentAcceptedPaymentMethod = acceptedPaymentMethodsMap.get(product.IEC_Parent_Product__c);
 
                 if (
-                    isBlank(product.Accepted_Payment_Methods__c) == false
+                    String.isBlank(product.Accepted_Payment_Methods__c) == false
                     &&
                     isEqual(product.Accepted_Payment_Methods__c, parentAcceptedPaymentMethod) == false
                 ) {
@@ -919,8 +919,8 @@ public class Product_Svc
                     }
                 } else {
                     // if blank, set to parent
-                    if (isBlank(product.Accepted_Payment_Methods__c)) {
-                        if (isBlank(parentAcceptedPaymentMethod)) {
+                    if (String.isBlank(product.Accepted_Payment_Methods__c)) {
+                        if (String.isBlank(parentAcceptedPaymentMethod)) {
                             if (Test.isRunningTest() == false) {
                                 product.addError(Label.PARENT_ACCEPTED_PAYMENT_METHODS_IS_EMPTY);
                             }
@@ -982,9 +982,27 @@ public class Product_Svc
         Database.executeBatch(new OrderItemAcceptedPaymentMethodsBatch(allProductIdSet), 50);
     } //*** end of replicateParentProductacceptedPaymentMethods
 
-    private static Boolean isBlank(String str) {
-        return (str == null || str.length() == 0 || str.trim().length() == 0);
-    }
+    //Product information is sent to Zuora after insert/update
+    //by the saveZProducts method. When that happens, we need 
+    //to populate the Zuora Id on the product and on the related
+    //ZProduct (this is needed because later Zuora will try to
+    //match it when uploading Rate Plans)
+    public static void propagateZuoraId(Map<Id, Product2> products, Map<Id, Product2> oldProducts){
+
+        Set<Id> productIds = new Set<Id>();
+        for(Product2 p : products.values()){
+            if(p.zqu__ZuoraId__c != null && oldProducts.get(p.Id).zqu__ZuoraId__c == null) productIds.add(p.Id);
+        }
+
+        if(productIds.isEmpty()) return;
+
+        List<zqu__ZProduct__c> zProducts = [SELECT Id, zqu__Product__c  FROM zqu__ZProduct__c WHERE zqu__Product__c IN :productIds AND zqu__ZuoraId__c = ''];
+        for(zqu__ZProduct__c zp : zProducts){
+            zp.zqu__ZuoraId__c = products.get(zp.zqu__Product__c).zqu__ZuoraId__c;
+        }
+
+        if(!zProducts.isEmpty()) update zProducts;
+    }//end of propagateZuoraId
 
     @testVisible
     private static Boolean isEqual(String str1, String str2) {
