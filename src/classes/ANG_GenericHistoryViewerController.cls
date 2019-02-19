@@ -38,9 +38,9 @@ public with sharing class ANG_GenericHistoryViewerController {
         List<SObject> customHistoryRecords = database.query(theCustomQuery);
         List<SObject> standardHistoryRecords = database.query(theStandardQuery);
 
-        if(standardHistoryRecords.isEmpty() && Test.isRunningTest()){
-            standardHistoryRecords.add(new AccountHistory(AccountId=trackedObjId,Field='Type'));
-        }
+        /*if(standardHistoryRecords.isEmpty() && Test.isRunningTest() && trackedObjApiName == 'Account') {
+            standardHistoryRecords.add(new AccountHistory(AccountId=trackedObjId, Field='Type'));
+        }*/
 
         Set<Id> userIds = new Set<Id>();
 
@@ -225,7 +225,7 @@ public with sharing class ANG_GenericHistoryViewerController {
             this.isLookUpValueOld = (isLookUpValueIn && oldValue != '<blank>');
             this.isLookUpValueNew = (isLookUpValueIn && newValue != '<blank>');
             
-            //System.debug('Creating new GenericHistoryWrapper with values|oldValue:'+oldValue + '|newValue:'+newValue + '|fieldName:'+fieldName + '|fieldAPIName:'+fieldAPIName + '|isLookUpValue:' +isLookUpValue);
+            //System.debug('### Creating new GenericHistoryWrapper with values|oldValue:'+oldValue + '|newValue:'+newValue + '|fieldName:'+fieldName + '|fieldAPIName:'+fieldAPIName + '|isLookUpValue:' +isLookUpValueIn);
 
             this.fieldAPIName = fieldAPIName;
             this.createdById = createdById;
