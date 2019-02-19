@@ -71,22 +71,32 @@
                 </aura:if>
             </aura:if>
             
-            <!-- MISSING AMAZON BUTTONS -->
-            
-            <aura:if isTrue="{!not(v.panelProperties.isPortal)}">
-                <lightning:buttonGroup>
-                    
-                    <!-- AMAZON BUTTON -->
-                    <lightning:button variant="neutral" label="{!$Label.c.Upload_File}" onclick="{!c.uploadFileButtonHandler}"/>
-                    
-                    <lightning:button variant="neutral" label="{!$Label.c.Transfer_Attachments}" onclick="{!c.transferAttachmentsButtonHandler}"/>
-                    <aura:if isTrue="{!v.panelProperties.parentIsOSCAR}">
-                    	<lightning:button variant="neutral" label="{!$Label.c.Oscar_Attachments}" onclick="{!c.viewOscarAttachmentsButtonHandler}"/>
-                    </aura:if>
-                    <lightning:button variant="neutral" label="{!$Label.c.Make_All_Public}" onclick="{!c.makeAllAttachmentsPublicButtonHandler}"/>
-                    <lightning:button variant="neutral" label="{!$Label.c.Make_All_Private}" onclick="{!c.makeAllAttachmentsPrivateButtonHandler}"/>
-                    <lightning:button variant="neutral" label="Download All Files" onclick="{!c.downloadAllFilesButtonHandler}"/>
-                </lightning:buttonGroup>
+            <aura:if isTrue="{!not(v.isPortal)}">
+                <aura:if isTrue="{!v.panelProperties}">
+                    <lightning:buttonGroup>
+                        
+                        <!-- AMAZON BUTTON -->
+                        <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
+                        	<lightning:button variant="neutral" label="{!$Label.c.Upload_File}" onclick="{!c.uploadFileButtonHandler}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!not(v.panelProperties.isSAAMorSIDRA)}">
+                            <lightning:button variant="neutral" label="Attach File" onclick="{!c.uploadFileNonSAAMSIDRAButtonHandler}"/>
+                        </aura:if>
+                        <lightning:button variant="neutral" label="{!$Label.c.Transfer_Attachments}" onclick="{!c.transferAttachmentsButtonHandler}"/>
+                        <aura:if isTrue="{!v.panelProperties.parentIsOSCAR}">
+                            <lightning:button variant="neutral" label="{!$Label.c.Oscar_Attachments}" onclick="{!c.viewOscarAttachmentsButtonHandler}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
+                            <lightning:button variant="neutral" label="{!$Label.c.Make_All_Public}" onclick="{!c.makeAllAttachmentsPublicButtonHandler}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
+                            <lightning:button variant="neutral" label="{!$Label.c.Make_All_Private}" onclick="{!c.makeAllAttachmentsPrivateButtonHandler}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
+                        	<lightning:button variant="neutral" label="Download All Files" onclick="{!c.downloadAllFilesButtonHandler}"/>
+                        </aura:if>
+                    </lightning:buttonGroup>
+                </aura:if>
             </aura:if>
         </aura:set>
         <p class="slds-p-horizontal_small">

@@ -64,8 +64,10 @@
                 
                 var rowActions = helper.getRowActions.bind(this, component);
                 
+                var isSAAMorSIDRA = panelProperties.isSAAMorSIDRA;
+                
                 var columns = [];
-                if(uploaderWizard == 'AMS_File' || isPortal){
+                if(isSAAMorSIDRA && (uploaderWizard == 'AMS_File' || isPortal)){
                     columns.push(
                         {
                             label: 'Review Status', 
@@ -73,7 +75,7 @@
                             type: 'text'
                         });
                 }
-                if(uploaderWizard == 'AMS_File'){
+                if(isSAAMorSIDRA && uploaderWizard == 'AMS_File'){
                     columns.push(
                         {
                             label: 'File Identifier', 
@@ -81,7 +83,7 @@
                             type: 'text'
                         });
                 }
-                if(uploaderWizard == 'AMS_File'){
+                if(isSAAMorSIDRA && uploaderWizard == 'AMS_File'){
                     columns.push(
                         {
                         label: 'Source', 
@@ -102,12 +104,16 @@
                         label: 'Name', 
                         fieldName: 'name', 
                         type: 'text'
-                    },
-                    {
-                        label: 'File Identifier', 
-                        fieldName: 'fileIdentifierPick', 
-                        type: 'text'
-                    },
+                    });
+                if(isSAAMorSIDRA){
+                    columns.push(
+                        {
+                            label: 'File Identifier', 
+                            fieldName: 'fileIdentifierPick', 
+                            type: 'text'
+                        });
+                }
+                columns.push(
                     {
                         label: 'Size', 
                         fieldName: 'size', 
@@ -127,7 +133,7 @@
                             type: 'text'
                         });
                 }
-                if(panelProperties.showFileIdentifier){
+                if(isSAAMorSIDRA && panelProperties.showFileIdentifier){
                     columns.push(
                     {
                         label: 'File Identifier', 
@@ -197,12 +203,20 @@
         var isPortal = component.get("v.isPortal");
         //console.log(isPortal);
         
+        var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
+        //console.log(isSAAMorSIDRA);
+        
         if(action == 'edit'){
             helper.attachLineEditAction(component, row, isPortal);
         }
         
         if(action == 'view'){
-            helper.attachLineViewAction(component, row, event);
+            
+            if(isSAAMorSIDRA){
+            	helper.attachLineViewAction(component, row, event);
+            }else{
+                helper.attachLineViewActionRedirect(component, row, event);
+            }
         }
         
         if(action == 'delete'){
@@ -210,11 +224,11 @@
         }
         
         if(action == 'makePublic'){
-            helper.attachLineMakePrivatePublicAction(component, parentId, row, isPortal);
+            helper.attachLineMakePrivatePublicAction(component, parentId, row, isPortal, isSAAMorSIDRA);
         }
         
         if(action == 'makePrivate'){
-            helper.attachLineMakePrivatePublicAction(component, parentId, row, isPortal);
+            helper.attachLineMakePrivatePublicAction(component, parentId, row, isPortal, isSAAMorSIDRA);
         }
     },
     
@@ -225,10 +239,14 @@
         //console.log(isPortal);
         //makeAllAttachPublic(String parentId, Boolean isPortal){
         
+        var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
+        //console.log(isSAAMorSIDRA);
+        
         var makeAllAttachPublicAction = component.get("c.makeAllAttachPublic");
         makeAllAttachPublicAction.setParams({ 
             "parentId" : parentId,
-            "isPortal" : isPortal
+            "isPortal" : isPortal,
+            "isSAAMorSIDRA" : isSAAMorSIDRA
         });
         makeAllAttachPublicAction.setCallback(this, function(response2){
             var state = response2.getState();
@@ -281,10 +299,14 @@
         //console.log(isPortal);
         //makeAllAttachPrivate(String parentId, Boolean isPortal){
         
+        var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
+        //console.log(isSAAMorSIDRA);
+        
         var makeAllAttachPrivateAction = component.get("c.makeAllAttachPrivate");
         makeAllAttachPrivateAction.setParams({ 
             "parentId" : parentId,
-            "isPortal" : isPortal
+            "isPortal" : isPortal,
+            "isSAAMorSIDRA" : isSAAMorSIDRA
         });
         makeAllAttachPrivateAction.setCallback(this, function(response2){
             var state = response2.getState();
@@ -545,13 +567,14 @@
         //console.log(parentId);
         
         //getAllExpiringLink(String objectId, Boolean isPortal)
-        var getAllExpiringLinkAction = component.get("c.getTransferAttachmentsUrl");
-        getAllExpiringLinkAction.setParams({
+        var getTransferAttachmentsUrlAction = component.get("c.getTransferAttachmentsUrl");
+        getTransferAttachmentsUrlAction.setParams({
             "parentId" : parentId
         });
-        getAllExpiringLinkAction.setCallback(this, function(response2){
+        getTransferAttachmentsUrlAction.setCallback(this, function(response2){
             var state = response2.getState();
             if (state === "SUCCESS") {
+                //console.log(response2.getReturnValue());
                 
                 var urlEvent = $A.get("e.force:navigateToURL");
                 urlEvent.setParams({
@@ -574,7 +597,7 @@
                     }
                 }
         });
-        $A.enqueueAction(getAllExpiringLinkAction);
+        $A.enqueueAction(getTransferAttachmentsUrlAction);
         
     },
     
@@ -584,7 +607,19 @@
             component.set("v.doneUploading", false);
             helper.helperGetAttachList(component);
         }
+    },
+    
+    uploadFileNonSAAMSIDRAButtonHandler : function(component, event, helper){
+        var parentId = component.get("v.recordId");
+        var panelProperties = component.get("v.panelProperties");
         
+        var link = '/p/attach/NoteAttach?pid=' + parentId + '& parentname=' + panelProperties.relatedCase.CaseNumber + '&retURL=%2F' + parentId;
+        
+        var urlEvent = $A.get("e.force:navigateToURL");
+        urlEvent.setParams({
+            "url": link
+        });
+        urlEvent.fire();
     }
 
     

@@ -63,13 +63,13 @@
                             remoteFunctionPut(amazonCredentials, file, reader.result, fileIdentifierPick, component);
                         }; 
                         
-                        if(notifyOwner.length) {
+                        /*if(notifyOwner.length) {
                             UploadMultipleFileToAmazonButtonCtrl.notifyOscarOwner("{!sObjectId}", fileIdentifierPick , function(result, event) {
                                 alert(result);
                             });
                         }
                         
-                        $("#notifyOwner").prop("checked", false);
+                        $("#notifyOwner").prop("checked", false);*/
                         
                     }
                     
@@ -212,6 +212,7 @@
     
     getRowActions: function (component, row, doneCallback) {
         var isPortal = component.get("v.isPortal");
+        var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
        
         //create actions
         var actions = [];
@@ -236,7 +237,7 @@
                 }
             );
         }
-        if(!isPortal){
+        if(!isPortal && row['filetype'] != 'Archived'){
             if (row['isPublic']) {
                 actions.push({
                     'label': 'Make Private',
@@ -509,11 +510,15 @@
         var isPortal = component.get("v.isPortal");
         //console.log(isPortal);
         
+        var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
+        
         //get this page properties and 
         var getLstAttachmentsAction = component.get("c.getAllAttachmentsByParentIdAndPortal");
         getLstAttachmentsAction.setParams({ 
             "parentId" : parentId ,
-            "isPortal" : isPortal });
+            "isPortal" : isPortal ,
+            "isSAAMorSIDRA" : isSAAMorSIDRA
+        });
         getLstAttachmentsAction.setCallback(this, function(response2){
             var state = response2.getState();
             if (state === "SUCCESS") {
@@ -566,6 +571,25 @@
         
     },
     
+    attachLineEditActionRedirect : function(component, attachId, event){
+        var getExpiringLinkAction = component.get("c.getExpiringLink");
+        getExpiringLinkAction.setParams({ 
+            "fileName" : fullName });
+        getExpiringLinkAction.setCallback(this, function(response1){
+            var state = response1.getState();
+            if (state === "SUCCESS") {
+                var link = response1.getReturnValue().replace("&amp;","&");
+                
+                var urlEvent = $A.get("e.force:navigateToURL");
+                urlEvent.setParams({
+                    "url": link
+                });
+                urlEvent.fire();
+            }
+        });
+        $A.enqueueAction(getExpiringLinkAction);
+    },
+    
     attachLineViewAction : function(component, attachId, event) {
     	var isAmazon = false;
         var fullName = '';
@@ -577,7 +601,6 @@
                 fullName = lstAttachments[i].fullName;
             }
         }
-        //console.log(isAmazon);
         
         if(isAmazon){
             var getExpiringLinkAction = component.get("c.getExpiringLink");
@@ -613,12 +636,13 @@
         component.set("v.viewDeleteAttachmentPopup", true);
     },
     
-    attachLineMakePrivatePublicAction : function(component, parentId, attachId, isPortal) {        
+    attachLineMakePrivatePublicAction : function(component, parentId, attachId, isPortal, isSAAMorSIDRA) {        
         var changeAttachVisibilityAction = component.get("c.changeAttachVisibility");
         changeAttachVisibilityAction.setParams({ 
             "parentId" : parentId,
             "attachId" : attachId,
-            "isPortal" : isPortal
+            "isPortal" : isPortal,
+            "isSAAMorSIDRA" : isSAAMorSIDRA
         });
         changeAttachVisibilityAction.setCallback(this, function(response2){
             var state = response2.getState();
