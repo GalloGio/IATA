@@ -5,6 +5,11 @@ public class ANG_MulticountryHelper {
 		public String message;
 	}
 
+	public class SwapAccountsWrapper {
+		public Map<Id, Account> swapMapping;
+		public Id newGE;
+	}
+
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
     
     public static Set<String> locationTypesSet = new Set<String>{
@@ -311,6 +316,129 @@ public class ANG_MulticountryHelper {
 	
 		return null;
 	
+	}
+
+	/**
+	* Swap location types between two accounts 
+	* in the scope of change of location type
+	* for multicountry agencies
+	*
+	* @param accountsMap: Map<Id, Account>
+	* @param toReturn: AChangeStructure
+	*
+	*/
+	public static SwapAccountsWrapper swapAccountsLocationType(Map<Id, Account> accountsMap, ANG_AgencyChangesHelper.AChangeStructure toReturn){
+		
+		SwapAccountsWrapper swapWrapper = new SwapAccountsWrapper();
+
+		Map<Id, Account> swapMapping = new Map<Id, Account>();
+		
+		List<Account> accountLst = accountsMap.values();
+
+		Account firstAccount  = accountLst.get(0);
+		Account secondAccount = accountLst.get(1);
+		
+		String locationTypeAux = firstAccount.Location_Type__c;
+
+		firstAccount.Location_Type__c  = secondAccount.Location_Type__c;
+		secondAccount.Location_Type__c = locationTypeAux;
+		
+		if(firstAccount.Location_Type__c == AMS_Utils.GE){
+			swapRelatedFields(firstAccount, secondAccount);
+			swapWrapper.newGE = firstAccount.Id;
+		}
+		else if(secondAccount.Location_Type__c == AMS_Utils.GE){
+			swapRelatedFields(secondAccount, firstAccount);
+			swapWrapper.newGE = secondAccount.Id;
+		}
+		else if(firstAccount.Location_Type__c == AMS_Utils.HE){
+			swapRelatedFields(firstAccount, secondAccount);
+		}
+		else {
+			swapRelatedFields(secondAccount, firstAccount);
+		}
+
+		swapMapping.put(firstAccount.Id, secondAccount);
+		swapMapping.put(secondAccount.Id, firstAccount);
+		
+		swapWrapper.swapMapping = swapMapping;
+
+		toReturn.addAccount(firstAccount);
+		toReturn.addAccount(secondAccount);
+		
+		return swapWrapper;
+		
+	}
+
+	/**
+	* Move risk related fields and RHC information
+	* from one account to another in the scope of
+	* change of location type for multicountry agencies
+	*
+	* @param srcAcctId: Id
+	* @param assignFieldsAcct: Account
+	* @param resetFieldsAcct: Account
+	*
+	*/
+	public static void moveRiskRelatedFieldsFromAccount(Id srcAcctId, Account assignFieldsAcct, Account resetFieldsAcct){
+
+		Account srcAcct = 
+			[SELECT
+				Id, 
+				ANG_IEP_Status__c,
+				ANG_HE_RiskStatus__c, 
+				ANG_IEP_HE_AccntNum__c,
+				ANG_HE_CashCondition__c,
+				Financial_Review_Result__c,
+				ANG_HE_RiskHistoryAssessment__c,
+				(SELECT Id, ANG_AccountId__c FROM RHC_Informations__r)
+			 FROM
+			 	Account
+			 WHERE 
+			 	Id = :srcAcctId
+			];
+
+		assignFieldsAcct.ANG_IEP_Status__c = srcAcct.ANG_IEP_Status__c;
+		assignFieldsAcct.ANG_HE_RiskStatus__c = srcAcct.ANG_HE_RiskStatus__c;
+		assignFieldsAcct.ANG_IEP_HE_AccntNum__c = srcAcct.ANG_IEP_HE_AccntNum__c;
+		assignFieldsAcct.ANG_HE_CashCondition__c = srcAcct.ANG_HE_CashCondition__c;
+		assignFieldsAcct.Financial_Review_Result__c = srcAcct.Financial_Review_Result__c;
+		assignFieldsAcct.ANG_HE_RiskHistoryAssessment__c = srcAcct.ANG_HE_RiskHistoryAssessment__c;
+
+		resetFieldsAcct.ANG_IEP_Status__c = null;
+		resetFieldsAcct.ANG_HE_RiskStatus__c = null;
+		resetFieldsAcct.ANG_IEP_HE_AccntNum__c = null;
+		resetFieldsAcct.ANG_HE_CashCondition__c = false;
+		resetFieldsAcct.ANG_HE_RiskHistoryAssessment__c = null;
+
+		ANG_RHCHelper.moveRHCInfos(srcAcct.RHC_Informations__r, new Map<Id,Id>{resetFieldsAcct.Id => assignFieldsAcct.Id});
+
+	}
+
+
+	/**
+	* Swap field values between two accounts 
+	* in the scope of change of location type
+	* for multicountry agencies
+	*
+	* @param parentAcct: Account
+	* @param childAcct: Account
+	*
+	*/
+	public static void swapRelatedFields(Account parentAcct, Account childAcct){
+
+		if(parentAcct.Location_Type__c == AMS_Utils.GE && (childAcct.Location_Type__c == AMS_Utils.HE || childAcct.Location_Type__c == AMS_Utils.AE)){
+			parentAcct.ParentId = null;
+			parentAcct.Top_Parent__c = null;
+			childAcct.ParentId = parentAcct.Id;
+			childAcct.Top_Parent__c = parentAcct.Id;
+			moveRiskRelatedFieldsFromAccount(childAcct.Id, parentAcct, childAcct);
+		}
+		else if(parentAcct.Location_Type__c == AMS_Utils.HE && childAcct.Location_Type__c == AMS_Utils.AE){
+			parentAcct.ParentId = childAcct.ParentId;
+			childAcct.ParentId = parentAcct.Id;
+		}
+
 	}
 
 }

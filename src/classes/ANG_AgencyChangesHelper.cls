@@ -140,6 +140,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscar.AMS_Online_Accreditation__c);
 
+			Boolean isMulticountry = (oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
+
 			//map accountId -> active change code
 			Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
 
@@ -187,7 +189,7 @@ public with sharing class ANG_AgencyChangesHelper {
                         System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
 					}
 					
-					changesContainer = processHierarchyChangesAux(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected,allRelationsOnHierarchy);
+					changesContainer = processHierarchyChangesAux(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected,allRelationsOnHierarchy, isMulticountry);
 
 
 				}
@@ -414,17 +416,17 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	public static AChangeStructure processHierarchyChanges(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean isAllHierarchySelected) {
-		return processHierarchyChangesAux(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected, null);
+		return processHierarchyChangesAux(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected, null, false);
 	}
 
-	public static AChangeStructure processHierarchyChangesAux(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean isAllHierarchySelected, Map<Id, List<AMS_Agencies_relationhip__c>> allRelations) {
+	public static AChangeStructure processHierarchyChangesAux(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean isAllHierarchySelected, Map<Id, List<AMS_Agencies_relationhip__c>> allRelations, Boolean isMulticountry) {
 		
         System.debug('[ANG_AgencyChangesHelper] - Accounts involved are:'+accountIdsInvolvedSet);
         System.debug('[ANG_AgencyChangesHelper] - ChangesContainer is'+changesContainer);
         System.debug('[ANG_AgencyChangesHelper] - isAllHierarchySelected is'+isAllHierarchySelected);
 
 		if (containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c))
-			changesContainer = applyChangeOfLocationType(oscar, changesContainer,allRelations);
+			changesContainer = applyChangeOfLocationType(oscar, changesContainer,allRelations, isMulticountry);
 		else if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
 		
 			changesContainer = applyChangeOfHierarchy(oscar, changesContainer, accountIdsInvolvedSet, isAllHierarchySelected);
@@ -473,7 +475,85 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static AChangeStructure applyChangeOfLocationType(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
+	/**
+	* Applies change of location type for multicountry agents
+	* 
+	* @param oscarToProcess: AMS_OSCAR__c
+	* @param toReturn: AChangeStructure 
+	* @param accountHierarchyRelationships: Map<Id, List<AMS_Agencies_relationhip__c>>
+	* 
+	* @return toReturn: AChangeStructure (could be avoided since the object is passed by reference)
+	*
+	*/
+	public static AChangeStructure applyChangeOfLocationTypeMulticountry(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
+		
+		//Accounts Map contains only the two agencies that we are gonna swap
+		Map<Id, Account> accountsMap = toReturn.accountsMap.deepClone();
+		
+		//Swap location types and related fields (parents + RHC info & risk fields if GE's involved)
+		ANG_MulticountryHelper.SwapAccountsWrapper swapAccountsWrapper = ANG_MulticountryHelper.swapAccountsLocationType(accountsMap, toReturn);
+
+		//Fetch all the agencies from the hierarchy 
+		if(accountHierarchyRelationships == null){
+			accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarToProcess.Account__c});
+		}
+		
+		//Update the necessary relationships and respective accounts 
+		for(AMS_Agencies_relationhip__c rel : accountHierarchyRelationships.get(oscarToProcess.Account__c)){
+
+			Account childAcct  = accountsMap.get(rel.Child_Account__c);
+			Account parentAcct = accountsMap.get(rel.Parent_Account__c);
+			
+			Boolean needsUpdate = (swapAccountsWrapper.newGE != NULL);
+
+			//Means that the current child 
+			//in this relationship is being swapped 
+			if(childAcct != NULL){
+				rel.Child_Account__c = swapAccountsWrapper.swapMapping.get(rel.Child_Account__c).Id;
+				needsUpdate = true;
+			}
+			
+			//Means that the current parent 
+			//in this relationship is being swapped 
+			if(parentAcct != NULL){
+				rel.Parent_Account__c = swapAccountsWrapper.swapMapping.get(rel.Parent_Account__c).Id;
+				needsUpdate = true;
+			}
+
+			if(needsUpdate){
+				
+				//Means that the parent of the current child 
+				//in this relation needs to be updated
+				if(childAcct == NULL){
+
+					Account acct  = new Account(Id = rel.Child_Account__c);
+					acct.ParentId = rel.Parent_Account__c;
+
+					//Change top parent if the GE was swapped
+					if(swapAccountsWrapper.newGE != NULL){
+						acct.Top_Parent__c = swapAccountsWrapper.newGE;
+					}
+
+					toReturn.addAccount(acct);
+				
+				}
+				
+				toReturn.addRelation(rel);
+
+			}
+		
+		}
+
+		return toReturn;
+	
+	}
+
+	public static AChangeStructure applyChangeOfLocationType(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships, Boolean isMulticountry){
+
+		if(isMulticountry){
+			System.debug('[ANG_AgencyChangesHelper] Performing change of Location Type for Multicountry');
+			return applyChangeOfLocationTypeMulticountry(oscarToProcess, toReturn, accountHierarchyRelationships);
+		}
 
 		// 1) need to fetch all the relations on the hierarchy
 		// 2) need to fetch all the accounts involved in this "swap"
