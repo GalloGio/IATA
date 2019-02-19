@@ -11341,11 +11341,11 @@
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <label>总担保额（转换后）</label>
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <label>细节</label>
         <name>ISSP_Financial_Securities_Details</name>
     </customLabels>
     <customLabels>
@@ -13047,6 +13047,10 @@
     <customLabels>
         <label><!-- ISSP_Related contacts --></label>
         <name>ISSP_Related_contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Relocate Contact --></label>

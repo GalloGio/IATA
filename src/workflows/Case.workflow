@@ -13357,7 +13357,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>SIDRA_UpdateDateTimeDefaultApproval</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>SCE</description>
         <formula>AND(OR(RecordType.DeveloperName=&apos;SIDRA_Lite&apos;,RecordType.DeveloperName=&apos;SIDRA&apos;),ISCHANGED(DEF_Approval_Rejection__c))</formula>
         <triggerType>onAllChanges</triggerType>
