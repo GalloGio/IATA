@@ -3,6 +3,7 @@ global class ANG_RestServiceHelper {
     global static string URIRequest_GDIOffer = 'gdi-create-offer';
     global static string URIRequest_AccountFiles = 'account-files';
     global static string URIRequest_AccountFinancialInfo = 'account-financial-info';
+    global static string URIRequest_CasePaymentStatus = 'payment-status';
 
     /* Generates the response */
     global static void GenerateResponse(string sBody, integer iStatusCode){
