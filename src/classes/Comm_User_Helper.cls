@@ -292,7 +292,12 @@ global without sharing class Comm_User_Helper {
                 // Build the header image URL from the document information
               imageURL = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+doc[0].id+'&oid='+userinfo.getorganizationid();            
             // If there is a service name, that should determine the community name
-            if(!String.isBlank(serviceName)) commName = serviceName;
+            if(!String.isBlank(serviceName)) {
+                communityName = serviceName;
+                if(serviceName == 'FRED'){
+                    communityName += '+';
+                }
+            }
             else communityName = 'Identity';
         }
         if(commName != ONEIDENTITY) communityName = portalName + ' Customer Portal';
