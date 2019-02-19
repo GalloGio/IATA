@@ -227,10 +227,10 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
 
     /**
         This is the action of submit button
-        It actually sends the form to be processes, so it is markes as Open
+        It actually sends the form to be processes, so it is marked as 'For Review and Acceptance'
     **/
     public PageReference submitForm() {
-        this.newCase.Status = 'Open';
+        this.newCase.Status = 'For Review and Acceptance';
         if(validateFields() && saveDraft()) {
             // upload agreement
             uploadForm(this.newCase.Id, getFormFileName());
@@ -376,7 +376,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
     **/
     public list<SelectOption> getListCountryOptions() {
         list<SelectOption> listOptions = new list<SelectOption>();
-        for (IATA_ISO_Country__c country: [SELECT Id,Name FROM IATA_ISO_Country__c]) {
+        for (IATA_ISO_Country__c country: [SELECT Id,Name FROM IATA_ISO_Country__c ORDER BY Name ASC]) {
             listOptions.add(new SelectOption(country.Id,country.Name));
         }
         return listOptions;

@@ -146,6 +146,13 @@
             </apex:selectList>
         </apex:pageBlockSectionItem>
 
+        <apex:pageBlockSectionItem >
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.TAX_VAT_Registration_Number__c.label}"/>
+            <apex:inputField value="{!newForm.TAX_VAT_Registration_Number__c}"/>
+        </apex:pageBlockSectionItem>
+
     </apex:pageBlockSection>
 
     <apex:pageBlockSection columns="2" id="section1B" collapsible="false" rendered="{!account.Sector__c!='Airline'}">
@@ -160,6 +167,8 @@
             <apex:inputField styleclass="form-legalname required" value="{!newForm.Legal_Name_of_company__c}"/>
         </apex:pageBlockSectionItem>
         <apex:pageBlockSectionItem >
+            <apex:outputLabel value="{!$ObjectType.AP_Process_Form__c.fields.TAX_VAT_Registration_Number__c.label}"/>
+            <apex:inputField value="{!newForm.TAX_VAT_Registration_Number__c}"/>
         </apex:pageBlockSectionItem>
         
         <apex:pageBlockSectionItem >
