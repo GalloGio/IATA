@@ -2689,6 +2689,11 @@
         <label>Person Account Search Fields</label>
     </fieldSets>
     <fieldSets>
+        <fullName>FieldsExcludedFromTracking</fullName>
+        <description>The fields in this list will be tracked on the Account Tracking History object</description>
+        <label>FieldsExcludedFromTracking</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ISSP_Account_Portal_Search</fullName>
         <description>Portal</description>
         <displayedFields>

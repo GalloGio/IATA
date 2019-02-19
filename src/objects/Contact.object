@@ -1807,6 +1807,11 @@
         <label>Lead Convert Fields</label>
     </fieldSets>
     <fieldSets>
+        <fullName>FieldsExcludedFromTracking</fullName>
+        <description>The fields in this list will be tracked on the Contact Tracking History object</description>
+        <label>FieldsExcludedFromTracking</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ISSP_Contacts_MyCompanyContacts</fullName>
         <description>ISSP_ContactList.page</description>
         <displayedFields>
