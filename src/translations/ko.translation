@@ -11361,19 +11361,19 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <label>총 담보 금액</label>
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <label>상세 내역</label>
         <name>ISSP_Financial_Securities_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <label>담보</label>
         <name>ISSP_Financial_Securities_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <label>합계</label>
         <name>ISSP_Financial_Securities_Summary</name>
     </customLabels>
     <customLabels>
@@ -13084,6 +13084,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>관련 컨택</label>
         <name>ISSP_Related_contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
     </customLabels>
     <customLabels>
         <label>다른 어카운트로 이전하기</label>

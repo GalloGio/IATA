@@ -322,12 +322,19 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(Account__c = cargoHO.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_HO);
 		insert OSCAR;
+		
+		AMS_OSCAR__c OSCAR_BR = new AMS_OSCAR__c(Account__c = cargoBR.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_BR);
+		insert OSCAR_BR;
 
 		Contact co1 = new Contact(AccountId = cargoHO.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
 		Contact co2 = new Contact(AccountId = cargoHO.id, Firstname = 'teste2', Lastname='test2', Phone = '911111112', MobilePhone = '911111112', Email = 'test2@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved Admin');
 		Contact co3 = new Contact(AccountId = cargoHO.id, Firstname = 'teste3', Lastname='test3', Phone = '911111113', MobilePhone = '911111113', Email = 'test3@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved');
 		
-		List<Contact> cos = new List<Contact>{co1,co2}; 
+		Contact co4 = new Contact(AccountId = cargoBR.id, Firstname = 'teste4', Lastname='test4', Phone = '911111114', MobilePhone = '911111114', Email = 'test4@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
+		Contact co5 = new Contact(AccountId = cargoBR.id, Firstname = 'teste5', Lastname='test5', Phone = '911111115', MobilePhone = '911111115', Email = 'test5@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved Admin');
+		Contact co6 = new Contact(AccountId = cargoBR.id, Firstname = 'teste6', Lastname='test6', Phone = '911111116', MobilePhone = '911111116', Email = 'test6@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved');
+		
+		List<Contact> cos = new List<Contact>{co1,co2,co4,co5}; 
 		insert cos;
 
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
@@ -335,7 +342,12 @@ public with sharing class AMS_OSCAR_TestDataFactory
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
 
-         // Create the Staging area for the Account
+		Case oscarCaseBR = new Case(Oscar__c = oscar_BR.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
+        oscarCase.AccountId = cargoBR.Id;
+        oscarCase.ContactId = co4.Id;
+        insert oscarCaseBR;
+
+         // Create the Staging area for the Account HO
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = cargoHO.Name,
                 IATAcode__c = cargoHO.IATAcode__c,
                 Branch_Office_Country__c = cargoHO.IATA_ISO_Country__c,
@@ -344,11 +356,24 @@ public with sharing class AMS_OSCAR_TestDataFactory
                 SAAM_Case__c = oscarCase.Id,
                 Is_your_firm_handling_Dangerous_Goods__c = 'Yes',
                 CASS_Number__c = '000');
-
         insert stagingArea;
 
+		 // Create the Staging area for the Account BR
+        AMS_Pax_Accreditation_Form__c stagingAreaBR = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = cargoBR.Name,
+                IATAcode__c = cargoBR.IATAcode__c,
+                Branch_Office_Country__c = cargoBR.IATA_ISO_Country__c,
+                Location_Class__c = cargoBR.Location_Class__c,
+                Location_Type__c = cargoBR.Location_Type__c,
+                SAAM_Case__c = oscarCaseBR.Id,
+                Is_your_firm_handling_Dangerous_Goods__c = 'Yes',
+                CASS_Number__c = '001');
+        insert stagingAreaBR;
+
         OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
-        update oscar;
+        update OSCAR;
+        
+        OSCAR_BR.AMS_Online_Accreditation__c = stagingAreaBR.Id;
+        update OSCAR_BR;
 
         Id trainedStaff = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff');
 
@@ -357,8 +382,14 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		AMS_Accreditation_Contact__c acontact2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Greg', Last_name__c='Plitt', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGA, RecordTypeId=trainedStaff);
 
 		AMS_Accreditation_Contact__c acontact3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Daff', Last_name__c='Duck', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_CATA, RecordTypeId=trainedStaff);
+		
+		AMS_Accreditation_Contact__c acontact4 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingAreaBR.Id, First_name__c='Elmer', Last_name__c='Fudd', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGR, RecordTypeId=trainedStaff);
 
-		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3};
+		AMS_Accreditation_Contact__c acontact5 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingAreaBR.Id, First_name__c='Porky', Last_name__c='Pig', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGA, RecordTypeId=trainedStaff);
+
+		AMS_Accreditation_Contact__c acontact6 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingAreaBR.Id, First_name__c='Emma', Last_name__c='Webster', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_CATA, RecordTypeId=trainedStaff);
+
+		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3,acontact4,acontact5,acontact6};
 
 	}
 

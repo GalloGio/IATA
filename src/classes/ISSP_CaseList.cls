@@ -340,6 +340,7 @@ global with sharing class ISSP_CaseList {
             //Add mapping for Status field
             statusFieldValMapKey=ISSP_Case.STATUS_FLD_NAME+Item.Status;
             mapFieldsValue.put(statusFieldValMapKey,ISSP_Case.getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,Item.Status));
+
         }
         system.debug('basto1p - mapFieldsValue='+mapFieldsValue);
 
