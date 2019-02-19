@@ -11,54 +11,6 @@
 */
 @isTest
 private class ISSP_AMC_Location_Identifier_Test {
-
-	
-	/*@isTest static void testWithExistingCase() {
-
-	 	ISSP_AMC_ParticipationFactory.createcustomSetting(true);
-		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
-		
-		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
-
-		Test.StartTest(); 
-			System.runAs(myUser){
-
-			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
-
-			System.runAs(portalUser){
-
-				PageReference pageRef = Page.ISSP_AMC_Location_Identifier;
-				Test.setCurrentPageReference(pageRef);
-				pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Airport', false).Id);
-				ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
-				controller.init();
-				String testLanguage = controller.displayLanguage;
-				String testComName = controller.communityName;
-				List <SelectOption> testCountry = controller.countryList;
-				List <SelectOption> testSalutation = controller.salutationList;
-				controller.step = 'Submit';
-				controller.saveParticipation();
-				controller.init();
-
-				PageReference pageRef2 = Page.ISSP_AMC_Home;
-				Test.setCurrentPageReference(pageRef2);
-
-				PageReference pageRef3 = Page.ISSP_AMC_Location_Identifier;
-				Test.setCurrentPageReference(pageRef3);
-				ISSP_AMC_Location_Identifier controller3 = new ISSP_AMC_Location_Identifier();
-
-
-
-
-
-			}
-
-		Test.stopTest();
-
-		}
-	}*/
-	
-
 	/*
         Purpose: Saves an Empty Participation
         Parameters: 
@@ -84,10 +36,17 @@ private class ISSP_AMC_Location_Identifier_Test {
 				controller.init();
 				String testLanguage = controller.displayLanguage;
 				String testComName = controller.communityName;
+				String creNameTest= controller.credentialName;
 				List <SelectOption> testCountry = controller.countryList;
 				List <SelectOption> testSalutation = controller.salutationList;
 				controller.step = '1';
 				controller.saveParticipation();
+				/*ID accId = [SELECT Id,AccountId FROM Contact WHERE Id=:portalUser.contactId][0].AccountId;
+				Account portalAcc = [SELECT Id FROM Account WHERE ID=:accId];
+				portalAcc.SIS_Status__c = 'Terminated';
+				update portalAcc;
+				controller.saveParticipation();*/
+
 
 				//ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
 			}
@@ -97,6 +56,46 @@ private class ISSP_AMC_Location_Identifier_Test {
 		}
 	}
 
+	/*
+        Purpose: Saves an Empty Participation with Account SIS_Status__c!= ACtive
+        Parameters: 
+        Returns:
+        Throws [Exceptions]: 
+    */
+	@isTest static void testNoParticipationNoSIS() {
+
+	 	ISSP_AMC_ParticipationFactory.createcustomSetting(true);
+		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
+		
+		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
+
+		Test.StartTest(); 
+			System.runAs(myUser){
+
+			User portalUser = ISSP_AMC_ParticipationFactory.portalSetupNoSIS();
+
+			System.runAs(portalUser){
+
+				System.debug('SIS_Status__c '+ISSP_AMC_DAO.getAccountInfo().SIS_Status__c);
+				Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Location_Identifier'));
+				ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
+				controller.init();
+				String testLanguage = controller.displayLanguage;
+				String testComName = controller.communityName;
+				String creNameTest= controller.credentialName;
+				List <SelectOption> testCountry = controller.countryList;
+				List <SelectOption> testSalutation = controller.salutationList;
+				controller.step = '1';
+				controller.saveParticipation();
+
+
+				//ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
+			}
+
+			Test.stopTest();
+
+		}
+	}
 	/*
         Purpose: Saves a Location participation with the Location type Airport
         Parameters: 
@@ -608,12 +607,7 @@ private class ISSP_AMC_Location_Identifier_Test {
 				Test.setCurrentPageReference(pageRef);
 				pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Metropolitan Area', false).Id);
 				ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
-				controller.init();
 				controller.step = '1';
-				String testLanguage = controller.displayLanguage;
-				String testComName = controller.communityName;
-				List <SelectOption> testCountry = controller.countryList;
-				List <SelectOption> testSalutation = controller.salutationList;
 				controller.saveParticipation();
 
 				ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);

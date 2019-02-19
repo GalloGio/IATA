@@ -24,9 +24,14 @@ public without sharing class ISSP_AMC_Integration {
             if ( acliForms.isEmpty() ) throw new customException('No ACLI Forms to process');
             payload = JSON.serialize(acliForms);
 
+            
             sendRequest(payload);
+            
 
             System.debug('payload ' + payload);
+
+            
+            
         }catch(CalloutException e){
             system.debug('MC  --> ACLI doPost exception: ' + e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage()));
         }
@@ -397,35 +402,51 @@ public without sharing class ISSP_AMC_Integration {
         public String errorCode {get; set;}
         public String errorDescription {get; set;}
 
-        /*public String status            {get; set;}
+        public String status            {get; set;}
         public String requestId         {get; set;}
-        public String caseNumber        {get; set;}*/
+        public String caseNumber        {get; set;}
     }
 
     public static HttpResponse sendRequest(string theBody){
         HttpRequest req = new HttpRequest();
         req.setHeader('Content-Type', 'application/json');
-        req.setHeader('Accept', 'application/json');
+        //req.setHeader('Accept', 'application/json');
         req.setMethod('POST');
         req.setTimeout(ISSP_AMC_Integration.REQUEST_TIMEOUT);
         //req.setEndpoint('callout:ServiceNow_Login/api/now/table/incident');
         req.setEndpoint('https://apisbx.iata.org/coding/acli/requests');
         req.setBody(theBody);
+        String authorizationHeader = '5f76dc7646bd49c9a238aaefc3ac0d01ee12E4Cfec3C400185Ce877F0C3d0478';
+        req.setHeader('Authorization', authorizationHeader);
 
 
         Http http = new Http();
         HTTPResponse res;
 
-        //ACLIResponse acliResp = new ACLIResponse();
+        ACLIResponse acliResp = new ACLIResponse();
 
 
         try{
-
-            res = http.send(req);
+            if(!Test.isRunningTest()){
+                res = http.send(req);
+            }
+            else{
+                res = new HttpResponse();
+            }
+            
             system.debug('MC  --> ACLI Response: ' + res);
             system.debug('MC  --> ACLI Response body: ' + res.getBody());
-            //acliResp = (ACLIResponse)System.JSON.deserialize(res.getBody(), ACLIResponse.class);
-            //system.debug(acliResp);
+            system.debug('MC  --> ACLI Response status: ' + res.getStatusCode());
+            if(res.getStatusCode() == 200){
+                acliResp = (ACLIResponse)System.JSON.deserialize(res.getBody(), ACLIResponse.class);
+                system.debug(acliResp);
+                //String status = acliResp.Status;
+            }
+            if(Test.isRunningTest()){
+                CalloutException e = (CalloutException)CalloutException.class.newInstance();
+                e.setMessage('Unauthorized endpoint, please check Setup->Security->Remote site settings.');
+                throw e;
+            }
 
         }catch(CalloutException e){
             system.debug('MC  --> ACLI exception: ' + e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage()));

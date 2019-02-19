@@ -1,0 +1,26 @@
+<aura:component implements="lightning:availableForFlowScreens" access="global" controller="ISSP_AMC_FlowDAO">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="processOrchestratorId" type="String"  />
+    <aura:attribute name="stage" type="String" required="false" />
+    <aura:attribute name="previousVariant" type="String" required="false" default="neutral" />
+    <aura:attribute name="nextVariant" type="String" required="false" default="brand" />
+    <aura:attribute name="finishVariant" type="String" required="false" default="brand" />
+    
+    <aura:handler event="c:ISSP_AMC_RefreshProgressEvent" action="{!c.doInit}"/>
+    
+    <div class="slds-grid slds-grid_align-end">
+        <div class="slds-p-top_large slds-p-bottom_large">		
+            <aura:if isTrue="{!v.stage != 'Stage A'}">
+                <lightning:button label="Previous" aura:id="Previous" variant="neutral" onclick="{!c.previousAction}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.stage != 'Stage F'}">
+                <lightning:button label="Next" aura:id="Next" variant="{!v.nextVariant}" disabled="{!v.nextVariant == 'destructive'}" onclick="{!c.nextAction}"/>
+                <aura:set attribute="else">
+                    <lightning:button label="Finish" aura:id="Finish" variant="{!v.finishVariant}" disabled="{!v.finishVariant == 'destructive'}" onclick="{!c.finishAction}"/>
+                </aura:set>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

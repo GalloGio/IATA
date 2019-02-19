@@ -10,6 +10,8 @@
     1.0         Filipa Martins       30-10-2018      INITIAL DEVELOPMENT
  -->
 <apex:page controller="ISSP_AMC_ManageMyCodes" showHeader="false">
+    <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <c:ISSP_Header />
     <div class="section-header col-md-6" style="text-align: center; background-color: #003F76">
         <strong class="companyTitle" style="color: white">{!$Label.ISSP_AMC_COMPANY_CODES3}</strong><br/>
@@ -69,4 +71,5 @@
 
               }
     </script>
+    </html>
 </apex:page>

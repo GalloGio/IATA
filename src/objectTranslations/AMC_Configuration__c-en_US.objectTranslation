@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>AMC_Configuration</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>AMC_Configuration</value>
+    </caseValues>
+    <fields>
+        <label><!-- CaseAccountingPrefixCodeRecordType --></label>
+        <name>CaseAccountingPrefixCodeRecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- CaseBaggageCodeRecordType --></label>
+        <name>CaseBaggageCodeRecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- CaseCompanyInfoRecordType --></label>
+        <name>CaseCompanyInfoRecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Designator Code RecordType --></label>
+        <name>CaseDesignatorCodeRecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- CaseLocationCodeRecordType --></label>
+        <name>CaseLocationCodeRecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- CaseManageCodesRecordType --></label>
+        <name>CaseManageCodesRecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- Orchestrator Step RecordType --></label>
+        <name>Orchestrator_Step_RecordType__c</name>
+    </fields>
+    <fields>
+        <label><!-- amazonRecordTypeId --></label>
+        <name>amazonRecordTypeId__c</name>
+    </fields>
+    <fields>
+        <label><!-- isPublicAmazonFile --></label>
+        <name>isPublicAmazonFile__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

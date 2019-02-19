@@ -50,6 +50,73 @@ public class ISSP_AMC_Baggage_Tag_Range_Test {
 	}
 
 	/*
+        Purpose: Saves an Empty Participation with Account SIS_Status__c!= ACtive
+        Parameters: 
+        Returns:
+        Throws [Exceptions]: 
+    */
+	@isTest static void testNoParticipationNoSIS() {
+
+	 	ISSP_AMC_ParticipationFactory.createcustomSetting(true);
+		ISSP_AMC_ParticipationFactory.createBaggageRequirements(true);
+		
+		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
+
+
+
+		Test.StartTest(); 
+			System.runAs(myUser){
+
+			User portalUser = ISSP_AMC_ParticipationFactory.portalSetupNoSIS();
+
+			Account acc = [SELECT id, Name,
+                                    Airline_Code__c, 
+                                    Baggage_Tag_Range_Code__c,
+                                    Airline_designator__c,
+                                    Accounting_Code__c,
+                                    Airline_Prefix__c,
+                                    AOC_Expiry_Date__c,
+                                    Legal_name__c,
+                                    TradeName__c,
+                                    Sector__c,
+                                    Category__c,
+                                    IATA_ISO_Country__r.Name,
+                                    Region_formula__c,
+                                    Phone,
+                                    Email__c,
+                                    Website,
+                                    ShippingStreet,
+                                    ShippingAddress,
+                                    ShippingCity,
+                                    ShippingState,
+                                    ShippingPostalCode,
+                                    ShippingCountry,
+                                    IATA_ISO_Country__c,
+                                    SIS_Status__c
+                            FROM account
+                            
+                            LIMIT 1];
+				acc.SIS_Status__c = 'Terminated';
+				update acc;
+				
+			System.runAs(portalUser){
+
+				Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Baggage_Tag_Range'));
+				ISSP_AMC_Baggage_Tag_Range controller = new ISSP_AMC_Baggage_Tag_Range();
+				controller.init();
+				controller.step = '1';
+				controller.saveParticipation();
+
+
+				//ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
+			}
+
+			Test.stopTest();
+
+		}
+	}
+
+	/*
 		Purpose: Empty participation form for the Baggage Tag Range Code request with a submit.
 		Parameters: 
 		Returns:

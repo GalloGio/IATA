@@ -1,0 +1,129 @@
+/*.THIS .article {
+display: inline-table !important;
+}
+.THIS .slds-path {
+display: inline-table !important;
+}
+.THIS .slds-path__track{
+display: inline-grid !important;  
+} */
+.THIS .slds-path__nav{
+    margin-right: 10%;  
+}
+.THIS .slds-path__item{
+    min-width: 10%; 
+    max-width: 100%; 
+    
+}
+.THIS .path-item-status-fix {
+    cursor: default;
+}
+.THIS .path-item-fix {
+    color: #ffffff;
+    cursor: default;
+}
+.THIS .slds-path__nav .iata-status-completed {
+    background-color: #04844b;
+}
+.THIS .slds-path__nav .iata-status-completed::before {
+    background-color: #04844b;
+}
+.THIS .slds-path__nav .iata-status-completed::after {
+    background-color: #04844b;
+}
+
+.THIS .slds-path__nav .iata-status-fail {
+    background-color: #a61a14;
+}
+.THIS .slds-path__nav .iata-status-fail::before {
+    background-color: #a61a14;
+}
+.THIS .slds-path__nav .iata-status-fail::after {
+    background-color: #a61a14;
+}
+
+.THIS .slds-path__nav .iata-status-progressing {
+    background-color: #16325c;
+}
+.THIS .slds-path__nav .iata-status-progressing::before {
+    background-color: #16325c;
+}
+.THIS .slds-path__nav .iata-status-progressing::after {
+    background-color: #16325c;
+}
+
+.THIS .slds-path__nav .iata-status-pending-customer {
+    background-color: #ff9a3c;
+}
+.THIS .slds-path__nav .iata-status-pending-customer::before {
+    background-color: #ff9a3c;
+}
+.THIS .slds-path__nav .iata-status-pending-customer::after {
+    background-color: #ff9a3c;
+}
+
+.THIS .slds-path__nav .iata-status-incomplete {
+    background-color: #b0adab;
+}
+.THIS .slds-path__nav .iata-status-incomplete::before {
+    background-color: #b0adab;
+}
+.THIS .slds-path__nav .iata-status-incomplete::after {
+    background-color: #b0adab;
+}
+
+.THIS .LabelTooltip .tooltiptext{
+    visibility: hidden;
+    position:fixed;
+    width: -moz-max-content;
+    background-color: #fff;
+    color: #00396b;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.3s;
+    margin-bottom: 80px !important;
+    margin-top: -40px !important; /*Position label*/
+    border-color: #e5e4e3;
+    border-style: solid;
+    border-width: thin;
+    
+}
+
+.THIS .LabelTooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #e5e4e3 transparent;
+    font-size: 0.8125rem;
+    transform: rotate(180deg);
+}
+
+.THIS .LabelTooltip:hover .tooltiptext {
+    margin-bottom: 1.25rem;
+    margin-left: 1rem;
+    visibility: visible;
+}
+
+/*@media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+.THIS .LabelTooltip .tooltiptext{
+visibility: hidden;
+position: fixed;
+width: max-content;
+background-color: #000;
+color: #000;
+text-align: center;
+padding: 10px;
+border-radius: 6px;
+z-index: 1;
+opacity: 1;
+transition: opacity 0.3s;
+margin-bottom: 80px !important;
+}
+}*/

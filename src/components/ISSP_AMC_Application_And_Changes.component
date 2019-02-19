@@ -25,6 +25,10 @@
                 float: left;
                 min-height: 6px;
             }
+
+            .pagination{
+                display: flex !important;
+            }
         </style>
     </head>
     <div>

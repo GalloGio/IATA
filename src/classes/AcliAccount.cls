@@ -2,7 +2,7 @@ global  class AcliAccount  {
 
     //ACLI Enhancements
     //Portal Service Name
-    public static String PORTAL_SERVICE_NAME_ACLI  = 'NOT SET';
+    /*public static String PORTAL_SERVICE_NAME_ACLI  = 'NOT SET';
 
     static {
         ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
@@ -11,7 +11,7 @@ global  class AcliAccount  {
         }
     }
 
-    private static final map<String,String> MAP_REASONS = new map<String,String>{
+    */private static final map<String,String> MAP_REASONS = new map<String,String>{
         'ACP' => '3 Digit Form',
         'DES' => 'Designator Form',
         'LOS' => 'Location ID Form'

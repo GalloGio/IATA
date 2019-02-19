@@ -7,7 +7,7 @@ Copyright @Right IT Services
 Purpose: Apply to an Airline Designator code
 
 VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
-1.0         João Ferreira       30-10-2018      INITIAL DEVELOPMENT
+1.0         JoÃ£o Ferreira       30-10-2018      INITIAL DEVELOPMENT
 -->
 <apex:page controller="ISSP_AMC_Location_Identifier" docType="html-5.0" cache="false" sidebar="false" showHeader="false" language="{!displayLanguage}" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" action="{!init}">
     <html>
@@ -236,9 +236,11 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                 }
                 #loading > div:nth-child(2){
                     position: fixed !important;
+                    transform:translate(-50%,-50%)!important;
                 }
                 #redirect > div:nth-child(2){
                     position: fixed !important;
+                    transform:translate(-50%,-50%)!important;
                 }
             </style>
             
@@ -411,46 +413,46 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 </apex:commandLink>
                                             </div>
                                         </div>
-                                        <br></br> 
-                                            
-                                                <!--TIAGO MENDES-->
-                                                <div class="requestor" style="display: inline-block; width: 100%;">
-                                                    <div class="panel panel-primary">
-                                                        <div class="panel-heading" id="METROPOLITAN_AREA">
-                                                            {!$Label.ISSP_AMC_REQUESTOR_LOCATION_TYPE}
-                                                        </div>
-                                                        <div class="panel-body">
-                                                                <div class="form-group">
-                                                                    <label for="nameAirline" class="col-sm-3 control-label">{!$Label.ISSP_AMC_AIRLINE_NAME}</label>
-                                                                    <div class="col-sm-7">
-                                                                        <apex:inputText id="nameAirline" styleClass="form-control" value="{!accountRecord.Name}" disabled="true"/>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="codeAirline" class="col-sm-3 control-label">{!$Label.ISSP_AMC_AIRLINE_CODE}</label>
-                                                                    <div class="col-sm-3">
-                                                                        <apex:inputText id="codeAirline" styleClass="form-control" value="{!accountRecord.Airline_Code__c}" disabled="true"/>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                        <label for="country" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LOCATION_TYPE}</label>
-                                                                        <div class="col-sm-3">
-                                                                            <apex:selectList id="country" styleClass="form-control" size="1" value="{!participation.Location_Type__c}" >
-                                                                            <apex:actionSupport reRender="step2Panel,step3Panel" event="onchange" action="{!CalculateWhichComponentsToShow}" status="Loading"/>
-                                                                                <apex:selectOptions value="{!locationList}"/>
-                                                                            </apex:selectList>
-                                                                        </div>                            
-                                                                </div>
-                                                        </div>
-                                                    </div>
+                                        <br></br>  
+                                        <!--TIAGO MENDES-->
+                                        <div class="requestor" style="display: inline-block; width: 100%;">
+                                            <div class="panel panel-primary">
+                                                <div class="panel-heading" id="METROPOLITAN_AREA">
+                                                    {!$Label.ISSP_AMC_REQUESTOR_LOCATION_TYPE}
                                                 </div>
-                                                <c:ISSP_AMC_EntityContactData participation="{!participation}" hasError="{!hasError}" isLocation="{!isLocation}" isSISUser="{!isSISUser}" rendered="{!IF(accountRecord.SIS_Status__c == 'Active',false,true)}"/> 
-                                                <!-- DAVID BENTO -->
-                                                <c:ISSP_AMC_LocationAreaData participation="{!participation}" countryList="{!countryList}" hasError="{!hasError}"/>
-
-
-                                            
-
+                                                <div class="panel-body">
+                                                        <div class="form-group">
+                                                            <label for="nameAirline" class="col-sm-3 control-label">{!$Label.ISSP_AMC_AIRLINE_NAME}</label>
+                                                            <div class="col-sm-7">
+                                                                <apex:inputText id="nameAirline" styleClass="form-control" value="{!accountRecord.Name}" disabled="true"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="codeAirline" class="col-sm-3 control-label">{!$Label.ISSP_AMC_AIRLINE_CODE}</label>
+                                                            <div class="col-sm-3">
+                                                                <apex:inputText id="codeAirline" styleClass="form-control" value="{!accountRecord.Airline_Code__c}" disabled="true"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label for="country" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LOCATION_TYPE}</label>
+                                                                <div class="col-sm-3">
+                                                                    <apex:selectList id="country" styleClass="form-control" size="1" value="{!participation.Location_Type__c}" >
+                                                                    <apex:actionSupport reRender="step2Panel,step3Panel" event="onchange" action="{!changeListReqs}" status="Loading"/>
+                                                                        <apex:selectOptions value="{!locationList}"/>
+                                                                    </apex:selectList>
+                                                                </div>                            
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div> <!--  -->
+                                        <apex:outputPanel id="entity">
+                                            <c:ISSP_AMC_EntityContactData participation="{!participation}" hasError="{!hasError}" isLocation="{!isLocation}" isSISUser="{!isSISUser}" rendered="{!IF(accountRecord.SIS_Status__c == 'Active',false,true)}"></c:ISSP_AMC_EntityContactData> 
+                                        </apex:outputPanel>
+                                        <!-- DAVID BENTO -->
+                                        <apex:outputPanel id="locmap">                                 
+                                            <c:ISSP_AMC_LocationAreaData participation="{!participation}" countryList="{!countryList}" hasError="{!hasError}"></c:ISSP_AMC_LocationAreaData>
+                                        </apex:outputPanel>
+ 
                                     </div>
                                 </apex:outputPanel>
                             </div>
@@ -528,7 +530,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                             <div class="col-sm-12">
                                                 <div class="panel-body">
                                                     <div class="form-group">
-                                                        <div class="panel panel-primary">
+                                                        <div class="panel panel-primary" style="overflow-x:auto;">
                                                             <table class="table panel-primary">
                                                                 <thead class="panel-heading">
                                                                     <tr>

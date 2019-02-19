@@ -245,6 +245,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                     <div class="panel panel-primary">
                         <div class="panel-heading" id="SISCONTACT">
                             {!$Label.ISSP_AMC_SIS_INFO}
+                            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMC_SIS_BUBBLE}" 
+                              html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                         </div>
                         <div class="panel-body">
                             <apex:outputPanel id="hobContact">

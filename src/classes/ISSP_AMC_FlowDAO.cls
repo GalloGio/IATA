@@ -89,10 +89,10 @@ public with sharing class ISSP_AMC_FlowDAO {
         request.setObjectId(caseId);
 
         // Submit the record to specific process
-        request.setProcessDefinitionNameOrId('Process_For_ACLI_Flow');
+        request.setProcessDefinitionNameOrId('ACLI_Approve_code_assignment');
 
         // set nex approver ids (mandatory)
-        request.setNextApproverIds(new Id[] {UserInfo.getUserId()});
+        //request.setNextApproverIds(new Id[] {UserInfo.getUserId()});
         
         // Submit on behalf of a specific submitter
         //request.setSubmitterId(user1.Id);
@@ -136,13 +136,10 @@ public with sharing class ISSP_AMC_FlowDAO {
             relatedCase.Priority = parentCase.Priority;
             relatedCase.Origin = parentCase.Origin;
             //relatedCase.Account.Site = parentCase.Account.Site;
-            //System.debug('FILIPA parent 1: ' + parentCase.Account.Name);
             relatedCase.AccountId = parentCase.AccountId;
             relatedCase.ContactId = parentCase.ContactId;
             string descriptionB = 'Dear Team,' + '\n' + 'Please process DD for new applicant. Attached you will find usual documentation.' + '\n' + 'Thank you,' + '\n' + 'Coding Team';
             string descriptionC = 'Dear Colleagues,' + '\n' + 'Would you please raise a PPA for this customer with the following items (using current year price list):' + '\n' + 'Application Fee x 1' + '\n' + 'Assignment Fee x 1' + '\n' + 'BRgds,' + '\n' + 'Coding Team';
-            //System.debug('FILIPA parent: ' + parentCase.Account.Name);
-            //System.debug('FILIPA related: ' + relatedCase.Account.Name);
 
             if(stage == 'Stage B'){
                 relatedCase.CaseArea__c = 'Corporate Compliance';
@@ -152,6 +149,9 @@ public with sharing class ISSP_AMC_FlowDAO {
                 relatedCase.Description = descriptionB;
                 relatedCase.RecordTypeId = recordTypeIdStageB;
             }else if(stage == 'Stage C'){
+            	if(parentCase.Account.ACLI_SAP_Id__c == null){
+                	parentCase.Account.ACLI_SAP_Id__c = 'No value';
+                }
                 relatedCase.CaseArea__c = 'Invoicing';
                 relatedCase.Reason = 'Customer Charge Request';
                 relatedCase.Subject = 'Charge Request for ' + parentCase.Account.Name + ' – ' + parentCase.Account.ACLI_SAP_Id__c;
@@ -168,9 +168,7 @@ public with sharing class ISSP_AMC_FlowDAO {
             }
 
             try{
-                //System.debug('FILIPA case antes ' + relatedCase);
                 insert relatedCase;
-                //System.debug('FILIPA case depois ' + [SELECT id, recordTypeId FROM Case WHERE id =: relatedCase.Id]);
             }catch(Exception e){
                 System.debug(LoggingLevel.ERROR,
                         'ERROR when trying to insert a related case');

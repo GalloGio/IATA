@@ -279,6 +279,8 @@ public with sharing class ISSP_AMC_DAO {
                     FROM AmazonFile__c
                     WHERE id =: amazonFileId];
 
+                    system.debug('amazenas '+amazenas.Description__c);
+
             //returns 1 per requirement
             savedForms = new List<Participant_Online_App_Requirement__c>(
                     [SELECT id, AmazonFile__c, Participation_Application_Requirement__c
@@ -288,6 +290,7 @@ public with sharing class ISSP_AMC_DAO {
                     LIMIT 1]);
 
             savedForms.get(0).AmazonFile__c = amazonFileId;
+
             update savedForms;
         //}
         /*catch (Exception e) {
@@ -758,7 +761,7 @@ public with sharing class ISSP_AMC_DAO {
                             parOnlineRecord.Status__c = 'Incomplete';
                         }
                         if(participation.Has_the_company_published_their_schedule__c == 'No'){
-                            errorMessages.add(Label.ISSP_AMC_SCHEDULES_PUBLICATION + ' ' + Label.ISSP_AMC_REQUIRES_AN_ANSWER + 
+                            errorMessages.add(Label.ISSP_AMC_SCHEDULES_PUBLICATION + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
                                             '<a href="#" step="step2" goto="#SCHEDULESPUBLICATION" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a></br>');                            
                             parOnlineRecord.Status__c = 'Incomplete';
                         }
@@ -1553,7 +1556,7 @@ public with sharing class ISSP_AMC_DAO {
                             parOnlineRecord.Status__c = 'Incomplete';
                         }
                         if(participation.Has_the_company_published_their_schedule__c == 'No'){
-                            errorMessages.add(Label.ISSP_AMC_SCHEDULES_PUBLICATION + ' ' + Label.ISSP_AMC_REQUIRES_AN_ANSWER + 
+                            errorMessages.add(Label.ISSP_AMC_SCHEDULES_PUBLICATION + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
                                             '<a href="#" step="step2" goto="#SCHEDULESPUBLICATION" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a></br>');                            
                             parOnlineRecord.Status__c = 'Incomplete';
                         }
@@ -2283,6 +2286,24 @@ public with sharing class ISSP_AMC_DAO {
         }
         set;
     }
+
+    //ACLI Enhancements
+    //Portal Service Name
+    public static String PORTAL_SERVICE_NAME_ACLI  = 'NOT SET';
+
+    static {
+        ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+        if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes_Na__c)){
+            ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI = serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes_Na__c;
+        }
+    }
+
+    private static final map<String,String> MAP_REASONS = new map<String,String>{
+        'ACP' => '3 Digit Form',
+        'DES' => 'Designator Form',
+        'LOS' => 'Location ID Form'
+    };
+
 
     public class AplicationRequirements {
         public Id     requirementId { get; set; }

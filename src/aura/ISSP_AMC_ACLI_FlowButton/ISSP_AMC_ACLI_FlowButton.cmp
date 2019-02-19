@@ -1,0 +1,59 @@
+<aura:component implements="lightning:availableForFlowScreens,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="ISSP_AMC_FlowDAO">
+
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+	<lightning:notificationsLibrary aura:id="notifLib"/>
+	
+	<aura:attribute name="caseRecordId" type="String" required="false" />
+	<aura:attribute name="action" type="String" required="false" />
+	<aura:attribute name="stage" type="String" required="false" />
+    <aura:attribute name="action2" type="String" required="false" />
+    <aura:attribute name="processOrchestratorId" type="String"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" description="Defines when to display the spinner"/>
+    <aura:attribute name="apiServerPartner" type="String" required="false" />
+
+    <aura:attribute name="requestApprovalVariant" type="String" required="false" default="neutral" />
+    <aura:attribute name="relatedCaseVariant" type="String" required="false" default="neutral" />
+    <aura:attribute name="assignmentLetterVariant" type="String" required="false" default="neutral" />
+    <aura:attribute name="sendCaseVariant" type="String" required="false" default="neutral" />
+
+    <aura:attribute name="url" type="ACLI_Process__mdt"/>
+    <aura:attribute name="apiServer" type="String" required="false"/>
+
+    <aura:handler event="c:ISSP_AMC_RefreshProgressEvent" action="{!c.doInit}"/>
+
+    <lightning:spinner class="{!if(v.showSpinner,'slds-show','slds-hide')}" style="position: fixed;" alternativeText="Loading" size="medium"/>
+
+    <lightning:workspaceAPI aura:id="workspace" />
+
+	<div class="slds-grid slds-grid_align-end">
+		<div class="slds-p-top_large slds-p-bottom_large">
+
+			<aura:if isTrue="{!v.action == 'Request_Approval' || v.action2 == 'Request_Approval'}">
+				<lightning:buttongroup>
+					<lightning:button label="Request for Approval" aura:id="Request_Approval" variant="{!v.requestApprovalVariant}" disabled="{!v.requestApprovalVariant == 'destructive'}" onclick="{!c.requestApproval}"/>
+				</lightning:buttongroup>
+			</aura:if>
+
+			<aura:if isTrue="{!v.action == 'Create_Related_Case' || v.action2 == 'Create_Related_Case'}">
+				<lightning:buttongroup>
+					<lightning:button label="Create Related Case" aura:id="Create_Related_Case" variant="{!v.relatedCaseVariant}" disabled="{!v.relatedCaseVariant == 'destructive'}" onclick="{!c.createRelatedCase}"/>
+				</lightning:buttongroup>
+			</aura:if>
+
+			<aura:if isTrue="{!v.action == 'Send_Assignment_Letter' || v.action2 == 'Send_Assignment_Letter'}">
+				<lightning:buttongroup>
+					<lightning:button label="Generate Letter" aura:id="Send_Assignment_Letter" variant="{!v.assignmentLetterVariant}" disabled="{!v.assignmentLetterVariant == 'destructive'}" onclick="{!c.sendAssignmentLetter}"/>
+				</lightning:buttongroup>
+			</aura:if>
+
+            <aura:if isTrue="{!v.action == 'Send_Case' || v.action2 == 'Send_Case'}">
+                <lightning:buttongroup>
+                    <lightning:button label="Sync with ACLI" aura:id="Send_Case" variant="{!v.sendCaseVariant}" disabled="{!v.sendCaseVariant == 'destructive'}" onclick="{!c.sendCase}"/>
+                </lightning:buttongroup>
+            </aura:if>
+		</div>
+	</div>
+
+</aura:component>

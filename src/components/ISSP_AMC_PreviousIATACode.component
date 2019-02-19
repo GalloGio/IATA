@@ -85,7 +85,8 @@
 	                    }
 	                    if(y[i].classList =="errormessage"){
 	                    	element.value= "";
-	                        y[i].innerHTML = "{!$Label.ISSP_AMC_IATA_CODE_VALIDATION}";
+	                        y[i].innerHTML = "{!$Label.ISSP_AMC_2DIGITS_CODE}";
+	                        //y[i].innerHTML = "The code must have 2 digits and may include letters or letters and numbers."
 
 	                    }                   
 	                }

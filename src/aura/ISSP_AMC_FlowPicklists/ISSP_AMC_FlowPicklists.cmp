@@ -1,0 +1,26 @@
+<aura:component access="global" implements="lightning:availableForFlowScreens" controller="ISSP_AMC_FlowDAO">
+
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+  <aura:attribute name="CurrentStage" type="String"  />
+  <aura:attribute name="processOrchestratorId" type="String" />
+
+
+  <aura:attribute name="picklists" type="ISSP_AMC_FlowDAO.PicklistInfo[]" />
+  
+  <aura:registerEvent name="refreshProgressEvent" type="c:ISSP_AMC_RefreshProgressEvent"/>
+  
+  <!--<div style="height: 100%;">-->
+  <div class="slds-grid slds-gutters slds-wrap slds-grid_align-center slds-grid_vertical-align-start">
+    <aura:iteration items="{!v.picklists}" var="picklist">
+      <div class="slds-col slds-size_5-of-12 slds-m-vertical--medium">
+        <lightning:combobox name="progress" label="{!picklist.stepActionName}" value="{!picklist.stepStatus}" required="false" options="{!picklist.pickListValueMap}" onchange="{! c.handleChange }" readonly="{!picklist.stepActionName == 'Request for approval'}"/>
+      </div>
+      <div class="slds-col" />
+    </aura:iteration>
+    <aura:if isTrue="{!mod(v.picklists.length, 2) > 0}">
+      <div class="slds-col slds-size_5-of-12 slds-m-vertical--medium" /><div class="slds-col" />
+    </aura:if>
+  </div>
+<!--    </div>-->
+</aura:component>

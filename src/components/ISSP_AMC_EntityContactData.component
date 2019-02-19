@@ -13,7 +13,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
     <apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" assignTo="{!controllerParticipation}"/>
     <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="false" />
     <apex:attribute name="isLocation" description="is Location Identifer Page" type="Boolean" required="false" />
-    <apex:attribute name="isSISUser" description="is SIS User" type="Boolean" required="true"/>
+    <apex:attribute name="isSISUser" description="is SIS User" type="Boolean" required="false"/>
     <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
             color: white !important;
@@ -32,25 +32,6 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
         }
 
     </style>
-    <script>
-        $(document).ready(function() {
-            var isLocation = '{!isLocation}';
-            console.log(isLocation);
-
-            /*var entityTab = document.getElementById("tab2");
-            console.log(entityTab);*/
-            var entityTab = document.getElementsByClassName("forTab2")[0];
-            if(isLocation == 'true') {
-                entityTab.classList.add("hidden");
-                console.log('nao entra');
-
-                console.log(entityTab.classList);
-                entityTab.setAttribute("display", "none");
-
-            }
-        });
-
-    </script>
         
 
 
@@ -272,9 +253,11 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                     <div class="panel panel-primary">
                         <div class="panel-heading" id="SISCONTACT">
                             {!$Label.ISSP_AMC_SIS_INFO}
+                            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMC_SIS_BUBBLE}" 
+                              html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                         </div>
                         <div class="panel-body">
-                            <apex:outputPanel id="hobContact">
+                            <apex:outputPanel id="sisContact">
                             <div class="form-group">
                                 <label for="nameOrganization2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE}</label>
                                 <div class="col-sm-3">
@@ -630,6 +613,20 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
 
         <script>
             $(document).ready(function(){
+                var isLocation = '{!isLocation}';
+                console.log(isLocation);
+
+                /*var entityTab = document.getElementById("tab2");
+                console.log(entityTab);*/
+                var entityTab = document.getElementsByClassName("forTab2")[0];
+                if(isLocation == 'true') {
+                    entityTab.classList.add("hidden");
+                    console.log('nao entra');
+
+                    console.log(entityTab.classList);
+                    entityTab.setAttribute("display", "none");
+
+                }
                 var emailList = document.getElementsByClassName('allemails');
                 var telefList = document.getElementsByClassName('alltelef');
                 var charList = document.getElementsByClassName('allchar');

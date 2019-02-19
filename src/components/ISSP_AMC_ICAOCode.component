@@ -84,7 +84,7 @@
                         }
                         if(y[i].classList =="errormessage"){
                             element.value="";
-                            y[i].innerHTML = "{!$Label.ISSP_AMC_IATA_CODE_VALIDATION}";
+                            y[i].innerHTML = "{!$Label.ISSP_AMC_3LETTERS_CODE}";
 
                         }                   
                     }
@@ -119,6 +119,13 @@
                 x.remove("has-feedback");
             }
         }
+        
+        $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip({'placement':'auto'});
+          //comment the following line out to see page move on click
+          $('a[data-toggle="tooltip"]').click(function(e){e.preventDefault()})
+        })
+
     </script>
 
 </apex:component>

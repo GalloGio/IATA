@@ -9,13 +9,14 @@ global class ISSP_AMC_Invocable {
     public static void invokeACLICustomImpl(List<ID> orchestrator) {
         
         if(orchestrator != null && !orchestrator.isEmpty()){   
-            System.debug(orchestrator[0]);
+            System.debug('Orchestrator ID'+orchestrator[0]);
                  
             AMC_Configuration__c amcConfiguration = AMC_Configuration__c.getInstance();
+            system.debug('amcConfiguration'+amcConfiguration);
             ID recordTypeId = Schema.SObjectType.IATA_Process_Orchestrator__c.RecordTypeInfosByName.get(amcConfiguration.Orchestrator_Step_RecordType__c).RecordTypeId;
-            
+            system.debug('recordTypeId'+recordTypeId);
             IATA_Process_Orchestrator__c theParent = [select id, process_name__c, associated_case__c from IATA_Process_Orchestrator__c where id =:orchestrator[0]];
-    
+            system.debug('theParent'+theParent);
             Case theCase = [select id, subject from case where id = :theParent.associated_case__c ];
             try{
                 ISSP_AMC_Invocable.getFormData(theCase.id);
@@ -80,6 +81,7 @@ global class ISSP_AMC_Invocable {
                         anAction.Action_Name__c = ac;
                         anAction.Associated_Case__c = theCase.id;
                         anAction.IATA_Process_Orchestrator__c = sp.Id;
+                        anAction.Status__c = 'Not Started';
                         actions.add(anAction);                        
                     }
                     
@@ -104,6 +106,7 @@ global class ISSP_AMC_Invocable {
                         anAction.Action_Name__c = ac;
                         anAction.Associated_Case__c = theCase.id;
                         anAction.IATA_Process_Orchestrator__c = sp.Id;
+                        anAction.Status__c = 'Not Started';
                         actions.add(anAction);                        
                     }
                     
@@ -131,6 +134,7 @@ global class ISSP_AMC_Invocable {
                         anAction.Action_Name__c = ac;
                         anAction.Associated_Case__c = theCase.id;
                         anAction.IATA_Process_Orchestrator__c = sp.Id;
+                        anAction.Status__c = 'Not Started';
                         actions.add(anAction);                        
                     }
                     
@@ -153,6 +157,7 @@ global class ISSP_AMC_Invocable {
                         anAction.Action_Name__c = ac;
                         anAction.Associated_Case__c = theCase.id;
                         anAction.IATA_Process_Orchestrator__c = sp.Id;
+                        anAction.Status__c = 'Not Started';
                         actions.add(anAction);                        
                     }
                     
@@ -174,6 +179,7 @@ global class ISSP_AMC_Invocable {
                         anAction.Action_Name__c = ac;
                         anAction.Associated_Case__c = theCase.id;
                         anAction.IATA_Process_Orchestrator__c = sp.Id;
+                        anAction.Status__c = 'Not Started';
                         actions.add(anAction);                        
                     }
                     
@@ -194,6 +200,7 @@ global class ISSP_AMC_Invocable {
                         anAction.Action_Name__c = ac;
                         anAction.Associated_Case__c = theCase.id;
                         anAction.IATA_Process_Orchestrator__c = sp.Id;
+                        anAction.Status__c = 'Not Started';
                         actions.add(anAction);                        
                     }
                     

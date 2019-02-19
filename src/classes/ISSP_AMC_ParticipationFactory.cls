@@ -58,6 +58,91 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             Name = 'TestAccount',
             //Top_Parent__c = parentAccount.Id,
             OwnerId = portalAccountOwner1.Id,
+            SIS_Status__c = 'Active',
+            RecordType = [SELECT Name,id from RecordType WHERE Name = 'Airline Headquarters'][0]
+        );
+        Database.insert(portalAccount1);
+
+        
+                
+        //Create contact
+        Contact contact1 = new Contact(
+            FirstName = 'Test',
+            //User_Portal_Status__c = 'Administrator',
+            Lastname = 'McTesty',
+            AccountId = portalAccount1.Id,
+            Email = System.now().millisecond() + 'test@test.com',
+            RecordType = [SELECT Name,id from RecordType WHERE Name = 'Standard'][0]
+        );
+        Database.insert(contact1);
+                
+        //Create user
+        Profile portalProfile = [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline Delegated Admin User' Limit 1];
+        User user1 = new User(
+            Username = System.now().millisecond() + Math.random() + 'test12345@test.com',
+            ContactId = contact1.Id,
+            ProfileId = portalProfile.Id,
+            Alias = 'test123',
+            Email = 'test12345@test.com',
+            EmailEncodingKey = 'UTF-8',
+            LastName = 'McTesty',
+            CommunityNickname = 'test12345',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            LocaleSidKey = 'en_US',
+            LanguageLocaleKey = 'en_US'
+        );
+        Database.insert(user1);
+
+        return user1;
+    }
+
+    /*
+        Purpose: Creates a portal User with Account SIS_Status != Active
+        Parameters: 
+        Returns:
+        Throws [Exceptions]: 
+    */
+    public static User portalSetupNoSIS(){
+        //Create portal account owner
+        UserRole portalRole = [Select Id From UserRole Where PortalType = 'None' Limit 1];
+        Profile profile1 = [Select Id from Profile where name = 'System Administrator'];
+        User portalAccountOwner1 = new User(
+            UserRoleId = portalRole.Id,
+            ProfileId = profile1.Id,
+            Username = System.now().millisecond() + Math.random() + 'test2@test.com',
+            Alias = 'batman',
+            Email='bruce.wayne@wayneenterprises.com',
+            EmailEncodingKey='UTF-8',
+            Firstname='Bruce',
+            Lastname='Wayne',
+            LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US',
+            TimeZoneSidKey='America/Chicago',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        Database.insert(portalAccountOwner1);
+
+        //create Country
+        /*IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+            IATA_COUNTRY_EN__c = 'test', IATA_Country_FR__c = 'test', IATA_Country_ZH__c = 'test',
+            IATA_Country_IT__c = 'test', IATA_Country_JP__c = 'test', ISO_Code__c = 'EN',
+            IATA_Country_PT__c = 'test', IATA_Country_SP__c = 'test', Case_BSP_Country__c = 'test');
+        insert country;
+
+        //parent account(ISSP_AMC_Home_Test)
+        Account parentAccount = new Account(                        // HOME
+            Name = 'TestAccount2',
+            OwnerId = portalAccountOwner1.Id,
+            IATA_ISO_Country__c = country.Id,
+            RecordType = [SELECT Name,id from RecordType WHERE Name = 'Airline Headquarters'][0]
+        );
+        Database.insert(parentAccount);*/
+
+        //Create account
+        Account portalAccount1 = new Account(
+            Name = 'TestAccount',
+            //Top_Parent__c = parentAccount.Id,
+            OwnerId = portalAccountOwner1.Id,
             RecordType = [SELECT Name,id from RecordType WHERE Name = 'Airline Headquarters'][0]
         );
         Database.insert(portalAccount1);
@@ -103,8 +188,6 @@ public with sharing class ISSP_AMC_ParticipationFactory {
     */
     public static void testLocationUploadFiles(ISSP_AMC_Location_Identifier controller){
         List <Participant_Online_App_Requirement__c> reqList = [SELECT Id,Name,Participation_Application_Requirement__r.Type_of_Requirement__c FROM Participant_Online_App_Requirement__c WHERE Participation_Online_Application__c= :controller.participation.Id AND Participation_Application_Requirement__r.Type_of_Requirement__c = 'Attachment'];
-        System.debug('REQLIST size' + reqList);
-        System.debug('REQLIST size' + reqList.size());
         List <AmazonFile__c> filesList = new List<AmazonFile__c>();
 
         
@@ -117,8 +200,8 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         String fileName='ICE POP';
         RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('File');
         Id RTId = rtInfo.getRecordTypeId();
-        System.debug('RTId' + RTId);
         AmazonFile__c azFile;
+        List <AmazonFile__c> insertAmazon = new List<AmazonFile__c>();
         for(Participant_Online_App_Requirement__c req : reqList){
             
             if(req.Participation_Application_Requirement__r.Type_of_Requirement__c == 'Attachment'){
@@ -128,19 +211,29 @@ public with sharing class ISSP_AMC_ParticipationFactory {
                                     Case__c =controller.participation.case__c,
                                     Full_Name_Unique__c = '001/'+controller.participation.case__c+Math.random()+'/ICE POP'
                             );
-                insert azFile;
-                UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
+                insertAmazon.add(azFile);
+                //UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
                 //ISSP_AMC_DAO.saveAmazonFileInJunctionObject(azFile.id,controller.participation.id);
-                req.AmazonFile__c = azFile.Id;
+                //req.AmazonFile__c = azFile.Id;
                 
             }
 
         }
+        insert insertAmazon;
+
+        for(Participant_Online_App_Requirement__c req : reqList){
+            for(AmazonFile__c file : insertAmazon){
+                if(req.Participation_Application_Requirement__r.Type_of_Requirement__c == 'Attachment'){
+                    UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
+                    req.AmazonFile__c = azFile.Id;
+                }
+            }
+        }
+
 
         //insert filesList;
         update reqList;
         update [SELECT Id FROM Case WHERE Id=:controller.participation.case__c];
-        System.debug('ITEMS NO ATTACHMENT'+[SELECT Id  FROM Attachment]);
 
         ISSP_AMC_Upload_Files uploadFiles = new ISSP_AMC_Upload_Files();
         uploadFiles.participationBackend = controller.participation;
@@ -306,95 +399,6 @@ public with sharing class ISSP_AMC_ParticipationFactory {
   
 
 
-    /*public static Contact dummyContact(Boolean insertContact){
-        Contact con = new Contact(
-            Firstname = 'AMC',
-            Lastname = 'User Partner',
-            Status__c = 'Active',
-            Membership_Function__c = 'Aeropolitical; Operations; Technical',
-            Email = 'joeblack12345zao@gmail.com',
-            Preferred_Language__c = 'English',
-            User_Portal_Status__c = 'Active'
-            //ISO_Country__c = 'Portugal',
-            //RecordTypeId = [SELECT RecordTypeId FROM Contact][0].Id
-            );
-
-        if(insertContact){
-            insert con;
-        }
-
-        return con;
-    }
-
-    public static Account dummyAccount(Boolean insertAccount){
-        Account acc = new Account(
-            Name = 'TAP Portugal',
-            Field_Head_Office__c = 'Headquarter',
-            Payment_Term__c = '2003',
-            Segmentation__c = 'Large',
-            Sector__c = 'Airline',
-            Site = 'TP PT',
-            Legal_name__c = 'Transportes Aéreos Portugueses S.A.',
-            Name_on_AOC__c = 'TAP Portugal',
-            //Type_of_Operations__c = 'Scheduled Passenger and Cargo',
-            Type_of_Service__c = 'Scheduled and Non-Scheduled',
-            Airline_Model_Type__c = 'Full Service Carrier',
-            ACLI_Status__c = 'Active Company',
-            TradeName__c = 'TAP Portugal',
-            //AOC_Expiry_Date__c = '12/31/2100',
-            Area_of_Operation__c = 'International and Domestic',
-            MITA_Member__c = true,
-            Membership_SITA__c = true,
-            BIETA_Member__c = true,
-            ICh_Member__c= true,
-            Membership_status__c = 'Non-IATA member',
-            //Region_formula__c = 'Europe',
-            //IATA_ISO_Country__c = 'Portugal',
-            Email__c = 't@bjdf.com',
-            Website = 'http://www.iata.org',
-            Phone = '85325963',
-            BillingStreet = 'Aeroporto de Lisboa',
-            BillingCity = 'Lisboa',
-            BillingPostalCode = '1704-801',
-            BillingState = 'Campo Grande',
-            BillingCountry = 'Portugal',
-            ShippingStreet = 'Aeroporto de Lisboa',
-            ShippingCity = 'Lisboa',
-            ShippingPostalCode = '1704-801',
-            ShippingState = 'Campo Grande',
-            ShippingCountry = 'Portugal',
-            Type = 'Passenger and cargo',
-            RecordType = [SELECT Name,id from RecordType WHERE Name = 'Airline Headquarters'][0]
-
-            );
-
-        if(insertAccount){
-            insert acc;
-        }
-
-        return acc;
-    }
-
-    @future 
-    public static void insertUser(Id contactId){
-        User portalUser = new User( email='portaluser@portal.com',
-                //profileid = [select Id,Name from UserRole WHERE RoleName='TAPPortugalPartnerUser27'][0].Id, 
-            profileid = [select Id,Name from Profile WHERE Name='ISS Portal Airline Delegated Admin User'][0].Id,
-            UserName='portaluserUsername', 
-            Alias = 'portU',
-            TimeZoneSidKey='America/New_York',
-            EmailEncodingKey='ISO-8859-1',
-            LocaleSidKey='en_US', 
-            LanguageLocaleKey='en_US',
-            ContactId = contactId,
-            PortalRole = 'Worker',
-            UserRoleId = [select Id from UserRole where Name='TAP Portugal Partner User'][0].Id,
-            FirstName = 'Portal',
-            LastName = 'User'
-        );
-        insert portalUser;
-    }*/
-
 
     /*
         Purpose: Create Airline Designator Participation
@@ -436,6 +440,12 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             Preference_of_Code_1__c = 'AA',
             Preference_of_Code_2__c = 'B2',
             Preference_of_Code_3__c = '3C',
+            SIS_Salutation__c = 'Amiral',
+            SIS_First_Name__c ='First Name',
+            SIS_Last_Name__c = 'Last Name',
+            SIS_Phone__c = '1234',
+            SIS_Email__c = 'da@da.com',
+            SIS_Title__c = 'CEO',
             
             //TermsAndConditions
             Terms_Conditions_Agreement__c = true
@@ -624,6 +634,12 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             HOB_Title__c = 'HOB_Title__c',
             HOB_Phone__c = 'HOB_Phone__c',
             HOB_Email__c = 'HOB_Email__c',
+            SIS_Salutation__c = 'Amiral',
+            SIS_First_Name__c ='First Name',
+            SIS_Last_Name__c = 'Last Name',
+            SIS_Phone__c = '1234',
+            SIS_Email__c = 'da@da.com',
+            SIS_Title__c = 'CEO',
             //Preference of Code
             Preference_of_Code_1__c = '111',
             Preference_of_Code_2__c = '222',
@@ -800,7 +816,13 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             GPS_Coordinates__c = '43°41’30.149"N, 94°55’18.75"W',
             Time_Zone__c = 'Time Zone',
             // Terms and Conditions
-            Terms_Conditions_Agreement__c = true
+            Terms_Conditions_Agreement__c = true,
+            SIS_Salutation__c = 'Amiral',
+            SIS_First_Name__c ='First Name',
+            SIS_Last_Name__c = 'Last Name',
+            SIS_Phone__c = '1234',
+            SIS_Email__c = 'da@da.com',
+            SIS_Title__c = 'CEO'
             );
 
         if(locationType == ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_AIRPORT || locationType == ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_HELIPORT){
@@ -868,6 +890,12 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             HOB_Title__c = 'HOB_Title__c',
             HOB_Phone__c = 'HOB_Phone__c',
             HOB_Email__c = 'HOB_Email__c',
+            SIS_Salutation__c = 'Amiral',
+            SIS_First_Name__c ='First Name',
+            SIS_Last_Name__c = 'Last Name',
+            SIS_Phone__c = '1234',
+            SIS_Email__c = 'da@da.com',
+            SIS_Title__c = 'CEO',
             //TermsAndConditions
             Terms_Conditions_Agreement__c = true,
             // Reasons for Use
@@ -1272,6 +1300,15 @@ public with sharing class ISSP_AMC_ParticipationFactory {
     public static void createLocationIdentifierRequirements(Boolean insertRequirement){
         List <Participation_Application_Requirement__c> reqList = new List<Participation_Application_Requirement__c>();
 
+        Participation_Application_Requirement__c entityData = new Participation_Application_Requirement__c(
+            
+            ACLI_Codes__c = 'Location Code',
+            Type_of_Requirement__c = 'VF_Component',  // OR Attachment
+            Location_Type__c = 'Airport; Heliport; Railway Station; Bus Station; Ferry Port; Off-line Point; Metropolitan Area',
+            Component_Key__c = 'ISSP_AMC_EntityContactData',
+            isToShow__c = true
+        );
+        reqList.add(entityData);
         Participation_Application_Requirement__c airportheliport = new Participation_Application_Requirement__c(
             
             ACLI_Codes__c = 'Location Code',
@@ -1483,6 +1520,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             CaseDesignatorCodeRecordType__c = 'Airline Coding Application',
             CaseLocationCodeRecordType__c = 'Airline Coding Application',
             CaseManageCodesRecordType__c = 'Airline Coding Application',
+            Orchestrator_Step_RecordType__c = 'IATA Process Step',
             isPublicAmazonFile__c = true
         );
 

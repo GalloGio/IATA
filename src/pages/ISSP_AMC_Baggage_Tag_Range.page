@@ -12,7 +12,9 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
 -->
 <apex:page controller="ISSP_AMC_Baggage_Tag_Range" docType="html-5.0" cache="false" sidebar="false" showHeader="false" language="{!displayLanguage}" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" action="{!init}">
     <html>
-
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        
         <c:ISSP_Header />
         <apex:stylesheet value="{!URLFOR($Resource.BootstrapDatepicker, 'css/bootstrap-datepicker3.min.css')}" />
         <script src="{!URLFOR($Resource.BootstrapDatepicker, 'js/bootstrap-datepicker.min.js')}"></script>
@@ -226,9 +228,11 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                 }
                 #loading > div:nth-child(2){
                     position: fixed !important;
+                    transform:translate(-50%,-50%)!important;
                 }
                 #redirect > div:nth-child(2){
                     position: fixed !important;
+                    transform:translate(-50%,-50%)!important;
                 }
             </style>
             
@@ -457,7 +461,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                         <div class="col-sm-12">
                                             <div class="panel-body">
                                                 <div class="form-group">
-                                                    <div class="panel panel-primary">
+                                                    <div class="panel panel-primary" style="overflow-x:auto;">
                                                         <table class="table panel-primary">
                                                             <thead class="panel-heading">
                                                                 <tr>

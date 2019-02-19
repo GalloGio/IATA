@@ -349,7 +349,12 @@
                 }
             }
 
-
+            //untested!
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip({'placement':'auto'});
+  //comment the following line out to see page move on click
+  $('a[data-toggle="tooltip"]').click(function(e){e.preventDefault()})
+})
 
 </script>  
 <style type="text/css">
@@ -368,6 +373,7 @@
             background-color: white;
             font-weight: bold;
             vertical-align: middle;
+            display:flex;
             }
   
   .errorColor { 
@@ -375,6 +381,48 @@
                     display:block;
                     
                 }
+
+  
+  @media screen and (max-width: 720px) {
+    .topright {
+      top: 12% !important;
+      left:4.5%;
+      font-size:13px;
+    }
+  }
+
+
+  @media screen and (max-width: 450px) {
+    .topright {
+      left:2% !important;
+      top: 12% !important;
+      margin:20px;
+      font-size:13px;
+    }
+  }
+
+  @media screen and (max-width: 350px) {
+    .topright {
+      width: 84%;
+      left:8% !important;
+      top: 20% !important;
+      margin:20px;
+      font-size:13px;
+    }
+  }
+  
+  @media screen and (max-width: 330px) {
+    .topright {
+      left:0% !important;
+      top: 0% !important;
+      margin:20px;
+      font-size:13px;
+    }
+  }
+
+
+
+
 
   
 
@@ -400,7 +448,7 @@
                             <label for="vat" class="col-sm-2 control-label">{!$Label.ISSP_AMC_COUNTRY}</label>
                             <div class="col-sm-3">
                               <div class="{!IF(AND(hasError, OR(participation.IATA_ISO_Country__c == '--None--', participation.IATA_ISO_Country__c == null)), 'has-error has-feedback', '')}">
-                                  <apex:selectList onblur="validateCountry(this)"  size="1" styleClass="form-control" value="{!participation.IATA_ISO_Country__c}">
+                                  <apex:selectList onblur="validateCountry(this)" size="1" styleClass="form-control" value="{!participation.IATA_ISO_Country__c}">
                                     <apex:selectOptions value="{!countryList}"/>
                                   </apex:selectList>
                                   <span class="{!IF(AND(hasError, OR(participation.IATA_ISO_Country__c == '--None--', participation.IATA_ISO_Country__c == null)), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
@@ -468,13 +516,13 @@
                                   
                                 </div>
       
-                                <div class="col-md-4  topright">
+                                <div class="col-md-4  topright flex-container">
                                   <div class="col-md-4 control-label ">
-                                      <apex:outputText value="{!$Label.ISSP_AMC_TIME_ZONE}"/>
-                                    </div>
-                                    <div class="col-md-8">
-                                      <apex:inputField id="timeZonetext" styleClass="form-control timeclass" value="{!participation.Time_Zone__c}" html-disabled="true" />
-                                    </div>
+                                     <apex:outputText value="{!$Label.ISSP_AMC_TIME_ZONE}"/>                          
+                                  </div>
+                                  <div class="col-md-8">
+                                     <apex:inputField id="timeZonetext" styleClass="form-control timeclass" value="{!participation.Time_Zone__c}" html-disabled="true" />
+                                  </div>     
                                 </div>
                                 
                                                                 <!-- Replace the value of the key parameter with your own API key. -->

@@ -451,7 +451,7 @@ private class OneId_RegistrationProcessControllerTest {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
         insert country ;
 
-        Portal_Applications__c pa = new Portal_Applications__c(name = AcliAccount.PORTAL_SERVICE_NAME_ACLI);
+        Portal_Applications__c pa = new Portal_Applications__c(name = ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI);
         insert pa;
 
         ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(

@@ -14,7 +14,7 @@ public without sharing class ISSP_AMC_Location_Identifier {
 
 
     public Account accountRecord {get;set;}
-    public Boolean isLocation {get;set;}
+    public static Boolean isLocation {get;set;}
     
     public Boolean isSISUser{get;set;}
 
@@ -47,16 +47,8 @@ public without sharing class ISSP_AMC_Location_Identifier {
     }
 
     /* DUMMY TO DELETE */
-    public Date dat {get;set;}
-    public String strText { get; set; }
-    public String credentialName  {
-        get { return WrapperAttach.CREDENTIAL_NAME; }
-    }
-    public String amazonPath  {
-        get {
-
-            return WrapperAttach.getAmazonFolder('5001x000001PF0k'); }
-    }
+    public String credentialName  {get;set;}
+    
     /* END DUMMY TO DELETE */
 
     /* GENERAL */
@@ -189,7 +181,12 @@ public without sharing class ISSP_AMC_Location_Identifier {
         
     }
 
-    
+    public void changeListReqs(){
+        step ='1';
+        CalculateWhichComponentsToShow();
+        ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
+
+    }
 
 	/*public boolean validateForm(){
 		boolean errorFound = false;
@@ -232,7 +229,8 @@ public without sharing class ISSP_AMC_Location_Identifier {
         ISSP_AMC_Metropolitan_AirportB = false;
         ISSP_AMC_EntityContactData = false;
 
-     calculateApplicationRequirementsToShow();
+
+        calculateApplicationRequirementsToShow();
 
         if(componentByOperation != null){
             for(String componentKey : componentByOperation.keySet()){
@@ -337,5 +335,7 @@ public without sharing class ISSP_AMC_Location_Identifier {
                     
                 }
             }
+
+            
     }
 }
