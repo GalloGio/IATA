@@ -49,7 +49,7 @@ e.g. {!Account.IATA_ISO_Country__r.Name}</description>
     </fields>
     <fields>
         <fullName>Query__c</fullName>
-        <description>SOQL query that if returns at least one record the message will be displayed.</description>
+        <description>SOQL query that if returns at least one record the message will be displayed. Use Id = {!recordId} on query to filter by results related with main object record</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Query</label>
