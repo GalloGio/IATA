@@ -27214,20 +27214,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
 )</errorConditionFormula>
         <errorDisplayField>CASS_Number__c</errorDisplayField>
         <errorMessage>CASS Number should be inserted for Accounts with Location Class equals to C, R, I Q or G (for GSSA application processes) or for Cargo Agents.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Change_HO_Location_Type</fullName>
-        <active>true</active>
-        <description>For the location type HO, after the accreditation change code is &apos;NEW&apos; the Location Type can&apos;t be changed.</description>
-        <errorConditionFormula>AND(
- ISPICKVAL(PRIORVALUE(Location_Type__c) , &apos;HO&apos;),
- ISPICKVAL(Location_Type__c , &apos;BR&apos;),
- ISCHANGED(Location_Type__c),
- NOT( ISBLANK( IATACode__c )  )
-)</errorConditionFormula>
-        <errorDisplayField>Location_Type__c</errorDisplayField>
-        <errorMessage>The Location Type can not be changed from HO to BR.</errorMessage>
-    </validationRules>
+    </validationRules>    
     <validationRules>
         <fullName>ISSP_AMS_T_C_Accepted_on_Submit</fullName>
         <active>false</active>
