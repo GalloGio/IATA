@@ -367,7 +367,7 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-       <fullName>Change case status to Action Needed</fullName>
+        <fullName>Change case status to Action Needed</fullName>
         <actions>
             <name>Change_case_status_to_Action_Needed</name>
             <type>FieldUpdate</type>
@@ -506,8 +506,7 @@
         </actions>
         <active>true</active>
         <description>case gets reopened when an email enters the case</description>
-        <formula>AND(  OR( Parent.RecordType.DeveloperName == &apos;External_Cases_ACCA&apos;, Parent.RecordType.DeveloperName == &apos;CS_Process_IDFS_ISS&apos;, Parent.RecordType.DeveloperName == &apos;SEDA&apos;, Parent.RecordType.DeveloperName == &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName == &apos;FDS_ICCS_Email_to_Case&apos;, Parent.RecordType.DeveloperName == &apos;SIDRA&apos;,  AND(OR( Parent.RecordType.DeveloperName == &apos;CasesAmericas&apos;, Parent.RecordType.DeveloperName == &apos;CasesMENA&apos;, Parent.RecordType.DeveloperName == &apos;Cases_China_North_Asia&apos;, Parent.RecordType.DeveloperName == &apos;CasesEurope&apos;, 
-Parent.RecordType.DeveloperName == &apos;Cases_Global&apos;, Parent.RecordType.DeveloperName == &apos;ExternalCasesIDFSglobal&apos;, Parent.RecordType.DeveloperName == &apos;ComplaintIDFS&apos;), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)),  OR( NOT(CONTAINS(FromAddress,&quot;acca&quot;)), NOT(CONTAINS(FromAddress,&quot;accelya&quot;)) ),  OR( CONTAINS(HtmlBody,&quot;ref:&quot;), CONTAINS(Subject,&quot;ref:&quot;), CONTAINS(TextBody,&quot;ref:&quot;) ),  Incoming=TRUE, Parent.IsClosed=TRUE )</formula>
+        <formula>AND(  OR( Parent.RecordType.DeveloperName == &apos;External_Cases_ACCA&apos;, Parent.RecordType.DeveloperName == &apos;CS_Process_IDFS_ISS&apos;, Parent.RecordType.DeveloperName == &apos;SEDA&apos;, Parent.RecordType.DeveloperName == &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName == &apos;FDS_ICCS_Email_to_Case&apos;, Parent.RecordType.DeveloperName == &apos;SIDRA&apos;,  AND(OR( Parent.RecordType.DeveloperName == &apos;CasesAmericas&apos;, Parent.RecordType.DeveloperName == &apos;CasesMENA&apos;, Parent.RecordType.DeveloperName == &apos;Cases_China_North_Asia&apos;, Parent.RecordType.DeveloperName == &apos;CasesEurope&apos;,  Parent.RecordType.DeveloperName == &apos;Cases_Global&apos;, Parent.RecordType.DeveloperName == &apos;ExternalCasesIDFSglobal&apos;, Parent.RecordType.DeveloperName == &apos;ComplaintIDFS&apos;), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)),  OR( NOT(CONTAINS(FromAddress,&quot;acca&quot;)), NOT(CONTAINS(FromAddress,&quot;accelya&quot;)) ),  OR( CONTAINS(HtmlBody,&quot;ref:&quot;), CONTAINS(Subject,&quot;ref:&quot;), CONTAINS(TextBody,&quot;ref:&quot;) ),  Incoming=TRUE, Parent.IsClosed=TRUE )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -560,7 +559,7 @@ Parent.RecordType.DeveloperName == &apos;Cases_Global&apos;, Parent.RecordType.D
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-         <fullName>IDFS Last Email sent</fullName>
+        <fullName>IDFS Last Email sent</fullName>
         <actions>
             <name>IDFS_Last_Email_sent</name>
             <type>FieldUpdate</type>
