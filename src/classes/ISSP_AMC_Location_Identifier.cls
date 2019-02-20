@@ -14,7 +14,8 @@ public without sharing class ISSP_AMC_Location_Identifier {
 
 
     public Account accountRecord {get;set;}
-    public static Boolean isLocation {get;set;}
+    public Boolean isLocation {get;set;}
+    public static Boolean isLoc{get;set;}
     
     public Boolean isSISUser{get;set;}
 
@@ -145,13 +146,15 @@ public without sharing class ISSP_AMC_Location_Identifier {
     public String step { get; set; }
 
     public ISSP_AMC_Location_Identifier() {
+        isLocation = true;
+        isLoc = true;
         userInformation();
         if(accountRecord.SIS_Status__c == 'Active'){
             isSISUser = true;
         }
 
 
-        isLocation = true;
+        
         displayMessage = false;
         String participationId = Apexpages.currentPage().getParameters().get('participationId');
         appRequirementList = new List <ISSP_AMC_DAO.AplicationRequirements>();

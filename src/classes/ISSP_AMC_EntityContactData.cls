@@ -259,7 +259,7 @@ public class ISSP_AMC_EntityContactData {
 			controllerParticipation.HQ_State_Province__c = accountRecord.ShippingState;
 			controllerParticipation.HQ_Street_address_1__c = accountRecord.ShippingStreet;
 			controllerParticipation.HQ_VAT__c = accountRecord.VAT_Number__c;
-			if(ISSP_AMC_Location_Identifier.isLocation == false){
+			if(ISSP_AMC_Location_Identifier.isLoc == false){
 				controllerParticipation.IATA_ISO_Country__c = accountRecord.IATA_ISO_Country__c;
 			}
 			//controllerParticipation.Is_the_billing_address_same_the_HQ__c = accountRecord.;
