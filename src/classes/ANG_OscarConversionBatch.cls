@@ -194,7 +194,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 		AMS_Pax_Accreditation_Form__c onlineForm = null;
 
-		List<AMS_Pax_Accreditation_Form__c> onlineFormLst = [SELECT Id, Location_Type__c, Remittance_frequency__c from AMS_Pax_Accreditation_Form__c where Id = :oscarToProcess.AMS_Online_Accreditation__c LIMIT 1];
+		List<AMS_Pax_Accreditation_Form__c> onlineFormLst = [SELECT Id, Location_Type__c from AMS_Pax_Accreditation_Form__c where Id = :oscarToProcess.AMS_Online_Accreditation__c LIMIT 1];
 
 		if(onlineFormLst.isEmpty())
 			return null;
