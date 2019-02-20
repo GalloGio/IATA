@@ -1,0 +1,43 @@
+<aura:component controller="DetailPageMessages" implements="flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName" access="global">
+    <!-- Parameters to be used on classic -->
+    <!-- can be removed after migration to lightning is completed -->
+    <aura:attribute name="paramRecordId" type="Id"/>
+    <aura:attribute name="paramObjectName" type="String"/> 
+
+	<!-- List of messages retrieved from server -->    
+    <aura:attribute name="messages" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <aura:if isTrue="{!v.paramRecordId == null}">
+        <lightning:card title="Custom Messages">
+            <aura:iteration items="{!v.messages}" var="item">    
+                <div class="slds-p-horizontal_small">
+                    <div class="grid">
+                        <div class="col-1">
+                            <lightning:icon iconName="{!item.icon}" variant="{!item.variant}" size="large"/>	
+                        </div>
+                        <div class="col-2">
+                            <ui:outputRichText value="{!item.message}"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:iteration>
+        </lightning:card>        	
+        <aura:set attribute="else"> <!-- classic mode -->
+            <aura:iteration items="{!v.messages}" var="item"> 
+                <div class="slds-p-horizontal_small">
+                    <div class="slds-grid slds-wrap">
+                        <div class="grid">
+                            <div class="col-1">
+                                <lightning:icon iconName="{!item.icon}" variant="{!item.variant}" size="large"/>
+                            </div>
+                            <div class="col-2">
+                                <ui:outputRichText value="{!item.message}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aura:iteration>
+        </aura:set>
+    </aura:if>    
+</aura:component>

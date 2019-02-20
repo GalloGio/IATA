@@ -1,0 +1,18 @@
+.THIS {
+    font-size: 15px;
+}
+
+.THIS .grid {
+    width: 100%;
+    display: inline-flex; 
+    margin-bottom: 5px;
+}
+
+.THIS .col-1 {
+    width: 5%;
+    margin-right: 10%;
+}
+
+.THIS .col-2 {
+    width: 95%;
+}

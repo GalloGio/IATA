@@ -10,6 +10,13 @@
         <label>Account Information</label>
         <layoutColumns>
             <layoutItems>
+                <height>100</height>
+                <page>DetailPageMessagesClassic</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
@@ -35,6 +42,9 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Sector__c</field>
