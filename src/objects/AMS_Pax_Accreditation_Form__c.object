@@ -27219,7 +27219,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
 )</errorConditionFormula>
         <errorDisplayField>CASS_Number__c</errorDisplayField>
         <errorMessage>CASS Number should be inserted for Accounts with Location Class equals to C, R, I Q or G (for GSSA application processes) or for Cargo Agents.</errorMessage>
-    </validationRules>
+    </validationRules>    
     <validationRules>
         <fullName>ISSP_AMS_T_C_Accepted_on_Submit</fullName>
         <active>false</active>

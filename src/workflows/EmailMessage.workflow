@@ -367,7 +367,7 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Change case status to Action Needed</fullName>
+       <fullName>Change case status to Action Needed</fullName>
         <actions>
             <name>Change_case_status_to_Action_Needed</name>
             <type>FieldUpdate</type>
@@ -397,7 +397,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Complaint (IDFS ISS),Invoicing Collection Cases,FDS Ad-hoc Calendar Change (R&amp;S) Locked,Airline Coding Application</value>
+            <value>Cases - Global,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Complaint (IDFS ISS),Invoicing Collection Cases,FDS Ad-hoc Calendar Change (R&amp;S) Locked,Airline Coding Application</value>
         </criteriaItems>
         <criteriaItems>
             <field>EmailMessage.CcAddress</field>
@@ -428,7 +428,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Process</value>
+            <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Process</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.First_Contact_with_Client__c</field>
@@ -560,7 +560,7 @@ Parent.RecordType.DeveloperName == &apos;Cases_Global&apos;, Parent.RecordType.D
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>IDFS Last Email sent</fullName>
+         <fullName>IDFS Last Email sent</fullName>
         <actions>
             <name>IDFS_Last_Email_sent</name>
             <type>FieldUpdate</type>
@@ -569,7 +569,7 @@ Parent.RecordType.DeveloperName == &apos;Cases_Global&apos;, Parent.RecordType.D
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>ACCA Customer Service Request (External),Cases - Africa &amp; Middle East,Cases - Americas,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Internal Cases (IDFS ISS),SAAM,SIDRA,SIDRA BR,Complaint (IDFS ISS),Process</value>
+            <value>Cases - Global,ACCA Customer Service Request (External),Cases - Africa &amp; Middle East,Cases - Americas,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Internal Cases (IDFS ISS),SAAM,SIDRA,SIDRA BR,Complaint (IDFS ISS),Process</value>
         </criteriaItems>
         <criteriaItems>
             <field>EmailMessage.Incoming</field>
