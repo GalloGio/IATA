@@ -27275,18 +27275,6 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
         <errorMessage>The amount of selected options is not valid for this agency.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Change_HO_Location_Type</fullName>
-        <active>true</active>
-        <description>For the location type HO, after the accreditation change code is &quot;NEW&quot; the Location Type can&quot;t be changed.</description>
-        <errorConditionFormula>AND( 
-ISPICKVAL( PRIORVALUE(Location_Type__c) , &quot;HO&quot;), 
-ISPICKVAL( Location_Type__c , &quot;BR&quot;)
-ISCHANGED(Location_Type__c),
-NOT( ISBLANK( IATACode__c ) ) 
-)</errorConditionFormula>
-        <errorMessage>The Location Type can not be changed.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Change_Location_Class_after_IATACode_gen</fullName>
         <active>true</active>
         <description>Once the IATA Code is generated the Location Class can no longer be changed.</description>
