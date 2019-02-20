@@ -11922,7 +11922,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-       <fullName>FDS Delete New Interaction Info</fullName>
+        <fullName>FDS Delete New Interaction Info</fullName>
         <actions>
             <name>Clear_interaction_date</name>
             <type>FieldUpdate</type>
@@ -16224,7 +16224,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-       <fullName>RecType Complaint %28IDFS ISS%29</fullName>
+        <fullName>RecType Complaint %28IDFS ISS%29</fullName>
         <actions>
             <name>RecType_Complaint_IDFS_ISS</name>
             <type>FieldUpdate</type>
