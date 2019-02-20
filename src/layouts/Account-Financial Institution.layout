@@ -172,8 +172,8 @@
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
-        <fields>CORE.USERS.ALIAS</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
+        <fields>Primary_Contact__c</fields>
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>

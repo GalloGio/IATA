@@ -1187,6 +1187,11 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>ISSP_AMS_VAT_Number_Input__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
