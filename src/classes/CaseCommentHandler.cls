@@ -53,16 +53,9 @@ public with sharing class CaseCommentHandler {
             }
         }
         
-        
-        try{
-            if(kpiValuesToInsert.size() > 0 ) {
-                insert kpiValuesToInsert;
-            }
-            
-        } catch (DmlException e){
-            System.debug('DML Exception: ' + e.getMessage());
+        if(kpiValuesToInsert.size() > 0 ) {
+            insert kpiValuesToInsert;
         }
-        
     }
     
     /**
@@ -72,54 +65,11 @@ public with sharing class CaseCommentHandler {
 * @return List<ISSP_KPI_Reporting__mdt> - list of configs
 */
     private List<ISSP_KPI_Reporting__mdt> getKPIConfig(String actionType) {
-        String queryString = '';
-        queryString = 'SELECT ' +
-            'Action__c, ' +
-            'Case_Record_Type__c, ' +
-            'DeveloperName, ' +
-            'Id, ' +
-            'Points__c ' +
-            'FROM ' +
-            'ISSP_KPI_Reporting__mdt ' +
-            'WHERE ' +
-            'Action__c =: actionType ';
-        
-        return Database.query(queryString);
+        return [SELECT Action__c, Case_Record_Type__c, DeveloperName, Id,
+                       Points__c FROM ISSP_KPI_Reporting__mdt WHERE Action__c =: actionType];
     }
     
-    /**
-* @description method used to return ID of existing FDS_KPI_Reporting record or to create new record.
-*
-* @return String - FDS_KPI_Reporting__c Id for KPI_Value__c
-*/
-    private String kpiReportingExistsOrCreate() {
-        List<FDS_KPI_Reporting__c> listOfKPIReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name =: CASE_COMMENT_ACTION AND Type_Of_Action__c =: CASE_COMMENT_ACTION];
-        String returnMe = '';
-        if(listOfKPIReportings.size() > 0 ) {
-            returnMe = listOfKPIReportings.get(0).Id;
-        } else {
-            FDS_KPI_Reporting__c newKPIReporting = new FDS_KPI_Reporting__c();
-            
-            newKPIReporting.Type_Of_Action__c = CASE_COMMENT_ACTION;
-            newKPIReporting.Name = CASE_COMMENT_ACTION;
-            newKPIReporting.RecordTypeId = [SELECT Id FROM RecordType WHERE sObjectType = 'FDS_KPI_Reporting__c' and DeveloperName = 'CSC' LIMIT 1].Id;
-            
-            kpiReportingsToInsert.add(newKPIReporting);
-        }
-        
-        try{
-            if(kpiReportingsToInsert.size() > 0 ){
-                insert kpiReportingsToInsert;
-            }
-            
-            returnMe = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name =: CASE_COMMENT_ACTION AND Type_Of_Action__c =: CASE_COMMENT_ACTION LIMIT 1].Id;
-        } catch (DmlException e) {
-            System.debug('DML Exception: ' + e.getMessage());
-        }
-        
-        return returnMe;
-    }
-    
+
     /**
 * @description method will create KPI_Value__c record in database for existing FDS_KPI_Reporting__c
 *              with Type_Of_Action == 'Case Comment'. If not exists, then FDS_KPI_Reporting
@@ -133,10 +83,10 @@ public with sharing class CaseCommentHandler {
         
         KPI_Value__c valueToAdd = new KPI_Value__c();
         
-        valueToAdd.Name = 'Value_' + comment.ParentId + '_' + DateTime.now().hour()+'_'+DateTime.now().minute()+'_'+DateTime.now().second();
+        valueToAdd.Name = 'Value_' + comment.ParentId + '_' + System.now().format('hh_mm_ss');
         valueToAdd.FDS_KPI_Reporting__c = kpiReportingId;
         valueToAdd.CaseNumber__c = comment.ParentId;
-        valueToAdd.Month__c = convertMonthNumberToText(Integer.valueOf(Date.today().month()));
+        valueToAdd.Month__c = System.now().format('MMMM');
         valueToAdd.Year__c = String.valueOf(Date.today().year());
         valueToAdd.KPI_Value__c = points;
         valueToAdd.Responsible__c = UserInfo.getUserId();
@@ -144,45 +94,7 @@ public with sharing class CaseCommentHandler {
         kpiValuesToInsert.add(valueToAdd);
     }
     
-    /**
-* @description method used to coverts month number to Text
-*
-* @param month
-*
-* @return month name
-*/
-    public static String convertMonthNumberToText (Integer month) {
-        String monthName = '';
-        
-        if(month == 1)
-            monthName = 'January';
-        else if (month == 2)
-            monthName = 'February';
-        else if (month == 3)
-            monthName = 'March';
-        else if (month == 4)
-            monthName = 'April';
-        else if (month == 5)
-            monthName = 'May';
-        else if (month == 6)
-            monthName = 'June';
-        else if (month == 7)
-            monthName = 'July';
-        else if (month == 8)
-            monthName = 'August';
-        else if (month == 9)
-            monthName = 'September';
-        else if (month == 10)
-            monthName = 'October';
-        else if (month == 11)
-            monthName = 'November';
-        else if (month == 12)
-            monthName = 'December';
-        else
-            monthName = 'incorrect month';
-        
-        return monthName;
-    }
+   
     
     /**
 If an input case comment tries to insert then it is blocked, but only if:
