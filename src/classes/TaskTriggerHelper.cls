@@ -47,13 +47,11 @@ public with sharing class TaskTriggerHelper {
             }
         }
 
-        try{
-            if(kpiValuesToInsert.size() > 0 ){
-                insert kpiValuesToInsert;
-            }
-        } catch(DmlException e) {
-            System.debug('Insert exception: ' + e.getMessage());
+
+        if(kpiValuesToInsert.size() > 0 ){
+            insert kpiValuesToInsert;
         }
+        
     }
 
     /**
@@ -64,70 +62,19 @@ public with sharing class TaskTriggerHelper {
      * @return List<ISSP_KPI_Reporting__mdt> - list of configs
      */
     public static List<ISSP_KPI_Reporting__mdt> getKPIConfig(String actionType) {
-        String queryString = '';
-        queryString = 'SELECT ' +
-                'Action__c, ' +
-                'Case_Record_Type__c, ' +
-                'DeveloperName, ' +
-                'Id, ' +
-                'Points__c, ' +
-                'Type_of_Task__c ' +
-                'FROM ' +
-                'ISSP_KPI_Reporting__mdt ' +
-                'WHERE ' +
-                'Action__c =: actionType ';
-
-        return Database.query(queryString);
+        return [SELECT Action__c, Case_Record_Type__c, DeveloperName, Id,
+                Points__c, Type_of_Task__c FROM ISSP_KPI_Reporting__mdt WHERE Action__c =: actionType];
     }
 
-    /**
-     * @description method used to coverts month number to Text
-     *
-     * @param month
-     *
-     * @return month name
-     */
-    public static String convertMonthNumberToText (Integer month) {
-        String monthName = '';
-
-        if(month == 1)
-            monthName = 'January';
-        else if (month == 2)
-            monthName = 'February';
-        else if (month == 3)
-            monthName = 'March';
-        else if (month == 4)
-            monthName = 'April';
-        else if (month == 5)
-            monthName = 'May';
-        else if (month == 6)
-            monthName = 'June';
-        else if (month == 7)
-            monthName = 'July';
-        else if (month == 8)
-            monthName = 'August';
-        else if (month == 9)
-            monthName = 'September';
-        else if (month == 10)
-            monthName = 'October';
-        else if (month == 11)
-            monthName = 'November';
-        else if (month == 12)
-            monthName = 'December';
-        else
-                monthName = 'incorrect month';
-
-        return monthName;
-    }
-
+   
     
     public static KPI_Value__c createKPIReportingValue(String caseId, Integer points, String kpiReportingId){
         KPI_Value__c valueToAdd = new KPI_Value__c();
 
-        valueToAdd.Name = 'Value_' + caseId + '_' + DateTime.now().hour()+'_'+DateTime.now().minute()+'_'+DateTime.now().second();
+        valueToAdd.Name = 'Value_' + caseId + '_' + System.now().format('hh_mm_ss');
         valueToAdd.FDS_KPI_Reporting__c = kpiReportingId;
         valueToAdd.CaseNumber__c = caseId;
-        valueToAdd.Month__c = convertMonthNumberToText(Integer.valueOf(Date.today().month()));
+        valueToAdd.Month__c = System.now().format('MMMM');
         valueToAdd.Year__c = String.valueOf(Date.today().year());
         valueToAdd.KPI_Value__c = points;
         valueToAdd.Responsible__c = UserInfo.getUserId();
