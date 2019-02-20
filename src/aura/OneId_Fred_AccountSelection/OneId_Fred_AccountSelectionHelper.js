@@ -83,7 +83,7 @@
                 }
                 cmp.set("v.suggestionBoxHeight", 0 );
                 cmp.set("v.accountSelected", true);
-                cmp.set("v.acc", partnerAccount);
+                cmp.set("v.account", partnerAccount);
             }
             
         });
