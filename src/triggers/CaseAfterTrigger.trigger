@@ -433,7 +433,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 
 			//START - Too many SOQL fix
-			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out' and status != 'Closed_Non compliance')) from Account where Id in :acctIds]);
+			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out')) from Account where Id in :acctIds]);
 			Set<Id> caseIds;
 
 			for (Account acct : acctsToUpdate.values()) {
@@ -1249,7 +1249,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		new ANG_CaseTriggerHandler().onAfterUpdate();
 		/*ANG Triggers*/
 
-		ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Case', 'ANG_Case_Tracking_History__c'); //ACAMBAS - WMO-390
 
 	/*Trigger.isUpdate*/
 	}
