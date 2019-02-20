@@ -199,10 +199,18 @@ public with sharing class ISSP_AMC_DAO_Test {
                 controller.saveParticipation();
                 ISSP_AMC_DAO.getExistingCase(controller.participation.case__c);
 
+                Set<Id> poa = new Set<Id>();
+                poa.add(controller.participation.Id);
                 ISSP_AMC_DAO.getCompleteDesignatorCode(controller.participation.Id);
+                ISSP_AMC_DAO.getCompleteDesignatorCodeList(poa);
                 //ISSP_AMC_ParticipationFactory.testLocationUploadFiles(controller);
                 Id caseId = [SELECT Id FROM Case WHERE Id=:controller.participation.case__c][0].Id;
                 System.assertEquals(caseId,controller.participation.case__c);
+
+
+                
+
+
             }
 
             Test.stopTest();
@@ -211,14 +219,19 @@ public with sharing class ISSP_AMC_DAO_Test {
         }
     }
 
-    
+    @isTest public static void portalServiceNameAcli()
+    {   
 
-    /*
-        Create test method for 
-                                saveAmazonFileInJunctionObject(Id amazonFileId, id participationBackend )
-                                getCompleteDesignatorCodeList(set<Id> poaIdSet)
+        ISSP_Portal_Service_Ids__c csetting = new ISSP_Portal_Service_Ids__c(
+            ACLI_IATA_Airlines_and_Location_Codes_Na__c = 'IATA Airlines and Location Codes',
+            ACLI_IATA_Airlines_and_Location_Codes__c    = 'a2w0D0000004mMp'
+        );
+        insert csetting;
 
+        ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI = 'for testing purposes';
+        ISSP_AMC_DAO dao = new ISSP_AMC_DAO();
+        
 
+    }
 
-    */
 }

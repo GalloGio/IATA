@@ -10,7 +10,7 @@
     1.0         Filipa Martins      29-10-2018      INITIAL DEVELOPMENT
     2.0         Miguel                              
 */
-public with sharing class ISSP_AMC_DAO {
+public class ISSP_AMC_DAO {
     
     public static Account getAccountInfo() {
         Account accountInfo;
@@ -2298,11 +2298,11 @@ public with sharing class ISSP_AMC_DAO {
         }
     }
 
-    private static final map<String,String> MAP_REASONS = new map<String,String>{
+    /*private static final map<String,String> MAP_REASONS = new map<String,String>{
         'ACP' => '3 Digit Form',
         'DES' => 'Designator Form',
         'LOS' => 'Location ID Form'
-    };
+    };*/
 
 
     public class AplicationRequirements {
