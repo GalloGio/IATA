@@ -38,10 +38,7 @@ public class ISSP_AP_FieldLists {
             'Participate_in_any_Remit_scheme__c' 		=> '',
             'Accept_payment_Cards_for_BSP_ticket__c' 	=> '',
             'Join_BSP_ECCB__c' 							=> '',
-            'Flights_operated_in_the_BSP_country__c'	=> '',
-            'BSP_Local_address__c' 						=> '',
-            'BSP_Local_Zip_Code__c'						=> '',
-            'BSP_Local_City__c' 						=> ''
+            'Flights_operated_in_the_BSP_country__c'	=> ''
             };
 
     // mandatory fields when Participate_in_any_Commission_Control__c == 'Yes'
@@ -157,17 +154,6 @@ public class ISSP_AP_FieldLists {
             'Receive_XLS_Reports__c' 						=> '',
             'Pay_Commission_to_agents__c' 					=> ''
             };
-
-
-    //Mandatory CASS fields specific where the country requirement Local_VAT_Mandatory__c is 'YES'
-    public static final Map<String,String> cassLocalVATMandatoryFields = new Map<String,String>{
-        'BSP_Country_VAT_Tax_number__c' => ''
-    };
-
-    //Mandatory CASS fields specific where the country requirement Local_VAT_Mandatory__c is not 'YES'
-    public static final Map<String,String> cassLocalVATNOTMandatoryFields = new Map<String,String>{
-        'VAT_Tax_number_in_your_home_country__c' => ''
-    };
 
    	//Mandatory CASS fields specific to France
 	public static final Map<String,String> cass_FR_MandatoryFields = new Map<String,String>{

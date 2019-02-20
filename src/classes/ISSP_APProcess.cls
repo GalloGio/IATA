@@ -327,10 +327,13 @@ global without sharing class ISSP_APProcess {
                 // check if all mandatory files were uploaded
                 List<String> listMandatoryFiles = new list<String>();
                 if (strAreaType=='Airline Joining' && apcountryisocode=='AR') {
-                    listMandatoryFiles.add('Additional_Information_AR');
+                    listMandatoryFiles.add('Additional_Information_AR1');
+                    listMandatoryFiles.add('Additional_Information_AR2');
+                    listMandatoryFiles.add('Additional_Information_AR3');
                 }
                 if (apcountryisocode=='BR') {
-                    listMandatoryFiles.add('Additional_Information_BR');
+                    listMandatoryFiles.add('Additional_Information_BR1');
+                    listMandatoryFiles.add('Additional_Information_BR2');
                 }
                 if (!checkMandatoryFiles(listMandatoryFiles)) {
                     allfieldsfilled = false;
@@ -345,17 +348,32 @@ global without sharing class ISSP_APProcess {
                         }
                     }
                     
-                    
                     if (newForm.Receive_HOT_files__c=='YES - Daily' || newForm.Receive_HOT_files__c=='YES - Per Period') {
                         ISSP_AP_fieldLists.bspMandatoryFields.put('Hot_files_delivery_format__c', '');
                     }
                     if (newForm.Hot_files_delivery_format__c=='iiNET') {
                         ISSP_AP_fieldLists.bspMandatoryFields.put('IINET_account_number__c', '');
                     }
+                    if (getlocalAddressMandatory()) {
+                        ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Local_address__c','');
+                        ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Local_Zip_Code__c','');
+                        ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Local_City__c','');
+                    }
+                    if (getLocalVATMandatory()) {
+                        ISSP_AP_fieldLists.bspMandatoryFields.put('BSP_Country_VAT_Tax_number__c','');
+                    }
+                    // either one or the other field is mandatory
+                    if (getVATAlwaysInserted()) {
+                        if (newForm.VAT_Tax_number_in_your_home_country__c==null && newForm.BSP_Country_VAT_Tax_number__c==null ) {
+                            allfieldsfilled = false;
+                            System.Debug('BSP validation FAIL VAT_Tax_number_in_your_home_country__c or BSP_Country_VAT_Tax_number__c');
+                        }
+                    }
                     for (String fldLabel : ISSP_AP_fieldLists.bspMandatoryFields.keySet())
                     {
                         if (newForm.get(fldLabel)==null) {
                             allfieldsfilled = false;
+                            System.Debug('BSP FldLabel FAIL ' + fldLabel);
                             break;
                         }
                     }
@@ -370,11 +388,6 @@ global without sharing class ISSP_APProcess {
                         }
                     }
 
-                    // either one or the other field is mandatory
-                    if (newForm.VAT_Tax_number_in_your_home_country__c==null && newForm.BSP_Country_VAT_Tax_number__c==null ) {
-                        allfieldsfilled = false;
-                    }
-                    
                 } else if(isCASS && strAreaType=='Airline Joining') {  //Test CASS mandatory fields
                     if(ISSP_AP_FieldLists.cass_MandatoryFieldsbyCountry.get(apcountryisocode) != null) {
                         Map<String, String> extraMandatoryFields = ISSP_AP_FieldLists.cass_MandatoryFieldsbyCountry.get(apcountryisocode);
@@ -382,16 +395,26 @@ global without sharing class ISSP_APProcess {
                             ISSP_AP_fieldLists.cassMandatoryFields.put(tmp, extraMandatoryFields.get(tmp));
                         }
                     }
-                    if (this.countryRequirement.Local_VAT_Mandatory__c=='YES') {
-                        ISSP_AP_fieldLists.cassMandatoryFields.putAll(ISSP_AP_fieldLists.cassLocalVATMandatoryFields);
-                    } else {
-                        ISSP_AP_fieldLists.cassMandatoryFields.putAll(ISSP_AP_fieldLists.cassLocalVATNOTMandatoryFields);
-                    }
                     if (this.newForm.Online_carrier_in_the_BSP_country__c!='No') {
                         ISSP_AP_fieldLists.cassMandatoryFields.put('Flights_operated_in_the_BSP_country__c','');
                     }
                     if (this.newForm.Receive_HOT_files__c=='YES - Billing Period HOT' || this.newForm.Receive_HOT_files__c=='YES - Remittance Period HOT') {
                         ISSP_AP_fieldLists.cassMandatoryFields.put('Hot_files_delivery_format__c','');
+                    }
+                    if (getlocalAddressMandatory()) {
+                        ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Local_address__c','');
+                        ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Local_Zip_Code__c','');
+                        ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Local_City__c','');
+                    }
+                    if (getLocalVATMandatory()) {
+                        ISSP_AP_fieldLists.cassMandatoryFields.put('BSP_Country_VAT_Tax_number__c','');
+                    }
+                    // either one or the other field is mandatory
+                    if (getVATAlwaysInserted()) {
+                        if (newForm.VAT_Tax_number_in_your_home_country__c==null && newForm.BSP_Country_VAT_Tax_number__c==null ) {
+                            allfieldsfilled = false;
+                            System.Debug('CASS validation FAIL VAT_Tax_number_in_your_home_country__c or BSP_Country_VAT_Tax_number__c');
+                        }
                     }
                     for (String fldLabel : ISSP_AP_fieldLists.cassMandatoryFields.keySet())
                     {
@@ -706,6 +729,7 @@ global without sharing class ISSP_APProcess {
 
         try {
             upsert newCase;
+            saveBSPForm();
             return goToStep2();
         } catch(DmlException ex) {
             ApexPages.addMessages(ex);
@@ -718,8 +742,11 @@ global without sharing class ISSP_APProcess {
         getLob(newCase.Verification__c);
         // TF - Type of Change Requested
         String typeOfChangeRequestedString = '';
-        for (String thisValue : typeOfChangeRequested){
-          typeOfChangeRequestedString = typeOfChangeRequestedString + thisValue + ';';
+        if (typeOfChangeRequested!=null) {
+            for (String thisValue : typeOfChangeRequested){
+                typeOfChangeRequestedString = typeOfChangeRequestedString + thisValue + ';';
+            }
+            
         }
         newForm.Type_of_Change_Requested__c = typeOfChangeRequestedString;
 
@@ -864,6 +891,10 @@ global without sharing class ISSP_APProcess {
 
     public Pagereference goToFinalStep(){
         List<String> listMandatoryFiles = new list<String>();
+        if (this.newForm.Airline_wish_to_join_ICCS__c==null) {
+            this.newForm.Airline_wish_to_join_ICCS__c.addError('Select an option');
+            return null;
+        }
         if (getShowJoinICCS()) {
             //check ICCS_Join
             listMandatoryFiles.add('ICCS_Join');
@@ -872,15 +903,25 @@ global without sharing class ISSP_APProcess {
             //check ICCS_Join_market
             listMandatoryFiles.add('ICCS_Join_market');
         }
-        if(newForm.Airline_wish_to_join_ICCS__c==null){
-            newForm.Airline_wish_to_join_ICCS__c = 'No';
-        }
         if(newForm.Airline_wish_to_join_ICCS__c == 'No') {
             //check Bank_Mandate
             listMandatoryFiles.add('Bank_Mandate');
         }
+        if (getShowCounterIndemnity()) {
+            listMandatoryFiles.add('CounterIndemnityAgreement');
+        }
+        if (getShowFormOfConcurrence()) {
+            listMandatoryFiles.add('FormOfAuthorization');
+        }
+        if (getShowFormOfApplication()) {
+            listMandatoryFiles.add('FormOfApplication');
+        }
+        if (getShowFormOfApplicationAndConcurrence()) {
+            listMandatoryFiles.add('FormOfApplicationAndConcurrence');
+        }
         if (!checkMandatoryFiles(listMandatoryFiles)) {
             newForm.addError('There are missing files to upload, Please attach them before submitting the application.');
+            return null;
         }
         try{
 
@@ -1466,6 +1507,7 @@ global without sharing class ISSP_APProcess {
         }
     }
 
+    @TestVisible
     private void sendConfirmationEmail(Case newCase) {
         String emailTemplateName;
         String fromaddress;
@@ -1639,7 +1681,57 @@ global without sharing class ISSP_APProcess {
             && this.hqaccount.ICCS_Membership_Status__c!='Active'
             && this.hqaccount.ICCS_Membership_Status__c!='Member';
     }
-    
+
+    /**
+        Returns true if the account meets the conditions to show CounterIndemnity section
+    **/
+    public Boolean getShowCounterIndemnity() {
+        if (isBSP) {
+            return isGSSAUser==false
+                && strAreaType=='Airline Joining'
+                && accountToShowSections.Sector__c=='Airline'
+                && accountToShowSections.BSP_CI_Valid__c==false;
+        }
+        if (isCASS) {
+            return isGSSAUser==false
+                && strAreaType=='Airline Joining'
+                && accountToShowSections.Sector__c=='Airline'
+                && accountToShowSections.CASS_CI_Valid__c==false;
+        }
+        return false;
+    }
+
+    /**
+        Returns true if the account meets the conditions to show Form Of Concurrence section
+    **/
+    public Boolean getShowFormOfConcurrence() {
+        return isBSP
+            && strAreaType=='Airline Joining'
+            && accountToShowSections.Sector__c=='Airline'
+            && accountToShowSections.BSP_FOC_Valid__c==false
+            && accountToShowSections.Membership_status__c!='IATA member';
+    }
+
+    /**
+        Returns true if the account meets the conditions to show Form Of Application section
+    **/
+    public Boolean getShowFormOfApplication() {
+        return isGSSAUser==false
+            && strAreaType=='Airline Joining'
+            && accountToShowSections.Sector__c=='Airline'
+            && accountToShowSections.Membership_status__c!='IATA member';
+    }
+
+    /**
+        Returns true if the account meets the conditions to show Form Of Application And Concurrence section
+    **/
+    public Boolean getShowFormOfApplicationAndConcurrence() {
+        return isCASS
+            && strAreaType=='Airline Joining'
+            && accountToShowSections.Sector__c=='Airline'
+            && accountToShowSections.Membership_status__c!='IATA member';
+    }
+
     /**
         Find in ISSP_AP_FieldLists those fields marked as mandatory for current DPC System
     **/
@@ -1648,6 +1740,30 @@ global without sharing class ISSP_APProcess {
         list<String> listFieldsToCheck = ISSP_AP_FieldLists.bspCommissionMandatoryFields.get(dpcSystem);
         if (listFieldsToCheck==null) return new list<String>();
         return listFieldsToCheck;
+    }
+
+    /**
+        If the country requirement value VAT_no_always_inserted_into_ISS_systems__c is set
+        to YES means that at least one VAT field is mandatory
+    **/
+    public Boolean getVATAlwaysInserted() {
+        return this.countryRequirement.VAT_no_always_inserted_into_ISS_systems__c=='YES';
+    }
+
+    /**
+        If the country requirement value Local_VAT_Mandatory__c is set
+        to Yes means that BSP_Country_VAT_Tax_number__c field is mandatory
+    **/
+    public Boolean getLocalVATMandatory() {
+        return this.countryRequirement.Local_VAT_Mandatory__c=='YES';
+    }
+
+    /**
+        If the country requirement value Type_of_address_accepted__c is set
+        to Local means that local address fields are mandatory
+    **/
+    public Boolean getlocalAddressMandatory() {
+        return this.countryRequirement.Type_of_address_accepted__c=='Local';
     }
 
     /**

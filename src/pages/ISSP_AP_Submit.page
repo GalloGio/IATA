@@ -29,14 +29,14 @@
      <apex:form id="FinalForm">
         <apex:pageBlock rendered="{!isStep4}" title="" mode="edit">
             
-            <apex:pageBlockButtons >
+            <apex:pageBlockButtons id="buttonSection">
                 <apex:commandButton styleclass="apbutton" action="{!goToStep3}" value="Previous"/>&nbsp;
                 <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}"/>
                 <apex:commandButton styleclass="apbutton" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" style="float:right"/>
             </apex:pageBlockButtons>
             
             <apex:pageMessages />
-            <div class="apcontainer">
+            <apex:outputPanel id="mainPanel" layout="block" styleclass="apcontainer">
                 <apex:pageBlockSection title="Application Status" columns="1">
                     <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>                  
                 </apex:pageBlockSection>
@@ -54,8 +54,8 @@
 
                     <apex:pageBlockSectionItem rendered="{!NOT(ISNULL(ICCSProductCountry))}">
                         <apex:outputLabel value="Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market" styleclass="ap-required"/>
-                        <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}">
-                            <apex:actionSupport event="onchange" rerender="FinalForm"/>
+                        <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}" >
+                            <apex:actionSupport event="onchange" rerender="mainPanel,buttonSection"/>
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
 
@@ -226,15 +226,7 @@
 
                 <!-- Counter Indemnity Agreement -->
                 <apex:pageBlockSection title="Counter Indemnity Agreement" columns="1"
-                    rendered="{!
-                            AND(!isGSSAUser,
-                                strAreaType=='Airline Joining',
-                                accountToShowSections.Sector__c=='Airline',
-                                OR(
-                                    AND(isBSP,NOT(accountToShowSections.BSP_CI_Valid__c)),
-                                    AND(isCASS,NOT(accountToShowSections.CASS_CI_Valid__c))
-                                )
-                            )}">
+                    rendered="{!ShowCounterIndemnity}">
                     <div class="aplabel">
                         <p>
                             According to our records, your airline needs to provide a counter indemnity agreement in order to join this operation. Please sondlowad in the download it in the following link and attach an escaned copy using the button below
@@ -248,13 +240,7 @@
 
                 <!-- Form of Concurrence -->
                 <apex:pageBlockSection title="Form of Concurrence" columns="1"
-                    rendered="{!AND(
-                        strAreaType=='Airline Joining',
-                        accountToShowSections.Sector__c=='Airline',
-                        isBSP,
-                        NOT(accountToShowSections.BSP_FOC_Valid__c),
-                        accountToShowSections.Membership_status__c!='IATA Member'
-                    )}">
+                    rendered="{!ShowFormOfConcurrence}">
                     <div class="aplabel">
                         <p>
                             According to our records, your airline needs to provide a form of Concurrence document signed. This document needs to be provided only once. Please download using the following link and attach an escaned copy using the button below. The hard copy must be send to the address below.
@@ -267,14 +253,7 @@
                 </apex:pageBlockSection>
 
                 <!-- Form Of Application -->
-                <apex:pageBlockSection title="Form of Application" columns="1"
-                    rendered="{!
-                            AND(!isGSSAUser,
-                                strAreaType=='Airline Joining',
-                                accountToShowSections.Sector__c=='Airline',
-                                accountToShowSections.Membership_status__c!='IATA Member',
-                                isBSP
-                            )}">
+                <apex:pageBlockSection title="Form of Application" columns="1" rendered="{!ShowFormOfApplication}">
                     <div class="aplabel">
                         <p>
                             Text to be defined
@@ -284,13 +263,7 @@
                 </apex:pageBlockSection>
 
                 <!-- Form Of Application and Concurrence -->
-                <apex:pageBlockSection title="Form of Application and Concurrence" columns="1"
-                    rendered="{!
-                            AND(strAreaType=='Airline Joining',
-                                accountToShowSections.Sector__c=='Airline',
-                                accountToShowSections.Membership_status__c!='IATA Member',
-                                isCASS
-                            )}">
+                <apex:pageBlockSection title="Form of Application and Concurrence" columns="1" rendered="{!ShowFormOfApplicationAndConcurrence}">
                     <div class="aplabel">
                         <p>
                             Text to be defined
@@ -299,41 +272,42 @@
                     <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=7&reqRequired=Mandatory&reqName=Form of Application and Concurrence&reqDescription=&reqIdentifier=FormOfApplicationAndConcurrence" height="180px" width="100%" scrolling="false"/>
                 </apex:pageBlockSection>
 
-                <!-- Accept terms and conditions -->   
-                <apex:pageBlockSection title="Terms and conditions" columns="1">
-                    <div class="aplabel">
-                        <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <b>{!apcountry}</b>
-                            and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
-                        <p>
-                            I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
-                        </p><br/> 
-                        <p>
-                            I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
-                        </p>
-                    
-                    <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
-                        <div style="line-height: 20px;font-weight:bold">
-                        In addition I confirm that my airline fulfills the following legal requirements to operate in PERU:<br/>
-                        <div style="margin-left:20px">
-                        a)  Authorization issued by SUNAT for the Airline to issue E-tickets<br/>
-                        b)  Registration with SUNARP of the Airline's branch office legal entity<br/>
-                        c)  Registration with SUNAT Tax regulator for the RUC number of the Airline<br/>
-                        d)  Operating Authorization permit granted by Civil Aviation -- applicable to ONLINE carriers<br/>
-                        e)  DGAC government resolution authorizing an Airline to operate sales in Peru -- applicable to OFFLINE carriers<p/>
-                        </div>
-                        </div>
-                     </apex:outputText>
-                    </div>
-                    <div class="aplabel">
-                    By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.
+            </apex:outputPanel>
 
-                    <br/>
-                    <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/>
+            <!-- Accept terms and conditions -->   
+            <apex:pageBlockSection title="Terms and conditions" columns="1">
+                <div class="aplabel">
+                    <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <b>{!apcountry}</b>
+                        and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
+                    <p>
+                        I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
+                    </p><br/> 
+                    <p>
+                        I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
+                    </p>
+                
+                <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
+                    <div style="line-height: 20px;font-weight:bold">
+                    In addition I confirm that my airline fulfills the following legal requirements to operate in PERU:<br/>
+                    <div style="margin-left:20px">
+                    a)  Authorization issued by SUNAT for the Airline to issue E-tickets<br/>
+                    b)  Registration with SUNARP of the Airline's branch office legal entity<br/>
+                    c)  Registration with SUNAT Tax regulator for the RUC number of the Airline<br/>
+                    d)  Operating Authorization permit granted by Civil Aviation -- applicable to ONLINE carriers<br/>
+                    e)  DGAC government resolution authorizing an Airline to operate sales in Peru -- applicable to OFFLINE carriers<p/>
                     </div>
-                    
-                </apex:pageBlockSection>
-            </div>
-            
+                    </div>
+                 </apex:outputText>
+                </div>
+                <div class="aplabel">
+                By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.
+
+                <br/>
+                <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/>
+                </div>
+
+            </apex:pageBlockSection>
+
         </apex:pageBlock>
     </apex:form>
 

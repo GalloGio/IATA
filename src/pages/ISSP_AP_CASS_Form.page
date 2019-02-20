@@ -45,10 +45,6 @@
     }
     </script>
 
-    <apex:variable var="localVATMandatory" value="{!countryRequirement.Local_VAT_Mandatory__c=='YES'}" />
-    <apex:variable var="VATAlwaysInserted" value="{!countryRequirement.VAT_no_always_inserted_into_ISS_systems__c=='YES'}" />
-    <apex:variable var="localAddressMandatory" value="{!countryRequirement.Type_of_address_accepted__c=='Local'}" />
-
     <!-- Modal -->
 <div class="modal fade" id="ModalCountryReqs" tabIndex="-1" data-backdrop='false' role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -367,9 +363,9 @@
                     
                     <apex:pageBlockSectionItem helpText="Or equivalent (RUT/RUC/RIF/ NIT). Only if applicable. Please refer to Country requirements" rendered="{!NOT(OR(apcountryisocode='BR',apcountryisocode='EC',apcountryisocode='VE'))}">
                         <apex:outputLabel value="Local VAT number in CASS {!apcountry}" 
-                            styleClass="{!IF(AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null),'ap-required','')}"/>
+                            styleClass="{!IF(OR(LocalVATMandatory,AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null)),'ap-required','')}"/>
                         <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label="">
-                            <apex:actionSupport event="onchange" rerender="section3"/>
+                            <apex:actionSupport event="onchange" rerender="section3,section9"/>
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
                     
@@ -385,17 +381,17 @@
                     
                     <apex:pageBlockSectionItem helpText="In Ecuador the VAT number is called the RUC and given to each company by the Commerce Registry (Registro Mercantil)" rendered="{!apcountryisocode='EC'}">
                         <apex:outputLabel value="Your airline's VAT/RUC Number"
-                            styleClass="{!IF(AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null),'ap-required','')}"/>
+                            styleClass="{!IF(OR(LocalVATMandatory,AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null)),'ap-required','')}"/>
                         <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label="">
-                            <apex:actionSupport event="onchange" rerender="section3"/>
+                            <apex:actionSupport event="onchange" rerender="section3,section9"/>
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem helpText="The RIF must belong to the bank beneficiary account holder" rendered="{!apcountryisocode='VE'}">
                         <apex:outputLabel value="Please provide the Registro Informacion Fiscal (RIF) information"
-                            styleClass="{!IF(AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null),'ap-required','')}"/>
+                            styleClass="{!IF(OR(LocalVATMandatory,AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null)),'ap-required','')}"/>
                         <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label="">
-                            <apex:actionSupport event="onchange" rerender="section3"/>
+                            <apex:actionSupport event="onchange" rerender="section3,section9"/>
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
                     
@@ -406,9 +402,9 @@
                     
                     <apex:pageBlockSectionItem rendered="{!NOT(apcountryisocode='BR')}">
                         <apex:outputLabel value="VAT/Tax Registration number of the Airline's Home Country / Head Office"
-                            styleClass="{!IF(AND(VATAlwaysInserted,newForm.BSP_Country_VAT_Tax_number__c==null),'ap-required','')}"/>
+                            styleClass="{!IF(AND(NOT(LocalVATMandatory),VATAlwaysInserted,newForm.BSP_Country_VAT_Tax_number__c==null),'ap-required','')}" />
                         <apex:inputField value="{!newForm.VAT_Tax_number_in_your_home_country__c}" label="">
-                            <apex:actionSupport event="onchange" rerender="section3"/>
+                            <apex:actionSupport event="onchange" rerender="section3,section9"/>
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
                     <apex:outputText rendered="{!OR(apcountryisocode='EC',apcountryisocode='VE')}"><!--empty: move following field to next row --></apex:outputText>
@@ -693,7 +689,7 @@
                 </apex:pageBlockSection>    
                 
                 <span id="nav_nine"></span>   
-                <apex:pageBlockSection title="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
+                <apex:pageBlockSection id="section9" title="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas juridicas)', 'Local VAT - RFC #')}" rendered="{!OR(apcountryisocode='BR',apcountryisocode='MX')}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="9. Additional Information - {!CASE(apcountryisocode, 'BR', 'Local VAT # (CNPJ - Certificado Nacional de Personas jurídicas)', 'Local VAT - RFC #')}"/>
@@ -701,8 +697,11 @@
                     </apex:facet>
                 
                     <apex:pageBlockSectionItem helpText="{!CASE(apcountryisocode, 'BR', 'Format : XX.XXX.XXX/XXXX-XX. Must be that of the Bank Beneficiary Account Holder.', 'As per local law the RFC number (Local VAT no.) must correspond with the Local Fiscal Address of the Airline Participant and should be provided to IATA')}">
-                        <apex:outputLabel styleClass="{!IF(localVATMandatory,'ap-required','')}" value="{!CASE(apcountryisocode, 'BR','* CNPJ # to be entered in IATA Systems', '* RFC # to be entered in IATA Systems')}"/>
-                        <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label=""/>
+                        <apex:outputLabel value="{!CASE(apcountryisocode, 'BR','* CNPJ # to be entered in IATA Systems', '* RFC # to be entered in IATA Systems')}"
+                            styleClass="{!IF(OR(LocalVATMandatory,AND(VATAlwaysInserted,newForm.VAT_Tax_number_in_your_home_country__c==null)),'ap-required','')}"/>
+                        <apex:inputField value="{!newForm.BSP_Country_VAT_Tax_number__c}" label="">
+                            <apex:actionSupport event="onchange" rerender="section3,section9"/>
+                        </apex:inputField>
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem rendered="{!apcountryisocode='BR'}">
@@ -721,9 +720,9 @@
                     
                     <apex:pageBlockSection title="Please enclose" columns="1" rendered="{!apcountryisocode='BR'}">
                         <apex:iframe scrolling="false" height="160px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=1) A copy of the CNPJ Certification&reqDescription=&reqIdentifier=Additional_Information_BR&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=0&reqRequired=Mandatory&reqName=1) A copy of the CNPJ Certification&reqDescription=&reqIdentifier=Additional_Information_BR1&onlyOne=true"/>
                         <apex:iframe scrolling="false" height="160px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=2) The ANAC Authorization or Publication provided by the Offical Gazetta&reqDescription=&reqIdentifier=Additional_Information_BR2&onlyOne=true"/>
                     </apex:pageBlockSection>
 
                 </apex:pageBlockSection>
@@ -743,11 +742,11 @@
                     
                     <apex:pageBlockSection title="Please provide copies of the following documents:" columns="1">
                         <apex:iframe scrolling="false" height="230px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=a. Permission granted by the Civil Aviation Authority (Administracion Nacional de Aviacion Civil  -- ANAC) for your Airline to operate regular flights in Argentina.&reqDescription=If you are joining the BSP through a General Sales Agent (GSA), permission should be granted to the GSA, authorizing tickets sales in the country.&reqIdentifier=Additional_Information_AR&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=a. Permission granted by the Civil Aviation Authority (Administracion Nacional de Aviacion Civil  -- ANAC) for your Airline to operate regular flights in Argentina.&reqDescription=If you are joining the BSP through a General Sales Agent (GSA), permission should be granted to the GSA, authorizing tickets sales in the country.&reqIdentifier=Additional_Information_AR1&onlyOne=true"/>
                         <apex:iframe scrolling="false" height="230px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=b. Fiscal ID registration number (Clave Unica de Identificacion Tributaria  -- CUIT) granted by the Fiscal Authority (AFIP).&reqDescription=If you are joining the BSP through a GSA, the GSA's fiscal ID number/CUIT will be accepted.<br/><br/>&reqIdentifier=Additional_Information_AR&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=b. Fiscal ID registration number (Clave Unica de Identificacion Tributaria  -- CUIT) granted by the Fiscal Authority (AFIP).&reqDescription=If you are joining the BSP through a GSA, the GSA's fiscal ID number/CUIT will be accepted.<br/><br/>&reqIdentifier=Additional_Information_AR2&onlyOne=true"/>
                         <apex:iframe scrolling="false" height="230px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=c. Registered in-laws and Power of Attorney to show your Airline's representation in Argentina.&reqDescription=If you are joining the BSP through a GSA, a copy of the GSA agreement must be presented.&reqIdentifier=Additional_Information_AR&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=c. Registered in-laws and Power of Attorney to show your Airline's representation in Argentina.&reqDescription=If you are joining the BSP through a GSA, a copy of the GSA agreement must be presented.&reqIdentifier=Additional_Information_AR3&onlyOne=true"/>
                     </apex:pageBlockSection>
 
                 </apex:pageBlockSection>
