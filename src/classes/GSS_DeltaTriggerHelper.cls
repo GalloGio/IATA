@@ -209,14 +209,14 @@ public class GSS_DeltaTriggerHelper {
                     }catch(Exception e) {}                  
                 }
                 
-                System.debug('OldStatusCode: '+ OldStatusCode);               
-                System.debug('NewStatusCode: '+ NewStatusCode);
+                //System.debug('OldStatusCode: '+ OldStatusCode);               
+                //System.debug('NewStatusCode: '+ NewStatusCode);
                 
                 String StatusChangeCode = '';
                 //There is an Agency Status Change! Get the StatusChangeCode
                 if (LogDelta)
                 { 
-                    System.debug(' Accreditation status code Change Need to dertermine the code (A, B, C, D)');
+                    //System.debug(' Accreditation status code Change Need to dertermine the code (A, B, C, D)');
                     // load all the specification id 
                     if (OldStatusCode == 0 ){
                         if (NewStatusCode >= 4) StatusChangeCode = 'B';  // Reinstatment
@@ -286,7 +286,9 @@ public class GSS_DeltaTriggerHelper {
         // therefore, we need to have some info on GDP_Products_Account_View 
         Map<Id, GDP_Products_Account_View__c> pvaIdToObjectMap = null; //new Map<Id, GDP_Products_Account_View__c> ();
         if (!OBJECT_ACCOUNTVIEW) { pvaIdToObjectMap = getRelatedProductAccountView(oldRecords, NewRecords, sourceObjectName);}
-        if (OBJECT_ACCOUNTVIEW) { for ( SObject obj : newRecords ) { pvaIdToObjectMap = new Map<Id, GDP_Products_Account_View__c> (); GDP_Products_Account_View__c objb = (GDP_Products_Account_View__c) obj; pvaIdToObjectMap.put(objb.id, objb);} }
+        if (OBJECT_ACCOUNTVIEW) { pvaIdToObjectMap = new Map<Id, GDP_Products_Account_View__c> (); for ( SObject obj : newRecords ) {  GDP_Products_Account_View__c objb = (GDP_Products_Account_View__c) obj; pvaIdToObjectMap.put(objb.id, objb);} }
+        
+        
         //Generic treatment for aby type of objects.
         //Iterate on records, fields, and File specification to detect change and add change code as needed
         //Iterate the list of new records to find if there are modifications
@@ -367,10 +369,10 @@ public class GSS_DeltaTriggerHelper {
             //Check if record already have a delta change if yes, continue
             if(ProcessedRecordSet.contains(ParentRecordId))  continue;
             
-            System.debug('No Agency code Change, need to loop all fields to detect possible change');
+            //System.debug('No Agency code Change, need to loop all fields to detect possible change');
             
             //Loop list of fields
-            system.debug('fieldstructure.keyset(): ' +fieldstructure.keyset());
+            //system.debug('fieldstructure.keyset(): ' +fieldstructure.keyset());
             for(String dskey : fieldstructure.keyset())
             {
                 FieldStructureCls ds = (FieldStructureCls) fieldstructure.get(dskey);
@@ -379,11 +381,12 @@ public class GSS_DeltaTriggerHelper {
                 {
                     //Code Review
                     LogDelta=false;
-                    if (ISUPDATE)                            
-                        if (newRecord.get(ds.FieldName)!=oldRecords[position].get(ds.FieldName)) LogDelta=true;
+                    if (ISUPDATE) {
+                        try {if (newRecord.get(ds.FieldName)!=oldRecords[position].get(ds.FieldName)) LogDelta=true;}catch(exception e) {}
+                    }
                     if (ISINSERT || ISDELETE) LogDelta=true;
                     
-                    System.debug('field : '+ds.FieldName+' Delta: '+LogDelta);
+                    //System.debug('field : '+ds.FieldName+' Delta: '+LogDelta);
                     if (LogDelta)
                         for(String SpecificationId : ds.SpecficationFile)
                         {
@@ -408,8 +411,11 @@ public class GSS_DeltaTriggerHelper {
                                 catch(exception e) {}
                             }
                             key = Delta.Related_GDP_Product_Account_View__c +'|'+Delta.Change_Code__c + '|' + SpecificationId;
+                            //System.debug('key1 >>>'+key);
                             if (DeltaSet.Contains(key)) continue;
+                            //System.debug('key2 >>>'+key);
                             
+                         
                             // change other than Accreditation__c.Status will be only recorded in delta
                             // if the GDP_Products_Account_View is not inactive
                             
@@ -433,7 +439,7 @@ public class GSS_DeltaTriggerHelper {
         
         //TODO OPTIMIZATION: future serialize statement for batch asynch processing
         System.debug('DeltaList: '+DeltaList);
-        if (DeltaList.Size()>0) insert DeltaList;
+        if (DeltaList.size()>0) insert DeltaList;
     } // end of calculateDeltas
     
     
