@@ -68,7 +68,7 @@ global with sharing class ProvisionKaviAccess {
     public static Account getFakeAccount (){
         
         if(fakeAccount != null) return fakeAccount;
-        list<Account> acc2 = [Select Id from Account Where Name= 'IATA SSW ACCOUNT'];
+        list<Account> acc2 = [Select Id, Name from Account Where Name= 'IATA SSW ACCOUNT'];
         if (! acc2.isEmpty())       
             fakeAccount = acc2[0];
         else 
