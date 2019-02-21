@@ -269,6 +269,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         Id RTId = rtInfo.getRecordTypeId();
         System.debug('RTId' + RTId);
         AmazonFile__c azFile;
+        List <AmazonFile__c> insertAmazon = new List<AmazonFile__c>();
         for(Participant_Online_App_Requirement__c req : reqList){
             
             if(req.Participation_Application_Requirement__r.Type_of_Requirement__c == 'Attachment'){
@@ -278,11 +279,22 @@ public with sharing class ISSP_AMC_ParticipationFactory {
                                     Case__c =controller.participation.case__c,
                                     Full_Name_Unique__c = '001/'+controller.participation.case__c+Math.random()+'/ICE POP'
                             );
-                insert azFile;
-                UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
+                insertAmazon.add(azFile);
+                //UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
                 //ISSP_AMC_DAO.saveAmazonFileInJunctionObject(azFile.id,controller.participation.id);
-                req.AmazonFile__c = azFile.Id;
+                //req.AmazonFile__c = azFile.Id;
                 
+            }
+
+        }
+        insert insertAmazon;
+
+        for(Participant_Online_App_Requirement__c req : reqList){
+            for(AmazonFile__c file : insertAmazon){
+                if(req.Participation_Application_Requirement__r.Type_of_Requirement__c == 'Attachment'){
+                    UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
+                    req.AmazonFile__c = azFile.Id;
+                }
             }
         }
 
@@ -319,6 +331,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         Id RTId = rtInfo.getRecordTypeId();
         System.debug('RTId' + RTId);
         AmazonFile__c azFile;
+        List <AmazonFile__c> insertAmazon = new List<AmazonFile__c>();
         for(Participant_Online_App_Requirement__c req : reqList){
             
             if(req.Participation_Application_Requirement__r.Type_of_Requirement__c == 'Attachment'){
@@ -328,13 +341,23 @@ public with sharing class ISSP_AMC_ParticipationFactory {
                                     Case__c =controller.participation.case__c,
                                     Full_Name_Unique__c = '001/'+controller.participation.case__c+Math.random()+'/ICE POP'
                             );
-                insert azFile;
-                UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
+                insertAmazon.add(azFile);
+                //UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
                 //ISSP_AMC_DAO.saveAmazonFileInJunctionObject(azFile.id,controller.participation.id);
-                req.AmazonFile__c = azFile.Id;
+                //req.AmazonFile__c = azFile.Id;
                 
             }
 
+        }
+        insert insertAmazon;
+
+        for(Participant_Online_App_Requirement__c req : reqList){
+            for(AmazonFile__c file : insertAmazon){
+                if(req.Participation_Application_Requirement__r.Type_of_Requirement__c == 'Attachment'){
+                    UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
+                    req.AmazonFile__c = azFile.Id;
+                }
+            }
         }
 
         //insert filesList;
@@ -370,6 +393,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         Id RTId = rtInfo.getRecordTypeId();
         System.debug('RTId' + RTId);
         AmazonFile__c azFile;
+        List <AmazonFile__c> insertAmazon = new List<AmazonFile__c>();
         for(Participant_Online_App_Requirement__c req : reqList){
             
             if(req.Participation_Application_Requirement__r.Type_of_Requirement__c == 'Attachment'){
@@ -379,13 +403,23 @@ public with sharing class ISSP_AMC_ParticipationFactory {
                                     Case__c =controller.participation.case__c,
                                     Full_Name_Unique__c = '001/'+controller.participation.case__c+Math.random()+'/ICE POP'
                             );
-                insert azFile;
-                UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
+                insertAmazon.add(azFile);
+                //UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
                 //ISSP_AMC_DAO.saveAmazonFileInJunctionObject(azFile.id,controller.participation.id);
-                req.AmazonFile__c = azFile.Id;
+                //req.AmazonFile__c = azFile.Id;
                 
             }
 
+        }
+        insert insertAmazon;
+
+        for(Participant_Online_App_Requirement__c req : reqList){
+            for(AmazonFile__c file : insertAmazon){
+                if(req.Participation_Application_Requirement__r.Type_of_Requirement__c == 'Attachment'){
+                    UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
+                    req.AmazonFile__c = azFile.Id;
+                }
+            }
         }
 
         //insert filesList;
@@ -1513,7 +1547,9 @@ public with sharing class ISSP_AMC_ParticipationFactory {
 
         AMC_Configuration__c csetting = new AMC_Configuration__c(
 
-            amazonRecordTypeId__c = '012w0000000YcHe',
+            //Schema.SObjectType.Case.getRecordTypeInfosByName().get('General Case').getRecordTypeId();
+            //'012w0000000YcHe'
+            amazonRecordTypeId__c = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('File').getRecordTypeId(),
             CaseAccountingPrefixCodeRecordType__c = 'Airline Coding Application',
             CaseBaggageCodeRecordType__c = 'Airline Coding Application',
             CaseCompanyInfoRecordType__c = 'Airline Coding Application',
