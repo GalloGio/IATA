@@ -439,7 +439,7 @@ public class GSS_DeltaTriggerHelper {
         
         //TODO OPTIMIZATION: future serialize statement for batch asynch processing
         System.debug('DeltaList: '+DeltaList);
-        if (DeltaList.size()>0) insert DeltaList;
+        if (DeltaList.Size()>0) insert DeltaList;
     } // end of calculateDeltas
     
     
