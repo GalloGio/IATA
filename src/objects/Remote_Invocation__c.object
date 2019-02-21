@@ -102,7 +102,7 @@
                     <label>TIP - IFG Report</label>
                 </value>
                 <value>
-                    <fullName>SAP PPA</fullName>
+                    <fullName>SAP_PPA</fullName>
                     <default>false</default>
                     <label>SAP PPA</label>
                 </value>
@@ -316,7 +316,7 @@ When MS sets “In Progress”, trigger to fire</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>SAP PPA</fullName>
+                <fullName>SAP_PPA</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -332,6 +332,10 @@ When MS sets “In Progress”, trigger to fire</description>
             </values>
             <values>
                 <fullName>IFG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
