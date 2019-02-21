@@ -777,16 +777,16 @@
         <label>Stage_F</label>
         <stageOrder>6</stageOrder>
     </stages>
-    <startElementReference>Main_Flow</startElementReference>
+    <startElementReference>Main_Flow_ACLI</startElementReference>
     <subflows>
-        <name>Main_Flow</name>
-        <label>Main Flow</label>
-        <locationX>157</locationX>
-        <locationY>205</locationY>
+        <name>Main_Flow_ACLI</name>
+        <label>Main Flow ACLI</label>
+        <locationX>132</locationX>
+        <locationY>170</locationY>
         <connector>
             <targetReference>Perform_Sanity_Check</targetReference>
         </connector>
-        <flowName>Main_Flow_Test</flowName>
+        <flowName>Main_Flow_ACLI</flowName>
         <inputAssignments>
             <name>recordId</name>
             <value>
