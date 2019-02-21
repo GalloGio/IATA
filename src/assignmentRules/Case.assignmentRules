@@ -3885,6 +3885,25 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <template>Quality/New_Case_Business_delivery</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_ARM_Global_Emergency</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SAAM,Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Agency Risk Management,Risk Management Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Priority</field>
+                <operation>equals</operation>
+                <value>Emergency</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_ARM_Europe</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND 2) OR 3 OR (2 AND 4 AND 5)</booleanFilter>
