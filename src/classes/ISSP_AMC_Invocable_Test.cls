@@ -33,7 +33,7 @@ public with sharing class ISSP_AMC_Invocable_Test {
 				ISSP_AMC_Invocable.invokeACLICustomImpl(orchestratorList);
 				ISSP_AMC_FlowDAO.getStageWithStatusMap(orchestrator.Id);
 				ISSP_AMC_FlowDAO.getPicklistsFromProcessOrchestrator(orchestrator.Id,'STAGE_A');
-				ISSP_AMC_FlowDAO.sendCaseCtr(controller.participation.case__c);
+				ISSP_AMC_FlowDAO.sendCase(controller.participation.case__c);
 				
 				//ISSP_AMC_FlowDAO.requestForApproval(controller.participation.case__c);
 				ISSP_AMC_FlowDAO.createRelatedCases(controller.participation.case__c, 'STAGE_A');
