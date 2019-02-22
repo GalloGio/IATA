@@ -15,6 +15,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Applicable_only_for_Accreditation_Model__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Applicable only for Accreditation Model Setup Change Codes</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Applicable only for Accreditation Model Setup Change Codes</inlineHelpText>
+        <label>Applicable only for Accreditation Model</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Change_Code__c</fullName>
         <externalId>false</externalId>
         <label>Change Code</label>
