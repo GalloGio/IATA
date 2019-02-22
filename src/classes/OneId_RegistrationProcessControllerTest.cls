@@ -462,17 +462,29 @@ private class OneId_RegistrationProcessControllerTest {
         String serviceName = 'ISSP';
 
         Test.startTest();
+        Contact c;
+        
 
-        PortalType portalType = PortalType.PowerPartner;
-        User userWithRole = null;
-        Boolean doInsert = true;
-        Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Airline', Category__c='Passenger and Cargo',IATA_ISO_Country__c = country.Id,BillingCountry='Portugal',IATA_ISO_Shipping_Country__c=country.Id);
+        User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-        Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
 
-        OneId_RegistrationProcessController.registration(a,c,serviceName);
+            System.runAs(myUser)
+            {
+                User user1 = ISSP_AMC_ParticipationFactory.portalSetup();       
+                System.runAs(user1){
+                    PortalType portalType = PortalType.PowerPartner;
+                    User userWithRole = null;
+                    Boolean doInsert = true;
+                    Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Airline', Category__c='Passenger and Cargo',IATA_ISO_Country__c = country.Id,BillingCountry='Portugal',IATA_ISO_Shipping_Country__c=country.Id);
 
-        OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'FRED');
+                    c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
+
+                    OneId_RegistrationProcessController.registration(a,c,serviceName);
+
+                    OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'FRED');
+
+                }
+            }
 
         Test.stopTest();
 
