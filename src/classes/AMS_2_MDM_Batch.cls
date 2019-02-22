@@ -61,6 +61,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
         List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c, Location_Type_To_Exclude__c, Accreditation_Model_To_Exclude__c 
                                                                                 FROM AMS_Change_Codes_Billable_Setup__c where Country_To_Exclude__c in :countryIsoCodes];
 
+
         system.debug('AMS_2_MDM_Batch: lChangeCodesBillableSetup - ' + lChangeCodesBillableSetup);
 
         //lstAccount = [SELECT Id, Name, Location_Class__c, Country_ISO_Code__c FROM Account WHERE id in :setAccountKeys];
@@ -105,7 +106,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
                     Boolean bLocation_Type_To_Exclude_Empty = ccbs.Location_Type_To_Exclude__c == null ? true : false;
                     Boolean bLocation_Type_To_Exclude_Contains = false;
                     if(!bLocation_Type_To_Exclude_Empty) bLocation_Type_To_Exclude_Contains = ccbs.Location_Type_To_Exclude__c.containsIgnoreCase(auxAccAccount.Location_Type__c) ? true : false;
-
+ 
                     if(au.Change_Code__c == ccbs.Change_Code__c 
                         && auxAccAccount.Country_ISO_Code__c == ccbs.Country_To_Exclude__c 
                         && auxAccAccount.Location_Class__c == ccbs.Location_Class_To_Exclude__c
@@ -114,11 +115,14 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
                         bToSend = false;                            
                     }
 
-                    if( au.Change_Code__c == ccbs.Change_Code__c && 
+    
+                    Set<String> aModelToExcludeSet = new set<String>(ccbs.Accreditation_Model_To_Exclude__c.split(';'));
+
+                    if(au.Change_Code__c == ccbs.Change_Code__c && 
                         auxAccAccount.ANG_IsNewGenAgency__c && 
-                        auxAccAccount.ANG_Accreditation_Model__c == ccbs.Accreditation_Model_To_Exclude__c)
-                    bToSend = false;
-                }
+                        aModelToExcludeSet.contains(auxAccAccount.ANG_Accreditation_Model__c))
+                        bToSend = false;
+                    }
 
                 if(bToSend){
                     sLog += au.Account__r.IATACode__c + ',';
