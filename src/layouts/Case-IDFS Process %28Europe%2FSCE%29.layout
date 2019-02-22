@@ -10,7 +10,7 @@
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <customButtons>Migrate_SAAM_Case</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
-    <customButtons>E2CP__New_Comment</customButtons>
+    <customButtons>New_Case_Comment</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>

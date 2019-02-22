@@ -7,7 +7,7 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
-    <customButtons>E2CP__New_Comment</customButtons>
+    <customButtons>New_Case_Comment</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>

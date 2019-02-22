@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>E2CP__New_Comment</customButtons>
+    <customButtons>New_Case_Comment</customButtons>
     <customButtons>Conga_Merge_JS</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
