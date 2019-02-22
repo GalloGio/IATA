@@ -118,15 +118,16 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
                         && auxAccAccount.Location_Class__c == ccbs.Location_Class_To_Exclude__c
                         && ( bLocation_Type_To_Exclude_Empty || bLocation_Type_To_Exclude_Contains);
                         
-                    if(au.Change_Code__c == ccbs.Change_Code__c && (excludeByCountry || excludeSpecialRemarks)){  //FM AMSU-116 //WMO-456                        
-                        bToSend = false;                            
+                    if(au.Change_Code__c == ccbs.Change_Code__c && (excludeByCountry || excludeSpecialRemarks)){  //FM AMSU-116 //WMO-456
+                        bToSend = false;
                     }
 
-                    if( au.Change_Code__c == ccbs.Change_Code__c && 
-                        auxAccAccount.ANG_IsNewGenAgency__c && 
-                        auxAccAccount.ANG_Accreditation_Model__c == ccbs.Accreditation_Model_To_Exclude__c)
-                    bToSend = false;
-                }
+                    Set<String> aModelToExcludeSet = new set<String>(ccbs.Accreditation_Model_To_Exclude__c.split(';'));
+
+                    if(au.Change_Code__c == ccbs.Change_Code__c && auxAccAccount.ANG_IsNewGenAgency__c && aModelToExcludeSet.contains(auxAccAccount.ANG_Accreditation_Model__c)){
+                        bToSend = false;
+					}
+				}
 
                 if(bToSend){
                     sLog += au.Account__r.IATACode__c + ',';
