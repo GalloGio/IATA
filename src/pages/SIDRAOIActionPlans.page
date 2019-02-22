@@ -21,14 +21,14 @@
 		<apex:pageBlock >
 
 			<apex:pageBlockButtons location="top" >
-				<apex:commandButton value="Save" action="{!Save}" rendered="{! isEditMode }" />
+				<apex:commandButton value="Save" action="{!Save}" rendered="{! isEditMode }"/>
 				<apex:commandButton value="Cancel" action="{!Cancel}" rendered="{! isEditMode }" />
 
 				<apex:commandButton value="Edit" action="{!Edit}" rendered="{! NOT(isEditMode) }" />
 				<apex:commandButton value="New OI Action Plan" action="{!addNewActionPlan}" rendered="{! NOT(isEditMode) }" />
 			</apex:pageBlockButtons>
 
-			<apex:pageBlockTable value="{! listOIActionPlans }" var="actionPlan" >
+			<apex:pageBlockTable value="{! listOIActionPlans }" var="actionPlan">
 
 					<apex:column headerValue="#" >
 						<apex:outputText value="{!rowNum}"/>
@@ -39,7 +39,6 @@
 						<apex:commandLink action="{!deleteLine}" onclick="return confirmDelete();"  value="Del" >
 							<apex:param name="actionPlanIdToDelete" value="{!actionPlan.Id}" assignTo="{!actionPlanIdToDelete}"/>
 						</apex:commandLink>
-						<!--<apex:outputLink value="/{!oi.Id}" rendered="{! NOT(isEditMode) }" >View</apex:outputLink> -->
 					</apex:column>
 
 					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Description__c.label}" >
@@ -47,30 +46,78 @@
 						<apex:inputTextArea styleclass="fullLength" value="{!actionPlan.Description__c}" rendered="{! isEditMode }" />
 					</apex:column>
 
-					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Due_Date__c.label}" >
+					<!--apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Due_Date__c.label}" >
 						<apex:outputField value="{!actionPlan.Due_Date__c}" rendered="{! NOT(isEditMode) }" />
 						<apex:inputField value="{!actionPlan.Due_Date__c}" rendered="{! isEditMode }" />
-					</apex:column>
+					</apex:column--> 
+					<apex:column>
+		            	<apex:facet name="header"> 
+		            		<apex:outputPanel>     			
+			                	<apex:commandLink value="{!$ObjectType.OI_Action_Plan__c.fields.Due_Date__c.label}" action="{!SortTable}" rendered="{! NOT(isEditMode) }">
+			                		<apex:param name="sortField" value="Due_Date__c" assignTo="{!strSortField}"/>
+			                	</apex:commandLink>
+			                	<apex:outputText value="{!$ObjectType.OI_Action_Plan__c.fields.Due_Date__c.label}" rendered="{! isEditMode }"/>
+				            </apex:outputPanel>
+		               	</apex:facet>
+		               	<apex:outputField value="{!actionPlan.Due_Date__c}" rendered="{! NOT(isEditMode) }" />
+						<apex:inputField value="{!actionPlan.Due_Date__c}" rendered="{! isEditMode }" />
+		            </apex:column>
 
-					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Closure_Date__c.label}" >
+					<!--apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Closure_Date__c.label}" >
 						<apex:outputField value="{!actionPlan.Closure_Date__c}" rendered="{! NOT(isEditMode) }" />
 						<apex:inputField value="{!actionPlan.Closure_Date__c}" rendered="{! isEditMode }" />
-					</apex:column>
+					</apex:column-->
+					<apex:column>
+		            	<apex:facet name="header">
+		                	<apex:outputPanel>     			
+			                	<apex:commandLink value="{!$ObjectType.OI_Action_Plan__c.fields.Closure_Date__c.label}" action="{!SortTable}" rendered="{! NOT(isEditMode) }">
+			                		<apex:param name="sortField" value="Closure_Date__c" assignTo="{!strSortField}"/>
+			                	</apex:commandLink>
+			                	<apex:outputText value="{!$ObjectType.OI_Action_Plan__c.fields.Closure_Date__c.label}" rendered="{! isEditMode }"/>
+				            </apex:outputPanel>
+		               	</apex:facet>
+		                <apex:outputField value="{!actionPlan.Closure_Date__c}" rendered="{! NOT(isEditMode) }" />
+						<apex:inputField value="{!actionPlan.Closure_Date__c}" rendered="{! isEditMode }" />
+		            </apex:column>
 
-					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Action_Owner__c.label}" >
+					<!--apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Action_Owner__c.label}" >
 						<apex:outputField value="{!actionPlan.Action_Owner__c}" rendered="{! NOT(isEditMode) }" />
 						<apex:inputField value="{!actionPlan.Action_Owner__c}" rendered="{! isEditMode }" />
-					</apex:column>
+					</apex:column-->
+					<apex:column>
+		            	<apex:facet name="header">
+		                	<apex:outputPanel>     			
+			                	<apex:commandLink value="{!$ObjectType.OI_Action_Plan__c.fields.Action_Owner__c.label}" action="{!SortTable}" rendered="{! NOT(isEditMode) }">
+			                		<apex:param name="sortField" value="Action_Owner__c" assignTo="{!strSortField}"/>
+			                	</apex:commandLink>
+			                	<apex:outputText value="{!$ObjectType.OI_Action_Plan__c.fields.Action_Owner__c.label}" rendered="{! isEditMode }"/>
+				            </apex:outputPanel>	
+		               	</apex:facet>
+		                <apex:outputField value="{!actionPlan.Action_Owner__c}" rendered="{! NOT(isEditMode) }" />
+						<apex:inputField value="{!actionPlan.Action_Owner__c}" rendered="{! isEditMode }" />
+		            </apex:column>
 
 					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Comment__c.label}" >
 						<apex:outputField value="{!actionPlan.Comment__c}" rendered="{! NOT(isEditMode) }" />
 						<apex:inputTextArea styleclass="fullLength" value="{!actionPlan.Comment__c}" rendered="{! isEditMode }" />
 					</apex:column>
 
-					<apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Met_Due_Date__c.label}" >
+					<!--apex:column headerValue="{!$ObjectType.OI_Action_Plan__c.fields.Met_Due_Date__c.label}" >
 						<apex:outputField value="{!actionPlan.Met_Due_Date__c}" rendered="{! NOT(isEditMode) }" />
 						<apex:inputField value="{!actionPlan.Met_Due_Date__c}" rendered="{! isEditMode }" />
-					</apex:column>
+					</apex:column-->
+					<apex:column>
+		            	<apex:facet name="header">
+		                	<apex:outputPanel>     			
+			                	<apex:commandLink value="{!$ObjectType.OI_Action_Plan__c.fields.Met_Due_Date__c.label}" action="{!SortTable}" rendered="{! NOT(isEditMode) }">
+			                		<apex:param name="sortField" value="Met_Due_Date__c" assignTo="{!strSortField}"/>
+			                	</apex:commandLink>
+			                	<apex:outputText value="{!$ObjectType.OI_Action_Plan__c.fields.Met_Due_Date__c.label}" rendered="{! isEditMode }"/>
+				            </apex:outputPanel>		
+		               	</apex:facet>
+		                <apex:outputField value="{!actionPlan.Met_Due_Date__c}" rendered="{! NOT(isEditMode) }" />
+						<apex:inputField value="{!actionPlan.Met_Due_Date__c}" rendered="{! isEditMode }" />
+		            </apex:column>
 
 			</apex:pageBlockTable>
 

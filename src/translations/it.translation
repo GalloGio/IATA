@@ -11362,23 +11362,23 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <label>Importo totale garantito (Convertito)</label>
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <label>Dettagli</label>
         <name>ISSP_Financial_Securities_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <label>Garanzie finanziarie</label>
         <name>ISSP_Financial_Securities_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <label>Prospetto</label>
         <name>ISSP_Financial_Securities_Summary</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <label>Importo totale garantito</label>
         <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
@@ -13085,6 +13085,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
     <customLabels>
         <label>Contatti relazionati</label>
         <name>ISSP_Related_contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
     </customLabels>
     <customLabels>
         <label>Trasferire in un altro account</label>
