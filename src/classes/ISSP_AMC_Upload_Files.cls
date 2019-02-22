@@ -186,6 +186,7 @@ public class ISSP_AMC_Upload_Files {
 	/**
         Delete a standard attachment in Salesforce
     **/
+
 	private static boolean deleteSalesforceAttachment(String id) {
 		try {
 			delete [SELECT Id  FROM Attachment where Id = :id];

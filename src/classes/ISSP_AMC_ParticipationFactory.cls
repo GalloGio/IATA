@@ -194,10 +194,10 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         WrapperAttachTest.loadTestCredentials();
 
 
-        String parentId = controller.participation.case__c;
-        Long filesize = 100;
-        String amazonKey = 'path/'+Math.random()+'testfileName.pdf';
-        String fileName='ICE POP';
+        //String parentId = controller.participation.case__c;
+        //Long filesize = 100;
+        //String amazonKey = 'path/'+Math.random()+'testfileName.pdf';
+        //String fileName='ICE POP';
         RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('File');
         Id RTId = rtInfo.getRecordTypeId();
         AmazonFile__c azFile;
@@ -224,7 +224,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         for(Participant_Online_App_Requirement__c req : reqList){
             for(AmazonFile__c file : insertAmazon){
                 if(req.Participation_Application_Requirement__r.Type_of_Requirement__c == 'Attachment'){
-                    UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
+                    //UploadFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, azFile);
                     req.AmazonFile__c = azFile.Id;
                 }
             }
@@ -235,14 +235,52 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         update reqList;
         update [SELECT Id FROM Case WHERE Id=:controller.participation.case__c];
 
+        
+    }
+
+    public static void testUploads(ISSP_AMC_Location_Identifier controller){
+        WrapperAttachTest.loadTestCredentials();
         ISSP_AMC_Upload_Files uploadFiles = new ISSP_AMC_Upload_Files();
+        Set<Id> testSet = uploadFiles.myAmazon;
+        String testString = uploadFiles.amazonFileId;
+        Boolean testBoolean = uploadFiles.hasFile;
+        
         uploadFiles.participationBackend = controller.participation;
         uploadFiles.getUploadedFileInfo();
+        RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('File');
+        Id RTId = rtInfo.getRecordTypeId();
+        AmazonFile__c azFile = new AmazonFile__c(
+                        Name='ICE POP',
+                        Source__c = 'Portal',
+                        RecordTypeId = RTId,
+                        Case__c =controller.participation.case__c,
+                        Full_Name_Unique__c = '001/'+controller.participation.case__c+Math.random()+'/ICE POP'
+                    );
+        insert azFile;
         AmazonFile__c fileToDelete = [SELECT Id,Name,Full_Name_Unique__c FROM AmazonFile__c][0];
         String amazonId = ''+fileToDelete.Id;
         String amazonName = ''+fileToDelete.Full_Name_Unique__c;
         ISSP_AMC_Upload_Files.getExpiringLink(amazonName);
         ISSP_AMC_Upload_Files.deleteAttachment(amazonId,amazonName);
+        Case cs1 = new Case(
+                              Region__c = 'China & North Asia',
+                              BSPCountry__c = 'China',
+                              Status = 'Open',
+                              Origin = 'asd',
+                              CaseArea__c = 'Accreditation',
+                              Reason1__c = '3 Digit Form',
+                              Coding_Application_ID__c = null,
+                              Coding_Application_Status__c = null,
+                              Coding_Application_Reception_Date__c = null,
+                              Subject = 'cs1');
+        insert cs1;
+        Attachment att = new Attachment();
+            att.ParentID = cs1.id;
+            att.Name = Datetime.now().format('yyyyMMdd_HHmm') + '.pdf';
+            att.Body = Blob.toPdf('test');
+            att.ContentType = 'application/pdf';
+        insert att;
+        ISSP_AMC_Upload_Files.deleteAttachment(String.valueOf(att.id),null);
     }
 
     /*
