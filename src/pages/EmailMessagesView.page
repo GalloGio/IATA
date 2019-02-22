@@ -110,6 +110,12 @@
 
         function SendEmail(){
 
+            //ACAMBAS - WMO-436 - Begin
+            if({!cse.Account.Identify_as_Key_Customer__c} == true && {!isEligibleForKeyCustomerAlert} == true) {
+                alert("{!$Label.KEY_CUSTOMER_ALERT}");           
+            }
+            //ACAMBAS - WMO-436 - End
+
             var countryEmail = getCountryEmail();
             var redirectUrlOne = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p26=" + countryEmail;
             var redirectUrlTwo = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003";

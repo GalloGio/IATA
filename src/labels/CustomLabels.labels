@@ -27794,6 +27794,13 @@ You can choose one or more of the following topics:</value>
         <value>If you forget your password, or having trouble logging in, please visit this link</value>
     </labels>
     <labels>
+        <fullName>KEY_CUSTOMER_ALERT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Key Customer Alert</shortDescription>
+        <value>Key Customer!!!</value>
+    </labels>
+    <labels>
         <fullName>L2_Support_Priority_escalation_check</fullName>
         <language>en_US</language>
         <protected>false</protected>
