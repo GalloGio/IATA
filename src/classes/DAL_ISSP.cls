@@ -94,7 +94,7 @@ public with sharing class DAL_ISSP {
              	DEF_Withdrawal_Approval_Rejection__c,DEF_Withdrawal_Approval_Rejection_Date__c,Update_AIMS_REI_DEFWITH__c,Remittance_Date__c,Short_Payment_Amount__c,Billing_Amount__c,
                 Collected_amount__c, E2CP__AdditionalCC__c, Has_the_agent_paid_invoice__c, Account.Location_Type__c, Reason_for_Deadline__c, Cost_Centre__c, Action__c, Due_Date__c, 
                 Action_Person__c, Detailed_Description__c, Source_of_Case__c, IsClosed,
-                OSCAR__c, Oscar__r.Process__c
+                OSCAR__c, Oscar__r.Process__c, Country_Concerned__c
                 FROM Case where Id=:caseId];
         if (cases.size() > 0)
             return cases[0];

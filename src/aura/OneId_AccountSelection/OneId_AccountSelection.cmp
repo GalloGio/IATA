@@ -42,6 +42,7 @@
 							<ui:inputSelectOption text="Agency" label="{!$Label.c.IDCard_ka_agency}"/>
 							<ui:inputSelectOption text="OtherCompany" label="{!$Label.c.ISSP_Other_Company}"/>
 							<ui:inputSelectOption text="GeneralPublic" label="{!$Label.c.ISSP_General_Public}"/>
+							<ui:inputSelectOption text="FreightForwarder" label="{!$Label.c.ISSP_PASS}"/>
 						</ui:inputSelect>
 					</div>
 				</div>
@@ -82,7 +83,7 @@
 				country="{!v.country}"
 				changeName="{! !(v.customerType == 'Airline' &amp;&amp; !empty(v.account.IATA_ISO_Country__c) &amp;&amp; v.account.IATA_ISO_Country__c != v.selectedCountry)}"
 				changeSector="{!v.customerType == 'OtherCompany'}"
-				changeCategory="{!v.customerType == 'OtherCompany' || (v.customerType == 'Airline' &amp;&amp; (empty(v.account.IATA_ISO_Country__c) || v.account.IATA_ISO_Country__c == v.selectedCountry))}"
+				changeCategory="{!v.customerType == 'OtherCompany' || v.customerType=='FreightForwarder' || (v.customerType == 'Airline' &amp;&amp; (empty(v.account.IATA_ISO_Country__c) || v.account.IATA_ISO_Country__c == v.selectedCountry))}"
 			/>
 		</aura:set>
 	</aura:if>

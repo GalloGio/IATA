@@ -268,11 +268,15 @@ public  class AccountTriggerHelper {
           for (String field : fieldsToCheck) {
             branch.put(field, a.get(field));
           }
+
           string site = transformationHelper.buildSiteForAcli(a.IATACode__c, a.Airline_designator__c ,
                         branch.IATA_ISO_Country__r.ISO_Code__c,
                         null);
-          Branch.site = site;
-          Branch.Site_index__c = site;
+          
+          if(Branch.Reason_For_Creation__c!=AMS_Utils.accountReasonForCreationPASS){//ignore the site update if the process is trying to update an account created from a PASS process.
+            Branch.site = site;
+            Branch.Site_index__c = site;
+          }
         }
       }
 

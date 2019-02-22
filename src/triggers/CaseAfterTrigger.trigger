@@ -798,18 +798,42 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			    }
 			    system.debug('STC: ' + STC);
 				map<Id,Id> caseIdPerAccID = new map<Id,Id>();                      
-		        map<Id,Case> caseMap = new map<Id,Case>();  
+		        map<Id,Case> caseMap = new map<Id,Case>();
+		        set<Id> checkChildCasesId=new set<Id>();  
 		        //Initial Validation 
 		        for (Case c : casesToTrigger){
 		        	system.debug('REASON: '+c.reason1__c);
-		        	if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){
-			            system.debug('483  ');
+		        	if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (c.BSPCountry__c != AMS_Utils.passIATAMultipleCountries || !c.Reason1__c.startsWith('PASS')) && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){
 			            caseMap.put(c.id,c);
 			            caseIdPerAccID.put(c.accountID,c.id);
 			        } else if( !ServicesToCheck.contains(c.reason1__c)){
 						c.addError(' The reason you entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting ' );                  
 		            }
+		            if(c.Status == 'Closed' && c.BSPCountry__c == AMS_Utils.passIATAMultipleCountries && c.Reason1__c.startsWith('PASS') && trigger.oldmap.get(c.id).Status != 'Closed'){
+		            	checkChildCasesId.add(c.Id);
+		            }
 		        }
+
+		        //This prevents the parent case to be closed before closing the child cases. Only used in the PASS Airline Participation
+		        if(checkChildCasesId.size()>0){
+		        	List<Case> notClosedChildCaseList=[SELECT Id,CaseNumber,ParentId FROM Case WHERE ParentId In:checkChildCasesId AND Status != 'Closed'];
+		        	Map<Id,String> notClosedChildCaseParentMap= new Map<Id,String>();
+
+		        	for(Case openedChildCase:notClosedChildCaseList){
+		        		if(notClosedChildCaseParentMap.containsKey(openedChildCase.ParentId)){
+		        			notClosedChildCaseParentMap.put(openedChildCase.ParentId,notClosedChildCaseParentMap.get(openedChildCase.ParentId)+'; '+openedChildCase.CaseNumber);
+	        			}else{
+	        				notClosedChildCaseParentMap.put(openedChildCase.ParentId,openedChildCase.CaseNumber);
+	        			}
+		        	}
+
+		        	for (Case c : casesToTrigger){
+			        	if(notClosedChildCaseParentMap.containsKey(c.Id)){
+			        		c.addError('Please close the following child case(s) before closing this case: '+notClosedChildCaseParentMap.get(c.Id)+'.');
+			        	}
+			        }
+		        }
+
 		       	if(caseMap.size()>0){ //validation and at the same time change of recordtype of the accts if they were standard 
 		        	map<Id,Case> casesWithErrorOnAcct = ServiceRenderedCaseLogic.changeRTtoBranchAccts(caseIdPerAccID, caseMap);
 					for (Id idc : caseMap.keySet()) {

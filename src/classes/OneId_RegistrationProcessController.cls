@@ -446,12 +446,17 @@ public without sharing class OneId_RegistrationProcessController {
                 if(serviceName == 'ISSP'){
                     permissionCSPortal(returnedString); // assign Permission Set CS Portal, give access to CS Portal Connected App
                 }
-                if(serviceName == 'ISSP' && isNewAcc == true && (acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')){
+                if(serviceName == 'ISSP' && isNewAcc == true && (acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent' || acc.Sector__c == AMS_Utils.SECTOR_PASS)){
                     permissionNewAgency(returnedString);
                     updatePortalUseProfile(returnedString);
 
-                    if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')                    
+                    if((acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent') && acc.Category__c != AMS_Utils.categoryPass){
                         portalServiceNewAgency(con.Id);
+                    }
+                }
+                //PASS-71
+                if(acc.Sector__c == AMS_Utils.SECTOR_PASS && acc.Category__c == AMS_Utils.categoryPass){
+                    portalServiceNewPASSAgency(con.Id);
                 }
                 
             }
@@ -606,6 +611,21 @@ public without sharing class OneId_RegistrationProcessController {
         system.debug('aqui portalServiceNewAgency....' + conId);
         if (conId != null && conId != '') {
             List<Portal_Applications__c> pApplication = [SELECT id FROM Portal_Applications__c WHERE Name = :AMS_UTILS.IATA_ACCREDITATION_AND_CHANGES];
+
+            if(!pApplication.isEmpty()){
+                Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+                appRight.Contact__c = conId;
+                appRight.Portal_Application__c = pApplication[0].Id;
+                appRight.Right__c = 'Access Granted';
+                insert appRight;
+            }
+
+        }
+    }
+
+    public static void portalServiceNewPASSAgency(String conId){
+        if (conId != null && conId != '') {
+            List<Portal_Applications__c> pApplication = [SELECT id FROM Portal_Applications__c WHERE Name = :AMS_UTILS.IATA_PASS_SERVICE_NAME];
 
             if(!pApplication.isEmpty()){
                 Portal_Application_Right__c appRight = new Portal_Application_Right__c();

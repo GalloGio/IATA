@@ -16,6 +16,9 @@
     .btn {
         background:none;
     }
+    .btn-progressBar-PASS {
+            padding: 2px 40px !important;
+        }
 }
     </style>
     
@@ -34,7 +37,7 @@
             </div>
     <div class="panel-body" id="body-enquiries">
     <apex:form >
-        <div class="progress">
+        <div class="progress" style="{!IF(isPassAccreditation==false, 'display:block', 'display:none')}">
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
                 <apex:commandLink styleclass="btn btn-default" action="{!goToStep1}" value="{!lblStepA}" id="Prev1"/>
             </div>
@@ -51,10 +54,24 @@
                 <apex:commandLink styleclass="btn btn-default" action="{!goToStep5}" value="{!lblStepE}" id="Next5"/>
             </div>
         </div>
+        <div class="progress" style="{!IF(isPassAccreditation==true, 'display:block', 'display:none')}">
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="0" style="width: 30%;">
+                <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep2}" value="{!lblStepA}" id="Prev2PASS"/>
+            </div>
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 27%;">
+               <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep3}" value="{!lblStepB}" id="Prev3PASS"/>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
+                {!lblStepC}
+            </div>
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 21%">
+                <apex:commandLink styleclass="btn btn-default btn-progressBar-PASS" action="{!goToStep5}" value="{!lblStepD}" id="Next5PASS"/>
+            </div>
+        </div>
         </apex:form>
      <div class="col-md-12">
         <apex:variable var="sectorValueLabel" value="{!IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, IF(newlabels, $Label.ISSP_Cargo_Agent_New, $Label.ISSP_Cargo_Agent))}" />
-        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel)}">
+        <apex:pageBlock mode="detail" id="theBlock" title="{!IF(isPassAccreditation==true,$Label.ISSP_Requirements_PASS,amsCountryLabel+' - '+ IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)+' '+ IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel))}">
             <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>
             <br />
                 <apex:pageMessages />

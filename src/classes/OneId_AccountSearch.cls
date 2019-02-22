@@ -32,7 +32,7 @@ public without sharing class OneId_AccountSearch {
 			}
 		}
 
-		Set<String> nonGeneralTypes = new Set<String>{'Airline', 'Agency', 'OtherCompany'};
+		Set<String> nonGeneralTypes = new Set<String>{'Airline', 'Agency', 'OtherCompany',AMS_Utils.customerTypePass};
 		if(nonGeneralTypes.contains(customerType))
 			objectString += ' AND Sector__c != \'General Public\'';
 		
