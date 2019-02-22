@@ -3594,30 +3594,6 @@ private class ISSP_AMS_Accreditation_Test {
         Test.stopTest();
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_12() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNewCase = true;
-            accr.hqAccount.Company_Type__c = 'Z';
-            accr.isNoticeOfChange = false;
-            accr.amsOfficeType = 'Branch';
-            accr.newCase.Reason1__c = 'Xpto';
-            accr.isNewHOforAccredAgent = true;
-            accr.sectorValue = 'Travel_Agent';
-            accr.newForm.Accept_terms_and_conditions__c = true;
-            accr.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
-
-            PageReference pageRef = accr.goToFinalStep();
-        }
-
-        Test.stopTest();
-    }
-
     @isTest static void ISSP_AMS_Accreditation_Test_ICC_13() {
         Test.startTest();
 
@@ -3637,6 +3613,10 @@ private class ISSP_AMS_Accreditation_Test {
             accr.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 
             PageReference pageRef = accr.goToFinalStep();
+
+            accr.sectorValue = 'Travel_Agent';
+
+            pageRef = accr.goToFinalStep();
         }
 
         Test.stopTest();

@@ -209,12 +209,18 @@
             }
 
             function submitMultiCountry() {
-
+                submitMultiCountryApplication();
             }
 
             function discardMultiCountry() {
-                
+                discardMCApplication();
             }
+
+            $(document).ready(function() {
+                if ("{!mcAbleToSubmit}" == 'false') {
+                    $('#submitMCButton').attr('disabled', 'false');
+                }
+            });
             </script>
         <div class="container">
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
@@ -233,9 +239,11 @@
                 <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/>
                 <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
                 <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases"/>
-                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms, submitMC">
+                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms">
                     <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
                 </apex:actionFunction>
+                <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" rerender="onGoingMultiCountryForms"/>
+                <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" rerender="onGoingMultiCountryForms"/>
 
                 <div class="container" style="width: 100%">
                     <div class="row">
@@ -337,7 +345,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4" id="submitMC">
-                                    <input type="button" class="btn btn_iata_primary" onClick="submitMultiCountry();" value="Submit Multicountry Application to IATA" disabled="{!mcAbleToSubmit}"/>
+                                    <input type="button" class="btn btn_iata_primary" onClick="submitMultiCountry();" value="Submit Multicountry Application to IATA" id="submitMCButton"/>
                                 </div>
                                 <div class="col-md-4">
                                 </div>
