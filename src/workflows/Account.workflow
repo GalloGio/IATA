@@ -96,15 +96,19 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
     </fieldUpdates>
     <fieldUpdates>
         <fullName>AccountIATAAirlineSetName</fullName>
-        <description>Set the name of an IATA Airline Account, first using Trade Name, and in second place Name_on_AOC__c</description>
+        <description>Set the name of an IATA Airline Account, first using Trade Name, in second place using Legal Name and in third place Name_on_AOC__c</description>
         <field>Name</field>
         <formula>IF(
   OR( ISNULL( TradeName__c ), TradeName__c == &apos;&apos;),
   IF (
+			OR( ISNULL( Legal_name__c ), Legal_name__c == &apos;&apos;),
+				IF (
     OR( ISNULL( Name_on_AOC__c ), Name_on_AOC__c == &apos;&apos;),
     Name,
     Name_on_AOC__c
   ),
+				Legal_name__c
+		),
   TradeName__c
 )</formula>
         <name>AccountIATAAirlineSetName</name>
@@ -349,7 +353,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </actions>
         <active>true</active>
         <description>Set the name of an ACLI account (RT = Airline Headquarters ) using its Trade Name or AOC Name</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;IATA_Airline&apos;,   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
+        <formula>AND (   RecordType.DeveloperName = &apos;IATA_Airline&apos;,   OR( ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Legal_name__c ), ISCHANGED( Name_on_AOC__c ) )  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

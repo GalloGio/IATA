@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>28.0</apiVersion>
+    <available>true</available>
+    <description>Email sent when IATA add a public comment to a case for case global</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IATA CS Portal Case Comments Global</name>
+    <packageVersions>
+        <majorNumber>5</majorNumber>
+        <minorNumber>15</minorNumber>
+        <namespace>E2CP</namespace>
+    </packageVersions>
+    <style>none</style>
+    <subject>New comment on case n° -</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
