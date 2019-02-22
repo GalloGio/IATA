@@ -250,7 +250,7 @@ global class AMS_BSPLinkIntegration {
     	BodyRequest.AgentCode = AA.IATACode__c;			//Get IATA COde
     	BodyRequest.SalesForceId = AA.Id;		//ID of the record created in the queue table
 		if(sProcess=='UrgentDeactivation')	BodyRequest.Urgent='Yes';
-    	req.setBody(JSON.serialize(BodyRequest));
+    	req.setBody(JSON.serialize(BodyRequest, true));
     	req.setTimeout(120000); 
     	
     	try{
