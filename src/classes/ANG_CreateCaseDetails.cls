@@ -134,7 +134,7 @@ global without sharing class ANG_CreateCaseDetails {
 				return false;
             }
 
-			List<AMS_OSCAR__c> oscarLst = [Select Id, Invoice_status__c from AMS_OSCAR__c where Id = :gdiCase.OSCAR__c];
+			List<AMS_OSCAR__c> oscarLst = [Select Id, Invoice_status__c, Payment_Type__c,Oscar_Communication_Case_Id__c, Billing_Document_Number__c from AMS_OSCAR__c where Id = :gdiCase.OSCAR__c];
 			
 			if(oscarLst.isEmpty()){
                 ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Oscar with Id' + caseId +' not found')), 404);
@@ -154,6 +154,15 @@ global without sharing class ANG_CreateCaseDetails {
             }
 
 			oscar.Invoice_status__c = paymentStatus;
+
+            if(oscar.Payment_Type__c == 'PPA' ){
+                
+                insert new CaseComment(ParentId = oscar.Oscar_Communication_Case_Id__c, CommentBody = 'Invoice ' +oscar.Billing_Document_Number__c+ ' is ' + paymentStatus);
+                update new Case(id = oscar.Oscar_Communication_Case_Id__c, New_interaction__c = 'New comment');
+                oscar.step48__c = (paymentStatus == 'Paid' ? 'Passed' : (paymentStatus == 'Outstanding' ? 'Failed' : oscar.step48__c ));
+
+            }
+
 			update oscar;
 
 			return true;
