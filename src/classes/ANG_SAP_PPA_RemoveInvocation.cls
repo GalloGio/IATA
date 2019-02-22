@@ -52,7 +52,7 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 				}
 			}
 			else{
-				ri.addError('Remote Invocation Internal ID ('+ ri.Internal_ID__c+') doesn\'t match the Artifact Internal ID ('+ artifact.Internal_ID__c+').');
+				ri.addError('Remote Invocation IATA code ('+ ri.Internal_ID__c+') doesn\'t match the Artifact IATA code ('+ artifact.Internal_ID__c+').');
 			}
 		}
 

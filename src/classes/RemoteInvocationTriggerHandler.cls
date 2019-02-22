@@ -10,7 +10,7 @@ public without sharing class RemoteInvocationTriggerHandler {
     public static final String NEWGEN_EASY_PAY = 'ANG_IEP_MODEL_A';
     public static final String TIP_IFG_REPORT  = 'TIP_IFG_REPORT';
     public static final String NEWGEN_GDI_ENDO = 'GDI_ENDORSEMENT';
-    public static final String NEWGEN_SAP_PPA  = 'SAP PPA';
+    public static final String NEWGEN_SAP_PPA  = 'SAP_PPA';
 
     public List<String> requestTypeListBefore = new List<String>{NEWGEN_EASY_PAY};
 
