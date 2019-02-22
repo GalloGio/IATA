@@ -3041,9 +3041,10 @@ public class AMS_OSCARTriggerHandler {
                 
                 /*** AMSU-121 Start ***/
                 Boolean isNewAccreditaion = AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c);
+                Boolean isNewgenAccreditation = AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c);//ENHC0012583
                 Boolean isCorrection = oscar.Process__c == AMS_Utils.COR;
                 Boolean isChangeOfLocation = oscar.Process__c == AMS_Utils.AGENCYCHANGES && String.isNotBlank(oscar.Type_of_change__c) && oscar.Type_of_change__c.contains(AMS_Utils.Location);
-                if(isNewAccreditaion || isCorrection || isChangeOfLocation) {
+                if(isNewAccreditaion || isCorrection || isChangeOfLocation || isNewgenAccreditation) { //ENHC0012583 (|| isNewgenAccreditation)
                 	allOnlineAccr = allOnlineAccr == null ? getAllAccreditations(oscars) : allOnlineAccr;
                 	validateShippingAddress(oscar, allOnlineAccr);
                 }
@@ -3568,6 +3569,10 @@ public class AMS_OSCARTriggerHandler {
                 
                 if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD && oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && (updatedOscar.RPM_Approval__c == 'Not Started' || updatedOscar.RPM_Approval__c == null)){
                     updatedOSCAR.addError('Cannot close the OSCAR until the Manager Approval Step is not completed.');
+                }
+
+                if(updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOSCAR.STEP36__c == 'Passed' && updatedOSCAR.Risk_event_creation_date__c == null){
+                    updatedOSCAR.addError('Cannot pass the finalization step until the Risk Event button is clicked.');   
                 }
 
                 if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP36__c != 'Passed'){

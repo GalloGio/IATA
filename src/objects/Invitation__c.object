@@ -275,6 +275,7 @@
         <columns>Last_Name__c</columns>
         <columns>Email__c</columns>
         <columns>Role__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
