@@ -201,7 +201,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;  
         if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && (oscarObj.Process__c == AMS_Utils.NEWAE || (oscarObj.Process__c == AMS_Utils.MCAE && isAEAccount))) return false;     
 
-        if(!isAgencyChanges && !isAgencyCorrection) return true;     
+        if(!isAgencyChanges && !isAgencyCorrection) return true;
 
         //check per field
         return editableFields.contains(fieldName);

@@ -2272,6 +2272,11 @@ SIS Charge Code Type.</description>
                     <label>Cargo Claims and Loss Prevention Handbook</label>
                 </value>
                 <value>
+                    <fullName>Cargo Country Statistics</fullName>
+                    <default>false</default>
+                    <label>Cargo Country Statistics</label>
+                </value>
+                <value>
                     <fullName>Cargo Interchange Message Procedures (Cargo-IMP)</fullName>
                     <default>false</default>
                     <label>Cargo Interchange Message Procedures (Cargo-IMP)</label>
@@ -13743,6 +13748,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Cargo Claims and Loss Prevention Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Country Statistics</fullName>
                 <default>false</default>
             </values>
             <values>
