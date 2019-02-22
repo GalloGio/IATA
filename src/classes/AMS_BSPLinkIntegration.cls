@@ -153,7 +153,7 @@ global class AMS_BSPLinkIntegration {
 					for(Agency_Authorization__c AA:lsToRemove){
 						Response resp;
 						if(sProcess == 'Deactivation' || sProcess=='UrgentDeactivation')
-							resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter, sProcess); //SUCA
+							resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter, sProcess);
 						
 						system.debug('DTULLO 142 --> ' + AA);
 						
