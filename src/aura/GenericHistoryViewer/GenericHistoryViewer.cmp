@@ -20,6 +20,7 @@
                     <!--td><b>{!row.fieldName}</b> changed from <b><a href="#" onclick="{!c.navigateToId}" data-rec-id="{!row.oldValue}">{!row.oldValue}</a></b> to <b>{!row.newValue}</b></td-->
                     <td>
                         <aura:renderIf isTrue="{!row.isLookUpValueOld}">
+                            
                             <table class="table-lookup">
                                 <tr class="tr-lookup">
                                     <td class="td-lookup"><b>{!row.fieldName}</b>&nbsp;changed from&nbsp;</td>
@@ -36,23 +37,20 @@
                                             <lightning:recordViewForm recordId="{!row.newValue}" objectApiName="{!row.lookupObject}">
                                                 <lightning:outputField fieldName="Name" variant="label-hidden"/>
                                             </lightning:recordViewForm>
-                                        </a>
+                                        </a>.
                                     </td>
                                 </tr>
                             </table>
-                            <!--b>{!row.fieldName}</b>&nbsp;
-                             changed from&nbsp;<a href="#" onclick="{!c.navigateToId}" data-rec-id="{!row.oldValue}">
-                                <lightning:recordViewForm recordId="{!row.oldValue}" objectApiName="{!row.lookupObject}">
-                                    <lightning:outputField fieldName="Name" variant="label-hidden"/>
-                                </lightning:recordViewForm>
-                                </a>&nbsp;to&nbsp;<a href="#" onclick="{!c.navigateToId}" data-rec-id="{!row.newValue}">
-                                <lightning:recordViewForm recordId="{!row.newValue}" objectApiName="{!row.lookupObject}">
-                                    <lightning:outputField fieldName="Name" variant="label-hidden"/>
-                                </lightning:recordViewForm>
-                                </a-->
+
                             <aura:set attribute="else">
-                                <b>{!row.fieldName}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>
+                                <aura:renderIf isTrue="{!row.oldValue == row.newValue}">
+                                    <b>{!row.fieldName}</b> changed.
+                                    <aura:set attribute="else">
+                                       <b>{!row.fieldName}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>.
+                                    </aura:set>
+                                </aura:renderIf>
                             </aura:set>
+
                         </aura:renderIf>
                     </td>
                 </tr>
