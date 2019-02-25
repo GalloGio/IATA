@@ -1,34 +1,34 @@
-<apex:page standardController="Case"  extensions="EmailMessagesViewCon" showHeader="false">
+<apex:page standardController="Case" extensions="EmailMessagesViewCon" showHeader="false">
 
-<apex:messages />
-<apex:message />
-    <apex:includeScript value="/support/console/30.0/integration.js"/>
-    <apex:includeScript value="/soap/ajax/26.0/connection.js"/>
-    <apex:includeScript value="/soap/ajax/26.0/apex.js"/>
-    <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+    <apex:messages />
+    <apex:message />
+    <apex:includeScript value="/support/console/30.0/integration.js" />
+    <apex:includeScript value="/soap/ajax/26.0/connection.js" />
+    <apex:includeScript value="/soap/ajax/26.0/apex.js" />
+    <apex:includeScript value="{!$Resource.jquery2_1_4}" />
 
 
 
     <script type="text/javascript">
 
-       var caseId = ("{!cse.Id}").substring(0,15);
+        var caseId = ("{!cse.Id}").substring(0, 15);
 
-       function getCountryEmail() {
+        function getCountryEmail() {
             sforce.connection.sessionId = "{!$Api.Session_ID}";
-            var countryEmail = sforce.apex.execute("IDFS_Util","getRecordTypeEmail",{caseRecordType:"{!cse.RecordType.DeveloperName}", caseBSPCountry:"{!cse.BSPCountry__c}", caseGroup:"{!cse.Case_Group__c}"});
+            var countryEmail = sforce.apex.execute("IDFS_Util", "getRecordTypeEmail", { caseRecordType: "{!cse.RecordType.DeveloperName}", caseBSPCountry: "{!cse.BSPCountry__c}", caseGroup: "{!cse.Case_Group__c}" });
             if (countryEmail == '') {
-                countryEmail = sforce.apex.execute("IDFS_Util","getIATACountryEmail",{caseBSPCountry:"{!cse.BSPCountry__c}"});
+                countryEmail = sforce.apex.execute("IDFS_Util", "getIATACountryEmail", { caseBSPCountry: "{!cse.BSPCountry__c}" });
             }
             return countryEmail;
         }
 
-        function DeleteMethod(id){
+        function DeleteMethod(id) {
 
-            if(confirm("Are you sure you want to delete this email?")){
+            if (confirm("Are you sure you want to delete this email?")) {
 
                 sforce.connection.sessionId = "{!$Api.Session_ID}";
 
-                var isEmailDeleted = sforce.apex.execute("IDFS_Util","DeleteEmail",{EmailID:id});
+                var isEmailDeleted = sforce.apex.execute("IDFS_Util", "DeleteEmail", { EmailID: id });
 
                 if(isEmailDeleted == 'true')
                 {
@@ -36,7 +36,7 @@
                     //window.top.location.reload();
                     //window.parent.location.reload();
                     // var temp = window.top.location;
-                     window.top.location = ("{!$Site.BaseURL}/" + caseId);
+                    window.top.location = ("{!$Site.BaseURL}/" + caseId);
                 }
                 else
                 {
@@ -45,7 +45,7 @@
             }
         }
 
-        function ToAllMethod(id){
+        function ToAllMethod(id) {
 
             var countryEmail = getCountryEmail();
             var redirectUrlOne = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId + "&p26=" + countryEmail;
@@ -57,20 +57,20 @@
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlOne);
                 } else {
-                    window.top.location= redirectUrlOne;
-                } 
+                    window.top.location = redirectUrlOne;
+                }
             } else {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlTwo);
                 } else {
-                    window.top.location= redirectUrlTwo;
+                    window.top.location = redirectUrlTwo;
 
                 }
-                
+
             }
         }
 
-        function ReplyMethod(id){
+        function ReplyMethod(id) {
 
             var countryEmail = getCountryEmail();
             var redirectUrlOne = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId + "&p26=" + countryEmail;
@@ -82,24 +82,24 @@
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlOne);
                 } else {
-                    window.top.location= redirectUrlOne;
-                } 
+                    window.top.location = redirectUrlOne;
+                }
             } else {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlTwo);
                 } else {
-                    window.top.location= redirectUrlTwo;
+                    window.top.location = redirectUrlTwo;
 
                 }
-                
+
             }
         }
 
         function ServiceConsoleIntegration(redirectUrl)
         {
             if (sforce.console.isInConsole()) {
-                sforce.console.getEnclosingTabId(function(enclosingResult){
-                    sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+                sforce.console.getEnclosingTabId(function (enclosingResult) {
+                    sforce.console.getEnclosingPrimaryTabId(function (primaryResult) {
                         sforce.console.openSubtab(primaryResult.id, redirectUrl, true, '', null);
                     });
                 });
@@ -108,7 +108,7 @@
             }
         }
 
-        function SendEmail(){
+        function SendEmail() {
 
             var countryEmail = getCountryEmail();
             var redirectUrlOne = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p26=" + countryEmail;
@@ -120,59 +120,73 @@
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlOne);
                 } else {
-                    window.top.location= redirectUrlOne;
-                } 
+                    window.top.location = redirectUrlOne;
+                }
             } else {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlTwo);
                 } else {
-                    window.top.location= redirectUrlTwo;
+                    window.top.location = redirectUrlTwo;
 
                 }
-                
+
             }
-            
+
         }
-         
-        function openSubTab(id) {
-            var retUrl= "{!$Label.SF_Base_URL}/" + id;
+
+        function SendEmailUnbabel() {
+            //var id = '{!unifiedList[0].emailId}';
+            //+ "&originalId=" + id + "&replyToAll=0"
+            var redirectUrlOne = "{!$Label.SF_Base_URL}/apex/unbabelsc__UnbabelSendEmail?id=" + caseId;
+
             if (sforce.console.isInConsole()) {
-                    ServiceConsoleIntegration(retUrl);
-                } else {
-                    window.top.location=retUrl;
+                ServiceConsoleIntegration(redirectUrlOne);
+            } else {
+                window.top.location = redirectUrlOne;
+
+            }
+
+        }
+
+        function openSubTab(id) {
+            var retUrl = "{!$Label.SF_Base_URL}/" + id;
+            if (sforce.console.isInConsole()) {
+                ServiceConsoleIntegration(retUrl);
+            } else {
+                window.top.location = retUrl;
             }
         }
 
-        function sendTrackedEmail(){
-			sendTrackedRedirection("/apex/sendSingleTrackedEmail?case={!cse.Id}&retURL={!cse.Id}");
+        function sendTrackedEmail() {
+            sendTrackedRedirection("/apex/sendSingleTrackedEmail?case={!cse.Id}&retURL={!cse.Id}");
         }
 
-        function sendTrackedReplyTo(emailId){
+        function sendTrackedReplyTo(emailId) {
             var id = emailId;
-			sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyTo");
+            sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyTo");
         }
 
-        function sendTrackedReplyAll(emailId){
+        function sendTrackedReplyAll(emailId) {
             var id = emailId;
-			sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyToAll");
+            sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=ReplyToAll");
         }
-        
-        function sendTrackedForward(emailId){
+
+        function sendTrackedForward(emailId) {
             var id = emailId;
-			sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=Forward");
+            sendTrackedRedirection("/apex/sendsingletrackedemail?originalEmail=" + id + "&action=Forward");
         }
-        
-        function sendTrackedRedirection(redirectURL){
+
+        function sendTrackedRedirection(redirectURL) {
             if({!$Permission.Can_send_a_tracked_email}){
-                if (sforce.console.isInConsole()) {
-		            ServiceConsoleIntegration(redirectURL + "&isInConsole=true");
-                } else {
-                    window.top.location= redirectURL;
-	            }
+            if (sforce.console.isInConsole()) {
+                ServiceConsoleIntegration(redirectURL + "&isInConsole=true");
+            } else {
+                window.top.location = redirectURL;
             }
-            else{
-                alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
-            }
+        }
+            else {
+            alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
+        }
         }
     </script>
 
@@ -186,108 +200,112 @@
     </style>
     <apex:form >
 
-        <apex:pageblock id="CustomList"  Title="Emails" helpTitle="Emails Help" helpUrl="https://help.salesforce.com/htviewhelpdoc?id=cases_email.htm&siteLang=en_US">
-        <apex:facet name="header">
-           <div class="pbHeader">
-                <table border="0" cellpadding="0" cellspacing="0">
-                    <tbody>
-                        <tr>
-                            <td class="pbTitle">
-                                <img src="{!URLFOR($Resource.icon_home)}" class="relatedListIcon" style="width:24px; display:block; margin-left:0;" />
-                                <h3 id="50011000000m9Uv_RelatedEmailMessageList_title">&nbsp;Emails</h3>
-                            </td>
-                            <td class="pbButton">
+        <apex:pageblock id="CustomList" Title="Emails" helpTitle="Emails Help" helpUrl="https://help.salesforce.com/htviewhelpdoc?id=cases_email.htm&siteLang=en_US">
+            <apex:facet name="header">
+                <div class="pbHeader">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td class="pbTitle">
+                                    <img src="{!URLFOR($Resource.icon_home)}" class="relatedListIcon" style="width:24px; display:block; margin-left:0;" />
+                                    <h3 id="50011000000m9Uv_RelatedEmailMessageList_title">&nbsp;Emails</h3>
+                                </td>
+                                <td class="pbButton">
                                 <input value="Send an Email" class="btn" name="newEmail" onclick="SendEmail();return false;" title="Send an Email" type="button"/>
                                 <input value="Send a Tracked Email" class="btn" name="newEmail" onclick="sendTrackedEmail();return false;" title="Send a Tracked Email" type="button"
                                   style="display: {!IF($Permission.Can_send_a_tracked_email && ShowSendTrackedEmailButton,'','none')}"  />
-                            </td>
-                            <td class="pbHelp">
-                                <span class="help" title="Emails Help (New Window)">
-                                    <a href="#" onClick="window.open('https://help.salesforce.com/htviewhelpdoc?id=cases_email.htm&siteLang=en_US');" class="linkCol">
-                                        <span class="linkSpan">Emails Help</span>
-                                        <img src="/s.gif" alt="Emails Help (New Window)" class="helpIcon" title="Emails Help (New Window)"/>
-                                    </a>
-                                </span>
-                            </td>
+                                    <input value="Send an Email with Translation" class="btn" name="newEmail" onclick="SendEmailUnbabel();return false;"
+                                        title="Send an Email with Translation" type="button" />
+                                </td>
+                                <td class="pbHelp">
+                                    <span class="help" title="Emails Help (New Window)">
+                                        <a href="#" onClick="window.open('https://help.salesforce.com/htviewhelpdoc?id=cases_email.htm&siteLang=en_US');" class="linkCol">
+                                            <span class="linkSpan">Emails Help</span>
+                                            <img src="/s.gif" alt="Emails Help (New Window)" class="helpIcon" title="Emails Help (New Window)" />
+                                        </a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </apex:facet>
+            <apex:pageBlockButtons location="top" title="Emails">
+                <apex:commandButton onclick="SendEmail();return false;" value="Send an email" id="theButton" />
+                <apex:commandButton onclick="SendEmailUnbabel();return false;" value="Send an Email with Translation"
+                    id="theButtonUnbabel" />
+            </apex:pageBlockButtons>
+            <div style="height: 200px; overflow-y:auto; display:{!IF(EmailsAvailable==false,'none','block')}">
+                <!-- VERSION JFO -->
+                <table class="list" cellspacing="0" cellpadding="0" border="0">
+                    <tbody>
+                        <tr class="headerRow">
+                            <th class="actionColumn" scope="col">Action</th>
+                            <th class=" zen-deemphasize" scope="col">Status</th>
+                            <th class=" zen-deemphasize" scope="col" width="50"> </th>
+                            <th class=" zen-deemphasize" scope="col">Subject</th>
+                            <th class=" zen-deemphasize" scope="col">Email Address</th>
+                            <th class=" zen-deemphasize" scope="col">Message Date</th>
                         </tr>
+
+                        <apex:repeat var="message" value="{!unifiedList}">
+                            <tr class="dataRow even ">
+                                <td class="actionColumn" style="display:{!message.displayEmailActions}">
+                                    <a href="" onclick="ReplyMethod('{!message.emailId}');return false;" title="Reply" style="color:#015ba7; cursor: pointer;">
+                                        <span value="View" class="view">Reply</span>
+                                    </a>
+                                    <span value="|" class="view"> |</span>
+                                    <a href="" onclick="ToAllMethod('{!message.emailId}');return false;" style="color:#015ba7; cursor: pointer;" title="To All">
+                                        <apex:outputText value="To All" />
+                                    </a>
+                                    <span value="|" class="view"> |</span>
+                                    <a href="" onclick="DeleteMethod('{!message.emailId}');return false;" style="color:#015ba7; cursor: pointer;" title="Delete">
+                                        <apex:outputText value="Del" />
+                                    </a>
+                                </td>
+                                <td class="actionColumn" style="display:{!message.displayArchivedActions}">
+                                    <a class="actionLink actionLink" title="Reply" target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.emailId}&replyToAll=0&retURL=%2F{!aCaseId}">Reply</a>
+                                    |
+                                    <a class="actionLink actionLink" title="To All" target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.emailId}&replyToAll=1&retURL=%2F{!aCaseId}">To All</a>
+                                </td>
+                                <td class="actionColumn" style="display:{!message.displayTrackedActions}">
+                                    <a href="" onclick="sendTrackedReplyTo('{!message.emailId}');return false;" title="Reply" style="color:#015ba7; cursor: pointer;">
+                                        <span value="View" class="view">Reply</span>
+                                    </a>
+                                    <span value="|" class="view"> |</span>
+                                    <a href="" onclick="sendTrackedReplyAll('{!message.emailId}');return false;" title="To All" style="color:#015ba7; cursor: pointer;">
+                                        <span value="View" class="view">To All</span>
+                                    </a>
+                                    <span value="|" class="view"> |</span>
+                                    <a href="" onclick="sendTrackedForward('{!message.emailId}');return false;" title="Forward" style="color:#015ba7; cursor: pointer;">
+                                        <span value="View" class="view">Forward</span>
+                                    </a>
+                                </td>
+                                <td class=" dataCell " scope="row">
+                                    <apex:outputText value="{!message.status}" />
+                                </td>
+                                <td class=" dataCell " width="50">
+                                    <div class="bEmailStatus">
+                                        <img width="16" height="13" src="{!message.image}" title="{!message.title}" />
+                                        <img width="16" height="13" src="/img/emailHasAttach.gif" style="display:{!message.displayHasAttachmentImage}" />
+                                    </div>
+                                </td>
+                                <td class=" dataCell ">
+                                <a style="font-weight: bold;"  href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_parent" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
+                                    <br/>
+                                    <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!message.body}...</font>
+                                </td>
+                                <td class=" dataCell ">
+                                    <apex:outputText value="{!message.emailAddress}" />
+                                </td>
+                            <td class=" dataCell "><apex:outputText value=" {!message.MessageDate}"/></td>
+                            </tr>
+                        </apex:repeat>
                     </tbody>
                 </table>
             </div>
-        </apex:facet>
-        <apex:pageBlockButtons location="top" title="Emails">
-                <apex:commandButton onclick="SendEmail();return false;" value="Send an email" id="theButton" />
-        </apex:pageBlockButtons>
-            <div style="height: 200px; overflow-y:auto; display:{!IF(EmailsAvailable==false,'none','block')}">
-            <!-- VERSION JFO -->
-            <table class="list" cellspacing="0" cellpadding="0" border="0">
-                <tbody>
-                    <tr class="headerRow">
-                    <th class="actionColumn" scope="col">Action</th>
-                    <th class=" zen-deemphasize" scope="col">Status</th>
-                    <th class=" zen-deemphasize" scope="col" width="50" > </th>
-                    <th class=" zen-deemphasize" scope="col">Subject</th>
-                    <th class=" zen-deemphasize" scope="col">Email Address</th>
-                    <th class=" zen-deemphasize" scope="col">Message Date</th>
-                    </tr>
 
-                    <apex:repeat var="message" value="{!unifiedList}">
-                        <tr class="dataRow even ">
-                            <td class="actionColumn" style="display:{!message.displayEmailActions}">
-                                      <a href ="" onclick="ReplyMethod('{!message.emailId}');return false;"  title="Reply" style="color:#015ba7; cursor: pointer;">
-                                        <span value="View" class="view">Reply</span>
-                                      </a>
-                                      <span value="|" class="view"> |</span>
-                                       <a href ="" onclick="ToAllMethod('{!message.emailId}');return false;" style="color:#015ba7; cursor: pointer;" title="To All">
-                                         <apex:outputText value="To All" />
-                                       </a>
-                                       <span value="|" class="view"> |</span>
-                                      <a href ="" onclick="DeleteMethod('{!message.emailId}');return false;" style="color:#015ba7; cursor: pointer;" title="Delete">
-                                        <apex:outputText value="Del" />
-                                      </a>
-                            </td>
-                            <td class="actionColumn" style="display:{!message.displayArchivedActions}">
-                                <a class="actionLink actionLink" title="Reply"  target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.emailId}&replyToAll=0&retURL=%2F{!aCaseId}">Reply</a>
-                                |
-                                <a class="actionLink actionLink" title="To All" target="_parent" href="/_ui/core/email/author/EmailAuthor?email_id={!message.emailId}&replyToAll=1&retURL=%2F{!aCaseId}">To All</a>
-                            </td>
-                            <td class="actionColumn" style="display:{!message.displayTrackedActions}">
-                                <a href="" onclick="sendTrackedReplyTo('{!message.emailId}');return false;" title="Reply" style="color:#015ba7; cursor: pointer;">
-                            		<span value="View" class="view">Reply</span>
-                            	</a>
-								<span value="|" class="view"> |</span>
-                            	<a href="" onclick="sendTrackedReplyAll('{!message.emailId}');return false;" title="To All" style="color:#015ba7; cursor: pointer;">
-                            		<span value="View" class="view">To All</span>
-                            	</a>
-								<span value="|" class="view"> |</span>
-                            	<a href="" onclick="sendTrackedForward('{!message.emailId}');return false;" title="Forward" style="color:#015ba7; cursor: pointer;">
-                            		<span value="View" class="view">Forward</span>
-                            	</a>
-                            </td>
-                            <td class=" dataCell " scope="row">
-                                <apex:outputText value="{!message.status}" />
-                            </td>
-                            <td class=" dataCell "  width="50" >
-                                <div class="bEmailStatus">
-                                    <img width="16" height="13" src="{!message.image}" title="{!message.title}"/>
-                                    <img width="16" height="13" src="/img/emailHasAttach.gif" style="display:{!message.displayHasAttachmentImage}"/>
-                                </div>
-                            </td>
-                            <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_parent" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
-                                <br/> 
-                                <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!message.body}...</font>
-                            </td>
-                            <td class=" dataCell ">
-                                <apex:outputText value="{!message.emailAddress}" />
-                            </td>
-                            <td class=" dataCell "><apex:outputText value=" {!message.MessageDate}"/></td>
-                        </tr>
-                    </apex:repeat> 
-                </tbody>
-            </table>
-            </div>
-
-        <apex:outputLabel value="No Emails available" rendered="{!EmailsAvailable==false}" styleClass="noRowsHeader"></apex:outputLabel>
-    </apex:pageblock>
+            <apex:outputLabel value="No Emails available" rendered="{!EmailsAvailable==false}" styleClass="noRowsHeader"></apex:outputLabel>
+        </apex:pageblock>
     </apex:form>
 </apex:page>

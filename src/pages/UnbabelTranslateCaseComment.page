@@ -1,0 +1,12 @@
+<apex:page standardController="Case" extensions="UnbabelTranslateCaseCommentController" action="{!requestTranslation}" >
+    <apex:form >
+    <apex:pageMessages />
+    <apex:pageBlock title="Last Customer Case Commment" >
+        <apex:pageblockSection columns="1" >
+                <apex:outputField value="{!cc.isPublished}" label="Public"/>
+                <apex:outputField value="{!cc.CommentBody}" label="Comment"/>
+        </apex:pageblockSection>
+        <apex:commandButton value="Go back to the Case" action="{!goToCase}" styleClass="closeButton" rerender="popup"/>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>
