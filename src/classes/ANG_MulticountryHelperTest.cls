@@ -28,6 +28,7 @@ private class ANG_MulticountryHelperTest {
 		countryPT.ISO_Code__c = 'PT';
 		countryPT.ANG_Enable_NewGen__c = true;
 		countryPT.AMS_Settlement_System__c = bspPT.Id;
+		countryPT.Multicountry_Enabled__c = true;
 
 		IATA_ISO_Country__c countryUK = new IATA_ISO_Country__c();
 		
@@ -35,6 +36,7 @@ private class ANG_MulticountryHelperTest {
 		countryUK.ISO_Code__c = 'GB';
 		countryUK.ANG_Enable_NewGen__c = true;
 		countryUK.AMS_Settlement_System__c = bspGB.Id;
+		countryUK.Multicountry_Enabled__c = true;
 
 		IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c();
 		
@@ -42,6 +44,7 @@ private class ANG_MulticountryHelperTest {
 		countryFR.ISO_Code__c = 'FR';
 		countryFR.ANG_Enable_NewGen__c = true;
 		countryFR.AMS_Settlement_System__c = bspFR.Id;
+		countryFR.Multicountry_Enabled__c = true;
 
 		insert new List<IATA_ISO_Country__c>{countryPT, countryUK, countryFR};
 
@@ -298,8 +301,28 @@ private class ANG_MulticountryHelperTest {
         	System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error + '\'.');
         }
 
-        Test.stopTest();
+        // Test country is not a Multicountry Enable 
+        countryPT.Multicountry_Enabled__c = false;
+        update countryPT;
 
+        Account GEnotMulticountryEnabled = new Account(
+        	Name = 'Account GE No Multicountry ',
+        	RecordTypeId = standardAcctRecId,
+            IATA_ISO_Country__c = countryPT.id,
+            Location_Type__c = AMS_Utils.GE,
+            Location_Class__c = 'P',
+            ANG_Accreditation_Model__c = 'Multicountry'
+        );
+        
+        try{
+        	insert GEnotMulticountryEnabled;
+        }
+        catch(Exception e){
+        	Boolean expectedExceptionThrown = e.getMessage().contains(Label.ANG_Multicountry_Country_not_Enabled_for_Multicountry);
+        	System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Country_not_Enabled_for_Multicountry + '\'.');
+        }
+
+        Test.stopTest();
     }
 
 
