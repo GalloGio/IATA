@@ -1,6 +1,3 @@
-
-                
-  
 public class BusinessDays {
     
     // private map<Id,map<integer,boolean>> businessDayPerCaseId  = new map<Id,map<integer,boolean>>();
@@ -147,9 +144,10 @@ throw new transformationException('updatedCase.First_Business_Day__c' +  updated
                     Id globalRT = RecordTypeSingleton.getInstance().getRecordType('Case', 'Cases_Global').Id;
                     //hoursToUse  = '01m200000000S6AAAU'; // germany
 					
+					Double timeSinceLastStatus = 0;
 					if(!oldCase.IsClosed){
 						//The diff method comes back in milliseconds, so we divide by 3600000 to get hours.
-						Double timeSinceLastStatus = BusinessHours.diff(hoursToUse, updatedCase.Last_Status_Change__c, System.now()) / 3600000.0;
+						timeSinceLastStatus = BusinessHours.diff(hoursToUse, updatedCase.Last_Status_Change__c, System.now()) / 3600000.0;
 						System.debug(timeSinceLastStatus);
 						// millisecond()
 					}
