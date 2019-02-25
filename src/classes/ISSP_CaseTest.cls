@@ -138,7 +138,7 @@ public class ISSP_CaseTest {
         FAQkav.Language='en_US';
         FAQkav.UrlName = 'test00qwe';
         FAQkav.Title ='Test';
-        FAQkav.To_display_on_Homepage__c=true;
+        //FAQkav.To_display_on_Homepage__c=true;
         insert FAQkav;
 
         String kId = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :FAQkav.Id LIMIT 1].KnowledgeArticleId;

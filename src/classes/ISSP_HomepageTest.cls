@@ -52,7 +52,7 @@ private class ISSP_HomepageTest {
             FAQkav.UrlName = 'test00qwe';
             FAQkav.Title ='Test';
             //FAQkav.PublishStatus='Online';
-            FAQkav.To_display_on_Homepage__c=true;
+            //FAQkav.To_display_on_Homepage__c=true;
             insert FAQkav;
             
             //Portal_newska =  (Portal_news__kav)ISSP_ObjectFactory.createSObject('Portal_news__kav',false,6);
