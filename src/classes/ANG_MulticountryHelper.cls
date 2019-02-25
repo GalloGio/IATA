@@ -94,7 +94,17 @@ public class ANG_MulticountryHelper {
 		ValidationWrapper vw = new ValidationWrapper();
 		vw.valid = true;
 
-		if(account.Location_Type__c == AMS_Utils.AE){
+		//NEWGEN-5055 - Check If ISO Country selected to the account is a Multicountry Enable
+		if(!account.IATA_ISO_Country__r.Multicountry_Enabled__c){
+			vw.valid = false;
+			if(!String.isBlank(account.Location_Type__c)) 
+				vw.message = Label.ANG_Multicountry_Country_not_Enabled_for_Multicountry;
+			else // Account created from from account creator page
+				vw.message = 'The country ' + account.IATA_ISO_Country__r.Name  + ' is not enabled for multicountry';
+            return vw;
+		}
+
+		else if(account.Location_Type__c == AMS_Utils.AE){
 
            	if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
                 vw.valid = false;
@@ -123,16 +133,6 @@ public class ANG_MulticountryHelper {
 
         }
 
-		//NEWGEN-5055 - Check If ISO Country selected to the account is a Multicountry Enable
-		if(!account.IATA_ISO_Country__r.Multicountry_Enabled__c){
-			vw.valid = false;
-			if(!String.isBlank(account.Location_Type__c)) 
-				vw.message = Label.ANG_Multicountry_Country_not_Enabled_for_Multicountry;
-			else // Account created from from account creator page
-				vw.message = 'The country ' + account.IATA_ISO_Country__r.Name  + ' is not enabled for multicountry';
-            return vw;
-		}
-
         return vw;
 
 	}
@@ -156,6 +156,7 @@ public class ANG_MulticountryHelper {
                 Parent.Location_Type__c,
                 IATA_ISO_Country__r.AMS_Settlement_System__c,
                 IATA_ISO_Country__r.Multicountry_Enabled__c,
+                IATA_ISO_Country__r.Name,
                 Parent.IATA_ISO_Country__r.AMS_Settlement_System__c
              FROM
                 Account
