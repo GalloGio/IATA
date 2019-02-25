@@ -279,7 +279,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
 
         if(typeOfProcess.equalsIgnoreCase(NEWNGLOBAL)) {
-            return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
+            return AMS_Utils.RECTYPE_NEWGE;
         }
         
         return null;

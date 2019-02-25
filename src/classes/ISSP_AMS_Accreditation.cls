@@ -1951,7 +1951,6 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public void createBranchAccount() {
-        System.debug('finasdusa: ' + newForm.ISSP_Branch_AccountId__c);
         Account newSFDCAccount = new Account(Id = newForm.ISSP_Branch_AccountId__c);
         updateAccountByBranchApp(newSFDCAccount);
         upsert newSFDCAccount;
@@ -2030,9 +2029,6 @@ public without sharing class ISSP_AMS_Accreditation {
             SFDCAccount.BillingStreet = newForm.Branch_Office_Street_name_number__c;
             SFDCAccount.BillingPostalCode = newForm.Branch_Office_Postal_code__c;
         }
-
-        System.debug('fk1: ' + SFDCAccount.IATA_ISO_Country__c);
-        System.debug('fk2: ' + newForm.Branch_Office_Country__c);
     }
 
     private void createHOAccount(Account parentHO) {
@@ -2802,9 +2798,6 @@ public without sharing class ISSP_AMS_Accreditation {
                     }
                 }
 
-                System.debug('hey1: ' + amsOfficeType);
-                System.debug('hey2: ' + newCase.Reason1__c);
-
                 if (amsOfficeType == 'Branch' || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD) {
                     createBranchAccount();
                     
@@ -2946,6 +2939,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public void submitMultiCountryApplication() { //rui
         submittingMCApplication = true;
         Set<AMS_Pax_Accreditation_Form__c> sameLegalEntityForms = new Set<AMS_Pax_Accreditation_Form__c>();
+        Boolean wasNotGE;
 
         for (AMS_Pax_Accreditation_Form__c mcForm: multiCountryApplicationForms) {
             if (mcform.HO_Account__c == null) {
@@ -2956,13 +2950,22 @@ public without sharing class ISSP_AMS_Accreditation {
                     sameLegalEntityForms.add(mcform);
                 }
             } else {
+                mcForm.Location_Type__c = 'GE';
                 heMCForm = mcform;
+                if (hqAccount.Location_Type__c != 'GE') {
+                    wasNotGE = true;
+                    hqAccount.Location_Type__c = 'GE';
+                }
             }
 
             mcForm.Submitted_to_IATA__c = true;
         }
 
         update multiCountryApplicationForms;
+
+        if (wasNotGE) {
+            update hqAccount;
+        }
 
         if (!sameLegalEntityForms.isEmpty()) {
             copyOwnersFromHE(sameLegalEntityForms);
@@ -2975,6 +2978,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         OSCARIntegration(heMCForm.HO_Account__c, heMCForm.Id, 'ANG.NEW.GE.STANDARD.1.0', newCase.Id);
         sendConfirmationEmail(newCase);
+
+        isMultiCountryStarted = false;
     }
 
     private void copyOwnersFromHe(Set<AMS_Pax_Accreditation_Form__c> sameLegalEntityForms) {
@@ -2986,7 +2991,6 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         query = query.removeEnd(', ');
-        System.debug('query: ' + query);
         query += ' FROM AMS_Accreditation_Contact__c ';
         query += 'WHERE AMS_Pax_Accreditation_Form__c = \'' + heMCForm.Id + '\'';
 
@@ -3486,8 +3490,6 @@ public without sharing class ISSP_AMS_Accreditation {
         if (!owea.isEmpty()) {
             mail.setOrgWideEmailAddressId(owea[0].Id);
         }
-
-        System.debug('saodk: ' + newCase.ContactId + ' ' + newCase.Id);
 
         //mail.setSenderDisplayName(fromaddress);
         mail.setTargetObjectId(newCase.ContactId);
@@ -4121,7 +4123,8 @@ public without sharing class ISSP_AMS_Accreditation {
                                         :AMS_Utils.CASE_REASON_HE_LITE,
                                         :AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD ,
                                         :AMS_UTILS.CASE_REASON_FOR_MANAGEMENT,
-                                        :AMS_Utils.CASE_REASON_OPT_OUT)
+                                        :AMS_Utils.CASE_REASON_OPT_OUT,
+                                        :AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)
                 ORDER BY CaseNumber DESC]));
             }
             return setConn;
@@ -5732,7 +5735,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-            if (cntAuthorisedSig == 0) {
+            if (cntAuthorisedSig == 0 && !(isMultiCountryNewAE && newform.AE_separate_Legal_Entity__c == 'No')) { //rui
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Author_Sig));
                 errorFound = true;
             }
@@ -7142,6 +7145,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public void discardMCApplication() {
         deleteFormsAux(multiCountryApplicationForms);
+
+        delete [SELECT Id FROM Case WHERE Id = :newCase.Id];
+
+        isMultiCountryStarted = false;
     }
 
     private static void deleteFormsAux(List<AMS_Pax_Accreditation_Form__c> formsList) {
