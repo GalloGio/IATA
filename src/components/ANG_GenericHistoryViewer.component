@@ -38,19 +38,21 @@
             <apex:column >
                 <apex:facet name="header">Action</apex:facet>
                     <!-- <apex:outputPanel rendered="{!AND(row.fieldName <> 'created',row.fieldName <> 'Parent')}"> -->
-                    <apex:outputPanel rendered="{!AND(row.fieldName <> 'created')}">
-
-                        <b>{!row.fieldName}</b> changed from&nbsp;
+                    <apex:outputPanel rendered="{!AND(row.fieldName <> 'created', row.oldValue <> row.newValue)}">
+                        <b>{!row.fieldName}</b> changed from
                          <b>
                              <apex:outputField rendered="{!row.isLookUpValueOld}" value="{!row.oldObj[row.fieldAPIName]} "/>
                              <apex:outputText rendered="{!!row.isLookUpValueOld}" value="{!row.oldValue}"/>
                         </b> 
-                         to&nbsp;
+                         to
                         <b>
                             <apex:outputField rendered="{!row.isLookUpValueNew}"  value="{!row.newObj[row.fieldAPIName]}"/>
                             <apex:outputText rendered="{!!row.isLookUpValueNew}" value="{!row.newValue}"/>
-                        </b>
-                        
+                        </b>.                       
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!AND(row.fieldName <> 'created', row.oldValue == row.newValue)}">
+                        <b>{!row.fieldName}</b> changed.                    
                     </apex:outputPanel>
             </apex:column>
         </apex:pageBlockTable>
