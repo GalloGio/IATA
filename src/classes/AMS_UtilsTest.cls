@@ -712,5 +712,22 @@ private class AMS_UtilsTest {
         orderedSlotsOccupied.add(1);orderedSlotsOccupied.add(6);
         AMS_Utils.findGapInRange(1,10,orderedSlotsOccupied);
      }
+     
+     
+     /**
+     AMS_Utils.getRandomNumber() should only return positive values (zero included).
+     Integer value ranges from -2,147,483,648 to 2,147,483,647.
+     Since the number is randomlly generated the 100 times cicle makes it nearly impossible to generate 100 out of 100 positive number in case the turning the 
+     negative number generated aren't being properly being turn into positive values.
+    */
+     @isTest
+     static void testGetRandomNumber(){
+     	Integer generatedNumber;
+     	
+     	for(Integer i = 0; i < 100; i++){
+     		generatedNumber = AMS_Utils.getRandomNumber();
+     		System.assert(generatedNumber >= 0);
+     	}
+     }
 
 }
