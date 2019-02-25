@@ -11359,19 +11359,19 @@ and
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <label>细节</label>
         <name>ISSP_Financial_Securities_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <label>经济担保</label>
         <name>ISSP_Financial_Securities_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <label>概况</label>
         <name>ISSP_Financial_Securities_Summary</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <label>总担保额</label>
         <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
@@ -13073,6 +13073,10 @@ and
     <customLabels>
         <label>相关联系人</label>
         <name>ISSP_Related_contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
     </customLabels>
     <customLabels>
         <label>转移至另一账户下</label>

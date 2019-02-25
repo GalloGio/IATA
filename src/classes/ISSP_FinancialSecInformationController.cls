@@ -22,6 +22,7 @@ public class ISSP_FinancialSecInformationController {
 
 	private void loadRecords() {
 		Set<String> typesToExclude = new Set<String> {'Manifestacion de Bienes', 'Others'};
+		Set<String> statusToInclude = new Set<String> {'Active', 'Close to Expiry Date', 'Expired', 'Encashment in progress'}; /* WMO-412 */
 		Date minRangeDate = Date.today().addDays(-7);
 		Id accountId = [SELECT Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()].Contact.AccountId;
 
@@ -30,6 +31,7 @@ public class ISSP_FinancialSecInformationController {
 													convertCurrency(Amount__c) convertedAmount
 									   		   FROM Financial_Security__c 
 						   			   		   WHERE Security_Type__c NOT IN :typesToExclude 
+						   			   		   		AND Security_Status__c IN :statusToInclude
 						   			   		   		AND (Expiry_Date__c > :minRangeDate OR Unlimited_Security__c = true) 
                                                    	AND Account__c = :accountId AND Account__r.RecordType.DeveloperName = 'IATA_Agency'
 						   			   		   	ORDER BY Expiry_Date__c DESC];
