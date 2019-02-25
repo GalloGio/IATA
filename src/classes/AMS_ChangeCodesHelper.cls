@@ -332,7 +332,7 @@ public class AMS_ChangeCodesHelper {
 
 
         //update Agency Status
-        String newVal = AMS_Utils.getIATAReadableStatus(changeCode.status);
+        String newVal = oscarAgency.CNS_Agency__c ? AMS_Utils.getCNSReadableStatus(changeCode.status) : AMS_Utils.getIATAReadableStatus(changeCode.status);
 
 
         System.debug('Change code status is ' + changeCode.status);
