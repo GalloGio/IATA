@@ -124,8 +124,6 @@ public with sharing class ANG_MulticountryAccountCreatorController {
         }
         catch(Exception e){
 			hasErrors = true;
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, '' + e);
-        	ApexPages.addMessage(myMsg);
 			return false;
         }
     }
@@ -145,7 +143,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
     public void submitHierarchy(){
 
 		if(!saveAccount())
-			return;
+			return; 
 
     	hasErrors = false;
     	try{

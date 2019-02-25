@@ -62,7 +62,10 @@ public class AMS_AccountTriggerHandler {
             }
 
             if(ANG_MulticountryHelper.shouldRunMulticountryValidations(ag)){
-                parentIdSet.add(ag.ParentId);
+                if(String.isBlank(ag.ParentId))
+                    parentIdSet.add(ag.ID);
+                else
+                    parentIdSet.add(ag.ParentId);
             }
 
         }
@@ -120,7 +123,10 @@ public class AMS_AccountTriggerHandler {
 
         for(Account acct : accs){
             if(ANG_MulticountryHelper.shouldRunMulticountryValidations(acct)){
-                parentIdSet.add(acct.ParentId);
+                if(String.isBlank(acct.ParentId))
+                    parentIdSet.add(acct.ID);
+                else
+                    parentIdSet.add(acct.ParentId);
             }
         }
 

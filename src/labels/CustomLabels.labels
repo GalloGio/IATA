@@ -2025,6 +2025,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>The hierarchy does not have any location in this BSP. The agency can only be a HE in this BSP.</value>
     </labels>
     <labels>
+        <fullName>ANG_Multicountry_Country_not_Enabled_for_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Country not Enabled for Multicountry</shortDescription>
+        <value>The selected country is not enabled for multicountry</value>
+    </labels>
+    <labels>
         <fullName>ANG_Multicountry_Process_Parent_Account_Error</fullName>
         <language>en_US</language>
         <protected>false</protected>
