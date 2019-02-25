@@ -377,7 +377,7 @@ public with sharing class AMS_AccountRoleCreator
             for(AMS_Accreditation_Contact__c ac : accreditationContactsToProcess)
                 acContactIdSet.add(ac.Contact__c);
 
-            List<Contact> allContactsFromAccreditation = [SELECT FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c, Authorized_Signatory__c FROM Contact WHERE Id IN :acContactIdSet];
+            List<Contact> allContactsFromAccreditation = [SELECT FirstName, LastName, Title, AccountId, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c, Authorized_Signatory__c, Designated_portal_admin__c,Invoicing_contact__c  FROM Contact WHERE Id IN :acContactIdSet];
 
             for(Contact c :allContactsFromAccreditation)
                 emailContactMap.put(c.id, c);
@@ -880,8 +880,10 @@ public with sharing class AMS_AccountRoleCreator
 
                 if(ac.Contact__c != null && rolesMap.get(ac.AMS_Ownership_Role__c).Id == role.Id){ // has a contact, let's update the contact as well
                 
-                    Contact contactToUpdate = AMS_AccreditationContactHelper.populateNewContactFields(emailContactMap.get(ac.Contact__c), ac);
-                    contactsToUpdate.put(contactToUpdate.email, contactToUpdate);
+                    Contact contactToUpdate = AMS_AccreditationContactHelper.updateNewContactFields(emailContactMap.get(ac.Contact__c), ac);
+
+                    if(contactToUpdate != null) // has a change to be updated
+                        contactsToUpdate.put(contactToUpdate.email, contactToUpdate);
 
                 }else{
 
@@ -1002,9 +1004,11 @@ public with sharing class AMS_AccountRoleCreator
             // has the user changed anything on the contact ? well, let's update them.
             if(ac.Contact__c != null && emailContactMap.get(ac.Contact__c) != null) {
             
-                Contact contactToUpdate = AMS_AccreditationContactHelper.populateNewContactFields(emailContactMap.get(ac.Contact__c), ac);
+                Contact contactToUpdate = AMS_AccreditationContactHelper.UpdateNewContactFields(emailContactMap.get(ac.Contact__c), ac);
 
-                contactsToUpdate.put(contactToUpdate.email, contactToUpdate);
+                if(contactToUpdate != null) // has a change to be updated
+                    contactsToUpdate.put(contactToUpdate.email, contactToUpdate);
+
             }else{
 
 
@@ -1105,9 +1109,10 @@ public with sharing class AMS_AccountRoleCreator
                 // has the user changed anything on the contact ? well, let's update them.
                 if(emailContactMap.get(ac.Contact__c) != null && ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c == accountId) {
 
-                    Contact contactToUpdate = AMS_AccreditationContactHelper.populateNewContactFields(emailContactMap.get(ac.Contact__c), ac);
-
-                    contactsToUpdate.put(contactToUpdate.email, contactToUpdate);
+                    Contact contactToUpdate = AMS_AccreditationContactHelper.updateNewContactFields(emailContactMap.get(ac.Contact__c), ac);
+    
+                    if(contactToUpdate != null) // has a change to be updated
+                        contactsToUpdate.put(contactToUpdate.email, contactToUpdate);
                 }
 
                 rolesToInsert.add(role);
