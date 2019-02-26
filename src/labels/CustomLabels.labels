@@ -2896,6 +2896,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Company name</value>
     </labels>
     <labels>
+        <fullName>ConfirmSendRecycleBin</fullName>
+        <categories>pop-up, modal, alert, confirm</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ConfirmSendRecycleBin</shortDescription>
+        <value>Are you sure you want to move this case to Recycle Bin?</value>
+    </labels>
+    <labels>
         <fullName>Confirm_password</fullName>
         <language>en_US</language>
         <protected>false</protected>
