@@ -29,9 +29,23 @@
 <link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
 
 <style>
-    #loading-download {
-        text-align: center;
-        display: none;
+    .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+        margin-left: 45%;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    #loading-modal-content {
+        margin-top: 25%;
     }
 </style>
 
@@ -551,7 +565,7 @@
         generationCounter = null;
         zipFile = null;
         $('#downloadBtn').attr("disabled", true);
-        $("#loading-download").show();
+        $("#loading-modal").modal("show");
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.createZipFile}',
             opt, operations, remittance, countries, accountId,
@@ -587,11 +601,11 @@
                 } else if (event.type === 'exception') {
                     showError(event.message);
                     $('#downloadBtn').attr("disabled", false);
-                    $("#loading-download").hide();
+                    $("#loading-modal").modal("hide");
                 } else {
                     console.log('Unknown error during download result: ' + unescape(result));
                     $('#downloadBtn').attr("disabled", false);
-                    $("#loading-download").hide();
+                    $("#loading-modal").modal("hide");
                 }
             },
             {escape: false}
@@ -687,7 +701,7 @@
             document.body.removeChild(element);
             }            
             $('#downloadBtn').attr("disabled", false);
-            $("#loading-download").hide();
+            $("#loading-modal").modal("hide");
         });
     }
 
@@ -777,14 +791,14 @@
                     <label class="form-check-label" for="enableFiltersCheck">{!$Label.ISSP_OperationalCalendar_EnableFilters}</label>
                 </apex:outputPanel>
             </div>
-            <div class="{!IF(isAirline, 'col-sm-7', 'col-sm-8')}">
+            <div class="{!IF(isAirline, 'col-sm-6', 'col-sm-8')}">
                 <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
             </div>
-            <div id="exportCSV" class="{!IF(isAirline, 'col-sm-3', 'col-sm-2')}">
+            <div id="exportCSV" class="{!IF(isAirline, 'col-sm-4', 'col-sm-2')}" style="float: right; text-align: right;">
                 <span id="exportCSV"></span>
                 <span id="exportPDF"></span>
                 <apex:outputPanel layout="none" rendered="{!isAirline}">
-                    <span id="advanced-filters" class="pull-right"></span>
+                    <span id="advanced-filters" class="pull-right" style="margin-left: 1%"></span>
                 </apex:outputPanel>
             </div>
         </div>
@@ -878,10 +892,9 @@
 
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">{!$Label.ISSP_FDS_PopupTitle}</h4>
-                                <div id="loading-download">
-                                    {!$Label.ISSP_OperationalCalendar_DownloadWarning}
-                                </div>
+                                <h3 class="modal-title" style="color: rgb(32, 107, 164); text-align: center;">
+                                    {!$Label.ISSP_FDS_PopupTitle}
+                                </h3>
                             </div>            
                             <div class="modal-body">
                                 <div class="row">
@@ -958,6 +971,21 @@
                                 <button id="downloadBtn" type="button" class="btn btn-primary" onclick="downloadZip(); return false;">{!$Label.ISSP_FDS_Download}</button>
                             </div>
                         </apex:form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loading-modal" class="modal fade">
+                <div class="modal-dialog">
+                    <div id="loading-modal-content" class="modal-content">
+                        <div class="modal-body">
+                            <p style="text-align: center;">
+                                {!$Label.ISSP_OperationalCalendar_DownloadWarning}
+                            </p>
+                            <div style="text-align: center;">
+                                <div class="loader"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

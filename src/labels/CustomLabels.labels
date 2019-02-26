@@ -33671,7 +33671,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_FDS_CustomFilterBtn</shortDescription>
-        <value>Custom</value>
+        <value>Multi-download</value>
     </labels>
     <labels>
         <fullName>ISSP_FDS_DownloadOpts</fullName>
@@ -33762,7 +33762,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_FDS_PopupTitle</shortDescription>
-        <value>Filters</value>
+        <value>Multi Calendar Download</value>
     </labels>
     <labels>
         <fullName>ISSP_FDS_NoResults</fullName>
