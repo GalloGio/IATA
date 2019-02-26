@@ -1,0 +1,175 @@
+<apex:page controller="ISSP_Financial_Institutions" cache="false" sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false">
+	<html>
+  		<c:ISSP_Header />
+  		<body>
+  			<style>
+		    	.table > tbody > tr > td, 
+		    	.table > tbody > tr > th, 
+		    	.table > tfoot > tr > td, 
+		    	.table > tfoot > tr > th, 
+		    	.table > thead > tr > td, 
+		    	.table > thead > tr > th {
+		        	vertical-align: middle !important;
+		    	}
+
+		    	.table > tbody > tr > td, 
+		    	.table > tbody > tr > th {
+		    		height: 45px;
+		    	}
+			</style>
+  			<script type="text/javascript">
+  				function showTermsAndConditionsModal() {
+  					$('[id$="termsAndConsitionsFIModal"]').css('display', 'block');
+  					changeContinueButtonState();
+  					$('[id$="errorMessagesTCModal"]').css('display', 'none');	
+  				}
+
+  				function hideTermsAndConditionsModal() {
+  					$('[id$="termsAndConsitionsFIModal"]').css('display', 'none');
+  				}
+
+  				function changeContinueButtonState() {
+  					if($('[id$="tcModalAgreeCheckbox"]').prop("checked"))
+  						$('[id$="tcModalConfirmButton"]').removeAttr('disabled');
+  					else
+  						$('[id$="tcModalConfirmButton"]').attr('disabled','disabled');
+  				}
+
+  				function disableTCModalButtons() {
+  					$('[id$="tcModalConfirmButton"]').attr('disabled','disabled');
+  					$('[id$="tcModalCloseButton"]').attr('disabled','disabled');
+  					$('[id$="tcModalAgreeCheckbox"]').attr('disabled','disabled');
+  					$('[id$="tcModalCloseButtonSecondary"]').attr('disabled','disabled');
+  				}
+
+  				function enableTCModalButtons() {
+  					$('[id$="tcModalConfirmButton"]').removeAttr('disabled');
+  					$('[id$="tcModalCloseButton"]').removeAttr('disabled');
+  					$('[id$="tcModalAgreeCheckbox"]').removeAttr('disabled');
+  					$('[id$="tcModalCloseButtonSecondary"]').removeAttr('disabled');
+  				}
+
+  				function hideContinue() {
+  					$('[id$="tcModalConfirmButton"]').css('display', 'none');
+  				}
+
+  				function navigateToGDIPortal() {
+  					window.open('{!gdiPortalAppURL}', '_blank')
+  				}
+  			</script>
+
+  			<div class="container">
+  				<c:ISSP_CustomNavigation />
+  				<div id="contentWrapper">
+  					<h4>
+  						{!$Label.ISSP_services} 
+  						<span class="glyphicon glyphicon-chevron-right small" aria-hidden="true"></span>
+         				{!$Label.ISSP_Financial_Insititutions}
+						<span class="glyphicon glyphicon-chevron-right small" aria-hidden="true"></span>
+         				<small>{!$Label.ANG_ISSP_GDI_Breadcrumb}</small>
+        			</h4>
+  					<div>
+		                <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float: left;"/>
+		            </div>
+		            <div style="padding-top: 16px; padding-left: 44px;">
+		                <h3>{!$Label.ISSP_Financial_Insititutions_Header}</h3>
+		                <apex:outputText value="{!$Label.ISSP_Financial_Insititutions_Subheader}" escape="false"/>
+		            </div>
+		            <apex:form>
+		            	<apex:actionFunction name="reRenderErrorMessagesTCModal" reRender="errorMessagesTCModal"/>
+		            	<apex:actionFunction name="submitTCModal" action="{!startGDIPortalAppRightCreation}" reRender="requestLoading" oncomplete="if ({!currentErrorMessage != ''}) { enableTCModalButtons(); reRenderErrorMessagesTCModal(); } else { createGDIAppRight(); } return false;"/>
+		            	<apex:actionFunction name="createGDIAppRight" action="{!createPortalAppRight}" reRender="requestLoading" oncomplete="if ({!currentErrorMessage != ''}) { enableTCModalButtons(); reRenderErrorMessagesTCModal(); } return false;"/>
+		            	<apex:actionFunction name="refreshPageSize" action="{!refreshPageSize}" reRender="financialInsitutionList"/>
+		            	<apex:actionFunction name="reRenderFinancialInstitutions" reRender="financialInsitutionList"/>
+		            	
+			            <apex:pageBlock id="financialInsitutionList" rendered="{!financialInstitutionList != null}">
+			            	<br/>
+			            	<apex:pageBlockSection columns="1">
+				            	<apex:pageBlockTable value="{!financialInstitutionList}" var="financialInstitution" rendered="{!financialInstitutionsFound}" styleClass="table-hover table table-condensed table-responsive" style="width: 60%;">
+				            		<apex:column>
+				            			<apex:outputLink value="{!IF(BEGINS(LOWER(financialInstitution.Website__c), 'http'), financialInstitution.Website__c, 'http://'+financialInstitution.Website__c)}" rendered="{!financialInstitution.Website__c != ''}" target="_blank">
+				            				{!financialInstitution.Name}
+				            			</apex:outputLink>
+				            			
+				            			<apex:outputText value="{!financialInstitution.Name}" rendered="{!financialInstitution.Website__c == ''}"/>
+				                        
+				                        <apex:commandButton styleClass="btn_iata_primary btn" value="Request GDI Access" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(NOT(gdiAppRightDenied), NOT(gdiAppRightGranted), NOT(gdiAppRightRequested), financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
+
+				                        <apex:outputText value="{!$Label.ISSP_Access_Denied}" rendered="{!AND(gdiAppRightDenied, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
+
+				                        <apex:outputText value="{!$Label.ISSP_Access_Requested}" rendered="{!AND(gdiAppRightRequested, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
+
+				                        <apex:commandButton styleClass="btn_iata_primary btn" value="{!$Label.ANG_ISSP_GDI_Navigate_Portal}" onclick="navigateToGDIPortal();" reRender="" rendered="{!AND(gdiAppRightGranted, financialInstitution.Name == 'GDI - Euler Hermes')}" style="float: right;"/>
+				                        
+				                        <apex:facet name="header">
+				                            <apex:outputText escape="false" value="{!$ObjectType.Financial_Institution__c.fields.Name.Label}"/>
+				                        </apex:facet>
+				                    </apex:column>
+				            	</apex:pageBlockTable>
+			            	</apex:pageBlockSection>
+
+			            	<apex:pageBlockButtons id="pageButtonBlock" location="bottom" rendered="{!financialInstitutionsFound}" style="padding-bottom: 10px; width: 100%;">
+				                {!$Label.ANG_ISSP_GDI_Page_Display_Records} &nbsp;
+				                <apex:selectList styleClass="form-control selector" style="width: 10%; display: initial; height: 30px;" value="{!listSize}" size="1" onchange="refreshPageSize();">
+				                    <apex:selectOptions value="{!paginationSizeOptions}"/>
+				                </apex:selectList>
+				                &nbsp;
+				                <apex:commandButton styleClass="btn btn-primary" value="{!$Label.ANG_ISSP_GDI_Page_First}" action="{!first}" disabled="{!ssController == null || NOT(ssController.hasPrevious)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
+
+				                <apex:commandButton styleClass="btn btn-primary" value="{!$Label.ANG_ISSP_GDI_Page_Previous}" action="{!previous}" disabled="{!ssController == null || NOT(ssController.hasPrevious)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
+
+				                <apex:commandButton styleClass="btn btn-primary" value="{!$Label.ANG_ISSP_GDI_Page_Next}" action="{!next}" disabled="{!ssController == null || NOT(ssController.hasNext)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
+
+				                <apex:commandButton styleClass="btn btn-primary" value="{!$Label.ANG_ISSP_GDI_Page_Last}" action="{!last}" disabled="{!ssController == null || NOT(ssController.hasNext)}" reRender="financialInsitutionList" rendered="{!ssController != null}"/>
+				            </apex:pageBlockButtons>
+			            </apex:pageBlock>
+
+			            <!-- Modal GDI Portal App Request --> 
+					    <div class="modal" id="termsAndConsitionsFIModal" tabindex="-1" role="dialog">
+					    	<apex:outputPanel layout="block" id="myModalContent"> 
+						      	<div class="modal-dialog" role="document">
+						        	<div class="modal-content">
+						          		<div class="modal-header">
+						            		<button id="tcModalCloseButtonSecondary" type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="hideTermsAndConditionsModal();">&times;</button>
+						            		<h4 class="modal-title">{!$Label.OneId_TermsAndConditions}</h4>
+						          		</div>
+						          		<div class="modal-body">
+						          			<apex:outputPanel id="errorMessagesTCModal"> 
+								                <div class="alert alert-danger" style="display:{!IF(currentErrorMessage == '','none','')}">
+								                  	<strong>{!$Label.ISSP_Error}</strong>
+								                    <p><apex:outputText value="{!currentErrorMessage}" escape="false"/></p>
+								                </div>
+								            </apex:outputPanel>
+						            		<p>
+						            			<b>
+						              				<apex:outputText value="{!$Label.ANG_ISSP_GDI_Terms_Conditions}"/>
+						            			</b>
+						            		</p>
+						            		<p>
+						            			<apex:inputCheckbox id="tcModalAgreeCheckbox" value="{!termsAndConditions}" onchange="changeContinueButtonState();" required="true" selected="{!termsAndConditions}"/>
+						            			<apex:outputText value="&nbsp;{!$Label.ANG_ISSP_GDI_Agreement}" escape="false"/>
+						            		</p>
+						            		<apex:outputPanel id="requestLoading">
+						            			<div style="text-align: center; display:{!IF(gdiPolling,'','none')}">
+						            				<apex:actionPoller id="provisioningPoller" action="{!pollingStatus}" reRender="requestLoading, errorMessagesTCModal" interval="5" enabled="{!gdiPolling}" oncomplete="if(!{!gdiPolling}) { enableTCModalButtons(); hideContinue(); } if({!gdiAppRightGranted}) { hideTermsAndConditionsModal(); reRenderFinancialInstitutions(); navigateToGDIPortal(); }"/>
+						         	 				<img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
+						         	 				<b>{!$Label.ANG_ISSP_GDI_UserProvisioningWait}</b>
+						         	 			</div>
+						            		</apex:outputPanel>
+						         	 	</div>
+						         	 	<div class="modal-footer">
+						         	 		<apex:commandButton id="tcModalConfirmButton" styleClass="btn_iata_success btn" value="{!$Label.ISSP_PCI_Stay}" onclick="disableTCModalButtons(); submitTCModal(); return false;" reRender=""/>
+						         	 		<apex:commandButton id="tcModalCloseButton" styleClass="btn btn-secondary" value="{!$Label.IFAP_close}" onclick="hideTermsAndConditionsModal(); reRenderFinancialInstitutions(); return false;" reRender=""/>
+									    </div>
+						        	</div>
+						      	</div>
+					      	</apex:outputPanel>
+					    </div>
+					    <!-- End Modal GDI Portal App Request --> 
+			    	</apex:form>
+  				</div>
+  				<c:ISSP_CustomFooter />
+  			</div>
+  		</body>
+  	</html>
+</apex:page>

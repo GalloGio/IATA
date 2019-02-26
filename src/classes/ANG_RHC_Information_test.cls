@@ -139,32 +139,33 @@ public class ANG_RHC_Information_test{
        
         insert c;
 
-         // Create a new Financial Security
-        Financial_Security__c fs = new Financial_Security__c(
-        	Region__c = 'Americas', 
-        	Security_status__c = 'Active', 
-        	Account__c = a.Id, 
-        	CurrencyIsoCode = 'EUR', 
-        	Security_Type__c='CCG',
-        	Amount__c = 100,
-            Expiry_date__c = Date.today().addYears(2), 
-            Financial_Institution__c = fi.Id,
-            Validity_Start_Date__c = Date.today().addDays(-2), 
-            Reception_Case__c = c.Id, 
-            Reception_Date__c = Date.today(), 
-            Reasonforrequest__c = 'New Application'
-        );
-        insert fs;
-	     
-        
-
-        ANG_RHC_Information__c rhcInfo= [select id, CurrencyIsoCode,ANG_Minimum_Financial_Security__c from ANG_RHC_Information__c limit 1];
-
         test.StartTest();
+        
+        	// Create a new Financial Security
+        	Financial_Security__c fs = new Financial_Security__c(
+        		Region__c = 'Americas', 
+        		Security_status__c = 'Active', 
+        		Account__c = a.Id, 
+        		CurrencyIsoCode = 'EUR', 
+        		Security_Type__c='CCG',
+        		Amount__c = 100,
+            	Expiry_date__c = Date.today().addYears(2), 
+            	Financial_Institution__c = fi.Id,
+            	Validity_Start_Date__c = Date.today().addDays(-2), 
+            	Reception_Case__c = c.Id, 
+            	Reception_Date__c = Date.today(), 
+            	Reasonforrequest__c = 'New Application'
+        	);
+        	
+        	insert fs;
+	             	
+        	ANG_RHC_Information__c rhcInfo= [select id, CurrencyIsoCode,ANG_Minimum_Financial_Security__c from ANG_RHC_Information__c limit 1];
+
             rhcInfo.CurrencyIsoCode=fs.CurrencyIsoCode;
         	update rhcInfo;
         	
         	fs1=[select ANG_ConvertedAmount__c,ANG_Minimum_Financial_Security__c from Financial_Security__c limit 1];
+        	
         	Financial_Security__c fs2=[select ANG_ConvertedAmount__c,amount__c,ANG_Minimum_Financial_Security__c from Financial_Security__c where Region__c='Americas' limit 1];
             ANG_RHC_Information__c rhcRec=[select ANG_Financial_Security__c,ANG_Minimum_Financial_Security__c from ANG_RHC_Information__c limit 1];
         	system.assertEquals(fs2.amount__C,fs2.ANG_ConvertedAmount__c);
@@ -174,13 +175,14 @@ public class ANG_RHC_Information_test{
         test.StopTest();
 	}
 	TestMethod static void updateFinancialSecurityRecordToInactive(){
-        test.StartTest();
+        
+       	test.StartTest();
+        
     		Financial_Security__c f1 =[select id,ANG_ConvertedAmount__c,security_Status__C from Financial_Security__c limit 1];
     		f1.security_Status__C ='Not Active yet';
     		update  f1;
-
-		
-		  system.assertEquals([select ANG_Financial_Security__c from ANG_RHC_Information__c limit 1].ANG_Financial_Security__c,0);
+ 				
+		  	system.assertEquals([select ANG_Financial_Security__c from ANG_RHC_Information__c limit 1].ANG_Financial_Security__c,0);
 
 		test.StopTest();
 
@@ -246,7 +248,8 @@ public class ANG_RHC_Information_test{
 
         insert c;
         
-           
+          test.StartTest(); 
+        
         Financial_Security__c fs = new Financial_Security__c(
             Region__c = 'Americas', 
             Security_status__c = 'Active', 
@@ -263,7 +266,7 @@ public class ANG_RHC_Information_test{
         );
         insert fs;
 
-        test.StartTest();
+        
             system.assertEquals(0,[select count() from ANG_RHC_Information__c where ANG_AccountId__c=: a.id]);
 
         test.StopTest();

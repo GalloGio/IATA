@@ -92,6 +92,11 @@
                     <label>NewGen - Easy Pay Model A</label>
                 </value>
                 <value>
+                    <fullName>GDI_ENDORSEMENT</fullName>
+                    <default>false</default>
+                    <label>GDI_ENDORSEMENT</label>
+                </value>
+                <value>
                     <fullName>TIP_IFG_REPORT</fullName>
                     <default>false</default>
                     <label>TIP - IFG Report</label>
@@ -120,6 +125,11 @@
                     <fullName>IFG</fullName>
                     <default>false</default>
                     <label>IFG</label>
+                </value>
+                <value>
+                    <fullName>GDI</fullName>
+                    <default>false</default>
+                    <label>GDI</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -188,12 +198,74 @@ When MS sets “In Progress”, trigger to fire</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIP_IFG_REPORT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Source__c</picklist>
+            <values>
+                <fullName>GDI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IEP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initializing</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>GDI_ENDORSEMENT</fullName>
+        <active>true</active>
+        <label>GDI ENDORSEMENT</label>
+        <picklistValues>
+            <picklist>Request_Type__c</picklist>
+            <values>
+                <fullName>ANG_IEP_MODEL_A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP_IFG_REPORT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Source__c</picklist>
+            <values>
+                <fullName>GDI</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IEP</fullName>
                 <default>false</default>
@@ -234,12 +306,20 @@ When MS sets “In Progress”, trigger to fire</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>GDI_ENDORSEMENT</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIP_IFG_REPORT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>Source__c</picklist>
+            <values>
+                <fullName>GDI</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IEP</fullName>
                 <default>false</default>
