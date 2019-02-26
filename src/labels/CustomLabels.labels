@@ -29129,6 +29129,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>New product id created</value>
     </labels>
     <labels>
+        <fullName>NoEligibleUserForContact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Eligible User</shortDescription>
+        <value>No Eligible User for this Contact</value>
+    </labels>
+    <labels>
         <fullName>NoSameName</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
