@@ -10,13 +10,13 @@
                    {label.activeIdCardUserLABEL}
             </lightning-layout-item>
             <lightning-layout-item size="7" flexibility="auto" padding="around-small">
-                <lightning-combobox name="communitySelected" label={label.communityLABEL} placeholder={label.SelectCommunityLABEL}
+                <lightning-combobox name="communitySelected" label={label.communityLABEL} placeholder={label.selectCommunityLABEL}
                     value={CommunityVal} options={communityOptions.data} onchange={handleCommChange} disabled={noUser}
                     required>
                 </lightning-combobox>
             </lightning-layout-item>
             <lightning-layout-item size="7" flexibility="auto" padding="around-small">
-                <lightning-combobox name="communitySelected" label={label.portalStatusLABEL} placeholder={label.SelectPortalStatusLABEL}
+                <lightning-combobox name="communitySelected" label={label.portalStatusLABEL} placeholder={label.selectPortalStatusLABEL}
                     value={PortalStatVal} options={portalStatusOptions.data} onchange={handlePortalStatusChange}
                    required>
                 </lightning-combobox>

@@ -22,6 +22,8 @@ public with sharing class ISSP_PortalUserStatusChange {
      //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
+    public static boolean fromLc =false; //flag to check if method running from lightning component
     
     public ISSP_PortalUserStatusChange(Apexpages.Standardcontroller ctrl){
         Map<String, String> communityMap = new Map<String, String>{'CNS' => 'CNS Customer Portal', 'IEC' => 'E-Commerce','ISSP' => 'ISS Customer Portal'};
@@ -389,7 +391,10 @@ public with sharing class ISSP_PortalUserStatusChange {
             system.debug('inserted newuser: ' + newUser.Id);
             // new email process
             String password = Comm_User_Helper.generateRandomString(6)+'1a';
-            System.setPassword(newUser.Id, password);
+            if(ISSP_PortalUserStatusChange.fromLc) //AURA workaround for not being able to access this method by API Call(lightning communication between apex)
+                setPasswordAssync(newUser.Id, password);
+            else
+                System.setPassword(newUser.Id, password);
             String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
             cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
             string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
@@ -1017,6 +1022,10 @@ public with sharing class ISSP_PortalUserStatusChange {
         return errorMessageResult;
     }
 
+    @future
+    private static void setPasswordAssync(Id usrId,String pw){
+        System.setPassword(usrId, pw);
+    }
    
     @AuraEnabled(cacheable=true)
     public static List<SelectOptionWrapper> getAvalaibleCommunities() {
@@ -1131,6 +1140,7 @@ public with sharing class ISSP_PortalUserStatusChange {
         Savepoint sPointContact = Database.setSavepoint();     
         String runActionResult='';
         try{
+            ISSP_PortalUserStatusChange.fromLc = true;
             runActionResult = runAction(contactId, contactList[0].Email, theAction, newValue, inactivationReason, firstCommunity);
         }  catch(Exception e){
             system.debug('PF'+e.getMessage());
