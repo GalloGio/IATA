@@ -397,7 +397,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Complaint (IDFS ISS),Invoicing Collection Cases,FDS Ad-hoc Calendar Change (R&amp;S) Locked,Airline Coding Application</value>
+            <value>Cases - Global,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Complaint (IDFS ISS),Invoicing Collection Cases,FDS Ad-hoc Calendar Change (R&amp;S) Locked,Airline Coding Application</value>
         </criteriaItems>
         <criteriaItems>
             <field>EmailMessage.CcAddress</field>
@@ -428,7 +428,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Process</value>
+            <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Process</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.First_Contact_with_Client__c</field>
@@ -506,7 +506,7 @@
         </actions>
         <active>true</active>
         <description>case gets reopened when an email enters the case</description>
-        <formula>AND(  OR( Parent.RecordType.DeveloperName == &apos;External_Cases_ACCA&apos;, Parent.RecordType.DeveloperName == &apos;CS_Process_IDFS_ISS&apos;, Parent.RecordType.DeveloperName == &apos;SEDA&apos;, Parent.RecordType.DeveloperName == &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName == &apos;FDS_ICCS_Email_to_Case&apos;, Parent.RecordType.DeveloperName == &apos;SIDRA&apos;,  AND(OR( Parent.RecordType.DeveloperName == &apos;CasesAmericas&apos;, Parent.RecordType.DeveloperName == &apos;CasesMENA&apos;, Parent.RecordType.DeveloperName == &apos;Cases_China_North_Asia&apos;, Parent.RecordType.DeveloperName == &apos;CasesEurope&apos;, Parent.RecordType.DeveloperName == &apos;ExternalCasesIDFSglobal&apos;, Parent.RecordType.DeveloperName == &apos;ComplaintIDFS&apos;), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)),  OR( NOT(CONTAINS(FromAddress,&quot;acca&quot;)), NOT(CONTAINS(FromAddress,&quot;accelya&quot;)) ),  OR( CONTAINS(HtmlBody,&quot;ref:&quot;), CONTAINS(Subject,&quot;ref:&quot;), CONTAINS(TextBody,&quot;ref:&quot;) ),  Incoming=TRUE, Parent.IsClosed=TRUE )</formula>
+        <formula>AND(  OR( Parent.RecordType.DeveloperName == &apos;External_Cases_ACCA&apos;, Parent.RecordType.DeveloperName == &apos;CS_Process_IDFS_ISS&apos;, Parent.RecordType.DeveloperName == &apos;SEDA&apos;, Parent.RecordType.DeveloperName == &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName == &apos;FDS_ICCS_Email_to_Case&apos;, Parent.RecordType.DeveloperName == &apos;SIDRA&apos;,  AND(OR( Parent.RecordType.DeveloperName == &apos;CasesAmericas&apos;, Parent.RecordType.DeveloperName == &apos;CasesMENA&apos;, Parent.RecordType.DeveloperName == &apos;Cases_China_North_Asia&apos;, Parent.RecordType.DeveloperName == &apos;CasesEurope&apos;,  Parent.RecordType.DeveloperName == &apos;Cases_Global&apos;, Parent.RecordType.DeveloperName == &apos;ExternalCasesIDFSglobal&apos;, Parent.RecordType.DeveloperName == &apos;ComplaintIDFS&apos;), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)),  OR( NOT(CONTAINS(FromAddress,&quot;acca&quot;)), NOT(CONTAINS(FromAddress,&quot;accelya&quot;)) ),  OR( CONTAINS(HtmlBody,&quot;ref:&quot;), CONTAINS(Subject,&quot;ref:&quot;), CONTAINS(TextBody,&quot;ref:&quot;) ),  Incoming=TRUE, Parent.IsClosed=TRUE )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -568,7 +568,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>ACCA Customer Service Request (External),Cases - Africa &amp; Middle East,Cases - Americas,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Internal Cases (IDFS ISS),SAAM,SIDRA,SIDRA BR,Complaint (IDFS ISS),Process</value>
+            <value>Cases - Global,ACCA Customer Service Request (External),Cases - Africa &amp; Middle East,Cases - Americas,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Cases - Europe,Internal Cases (IDFS ISS),SAAM,SIDRA,SIDRA BR,Complaint (IDFS ISS),Process</value>
         </criteriaItems>
         <criteriaItems>
             <field>EmailMessage.Incoming</field>

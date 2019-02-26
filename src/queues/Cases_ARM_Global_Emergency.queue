@@ -2,15 +2,12 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
-    <name>PCI Cases GDC SIN</name>
+    <name>Cases - ARM Global Emergency</name>
     <queueMembers>
-        <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>APAgencyManagementStaff</roleAndSubordinateInternal>
-        </roleAndSubordinatesInternal>
+        <publicGroups>
+            <publicGroup>AllInternalUsers</publicGroup>
+        </publicGroups>
     </queueMembers>
-    <queueSobject>
-        <sobjectType>AMS_OSCAR__c</sobjectType>
-    </queueSobject>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

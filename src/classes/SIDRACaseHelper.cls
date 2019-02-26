@@ -6,6 +6,7 @@ public with sharing class SIDRACaseHelper {
 
 	// Get Sidra Record Type Id
 	private static Id sidraRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+	private static Id sidraLiteRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
 	private static Map<Id, Account> sidraCasesAccounts;
 	private static Map<Id, Account> accountsToUpdate = new Map<Id, Account>();
 	private static Boolean  isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
@@ -24,6 +25,7 @@ public with sharing class SIDRACaseHelper {
 		map<Id, Case> mapSidra = getSidraCases(newCases.values());
 
 		ANG_RiskEventGenerator.skip = true;
+		createChildCaseToSidraCasesOnInsert(newCases);	//ACAMBAS - WMO-384
 		updateRelatedObjects(mapSidra);
 		ANG_RiskEventGenerator.skip = false;
 	}
@@ -32,6 +34,9 @@ public with sharing class SIDRACaseHelper {
 	    After Update Action
 	**/
 	public static void doAfterUpdate(map<Id, Case> newCases, map<Id, Case> oldCases) {
+
+		Map<Id, Case> sidraCasesToBeProcessed = new Map<Id, Case>();
+
 		for (Case thisCase : newCases.values()) {
 			Case oldCase = oldCases.get(thisCase.Id);
 			if ((thisCase.RecordTypeId == sidraRecordTypeId) && (oldCase.RecordTypeId != sidraRecordTypeId)) {
@@ -72,11 +77,94 @@ public with sharing class SIDRACaseHelper {
 					}
 				}
 			}
+
+			//ACAMBAS - WMO-384 - Start
+
+			if(((thisCase.RecordTypeId == sidraRecordTypeId || thisCase.RecordTypeId == sidraLiteRecordTypeId) && 
+				(!thisCase.isClosed //&& !string.valueOf(thisCase.Owner).contains('Recycle') 
+					&& thisCase.DEF_Approval_Rejection__c == 'Approved' && thisCase.Agent_holds_FS_requiring_first_call__c == 'Yes')) && 
+			   !((oldCase.RecordTypeId == sidraRecordTypeId || oldCase.RecordTypeId == sidraLiteRecordTypeId) && 
+				(oldCase.DEF_Approval_Rejection__c == 'Approved' && oldCase.Agent_holds_FS_requiring_first_call__c == 'Yes'))) {
+				sidraCasesToBeProcessed.put(thisCase.Id, thisCase);
+			}		
 		}
+
+		if (sidraCasesToBeProcessed.size() > 0) {
+			System.enqueueJob(new createChildCaseToSidraCases(sidraCasesToBeProcessed));
+		}
+
+		//ACAMBAS - WMO-384 - End
+		
 		if (accountsToUpdate.size() > 0) {
 			update accountsToUpdate.values();
 		}
 	}
+
+	//ACAMBAS - WMO-384 - Start
+	
+	private static void createChildCaseToSidraCasesOnInsert(map<Id, Case> newCases)	{
+		Map<Id, Case> sidraCasesToBeProcessed = new Map<Id, Case>();
+
+		for(Case thisCase : newCases.values()) {
+			if(((thisCase.RecordTypeId == sidraRecordTypeId || thisCase.RecordTypeId == sidraLiteRecordTypeId) && 
+				(!thisCase.isClosed //&& !string.valueOf(thisCase.Owner).contains('Recycle') 
+					&& thisCase.DEF_Approval_Rejection__c == 'Approved' && thisCase.Agent_holds_FS_requiring_first_call__c == 'Yes'))
+			   ) {
+				sidraCasesToBeProcessed.put(thisCase.Id, thisCase);
+			}	
+		}
+			
+		if (sidraCasesToBeProcessed.size() > 0) {
+			System.enqueueJob(new createChildCaseToSidraCases(sidraCasesToBeProcessed));
+		}	
+	}
+
+	public class createChildCaseToSidraCases implements Queueable {
+
+		private Map<Id, Case> parentCases;
+
+		public createChildCaseToSidraCases(Map<Id, Case> parentCases) {
+			this.parentCases = parentCases;
+		}
+
+		public void execute(QueueableContext context) {
+
+			Id SAAMRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+			List<Case> newChildCases = new List<Case>();
+			List<Case> casesToProcess = new List<Case>([SELECT Id, OwnerId, Owner.Name, Account.Name, Account.IATACode__c, Region__c, BSPCountry__c, AccountId, ContactId,
+																(SELECT Id, ParentId
+																 FROM Cases
+																 WHERE RecordTypeId = :SAAMRecordTypeId AND CaseArea__c = 'Risk Management Process' AND 
+																	   Reason1__c = 'First call letter') FROM Case WHERE Id = : parentCases.keyset()]);
+
+			for(Case c : casesToProcess) {
+				if(c.Cases.size() == 0 && !c.Owner.Name.contains('Recycle')) {
+
+				 	Case newCase = new Case(recordtypeID = SAAMRecordTypeId,	
+											ParentId = c.Id,																		
+											CaseArea__c = 'Risk Management Process',
+											Reason1__c = 'First call letter',
+											Origin = 'IATA Internal User',
+											Subject = 'First call letter - ' + c.Account.Name + ' - ' + c.Account.IATACode__c,
+											Region__c = c.Region__c,
+                              				BSPCountry__c = c.BSPCountry__c,
+                              				AccountId = c.AccountId,
+                              				ContactId = c.ContactId);
+
+					Database.DMLOptions dmlOpts = new Database.DMLOptions();
+					//dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+					dmlOpts.assignmentRuleHeader.useDefaultRule = true;
+					newCase.setOptions(dmlOpts);
+
+					newChildCases.add(newCase);
+				}
+			}
+
+			insert newChildCases;
+		}
+	}
+
+	//ACAMBAS - WMO-384 - End
 
 	/**
 		Get the most recent SIDRA case and update the Account with its CreatedDate

@@ -17,6 +17,9 @@ private class clsBounceEmailBatchTest{
        em.Subject= 'Test';      
        em.MessageDate = datetime.now();
        Insert em;
+	   
+	   //EM: Added to increase coverage on EmailTrigger
+	   update em;
        
      
        Case ca1 = new Case();
