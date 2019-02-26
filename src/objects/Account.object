@@ -5679,6 +5679,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     </fields>
     <fields>
         <fullName>Baggage_Tag_Range_Code__c</fullName>
+        <description>Numeric code for the Baggage Tag Range.</description>
         <externalId>false</externalId>
         <label>Baggage Tag Range Code</label>
         <length>255</length>

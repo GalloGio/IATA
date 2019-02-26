@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+	<customApplications>
+		<label><!-- ACLI --></label>
+        <name>ACLI</name>
+    </customApplications>
     <customApplications>
         <label><!-- AMS INTEGRATION --></label>
         <name>AMS</name>
