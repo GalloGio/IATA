@@ -4,6 +4,7 @@ public class ChooseCommunityCtrl {
     Contact contact;
     public string Community {get; set;}
     public boolean bccCS {get; set;}
+    
     public boolean noUser {get;private set;}
     
     public ChooseCommunityCtrl(ApexPages.StandardController controller) {
@@ -28,9 +29,26 @@ public class ChooseCommunityCtrl {
         //else if(community == Comm_User_Helper.IEC)Comm_User_Helper.resetPasswordComm(cID  ,Comm_User_Helper.IEC, bccCS);
        
         return controller.view();
+    }
 
+    @AuraEnabled
+    public static void SendEmail(String contactId,String community){      
+       sendAssinc(contactId,community);
+    }
 
-        
+    @future
+    private static void sendAssinc(String contactId,String community){  
+         try{
+            comm_User_Helper.resetPasswordComm(Id.valueOf(contactId) ,community, false);
+        }catch(Exception e){
+            throw e;
+        }    
+    }
+
+     @AuraEnabled(cacheable=true)
+    public static boolean hasValidUser(String contactId){
+        list<user> userList=[Select id from User where ContactID =: Id.valueOf(contactId) and isactive = true];
+        return !userList.isEmpty();
     }
     
         
@@ -44,24 +62,12 @@ public class ChooseCommunityCtrl {
     }
 
     @AuraEnabled(cacheable=true)
-    public List<SelectOptionWrapper> getAvalaibleCommnuties() {
+    public static List<SelectOptionWrapper> getAvalaibleCommunities() {
         List<SelectOptionWrapper> options = new List<SelectOptionWrapper>();
-        options.add(new SelectOptionWrapper('--None--','--None--'));
+       // options.add(new SelectOptionWrapper('--None--','--None--'));
         options.add(new SelectOptionWrapper(Comm_User_Helper.IEC,'E-commerce'));
         options.add(new SelectOptionWrapper(Comm_User_Helper.ISSP,'ISS Customer Portal'));
         options.add(new SelectOptionWrapper(Comm_User_Helper.CNS,'CNS Customer Portal'));
         return options;
-    }    
-
-    public class SelectOptionWrapper {
-        @AuraEnabled
-        public String label {get;set;}
-        @AuraEnabled
-        public String value {get;set;}
-           
-            public SelectOptionWrapper(String value, String label) {
-                this.value = value;
-                this.label = label;
-            }
-    }    
+    }  
 }
