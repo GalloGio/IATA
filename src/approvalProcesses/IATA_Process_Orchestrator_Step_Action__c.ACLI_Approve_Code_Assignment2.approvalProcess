@@ -16,10 +16,8 @@
         <allowDelegate>false</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>dina.gromicho@rightitservices.com</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <label>Step 1</label>
         <name>Step_1</name>
@@ -48,10 +46,6 @@
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
     <initialSubmissionActions>
-        <action>
-            <name>Approve_code_assignment</name>
-            <type>Alert</type>
-        </action>
         <action>
             <name>Update_Status_field_to_Progressing</name>
             <type>FieldUpdate</type>
