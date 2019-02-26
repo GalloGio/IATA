@@ -119,7 +119,7 @@ global class ISSP_AMC_Invocable {
                              
 
                 if(stage.equals('STAGE_C')){
-                    sp.Process_Step_Name__c = 'Coding Fee (With the option of not Applicable)';
+                    sp.Process_Step_Name__c = 'Coding Fee';
                     insert sp;
                     
                     List<String> stageActionList = new List<String>();                    

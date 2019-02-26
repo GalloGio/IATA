@@ -86,12 +86,37 @@
                 }
         });
 
+
+        /*var action2 = component.get("c.disableButton");
+
+        action2.setParams({ "caseId" : component.get("v.caseRecordId")});
+        action2.setCallback(this, function(response) {
+        var state = response.getState();
+
+        if (state === "SUCCESS") {
+            var options =  response.getReturnValue();
+            if(options == true){
+                component.set("v.sendCaseVariant", "destructive");
+            }
+        }
+        else {
+            console.log("Failed with state: " + response.getError()[0].message);
+        }
+        var appEvent = $A.get("e.c:ISSP_AMC_RefreshProgressEvent");
+        appEvent.fire();
+        });
+
+        $A.enqueueAction(action2);*/
         $A.enqueueAction(action);
     },
 
 	requestApproval : function(component, event, helper) {
         var action = component.get("c.requestForApproval");
-        action.setParams({ "caseId" : component.get("v.caseRecordId") });
+
+        action.setParams({ 
+            "processOrchestratorId" : component.get("v.processOrchestratorId"),
+            "stage" : component.get("v.stage")
+        });
 
 
         action.setCallback(this, function(response) {
@@ -165,20 +190,43 @@
 	},
 
 	sendCase : function(component, event, helper){
-        /*var action = component.get("c.sendCase");
+        /*var action = component.get("c.sendCaseCtr");
 
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 var caseId =  response.getReturnValue();
+                alert(caseId);
                 component.set("v.caseRecordId", caseId);
             }
             else {
+            alert('erro');
                 console.log("Failed with state: " + response.getError()[0].message);
             }
         });
 
         $A.enqueueAction(action);*/
+
+        component.set("v.showSpinner",true);
+
+         var action = component.get("c.sendCaseCtr");
+
+         action.setParams({ "caseId" : component.get("v.caseRecordId")});
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+
+                if (state === "SUCCESS") {
+                    helper.showToast("success", "Case synched with sucess");
+                }
+                else {
+                    console.log("Failed with state: " + response.getError()[0].message);
+                    helper.showToast("error", "ver erro");
+                }
+                $A.get('e.force:refreshView').fire();
+                 component.set("v.showSpinner",false);
+            });
+
+            $A.enqueueAction(action);
 	},
 
     /*startProcess : function(component, event, helper){

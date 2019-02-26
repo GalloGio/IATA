@@ -9,11 +9,11 @@
         <value>Participation Online Applications</value>
     </caseValues>
     <fields>
-        <label><!-- AAO_Domestic --></label>
+        <label><!-- Domestic --></label>
         <name>AAO_Domestic__c</name>
     </fields>
     <fields>
-        <label><!-- AAO_International --></label>
+        <label><!-- International --></label>
         <name>AAO_International__c</name>
     </fields>
     <fields>
@@ -69,7 +69,7 @@
         <name>AOC_issue_date__c</name>
     </fields>
     <fields>
-        <label><!-- Accounting_Code_Airline_Prefix_Purpose --></label>
+        <label><!-- Accounting, Prefix Code Airline Purpose --></label>
         <name>Accounting_Code_Airline_Prefix_Purpose__c</name>
         <picklistValues>
             <masterLabel>Accounting Code</masterLabel>
@@ -163,7 +163,7 @@
         <name>Date_of_Participation__c</name>
     </fields>
     <fields>
-        <label><!-- Date_when_airport_has_been_operational --></label>
+        <label><!-- Date the airport has been operational --></label>
         <name>Date_when_airport_has_been_operational__c</name>
     </fields>
     <fields>
@@ -227,51 +227,51 @@
         <name>GPS_Coordinates__c</name>
     </fields>
     <fields>
-        <label><!-- HOB_Email --></label>
+        <label><!-- HOB Email --></label>
         <name>HOB_Email__c</name>
     </fields>
     <fields>
-        <label><!-- HOB_First_Name --></label>
+        <label><!-- HOB First Name --></label>
         <name>HOB_First_Name__c</name>
     </fields>
     <fields>
-        <label><!-- HOB_Last_Name --></label>
+        <label><!-- HOB Last Name --></label>
         <name>HOB_Last_Name__c</name>
     </fields>
     <fields>
-        <label><!-- HOB_Phone --></label>
+        <label><!-- HOB Phone --></label>
         <name>HOB_Phone__c</name>
     </fields>
     <fields>
-        <label><!-- HOB_Salutation --></label>
+        <label><!-- HOB Salutation --></label>
         <name>HOB_Salutation__c</name>
     </fields>
     <fields>
-        <label><!-- HOB_Title --></label>
+        <label><!-- HOB Title --></label>
         <name>HOB_Title__c</name>
     </fields>
     <fields>
-        <label><!-- HOC_Email --></label>
+        <label><!-- HOC Email --></label>
         <name>HOC_Email__c</name>
     </fields>
     <fields>
-        <label><!-- HOC_First_Name --></label>
+        <label><!-- HOC First Name --></label>
         <name>HOC_First_Name__c</name>
     </fields>
     <fields>
-        <label><!-- HOC_Last_Name --></label>
+        <label><!-- HOC Last Name --></label>
         <name>HOC_Last_Name__c</name>
     </fields>
     <fields>
-        <label><!-- HOC_Phone --></label>
+        <label><!-- HOC Phone --></label>
         <name>HOC_Phone__c</name>
     </fields>
     <fields>
-        <label><!-- HOC_Salutation --></label>
+        <label><!-- HOC Salutation --></label>
         <name>HOC_Salutation__c</name>
     </fields>
     <fields>
-        <label><!-- HOC_Title --></label>
+        <label><!-- HOC Title --></label>
         <name>HOC_Title__c</name>
     </fields>
     <fields>
@@ -405,7 +405,7 @@
         <name>ISSP_AMC_ESTIMATED_ANNUAL_PASSENGERS__c</name>
     </fields>
     <fields>
-        <label><!-- ISSP_AMC_Submitted_Date --></label>
+        <label><!-- Submitted Date --></label>
         <name>ISSP_AMC_Submitted_Date__c</name>
     </fields>
     <fields>
@@ -633,7 +633,7 @@
         <name>Previously_assigned_IATA_code__c</name>
     </fields>
     <fields>
-        <label><!-- Previously_assigned_numeric_code --></label>
+        <label><!-- Previously assigned numeric code --></label>
         <name>Previously_assigned_numeric_code__c</name>
     </fields>
     <fields>
@@ -697,7 +697,7 @@
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Submitted_By --></label>
+        <label><!-- Submitted By --></label>
         <name>Submitted_By__c</name>
         <relationshipLabel><!-- Participation Online Applications (Submitted_By) --></relationshipLabel>
     </fields>
@@ -833,18 +833,22 @@
         </sections>
     </layouts>
     <recordTypes>
+        <description><!-- Accounting or Prefix Code --></description>
         <label><!-- Accounting or Prefix Code --></label>
         <name>Accounting_or_Prefix_Code</name>
     </recordTypes>
     <recordTypes>
+        <description><!-- Baggage Code --></description>
         <label><!-- Baggage Code --></label>
         <name>Baggage_Code</name>
     </recordTypes>
     <recordTypes>
+        <description><!-- Designator Code --></description>
         <label><!-- Designator Code --></label>
         <name>Designator_Code</name>
     </recordTypes>
     <recordTypes>
+        <description><!-- Location Code --></description>
         <label><!-- Location Code --></label>
         <name>Location_Code</name>
     </recordTypes>

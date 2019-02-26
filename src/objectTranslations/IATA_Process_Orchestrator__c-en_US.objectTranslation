@@ -75,10 +75,12 @@
         <name>Total_Number_of_Actions__c</name>
     </fields>
     <recordTypes>
+        <description><!-- Represents an IATA Process Step --></description>
         <label><!-- IATA Process Step --></label>
         <name>IATA_Process_Step</name>
     </recordTypes>
     <recordTypes>
+        <description><!-- Record Type to hold IATA Orchestrator Process --></description>
         <label><!-- Orchestrator --></label>
         <name>Orchestrator</name>
     </recordTypes>

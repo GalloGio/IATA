@@ -32,7 +32,7 @@
 	                    }
 	                    if(y[i].classList =="errormessage"){
 	                    	element.value="";
-	                        y[i].innerHTML = "{!$Label.ISSP_AMC_IATA_CODE_VALIDATION}";
+	                        y[i].innerHTML = "{!$Label.ISSP_AMC_2DIGITS_CODE}";
 
 	                    }                   
 	                }

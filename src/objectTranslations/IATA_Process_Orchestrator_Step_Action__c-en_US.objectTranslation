@@ -13,6 +13,11 @@
         <name>Action_name__c</name>
     </fields>
     <fields>
+        <label><!-- Approver --></label>
+        <name>Approver__c</name>
+        <relationshipLabel><!-- IATA Process Orchestrator Step Actions --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- Associated Case --></label>
         <name>Associated_Case__c</name>
         <relationshipLabel><!-- IATA Process Orchestrator Step Actions --></relationshipLabel>

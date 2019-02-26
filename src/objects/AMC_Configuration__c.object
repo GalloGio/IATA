@@ -63,6 +63,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>First_Approver_Orchestrator__c</fullName>
+        <externalId>false</externalId>
+        <label>First Approver Orchestrator</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Orchestrator_Step_RecordType__c</fullName>
         <externalId>false</externalId>
         <label>Orchestrator Step RecordType</label>
@@ -83,12 +93,40 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>endpoint__c</fullName>
+        <externalId>false</externalId>
+        <label>endpoint</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>isPublicAmazonFile__c</fullName>
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>isPublicAmazonFile</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>password__c</fullName>
+        <externalId>false</externalId>
+        <label>password</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>username__c</fullName>
+        <externalId>false</externalId>
+        <label>username</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <label>AMC_Configuration</label>
     <visibility>Public</visibility>

@@ -314,7 +314,7 @@
                     </div>
                         <div class="col-md-offset-2 col-md-8">
                             <div class="form-group">                           
-                                <div class="col-md-1 col-sm-offset-0 control-label">
+                                <div class="col-md-1 col-sm-offset-0 control-label" style="float:left;">
                                     {!$Label.ISSP_AMC_1}
                                 </div>
                                 <div class="col-md-7">
@@ -330,7 +330,7 @@
                         </div>
                         <div class="col-md-offset-2 col-md-8"> 
                             <div class="form-group">
-                                <div class="col-md-1 col-sm-offset-0 control-label">
+                                <div class="col-md-1 col-sm-offset-0 control-label" style="float:left;">
                                     {!$Label.ISSP_AMC_2}
                                 </div> 
                                 <div class="col-md-7">
@@ -347,7 +347,7 @@
                         </div>
                         <div class="col-md-offset-2 col-md-8">
                             <div class="form-group">
-                                <div class="col-md-1 col-sm-offset-0  control-label">
+                                <div class="col-md-1 col-sm-offset-0  control-label" style="float:left;">
                                     {!$Label.ISSP_AMC_3}
                                 </div>
                                 <div class="col-md-7">  

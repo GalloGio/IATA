@@ -95,6 +95,8 @@ public without sharing class OneId_RegistrationProcessController {
             if(!userInformation.isServiceUser){
                 User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
 
+                system.debug('DB RITS guestUser' + guestUser);
+                system.debug('DB RITS ' + usr.AccountId);
                 Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
 
         

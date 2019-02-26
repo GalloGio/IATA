@@ -16,39 +16,40 @@ public without sharing class ISSP_AMC_Integration {
 
     public static final Integer STATUSOKLOWER  = 199;
     public static final Integer STATUSOKHIGHER = 300;
+    public static string caseStatus = ISSP_AMC_Constants.AMC_CASE_STATUS_SUBMITTED;
 
-    public static void doPost(List<Case> caseList) {
+    public static HttpResponse doPost(Id caseIdReceived) {
         string payload;
+        HttpResponse res = new HttpResponse();
         try {
-            List<ACLIForm> acliForms = applicationInfoMapping(caseList);
-            if ( acliForms.isEmpty() ) throw new customException('No ACLI Forms to process');
+            ACLIForm acliForms = applicationInfoMapping(caseIdReceived);
+            //if ( acliForms.isEmpty() ) throw new customException('No ACLI Forms to process');
+            if (acliForms == null)  throw new customException('No ACLI Forms to process');
             payload = JSON.serialize(acliForms);
 
-            
-            sendRequest(payload);
+
+            res = sendRequest(payload, caseIdReceived);
             
 
             System.debug('payload ' + payload);
-
-            
             
         }catch(CalloutException e){
             system.debug('MC  --> ACLI doPost exception: ' + e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage()));
         }
-
+        return res;
     }
 
-    public static List<ACLIForm> applicationInfoMapping(List<Case> oscarCaseList){
-        Case oscarCase = new Case();
-        List<ACLIForm> acliFormList = new List<ACLIForm>();
+    public static ACLIForm applicationInfoMapping(Id oscarCaseId){
+        //Case oscarCase = new Case();
+        //List<ACLIForm> acliFormList = new List<ACLIForm>();
         ACLIForm acliFormFields = New ACLIForm();
-        set<Id> oscarCaseSet = new set<Id>();
+        //set<Id> oscarCaseSet = new set<Id>();
 
-        for(Case eachCase : oscarCaseList){
+        /*for(Case eachCase : oscarCaseList){
             oscarCaseSet.add(eachCase.Id);
-        }
+        }*/
 
-        List<Participation_Online_Application__c> applicationFromOscarList = [SELECT ID, Case__c,
+        Participation_Online_Application__c applicationFromOscar = [SELECT ID, Case__c,
                                                                         Legal_Name__c,
                                                                         HQ_Street_address_1__c,
                                                                         HQ_City__c,
@@ -90,6 +91,7 @@ public without sharing class ISSP_AMC_Integration {
                                                                         Has_company_assigned_numeric_code__c,
                                                                         Has_the_company_published_their_schedule__c,
                                                                         IATA_ISO_Country__r.Name,
+                                                                        IATA_ISO_Country__r.ISO_Code__c,
                                                                         ICAO_Code__c,
                                                                         Is_ULD_participation_IATA_program__c,
                                                                         Location_Code_1__c,
@@ -125,13 +127,22 @@ public without sharing class ISSP_AMC_Integration {
                                                                         AAO_International__c,
                                                                         Case__r.account.Accounting_Code__c,
                                                                         Case__r.account.Airline_Prefix__c,
+                                                                        case__r.account.IATA_ISO_Billing_State__c,
+                                                                        case__r.account.IATA_ISO_Country__r.Name,
+                                                                        case__r.account.IATA_ISO_Country__r.ISO_Code__c,
+                                                                        case__r.account.Iso_State__r.ISO_Code__c,
+                                                                        case__r.Status,
+                                                                        case__r.account.IATA_ISO_Billing_State__r.ISO_Code__c,
+                                                                        case__r.Coding_Application_ID__c,
                                                                         Terms_Conditions_Agreement__c,
                                                                         Is_the_billing_contact_same_the_HOC__c
                                                                     FROM Participation_Online_Application__c
-                                                                    WHERE Case__c IN : oscarCaseSet];
+                                                                    WHERE Case__c =: oscarCaseId
+        AND (RecordType.DeveloperName = 'Designator_Code' OR RecordType.DeveloperName = 'Accounting_or_Prefix_Code') AND case__r.Status =: caseStatus];
 
-        for(Participation_Online_Application__c applicationFromOscar :applicationFromOscarList) {
-            acliFormFields  = new ACLIForm();
+        //for(Participation_Online_Application__c applicationFromOscar :applicationFromOscarList) {
+            //acliFormFields  = new ACLIForm();
+
             acliFormFields.CodePreferences = new List<String>();
             acliFormFields.Authorized_areas_of_operations = new List<String>();
 
@@ -208,6 +219,10 @@ public without sharing class ISSP_AMC_Integration {
             acliFormFields.HOC_Email = applicationFromOscar.HOC_Email__c;
 
             //address Billing
+            acliFormFields.IATA_ISO_Country_Code = applicationFromOscar.case__r.account.IATA_ISO_Country__r.ISO_Code__c;
+            acliFormFields.IATA_ISO_State_Code = applicationFromOscar.case__r.account.Iso_State__r.ISO_Code__c;
+            acliFormFields.IATA_ISO_Billing_State_Code = applicationFromOscar.case__r.account.IATA_ISO_Billing_State__r.ISO_Code__c;
+            //acliFormFields.IATA_ISO_Country = applicationFromOscar.case__r.account.IATA_ISO_Country__r.Name;
             acliFormFields.Billing_Street_address_1 = applicationFromOscar.Billing_Street_address_1__c;
             acliFormFields.Billing_City = applicationFromOscar.Billing_City__c;
             acliFormFields.Billing_State_Province = applicationFromOscar.Billing_State_Province__c;
@@ -262,7 +277,6 @@ public without sharing class ISSP_AMC_Integration {
             //acliFormFields.ICAO_Code = applicationFromOscar.ICAO_Code__c;
             /*acliFormFields.Has_company_assigned_numeric_code = applicationFromOscar.Has_company_assigned_numeric_code__c;
             acliFormFields.Has_the_company_published_their_schedule = applicationFromOscar.Has_the_company_published_their_schedule__c;
-            acliFormFields.IATA_ISO_Country = applicationFromOscar.IATA_ISO_Country__r.Name;
             acliFormFields.Is_ULD_participation_IATA_program = applicationFromOscar.Is_ULD_participation_IATA_program__c;*/
             /*acliFormFields.Location_Code_1 = applicationFromOscar.Location_Code_1__c;
             acliFormFields.Location_Code_2 = applicationFromOscar.Location_Code_2__c;
@@ -283,10 +297,10 @@ public without sharing class ISSP_AMC_Integration {
             /*acliFormFields.HOC_Name = applicationFromOscar.HOC_First_Name__c + ' ' + applicationFromOscar.HOC_Last_Name__c;*/
 
 
-            acliFormList.add(acliFormFields);
-        }
+            //acliFormList.add(acliFormFields);
+        //}
 
-        return acliFormList;
+        return acliFormFields;
     }
 
     public class ACLIForm{
@@ -346,6 +360,10 @@ public without sharing class ISSP_AMC_Integration {
         public String   Accounting_Code                                   {get; set;}
         public String   Prefix_Code                                       {get; set;}
         public Boolean  IS_Billing_Contact_Same_As_HOC                    {get; set;}
+        public string   IATA_ISO_Country_Code                             {get; set;}
+        //public string   IATA_ISO_Country                             {get; set;}
+        public string   IATA_ISO_State_Code                               {get; set;}
+        public string   IATA_ISO_Billing_State_Code                       {get; set;}
 
         //public string   ICAO_Code                                         {get; set;}
 
@@ -361,7 +379,6 @@ public without sharing class ISSP_AMC_Integration {
         public string   GPS_Coordinates                                   {get; set;}
         public string   Has_company_assigned_numeric_code                 {get; set;}
         public string   Has_the_company_published_their_schedule          {get; set;}
-        public string   IATA_ISO_Country                                  {get; set;}
         public string   Is_ULD_participation_IATA_program                 {get; set;}
         public string   Location_Code_1                                   {get; set;}
         public string   Location_Code_2                                   {get; set;}
@@ -404,43 +421,77 @@ public without sharing class ISSP_AMC_Integration {
 
         public String status            {get; set;}
         public String requestId         {get; set;}
-        public String caseNumber        {get; set;}
+        //public String caseNumber        {get; set;}
+        public String OscarCase        {get; set;}
+        //public String detail        {get; set;}
+        public List<Error> errors {get;set;}
+
     }
 
-    public static HttpResponse sendRequest(string theBody){
+    public class Error{
+        public String detail        {get; set;}
+    }
+
+    public static HttpResponse sendRequest(string theBody, Id caseIdReceived){
+
+        AMC_Configuration__c amcConfiguration = AMC_Configuration__c.getInstance();
+        String username = amcConfiguration.username__c;
+        String password = amcConfiguration.password__c;
+        String endpoint = amcConfiguration.endpoint__c;
+
         HttpRequest req = new HttpRequest();
         req.setHeader('Content-Type', 'application/json');
+
+        //String username = '9b5e2abd65ee4c8e9bff0e97bd8c4e16';
+        //String password = '8ac07dac22564502AB51BfBF6f24D217';
+
+        Blob headerValue = Blob.valueOf(username + ':' + password);
+        String authorizationHeader = 'Basic ' +
+                EncodingUtil.base64Encode(headerValue);
+        req.setHeader('Authorization', authorizationHeader);
+        System.debug('FILIPA:' + authorizationHeader);
+
+
         //req.setHeader('Accept', 'application/json');
         req.setMethod('POST');
         req.setTimeout(ISSP_AMC_Integration.REQUEST_TIMEOUT);
         //req.setEndpoint('callout:ServiceNow_Login/api/now/table/incident');
-        req.setEndpoint('https://apisbx.iata.org/coding/acli/requests');
+        //req.setEndpoint('https://apisbx.iata.org/acli-coding/requests');
+        req.setEndpoint(endpoint);
         req.setBody(theBody);
-        String authorizationHeader = '5f76dc7646bd49c9a238aaefc3ac0d01ee12E4Cfec3C400185Ce877F0C3d0478';
-        req.setHeader('Authorization', authorizationHeader);
-
 
         Http http = new Http();
         HTTPResponse res;
 
         ACLIResponse acliResp = new ACLIResponse();
+        //acliResp.errors = new List<HTTPResponse>();
+        //System.debug('FILI ' + acliResp.errors.size());
 
 
         try{
-            if(!Test.isRunningTest()){
+            //if(!Test.isRunningTest()){
                 res = http.send(req);
-            }
+            /*}
             else{
                 res = new HttpResponse();
-            }
-            
+            }*/
+
             system.debug('MC  --> ACLI Response: ' + res);
             system.debug('MC  --> ACLI Response body: ' + res.getBody());
             system.debug('MC  --> ACLI Response status: ' + res.getStatusCode());
-            if(res.getStatusCode() == 200){
                 acliResp = (ACLIResponse)System.JSON.deserialize(res.getBody(), ACLIResponse.class);
-                system.debug(acliResp);
-                //String status = acliResp.Status;
+            if(res.getStatusCode() == 201){
+                system.debug('FILLLLI ' + acliResp);
+                //String status = acliResp.Status
+
+                update new Case(Id = caseIdReceived, Coding_Application_ID__c = acliResp.requestId);
+
+            }else if(res.getStatusCode() == 400){
+                //String status = errors[0].Status;
+                String detail = acliResp.errors[0].detail;
+                System.debug('FILIPA MM ' + detail);
+                //System.debug('FILIPA MM STATUS ' + status);
+                system.debug('FILLLLI ' + acliResp);
             }
             if(Test.isRunningTest()){
                 CalloutException e = (CalloutException)CalloutException.class.newInstance();

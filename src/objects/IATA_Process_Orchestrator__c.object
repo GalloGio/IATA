@@ -298,6 +298,7 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
         <columns>Process_Name__c</columns>
         <columns>Total_Actions__c</columns>
         <columns>Process_Step_Stage__c</columns>
+        <columns>OWNER.ALIAS</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

@@ -8,5 +8,9 @@
         <plural>true</plural>
         <value>ACLI Processes</value>
     </caseValues>
+    <fields>
+        <label><!-- Generate Letter --></label>
+        <name>Generate_Letter_del__c</name>
+    </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

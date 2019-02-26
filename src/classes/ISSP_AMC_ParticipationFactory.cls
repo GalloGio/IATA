@@ -948,7 +948,7 @@ public with sharing class ISSP_AMC_ParticipationFactory {
     public static Participation_Online_Application__c createBaggageParticipation(String name, Boolean insertParticipation, boolean charDesig, boolean numCode){
         Participation_Online_Application__c participation = new Participation_Online_Application__c(
             // Entity/Contact Data
-            Name = name,
+            
             HOC_Salutation__c = 'Admiral',
             HOC_First_Name__c = 'First Name',
             HOC_Last_Name__c  = 'HOC Last Name',
@@ -1595,7 +1595,10 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             CaseLocationCodeRecordType__c = 'Airline Coding Application',
             CaseManageCodesRecordType__c = 'Airline Coding Application',
             Orchestrator_Step_RecordType__c = 'IATA Process Step',
-            isPublicAmazonFile__c = true
+            isPublicAmazonFile__c = true,
+            endpoint__c = 'https://apisbx.iata.org/acli-coding/requests',
+            username__c = '9b5e2abd65ee4c8e9bff0e97bd8c4e16',
+            password__c = '8ac07dac22564502AB51BfBF6f24D217'
         );
 
         if(insertSetting){

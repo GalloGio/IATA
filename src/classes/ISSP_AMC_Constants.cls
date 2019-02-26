@@ -106,10 +106,10 @@ public class ISSP_AMC_Constants {
 	public static final String AMC_CASE_STATUS_OPEN = 'Open';
 	public static final String AMC_CASE_STATUS_SUBMITTED = 'Submitted';
 	// Constantes for CaseArea
-	public static final String AMC_CASE_CASEAREA_AIRLINE_CODING_APPLICATION = 'Airline Coding Application';
-	public static final String AMC_CASE_CASEAREA_ACCOUNTING_OR_PREFIX_CODE = 'Airline Coding Application';
-	public static final String AMC_CASE_CASEAREA_CODES_LOCATION_CODE = 'Location Code';
-	public static final String AMC_CASE_CASEAREA_BAGGAGE_CODE = 'Airline Coding Application';
+	public static final String AMC_CASE_CASEAREA_AIRLINE_CODING_APPLICATION = 'Coding & MITA Airline Coding';
+	public static final String AMC_CASE_CASEAREA_ACCOUNTING_OR_PREFIX_CODE = 'Coding & MITA Airline Coding';
+	public static final String AMC_CASE_CASEAREA_CODES_LOCATION_CODE = 'Coding & MITA Airline Coding';
+	public static final String AMC_CASE_CASEAREA_BAGGAGE_CODE = 'Coding & MITA Airline Coding';
 	// Constantes for Reason
 	public static final String AMC_CASE_REASON_DESIGNATOR_FORM = 'Designator Form';
 	public static final String AMC_CASE_REASON_ACCOUNTING_OR_PREFIX_FORM = '3 Digit Form';

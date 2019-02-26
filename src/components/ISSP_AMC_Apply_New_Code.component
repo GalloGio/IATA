@@ -89,28 +89,40 @@
 	                <div class="col-md-12">
             			<hr/>
   					</div>
-					
+				
 					<apex:outputPanel id="popupDeleteSection" rendered="{!IF(isThereACase == true,true,false)}">
 						<div class="test">
-
-                      <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
-                          <apex:outputPanel styleClass="Content" layout="black" > 
-	                           <center>
-	                           		<apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}" />
-	                           		<div>
-	                           			<apex:commandButton value="View Case" action="{!redirectToCase}" styleClass="btn btn_iata_primary"/>
-	                           			<apex:commandButton value="Cancel" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
-
-	                           		</div>
-	                           		
-	                           	</center>
-                            </apex:outputPanel>
-                        </apex:outputPanel>         
-					</div>
+                      	<apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+	                        <apex:outputPanel styleClass="Content" layout="black" > 
+		                        <center>
+		                           	<apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}{!caseNum}." />
+		                           		<div>
+		                           			<apex:commandButton value="View Case" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
+		                           			disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+		                           			<apex:commandButton value="Cancel" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
+		                           		</div>
+		                           	</center>
+	                            </apex:outputPanel>
+	                        </apex:outputPanel>
+						</div>
                     </apex:outputPanel>
 
-				
-
+                    <apex:outputPanel id="popupDeleteSection2" rendered="{!IF(isThereAParticipation == true,true,false)}">
+						<div class="test">
+                      	<apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+	                        <apex:outputPanel styleClass="Content" layout="black" > 
+		                        <center>
+		                           	<apex:outputLabel value="Your company has already create a case to request the code. Click here to edit" />
+		                           		<div>
+		                           			<apex:commandButton value="Edit Application" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+		                           			disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+		                           			<apex:commandButton value="Cancel" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
+		                           		</div>
+		                           	</center>
+	                            </apex:outputPanel>
+	                        </apex:outputPanel>
+						</div>
+                    </apex:outputPanel>
 	            </section>
 			</div>
 		</apex:form>

@@ -383,6 +383,14 @@ $(document).ready(function(){
                 }
 
   
+  @media screen and (max-width: 812px) {
+    .topright {
+      top: 2% !important;
+      left:43%;
+      font-size:16px;
+    }
+  }
+  
   @media screen and (max-width: 720px) {
     .topright {
       top: 12% !important;

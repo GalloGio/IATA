@@ -228,11 +228,11 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                 }
                 #loading > div:nth-child(2){
                     position: fixed !important;
-                    transform:translate(-50%,-50%)!important;
+                    transform:translate(-35%,-40%)!important;
                 }
                 #redirect > div:nth-child(2){
                     position: fixed !important;
-                    transform:translate(-50%,-50%)!important;
+                    transform:translate(-35%,-40%)!important;
                 }
             </style>
 

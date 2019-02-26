@@ -230,17 +230,18 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                 }
                 .input-daterange input{
                     text-align: left;
+                    border-radius: 4px !important;
                 }
                 .glyphicon-remove {
                     color: #a94442 !important;
                 }
                 #loading > div:nth-child(2){
                     position: fixed !important;
-                    transform:translate(-50%,-50%)!important;
+                    transform:translate(-35%,-40%)!important;
                 }
                 #redirect > div:nth-child(2){
                     position: fixed !important;
-                    transform:translate(-50%,-50%)!important;
+                    transform:translate(-35%,-40%)!important;
                 }
             </style>
             
@@ -584,7 +585,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-11">
                                                     &nbsp;
                                                 </div>
-                                                <div class="col-sm-1">
+                                                <div class="col-sm-1" style="right: 13px;">
                                                     <apex:commandLink id="btnStep4Id" styleClass="btn btn-success" action="{!saveParticipation}" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4,step2Panel,step1Panel,step4Panel" status="Redirect" value="Submit" onclick="startRedirect()" oncomplete="rerenderMap(),stopLoading()" >
                                                         <apex:param assignTo="{!step}" value="Submit" />
                                                     </apex:commandLink>

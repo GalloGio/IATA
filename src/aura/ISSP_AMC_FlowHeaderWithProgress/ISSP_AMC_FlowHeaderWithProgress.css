@@ -8,12 +8,31 @@ display: inline-table !important;
 display: inline-grid !important;  
 } */
 .THIS .slds-path__nav{
-    margin-right: 10%;  
+    margin-right:10%;
+}
+.THIS .firts{
+    padding-right:10%; 
+    height:14%;
+    padding-top:8%; 
+    padding-left: 5%; 
+    
+}
+.THIS .second{
+    margin-right: 10%; 
+    padding-right:10%;
+    padding-left: 5%; 
 }
 .THIS .slds-path__item{
     min-width: 10%; 
-    max-width: 100%; 
-    
+    max-width: 100%;  
+}
+
+@media (max-width: 1000px) {
+    .THIS .LabelTooltip .tooltiptext { background-color: red; }
+}
+
+@media (min-width: 1000px) {
+    .THIS .LabelTooltip .tooltiptext{  background-color: blue; }
 }
 .THIS .path-item-status-fix {
     cursor: default;
@@ -71,33 +90,39 @@ display: inline-grid !important;
 .THIS .slds-path__nav .iata-status-incomplete::after {
     background-color: #b0adab;
 }
-
+.THIS .LabelTooltip  {
+    position: relative;
+    display: inline-block;
+    
+}
 .THIS .LabelTooltip .tooltiptext{
     visibility: hidden;
-    position:fixed;
-    width: -moz-max-content;
+    width: 150px;
     background-color: #fff;
     color: #00396b;
     text-align: center;
-    padding: 10px;
     border-radius: 6px;
+    padding: 6px;
+    position: absolute;
     z-index: 1;
     opacity: 1;
     transition: opacity 0.3s;
     margin-bottom: 80px !important;
-    margin-top: -40px !important; /*Position label*/
+    margin-top: -60% !important;
+    
     border-color: #e5e4e3;
     border-style: solid;
     border-width: thin;
     
 }
 
+
 .THIS .LabelTooltip .tooltiptext::after {
     content: "";
     position: absolute;
     top: 100%;
-    left: 50%;
-    margin-left: -5px;
+    left: 40%;
+    margin-left: -10px;
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent #e5e4e3 transparent;
@@ -106,24 +131,33 @@ display: inline-grid !important;
 }
 
 .THIS .LabelTooltip:hover .tooltiptext {
+    font-size: 80%;
     margin-bottom: 1.25rem;
     margin-left: 1rem;
+    margin-left: 20px !important;
     visibility: visible;
 }
-
-/*@media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
 .THIS .LabelTooltip .tooltiptext{
 visibility: hidden;
-position: fixed;
-width: max-content;
-background-color: #000;
-color: #000;
+max-width: 230%;
+max-height:180%;
+
+background-color: #fff;
+color: #00396b;
 text-align: center;
-padding: 10px;
 border-radius: 6px;
+padding: 6px;
+position: absolute;
 z-index: 1;
 opacity: 1;
 transition: opacity 0.3s;
 margin-bottom: 80px !important;
+margin-top: -45px !important;
+
+border-color: #e5e4e3;
+border-style: solid;
+border-width: thin;
 }
 }*/

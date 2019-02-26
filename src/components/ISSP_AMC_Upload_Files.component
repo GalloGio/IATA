@@ -63,7 +63,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!certificateIncorporationRegistration.Name}
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!breakdownOfShareholders.Name}
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!uld.Name}
                                     </div>
                                 </div>
@@ -177,7 +177,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!signedLetterCrs.Name}
                                     </div>
                                 </div>
@@ -221,7 +221,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!nonScheduled.Name}
                                     </div>
                                 </div>
@@ -260,7 +260,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!authorizationTransportationServices.Name}
                                     </div>
                                 </div>
@@ -299,7 +299,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!trafficAgreementValidIATACode.Name}
                                     </div>
                                 </div>
@@ -342,7 +342,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!passengers.Name}
                                     </div>
                                 </div>
@@ -387,7 +387,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!cargos.Name}
                                     </div>
                                 </div>
@@ -426,7 +426,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!currentStructureLocation.Name}
                                     </div>
                                 </div>
@@ -465,7 +465,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!caaLetterOpeningDate.Name}
                                     </div>
                                 </div>
@@ -504,7 +504,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!commercialScheduledOperations.Name}
                                     </div>
                                 </div>
@@ -542,7 +542,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!metropolitanLetteAirportA.Name}
                                     </div>
                                 </div>
@@ -579,7 +579,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!metropolitanLetteAirportB.Name}
                                     </div>
                                 </div>
@@ -618,7 +618,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div style="color:#3176b1" class="fileName">
+                                    <div style="color:#3176b1; word-wrap: break-word;" class="fileName">
                                             {!airlineIssuedAOC.Name}
                                     </div>
                                 </div>

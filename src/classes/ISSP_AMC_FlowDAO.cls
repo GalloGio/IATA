@@ -5,7 +5,7 @@ public with sharing class ISSP_AMC_FlowDAO {
         Map <String, String> stageWithStatusMap = new Map <String, String> ();
 
         List <IATA_Process_Orchestrator__c> processList = new List <IATA_Process_Orchestrator__c>([
-                SELECT  Id, Status__c, Process_Step_Name__c, Process_Step_Stage__c, Associated_Case__c  
+                SELECT  Id, Status__c, Process_Step_Name__c, Process_Step_Stage__c, Associated_Case__c
                 FROM    IATA_Process_Orchestrator__c
                 WHERE   IATA_Orchestrator_Process__c = :processOrchestratorId AND Process_Step_Stage__c != null
                 ORDER BY Process_Step_Stage__c
@@ -17,11 +17,31 @@ public with sharing class ISSP_AMC_FlowDAO {
                 //stageWithStatusMap.put(process.Process_Step_Stage__c + '#' + process.Process_Step_Name__c, process.Status__c);
                 //System.debug('TESTE ' + process.Process_Step_Stage__c + '#' + process.Process_Step_Name__c);
             }
+
         }
 
 
         return stageWithStatusMap;
     }
+
+    @AuraEnabled
+    public static Boolean disableButton(Id caseId){
+        Case caseFromConsole = [SELECT id, Coding_Application_ID__c, (SELECT Id, RecordType.DeveloperName FROM Participation_Online_Applications__r) FROM Case WHERE id =: caseId];
+        System.debug('FILIPS ' + caseFromConsole);
+        if(caseFromConsole.Participation_Online_Applications__r[0].RecordType.DeveloperName == 'Location_Code' || caseFromConsole.Participation_Online_Applications__r[0].RecordType.DeveloperName == 'Baggage_Code'){
+            caseFromConsole.Coding_Application_ID__c = 'Not Applicable';
+            update caseFromConsole;
+
+            return true;
+        }
+
+        if(caseFromConsole.Coding_Application_ID__c != null){
+            return true;
+        }
+
+        return false;
+    }
+
 
     @AuraEnabled
     public static List <PicklistInfo> getPicklistsFromProcessOrchestrator(Id processOrchestratorId, String stage){
@@ -57,9 +77,22 @@ public with sharing class ISSP_AMC_FlowDAO {
     }
 
     @AuraEnabled
-    public static void sendCase(Id caseId){
-        List<Case> casesToSendList = new List<Case>([SELECT id FROM Case WHERE id =: caseId]);
-        //ISSP_AMC_Integration.doPost(casesToSendList);
+    public static void sendCaseCtr(Id caseId){
+        HttpResponse res = new HttpResponse();
+        System.debug('entrei');
+        try {
+            /*List<Case> casesToSendList = new List<Case>([SELECT id FROM Case WHERE id =: caseId]);
+            System.debug('FILIPA case: ' + casesToSendList);
+            if(!casesToSendList.isEmpty()){*/
+                res = ISSP_AMC_Integration.doPost(caseId);
+                System.debug('FILIPA LIGHTNING ' + res.getBody());
+            //}
+
+            //ir buscar aqui os erros e mandar como label
+        }catch(Exception e){
+            System.debug(LoggingLevel.ERROR,
+                    'Error trying to send case');
+        }
     }
 
     @AuraEnabled
@@ -82,23 +115,41 @@ public with sharing class ISSP_AMC_FlowDAO {
     }
 
     @AuraEnabled
-    public static void requestForApproval(Id caseId){
-        // Create an approval request for the case
-        Approval.ProcessSubmitRequest request = new Approval.ProcessSubmitRequest();
-        request.setComments('Submitting request for approval.');
-        request.setObjectId(caseId);
+    public static void requestForApproval(Id processOrchestratorId, String stage){
 
-        // Submit the record to specific process
-        request.setProcessDefinitionNameOrId('ACLI_Approve_code_assignment');
-
-        // set nex approver ids (mandatory)
-        //request.setNextApproverIds(new Id[] {UserInfo.getUserId()});
+        stage = stage.replace(' ', '_');
         
-        // Submit on behalf of a specific submitter
-        //request.setSubmitterId(user1.Id);
+        List <IATA_Process_Orchestrator_Step_Action__c> stepActionList = new List <IATA_Process_Orchestrator_Step_Action__c>([
+                SELECT  Id, Action_name__c, IATA_Process_Orchestrator__r.Process_Step_Name__c, IATA_Process_Orchestrator__r.Process_Step_Stage__c, Status__c
+                FROM    IATA_Process_Orchestrator_Step_Action__c
+                WHERE   IATA_Process_Orchestrator__r.IATA_Orchestrator_Process__c = :processOrchestratorId
+                AND     IATA_Process_Orchestrator__r.Process_Step_Stage__c = :stage
+            ]);     
 
-        // Submit the approval request for the case
-        Approval.ProcessResult result = Approval.process(request);
+        AMC_Configuration__c amcConfiguration = AMC_Configuration__c.getInstance();
+
+        if(!stepActionList.isEmpty() && amcConfiguration.First_Approver_Orchestrator__c != null &&
+            String.isNotEmpty(amcConfiguration.First_Approver_Orchestrator__c)){
+
+            // Create an approval request for the case
+            Approval.ProcessSubmitRequest request = new Approval.ProcessSubmitRequest();
+            request.setComments('Submitting request for approval.');
+            request.setObjectId(stepActionList.get(0).Id);
+
+            // Submit the record to specific process
+            request.setProcessDefinitionNameOrId('ACLI_Approve_Code_Assignment2');
+
+            // set nex approver ids (mandatory)
+            //request.setNextApproverIds(new Id[] {UserInfo.getUserId()});
+            
+            request.setNextApproverIds(new Id[] { amcConfiguration.First_Approver_Orchestrator__c });
+
+            // Submit on behalf of a specific submitter
+            //request.setSubmitterId(user1.Id);
+
+            // Submit the approval request for the case
+            Approval.ProcessResult result = Approval.process(request);
+        }
     }
 
 

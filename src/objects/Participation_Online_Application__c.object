@@ -57,7 +57,7 @@
         <defaultValue>false</defaultValue>
         <description>authorized areas of operations - domestic</description>
         <externalId>false</externalId>
-        <label>AAO_Domestic</label>
+        <label>Domestic</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -67,7 +67,7 @@
         <defaultValue>false</defaultValue>
         <description>authorized areas of operations - international</description>
         <externalId>false</externalId>
-        <label>AAO_International</label>
+        <label>International</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -210,7 +210,7 @@
         <fullName>Accounting_Code_Airline_Prefix_Purpose__c</fullName>
         <description>Type of code requested depending on type of operation chosen.</description>
         <externalId>false</externalId>
-        <label>Accounting_Code_Airline_Prefix_Purpose</label>
+        <label>Accounting, Prefix Code Airline Purpose</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -451,7 +451,7 @@
         <fullName>Date_when_airport_has_been_operational__c</fullName>
         <description>Date since the airport has been operational</description>
         <externalId>false</externalId>
-        <label>Date_when_airport_has_been_operational</label>
+        <label>Date the airport has been operational</label>
         <length>10</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -608,7 +608,7 @@
         <fullName>HOB_Email__c</fullName>
         <description>Head Officer Billing Contact Email</description>
         <externalId>false</externalId>
-        <label>HOB_Email</label>
+        <label>HOB Email</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -620,7 +620,7 @@
         <fullName>HOB_First_Name__c</fullName>
         <description>Head Officer Billing Contact First Name</description>
         <externalId>false</externalId>
-        <label>HOB_First_Name</label>
+        <label>HOB First Name</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -632,7 +632,7 @@
         <fullName>HOB_Last_Name__c</fullName>
         <description>Head Officer Billing Contact Last Name</description>
         <externalId>false</externalId>
-        <label>HOB_Last_Name</label>
+        <label>HOB Last Name</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -644,7 +644,7 @@
         <fullName>HOB_Phone__c</fullName>
         <description>Head Officer Billing Contact Phone</description>
         <externalId>false</externalId>
-        <label>HOB_Phone</label>
+        <label>HOB Phone</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -654,7 +654,7 @@
         <fullName>HOB_Salutation__c</fullName>
         <description>Head Officer Billing Contact Salutation</description>
         <externalId>false</externalId>
-        <label>HOB_Salutation</label>
+        <label>HOB Salutation</label>
         <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -666,8 +666,8 @@
         <fullName>HOB_Title__c</fullName>
         <description>Head Officer Billing Contact Title</description>
         <externalId>false</externalId>
-        <label>HOB_Title</label>
-        <length>128</length>
+        <label>HOB Title</label>
+        <length>15</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -678,7 +678,7 @@
         <fullName>HOC_Email__c</fullName>
         <description>Head Officer Contact Email</description>
         <externalId>false</externalId>
-        <label>HOC_Email</label>
+        <label>HOC Email</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -690,7 +690,7 @@
         <fullName>HOC_First_Name__c</fullName>
         <description>Head Officer Contact First Name</description>
         <externalId>false</externalId>
-        <label>HOC_First_Name</label>
+        <label>HOC First Name</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -702,7 +702,7 @@
         <fullName>HOC_Last_Name__c</fullName>
         <description>Head Officer Contact Last Name</description>
         <externalId>false</externalId>
-        <label>HOC_Last_Name</label>
+        <label>HOC Last Name</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -714,7 +714,7 @@
         <fullName>HOC_Phone__c</fullName>
         <description>Head Officer Contact Phone</description>
         <externalId>false</externalId>
-        <label>HOC_Phone</label>
+        <label>HOC Phone</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -724,7 +724,7 @@
         <fullName>HOC_Salutation__c</fullName>
         <description>Head Officer Contact Salutation</description>
         <externalId>false</externalId>
-        <label>HOC_Salutation</label>
+        <label>HOC Salutation</label>
         <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -736,8 +736,8 @@
         <fullName>HOC_Title__c</fullName>
         <description>Head Officer Contact Title</description>
         <externalId>false</externalId>
-        <label>HOC_Title</label>
-        <length>128</length>
+        <label>HOC Title</label>
+        <length>15</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1067,7 +1067,7 @@
         <fullName>ISSP_AMC_Submitted_Date__c</fullName>
         <description>Submittted Date</description>
         <externalId>false</externalId>
-        <label>ISSP_AMC_Submitted_Date</label>
+        <label>Submitted Date</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1637,7 +1637,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
         <fullName>Previously_assigned_numeric_code__c</fullName>
         <description>Previously assigned numeric code to the company</description>
         <externalId>false</externalId>
-        <label>Previously_assigned_numeric_code</label>
+        <label>Previously assigned numeric code</label>
         <length>40</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1808,7 +1808,7 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Submitted By</description>
         <externalId>false</externalId>
-        <label>Submitted_By</label>
+        <label>Submitted By</label>
         <referenceTo>Contact</referenceTo>
         <relationshipLabel>Participation Online Applications (Submitted_By)</relationshipLabel>
         <relationshipName>Participation_Online_Applications</relationshipName>
@@ -1894,9 +1894,10 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
         <label>All</label>
     </listViews>
     <nameField>
+        <displayFormat>ACLI-{0000}</displayFormat>
         <label>ACLI Online Application Name</label>
         <trackHistory>false</trackHistory>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Participation Online Applications</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
@@ -2961,6 +2962,6 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
         </picklistValues>
     </recordTypes>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

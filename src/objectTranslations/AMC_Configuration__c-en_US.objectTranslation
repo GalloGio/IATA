@@ -33,6 +33,10 @@
         <name>CaseManageCodesRecordType__c</name>
     </fields>
     <fields>
+        <label><!-- First Approver Orchestrator --></label>
+        <name>First_Approver_Orchestrator__c</name>
+    </fields>
+    <fields>
         <label><!-- Orchestrator Step RecordType --></label>
         <name>Orchestrator_Step_RecordType__c</name>
     </fields>
@@ -41,8 +45,20 @@
         <name>amazonRecordTypeId__c</name>
     </fields>
     <fields>
+        <label><!-- endpoint --></label>
+        <name>endpoint__c</name>
+    </fields>
+    <fields>
         <label><!-- isPublicAmazonFile --></label>
         <name>isPublicAmazonFile__c</name>
+    </fields>
+    <fields>
+        <label><!-- password --></label>
+        <name>password__c</name>
+    </fields>
+    <fields>
+        <label><!-- username --></label>
+        <name>username__c</name>
     </fields>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

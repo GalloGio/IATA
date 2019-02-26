@@ -12,7 +12,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
 <apex:component controller="ISSP_AMC_EntityContactData">
     <apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" assignTo="{!controllerParticipation}"/>
     <apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="false" />
-    <apex:attribute name="isLocation" description="is Location Identifer Page" type="Boolean" required="false" />
+    <apex:attribute name="isLocation" description="is Location Identifer Page" type="Boolean" required="false"/>
     <apex:attribute name="isSISUser" description="is SIS User" type="Boolean" required="false"/>
     <style>
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
@@ -33,7 +33,16 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
 
     </style>
         
-
+<script>
+    /*function validationPreferenceOfCode(element, errorClass, parentClass){
+            var a = document.getElementsByClassName("entityTitle");
+                var t = element.parentElement.classList;
+                var y = element.parentElement.children;
+                for(var i = 0; i < a.length; i++){
+                    a[i].setAttribute("maxlength", 15);
+                }
+    }*/
+</script>
 
     <div class="tabset">
         
@@ -99,7 +108,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                             <label for="title1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE}</label>
                             <div class="col-sm-8">
                                 <div class="{!IF(AND(hasError, OR(participation.HOC_Title__c == null, participation.HOC_Title__c == "")), 'has-error has-feedback', '')}">
-                                    <apex:inputText id="title1" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOC_Title__c}"/>
+                                    <apex:inputText maxlength="15" id="title1" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar entityTitle" value="{!controllerParticipation.HOC_Title__c}"/>
                                     <span class="{!IF(AND(hasError, OR(participation.HOC_Title__c == null, participation.HOC_Title__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
                                     <span class="sr-only">(error)</span>
                                     
@@ -204,7 +213,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 <label for="streetAddress2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE}</label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.HOB_Title__c == null, participation.HOB_Title__c == "")), 'has-error has-feedback', '')}">
-                                        <apex:inputText id="streetAddress2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOB_Title__c}"/>
+                                        <apex:inputText maxlength="15" id="streetAddress2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar entityTitle" value="{!controllerParticipation.HOB_Title__c}"/>
                                         <span class="{!IF(AND(hasError, OR(participation.HOB_Title__c == null, participation.HOB_Title__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
                                         <span class="sr-only">(error)</span>
                                         
@@ -294,7 +303,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 <label for="streetAddress2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE}</label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.SIS_Title__c == null, participation.SIS_Title__c == "")), 'has-error has-feedback', '')}">
-                                        <apex:inputText id="streetAddress2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Title__c}"/>
+                                        <apex:inputText maxlength="15" id="streetAddress2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Title__c}"/>
                                         <span class="{!IF(AND(hasError, OR(participation.SIS_Title__c == null, participation.SIS_Title__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
                                         <span class="sr-only">(error)</span>
                                         

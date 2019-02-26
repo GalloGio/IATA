@@ -405,4 +405,57 @@ public class ISSP_AMC_Apply_New_Code_Test {
 			}
 		Test.StopTest();
 	}
+
+	/*
+		Purpose: 
+		Parameters: 
+		Returns:
+		Throws [Exceptions]: 
+	*/
+	public static testMethod void testPopUps(){
+
+		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
+		ISSP_AMC_ParticipationFactory.createDesignatorRequirements(true);
+		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
+
+
+
+		Test.StartTest();
+			System.runAs(myUser)
+			{
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				System.runAs(user1){
+					
+
+					
+					ISSP_AMC_Apply_New_Code ctrl = new ISSP_AMC_Apply_New_Code();
+					ctrl.caseDesignatorApplicationId = ISSP_AMC_ParticipationFactory.createDesignatorParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER).Id;
+					ctrl.caseAccountingOrPrefixApplicationId = ISSP_AMC_ParticipationFactory.createEmptyAccountingPrefixParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER).Id;
+					ctrl.caseLocationCodeApplicationId = ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, ISSP_AMC_Constants.AMC_PAR_LOCATION_TYPE_HELIPORT, false).Id;
+					ctrl.caseBaggageApplicationId = ISSP_AMC_ParticipationFactory.createBaggageParticipation('testName', true, true, true).Id;
+
+
+					ctrl.isDesignator = true;
+					ctrl.redirectToCase();
+					ctrl.redirectToParticipation();
+
+					ctrl.isAccountingPrefix = true;
+					ctrl.redirectToCase();
+					ctrl.redirectToParticipation();
+
+					ctrl.isLocation = true;
+					ctrl.redirectToCase();
+					ctrl.redirectToParticipation();
+
+					ctrl.isBaggage = true;
+					ctrl.redirectToCase();
+					ctrl.redirectToParticipation();
+					
+					ctrl.closePopupDeleteSection();
+
+				}
+			}
+		Test.StopTest();
+
+	}
 }
