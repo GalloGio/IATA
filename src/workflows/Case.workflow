@@ -3835,6 +3835,18 @@
         <template>Workflow_and_Metrics_team/Salesforce_Change_Request_UAT_Required_Reminder</template>
     </alerts>
     <alerts>
+        <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>
+        <description>Send a notification to SIS Customer Support when a SIS E-Joining form is submitted</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SISCustomerSupport</recipient>
+            <type>role</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>SIS_E_Invoicing/SIS_E_Invoicing_New_Form_submitted_internal_use</template>
+    </alerts>
+    <alerts>
         <fullName>Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application</fullName>
         <ccEmails>idcard@t-gh8qpfqgjc5oow1a4obnxk33.2-8tfeay.2.case.salesforce.com</ccEmails>
         <description>Send an email as soon as a case is created for IDCard Application</description>
@@ -17818,10 +17830,11 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <description>When a new case for SIS E-Joining is submitted( its status changes from Draft to Open) this notification is sent</description>
         <formula>AND(
   RecordType.DeveloperName=&apos;IDFS_Airline_Participation_Process&apos;,
-		ISPICKVAL(CaseArea__c,&apos;Airline Joining&apos;),
-		ISPICKVAL(Reason1__c,&apos;SIS Client&apos;),
-		ISPICKVAL(Classification_SIS__c,&apos;SIS Membership&apos;),
-		ISPICKVAL(Status,&apos;Open&apos;)
+  ISPICKVAL(CaseArea__c,&apos;Airline Joining&apos;),
+  ISPICKVAL(Reason1__c,&apos;SIS Client&apos;),
+  ISPICKVAL(Classification_SIS__c,&apos;SIS Membership&apos;),
+  ISPICKVAL(Status,&apos;For Review and Acceptance&apos;),
+  ISPICKVAL($User.UserType,&apos;PowerPartner&apos;)
 )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
