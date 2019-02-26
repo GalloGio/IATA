@@ -33609,6 +33609,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Regular Price</value>
     </labels>
     <labels>
+        <fullName>resetPasswordConfirmMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>resetPasswordConfirmMessage</shortDescription>
+        <value>Reset password for this user for the selected community?</value>
+    </labels>
+    <labels>
         <fullName>select_all</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
