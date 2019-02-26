@@ -52,6 +52,7 @@ public class AMS_AccountTriggerHandler {
         List<Account> operationHelpercandidate = new List<Account>();
 
         Set<Id> parentIdSet = new Set<Id>();
+        List<Account> accountLst = new List<Account>();
 
         for(Account ag: accs){
             if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent'){
@@ -63,6 +64,7 @@ public class AMS_AccountTriggerHandler {
 
             if(ANG_MulticountryHelper.shouldRunMulticountryValidations(ag)){
                 parentIdSet.add(ag.ParentId);
+                accountLst.add(ag);
             }
 
         }
@@ -70,7 +72,9 @@ public class AMS_AccountTriggerHandler {
         //Ideally this would be done on BeforeInsert
         //However, doing this on AfterInsert we only have to perform a single query
         //This simplifies the necessary logic plus allows reusability for the AfterUpdate
-        ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
+        if(!accountLst.isEmpty()){
+            ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
+        }
 
         if(operationHelpercandidate != null && operationHelpercandidate.size()>0){
             system.debug('[AMS_AgencyTrigger] updating Operation for '+operationHelpercandidate.size()+' Agencies');
@@ -117,17 +121,21 @@ public class AMS_AccountTriggerHandler {
         copyHandlingInformationToRegulations(accs, oldMap);
 
         Set<Id> parentIdSet = new Set<Id>();
+        List<Account> accountLst = new List<Account>();
 
         for(Account acct : accs){
             if(ANG_MulticountryHelper.shouldRunMulticountryValidations(acct)){
                 parentIdSet.add(acct.ParentId);
+                accountLst.add(acct);
             }
         }
 
         //Ideally this would be done on BeforeUpdate
         //However, doing this on AfterUpdate we only have to perform a single query
-        //This simplifies the necessary logic plus allows reusability for the AfterInsert 
-        ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
+        //This simplifies the necessary logic plus allows reusability for the AfterInsert
+        if(!accountLst.isEmpty()){
+            ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
+        }
 
     }
 
