@@ -2686,6 +2686,41 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_Community</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Community</shortDescription>
+        <value>Community</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Portal_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Portal_Status</shortDescription>
+        <value>Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SelectCommunity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SelectCommunity</shortDescription>
+        <value>Select Community</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SelectPortalStatus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SelectPortalStatus</shortDescription>
+        <value>Select Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_selectReason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_selectReason</shortDescription>
+        <value>Select Reason</value>
+    </labels>
+    <labels>
         <fullName>Campaign_already_created</fullName>
         <language>en_US</language>
         <protected>false</protected>
