@@ -6,8 +6,11 @@ public class ANG_MulticountryHelper {
 	}
 
 	public class SwapAccountsWrapper {
-		public Map<Id, Account> swapMapping;
 		public Id newGE;
+		public Id bspNewGE;
+		public Boolean swapAE;
+		public Boolean diffBSP;
+		public Map<Id, Account> swapMapping;
 	}
 
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
@@ -288,6 +291,8 @@ public class ANG_MulticountryHelper {
 		if(onlineForm == null || onlineForm.SAAM_Case__r.AccountId == null || onlineForm.SAAM_Case__r.Account.ParentId == null)
 			return 'The Parent Account could not be found.';
 
+		List<AMS_Accreditation_Contact__c> aContactLst = new List<AMS_Accreditation_Contact__c>();
+
 		for(AMS_Account_Role__c contactRole: [Select Id, Owner_Account__c, Owner_Account__r.Name, Contact__c, Contact__r.FirstName, Contact__r.LastName, Contact_Email__c,Financial_Assessment_Contact__c,Percentage__c,Legacy_External_ID__c,Person__c, Person__r.First_Name__c, Person__r.Lastname__c, Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Person__r.Name, Contact_Phone__c from AMS_Account_Role__c where Account__c = :onlineForm.SAAM_Case__r.Account.ParentId and active__c = true and RecordTypeId = :AMS_Utils.AccountRoleOwnershipRT]){
 
 			String firstName = contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.FirstName : contactRole.Person__c <> null ? '' : contactRole.Owner_Name__c;
@@ -310,9 +315,11 @@ public class ANG_MulticountryHelper {
 			aContact.Phone__c = contactRole.Contact_Phone__c;
 			aContact.RecordTypeId = contactRole.Owner_Account__c == null ? AMS_Utils.AccreditationContactPersonRT : AMS_Utils.AccreditationContactCompanyRT;
 
-			insert aContact;
+			aContactLst.add(aContact);
 
 		}
+
+		insert aContactLst;
 	
 		return null;
 	
@@ -331,6 +338,8 @@ public class ANG_MulticountryHelper {
 		
 		SwapAccountsWrapper swapWrapper = new SwapAccountsWrapper();
 
+		swapWrapper.swapAE = false;
+		
 		Map<Id, Account> swapMapping = new Map<Id, Account>();
 		
 		List<Account> accountLst = accountsMap.values();
@@ -342,14 +351,31 @@ public class ANG_MulticountryHelper {
 
 		firstAccount.Location_Type__c  = secondAccount.Location_Type__c;
 		secondAccount.Location_Type__c = locationTypeAux;
-		
+
+		Boolean diffBSP = 
+			(firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c != 
+				secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c);
+
+		//If the swapped accounts are in different BSPs 
+		//and one of them has the location type AE it must be updated to HE
+		//to make sure that the multicountry hierarchy remains valid  
+		if(diffBSP && firstAccount.Location_Type__c == AMS_Utils.AE){
+			firstAccount.Location_Type__c = AMS_Utils.HE;
+			swapWrapper.swapAE = true;
+		} else if(diffBSP && secondAccount.Location_Type__c == AMS_Utils.AE){
+			secondAccount.Location_Type__c = AMS_Utils.HE;
+			swapWrapper.swapAE = true;
+		}
+
 		if(firstAccount.Location_Type__c == AMS_Utils.GE){
 			swapRelatedFields(firstAccount, secondAccount);
 			swapWrapper.newGE = firstAccount.Id;
+			swapWrapper.bspNewGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 		}
 		else if(secondAccount.Location_Type__c == AMS_Utils.GE){
 			swapRelatedFields(secondAccount, firstAccount);
 			swapWrapper.newGE = secondAccount.Id;
+			swapWrapper.bspNewGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 		}
 		else if(firstAccount.Location_Type__c == AMS_Utils.HE){
 			swapRelatedFields(firstAccount, secondAccount);
@@ -361,6 +387,7 @@ public class ANG_MulticountryHelper {
 		swapMapping.put(firstAccount.Id, secondAccount);
 		swapMapping.put(secondAccount.Id, firstAccount);
 		
+		swapWrapper.diffBSP = diffBSP;
 		swapWrapper.swapMapping = swapMapping;
 
 		toReturn.addAccount(firstAccount);

@@ -204,8 +204,14 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSetAux, changesContainer);
-					else
+					else if(isMulticountry && containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
+						Id acctParentId = changesContainer.accountsMap.get(oscar.Account__c).ParentId;
+						Id parentInThisRel = (acctParentId != NULL && changesContainer.accountsMap.containsKey(acctParentId)) ? changesContainer.accountsMap.get(acctParentId).Id : oscar.Account__c;
+						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, new Set<Id>{parentInThisRel}, changesContainer);
+					}
+					else {
 						changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
+					}
 					
 					System.debug('[ANG_AgencyChangesHelper] Checkpoint2 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
@@ -301,7 +307,18 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
-				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
+				Set<Id> accountsIdSet = new Set<Id>();
+
+				if(isMulticountry && containsChange(new List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
+					Id acctParentId = changesContainer.accountsMap.get(oscar.Account__c).ParentId;
+					Id parentInThisRel = (acctParentId != NULL && changesContainer.accountsMap.containsKey(acctParentId)) ? changesContainer.accountsMap.get(acctParentId).Id : oscar.Account__c;
+					accountsIdSet.add(parentInThisRel);
+				}
+				else {
+					accountsIdSet.addAll(accountIdsInvolvedSet);
+				}
+
+				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountsIdSet, changesContainer);
 
 				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
 
@@ -343,7 +360,18 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(config == null)
 					config = ANG_AgencyChangesConfigHelper.getConfig(oscar);
 
-				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, accountIdsInvolvedSet, changesContainer);
+				Set<Id> accountsIdSet = new Set<Id>();
+
+				if(isMulticountry && containsChange(new List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c)){
+					Id acctParentId = changesContainer.accountsMap.get(oscar.Account__c).ParentId;
+					Id parentInThisRel = (acctParentId != NULL && changesContainer.accountsMap.containsKey(acctParentId)) ? changesContainer.accountsMap.get(acctParentId).Id : oscar.Account__c;
+					accountsIdSet.add(parentInThisRel);
+				}
+				else {
+					accountsIdSet.addAll(accountIdsInvolvedSet);
+				}
+
+				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, accountsIdSet, changesContainer);
 
 			}else if (!oldOSCAR.Apply_Penalty_Fee__c && oscar.Apply_Penalty_Fee__c) {
 
@@ -490,7 +518,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		//Accounts Map contains only the two agencies that we are gonna swap
 		Map<Id, Account> accountsMap = toReturn.accountsMap.deepClone();
 		
-		//Swap location types and related fields (parents + RHC info & risk fields if GE's involved)
+		//Swap location types and related fields (parents + RHC info & risk fields if GE is involved)
 		ANG_MulticountryHelper.SwapAccountsWrapper swapAccountsWrapper = ANG_MulticountryHelper.swapAccountsLocationType(accountsMap, toReturn);
 
 		//Fetch all the agencies from the hierarchy 
@@ -506,18 +534,38 @@ public with sharing class ANG_AgencyChangesHelper {
 			
 			Boolean needsUpdate = (swapAccountsWrapper.newGE != NULL);
 
-			//Means that the current child 
-			//in this relationship is being swapped 
-			if(childAcct != NULL){
-				rel.Child_Account__c = swapAccountsWrapper.swapMapping.get(rel.Child_Account__c).Id;
-				needsUpdate = true;
+			if(swapAccountsWrapper.diffBSP && childAcct != NULL && parentAcct != NULL){
+				rel.Child_Account__c = parentAcct.Id;
+				rel.Parent_Account__c = childAcct.Id;
 			}
-			
-			//Means that the current parent 
-			//in this relationship is being swapped 
-			if(parentAcct != NULL){
-				rel.Parent_Account__c = swapAccountsWrapper.swapMapping.get(rel.Parent_Account__c).Id;
-				needsUpdate = true;
+			else {
+
+				//Means that the current child 
+				//in this relationship is being swapped 
+				if(childAcct != NULL){
+					if(swapAccountsWrapper.diffBSP && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE && rel.Parent_Account__r.Location_Type__c == AMS_Utils.HE){
+						rel.Parent_Account__c = rel.Child_Account__c;
+					}
+					rel.Child_Account__c = swapAccountsWrapper.swapMapping.get(rel.Child_Account__c).Id;
+					needsUpdate = true;
+				}
+				
+				if(swapAccountsWrapper.diffBSP && parentAcct != NULL && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE && swapAccountsWrapper.swapAE){
+					rel.Parent_Account__c = swapAccountsWrapper.swapMapping.get(rel.Parent_Account__c).Id;
+					needsUpdate = true;
+				}
+				//Means that the current parent 
+				//in this relationship is being swapped
+				else if(!swapAccountsWrapper.diffBSP && parentAcct != NULL){
+					rel.Parent_Account__c = swapAccountsWrapper.swapMapping.get(rel.Parent_Account__c).Id;
+					needsUpdate = true;
+				}
+
+				if(childAcct == NULL && parentAcct == NULL && swapAccountsWrapper.diffBSP && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE){
+					rel.Parent_Account__c = swapAccountsWrapper.newGE;
+					needsUpdate = true;
+				}
+
 			}
 
 			if(needsUpdate){
@@ -528,6 +576,11 @@ public with sharing class ANG_AgencyChangesHelper {
 
 					Account acct  = new Account(Id = rel.Child_Account__c);
 					acct.ParentId = rel.Parent_Account__c;
+
+					//If the given child was an HE that remained in the BSP of the new GE the location type must be set as AE
+					if(swapAccountsWrapper.diffBSP && rel.Child_Account__r.Location_Type__c == AMS_Utils.HE && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE){
+						acct.Location_Type__c = AMS_Utils.AE;
+					}
 
 					//Change top parent if the GE was swapped
 					if(swapAccountsWrapper.newGE != NULL){
