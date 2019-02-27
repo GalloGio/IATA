@@ -166,7 +166,7 @@ public with sharing class SIDRAliteMassEmailController{
         public list<SelectOption> getlistSector() {
             list<SelectOption> listOption = new list<SelectOption>();
             listOption.add(new SelectOption('Travel Agent', 'Travel Agent'));
-            listOption.add(new SelectOption('Cargo Agent', 'Cargo Agent'));
+            listOption.add(new SelectOption('Cargo Agent', Label.ISSP_Cargo_Label_Value));//WMO-391
             return listOption;
         }
 

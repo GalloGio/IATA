@@ -142,7 +142,10 @@
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Sector</p>
                     </dt>
-                    <dd>{!v.account.Sector__c}</dd>
+                    <dd>
+                        <!-- WMO-391 -->
+                        <force:outputField value="{!v.account.Sector__c}"/>                        
+                    </dd>
                 </dl>
             </div>
 

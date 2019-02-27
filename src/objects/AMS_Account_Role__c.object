@@ -827,12 +827,11 @@ RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
         <fullName>Subsidiary_Type__c</fullName>
         <description>field created for AMP reporting</description>
         <externalId>false</externalId>
-        <formula>IF
-(
-TEXT(Account__r.Membership_status__c)= &apos;&apos;,
-TEXT(Account__r.Sector__c), 
-TEXT(Account__r.Membership_status__c)
-)</formula>
+        <formula>IF(
+                TEXT(Account__r.Membership_status__c)= &#39;&#39;,
+                IF(TEXT(Account__r.Sector__c) = &#39;Cargo Agent&#39;, &#39;Freight Forwarder&#39;, TEXT(Account__r.Sector__c)), 
+                    TEXT(Account__r.Membership_status__c))
+        </formula>
         <inlineHelpText>field created for AMP reporting</inlineHelpText>
         <label>Subsidiary Type</label>
         <required>false</required>

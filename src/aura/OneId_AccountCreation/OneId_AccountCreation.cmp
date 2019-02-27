@@ -59,7 +59,10 @@
 		<div class="slds-col slds-m-bottom_medium slds-size_1-of-1">
 			<label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!v.accountLabels.Sector__c}</label>
 			<div class="slds-form-element__control slds-select_container">
-				<ui:inputSelect aura:id="sectorSelection" value="{!v.account.Sector__c}" class="slds-select" disabled="{!!v.changeSector}"/>
+				<ui:inputSelect aura:id="sectorSelection" value="{!v.account.Sector__c}" class="slds-select" disabled="{!!v.changeSector}">
+					<ui:inputSelectOption text="Travel Agent" label="{!$Label.c.ISSP_Travel}"/>
+    				<ui:inputSelectOption text="Cargo Agent" label="{!$Label.c.ISSP_Cargo_Label_Value}"/><!-- WMO-391 label changed -->
+				</ui:inputSelect>
 				<!-- options are set on the setOption function -->
 			</div>
 		</div>

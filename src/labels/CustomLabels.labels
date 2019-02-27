@@ -19485,6 +19485,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Cargo</value>
     </labels>
     <labels>
+        <fullName>ISSP_Cargo_Label_Value</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Cargo</shortDescription>
+        <value>Freight Forwarder</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Cargo_Agent</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>

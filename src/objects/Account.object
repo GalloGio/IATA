@@ -15555,7 +15555,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <value>
                     <fullName>Cargo Agent</fullName>
                     <default>false</default>
-                    <label>Cargo Agent</label>
+                    <label>Freight Forwarder</label>
                 </value>
                 <value>
                     <fullName>Education</fullName>

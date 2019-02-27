@@ -111,7 +111,7 @@
                                 <apex:outputPanel rendered="{!con.Account.Sector__c != null}" layout="block">
                                     <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Sector__c.Label}</label>
                                     <div class="col-lg-7">
-                                        {!con.Account.Sector__c}
+                                         <apex:outputField value="{!con.Account.Sector__c}"/> <!-- WMO-391 -->
                                     </div>
                                 </apex:outputPanel>
                             </div>
