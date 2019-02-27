@@ -3161,4 +3161,10 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return res;
     }
     /*** AMSU-195 End ***/
+    
+    public static Integer getRandomNumber(){
+    	Integer randomKey = Crypto.getRandomInteger();
+    	
+    	return randomKey < 0 ? randomKey * -1 : randomKey;
+    }
 }
