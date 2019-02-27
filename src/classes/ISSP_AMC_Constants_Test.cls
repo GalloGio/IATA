@@ -85,10 +85,10 @@ public class ISSP_AMC_Constants_Test {
 			System.assertEquals('Application Code Withdraw', ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_MANAGE_MY_CODES);
 			System.assertEquals('Open', ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN);
 			System.assertEquals('Submitted', ISSP_AMC_Constants.AMC_CASE_STATUS_SUBMITTED);
-			System.assertEquals('Airline Coding Application', ISSP_AMC_Constants.AMC_CASE_CASEAREA_AIRLINE_CODING_APPLICATION);
-			System.assertEquals('Airline Coding Application', ISSP_AMC_Constants.AMC_CASE_CASEAREA_ACCOUNTING_OR_PREFIX_CODE);
-			System.assertEquals('Location Code', ISSP_AMC_Constants.AMC_CASE_CASEAREA_CODES_LOCATION_CODE);
-			System.assertEquals('Airline Coding Application', ISSP_AMC_Constants.AMC_CASE_CASEAREA_BAGGAGE_CODE);
+			System.assertEquals('Coding & MITA Airline Coding', ISSP_AMC_Constants.AMC_CASE_CASEAREA_AIRLINE_CODING_APPLICATION);
+			System.assertEquals('Coding & MITA Airline Coding', ISSP_AMC_Constants.AMC_CASE_CASEAREA_ACCOUNTING_OR_PREFIX_CODE);
+			System.assertEquals('Coding & MITA Airline Coding', ISSP_AMC_Constants.AMC_CASE_CASEAREA_CODES_LOCATION_CODE);
+			System.assertEquals('Coding & MITA Airline Coding', ISSP_AMC_Constants.AMC_CASE_CASEAREA_BAGGAGE_CODE);
 			System.assertEquals('Designator Form', ISSP_AMC_Constants.AMC_CASE_REASON_DESIGNATOR_FORM);
 			System.assertEquals('3 Digit Form', ISSP_AMC_Constants.AMC_CASE_REASON_ACCOUNTING_OR_PREFIX_FORM);
 			System.assertEquals('Location ID Form', ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM);
