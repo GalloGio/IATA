@@ -12,6 +12,7 @@
     <customButtons>Create_SAAM_Case</customButtons>
     <customButtons>OscarFOP</customButtons>
     <customButtons>Conga_Merge_JS</customButtons>
+    <customButtons>Create_SIDRA_lite</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
