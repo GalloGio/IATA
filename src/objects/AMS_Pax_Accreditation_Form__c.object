@@ -27267,5 +27267,16 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
         <errorDisplayField>Remittance_frequency__c</errorDisplayField>
         <errorMessage>The amount of selected options is not valid for this agency.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Change_Location_Class_after_IATACode_gen</fullName>
+        <active>true</active>
+        <description>Once the IATA Code is generated the Location Class can no longer be changed.</description>
+        <errorConditionFormula>AND(   
+ISCHANGED(Location_Class__c), 
+NOT( ISBLANK( IATACode__c ) ) 
+)</errorConditionFormula>
+		<errorDisplayField>Location_Class__c</errorDisplayField>
+        <errorMessage>Agent needs to be pointed to create a new account and new application.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
