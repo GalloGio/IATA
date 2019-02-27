@@ -74,7 +74,7 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 		if(!mapRemoteInvocationArtifacts.isEmpty()){
 
 			List<AMS_OSCAR__c> oscarList = [SELECT ID, Name, Invoice_number__c, Endorsement_Requested__c, Endorsement_requested_date__c, 
-											STEP47__c, STEP48__c, STEP49__c, Oscar_Communication_Case_Id__c
+											STEP47__c, STEP9__c, STEP49__c, Oscar_Communication_Case_Id__c
 											FROM AMS_OSCAR__c WHERE Oscar_Communication_Case_Id__c IN :mapRemoteInvocationArtifacts.keySet()]; 
 
 			System.debug('[ANG_SAP_PPA_RemoveInvocation] doProcess - Oscar list to Process: ' + oscarList);
@@ -99,7 +99,7 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 
 						//2 - Set Issue billing doc and Confirm Payment Received Steps as "Not Applicable"
 						osc.STEP47__c = 'Not Applicable';
-						osc.STEP48__c = 'Not Applicable';
+						osc.STEP9__c = 'Not Applicable';
 					}
 
 					osc.Payment_Type__c = remoteInovArt.Payment_type__c;
