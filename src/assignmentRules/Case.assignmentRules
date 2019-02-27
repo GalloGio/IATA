@@ -82,7 +82,7 @@
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Cases - Global</value>
+                <value>Cases - Global,Complaint (IDFS ISS)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
@@ -96,12 +96,45 @@
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCS_E_F</assignedTo>
+            <assignedTo>Cases_E_F_Thailand</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>Cases - Global,Complaint (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>E&amp;F - Enhancement &amp; Financing</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Thailand</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_E_F_Thailand</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - E&amp;F Thailand</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_E_F</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Complaint (IDFS ISS),Cases - Global</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
@@ -622,7 +655,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -636,7 +669,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -650,7 +683,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -664,7 +697,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -678,7 +711,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -1940,7 +1973,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
                 <operation>notEqual</operation>
-                <value>Risk Management Process</value>
+                <value>Risk Management Process,Agency Risk Management</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -3930,7 +3963,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>SAAM,Internal Cases (IDFS ISS)</value>
+                <value>SAAM,Internal Cases (IDFS ISS),OSCAR Communication</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
