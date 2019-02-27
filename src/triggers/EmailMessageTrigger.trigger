@@ -6,6 +6,9 @@ trigger EmailMessageTrigger on EmailMessage (after delete, after insert, after u
         } else if (Trigger.isAfter) {
             EmailMessageHandler.SetTheNOISentDateOnParentCase(Trigger.new);
             EmailMessageHandler.sendEmailToSenderWhenCaseClosed(Trigger.new);
+            
+            // sprint6 kpi value creation on email send action
+            EmailMessageKPIHandler.createKPIValues(Trigger.new);
         }
         
         
