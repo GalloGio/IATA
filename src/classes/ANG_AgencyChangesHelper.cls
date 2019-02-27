@@ -550,7 +550,11 @@ public with sharing class ANG_AgencyChangesHelper {
 					needsUpdate = true;
 				}
 				
-				if(swapAccountsWrapper.diffBSP && parentAcct != NULL && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE && swapAccountsWrapper.swapAE){
+				if(swapAccountsWrapper.diffBSP && parentAcct != NULL && (rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE || (rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c != swapAccountsWrapper.bspOldGE)) && swapAccountsWrapper.swapAE){
+					rel.Parent_Account__c = swapAccountsWrapper.swapMapping.get(rel.Parent_Account__c).Id;
+					needsUpdate = true;
+				}
+				else if(swapAccountsWrapper.diffBSP && parentAcct != NULL && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c != swapAccountsWrapper.bspNewGE && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c != swapAccountsWrapper.bspOldGE){
 					rel.Parent_Account__c = swapAccountsWrapper.swapMapping.get(rel.Parent_Account__c).Id;
 					needsUpdate = true;
 				}

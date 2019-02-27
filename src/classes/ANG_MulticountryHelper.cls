@@ -7,6 +7,7 @@ public class ANG_MulticountryHelper {
 
 	public class SwapAccountsWrapper {
 		public Id newGE;
+		public Id bspOldGE;
 		public Id bspNewGE;
 		public Boolean swapAE;
 		public Boolean diffBSP;
@@ -370,11 +371,13 @@ public class ANG_MulticountryHelper {
 		if(firstAccount.Location_Type__c == AMS_Utils.GE){
 			swapRelatedFields(firstAccount, secondAccount);
 			swapWrapper.newGE = firstAccount.Id;
+			swapWrapper.bspOldGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 			swapWrapper.bspNewGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 		}
 		else if(secondAccount.Location_Type__c == AMS_Utils.GE){
 			swapRelatedFields(secondAccount, firstAccount);
 			swapWrapper.newGE = secondAccount.Id;
+			swapWrapper.bspOldGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 			swapWrapper.bspNewGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 		}
 		else if(firstAccount.Location_Type__c == AMS_Utils.HE){

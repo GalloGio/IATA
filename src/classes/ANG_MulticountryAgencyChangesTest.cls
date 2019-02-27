@@ -49,7 +49,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
         ANG_AgencyChangesConfig__c changeLocationTypeDiffLegalEnt = new ANG_AgencyChangesConfig__c();
         changeLocationTypeDiffLegalEnt.Name = 'ChangeLocationTypeDifferentLegalEntity';
-        changeLocationTypeDiffLegalEnt.TC_Location_Type__c = true;
+        changeLocationTypeDiffLegalEnt.TC_Location_type_diff_legal_ent__c = true;
         changeLocationTypeDiffLegalEnt.TCA_Sanity_check__c = 'CDL';
         changeLocationTypeDiffLegalEnt.TCA_Manager_approval__c = 'CDF';
         changeLocationTypeDiffLegalEnt.TCA_Application_withdrawal__c = 'CWD';
@@ -276,38 +276,9 @@ private class ANG_MulticountryAgencyChangesTest {
 
 	}
 
-	@isTest static void changeOfLocationTypeAEGESameBSP() {
+	private static AMS_OSCAR__c createNecessaryData(Account acct){
 
-		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
-			'Multicountry GE PT' => 'Multicountry AE PT',
-			'Multicountry AE PT 2' => 'Multicountry AE PT',
-			'Multicountry HE FR' => 'Multicountry AE PT',
-			'Multicountry HE UK' => 'Multicountry AE PT',
-			'Multicountry AE FR' => 'Multicountry HE FR',
-			'Multicountry AE FR 2' => 'Multicountry HE FR',
-			'Multicountry AE UK' => 'Multicountry HE UK',
-			'Multicountry AE UK 2' => 'Multicountry HE UK'
-		};
-
-		Set<Id> accountsInvolvedSet = new Set<Id>();
-
-		Account acct = 
-			[SELECT 
-				Id, 
-				Name, 
-				IATA_ISO_Country__c, 
-				Iso_State__c, 
-				Location_Class__c, 
-				Location_Type__c
-			 FROM 
-			 	Account 
-			 WHERE 
-			 	Name = 'Multicountry AE PT'
-			 AND
-			 	Location_Type__c = :AMS_Utils.AE
-			];
-
-      	Contact cont = new Contact(
+		Contact cont = new Contact(
       		AccountId = acct.id, 
       		Firstname = 'Richard', 
       		Lastname = 'Vaughan', 
@@ -384,7 +355,78 @@ private class ANG_MulticountryAgencyChangesTest {
 		insert acontact;
 
 		oscar.AMS_Online_Accreditation__c = staging.Id;
+        oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+
 		update oscar;
+
+		return oscar;
+
+	} 
+
+	private static void assertAllHierarchy(Map<String,String> expectedHierarchyByNames, Id acctId){
+		
+		Map<Id, List<AMS_Agencies_relationhip__c>> relationsLst = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acctId});
+
+		for(AMS_Agencies_relationhip__c rel : relationsLst.get(acctId)){
+			system.debug('CHILD: ' + rel.Child_Account__r.Name + ', PARENT: ' + rel.Parent_Account__r.Name);
+			//system.assert(expectedHierarchyByNames.get(rel.Child_Account__r.Name) == rel.Parent_Account__r.Name);
+		}
+
+		for(Account acc : [SELECT Id, Name, Parent.Name FROM Account WHERE ParentId != NULL]){
+			system.assert(expectedHierarchyByNames.get(acc.Name) == acc.Parent.Name);
+		}
+
+	}
+
+	private static void assertChangeCodes(Id oscarId, String changeCode, Set<Id> accountsInvolvedSet){
+
+		List<Agency_Applied_Change_code__c> appliedChangeCodesLst = new List<Agency_Applied_Change_code__c>(
+			[SELECT 
+				Id, 
+				Account__c, 
+				Change_Code__c 
+			 FROM 
+			 	Agency_Applied_Change_code__c 
+			 WHERE 
+			 	OSCAR__c = :oscarId
+			 AND
+			 	Change_Code__c = :changeCode
+			]
+		);
+
+		system.assert(appliedChangeCodesLst.size() == accountsInvolvedSet.size());
+
+		for(Agency_Applied_Change_code__c aacc : appliedChangeCodesLst){
+			system.assert(aacc.Change_Code__c == changeCode);
+			system.assert(accountsInvolvedSet.contains(aacc.Account__c));
+		}
+
+	}
+
+	/**
+	* Change of location type AE<->GE 
+	* Same BSP and same legal entity
+	*
+	*/
+	@isTest static void changeOfLocationTypeAEGESameBSP() {
+
+		Account acct = 
+			[SELECT 
+				Id, 
+				Name, 
+				IATA_ISO_Country__c, 
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Name = 'Multicountry AE PT'
+			 AND
+			 	Location_Type__c = :AMS_Utils.AE
+			];
+
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
 
 		PageReference pg = Page.ANG_AccountHierarchySelection;
 		pg.getParameters().put('Id', oscar.Id);
@@ -394,6 +436,8 @@ private class ANG_MulticountryAgencyChangesTest {
 		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
 
 		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
 
 		accountsInvolvedSet.add(acct.Id);
 
@@ -413,48 +457,427 @@ private class ANG_MulticountryAgencyChangesTest {
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.Is_PCI_compliant__c = 'Yes';
 		oscar.Change_effective_as_of__c = System.today();
-        oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
 
 		update oscar;
 
 		Test.stopTest();
+		
+		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
+			'Multicountry GE PT' => 'Multicountry AE PT',
+			'Multicountry AE PT 2' => 'Multicountry AE PT',
+			'Multicountry HE FR' => 'Multicountry AE PT',
+			'Multicountry HE UK' => 'Multicountry AE PT',
+			'Multicountry AE FR' => 'Multicountry HE FR',
+			'Multicountry AE FR 2' => 'Multicountry HE FR',
+			'Multicountry AE UK' => 'Multicountry HE UK',
+			'Multicountry AE UK 2' => 'Multicountry HE UK'
+		};
 
-		List<Agency_Applied_Change_code__c> appliedChangeCodesLst = new List<Agency_Applied_Change_code__c>(
-			[SELECT 
-				Id, 
-				Account__c, 
-				Change_Code__c 
-			 FROM 
-			 	Agency_Applied_Change_code__c 
-			 WHERE 
-			 	OSCAR__c = :oscar.Id
-			]
-		);
-
-		system.assert(appliedChangeCodesLst.size() == 2);
-
-		for(Agency_Applied_Change_code__c aacc : appliedChangeCodesLst){
-			system.assert(aacc.Change_Code__c == 'CAD');
-			system.assert(accountsInvolvedSet.contains(aacc.Account__c));
-		}
-
-		Map<Id, List<AMS_Agencies_relationhip__c>> relationsLst = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
-
-		for(AMS_Agencies_relationhip__c rel : relationsLst.get(oscar.Account__c)){
-			system.assert(expectedHierarchyByNames.get(rel.Child_Account__r.Name) == rel.Parent_Account__r.Name);
-		}
-
-		for(Account acc : [SELECT Id, Name, Parent.Name FROM Account WHERE ParentId != NULL]){
-			system.assert(expectedHierarchyByNames.get(acc.Name) == acc.Parent.Name);
-		}
+		assertChangeCodes(oscar.Id, 'CAD', accountsInvolvedSet);
+		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
 
 	}
 
+	/**
+	* Change of location type AE<->HE 
+	* Same BSP and same legal entity
+	*
+	*/
 	@isTest static void changeOfLocationTypeAEHESameBSP() {
 
+		Account acct = 
+			[SELECT 
+				Id, 
+				Name, 
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Name = 'Multicountry AE UK'
+			 AND
+			 	Location_Type__c = :AMS_Utils.AE
+			];
 
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+
+		PageReference pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
+
+		accountsInvolvedSet.add(acct.Id);
+
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(item.acc.Location_Type__c == AMS_Utils.HE && item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c == acct.IATA_ISO_Country__r.AMS_Settlement_System__c){
+				item.selected = true;
+				accountsInvolvedSet.add(item.acc.Id);
+				break;
+			}
+		}  
+
+		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION_TYPE;
+		con.save();
+
+		Test.startTest();
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+
+		update oscar;
+
+		Test.stopTest();
+		
+		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
+			'Multicountry AE PT' => 'Multicountry GE PT',
+			'Multicountry AE PT 2' => 'Multicountry GE PT',
+			'Multicountry HE FR' => 'Multicountry GE PT',
+			'Multicountry AE UK' => 'Multicountry GE PT',
+			'Multicountry AE FR' => 'Multicountry HE FR',
+			'Multicountry AE FR 2' => 'Multicountry HE FR',
+			'Multicountry HE UK' => 'Multicountry AE UK',
+			'Multicountry AE UK 2' => 'Multicountry AE UK'
+		};
+		
+		assertChangeCodes(oscar.Id, 'CAD', accountsInvolvedSet);
+		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
 
 	}
-	
+
+	/**
+	* Change of location type AE<->GE 
+	* Same BSP and different legal entity
+	*
+	*/
+	@isTest static void changeOfLocationTypeAEGESameBSPandDiffLegalEntity() {
+
+		Account acct = 
+			[SELECT 
+				Id, 
+				Name, 
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Name = 'Multicountry AE PT'
+			 AND
+			 	Location_Type__c = :AMS_Utils.AE
+			];
+
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+
+		PageReference pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
+		accountsInvolvedSet.add(acct.Id);
+
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(item.acc.Location_Type__c == AMS_Utils.GE){
+				item.selected = true;
+				break;
+			}
+		}
+
+		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY;
+		con.save();
+
+		Test.startTest();
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+
+		update oscar;
+
+		assertChangeCodes(oscar.Id, 'CDL', accountsInvolvedSet);
+
+		oscar.STEP2__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		Test.stopTest();
+		
+		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
+			'Multicountry GE PT' => 'Multicountry AE PT',
+			'Multicountry AE PT 2' => 'Multicountry AE PT',
+			'Multicountry HE FR' => 'Multicountry AE PT',
+			'Multicountry HE UK' => 'Multicountry AE PT',
+			'Multicountry AE FR' => 'Multicountry HE FR',
+			'Multicountry AE FR 2' => 'Multicountry HE FR',
+			'Multicountry AE UK' => 'Multicountry HE UK',
+			'Multicountry AE UK 2' => 'Multicountry HE UK'
+		};
+		
+		assertChangeCodes(oscar.Id, 'CDF', accountsInvolvedSet);
+		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+
+	}
+
+	/**
+	* Change of location type AE<->HE 
+	* Same BSP and different legal entity
+	*
+	*/
+	@isTest static void changeOfLocationTypeAEHESameBSPandDiffLegalEntity() {
+
+		Account acct = 
+			[SELECT 
+				Id, 
+				Name, 
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Name = 'Multicountry AE FR'
+			 AND
+			 	Location_Type__c = :AMS_Utils.AE
+			];
+
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+
+		PageReference pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
+		accountsInvolvedSet.add(acct.Id);
+
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(item.acc.Location_Type__c == AMS_Utils.HE && item.acc.IATA_ISO_Country__r.AMS_Settlement_System__c == acct.IATA_ISO_Country__r.AMS_Settlement_System__c){
+				item.selected = true;
+				break;
+			}
+		}
+
+		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY;
+		con.save();
+
+		Test.startTest();
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+
+		update oscar;
+
+		assertChangeCodes(oscar.Id, 'CDL', accountsInvolvedSet);
+
+		oscar.STEP2__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		Test.stopTest();
+		
+		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
+			'Multicountry AE PT' => 'Multicountry GE PT',
+			'Multicountry AE PT 2' => 'Multicountry GE PT',
+			'Multicountry AE FR' => 'Multicountry GE PT',
+			'Multicountry HE UK' => 'Multicountry GE PT',
+			'Multicountry HE FR' => 'Multicountry AE FR',
+			'Multicountry AE FR 2' => 'Multicountry AE FR',
+			'Multicountry AE UK' => 'Multicountry HE UK',
+			'Multicountry AE UK 2' => 'Multicountry HE UK'
+		};
+		
+		assertChangeCodes(oscar.Id, 'CDF', accountsInvolvedSet);
+		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+
+	}
+
+	/**
+	* Change of location type AE<->GE 
+	* Different BSP and different legal entity
+	*
+	*/
+	@isTest static void changeOfLocationTypeAEGEDiffBSPandDiffLegalEntity() {
+
+		Account acct = 
+			[SELECT 
+				Id, 
+				Name, 
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Name = 'Multicountry AE UK'
+			 AND
+			 	Location_Type__c = :AMS_Utils.AE
+			];
+
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+
+		PageReference pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
+		accountsInvolvedSet.add(acct.Id);
+
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(item.acc.Location_Type__c == AMS_Utils.GE){
+				item.selected = true;
+				break;
+			}
+		}
+
+		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY;
+		con.save();
+
+		Test.startTest();
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+
+		update oscar;
+
+		assertChangeCodes(oscar.Id, 'CDL', accountsInvolvedSet);
+
+		oscar.STEP2__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		Test.stopTest();
+		
+		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
+			'Multicountry GE PT' => 'Multicountry AE UK',
+			'Multicountry AE PT 2' => 'Multicountry GE PT',
+			'Multicountry AE PT' => 'Multicountry GE PT',
+			'Multicountry HE FR' => 'Multicountry AE UK',
+			'Multicountry AE FR' => 'Multicountry HE FR',
+			'Multicountry AE FR 2' => 'Multicountry HE FR',
+			'Multicountry HE UK' => 'Multicountry AE UK',
+			'Multicountry AE UK 2' => 'Multicountry AE UK'
+		};
+		
+		assertChangeCodes(oscar.Id, 'CDF', accountsInvolvedSet);
+		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+
+	}
+
+	/**
+	* Change of location type HE<->GE 
+	* Different BSP and different legal entity
+	*
+	*/
+	@isTest static void changeOfLocationTypeHEGEDiffBSPandDiffLegalEntity() {
+
+		Account acct = 
+			[SELECT 
+				Id, 
+				Name, 
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Name = 'Multicountry HE FR'
+			 AND
+			 	Location_Type__c = :AMS_Utils.HE
+			];
+
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+
+		PageReference pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
+		accountsInvolvedSet.add(acct.Id);
+
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(item.acc.Location_Type__c == AMS_Utils.GE){
+				item.selected = true;
+				break;
+			}
+		}
+
+		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY;
+		con.save();
+
+		Test.startTest();
+
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+
+		update oscar;
+
+		assertChangeCodes(oscar.Id, 'CDL', accountsInvolvedSet);
+
+		oscar.STEP2__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		Test.stopTest();
+		
+		Map<String,String> expectedHierarchyByNames = new Map<String, String>{
+			'Multicountry GE PT' => 'Multicountry HE FR',
+			'Multicountry AE PT 2' => 'Multicountry GE PT',
+			'Multicountry AE PT' => 'Multicountry GE PT',
+			'Multicountry HE UK' => 'Multicountry HE FR',
+			'Multicountry AE FR' => 'Multicountry HE FR',
+			'Multicountry AE FR 2' => 'Multicountry HE FR',
+			'Multicountry AE UK' => 'Multicountry HE UK',
+			'Multicountry AE UK 2' => 'Multicountry HE UK'
+		};
+		
+		assertChangeCodes(oscar.Id, 'CDF', accountsInvolvedSet);
+		assertAllHierarchy(expectedHierarchyByNames, oscar.Account__c);
+
+	}
+
 }
