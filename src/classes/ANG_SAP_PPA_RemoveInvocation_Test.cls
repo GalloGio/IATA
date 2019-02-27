@@ -85,14 +85,14 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 
 		test.StopTest();
 
-		AMS_Oscar__c updatedOscar = [SELECT Endorsement_Requested__c, Endorsement_requested_date__c, STEP47__c, STEP48__c, STEP49__c FROM AMS_Oscar__c limit 1];
+		AMS_Oscar__c updatedOscar = [SELECT Endorsement_Requested__c, Endorsement_requested_date__c, STEP47__c, STEP9__c, STEP49__c FROM AMS_Oscar__c limit 1];
 
 		//Check assert Equals
 		System.assert(updatedOscar.Endorsement_Requested__c);
 		System.assertEquals(Date.today(), updatedOscar.Endorsement_requested_date__c);
 		System.assertEquals('Passed', updatedOscar.STEP49__c);
 		System.assertEquals('Not Applicable', updatedOscar.STEP47__c);
-		System.assertEquals('Not Applicable', updatedOscar.STEP48__c);
+		System.assertEquals('Not Applicable', updatedOscar.STEP9__c);
 
 	}
 

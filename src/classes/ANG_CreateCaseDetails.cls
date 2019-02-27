@@ -159,7 +159,7 @@ global without sharing class ANG_CreateCaseDetails {
                 
                 insert new CaseComment(ParentId = oscar.Oscar_Communication_Case_Id__c, CommentBody = 'Invoice ' +oscar.Billing_Document_Number__c+ ' is ' + paymentStatus);
                 update new Case(id = oscar.Oscar_Communication_Case_Id__c, New_interaction__c = 'New comment');
-                oscar.step48__c = (paymentStatus == 'Paid' ? 'Passed' : (paymentStatus == 'Outstanding' ? 'Failed' : oscar.step48__c ));
+                //oscar.step48__c = (paymentStatus == 'Paid' ? 'Passed' : (paymentStatus == 'Outstanding' ? 'Failed' : oscar.step48__c ));
 
             }
 
