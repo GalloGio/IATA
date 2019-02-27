@@ -235,20 +235,19 @@
         <shortDescription>AMS_OSCAR_Action18</shortDescription>
         <value>Restore Forms of Payment</value>
     </labels>
-
-    <labels>
-        <fullName>AMS_OSCAR_Action20</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_OSCAR_Action20</shortDescription>
-        <value>Open related Financial Security</value>
-    </labels>
     <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR Action2</shortDescription>
         <value>Issue Billing Document</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action20</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action20</shortDescription>
+        <value>Open related Financial Security</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action3</fullName>
@@ -393,6 +392,27 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR DISAPPROVAL</shortDescription>
         <value>Application Disapproval</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_ENDORSEMENT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>GDI Endorsement</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_FINANCIAL_SECURITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_fees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_fees</shortDescription>
+        <value>GDI fees</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_MASTERDATA</fullName>
@@ -802,18 +822,18 @@
         <value>Request endorsement details</value>
     </labels>
     <labels>
-        <fullName>AMS_OSCAR_STEP50</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS OSCAR STEP50</shortDescription>
-        <value>Confirm Financial Security Information</value>
-    </labels>
-    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP5</shortDescription>
         <value>Application Reconsideration</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP50</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP50</shortDescription>
+        <value>Confirm Financial Security Information</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
@@ -21572,6 +21592,30 @@ Please add below all your company valid email domains, including different ones 
         <value>Filter by type of participation</value>
     </labels>
     <labels>
+        <fullName>ISSP_Financial_Insititutions</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions</shortDescription>
+        <value>Financial Institutions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Header</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Header</shortDescription>
+        <value>Financial Institution Insurance Providers</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Subheader</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Subheader</shortDescription>
+        <value>The following Financial Institutions provide Financial Security Insurance in your country</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Financial_Securities_Converted_Total_Amount</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -22316,30 +22360,6 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP IFAP FA Third Deadline</shortDescription>
         <value>Financial Assessment 3rd Deadline</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Financial_Insititutions</fullName>
-        <categories>ISSP, Portal, ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Financial_Insititutions</shortDescription>
-        <value>Financial Institutions</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Financial_Insititutions_Header</fullName>
-        <categories>ISSP, Portal, ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Financial_Insititutions_Header</shortDescription>
-        <value>Financial Institution Insurance Providers</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Financial_Insititutions_Subheader</fullName>
-        <categories>ISSP, Portal, ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Financial_Insititutions_Subheader</shortDescription>
-        <value>The following Financial Institutions provide Financial Security Insurance in your country</value>
     </labels>
     <labels>
         <fullName>ISSP_IFAP_FSEC_Deadline</fullName>
@@ -33791,28 +33811,4 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
-
-    <labels>
-        <fullName>AMS_OSCAR_GDI_fees</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_OSCAR_GDI_fees</shortDescription>
-        <value>GDI fees</value>
-    </labels>
-    <labels>
-        <fullName>AMS_OSCAR_GDI_ENDORSEMENT</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
-        <value>GDI Endorsement</value>
-    </labels>
-
-    <labels>
-        <fullName>AMS_OSCAR_GDI_FINANCIAL_SECURITY</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
-        <value>Financial Security</value>
-    </labels>
-    
 </CustomLabels>
