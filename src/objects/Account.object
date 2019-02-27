@@ -94259,6 +94259,36 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <errorMessage>Billing City and Billing Country are mandatory fields</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Block_non_AGM_user_from_modifying_agents</fullName>
+        <active>true</active>
+        <description>Avoids AMS data being changed from profiles outside AGM and SF administration.</description>
+        <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+NOT(
+OR(
+$User.ProfileId = &apos;00ew0000001cuCY&apos;,
+$User.ProfileId = &apos;00ew0000001cuCZ&apos;,
+$User.ProfileId = &apos;00ew00000012qoC&apos;,
+$User.ProfileId = &apos;00e20000000h0gF&apos;,
+$User.ProfileId = &apos;00ew0000001R6uT&apos;,
+$User.ProfileId = &apos;00e20000000kvcd&apos;,
+$User.ProfileId = &apos;00e20000001Q8eH&apos;,
+$User.ProfileId = &apos;00ew0000001QUyp&apos;,
+$User.ProfileId = &apos;00e20000001QMpc&apos;,
+$User.ProfileId = &apos;00ew0000001Pj0u&apos;,
+$User.ProfileId = &apos;00ew0000001R6Uk&apos;,
+$User.ProfileId = &apos;00ew0000001QRzE&apos;,
+$User.ProfileId = &apos;00ew0000001QRzF&apos;,
+$User.ProfileId = &apos;00ew0000001QoC9&apos;,
+$User.ProfileId = &apos;00ew0000001QRzG&apos;,
+$User.ProfileId = &apos;00ew0000001QRzD&apos;,
+$User.ProfileId = &apos;00ew0000001QoBp&apos;,
+$User.ProfileId = &apos;00ew0000001QRzC&apos;,
+$User.ProfileId = &apos;00e20000001QJgR&apos;,
+$User.ProfileId = &apos;00ew0000001R6Za&apos;)))</errorConditionFormula>
+        <errorMessage>You are not allowed to modify AMS data, Please contact agency management or your system admin</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>CASS_Number_3_Digits</fullName>
         <active>true</active>
         <description>The CASS Number must have 3 digits</description>
