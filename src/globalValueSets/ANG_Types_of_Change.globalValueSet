@@ -60,6 +60,21 @@
         <default>false</default>
         <label>Trade name</label>
     </customValue>
+    <customValue>
+        <fullName>Conversion to GoLite</fullName>
+        <default>false</default>
+        <label>Conversion to GoLite</label>
+    </customValue>
+    <customValue>
+        <fullName>Conversion to Domestic with Cash</fullName>
+        <default>false</default>
+        <label>Conversion to Domestic with Cash</label>
+    </customValue>
+    <customValue>
+        <fullName>Conversion to International</fullName>
+        <default>false</default>
+        <label>Conversion to International</label>
+    </customValue>
     <masterLabel>ANG Types of Change</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

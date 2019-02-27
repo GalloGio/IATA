@@ -49,7 +49,7 @@ global class ANG_OscarProcessHelper {
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
-					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,ANG_IsNewGenAgency__c ,
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
 					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
@@ -112,7 +112,17 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1','In order to generate a IATA code you must first pass the Sanity Check.','-1'};
 
             }
+            /*** INC456141 start ***/
+            if((theAccount.Location_Type__c == 'HE' && theAccount.Location_Class__c == 'T') || (theAccount.Location_Type__c == 'AE' && theAccount.Location_Class__c == 'T')) {
+            	isIATACodeGenerationRunning = false;
+            	return new String[]{'-1','Location type T does not match with location class HE/AE. Please either correct the location class or location type on the Account level to match T with HO/BR or P with HE/AE.','-1'};
+            }
 
+            if((theAccount.ANG_IsNewGenAgency__c == true && (theAccount.Location_Type__c == 'HO' || theAccount.Location_Type__c == 'BR'))) {
+            	isIATACodeGenerationRunning = false;
+            	return new String[]{'-1','NewGen Agencies cannot have location type = HO or BR.','-1'};
+            }
+            /*** INC456141 end ***/
             if(oscar.Process__c.containsIgnoreCase('NEW') && oscar.Account__r.Location_Type__c != 'HO' && oscar.Account__r.Location_Type__c != 'HE' && oscar.Account__r.Top_Parent__r.Status__c == AMS_Utils.ACC_S0_TERMINATED){
             	isIATACodeGenerationRunning = false;
             	System.debug('[ANG_OscarProcessHelper] IATA code generation is not allowed in hierarchies with HO/HE status Terminated.');
@@ -553,6 +563,82 @@ global class ANG_OscarProcessHelper {
 		return updater;
 
 	}
+
+	//ACAMBAS - NEWGEN-4445 - Start
+	public static void createGenericChangeCode(AMS_Oscar__c theOSCAR, String changeCodeId) {
+
+		if(changeCodeId == null) return;
+
+		Savepoint sp = Database.setSavepoint();
+
+        try {
+
+			Account accnt = [SELECT Id, Status__c, CNS_Agency__c,
+									(SELECT Id, Reason_Code__c, Reason_Description__c
+									 FROM Agencies_Applied_Change_codes__r 
+									 WHERE Active__c = true)
+							 FROM Account
+							 WHERE Id = :theOSCAR.account__c FOR UPDATE];
+
+			List<Agency_Applied_Change_code__c> appliedChangeCodesLst = accnt.getSObjects('Agencies_Applied_Change_codes__r');
+
+			Agency_Applied_Change_code__c activeChangeCode = null;
+
+			if(appliedChangeCodesLst != null && appliedChangeCodesLst.size() > 0){
+				activeChangeCode = appliedChangeCodesLst.get(0);
+			}
+
+	        AMS_OSCAR_JSON.ChangeCode changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeId, theOSCAR.ANG_Type_Of_Change__c, accnt.Status__c, activeChangeCode, null);
+	
+			AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {accnt}, true);
+
+			theOSCAR.First_Step_Completed__c = true;
+
+			if(theOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
+				createChangeCodeOnChildrenAccounts(theOSCAR, changeCodeId);
+			}
+
+        } catch (Exception ex) {
+            Database.rollback(sp); 
+            throw ex;
+        }
+	}
+	//ACAMBAS - NEWGEN-4445 - End
+	
+	//ACAMBAS - NEWGEN-4822 - Start
+	private static void createChangeCodeOnChildrenAccounts(AMS_Oscar__c theOSCAR, String changeCodeId) {
+
+		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c,
+												(SELECT Id, Reason_Code__c, Reason_Description__c
+									 			 FROM Agencies_Applied_Change_codes__r 
+									 			 WHERE Active__c = true) 
+									 	  FROM Account 
+									 	  WHERE ParentId =: theOSCAR.Account__c];
+
+		Set<Account> childrenAccountsSet = new Set<Account>();
+		childrenAccountsSet.addAll(childrenAccounts);
+		Set<Account> targetAccounts = ANG_ConversionHelper.filterByStatus(childrenAccountsSet);
+		
+		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
+		List<AMS_OSCAR_JSON.ChangeCode> changeCodesList = new List<AMS_OSCAR_JSON.ChangeCode>();
+		AMS_OSCAR_JSON.ChangeCode changeCode;
+
+		for(Account accnt : targetAccounts) {
+			Agency_Applied_Change_code__c activeChangeCode = null;
+			List<Agency_Applied_Change_code__c> appliedChangeCodesLst = accnt.getSObjects('Agencies_Applied_Change_codes__r');
+
+			if(appliedChangeCodesLst != null && appliedChangeCodesLst.size() > 0){
+				activeChangeCode = appliedChangeCodesLst.get(0);
+			}
+
+			changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeId, theOSCAR.ANG_Type_Of_Change__c, accnt.Status__c, activeChangeCode, null);
+			changeCodesList.add(changeCode);
+			oscars.add(theOSCAR);
+		}
+
+		AMS_ChangeCodesHelper.createAAChangeCodes(changeCodesList, oscars, new List<Account>(targetAccounts), true);
+	}
+	//ACAMBAS - NEWGEN-4822 - End
 
 	public static EntityUpdater execCreateAMLCase(AMS_OSCAR__c oscar, EntityUpdater updater) {
 
@@ -1260,7 +1346,8 @@ global class ANG_OscarProcessHelper {
 	/*** AMSU-37 ***/
 	public static Boolean doAgainIATACodeGeneration(AMS_Oscar__c oscar, Account agency) {
 		Set<String> accountStatus = new Set<String> {'12-APPLICATION DISAPPROVED', '11-APPLICATION WITHDRAWN'};
-		Set<String> processes = AMS_Utils.oscarNewProcesses; 
+		Set<String> processes = AMS_Utils.oscarNewProcesses;
+		processes.addall(AMS_Utils.oscarNewGenNewAppProcesses);
 		Set<String> appliedChangeCodes = new Set<String> {'DIS', 'NWD'}; 
 		List<Agency_Applied_Change_code__c> changeCodes = agency.Agencies_Applied_Change_codes__r;
 

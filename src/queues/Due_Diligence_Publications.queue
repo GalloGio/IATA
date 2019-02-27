@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
-    <doesSendEmailToMembers>true</doesSendEmailToMembers>
-    <name>ICH Help Desk - ICH Finance</name>
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>noreply@iata.org</email>
+    <name>Due Diligence - Publications</name>
     <queueMembers>
         <roles>
-            <role>SISCustomerSupportA</role>
+            <role>Corporate_Compliance</role>
         </roles>
-        <users>
-            <user>sadiqs@iata.org</user>
-        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

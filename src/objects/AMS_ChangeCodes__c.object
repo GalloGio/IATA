@@ -522,9 +522,9 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>SETUP_OWNER_NAME</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Reason_Code_Description__c</field>
+            <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>ACTIVE,ENDORSED,PENDING</value>
+            <value>NEW</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>

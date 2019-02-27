@@ -62,7 +62,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>TrackingHistory</fullName>
-        <description>used for tracking purposes</description>
+        <description>used for tracking purposes - do NOT include any fields which cause mixed dml operations (e.g. profile, role, ...)</description>
         <displayedFields>
             <field>ToU_accepted__c</field>
             <isFieldManaged>false</isFieldManaged>

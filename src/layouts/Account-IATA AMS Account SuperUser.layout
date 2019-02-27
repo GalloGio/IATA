@@ -3,6 +3,7 @@
     <customButtons>Detailed_Hierarchy_View</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
+    <customButtons>China_Pilot_Conversion_Wizard</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
@@ -52,9 +53,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -109,6 +107,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Link_agent_code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Preferred_Language__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

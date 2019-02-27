@@ -180,7 +180,7 @@
         <label>ID Card Details</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>VER_Number__c</field>
             </layoutItems>
         </layoutColumns>

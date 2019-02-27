@@ -14,4 +14,8 @@
         <field>Default_Amount__c</field>
         <value xsi:type="xsd:double">2000000.0</value>
     </values>
+    <values>
+        <field>Visibility__c</field>
+        <value xsi:type="xsd:string">Internal</value>
+    </values>
 </CustomMetadata>

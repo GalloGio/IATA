@@ -57,6 +57,16 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public String socialmediafortravelindustry_Description {get; set;}
   public String accfinmgmtforagencies_Description {get; set;}
 
+  //RN-INC445559 add more 5 courses
+  public String IDCard_BSP_Agent_Billing_Reports_Procedures{get; set;}
+  public String IDCard_BSP_Agent_Remittance_Procedures{get; set;}
+  public String IDCard_BSP_Essentials_for_Travel_Agents{get; set;}
+  public String IDCard_BSP_Standard_Documents_Procedures{get; set;}
+  public String IDCard_Intro_to_the_BSP_System_Language{get; set;}
+
+  
+  
+
   private ID_Card__c[] idCardTemp;
   private Contact associatedContact {get; set;}
   private ID_Card__c associatedIDCard {get; set;}
@@ -108,6 +118,16 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     servingthetravelcustomer_Description = Label.Serving_The_Travel_Customer_Description;
     socialmediafortravelindustry_Description = Label.Social_Media_Travel_Industry_Description;
     accfinmgmtforagencies_Description = Label.Acc_Fin_Mgmt_Agencies_Description;
+
+    //RN-INC445559 add more 6 courses
+    IDCard_BSP_Agent_Billing_Reports_Procedures = Label.IDCard_BSP_Agent_Billing_Reports_Procedures;
+    IDCard_BSP_Agent_Remittance_Procedures = Label.IDCard_BSP_Agent_Remittance_Procedures;
+    IDCard_BSP_Essentials_for_Travel_Agents = Label.IDCard_BSP_Essentials_for_Travel_Agents;
+    IDCard_BSP_Standard_Documents_Procedures = Label.IDCard_BSP_Standard_Documents_Procedures;
+    IDCard_Intro_to_the_BSP_System_Language = Label.IDCard_Intro_to_the_BSP_System_Language;
+    
+
+
 
     initialize();
 
