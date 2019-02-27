@@ -93,25 +93,25 @@
 									<tbody>
 										<apex:repeat value="{!listFinSec}" var="item">
 											<tr>
-												<td>{!item.financialInstitution}</td>
-												<td>{!item.securityType}</td>
+												<td><apex:outputField value="{!item.record.Financial_Institution__c}"></apex:outputField></td>
+												<td><apex:outputField value="{!item.record.Security_Type__c}"></apex:outputField></td>
 												<td>
 													<apex:outputText value="{0, number, ###,###,##0.00} {1}">
-                                                       <apex:param value="{!item.amount}" />
-                                                       <apex:param value="{!item.currencyIsoCode}" />
+                                                       <apex:param value="{!item.record.Amount__c}" />
+                                                       <apex:param value="{!item.record.currencyIsoCode}" />
                                                     </apex:outputText>
 												</td>
 												<td>
 													<apex:outputText value="{0,date,dd/MM/yyyy}"> 
-														<apex:param value="{!item.validityStartDate}" /> 
+														<apex:param value="{!item.record.Validity_Start_Date__c}" /> 
 													</apex:outputText>
 												</td>
 												<td>
 													<apex:outputText value="{0,date,dd/MM/yyyy}"> 
-														<apex:param value="{!item.expiryDate}" /> 
+														<apex:param value="{!item.record.Expiry_Date__c}" /> 
 													</apex:outputText>
 												</td>
-												<td>{!item.securityStatus}</td>
+												<td><apex:outputField value="{!item.record.Security_Status__c}"></apex:outputField></td>
 												<td>
 													<apex:image value="/img/msg_icons/error16.png" rendered="{!item.cssRow == 'expiredRow'}"/>
 													<apex:image value="/img/msg_icons/warning16.png" rendered="{!item.cssRow == 'closeExpireRow'}"/>
