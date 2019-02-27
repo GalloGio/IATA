@@ -1541,6 +1541,7 @@
     </fields>
     <fields>
         <fullName>GDI_Offer_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
         <label>GDI Offer Id</label>
         <length>255</length>
