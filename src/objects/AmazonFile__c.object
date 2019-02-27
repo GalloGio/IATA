@@ -2135,11 +2135,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>ICE_POP</fullName>
+                <fullName>GDI_ENDORSEMENT</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>GDI_ENDORSEMENT</fullName>
+                <fullName>ICE_POP</fullName>
                 <default>false</default>
             </values>
             <values>
