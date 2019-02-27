@@ -655,5 +655,19 @@ var dyn_functions = {
         };
 
         sforce.console.getEnclosingPrimaryTabId(openSubtab);
+    },
+    openFS:function (args) {
+
+
+        var changeTab = function(result){
+        };
+
+        // Use the results primary tab id and open a new subtab
+        var openSubtab = function(result)
+        {               
+            sforce.console.openSubtab(result.id, '/apex/ANG_DGIStagingArea?Id='+args, true, 'Newgen ISS Financial Staging Area', null, changeTab);   
+        };
+
+        sforce.console.getEnclosingPrimaryTabId(openSubtab);
     }
 };
