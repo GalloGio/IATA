@@ -6591,7 +6591,7 @@
                   }
                 ],
                 "DisplayFields": [
-                  "STEP48__c"                  
+                  "STEP9__c"                  
                 ],
                 "IsDependent": false
               }
