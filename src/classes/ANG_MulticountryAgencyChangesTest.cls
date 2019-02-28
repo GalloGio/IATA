@@ -272,6 +272,25 @@ private class ANG_MulticountryAgencyChangesTest {
         
         insert rels;
 
+		ANG_RHC_Currencies__c rhcCurrencies = new ANG_RHC_Currencies__c();
+		rhcCurrencies.Name = 'EUR';
+		rhcCurrencies.CurrencyIsoCode = 'EUR';
+		rhcCurrencies.Currency_Name__c  = 'Euro';
+
+		insert rhcCurrencies;
+
+        ANG_RHC_Information__c rhcInfoForGE = new ANG_RHC_Information__c(
+        	ANG_AccountId__c = accountGE.Id,
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+			ANG_Financial_Security__c = 0,
+			ANG_RHC_Amount_Equals_FS__c = true,
+			ANG_RHC_Amount__c = 15,
+			ANG_RME_Amount__c = 100
+		);
+
+        insert rhcInfoForGE;
+
 		Test.stopTest();
 
 	}
@@ -368,8 +387,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		Map<Id, List<AMS_Agencies_relationhip__c>> relationsLst = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acctId});
 
 		for(AMS_Agencies_relationhip__c rel : relationsLst.get(acctId)){
-			system.debug('CHILD: ' + rel.Child_Account__r.Name + ', PARENT: ' + rel.Parent_Account__r.Name);
-			//system.assert(expectedHierarchyByNames.get(rel.Child_Account__r.Name) == rel.Parent_Account__r.Name);
+			system.assert(expectedHierarchyByNames.get(rel.Child_Account__r.Name) == rel.Parent_Account__r.Name);
 		}
 
 		for(Account acc : [SELECT Id, Name, Parent.Name FROM Account WHERE ParentId != NULL]){

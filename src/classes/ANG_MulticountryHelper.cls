@@ -410,28 +410,11 @@ public class ANG_MulticountryHelper {
 	* from one account to another in the scope of
 	* change of location type for multicountry agencies
 	*
-	* @param srcAcctId: Id
 	* @param assignFieldsAcct: Account
-	* @param resetFieldsAcct: Account
+	* @param srcAcct: Account
 	*
 	*/
-	public static void moveRiskRelatedFieldsFromAccount(Id srcAcctId, Account assignFieldsAcct, Account resetFieldsAcct){
-
-		Account srcAcct = 
-			[SELECT
-				Id, 
-				ANG_IEP_Status__c,
-				ANG_HE_RiskStatus__c, 
-				ANG_IEP_HE_AccntNum__c,
-				ANG_HE_CashCondition__c,
-				Financial_Review_Result__c,
-				ANG_HE_RiskHistoryAssessment__c,
-				(SELECT Id, ANG_AccountId__c FROM RHC_Informations__r)
-			 FROM
-			 	Account
-			 WHERE 
-			 	Id = :srcAcctId
-			];
+	public static void moveRiskRelatedFieldsFromAccount(Account assignFieldsAcct, Account srcAcct){
 
 		assignFieldsAcct.ANG_IEP_Status__c = srcAcct.ANG_IEP_Status__c;
 		assignFieldsAcct.ANG_HE_RiskStatus__c = srcAcct.ANG_HE_RiskStatus__c;
@@ -440,13 +423,13 @@ public class ANG_MulticountryHelper {
 		assignFieldsAcct.Financial_Review_Result__c = srcAcct.Financial_Review_Result__c;
 		assignFieldsAcct.ANG_HE_RiskHistoryAssessment__c = srcAcct.ANG_HE_RiskHistoryAssessment__c;
 
-		resetFieldsAcct.ANG_IEP_Status__c = null;
-		resetFieldsAcct.ANG_HE_RiskStatus__c = null;
-		resetFieldsAcct.ANG_IEP_HE_AccntNum__c = null;
-		resetFieldsAcct.ANG_HE_CashCondition__c = false;
-		resetFieldsAcct.ANG_HE_RiskHistoryAssessment__c = null;
+		srcAcct.ANG_IEP_Status__c = null;
+		srcAcct.ANG_HE_RiskStatus__c = null;
+		srcAcct.ANG_IEP_HE_AccntNum__c = null;
+		srcAcct.ANG_HE_CashCondition__c = false;
+		srcAcct.ANG_HE_RiskHistoryAssessment__c = null;
 
-		ANG_RHCHelper.moveRHCInfos(srcAcct.RHC_Informations__r, new Map<Id,Id>{resetFieldsAcct.Id => assignFieldsAcct.Id});
+		ANG_RHCHelper.moveRHCInfos(srcAcct.RHC_Informations__r, new Map<Id,Id>{srcAcct.Id => assignFieldsAcct.Id});
 
 	}
 
@@ -467,7 +450,7 @@ public class ANG_MulticountryHelper {
 			parentAcct.Top_Parent__c = null;
 			childAcct.ParentId = parentAcct.Id;
 			childAcct.Top_Parent__c = parentAcct.Id;
-			moveRiskRelatedFieldsFromAccount(childAcct.Id, parentAcct, childAcct);
+			moveRiskRelatedFieldsFromAccount(parentAcct, childAcct);
 		}
 		else if(parentAcct.Location_Type__c == AMS_Utils.HE && childAcct.Location_Type__c == AMS_Utils.AE){
 			parentAcct.ParentId = childAcct.ParentId;

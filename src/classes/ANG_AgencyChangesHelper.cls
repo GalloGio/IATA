@@ -542,6 +542,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			if(childAcct != NULL && parentAcct != NULL){
 				rel.Child_Account__c = parentAcct.Id;
 				rel.Parent_Account__c = childAcct.Id;
+				needsUpdate = true;
 			}
 			else {
 
@@ -562,9 +563,9 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(parentAcct != NULL && //Means that the current parent in this relationship is being swapped
 					(!swapAccountsWrapper.diffBSP || //if in the scope of a location change in the same BSP 
 					//If we are swapping an AE with a GE and the current child 
-					//in the relationship is not in the old GE's BSP (different BSPs)
+					//in the relationship is not in the old GE's BSP (location change in different BSPs)
 					(childBSP != swapAccountsWrapper.bspOldGE && swapAccountsWrapper.swapAE) || 
-					//If the current child is in a BSP not involved in the swap
+					//If the current child is in a BSP not involved in the swap (location change in different BSPs)
 					(childBSP != swapAccountsWrapper.bspNewGE && childBSP != swapAccountsWrapper.bspOldGE))
 				){
 					//The previous parent becomes the correspondent swapped account 
@@ -1561,7 +1562,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Country__r.Due_diligence_mandatory__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
-		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c,
+		        ANG_IEP_Status__c, ANG_HE_RiskStatus__c, ANG_IEP_HE_AccntNum__c, ANG_HE_CashCondition__c, Financial_Review_Result__c, ANG_HE_RiskHistoryAssessment__c, 
+		        (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r)
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
