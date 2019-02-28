@@ -118,7 +118,7 @@ public with sharing class AMS_AccountRoleCreator
         }
 
         //get all the contacts from the affected accounts
-        Map<Id,Contact> allContactsFromAccount = new Map<Id,Contact>([SELECT FirstName, LastName, Title, AccountId, Account.Location_Class__c, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c, Authorized_Signatory__c 
+        Map<Id,Contact> allContactsFromAccount = new Map<Id,Contact>([SELECT FirstName, LastName, Title, AccountId, Account.Location_Class__c, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c, Authorized_Signatory__c, Designated_portal_admin__c, Invoicing_contact__c 
             FROM Contact 
             WHERE AccountId IN :accountIds OR Id IN :contactToGetIds]);
 
@@ -167,8 +167,10 @@ public with sharing class AMS_AccountRoleCreator
                     if(duplicateContactsInAccCon.containsKey(bucket.contact.Id))
                         throw new AMS_ApplicationException('Duplicated Contact with Id: ' + bucket.contact.Id + ' in the Accreditation Contacts: ' + bucket.accreditationContact.First_Name__c + ' ' + bucket.accreditationContact.Last_Name__c + ' and ' + duplicateContactsInAccCon.get(bucket.contact.Id));
 
-                    contactsToUpsert.put(bucket.accreditationContact.Email__c, bucket.contact);
                     duplicateContactsInAccCon.put(bucket.contact.Id, bucket.accreditationContact.First_Name__c + ' ' + bucket.accreditationContact.Last_Name__c);
+                    
+                    if(bucket.isToUpsertContact)
+                        contactsToUpsert.put(bucket.accreditationContact.Email__c, bucket.contact);
 
                 } else {
 
@@ -430,20 +432,21 @@ public with sharing class AMS_AccountRoleCreator
 
     public class AccreditationContactBucket {
 
-        private AMS_OSCAR__c oscar {get;set;}
-        private Id accountId {get;set;}
-        private Id accreditationId {get;set;}
-        private AMS_Account_Role__c oldRole {get;set;}
-        private AMS_Account_Role__c newRole {get;set;}
-        private Contact contact {get;set;}
-        private Id personId {get;set;}
-        private Account company {get;set;}
-        private AMS_Accreditation_Contact__c accreditationContact {get;set;}
-        private Boolean isCompany {get;set;}
-        private Boolean isLinkedWithContactOrCompany {get;set;}
-        private Boolean isJustToClone {get;set;}
-        private Boolean isOwner {get;set;}
-        private Boolean isToCorrect {get;set;}
+        private AMS_OSCAR__c oscar;
+        private Id accountId;
+        private Id accreditationId;
+        private AMS_Account_Role__c oldRole;
+        private AMS_Account_Role__c newRole;
+        private Contact contact;
+        private Id personId;
+        private Account company;
+        private AMS_Accreditation_Contact__c accreditationContact;
+        private Boolean isCompany;
+        private Boolean isLinkedWithContactOrCompany;
+        private Boolean isJustToClone;
+        private Boolean isOwner;
+        private Boolean isToCorrect;
+        private Boolean isToUpsertContact;
 
         public AccreditationContactBucket(AMS_Accreditation_Contact__c accreditationContact, AMS_OSCAR__c oscar, Boolean isJustToClone, Boolean isToCorrect) {
             this.accreditationContact = accreditationContact;
@@ -459,16 +462,23 @@ public with sharing class AMS_AccountRoleCreator
             this.isJustToClone = isJustToClone;
             this.isOwner = accreditationContact.Agency_owner__c;
             this.isToCorrect = isToCorrect;
+            this.isToUpsertContact = false;
         }
 
         public void createNewContact() {
 
             contact = AMS_AccreditationContactHelper.populateNewContactFields(new Contact(), accreditationContact);
+            isToUpsertContact = true;
         }
 
         public void updateTheContact(Id conId) {
 
-            contact = AMS_AccreditationContactHelper.populateNewContactFields(new Contact(Id = conId), accreditationContact);
+            Contact contactAux = AMS_AccreditationContactHelper.updateNewContactFields(new Contact(Id = conId), accreditationContact);
+
+            if(contactAux != null) {
+                contact = contactAux;
+                isToUpsertContact = true;
+            }
         }
 
         public void createNewCompany() {

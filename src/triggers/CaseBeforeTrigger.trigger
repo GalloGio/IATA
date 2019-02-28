@@ -77,6 +77,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    ID SIDRALiteCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite'); //ACAMBAS - WMO-384
     ID SIDRABRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_BR');
     ID sisHelpDeskCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
     Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
@@ -87,6 +88,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     Id RT_ICCS_ASP_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ASP_Management');
     ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
     ID EuropecaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+    ID GlobalcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
     ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
     ID AfricaMEcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
     ID AsiaPacificcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ExternalCasesIDFSglobal');
@@ -590,155 +592,159 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
         /*updateAccountFieldBasedOnIATAwebCode Trigger*/
         if (updateAccountFieldBasedOnIATAwebCode) {
-            System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode]');
-            // For completing the Account Concerned (airline BR) automatically when the account is an airline and the IATA Country is specified:
-            // list of cases where the country is specified and list of related account Ids
-            List<Case> lstCasesWithBSPCountry = new List<Case>();
-            List<Id> lstAccountIds = new List<Id>();
-            // For completing the Account Concerned automatically when a Web IATA Code is specified:
-            // Create a map of the search cases per search strings (keys = Web IATA code)
-            Map<String, List<Case>> mapCasesPerWebIATACode = new Map<String, List<Case>>();
-            // fill this map with the cases of interest and the processed web iata codes
+            try {
+                System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode]');
+                // For completing the Account Concerned (airline BR) automatically when the account is an airline and the IATA Country is specified:
+                // list of cases where the country is specified and list of related account Ids
+                List<Case> lstCasesWithBSPCountry = new List<Case>();
+                List<Id> lstAccountIds = new List<Id>();
+                // For completing the Account Concerned automatically when a Web IATA Code is specified:
+                // Create a map of the search cases per search strings (keys = Web IATA code)
+                Map<String, List<Case>> mapCasesPerWebIATACode = new Map<String, List<Case>>();
+                // fill this map with the cases of interest and the processed web iata codes
 
-            Set<ID> recordTypeSet = new Set<ID>{SIDRAcaseRecordTypeID,ProcessISSPcaseRecordTypeID,EuropecaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,
-                                                AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,InternalcaseRecordTypeID,InvCollectioncaseRecordTypeID,
-                                                CSProcesscaseRecordTypeID, SEDAcaseRecordTypeID,ISSPcaseRecordTypeID};
-            for (Case aCase : trigger.New) {
-                System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] RECORD TYPE: ' + aCase.RecordTypeId);
-                // check if correct record type
-                if (recordTypeSet.contains(aCase.RecordTypeId)){
+                Set<ID> recordTypeSet = new Set<ID>{SIDRAcaseRecordTypeID,ProcessISSPcaseRecordTypeID,EuropecaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,
+                                                    AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,InternalcaseRecordTypeID,InvCollectioncaseRecordTypeID,
+                                                    CSProcesscaseRecordTypeID, SEDAcaseRecordTypeID,ISSPcaseRecordTypeID,GlobalcaseRecordTypeID};
+                for (Case aCase : trigger.New) {
+                    System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] RECORD TYPE: ' + aCase.RecordTypeId);
+                    // check if correct record type
+                    if (recordTypeSet.contains(aCase.RecordTypeId)){
 
-                    // Preliminary step for completing the Account Concerned when the account is an airline and the IATA Country is specified
-                    // get the potentially concerned cases, by choosing those with an IATA Country not null
-                    if (aCase.BSPCountry__c != null && 
-                        (
-                            (Trigger.isInsert && aCase.Account_Concerned__c == null) || 
-                            (Trigger.isUpdate && aCase.BSPCountry__c != Trigger.oldMap.get(aCase.Id).BSPCountry__c)
-                        ) 
-                    ) {
+                        // Preliminary step for completing the Account Concerned when the account is an airline and the IATA Country is specified
+                        // get the potentially concerned cases, by choosing those with an IATA Country not null
+                        if (aCase.BSPCountry__c != null && 
+                            (
+                                (Trigger.isInsert && aCase.Account_Concerned__c == null) || 
+                                (Trigger.isUpdate && aCase.BSPCountry__c != Trigger.oldMap.get(aCase.Id).BSPCountry__c)
+                            ) 
+                        ) {
 
-                        System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] Inside if 1');
-                        lstCasesWithBSPCountry.add(aCase);
-                        lstAccountIds.add(aCase.AccountId);
-                    }
-                    // Complete the Account Concerned automatically when a Web IATA Code is specified
-                    if ( (Trigger.isInsert && aCase.IATAcode__c != null && aCase.Account_Concerned__c == null) || 
-                        (Trigger.isUpdate && aCase.IATAcode__c != null && aCase.IATAcode__c != Trigger.oldMap.get(aCase.Id).IATAcode__c)
-                    ) {
-                        System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] Inside if 2');
-                        // this will make sure the IATA code entered by the user would be searched in DB for lengths 7,8,10 and 11
-                        String WebIATAcode = aCase.IATAcode__c;
-                        String WebIATAcode2 = aCase.IATAcode__c;
-                        system.debug('IATA CODE 1: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
-                        if (WebIATAcode.length() == 8)
-                            WebIATAcode = WebIATAcode.substring(0, 7);
-                        if (WebIATAcode.length() == 11)
-                            WebIATAcode = WebIATAcode.substring(0, 10);
-                        system.debug('IATA CODE 2: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
-                        //in case the user enters 7 digits we need to get the 8th digit
-                        if (WebIATAcode.length() == 7 && WebIATAcode2.length() == 7 && WebIATAcode.isNumeric() ) {
-                            Long a = Long.valueof(WebIATAcode);
-                            Long remainder = math.mod(a, 7);
-                            WebIATAcode = WebIATAcode  + remainder ;
+                            System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] Inside if 1');
+                            lstCasesWithBSPCountry.add(aCase);
+                            lstAccountIds.add(aCase.AccountId);
                         }
-                        system.debug('IATA CODE 3: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
-                        //in case the user enters 10 digits we need to get the 11th digit
-                        if (WebIATAcode.length() == 10 && WebIATAcode2.length() == 10 && WebIATAcode.isNumeric() ) {
-                            Long a = Long.valueof(WebIATAcode);
-                            Long remainder = math.mod(a, 7);
-                            WebIATAcode = WebIATAcode + remainder ;
-                        }
-                        system.debug('IATA CODE 4: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
-                        // Create an entry in the map for the processed key
-                        if (mapCasesPerWebIATACode.get(WebIATAcode) == null) {
-                            mapCasesPerWebIATACode.put(WebIATAcode, new List<Case>());
-                        }
-                        mapCasesPerWebIATACode.get(WebIATAcode).add(aCase);
-                        // and another one for the initial (user-entered, unprocessed) key - if it is different from the processed one
-                        if (WebIATAcode2 != WebIATAcode) {
-                            if (mapCasesPerWebIATACode.get(WebIATAcode2) == null) {
-                                mapCasesPerWebIATACode.put(WebIATAcode2, new List<Case>());
+                        // Complete the Account Concerned automatically when a Web IATA Code is specified
+                        if ( (Trigger.isInsert && aCase.IATAcode__c != null && aCase.Account_Concerned__c == null) || 
+                            (Trigger.isUpdate && aCase.IATAcode__c != null && aCase.IATAcode__c != Trigger.oldMap.get(aCase.Id).IATAcode__c)
+                        ) {
+                            System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] Inside if 2');
+                            // this will make sure the IATA code entered by the user would be searched in DB for lengths 7,8,10 and 11
+                            String WebIATAcode = aCase.IATAcode__c;
+                            String WebIATAcode2 = aCase.IATAcode__c;
+                            system.debug('IATA CODE 1: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
+                            if (WebIATAcode.length() == 8)
+                                WebIATAcode = WebIATAcode.substring(0, 7);
+                            if (WebIATAcode.length() == 11)
+                                WebIATAcode = WebIATAcode.substring(0, 10);
+                            system.debug('IATA CODE 2: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
+                            //in case the user enters 7 digits we need to get the 8th digit
+                            if (WebIATAcode.length() == 7 && WebIATAcode2.length() == 7 && WebIATAcode.isNumeric() ) {
+                                Long a = Long.valueof(WebIATAcode.trim());
+                                Long remainder = math.mod(a, 7);
+                                WebIATAcode = WebIATAcode  + remainder ;
                             }
-                            mapCasesPerWebIATACode.get(WebIATAcode2).add(aCase);
+                            system.debug('IATA CODE 3: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
+                            //in case the user enters 10 digits we need to get the 11th digit
+                            if (WebIATAcode.length() == 10 && WebIATAcode2.length() == 10 && WebIATAcode.isNumeric() ) {
+                                Long a = Long.valueof(WebIATAcode.trim());
+                                Long remainder = math.mod(a, 7);
+                                WebIATAcode = WebIATAcode + remainder ;
+                            }
+                            system.debug('IATA CODE 4: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
+                            // Create an entry in the map for the processed key
+                            if (mapCasesPerWebIATACode.get(WebIATAcode) == null) {
+                                mapCasesPerWebIATACode.put(WebIATAcode, new List<Case>());
+                            }
+                            mapCasesPerWebIATACode.get(WebIATAcode).add(aCase);
+                            // and another one for the initial (user-entered, unprocessed) key - if it is different from the processed one
+                            if (WebIATAcode2 != WebIATAcode) {
+                                if (mapCasesPerWebIATACode.get(WebIATAcode2) == null) {
+                                    mapCasesPerWebIATACode.put(WebIATAcode2, new List<Case>());
+                                }
+                                mapCasesPerWebIATACode.get(WebIATAcode2).add(aCase);
+                            }
                         }
                     }
                 }
-            }
-            // Web IATA Code > Account Concerned
-            // Match the processed & unprocessed Web IATA Code with the Account Site on the Account records
-            system.debug('mapCasesPerWebIATACode.keyset(): ' + mapCasesPerWebIATACode.keyset());
-            List<Account> lstMatchedAccounts = new List<Account>();
-            if ( !mapCasesPerWebIATACode.keyset().isEmpty()) {
-                lstMatchedAccounts = [SELECT Id, Site FROM Account WHERE Site_Index__c IN :mapCasesPerWebIATACode.keyset()];
-            }
-            // Update the Cases with the Account or Account Concerned info retrieved from the DB - only if the found Account / Account Concerned is different from the Account in the Case
-            Set<ID> setIds = new Set<ID>{EuropecaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,ISSPcaseRecordTypeID};
-            for (Account acc : lstMatchedAccounts) {
-                for (Case c : mapCasesPerWebIATACode.get(acc.Site)) {
-                    if (c.AccountId != acc.Id) {
-                        if (setIds.contains(c.RecordTypeId)) {
-                            // For these record types, set the Account Concerned field
-                            system.debug('FOUND AND SETTING Account Concerned');
-                            c.Account_Concerned__c = acc.Id;
-                        } else {
-                            // For the other record types, keep the initial behaviour of the case and set the Account field on the case
-                            system.debug('FOUND AND SETTING Account');
-                            c.AccountId = acc.Id;
+                // Web IATA Code > Account Concerned
+                // Match the processed & unprocessed Web IATA Code with the Account Site on the Account records
+                system.debug('mapCasesPerWebIATACode.keyset(): ' + mapCasesPerWebIATACode.keyset());
+                List<Account> lstMatchedAccounts = new List<Account>();
+                if ( !mapCasesPerWebIATACode.keyset().isEmpty()) {
+                    lstMatchedAccounts = [SELECT Id, Site FROM Account WHERE Site_Index__c IN :mapCasesPerWebIATACode.keyset()];
+                }
+                // Update the Cases with the Account or Account Concerned info retrieved from the DB - only if the found Account / Account Concerned is different from the Account in the Case
+                Set<ID> setIds = new Set<ID>{EuropecaseRecordTypeID,GlobalcaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,ISSPcaseRecordTypeID};
+                for (Account acc : lstMatchedAccounts) {
+                    for (Case c : mapCasesPerWebIATACode.get(acc.Site)) {
+                        if (c.AccountId != acc.Id) {
+                            if (setIds.contains(c.RecordTypeId)) {
+                                // For these record types, set the Account Concerned field
+                                system.debug('FOUND AND SETTING Account Concerned');
+                                c.Account_Concerned__c = acc.Id;
+                            } else {
+                                // For the other record types, keep the initial behaviour of the case and set the Account field on the case
+                                system.debug('FOUND AND SETTING Account');
+                                c.AccountId = acc.Id;
+                            }
                         }
                     }
                 }
-            }
-            // Airline & IATA Country > Account Concerned
-            if (!lstAccountIds.isEmpty()) {
+                // Airline & IATA Country > Account Concerned
+                if (!lstAccountIds.isEmpty()) {
 
-                // Get a map of related accounts - only airlines
-                set<String> setAirlineAccountRTs = new set<String> {'IATA_Airline', 'IATA_Airline_BR'};
-                Map<Id, Account> mapRelatedAirlineAccountsPerId = 
-                        new Map<Id, Account>([SELECT Id, Airline_designator__c, IATACode__c, IATA_ISO_Country__r.ISO_Code__c
-                                             FROM Account WHERE Id IN :lstAccountIds AND RecordType.DeveloperName IN :setAirlineAccountRTs]);
-                // continue only if there are airline accounts
-                if (!mapRelatedAirlineAccountsPerId.values().isEmpty()) {
-                    // Get all the ISO Countries & create a map, using the Case BSP Country as key
-                    List<IATA_ISO_Country__c> lstAllISOCountries = IATAIsoCountryDAO.getIsoCountries();
-                    Map<String, String> mapCountryCodePerBSPName = new Map<String, String>();
-                    for (IATA_ISO_Country__c ic : lstAllISOCountries) {
-                        mapCountryCodePerBSPName.put(ic.Case_BSP_Country__c, ic.ISO_Code__c);
-                    }
-                    // Build a search map for accounts concerned: the key is the searched account site (created with the data from the account on the case + the code
-                    // of the country on the case), the value is a list of cases
-                    map<String, List<Case>> mapCasesListPerAccountSite = new map<String, List<Case>>();
-                    for (Case c : lstCasesWithBSPCountry) {
-                        // we only look for the account concerned if it's different from the account on the case, which means the country needs to be different
-                        if (mapCountryCodePerBSPName.get(c.BSPCountry__c) != mapRelatedAirlineAccountsPerId.get(c.AccountId).IATA_ISO_Country__r.ISO_Code__c) {
-                            // Site = related account 2-letter code + related account iata code + country code of the country on the case
-                            String searchedAccSite = mapRelatedAirlineAccountsPerId.get(c.AccountId).Airline_designator__c + ' ' + mapRelatedAirlineAccountsPerId.get(c.AccountId).IATACode__c + ' ' + mapCountryCodePerBSPName.get(c.BSPCountry__c);
-                            if (mapCasesListPerAccountSite.get(searchedAccSite) == null) {
-                                mapCasesListPerAccountSite.put(searchedAccSite, new List<Case>());
-                            }
-                            mapCasesListPerAccountSite.get(searchedAccSite).add(c);
+                    // Get a map of related accounts - only airlines
+                    set<String> setAirlineAccountRTs = new set<String> {'IATA_Airline', 'IATA_Airline_BR'};
+                    Map<Id, Account> mapRelatedAirlineAccountsPerId = 
+                            new Map<Id, Account>([SELECT Id, Airline_designator__c, IATACode__c, IATA_ISO_Country__r.ISO_Code__c
+                                                 FROM Account WHERE Id IN :lstAccountIds AND RecordType.DeveloperName IN :setAirlineAccountRTs]);
+                    // continue only if there are airline accounts
+                    if (!mapRelatedAirlineAccountsPerId.values().isEmpty()) {
+                        // Get all the ISO Countries & create a map, using the Case BSP Country as key
+                        List<IATA_ISO_Country__c> lstAllISOCountries = IATAIsoCountryDAO.getIsoCountries();
+                        Map<String, String> mapCountryCodePerBSPName = new Map<String, String>();
+                        for (IATA_ISO_Country__c ic : lstAllISOCountries) {
+                            mapCountryCodePerBSPName.put(ic.Case_BSP_Country__c, ic.ISO_Code__c);
                         }
-                    }
-                    if (!mapCasesListPerAccountSite.keyset().isEmpty()) {
-                        // search for accounts with that account site
-                        lstMatchedAccounts = [SELECT Id, Site FROM Account WHERE Site_Index__c IN :mapCasesListPerAccountSite.keyset() AND RecordType.DeveloperName IN :setAirlineAccountRTs];
-                        // update all the cases with the account concerned
-                        for (Account acc : lstMatchedAccounts) {
-                            for (Case c : mapCasesListPerAccountSite.get(acc.Site)) {
-                                if (c.AccountId != acc.Id) {
-                                    if (setIds.contains(c.RecordTypeId)) {
-                                        // For these record types, set the Account Concerned field
-                                        system.debug('FOUND AND SETTING Account Concerned');
-                                        c.Account_Concerned__c = acc.Id;
-                                    } else {
-                                        // For the other record types, keep the initial behaviour of the case and set the Account field on the case
-                                        system.debug('FOUND AND SETTING Account');
-                                        c.AccountId = acc.Id;
+                        // Build a search map for accounts concerned: the key is the searched account site (created with the data from the account on the case + the code
+                        // of the country on the case), the value is a list of cases
+                        map<String, List<Case>> mapCasesListPerAccountSite = new map<String, List<Case>>();
+                        for (Case c : lstCasesWithBSPCountry) {
+                            // we only look for the account concerned if it's different from the account on the case, which means the country needs to be different
+                            if (mapCountryCodePerBSPName.get(c.BSPCountry__c) != mapRelatedAirlineAccountsPerId.get(c.AccountId).IATA_ISO_Country__r.ISO_Code__c) {
+                                // Site = related account 2-letter code + related account iata code + country code of the country on the case
+                                String searchedAccSite = mapRelatedAirlineAccountsPerId.get(c.AccountId).Airline_designator__c + ' ' + mapRelatedAirlineAccountsPerId.get(c.AccountId).IATACode__c + ' ' + mapCountryCodePerBSPName.get(c.BSPCountry__c);
+                                if (mapCasesListPerAccountSite.get(searchedAccSite) == null) {
+                                    mapCasesListPerAccountSite.put(searchedAccSite, new List<Case>());
+                                }
+                                mapCasesListPerAccountSite.get(searchedAccSite).add(c);
+                            }
+                        }
+                        if (!mapCasesListPerAccountSite.keyset().isEmpty()) {
+                            // search for accounts with that account site
+                            lstMatchedAccounts = [SELECT Id, Site FROM Account WHERE Site_Index__c IN :mapCasesListPerAccountSite.keyset() AND RecordType.DeveloperName IN :setAirlineAccountRTs];
+                            // update all the cases with the account concerned
+                            for (Account acc : lstMatchedAccounts) {
+                                for (Case c : mapCasesListPerAccountSite.get(acc.Site)) {
+                                    if (c.AccountId != acc.Id) {
+                                        if (setIds.contains(c.RecordTypeId)) {
+                                            // For these record types, set the Account Concerned field
+                                            system.debug('FOUND AND SETTING Account Concerned');
+                                            c.Account_Concerned__c = acc.Id;
+                                        } else {
+                                            // For the other record types, keep the initial behaviour of the case and set the Account field on the case
+                                            system.debug('FOUND AND SETTING Account');
+                                            c.AccountId = acc.Id;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+            } catch (Exception e) {
+                System.debug('** ERROR ' + e);
             }
         }
         /*updateAccountFieldBasedOnIATAwebCode Trigger*/
@@ -1181,6 +1187,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if (c.RecordTypeId == SEDAcaseRecordTypeID && c.Demand_by_Email_Fax__c!=null) {
                     c.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
                 }
+
+		//ACAMBAS - WMO-384 - Start
+                if((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == SIDRALiteCaseRecordTypeID) && !String.isEmpty(c.DEF_Approval_Rejection__c)) {
+                    c.DEF_Approval_Rejection_Date__c = DateTime.now();    
+                }
+                //ACAMBAS - WMO-384 - End
             }
             Map<String, CurrencyType> mapCurrencyTypePerCurrencyCode = new Map<String, CurrencyType>();
             if (! setCurrencies.isEmpty()) {
@@ -1641,13 +1653,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     accountIds.add(aCase.AccountId);
                     caseLast24Hours.add(aCase);
                 }     
-                else if (aCase.RecordTypeId == SEDAcaseRecordTypeID) {
-
-                    Case aCaseOld = Trigger.oldMap.get(aCase.Id);
+                Case aCaseOld = Trigger.oldMap.get(aCase.Id);   
+                if (aCase.RecordTypeId == SEDAcaseRecordTypeID) {
                     if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
                         aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
                     }
                 }
+                //ACAMBAS - WMO-384 - Start
+                if((aCase.RecordTypeId == SIDRAcaseRecordTypeID || aCase.RecordTypeId == SIDRALiteCaseRecordTypeID) && acase.DEF_Approval_Rejection__c != aCaseOld.DEF_Approval_Rejection__c) {
+                    aCase.DEF_Approval_Rejection_Date__c = DateTime.now();    
+                }
+                //ACAMBAS - WMO-384 - End 
             }
 
             if (accountIds.size() > 0) { // This list should be empty if all of the cases aren't related to the Sidra Small amount process
@@ -1731,11 +1747,20 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 for (Case updatedCase : System.Trigger.new) {
                     updatedCase.Last_Status_Change__c  = updatedCase.Last_Status_Change__c <> null ? updatedCase.Last_Status_Change__c : System.now();
                     Case oldCase = System.Trigger.oldMap.get(updatedCase.Id);
+                    Id processRTId = RecordTypeSingleton.getInstance().getRecordType('Case', 'CS_Process_IDFS_ISS').Id;
+
                     // this very next section is for the kpi
-                    if ((oldCase.Status != updatedCase.Status) || (updatedCase.BusinessHoursId <> null && updatedCase.BusinessHoursId <> oldCase.BusinessHoursId)
-                        || (oldCase.First_Business_Day__c == null)) {
-                        casesIdSoCalculate.add(updatedCase.id);
-                    }
+                    if (
+                        // if record type changed and new record type is process case record type
+                        (oldCase.recordTypeId != updatedCase.recordTypeId && updatedCase.recordTypeId == processRTId) ||
+                        // if status changed...
+                        (oldCase.Status != updatedCase.Status) || 
+                        // if new case has business hours and they have changed
+                        (updatedCase.BusinessHoursId <> null && updatedCase.BusinessHoursId <> oldCase.BusinessHoursId) ||
+                        // if first business day not present...
+                        (oldCase.First_Business_Day__c == null)) {
+                            casesIdSoCalculate.add(updatedCase.id);
+                        }
                     // the following section is used for the
                     // nex short day , to find the very next business day
                     if (updatedCase.BusinessHoursId <> null && updatedCase.Short_Payment_Date__c <> null ) {
