@@ -1,8 +1,5 @@
-public without sharing class ISSP_PortalUserStatusChangeHelper {
-	public ISSP_PortalUserStatusChangeHelper() {
-		
-	}
-
+public without sharing class WithoutSharingOperations {
+	
 	/*** AMSU-163 ***/
     public static void updateUserSync(String conId, Boolean isActive, String email, String profileId, String firstCommunity){
         list <User> usersToUpdate = [Select u.Id, u.IsActive, u.IsPortalEnabled, u.Email, u.Contact.Email, u.Community__c, u.ProfileId
@@ -23,5 +20,9 @@ public without sharing class ISSP_PortalUserStatusChangeHelper {
 
             update usersToUpdate;
         }
+    }
+
+    public static void upsertContacts(List<Contact> cons) {
+        upsert cons;
     }
 }
