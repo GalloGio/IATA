@@ -5,6 +5,15 @@ public class ANG_MulticountryHelper {
 		public String message;
 	}
 
+	public class SwapAccountsWrapper {
+		public Id newGE;
+		public Id bspOldGE;
+		public Id bspNewGE;
+		public Boolean swapAE;
+		public Boolean diffBSP;
+		public Map<Id, Account> swapMapping;
+	}
+
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
     
     public static Set<String> locationTypesSet = new Set<String>{
@@ -291,6 +300,8 @@ public class ANG_MulticountryHelper {
 		if(onlineForm == null || onlineForm.SAAM_Case__r.AccountId == null || onlineForm.SAAM_Case__r.Account.ParentId == null)
 			return 'The Parent Account could not be found.';
 
+		List<AMS_Accreditation_Contact__c> aContactLst = new List<AMS_Accreditation_Contact__c>();
+
 		for(AMS_Account_Role__c contactRole: [Select Id, Owner_Account__c, Owner_Account__r.Name, Contact__c, Contact__r.FirstName, Contact__r.LastName, Contact_Email__c,Financial_Assessment_Contact__c,Percentage__c,Legacy_External_ID__c,Person__c, Person__r.First_Name__c, Person__r.Lastname__c, Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Person__r.Name, Contact_Phone__c from AMS_Account_Role__c where Account__c = :onlineForm.SAAM_Case__r.Account.ParentId and active__c = true and RecordTypeId = :AMS_Utils.AccountRoleOwnershipRT]){
 
 			String firstName = contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.FirstName : contactRole.Person__c <> null ? '' : contactRole.Owner_Name__c;
@@ -313,12 +324,147 @@ public class ANG_MulticountryHelper {
 			aContact.Phone__c = contactRole.Contact_Phone__c;
 			aContact.RecordTypeId = contactRole.Owner_Account__c == null ? AMS_Utils.AccreditationContactPersonRT : AMS_Utils.AccreditationContactCompanyRT;
 
-			insert aContact;
+			aContactLst.add(aContact);
 
 		}
+
+		insert aContactLst;
 	
 		return null;
 	
+	}
+
+	/**
+	* Swap location types between two accounts 
+	* in the scope of change of location type
+	* for multicountry agencies
+	*
+	* @param accountsMap: Map<Id, Account>
+	* @param toReturn: AChangeStructure
+	*
+	*/
+	public static SwapAccountsWrapper swapAccountsLocationType(Map<Id, Account> accountsMap, ANG_AgencyChangesHelper.AChangeStructure toReturn){
+		
+		SwapAccountsWrapper swapWrapper = new SwapAccountsWrapper();
+
+		swapWrapper.swapAE = false;
+		
+		//Swap mapping stores the mapping between the swapping accounts
+		Map<Id, Account> swapMapping = new Map<Id, Account>();
+		
+		List<Account> accountLst = accountsMap.values();
+
+		Account firstAccount  = accountLst.get(0);
+		Account secondAccount = accountLst.get(1);
+		
+		String locationTypeAux = firstAccount.Location_Type__c;
+
+		//Swap location types from the involved accounts
+		firstAccount.Location_Type__c  = secondAccount.Location_Type__c;
+		secondAccount.Location_Type__c = locationTypeAux;
+
+		//Identifies if involved accounts are in a different BSP
+		Boolean diffBSP = 
+			(firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c != 
+				secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c);
+
+		//If the swapped accounts are in different BSPs 
+		//and one of them has the location type AE it must be updated to HE
+		//to make sure that the multicountry hierarchy remains valid  
+		if(diffBSP && firstAccount.Location_Type__c == AMS_Utils.AE){
+			firstAccount.Location_Type__c = AMS_Utils.HE;
+			swapWrapper.swapAE = true;
+		} else if(diffBSP && secondAccount.Location_Type__c == AMS_Utils.AE){
+			secondAccount.Location_Type__c = AMS_Utils.HE;
+			swapWrapper.swapAE = true;
+		}
+
+		//If we are swapping a GE we store the new GE Id, the old GE BSP and the new GE BSP
+		if(firstAccount.Location_Type__c == AMS_Utils.GE){
+			swapRelatedFields(firstAccount, secondAccount);
+			swapWrapper.newGE = firstAccount.Id;
+			swapWrapper.bspOldGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
+			swapWrapper.bspNewGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
+		}
+		//If we are swapping a GE we store the new GE Id, the old GE BSP and the new GE BSP
+		else if(secondAccount.Location_Type__c == AMS_Utils.GE){
+			swapRelatedFields(secondAccount, firstAccount);
+			swapWrapper.newGE = secondAccount.Id;
+			swapWrapper.bspOldGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
+			swapWrapper.bspNewGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
+		}
+		else if(firstAccount.Location_Type__c == AMS_Utils.HE){
+			swapRelatedFields(firstAccount, secondAccount);
+		}
+		else {
+			swapRelatedFields(secondAccount, firstAccount);
+		}
+
+		swapMapping.put(firstAccount.Id, secondAccount);
+		swapMapping.put(secondAccount.Id, firstAccount);
+		
+		swapWrapper.diffBSP = diffBSP;
+		swapWrapper.swapMapping = swapMapping;
+
+		toReturn.addAccount(firstAccount);
+		toReturn.addAccount(secondAccount);
+		
+		return swapWrapper;
+		
+	}
+
+	/**
+	* Move risk related fields and RHC information
+	* from one account to another in the scope of
+	* change of location type for multicountry agencies
+	*
+	* @param assignFieldsAcct: Account
+	* @param srcAcct: Account
+	*
+	*/
+	public static void moveRiskRelatedFieldsFromAccount(Account assignFieldsAcct, Account srcAcct){
+
+		assignFieldsAcct.ANG_IEP_Status__c = srcAcct.ANG_IEP_Status__c;
+		assignFieldsAcct.ANG_HE_RiskStatus__c = srcAcct.ANG_HE_RiskStatus__c;
+		assignFieldsAcct.ANG_IEP_HE_AccntNum__c = srcAcct.ANG_IEP_HE_AccntNum__c;
+		assignFieldsAcct.ANG_HE_CashCondition__c = srcAcct.ANG_HE_CashCondition__c;
+		assignFieldsAcct.Financial_Review_Result__c = srcAcct.Financial_Review_Result__c;
+		assignFieldsAcct.ANG_HE_RiskHistoryAssessment__c = srcAcct.ANG_HE_RiskHistoryAssessment__c;
+
+		srcAcct.ANG_IEP_Status__c = null;
+		srcAcct.ANG_HE_RiskStatus__c = null;
+		srcAcct.ANG_IEP_HE_AccntNum__c = null;
+		srcAcct.ANG_HE_CashCondition__c = false;
+		srcAcct.ANG_HE_RiskHistoryAssessment__c = null;
+
+		ANG_RHCHelper.moveRHCInfos(srcAcct.RHC_Informations__r, new Map<Id,Id>{srcAcct.Id => assignFieldsAcct.Id});
+
+	}
+
+
+	/**
+	* Swap field values between two accounts 
+	* in the scope of change of location type
+	* for multicountry agencies
+	*
+	* @param parentAcct: Account
+	* @param childAcct: Account
+	*
+	*/
+	public static void swapRelatedFields(Account parentAcct, Account childAcct){
+
+		if(parentAcct.Location_Type__c == AMS_Utils.GE){
+			parentAcct.ParentId = null;
+			parentAcct.Top_Parent__c = null;
+			childAcct.ParentId = parentAcct.Id;
+			childAcct.Top_Parent__c = parentAcct.Id;
+			moveRiskRelatedFieldsFromAccount(parentAcct, childAcct);
+		}
+		else if(parentAcct.Location_Type__c == AMS_Utils.HE && childAcct.Location_Type__c == AMS_Utils.AE){
+			parentAcct.ParentId = childAcct.ParentId;
+			childAcct.ParentId = parentAcct.Id;
+		}
+
 	}
 
 }
