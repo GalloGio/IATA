@@ -341,6 +341,7 @@ public class ANG_MulticountryHelper {
 
 		swapWrapper.swapAE = false;
 		
+		//Swap mapping stores the mapping between the swapping accounts
 		Map<Id, Account> swapMapping = new Map<Id, Account>();
 		
 		List<Account> accountLst = accountsMap.values();
@@ -350,9 +351,11 @@ public class ANG_MulticountryHelper {
 		
 		String locationTypeAux = firstAccount.Location_Type__c;
 
+		//Swap location types from the involved accounts
 		firstAccount.Location_Type__c  = secondAccount.Location_Type__c;
 		secondAccount.Location_Type__c = locationTypeAux;
 
+		//Identifies if involved accounts are in a different BSP
 		Boolean diffBSP = 
 			(firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c != 
 				secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c);
@@ -368,12 +371,14 @@ public class ANG_MulticountryHelper {
 			swapWrapper.swapAE = true;
 		}
 
+		//If we are swapping a GE we store the new GE Id, the old GE BSP and the new GE BSP
 		if(firstAccount.Location_Type__c == AMS_Utils.GE){
 			swapRelatedFields(firstAccount, secondAccount);
 			swapWrapper.newGE = firstAccount.Id;
 			swapWrapper.bspOldGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 			swapWrapper.bspNewGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 		}
+		//If we are swapping a GE we store the new GE Id, the old GE BSP and the new GE BSP
 		else if(secondAccount.Location_Type__c == AMS_Utils.GE){
 			swapRelatedFields(secondAccount, firstAccount);
 			swapWrapper.newGE = secondAccount.Id;
@@ -457,7 +462,7 @@ public class ANG_MulticountryHelper {
 	*/
 	public static void swapRelatedFields(Account parentAcct, Account childAcct){
 
-		if(parentAcct.Location_Type__c == AMS_Utils.GE && (childAcct.Location_Type__c == AMS_Utils.HE || childAcct.Location_Type__c == AMS_Utils.AE)){
+		if(parentAcct.Location_Type__c == AMS_Utils.GE){
 			parentAcct.ParentId = null;
 			parentAcct.Top_Parent__c = null;
 			childAcct.ParentId = parentAcct.Id;

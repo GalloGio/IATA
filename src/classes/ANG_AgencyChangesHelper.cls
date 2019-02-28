@@ -531,41 +531,51 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Account childAcct  = accountsMap.get(rel.Child_Account__c);
 			Account parentAcct = accountsMap.get(rel.Parent_Account__c);
+
+			Id childBSP = rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c;
 			
+			//If the GE was involved in the swap we need to update the relation 
 			Boolean needsUpdate = (swapAccountsWrapper.newGE != NULL);
 
-			if(swapAccountsWrapper.diffBSP && childAcct != NULL && parentAcct != NULL){
+			//If the change of location involves both of the accounts
+			//from this relationship (rel) we basically swap them
+			if(childAcct != NULL && parentAcct != NULL){
 				rel.Child_Account__c = parentAcct.Id;
 				rel.Parent_Account__c = childAcct.Id;
 			}
 			else {
 
-				//Means that the current child 
-				//in this relationship is being swapped 
+				//Means that the current child in this relationship was swapped 
 				if(childAcct != NULL){
-					if(swapAccountsWrapper.diffBSP && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE && rel.Parent_Account__r.Location_Type__c == AMS_Utils.HE){
-						rel.Parent_Account__c = rel.Child_Account__c;
+					//If we are upon a change of location involving different BSPs
+					//and the given child is the new GE the parent in this relationship 
+					//must be updated to become the new GE
+					if(swapAccountsWrapper.diffBSP && childAcct.Id == swapAccountsWrapper.newGE){
+						rel.Parent_Account__c = swapAccountsWrapper.newGE;
 					}
+					//The previous child becomes the correspondent swapped account
 					rel.Child_Account__c = swapAccountsWrapper.swapMapping.get(rel.Child_Account__c).Id;
 					needsUpdate = true;
 				}
+
 				
-				if(swapAccountsWrapper.diffBSP && parentAcct != NULL && (rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE || (rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c != swapAccountsWrapper.bspOldGE)) && swapAccountsWrapper.swapAE){
-					rel.Parent_Account__c = swapAccountsWrapper.swapMapping.get(rel.Parent_Account__c).Id;
-					needsUpdate = true;
-				}
-				else if(swapAccountsWrapper.diffBSP && parentAcct != NULL && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c != swapAccountsWrapper.bspNewGE && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c != swapAccountsWrapper.bspOldGE){
-					rel.Parent_Account__c = swapAccountsWrapper.swapMapping.get(rel.Parent_Account__c).Id;
-					needsUpdate = true;
-				}
-				//Means that the current parent 
-				//in this relationship is being swapped
-				else if(!swapAccountsWrapper.diffBSP && parentAcct != NULL){
+				if(parentAcct != NULL && //Means that the current parent in this relationship is being swapped
+					(!swapAccountsWrapper.diffBSP || //if in the scope of a location change in the same BSP 
+					//If we are swapping an AE with a GE and the current child 
+					//in the relationship is not in the old GE's BSP (different BSPs)
+					(childBSP != swapAccountsWrapper.bspOldGE && swapAccountsWrapper.swapAE) || 
+					//If the current child is in a BSP not involved in the swap
+					(childBSP != swapAccountsWrapper.bspNewGE && childBSP != swapAccountsWrapper.bspOldGE))
+				){
+					//The previous parent becomes the correspondent swapped account 
 					rel.Parent_Account__c = swapAccountsWrapper.swapMapping.get(rel.Parent_Account__c).Id;
 					needsUpdate = true;
 				}
 
-				if(childAcct == NULL && parentAcct == NULL && swapAccountsWrapper.diffBSP && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE){
+				//If both of the accounts in this relationship were NOT involved in the swap
+				//and the BSP of the given child account is the same as the new GE's BSP 
+				//we need to update the parent to be the new GE
+				if(childAcct == NULL && parentAcct == NULL && childBSP == swapAccountsWrapper.bspNewGE){
 					rel.Parent_Account__c = swapAccountsWrapper.newGE;
 					needsUpdate = true;
 				}
@@ -574,27 +584,33 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(needsUpdate){
 				
-				//Means that the parent of the current child 
-				//in this relation needs to be updated
+				//If the child in this relationship was not involved in the swap
+				//we need to update the account itself (parent and eventually top parent if the GE was swaped)
 				if(childAcct == NULL){
 
 					Account acct  = new Account(Id = rel.Child_Account__c);
+
+					//Update the parent according to the new parent in this relationship
 					acct.ParentId = rel.Parent_Account__c;
 
-					//If the given child was an HE that remained in the BSP of the new GE the location type must be set as AE
-					if(swapAccountsWrapper.diffBSP && rel.Child_Account__r.Location_Type__c == AMS_Utils.HE && rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c == swapAccountsWrapper.bspNewGE){
+					//If we are upon a change of location involving different BSPs
+					//and the given child was an HE that remained in the BSP of the new GE 
+					//the location type of this account must be set as AE so that the hierarchy remains valid
+					if(swapAccountsWrapper.diffBSP && rel.Child_Account__r.Location_Type__c == AMS_Utils.HE && childBSP == swapAccountsWrapper.bspNewGE){
 						acct.Location_Type__c = AMS_Utils.AE;
 					}
 
-					//Change top parent if the GE was swapped
+					//If there is a new GE in the hierarchy we must update the top parent
 					if(swapAccountsWrapper.newGE != NULL){
 						acct.Top_Parent__c = swapAccountsWrapper.newGE;
 					}
 
+					//Add the account to be updated
 					toReturn.addAccount(acct);
 				
 				}
 				
+				//Add the relationship to be updated
 				toReturn.addRelation(rel);
 
 			}
