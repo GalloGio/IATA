@@ -45,6 +45,7 @@ public with sharing class LVA_ChatTriggerHandler {
                 AccountId =  lct.AccountId,
                 ContactId = lct.ContactId,
                 Status = 'Action Needed',
+				assign__C= false,
                 ownerId=lct.OwnerId
             );
             lstCases.add(casec);
