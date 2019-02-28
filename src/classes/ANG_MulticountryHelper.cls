@@ -86,10 +86,7 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	public static Boolean shouldRunMulticountryValidations(Account account){
-    	return ((account.Location_Type__c == AMS_Utils.HE || account.Location_Type__c == AMS_Utils.AE) && 
-    			allowedLocationsSet.contains(account.Location_Class__c) &&
-    			account.ANG_IsNewGenAgency__c &&
-                account.ParentId != NULL);
+    	return (allowedLocationsSet.contains(account.Location_Class__c) && account.ANG_IsNewGenAgency__c);
 	}
 
 	/**
@@ -106,7 +103,17 @@ public class ANG_MulticountryHelper {
 		ValidationWrapper vw = new ValidationWrapper();
 		vw.valid = true;
 
-		if(account.Location_Type__c == AMS_Utils.AE){
+		//NEWGEN-5055 - Check If ISO Country selected to the account is a Multicountry Enable
+		if(!account.IATA_ISO_Country__r.Multicountry_Enabled__c){
+			vw.valid = false;
+			if(!String.isBlank(account.Location_Type__c)) 
+				vw.message = Label.ANG_Multicountry_Country_not_Enabled_for_Multicountry;
+			else // Account created from from account creator page
+				vw.message = 'The country ' + account.IATA_ISO_Country__r.Name  + ' is not enabled for multicountry';
+            return vw;
+		}
+
+		else if(account.Location_Type__c == AMS_Utils.AE){
 
            	if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
                 vw.valid = false;
@@ -157,15 +164,18 @@ public class ANG_MulticountryHelper {
                 Location_Class__c,
                 Parent.Location_Type__c,
                 IATA_ISO_Country__r.AMS_Settlement_System__c,
+                IATA_ISO_Country__r.Multicountry_Enabled__c,
+                IATA_ISO_Country__r.Name,
                 Parent.IATA_ISO_Country__r.AMS_Settlement_System__c
              FROM
                 Account
              WHERE 
                 (Id IN :parentIdSet OR ParentId IN :parentIdSet)
+            /* AND
+                Location_Type__c IN :locationTypesSet */
              AND
-                Location_Type__c IN :locationTypesSet
-             AND
-             	Top_Parent__r.Location_Type__c = :AMS_Utils.GE
+             	(
+             	Top_Parent__r.Location_Type__c = :AMS_Utils.GE OR Location_Type__c = :AMS_Utils.GE) 
             ]
         );
 
@@ -224,18 +234,16 @@ public class ANG_MulticountryHelper {
         Map<Id, Set<Id>> accountsHePerBspMap = aggregateHeadEntitiesForEachBSP(acctWithRelshipsMap.values());
         
         for(Account acct : accountLst){
-            
-            //Discard GE from the validations
-            if(acct.Location_Type__c == AMS_Utils.GE) continue;
-			
+    	
             Account acctWithRelships = acctWithRelshipsMap.get(acct.Id);
+            ValidationWrapper vw;
+            if(acctWithRelships != null){
+            	vw = runMulticountryValidations(acctWithRelships, accountsHePerBspMap);
 
-            ValidationWrapper vw = runMulticountryValidations(acctWithRelships, accountsHePerBspMap);
-            
-            if(!vw.valid){
-                acct.addError(vw.message);
+	            if(!vw.valid){
+	               	acct.addError(vw.message);
+            	}
             }
-
         }
 
 	}

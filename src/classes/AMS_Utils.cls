@@ -154,6 +154,8 @@ public without sharing class AMS_Utils {
 
 
     public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
+    public static final String PORTAL_APP_ACCESS_REQUESTED = 'Access Requested';
+    public static final String PORTAL_APP_ACCESS_DENIED = 'Access Denied';
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
@@ -193,7 +195,7 @@ public without sharing class AMS_Utils {
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
     public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
     public static final String NGGE             = 'ANG.NEW.GE.STANDARD.1.0';
-
+    public static final String NGGDI            = 'ANG.GDI.1.0';
 
     public static final String NGCHINACONVERSION  = 'ANG.MAJOR.CHANGES.CHINA.1.0'; //ACAMBAS - NEWGEN-4445
  
@@ -240,35 +242,40 @@ public without sharing class AMS_Utils {
     public static final String CERT_TSA         = 'TSA';
 
     //Record Types
-    public static final String RECTYPE_NEW                = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
-    public static final String RECTYPE_CHANGE             = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
-    public static final String RECTYPE_CERT               = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
+    public static final String RECTYPE_NEW          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
+    public static final String RECTYPE_CHANGE       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
+    public static final String RECTYPE_CERT         = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
     public static final String RECTYPE_NEWGE              = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_GE');
-    public static final String RECTYPE_NEWHE              = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
-    public static final String RECTYPE_NEWAE              = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
+    public static final String RECTYPE_NEWHE        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
+    public static final String RECTYPE_NEWAE        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
     public static final String RECTYPE_MCAE               = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Multicountry_AE');
-    public static final String RECTYPE_NGCHANGES          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
-    public static final String RECTYPE_NGCORRECTION       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
-    public static final String RECTYPE_CORRECTION         = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
-    public static final String RECTYPE_NEWGENFOP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
-    public static final String RECTYPE_NEWGENOPTINOUT     = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
-    public static final String RECTYPE_NEWGENANNUALREVAL  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
+    public static final String RECTYPE_NGCHANGES    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
+    public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
+    public static final String RECTYPE_CORRECTION   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
+    public static final String RECTYPE_NEWGENFOP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
+    public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
+    public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
     public static final String RECTYPE_BANK_ACCOUNT_SETUP = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
     public static final String RECTYPE_IEPMODELA          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_A_ONBOARDING');
     public static final String RECTYPE_IEPMODELB          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_B_SCREENING');
+    public static final String RECTYPE_GDI          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
     public static final String RECTYPE_SIDRA        = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
     public static final String RECTYPE_IFAP         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+
     public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
     
     public static final String RECTYPE_IATAEASYPAY  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c', 'IATA_EasyPay_Opt_in_Out');
+
     public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c','IEP_Model_A');
 
     public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
-    public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
+
+    public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
+	public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD, NEWGESTANDARD, MCAE};
 
@@ -3049,4 +3056,10 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return res;
     }
     /*** AMSU-195 End ***/
+    
+    public static Integer getRandomNumber(){
+    	Integer randomKey = Crypto.getRandomInteger();
+    	
+    	return randomKey < 0 ? randomKey * -1 : randomKey;
+    }
 }

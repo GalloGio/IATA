@@ -209,11 +209,27 @@
             }
 
             function submitMultiCountry() {
-
+                submitMultiCountryApplication();
             }
 
             function discardMultiCountry() {
-                
+                discardMCApplication();
+            }
+
+            $(document).ready(function() {
+                if ("{!mcAbleToSubmit}" == 'false') {
+                    $('#submitMCButton').attr('disabled', 'false');
+                }
+            });
+
+            function rerenderAllSections() {
+                $('[id$=left-side-regular]').css('display', 'block');
+                $('[id$=left-side-mc]').css('display', 'none');
+                $('[id$=ongoing-apps]').css('display', 'block');
+
+                if ({!isUserAccAccredited}) {
+                    $('[id$=other-forms]').css('display', 'block');
+                }
             }
             </script>
         <div class="container">
@@ -233,13 +249,15 @@
                 <apex:inputHidden value="{!pEfectiveDateStr}" id="effectiveDateOfChange"/>
                 <apex:actionStatus onstart="startLoading();" onstop="endLoading();" id="loadStatusSpinner"/>
                 <apex:actionFunction action="{!runOptInOut}" name="runOptInOut" oncomplete="onCompleteOptInOut();" rerender="DraftCases"/>
-                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms, submitMC">
+                <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms">
                     <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
                 </apex:actionFunction>
+                <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="allSections" oncomplete="rerenderAllSections();"/>
+                <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" status="loadStatusSpinner" rerender="allSections" oncomplete="rerenderAllSections();"/>
 
-                <div class="container" style="width: 100%">
+                <div class="container" style="width: 100%" id="allSections">
                     <div class="row">
-                        <section name="left-side-agency-accred" class="col-md-7" style="min-height: 350px; display: {!IF(isMultiCountryStarted, 'none', '')};">
+                        <section name="left-side-agency-accred" id="left-side-regular" class="col-md-7" style="min-height: 350px; display: {!IF(isMultiCountryStarted, 'none', '')};">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -301,7 +319,7 @@
                              </div>   
                         </section>
 
-                        <section name="left-side-agency-accred-multicountry" class="col-md-7" style="min-height: 350px; display: {!IF(isMultiCountryStarted, '', 'none')};">
+                        <section name="left-side-agency-accred-multicountry" id="left-side-mc" class="col-md-7" style="min-height: 350px; display: {!IF(isMultiCountryStarted, '', 'none')};">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -342,7 +360,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4" id="submitMC">
-                                    <input type="button" class="btn btn_iata_primary" onClick="submitMultiCountry();" value="Submit Multicountry Application to IATA" disabled="{!mcAbleToSubmit}"/>
+                                    <input type="button" class="btn btn_iata_primary" onClick="submitMultiCountry();" value="Submit Multicountry Application to IATA" id="submitMCButton"/>
                                 </div>
                                 <div class="col-md-4">
                                 </div>
@@ -381,7 +399,7 @@
                     </div>
                     
                     <div class="row">
-                        <section name="left-side-ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(isMultiCountryStarted, 'none', '')};">
+                        <section name="left-side-ongoing-apps" id="ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(isMultiCountryStarted, 'none', '')};">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -415,7 +433,7 @@
                                 
                         </section>
                             
-                        <section name="right-side-other-forms" class="col-md-5" style="display:{!IF(isMultiCountryStarted, 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+                        <section name="right-side-other-forms" id="other-forms" class="col-md-5" style="display:{!IF(isMultiCountryStarted, 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>

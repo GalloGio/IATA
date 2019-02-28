@@ -53,9 +53,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -778,6 +775,7 @@
     </relatedLists>
     <relatedLists>
         <customButtons>Assign_New_Financial_Assessment_Contact</customButtons>
+        <customButtons>Contact_Related_List</customButtons>
         <fields>FULL_NAME</fields>
         <fields>CONTACT.TITLE</fields>
         <fields>Airline_Contact_Type__c</fields>

@@ -442,6 +442,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ACLI_SAP_Id__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
@@ -514,6 +518,7 @@
         <relatedList>Data_Quality_Feedback__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>Contact_Related_List</customButtons>
         <fields>FULL_NAME</fields>
         <fields>Status__c</fields>
         <fields>CONTACT.TITLE</fields>

@@ -28,6 +28,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String IEP_MODEL_B_ACCOUNT_SETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
     public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
     public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
+    private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
 
 
     public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP, NEWVR_PV};
@@ -271,14 +272,20 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
  
-         if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
+        if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
 
-         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
-            
-        return null;
 
+        if(typeOfProcess.equalsIgnoreCase(NEWNGLOBAL)) {
+            return AMS_Utils.RECTYPE_NEWGE;
+        }
+	
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI))
+            return AMS_Utils.RECTYPE_GDI;
+        
+        return null;
     }
 
     private static boolean isSomethingEmpyOrNull(List<String> fieldsToValidate){

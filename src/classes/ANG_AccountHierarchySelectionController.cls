@@ -4,7 +4,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		get{
 			
 			if(newParent == null && oscar.New_parent__c != null)
-				return [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c from Account where ID = :oscar.New_parent__c];
+				return [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c, Top_Parent__r.Location_Type__c, Location_Type__c 
+						from Account where ID = :oscar.New_parent__c];
 			else 
 				return newParent;
 		}
@@ -192,13 +193,18 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					'All agents from the same BSP not selected',
 					'VMFR must be applied to all agencies in the same BSP'
 				);
-
+				
 				errorMessages.put(
 					'Only two agents selected with different location types',
 					'For change of location type, only two accounts can be selected with different location type'
 				);
-				
-			}
+
+				errorMessages.put(
+					'Standard or Lite to Multicountry hierarchy', 
+					'The selected new parent is part of a multicountry hierarchy. Please process a conversion in this scenario.'
+				);
+			}	
+		
 			return errorMessages;
 		}
 		set;
@@ -342,6 +348,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	
 	private Boolean isMulticountry = false;
 	private Boolean existsLocClassDomesticError = false;
+	private Boolean isMulticountry = false;
+	private Boolean isCashOrCashless = false;
 	private Map<Id, Integer> bspCountMap = new Map<Id, Integer>();
 	
 	public Map<Id, HierarchyItem> hierarchy{
@@ -518,6 +526,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
         }
 
 		this.isMulticountry = oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+		this.isCashOrCashless = (oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH || oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
 
 	}
 
@@ -562,6 +571,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected()) errorChecks.put('Location Type Change Detected', true);
 				if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c)) errorChecks.put('Must include New Parent', true);
 				if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c)) errorChecks.put('Multiple Hierarchies', true);
+
+				//NEWGEN-5007 
+				if(this.isCashOrCashless && (newParent.Location_Type__c == AMS_Utils.GE || (newParent.Top_Parent__r != null && newParent.Top_Parent__r.Location_Type__c == AMS_Utils.GE))) errorChecks.put('Standard or Lite to Multicountry hierarchy', true);
 
 				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && diffDestination(oscar.New_parent__c)) errorChecks.put('Mixed types of changes', true);
 			}
@@ -630,7 +642,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 	public PageReference FetchNewParent(){
 
-		if(oscar.New_parent__c != null)	newParent = [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c from Account where ID = :oscar.New_parent__c];
+		if(oscar.New_parent__c != null)	newParent = [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c, Top_Parent__r.Location_Type__c, Location_Type__c 
+													from Account where ID = :oscar.New_parent__c];
 
 		return null;
 	}

@@ -124,8 +124,11 @@ public with sharing class ANG_MulticountryAccountCreatorController {
         }
         catch(Exception e){
 			hasErrors = true;
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, '' + e);
-        	ApexPages.addMessage(myMsg);
+            if(!ApexPages.hasMessages(ApexPages.Severity.ERROR)){
+            //Only exhibits the message if it was not thrown an error before (e.g. trigger addError)
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, '' + e);
+                ApexPages.addMessage(myMsg);
+            }
 			return false;
         }
     }

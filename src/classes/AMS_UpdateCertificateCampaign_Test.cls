@@ -24,22 +24,21 @@ private class AMS_UpdateCertificateCampaign_Test {
 		setupTestContext();
 
 		Test.startTest();
+        Account campaignAccount;
+		campaignAccount = ISSP_ObjectFactory.createNewAccount();
+		campaignAccount.BillingCity = 'testCampaign';
+		campaignAccount.Name = 'testCampaign';
+		campaignAccount.Site = 'headSite';
+		campaignAccount.Sector__c = 'Travel Agent';
+		//campaignAccount.Top_Parent__c = testAccountTop.Id;
+		campaignAccount.RecordTypeId = ACCOUNT_RECORD_TYPE_ID_IATA_AGENCY;
+		campaignAccount.IATA_ISO_Country__c = testCountry.Id;
+
+		insert campaignAccount;
 
 		System.runAs(testUser) {
-			Account campaignAccount;
 			AMS_UpdateCertificateCampaign updateCertificationCampaign;
 			Set<Id> accountIdSet = new Set<Id>();
-
-			campaignAccount = ISSP_ObjectFactory.createNewAccount();
-			campaignAccount.BillingCity = 'testCampaign';
-			campaignAccount.Name = 'testCampaign';
-			campaignAccount.Site = 'headSite';
-			campaignAccount.Sector__c = 'Travel Agent';
-			//campaignAccount.Top_Parent__c = testAccountTop.Id;
-			campaignAccount.RecordTypeId = ACCOUNT_RECORD_TYPE_ID_IATA_AGENCY;
-			campaignAccount.IATA_ISO_Country__c = testCountry.Id;
-
-			insert campaignAccount;
 
 			accountIdSet.add(campaignAccount.Id);
 
@@ -60,7 +59,7 @@ private class AMS_UpdateCertificateCampaign_Test {
 		String orgId = UserInfo.getOrganizationId();
 		String dateString = String.valueOf(Datetime.now()).replace(' ', '').replace(':', '').replace('-', '');
 		Integer randomInteger = Integer.valueOf(Math.rint(Math.random()*1000000));
-		String uniqueName = orgId + String.valueOf(datetime.now());
+		String uniqueName = orgId + String.valueOf(datetime.now().format('yyMMddHHmmss'));
 		String contactId15;
 
 		testCountry = new IATA_ISO_Country__c(

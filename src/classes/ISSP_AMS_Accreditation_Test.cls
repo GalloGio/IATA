@@ -3173,31 +3173,30 @@ private class ISSP_AMS_Accreditation_Test {
             testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
             insert testCase2;
 
-            AMS_Pax_Accreditation_Form__c newForm2 = new AMS_Pax_Accreditation_Form__c();
-            newForm2.IsGSA__c = 'No';
-            newForm2.CurrencyIsoCode = country.CurrencyIsoCode;
-            newForm2.SAAM_Case__c = testCase2.Id;
-            newForm2.Agency_Codes_Concerned__c = '2000000';
-            newForm2.Scope_of_Change__c = 'HO - Selected Branches';
-            insert newForm2;
-
-            Test.startTest();
-
-            ApexPages.currentPage().getParameters().put('caseId', testCase2.Id );
-            ApexPages.currentPage().getParameters().put('isBankAccountChange' , 'true');
-            ApexPages.currentPage().getParameters().put('isNoticeOfChange' , 'true');
-            ISSP_AMS_Accreditation ctrl2 = new ISSP_AMS_Accreditation();
-            ctrl2.newCase = testCase2;
-
-            ctrl2.isNoticeOfChange = true;
-            ctrl2.isBankAccountChange = true;
-
-            ctrl2.newForm.Scope_of_Change__c = 'HO - Selected Branches';
-            ctrl2.newForm.Agency_Codes_Concerned__c = '2000000';
-            ctrl2.newform.Accept_terms_and_conditions__c = true;
-            ctrl2.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
-
-            Pagereference pr1 = ctrl2.goToFinalStep();
+ 			Test.startTest();
+ 			
+	            AMS_Pax_Accreditation_Form__c newForm2 = new AMS_Pax_Accreditation_Form__c();
+	            newForm2.IsGSA__c = 'No';
+	            newForm2.CurrencyIsoCode = country.CurrencyIsoCode;
+	            newForm2.SAAM_Case__c = testCase2.Id;
+	            newForm2.Agency_Codes_Concerned__c = '2000000';
+	            newForm2.Scope_of_Change__c = 'HO - Selected Branches';
+	            insert newForm2 ;
+	
+	            ApexPages.currentPage().getParameters().put('caseId', testCase2.Id );
+	            ApexPages.currentPage().getParameters().put('isBankAccountChange' , 'true');
+	            ApexPages.currentPage().getParameters().put('isNoticeOfChange' , 'true');
+	            ISSP_AMS_Accreditation ctrl2 = new ISSP_AMS_Accreditation();
+	            ctrl2.newCase = testCase2 ;
+	
+	            ctrl2.isNoticeOfChange = true;
+	            ctrl2.isBankAccountChange = true;
+	
+	            ctrl2.newForm.Scope_of_Change__c = 'HO - Selected Branches';
+	            ctrl2.newForm.Agency_Codes_Concerned__c = '2000000';
+	            ctrl2.newform.Accept_terms_and_conditions__c = true;
+	
+	            Pagereference pr1 = ctrl2.goToFinalStep();
 
             Test.stopTest();
         }
@@ -3594,30 +3593,6 @@ private class ISSP_AMS_Accreditation_Test {
         Test.stopTest();
     }
 
-    @isTest static void ISSP_AMS_Accreditation_Test_ICC_12() {
-        Test.startTest();
-
-        User testUser = icc_testUser();
-
-        System.runAs(testUser) {
-            ISSP_AMS_Accreditation accr = icc_initialize();
-
-            accr.isNewCase = true;
-            accr.hqAccount.Company_Type__c = 'Z';
-            accr.isNoticeOfChange = false;
-            accr.amsOfficeType = 'Branch';
-            accr.newCase.Reason1__c = 'Xpto';
-            accr.isNewHOforAccredAgent = true;
-            accr.sectorValue = 'Travel_Agent';
-            accr.newForm.Accept_terms_and_conditions__c = true;
-            accr.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
-
-            PageReference pageRef = accr.goToFinalStep();
-        }
-
-        Test.stopTest();
-    }
-
     @isTest static void ISSP_AMS_Accreditation_Test_ICC_13() {
         Test.startTest();
 
@@ -3637,6 +3612,10 @@ private class ISSP_AMS_Accreditation_Test {
             accr.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 
             PageReference pageRef = accr.goToFinalStep();
+
+            accr.sectorValue = 'Travel_Agent';
+
+            pageRef = accr.goToFinalStep();
         }
 
         Test.stopTest();
