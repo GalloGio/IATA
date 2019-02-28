@@ -200,6 +200,10 @@ global class vfISSP_FAQ2Case
             }
 
             system.debug('basto1p - isToShowFAQs='+resVal+'; isTopicDefault='+isTopicDefault+'; topic='+topic);
+            //RN-INC451479
+            if(topic.contains('-- Select --')){
+                topic = '0';
+            }
             return resVal;
         }
     set;}
