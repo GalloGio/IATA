@@ -1116,9 +1116,15 @@ $Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
         <active>true</active>
         <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
         <errorConditionFormula>AND(
-Portal_Application__r.ANG_Restrict_internal_selection__c = true,
-Text(Right__c) = &apos;Access Granted&apos;,
-NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+	Portal_Application__r.ANG_Restrict_internal_selection__c = true,
+	Text(Right__c) = &apos;Access Granted&apos;, 
+	AND(
+		NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
+		AND(
+			NOT(BEGINS($Profile.Name, &apos;ISS&apos;)),
+			BEGINS(Portal_Application__r.Name, &apos;Global Default Insurance (GDI)&apos;)
+		)
+	)
 )</errorConditionFormula>
         <errorMessage>Access to this portal service cannot be assigned internally. Please ask the portal user to request access, or their Portal Admin to add the user to this service.</errorMessage>
     </validationRules>
