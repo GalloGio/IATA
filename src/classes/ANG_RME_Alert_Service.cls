@@ -190,7 +190,7 @@ global class ANG_RME_Alert_Service {
 		if(!validateRTSAlert(req)) return;
 
 		ANG_Risk_Alert__c rtsAlert = new ANG_Risk_Alert__c(
-			RecordTypeId = Schema.SObjectType.ANG_Risk_Alert__c.getRecordTypeInfosByName().get('Risk Alert RTS').getRecordTypeId(),
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS'),
 			ANG_Severity__c= req.rtsSeverity,
 			ANG_Agent_Sales__c = req.agentSales,
 			CurrencyIsoCode = req.storedBaseCurrency,

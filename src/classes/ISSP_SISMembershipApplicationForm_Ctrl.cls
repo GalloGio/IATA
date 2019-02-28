@@ -1,10 +1,9 @@
 public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
 
     public static String AMAZON_CREDENTIALS_NAME = 'GenericAttach';
-    public static final Map<String,Schema.RecordTypeInfo> MAP_AP_RT = Schema.SObjectType.AP_Process_Form__c.getRecordTypeInfosByDeveloperName();
-    public static final Id AP_RT_ISPA = MAP_AP_RT.get('SIS_Application_ISPA').getRecordTypeId();
-    public static final Id AP_RT_ISUA = MAP_AP_RT.get('SIS_Application_ISUA').getRecordTypeId();
-    public static final Id AP_RT_TOU  = MAP_AP_RT.get('SIS_Application_TOU').getRecordTypeId();
+    public static final Id AP_RT_ISPA = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_ISPA');
+    public static final Id AP_RT_ISUA = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_ISUA');
+    public static final Id AP_RT_TOU  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_TOU');
     public static final Map<Id,String> MAP_RECORDTYPE_FORMS = new Map<Id,String>{
         AP_RT_ISPA => 'ISPA',
         AP_RT_ISUA => 'ISUA',
@@ -170,8 +169,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
                 update this.newForm;
 
                 //update Case
-                list<IATA_ISO_Country__c> listCountries = [
-                    SELECT Id, Name FROM IATA_ISO_Country__c WHERE Id = :this.newForm.Company_Country__c];
+                List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{this.newForm.Company_Country__c});
                 if (!listCountries.isEmpty()) {
                     this.newCase.BSPCountry__c = listCountries[0].Name;
                 }
@@ -289,7 +287,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
             File_Identifier__c = fileIdentifier,
             File_Identifier_picklist__c = fileIdentifier,
             Review_Status__c = 'Pending',
-            RecordTypeId = Schema.SObjectType.AmazonFile__c.RecordTypeInfosByName.get('AMS File').RecordTypeId,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c','AMS_File'),
             Size_MB__c = content.size()* 0.000001, //convert to MB
             isPublic__c = true,
             Case__c = caseId
@@ -383,7 +381,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
     **/
     public list<SelectOption> getListCountryOptions() {
         list<SelectOption> listOptions = new list<SelectOption>();
-        for (IATA_ISO_Country__c country: [SELECT Id,Name FROM IATA_ISO_Country__c]) {
+        for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountries()) {
             listOptions.add(new SelectOption(country.Id,country.Name));
         }
         return listOptions;

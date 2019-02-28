@@ -593,9 +593,7 @@ global without sharing class ISSP_OperationalCalendarController {
         if (String.isBlank(selectedCountry)) return;
         if (String.isBlank(selectedType)) return;
         try {
-            IATA_ISO_Country__c country = [
-                SELECT Id, ISO_Code__c FROM IATA_ISO_Country__c
-                WHERE Id = :selectedCountry];
+            IATA_ISO_Country__c country = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{selectedCountry}).get(0);
             ISSP_Operational_Calendar_Disclaimer__c disclaimer = [
                 SELECT Id, Label__c
                 FROM ISSP_Operational_Calendar_Disclaimer__c
