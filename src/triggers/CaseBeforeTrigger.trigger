@@ -91,6 +91,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
     //ID ProcesscaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
     ID EuropecaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+    ID GlobalcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
     ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
     ID AfricaMEcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
     ID AsiaPacificcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ExternalCasesIDFSglobal');
@@ -673,7 +674,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     if ((aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == ProcessISSPcaseRecordTypeID) || (aCase.RecordTypeId == EuropecaseRecordTypeID)
                             || (aCase.RecordTypeId == AmericacaseRecordTypeID) || (aCase.RecordTypeId == AfricaMEcaseRecordTypeID) || (aCase.RecordTypeId == AsiaPacificcaseRecordTypeID)
                             || (aCase.RecordTypeId == ChinaAsiacaseRecordTypeID) || (aCase.RecordTypeId == InternalcaseRecordTypeID) || (aCase.RecordTypeId == InvCollectioncaseRecordTypeID)
-                            || (aCase.RecordTypeId == CSProcesscaseRecordTypeID) || (aCase.RecordTypeId == SEDAcaseRecordTypeID) || (aCase.RecordTypeId == ISSPcaseRecordTypeID)) { //TF - SP9-C5
+                            || (aCase.RecordTypeId == CSProcesscaseRecordTypeID) || (aCase.RecordTypeId == SEDAcaseRecordTypeID) || (aCase.RecordTypeId == ISSPcaseRecordTypeID)
+                            || (aCase.RecordTypeId == GlobalcaseRecordTypeID)) { //TF - SP9-C5
                         system.debug('CORRECT RECORD TYPE');
                         system.debug('isInsert: ' + Trigger.isInsert);
                         system.debug('isUpdate: ' + Trigger.isUpdate);
@@ -744,7 +746,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 for (Account acc : lstMatchedAccounts) {
                     for (Case c : mapCasesPerWebIATACode.get(acc.Site)) {
                         if (c.AccountId != acc.Id) {
-                            if ( c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
+                            if ( c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == GlobalcaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
                                     || c.RecordTypeId == AsiaPacificcaseRecordTypeID || c.RecordTypeId == ChinaAsiacaseRecordTypeID || c.RecordTypeId == ISSPcaseRecordTypeID ) {
                                 // For these record types, set the Account Concerned field
                                 system.debug('FOUND AND SETTING Account Concerned');
@@ -795,7 +797,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             for (Account acc : lstMatchedAccounts) {
                                 for (Case c : mapCasesListPerAccountSite.get(acc.Site)) {
                                     if (c.AccountId != acc.Id) {
-                                        if (c.AccountId != null && (c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
+                                        if (c.AccountId != null && (c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == GlobalcaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
                                                                     || c.RecordTypeId == AsiaPacificcaseRecordTypeID || c.RecordTypeId == ChinaAsiacaseRecordTypeID || c.RecordTypeId == ISSPcaseRecordTypeID) ) {
                                             // For these record types, set the Account Concerned field
                                             system.debug('FOUND AND SETTING Account Concerned');
@@ -1819,11 +1821,20 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 for (Case updatedCase : System.Trigger.new) {
                     updatedCase.Last_Status_Change__c  = updatedCase.Last_Status_Change__c <> null ? updatedCase.Last_Status_Change__c : System.now();
                     Case oldCase = System.Trigger.oldMap.get(updatedCase.Id);
+                    Id processRTId = RecordTypeSingleton.getInstance().getRecordType('Case', 'CS_Process_IDFS_ISS').Id;
+
                     // this very next section is for the kpi
-                    if ((oldCase.Status != updatedCase.Status) || (updatedCase.BusinessHoursId <> null && updatedCase.BusinessHoursId <> oldCase.BusinessHoursId)
-                        || (oldCase.First_Business_Day__c == null)) {
-                        casesIdSoCalculate.add(updatedCase.id);
-                    }
+                    if (
+                        // if record type changed and new record type is process case record type
+                        (oldCase.recordTypeId != updatedCase.recordTypeId && updatedCase.recordTypeId == processRTId) ||
+                        // if status changed...
+                        (oldCase.Status != updatedCase.Status) || 
+                        // if new case has business hours and they have changed
+                        (updatedCase.BusinessHoursId <> null && updatedCase.BusinessHoursId <> oldCase.BusinessHoursId) ||
+                        // if first business day not present...
+                        (oldCase.First_Business_Day__c == null)) {
+                            casesIdSoCalculate.add(updatedCase.id);
+                        }
                     // the following section is used for the
                     // nex short day , to find the very next business day
                     if (updatedCase.BusinessHoursId <> null && updatedCase.Short_Payment_Date__c <> null ) {

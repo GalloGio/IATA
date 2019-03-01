@@ -251,11 +251,12 @@ public class ANG_ChinaConversionsHelperTest {
 
 		Test.startTest();
 		setupData(AMS_Utils.CONVERTTOLEGACY);
-		Test.stopTest();
+		
 
 		createFormOfPayment(oscar.Account__c, 'CC');
-
+		Test.stopTest();
 		convertChinaToLegacyStep6Test();
+		
 		convertChinaToLegacyStep2Test();
 		convertChinaToLegacyStep3Test();
 		convertChinaToLegacyStep4Test();

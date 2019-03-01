@@ -174,22 +174,17 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 			);
         insert newUser;
 		
-		
+		ISSP_AMS_MSO_Update_Controller ctrl;
         System.runAs(newUser){
-        	
-
-      		Test.setCurrentPage(Page.ISSP_AMS_MSO_Update);
-      		System.currentPageReference().getParameters().put('msoId', mso.Id);
-			System.currentPageReference().getParameters().put('action', ISSP_AMS_MSO_Update_Controller.ACTION_TERMINATION);
-
-            ISSP_AMS_MSO_Update_Controller ctrl = new ISSP_AMS_MSO_Update_Controller();
-
-			Test.startTest(); 
-            	ctrl.terminate();
-
-			Test.stopTest();
+            Test.setCurrentPage(Page.ISSP_AMS_MSO_Update);
+            System.currentPageReference().getParameters().put('msoId', mso.Id);
+            System.currentPageReference().getParameters().put('action', ISSP_AMS_MSO_Update_Controller.ACTION_TERMINATION);
+            ctrl = new ISSP_AMS_MSO_Update_Controller();
         }
 
+        Test.startTest(); 
+        ctrl.terminate();
+        Test.stopTest();
 
 		list<Account> updatedMSO = [SELECT Id, Status__c FROM Account WHERE Id = :mso.Id];
 		system.assertEquals('Terminated', updatedMSO[0].Status__c);
