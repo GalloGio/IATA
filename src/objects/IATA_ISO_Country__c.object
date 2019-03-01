@@ -1529,6 +1529,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Estonia</label>
                 </value>
                 <value>
+                    <fullName>Eswatini</fullName>
+                    <default>false</default>
+                    <label>Eswatini</label>
+                </value>
+                <value>
                     <fullName>Ethiopia</fullName>
                     <default>false</default>
                     <label>Ethiopia</label>
@@ -1982,11 +1987,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <fullName>Suriname</fullName>
                     <default>false</default>
                     <label>Suriname</label>
-                </value>
-                <value>
-                    <fullName>Swaziland</fullName>
-                    <default>false</default>
-                    <label>Swaziland</label>
                 </value>
                 <value>
                     <fullName>Sweden</fullName>

@@ -106,7 +106,7 @@ public class ANG_RiskEventGenerator {
 				List<String> fields = new List<String>();
 				for(Schema.SObjectField field : fMap.values()) fields.add(field.getDescribe().getName());
 				
-				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
+				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c, ANG_Risk_Event_Type__r.Name FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
 			}
 			return configs;
 		}
@@ -149,7 +149,7 @@ public class ANG_RiskEventGenerator {
 		if(reQuery){
 			// if any of the conditions fields includes a relationship (.) requery de object to get the relationships
 			try{
-				objToEvaluate = Database.query('SELECT Id, RecordTypeId, '+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
+				objToEvaluate = Database.query('SELECT Id, RecordTypeId, CreatedDate, '+(objectName == 'Case' ? 'ParentId, Parent.RecordTypeId, ':'')+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
 			}catch(System.QueryException e){
 				if(!e.getMessage().startsWith('No such column ')) throw e; 
 				else {
@@ -159,12 +159,40 @@ public class ANG_RiskEventGenerator {
 					throw new RiskEventGeneratorException(friendlyMessage);
 				}
 			}
+		}
+
+		//query previous IFAPs if needed (objectName = Case AND Parent Case = IFAP)
+		Map<Id,List<Case>> previousIFAPsByAccount = new Map<Id,List<Case>>();
+		if(objectName == 'Case'){
+			Set<String> ifapIds = new Set<String>();
+			Set<String> accsIds = new Set<String>();
+			for (sObject o :objToEvaluate){
+				System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] object - '+o);
+				if(o.getSobject('Parent') != null && o.getSobject('Parent').get('RecordTypeId') == AMS_Utils.RECTYPE_IFAP){
+					ifapIds.add(String.valueOf(o.get('ParentId')));
+					accsIds.add(String.valueOf(o.get('AccountId')));
+				}
+			}
+
+			if(!accsIds.isEmpty()){
+				for(Case c: [SELECT Id, AccountId, Status, CreatedDate FROM Case 
+					WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP 
+					AND AccountId IN :accsIds AND Id NOT IN :ifapIds ORDER BY CreatedDate DESC]){
+
+					if(previousIFAPsByAccount.containsKey(c.AccountId))
+						previousIFAPsByAccount.get(c.AccountId).add(c);
+					else
+						previousIFAPsByAccount.put(c.AccountId, new List<Case>{c});
+				}
+			}
+			System.debug('____ [cls ANG_RiskEventGenerator - generate] previousIFAPsByAccount - '+previousIFAPsByAccount);
 		}		
 
 
 		// for each object on the list, verify that it matches a config and create a risk event
 		List<ANG_Agency_Risk_Event__c> riskEvents  = new List<ANG_Agency_Risk_Event__c>();
 		Map<String, String> riskEventsToUpdate  = new Map<String, String>();
+		List<Technical_Logs__c> notifications = new List<Technical_Logs__c>();
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
 				if((Id)o.get('RecordTypeId') == RecordTypeSingleton.getInstance().getRecordTypeId(objectName, config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
@@ -189,7 +217,15 @@ public class ANG_RiskEventGenerator {
 						
 						if(config.ANG_Activate_In__c != null) risk.ANG_Issued_Date__c = System.today().addDays(Integer.valueOf(config.ANG_Activate_In__c));
 
-						riskEvents .add(risk);
+						//NEWGEN-2719 prevent "Fail Financial Statement" risk event creation for agents with previous ifap status = "Closed_Non compliance" 
+						if(config.ANG_Risk_Event_Type__r.Name != ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS || objectName != 'Case' || !previousIFAPsByAccount.containsKey(String.valueOf(o.get('AccountId'))) 
+							|| previousIFAPsByAccount.isEmpty() || !IFAP_BusinessRules.isPreviousIFAPStatusEquals(previousIFAPsByAccount.get(String.valueOf(o.get('AccountId'))),'Closed_Non compliance')){
+							riskEvents.add(risk);
+						}else{
+							System.debug('____ [cls ANG_RiskEventGenerator - generate: NOT creating "Fail Financial Statement" risk event');
+							notifications.add(new Technical_Logs__c(Record__c = o.Id, Log__c = 'Risk Event'));
+							break;
+						}
 					}
 					
 				}
@@ -232,8 +268,10 @@ public class ANG_RiskEventGenerator {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] riskEvents - ' + riskEvents);
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] riskEventsToUpdate - ' + riskEventsToUpdate);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] notificationsToInsert - ' + notifications);
 
 		if(!riskEvents.isEmpty()) update riskEvents;
+		if(!notifications.isEmpty()) insert notifications;
 	}
 
 	public void loadInitialInformations(){		
@@ -249,8 +287,10 @@ public class ANG_RiskEventGenerator {
 			if(re.ANG_Issued_Date__c == null) re.ANG_Issued_Date__c = System.today();
 			if(re.ANG_OscarId__c != null) oscars.put(re.ANG_OscarId__c, null);
 
+			Integer randomKey = AMS_Utils.getRandomNumber();
+			
 			// sets the Unique Key (this field is also set on the generate method to match the upsert and on a workflow rule if source id is empty)
-			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+(re.ANG_TargetAgency__c == 'Selected Accounts' ? String.valueOf(Id.valueOf(re.ANG_AccountId__c)) : '')+re.ANG_Risk_ID__c;
+			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+(re.ANG_TargetAgency__c == 'Selected Accounts' ? String.valueOf(Id.valueOf(re.ANG_AccountId__c)) : String.valueOf(randomKey))+re.ANG_Risk_ID__c;
 		}
 
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c, Limit_Cash_conditions__c, ANG_Delay_Cash_Condition__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
