@@ -71,7 +71,7 @@ public class ANG_AgencyChangesHelperTest {
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
 
-        ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfLocationType(oscar,null, null);
+        ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfLocationType(oscar,null, null, false);
 
         List<AMS_Agencies_relationhip__c> relationsMap = struct.relationsMap.values();
 		List<Account> accountsMap = struct.accountsMap.values();
