@@ -1,6 +1,6 @@
 public without sharing class DPCCasesUtil {
 
-    private static final Id CASE_RT_DPC = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
+    public static final Id CASE_RT_DPC = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
 
     private static final map<String,String> mapMainStatusControllingDPCStatus = new map<String, String>{
                                         '2.0 IE approved - Escalated DPC for PQ' => '2.0 New', 
@@ -539,22 +539,28 @@ public without sharing class DPCCasesUtil {
         Executed on Case After Insert
     **/
     public static void addAdditionalContactsAfter() {
-        // get the list of Case Team Members to add to new DPC Cases
+        // get the list of Case Team Members to add to new DPC Cases and all emails to notify them
         List<CaseTeamMember> listCaseTeamMembers = new List<CaseTeamMember>();
+        List<Messaging.SingleEmailMessage> listMemberEmail = new List<Messaging.SingleEmailMessage>();
         for (Case dpcCase: LIST_NEW_DPC_CASES) {
-            list<User> listUser = MAP_ACCOUNT_USERS.get(dpcCase.Account_Concerned__c);
-            list<CaseTeamMember> listMembers = getListCCOthersToDPC(dpcCase,listUser);
+            list<User> listUsers = MAP_ACCOUNT_USERS.get(dpcCase.Account_Concerned__c);
+            //Create All case Team members
+            list<CaseTeamMember> listMembers = getListCCOthersToDPC(dpcCase,listUsers);
             listCaseTeamMembers.addAll(listMembers);
+            //create an email message to notify the new Team member
+            list<Messaging.SingleEmailMessage> listEmail = getListEmailForDPC(dpcCase,listUsers);
+            listMemberEmail.addAll(listEmail);
         }
 
         // insert found users as a team member of their DPC Cases
-        if (!listCaseTeamMembers.isEmpty()) {
-            Savepoint sp = Database.setSavepoint();
-            try {
-                insert listCaseTeamMembers;
-            } catch (DMLException e) {
-                Database.rollback(sp);
-            }
+        Savepoint sp = Database.setSavepoint();
+        try {
+            if (!listCaseTeamMembers.isEmpty()) insert listCaseTeamMembers;
+            //finally sends an email to the full recipients list
+            if (!listMemberEmail.isEmpty()) Messaging.sendEmail(listMemberEmail);
+
+        } catch (DMLException e) {
+            Database.rollback(sp);
         }
     }
 
@@ -570,11 +576,34 @@ public without sharing class DPCCasesUtil {
     }
 
     /**
+        Get iata no reply Org Address with a single query
+    **/
+    private static Id NO_REPLAY_ADDRESS = null;
+    public static Id getNoReplyAddressId() {
+        if (NO_REPLAY_ADDRESS==null) {
+            NO_REPLAY_ADDRESS = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'].Id;
+        }
+        return NO_REPLAY_ADDRESS;
+    }
+
+    /**
+        Get template used to notify a new DPC case with a single query
+    **/
+    private static Id NEW_DPC_TEMPLATE = null;
+    public static Id getDPCTemplateId() {
+        if (NEW_DPC_TEMPLATE==null) {
+            NEW_DPC_TEMPLATE = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'New_DPC_Case'].Id;
+        }
+        return NEW_DPC_TEMPLATE;
+    }
+
+    /**
         Add a list of Case Team Members to the incoming case
         This will create one Case Team Member by each user in the incoming list
     **/
     public static List<CaseTeamMember> getListCCOthersToDPC(Case dpcCase, list<User> listUsers) {
         List<CaseTeamMember> listCaseTeamMembers = new List<CaseTeamMember>();
+        if (listUsers==null) listUsers = new list<User>();
         listUsers.add(new User(Id=UserInfo.getUserId())); //adding current user
         for(User user : listUsers) {
             CaseTeamMember teammember = new CaseTeamMember(
@@ -587,14 +616,41 @@ public without sharing class DPCCasesUtil {
     }
 
     /**
+        Returns a list of email messages to notify incoming users that a DPC case
+        has been created
+    **/
+    public static List<Messaging.SingleEmailMessage> getListEmailForDPC(Case cse, list<User> listUsers) {
+        List<Messaging.SingleEmailMessage> listEmail = new List<Messaging.SingleEmailMessage>();
+        if (listUsers!=null) {
+            for(User user : listUsers) {
+                if (user.ContactId!=null) {
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    mail.setOrgWideEmailAddressId(getNoReplyAddressId());
+                    mail.setTargetObjectId(user.ContactId);
+                    mail.setWhatId(cse.Id);
+                    mail.setUseSignature(false);
+                    mail.setBccSender(false);
+                    mail.setSaveAsActivity(false);
+                    mail.setTemplateId(getDPCTemplateId());
+                    listEmail.add(mail);
+                }
+            }
+        }
+        return listEmail;
+    }
+
+    /**
         Returns a list user emails into a string comma separated
     **/
     public static String getAdditionalCCEmails(list<User> listUsers) {
         set<String> setEmails = new set<String>();
-        for(User user : listUsers) {
-            setEmails.add(user.Contact.Email);
+        if (listUsers!=null) {
+            for(User user : listUsers) {
+                setEmails.add(user.Contact.Email);
+            }
         }
         setEmails.add(UserInfo.getUserEmail()); //adding current user email
         return String.join(new list<String>(setEmails),';');
     }
+
 }

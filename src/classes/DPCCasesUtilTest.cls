@@ -22,7 +22,7 @@
 @isTest
 private class DPCCasesUtilTest {
 
-    static testMethod void StatusHandlingTest() {
+    static  void StatusHandlingTest() {
         // gather necessary record type Ids
         Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
         ID RT_StdAcc_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
@@ -100,7 +100,7 @@ private class DPCCasesUtilTest {
     /*
      * This method tests that the required field validations that are dependant on the case values are working correctly
      */
-    static testMethod void FieldValidationTest() {
+    static  void FieldValidationTest() {
         // gather necessary record type Ids
         Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
         ID RT_StdAcc_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
@@ -235,7 +235,7 @@ private class DPCCasesUtilTest {
     /*
      * This method tests that all the required picklist values for the Status and Escalated Status DPC fields on the Case object are present
      */
-    static testMethod void TestPicklistValuesIntegrity() {
+    static  void TestPicklistValuesIntegrity() {
         list<String> lstRequiredStatusValues = new List<String>{
                         '0. New - pending case assignment',
                         '1.0 IE - Case Assigned',
@@ -307,4 +307,45 @@ private class DPCCasesUtilTest {
         // All values should be present, otherwise the test will fail
         system.assertEquals(true, All_Required_Picklist_Values_Present);
     }
+
+    static testMethod void test_addAdditionalContacts_CaseWithoutAccount() {
+        Case cse = new Case(RecordTypeID = DPCCasesUtil.CASE_RT_DPC);
+        
+        Test.startTest();
+        insert cse;
+        Test.stopTest();
+    }
+
+    static testMethod void test_addAdditionalContacts_CaseWithAccount() {
+        Account accountConcerned = new Account(Name='test account');
+        insert accountConcerned;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= accountConcerned.Id;
+        con.Email = 'Test_' + Math.random() + '@test.com';
+        con.User_Portal_Status__c='Approved Admin';
+        con.Status__c = 'Active';
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        Case cse = new Case(
+            RecordTypeID = DPCCasesUtil.CASE_RT_DPC,
+            Account_Concerned__c = accountConcerned.Id
+        );
+        
+        Test.startTest();
+        insert cse;
+        Test.stopTest();
+
+        Case result = [SELECT Id, E2CP__AdditionalCC__c FROM Case WHERE Id=:cse.Id];
+        list<String> listEmails = result.E2CP__AdditionalCC__c.split(';');
+        System.assertEquals(2,listEmails.size(),'listEmails: ' + listEmails);
+        List<CaseTeamMember> listCaseTeamMembers = [
+            SELECT Id
+            FROM CaseTeamMember
+            WHERE ParentId = :cse.Id];
+        System.assertEquals(2,listCaseTeamMembers.size());
+    }
+
 }
