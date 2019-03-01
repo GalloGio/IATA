@@ -93,7 +93,7 @@
 									<tbody>
 										<apex:repeat value="{!listFinSec}" var="item">
 											<tr>
-												<td><apex:outputField value="{!item.record.Financial_Institution__c}"></apex:outputField></td>
+												<td><apex:outputField value="{!item.record.Financial_Institution__r.Name}"></apex:outputField></td>
 												<td><apex:outputField value="{!item.record.Security_Type__c}"></apex:outputField></td>
 												<td>
 													<apex:outputText value="{0, number, ###,###,##0.00} {1}">
