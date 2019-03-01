@@ -22,7 +22,7 @@
 @isTest
 private class DPCCasesUtilTest {
 
-    static  void StatusHandlingTest() {
+    static testMethod void StatusHandlingTest() {
         // gather necessary record type Ids
         Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
         ID RT_StdAcc_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
@@ -100,7 +100,7 @@ private class DPCCasesUtilTest {
     /*
      * This method tests that the required field validations that are dependant on the case values are working correctly
      */
-    static  void FieldValidationTest() {
+    static testMethod void FieldValidationTest() {
         // gather necessary record type Ids
         Id RT_ACR_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
         ID RT_StdAcc_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
@@ -235,7 +235,7 @@ private class DPCCasesUtilTest {
     /*
      * This method tests that all the required picklist values for the Status and Escalated Status DPC fields on the Case object are present
      */
-    static  void TestPicklistValuesIntegrity() {
+    static testMethod void TestPicklistValuesIntegrity() {
         list<String> lstRequiredStatusValues = new List<String>{
                         '0. New - pending case assignment',
                         '1.0 IE - Case Assigned',
