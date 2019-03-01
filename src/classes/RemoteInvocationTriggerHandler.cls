@@ -12,7 +12,7 @@ public without sharing class RemoteInvocationTriggerHandler {
     public static final String NEWGEN_GDI_ENDO = 'GDI_ENDORSEMENT';
     public static final String NEWGEN_SAP_PPA  = 'SAP_PPA';
 
-    public List<String> requestTypeListBefore = new List<String>{NEWGEN_EASY_PAY};
+    public List<String> requestTypeListBefore = new List<String>{NEWGEN_EASY_PAY, NEWGEN_SAP_PPA};
 
     //Remote Invocation Status
     public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
