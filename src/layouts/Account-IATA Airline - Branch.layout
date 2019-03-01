@@ -317,6 +317,10 @@
                 <behavior>Readonly</behavior>
                 <field>BSP_Participant_formula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PASS_Participant_formula__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
