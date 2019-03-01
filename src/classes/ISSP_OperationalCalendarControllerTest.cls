@@ -59,7 +59,7 @@ public class ISSP_OperationalCalendarControllerTest {
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
         contact.LastName = 'test';
-        contact.Email = 'test@email.com';
+        contact.Email = 'test@email.com' + (Math.random()*1000000000);
         insert contact;
         contact.Account = account;
         
