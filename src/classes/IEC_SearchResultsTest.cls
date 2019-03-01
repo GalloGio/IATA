@@ -12,7 +12,7 @@ private class IEC_SearchResultsTest
 		TestDataGenerator.generateApexSetting();
 
 		//Generate 50 products 
-		List<Product2> products = TestDataGenerator.generateProducts(50, false);
+		List<Product2> products = TestDataGenerator.generateProducts(20, false);
 		List<Id> productIds = new List<Id>();
 		List<Id> en_productIds = new List<Id>();
 

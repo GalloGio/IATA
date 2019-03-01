@@ -1395,10 +1395,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sadiqs@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2900,10 +2896,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>sadiqs@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3057,10 +3049,6 @@
         </recipients>
         <recipients>
             <recipient>rodriguezp@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sadiqs@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
