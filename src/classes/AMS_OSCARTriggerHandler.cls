@@ -621,7 +621,7 @@ public class AMS_OSCARTriggerHandler {
 
             if(oldOSCAR.Invoice_status__c <> updatedOSCAR.Invoice_status__c &&  updatedOSCAR.Invoice_status__c != null){
                 
-                updatedOSCAR.STEP9__c = updatedOSCAR.Invoice_status__c == 'Paid' ? AMS_Utils.PASSED : updatedOSCAR.Invoice_status__c == 'Outstanding' ? AMS_Utils.FAILED : oldOSCAR.STEP9__c;
+                updatedOSCAR.STEP9__c = updatedOSCAR.Invoice_status__c == 'Paid' ? AMS_Utils.PASSED : updatedOSCAR.Invoice_status__c == 'Outstanding' ? AMS_Utils.FAILED : updatedOSCAR.STEP9__c;
 
                 // this was pulled from Automation on STEP 9 since when he reaches this part of the code, he already passed the automation
                 if(updatedOSCAR.STEP9__c == AMS_Utils.PASSED){
