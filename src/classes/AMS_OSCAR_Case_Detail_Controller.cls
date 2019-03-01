@@ -628,14 +628,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
             //Just in case there is a single agency in the hierachy
             hierarchyAccountIds.add(oscarObj.Account__c);
-            
-            Set<String> invalidAccountStatusSet = new Set<String>{
-                AMS_Utils.ACC_S1_NOTACCREDITED, 
-                AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, 
-                AMS_Utils.ACC_S3_NOTINOPERATION, 
-                AMS_Utils.ACC_S0_TERMINATED
-            };
-
+        
             pendingCases = 
                 [SELECT 
                     COUNT() 
@@ -644,7 +637,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                  WHERE
                      AccountId IN :hierarchyAccountIds 
                  AND RecordType.DeveloperName = 'OSCAR_Communication' 
-                 AND Account.Status__c NOT IN :invalidAccountStatusSet
                  AND Status NOT IN ('Closed_ Not Accepted', 'Closed_Rejected', 'Closed_Withdrawn', 'Closed')
                 ];
         }
