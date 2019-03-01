@@ -168,6 +168,11 @@
                     <default>false</default>
                     <label>Maestro</label>
                 </value>
+                <value>
+                    <fullName>PASSLINK</fullName>
+                    <default>false</default>
+                    <label>PASSLINK</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -482,6 +487,98 @@
             </values>
             <values>
                 <fullName>Maestro</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DPC__c</picklist>
+            <values>
+                <fullName>AMADEUS</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>CASSLINK</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Legacy_System__c</picklist>
+            <values>
+                <fullName>AIMS1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIMS2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AIMS3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAIMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WEBSTAR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>PASS</fullName>
+        <active>true</active>
+        <label>PASS</label>
+        <picklistValues>
+            <picklist>BSP_Billing__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>The Americas</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASS_facilities__c</picklist>
+            <values>
+                <fullName>Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DPC_System__c</picklist>
+            <values>
+                <fullName>Maestro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PASSLINK</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

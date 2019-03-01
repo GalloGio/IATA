@@ -281,6 +281,21 @@
                     <default>false</default>
                     <label>CASS Import via GHA</label>
                 </value>
+                <value>
+                    <fullName>PASS Participation</fullName>
+                    <default>false</default>
+                    <label>PASS Participation</label>
+                </value>
+                <value>
+                    <fullName>PASS Country</fullName>
+                    <default>false</default>
+                    <label>PASS Country</label>
+                </value>
+                <value>
+                    <fullName>PASS Country Aggregator</fullName>
+                    <default>false</default>
+                    <label>PASS Country Aggregator</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

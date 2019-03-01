@@ -70,11 +70,29 @@
                            $(".country-select").select2({width : "resolve"});
                        
                            $(".join-type-select").select2({width : "15%"});
+
+                           document.getElementById('loadingCountryListMessage').style.display='none';
+                           document.getElementById('loadingCountryListPASSMessage').style.display='none';
                        });
                        
                        $(function () {
                            $('[data-toggle="tooltip"]').tooltip()
                        })
+
+                       function disableJoiningCountryDiv(){
+                              document.getElementById('loadingCountryListMessage').style.display='block';
+                              document.getElementById('loadingCountryListPASSMessage').style.display='block';
+                              document.getElementById('countryListId').style.display='none';
+                              document.getElementById('countryListPass').style.display='none';
+                       }
+
+                       function enableJoiningCountryDiv(){
+                            document.getElementById('loadingCountryListMessage').style.display='none';
+                            document.getElementById('loadingCountryListPASSMessage').style.display='none';
+                            document.getElementById('countryListId').style.display='block';
+                            document.getElementById('countryListPass').style.display='block';
+                       }
+
                        
                        </script>
             
@@ -93,7 +111,7 @@
                             </div>
                             <div class="panel-body" id="body-enquiries">
                                 
-                                <div class="progress">
+                                <div class="progress" style="display:{!IF(isPassAirline == false && managePASS=false, 'block','none')}">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
                                         A. Participation Country &amp; Type
                                     </div>
@@ -101,16 +119,40 @@
                                         B. Review Country Requirements
                                     </div>
                                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                                        C. BSP / CASS {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
+                                        C. {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
                                     </div>
                                     <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
                                         D. Submit to IATA
                                     </div>
                                 </div>
+
+                                <div class="progress" style="display:{!IF(isPassAirline == true && managePASS=false, 'block','none')}">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 33.4%;">
+                                        A. Participation Country &amp; Type
+                                    </div>
+                                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 33.3%;">
+                                        B. {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
+                                    </div>
+                                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 33.3%;">
+                                        C. Submit to IATA
+                                    </div>
+                                </div>
+
+                                <div class="progress" style="display:{!IF(managePASS == true, 'block','none')}">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+                                        A. Participation Country &amp; Type
+                                    </div>
+                                    <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+                                        B. Submit to IATA
+                                    </div>
+                                </div>
                                 
                                 <apex:form styleClass="form-horizontal">
-                                    <apex:actionFunction action="{!null}" name="refreshCountryList" reRender="countryList" oncomplete="$('.country-select').select2({width : 'resolve'});">
+                                    <apex:actionFunction name="changeIsPassAirline" action="{!changeIsPassAirlineMethod}" immediate="true" reRender="none" oncomplete="refreshCountryList();">
                                         <apex:param value="" assignTo="{!strOT}" name="strOT"/>
+                                    </apex:actionFunction>
+                                    <apex:actionFunction name="refreshCountryList" action="{!null}" reRender="countryList" oncomplete="enableJoiningCountryDiv();$('.country-select').select2({width : 'resolve'});">
+                                      <apex:param value="" assignTo="{!strOT}" name="strOT"/>
                                     </apex:actionFunction>
                                     <apex:actionFunction action="{!null}" name="refreshCASSAirlineList" reRender="cassAirlineList" oncomplete="$('.cass-airlines-select').select2({width : 'resolve'});">
                                         <apex:param value="" assignTo="{!gssaCountryISOCode}" name="gssaCountryISOCode"/>
@@ -128,23 +170,42 @@
                                         <div class="form-group">
                                             <label for="jointype" class="col-sm-2 control-label">* Type of Participation</label>
                                             <div class="col-sm-10">
-                                                <apex:selectList id="jointype" Label="Type of Participation" styleClass="join-type-select" value="{!strOperationType}" onchange="refreshCountryList(this.value);" required="true" size="1">
+                                                <apex:selectList id="jointype" Label="Type of Participation" styleClass="join-type-select" value="{!strOperationType}" onchange="if('{!isGSSAUser}'=='false'){changeIsPassAirline(this.value);disableJoiningCountryDiv();}else{disableJoiningCountryDiv();refreshCountryList(this.value);}" required="true" size="1" disabled="{!managePASS}">
                                                     <apex:selectOptions value="{!APTypes}"/>
                                                 </apex:selectList>
                                             </div>
                                         </div>
                                         
-                                        <apex:outputPanel id="countryList">
-                                            <div class="form-group">
-                                                <label for="countryconcerned" class="col-sm-2 control-label">* BSP / CASS Country</label>
-                                                <div class="col-sm-10">
-                                                    <apex:selectList id="countryconcerned" Label="BSP / CASS Country" styleClass="country-select" style="width:200px" value="{!newCase.IFAP_Country_ISO__c}" onchange="refreshCASSAirlineList(this.value);" required="true" size="1">
+                                        <apex:outputPanel id="countryList"> 
+                                            <div class="form-group" style="display:{!IF(!(isPassAirline == true && isGSSAUser!= true), 'block','none')}">
+                                                <label for="countryconcerned" class="col-sm-2 control-label">* Joining Country</label>
+                                                <div id="loadingCountryListMessage">
+                                                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                                    Loading Countries...
+                                                </div>
+                                                <div id="countryListId" class="col-sm-10">
+                                                    <apex:selectList id="countryconcerned" Label="BSP / CASS Country" styleClass="country-select" style="width:200px" value="{!newCase.IFAP_Country_ISO__c}" onchange="refreshCASSAirlineList(this.value);" required="{!!isPassAirline}" size="1">
                                                         <apex:selectOptions value="{!items}"/>
                                                     </apex:selectList>
                                                 </div>
-                                            </div>
+                                            </div>  
+                                            <div class="form-group" style="display:{!IF(isPassAirline == true && isGSSAUser!= true, 'block','none')}">
+                                                <label for="countryconcernedPASS" class="col-sm-2 control-label">* Joining Countries</label>
+                                                <div id="loadingCountryListPASSMessage">
+                                                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                                                    Loading Countries...
+                                                </div>
+                                                <div id="countryListPass" class="col-sm-10">
+                                                    <c:MultiselectPicklist leftLabel="Available Countries"
+                                                    leftOptions="{!possiblePassCountries}"
+                                                    rightLabel="Selected Countries"
+                                                    rightOptions="{!selectedPassCountries}"
+                                                    size="10"
+                                                    width="150px"/>
+                                                </div>
+                                            </div>  
                                         </apex:outputPanel>
-                                        
+
                                         <apex:outputPanel id="cassAirlineList" rendered="{!isGSSAUser}">
                                             <div class="form-group">
                                                 <label for="airlineconcerned" class="col-sm-2 control-label">* Airline Concerned</label>
@@ -270,6 +331,7 @@
                     
                     <apex:include pageName="ISSP_AP_BSP_Form" rendered="{!AND(strAreaType=='Airline Joining', isBSP, isStep3)}"/>     
                     <apex:include pageName="ISSP_AP_CASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isCASS, isStep3)}"/>
+                    <apex:include pageName="ISSP_AP_PASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isPassAirline, isStep3)}"/>
                     <apex:include pageName="ISSP_AP_Changes" rendered="{!AND(strAreaType=='Airline Change', isStep3)}"/>
                     
                     <!--------------------->

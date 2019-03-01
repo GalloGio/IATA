@@ -815,8 +815,8 @@
                         <apex:column headerClass="info">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         </apex:column>
-                        <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),newForm.Agent_Type__c)),
-                                                                     $Label.ISSP_AMS_NoC_Request_for_Change)}">
+                        <!--<apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),newForm.Agent_Type__c)),$Label.ISSP_AMS_NoC_Request_for_Change)}">-->
+                        <apex:column headerClass="info" headerValue="{!IF(isPassAccreditation==true,$Label.ISSP_AMS_Step2_Check_List_PASS,$Label.ISSP_AMS_Step2_Check_List+' '+amsCountryLabel+' - '+ IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),newForm.Agent_Type__c)),$Label.ISSP_AMS_NoC_Request_for_Change))}">
                             <apex:outputText >
                                 <strong>{!reqs.Name}</strong><br/>
                                 <apex:outputField value="{!reqs.Requirement_text__c}"/>
@@ -891,7 +891,7 @@
         <apex:outputPanel rendered="{!BEGINS(sector, 'Cargo Agent') && !isNoticeOfChange}">
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
             <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}{!if(communityName=='CNS', '&CommunityName=CNS', '')}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
-</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , IF(newlabels,'IFACP Forwader',newForm.Agent_Type__c))} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
+</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(isPassAccreditation,'',IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , IF(newlabels,'IFACP Forwader',newForm.Agent_Type__c)))} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
         </apex:outputPanel>
         <apex:form >
         <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}" id="pdfnoc">

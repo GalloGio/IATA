@@ -673,6 +673,8 @@
                                         </apex:outputPanel>
 
                                         <apex:outputfield value="{!newCase.Subject}" />
+                                        <apex:outputField value="{!newCase.Country_concerned__c}" rendered="{!newCase.Country_concerned__c != ''}"/>
+                                        <apex:outputField value="{!newCase.IFAP_Country_ISO__c}" label="Country concerned" rendered="{!newCase.Country_concerned__c == ''}"/>
                                         <apex:outputfield value="{!newCase.Description}" rendered="{!NOT(isOSCARCase)}" />
                                         <!-- 222 STATUS = {!newCase.status}<br />PortalStatus = {!newCase.Portal_Case_Status__c }<br />caseType = {!caseType}<br />PWCCase = {!isPWCCase}<br />isDPCuser = {!isDPCUser}<br />isPWCProfile = {!isPWCProfile}-->
                                         <!-- <apex:outPutField rendered="{!caseType !='AP'}" value="{!newCase.CaseArea__c}"/> -->

@@ -104,6 +104,11 @@
                     <default>false</default>
                     <label>Travel Agent - Domestic</label>
                 </value>
+                <value>
+                    <fullName>Freight Forwarder</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarder</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

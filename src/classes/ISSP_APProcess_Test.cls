@@ -1256,6 +1256,17 @@ private class ISSP_APProcess_Test
             ctrl.newForm = apProcessForm;
             ctrl.newCase= testCase;
             ctrl.goToFinalStep();
+
+            ctrl.showHideHotFilesPreferenceMethod();
+            ctrl.showHidePdfReportsPreferenceMethod();
+
+            ctrl.newForm.Receive_PDF_Reports__c='YES';
+            ctrl.newForm.Receive_HOT_files__c='YES';
+            ctrl.newForm.Hot_files_delivery_format__c='E-mail and Download';
+            ctrl.newForm.PDF_Report_Delivery_Format__c='E-mail and Download';
+
+            ctrl.showHideHotFilesPreferenceMethod();
+            ctrl.showHidePdfReportsPreferenceMethod();
         }
         
         Test.stopTest();

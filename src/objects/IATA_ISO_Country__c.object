@@ -177,6 +177,19 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>AMS_Settlement_System_PASS__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>PASS Billing environment</label>
+        <referenceTo>AMS_Settlement_System__c</referenceTo>
+        <relationshipLabel>IATA ISO Countries (PASS Billing environment)</relationshipLabel>
+        <relationshipName>PASS_COUNTRIES</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>AMS_Settlement_System__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -2484,6 +2497,31 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PASS__c</fullName>
+        <externalId>false</externalId>
+        <label>PASS</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Passenger_Agency_Accredition__c</fullName>

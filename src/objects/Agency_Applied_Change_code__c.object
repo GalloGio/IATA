@@ -2874,5 +2874,13 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <errorConditionFormula>AND( RecordType.Name = &apos;Irregularities&apos;,  Account__r.ANG_IsNewGenAgency__c,  ISNEW()  )</errorConditionFormula>
         <errorMessage>Irregularity change codes cannot be created on newgen agencies.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Prevent_Publishing_e_Bulletin_PASS</fullName>
+        <active>true</active>
+        <description>Prevent the user to change the &quot;To Publish in e-Bulletin&quot; checkbox to TRUE if the Account is related to a PASS process.</description>
+        <errorConditionFormula>AND(ISPICKVAL(Account__r.Sector__c,&apos;Cargo Agent&apos;),ISPICKVAL(Account__r.Category__c,&apos;Postal Service&apos;),To_Publish_in_e_Bulletin__c =TRUE)</errorConditionFormula>
+        <errorDisplayField>To_Publish_in_e_Bulletin__c</errorDisplayField>
+        <errorMessage>This checkbox cannot be changed if the Account is related to a PASS process</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

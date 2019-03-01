@@ -724,6 +724,11 @@
                     <default>false</default>
                     <label>CASS</label>
                 </value>
+                <value>
+                    <fullName>PASS</fullName>
+                    <default>false</default>
+                    <label>PASS</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

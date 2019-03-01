@@ -15347,6 +15347,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>equals</operation>
             <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
         </criteriaItems>
+	<criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>PASS Country</value>
+        </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -15482,6 +15487,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
             <value>CHG – Data Maintenance</value>
+        </criteriaItems>
+	<criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>PASS Country Aggregator,PASS Participation</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>

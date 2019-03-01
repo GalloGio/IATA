@@ -3492,6 +3492,16 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                     <default>false</default>
                     <label>ANG.MAJOR.CHANGES.CHINA.1.0</label>
                 </value>
+		<value>
+                    <fullName>NEW.PASS.HO.1.0</fullName>
+                    <default>false</default>
+                    <label>NEW.PASS.HO.1.0</label>
+                </value>
+                <value>
+                    <fullName>NEW.PASS.BR.1.0</fullName>
+                    <default>false</default>
+                    <label>NEW.PASS.BR.1.0</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -7551,7 +7561,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <fullName>Update_BSPLink_CASSLink__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Update BSPLink / CASSLink</label>
+        <label>Update BSPLink / CASSLink / PASS</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -36218,6 +36228,14 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
             <values>
                 <fullName>NEW%2EMSO%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EPASS%2EBR%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW%2EPASS%2EHO%2E1%2E0</fullName>
                 <default>false</default>
             </values>
             <values>

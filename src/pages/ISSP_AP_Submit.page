@@ -1,4 +1,32 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true">
+    <script>
+        function uploadFileFunction(objectId, amazonRecordTypeId, amazonFileNameIdentifier, country,credentialName){
+             console.log('start call' + objectId);
+
+             let amazonFileModel = {
+                RecordTypeId: amazonRecordTypeId,
+                Name: country,
+                File_Identifier_picklist__c: amazonFileNameIdentifier,
+                isPublic__c:true};
+
+            runClickAction(objectId, 'GenericAttach', amazonFileModel, false);
+            console.log('after call');
+        }
+        function onAfterUpload(amazonfileid){
+            if(amazonfileid!='' && amazonfileid != undefined){
+                updateAmazonFileName(amazonfileid);
+            }
+        }
+
+        function onStart(){
+            console.log('Started');
+            startLoading();
+        }
+
+        function onStop(){
+            stopLoading();
+        }
+    </script>
     <c:iss_ap_css />
     
     <div class="panel-primary">
@@ -6,7 +34,7 @@
                <h3 class="panel-title">{!IF(strAreaType=='Airline Joining', 'Airline Participation Joining Application', IF(strChangeType=='Minor database changes', 'Airline Participation Change Request', 'Change of Bank Account details'))}</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
-        <div class="progress">
+        <div class="progress" style="display:{!IF(isPassAirline == false, 'block','none')}">
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
                 A. Participation Country &amp; Type
             </div>
@@ -20,8 +48,29 @@
                 D. Submit to IATA
             </div>
         </div>
+        <div class="progress" style="display:{!IF(isPassAirline == true && managePASS=false, 'block','none')}">
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 33.4%;">
+                A. Participation Country &amp; Type
+            </div>
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 33.3%;">
+                B. {!IF(strAreaType=='Airline Joining', 'Joining Form', IF(strChangeType=='Minor database changes','Change Request','Bank details change'))}
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 33.3%;">
+                C. Submit to IATA
+            </div>
+        </div>
+        <div class="progress" style="display:{!IF(isPassAirline == true && managePASS=true, 'block','none')}">
+            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+                A. Participation Country &amp; Type
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+                B. Submit to IATA
+            </div>
+        </div>
     
-     <apex:form id="FinalForm">    
+     <apex:form id="FinalForm">
+        <c:UploadFileToAmazonButton />
+        <apex:actionFunction name="updateAmazonFileName" action="{!UploadAmazonFile}" rerender="AttachmentTable" oncomplete="stopLoading();"/> 
         <apex:pageBlock rendered="{!isStep4}" title="" mode="edit">
             
             <apex:pageBlockButtons >
@@ -36,17 +85,17 @@
                     <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>                  
                 </apex:pageBlockSection>
                 <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}">
-                    <apex:outputText >
+                    <apex:outputText rendered="{!!isPassAirline}">
                         <div style="padding-bottom:10px">
-                            <div class="aplabel">The Airline needs to provide a Bank Account Mandate to IATA, so that the BSP / CASS proceedings can be settled. The bank account must either be:</div>
+                            <div class="aplabel">The Airline needs to provide a Bank Account Mandate to IATA, so that joining proceedings can be settled. The bank account must either be:</div>
                             <div style="margin:20px 20px">
-                                <p>1- an ICCS account (for cross border transfers) </p>
+                                <p>1- an ICCS account (for cross border transfers)</p>
                                 <p>2- or a local bank account in the ISS country and currency of settlement. </p>
                             </div>
                             
                         </div>
                     </apex:outputText>
-                    <apex:pageBlockSectionItem >
+                    <apex:pageBlockSectionItem rendered="{!!isPassAirline}">
                         <apex:outputLabel value="* Does your Airline wish to join ICCS (IATA Currency Clearance Service) in this market, if available?" style="color:#a31717; font-weight: bold !important;"/>
                         <!-- <apex:inputField value="{!newForm.Airline_wish_to_join_ICCS__c}" label="" onchange="$('#bankmandate').toggle();"/> -->
                         <apex:inputField id="mandateSelect" value="{!newForm.Airline_wish_to_join_ICCS__c}" label="" onchange="hideText('{!$Component.mandateSelect}');"/>
@@ -56,7 +105,7 @@
                                 
                                 <b>Please download the Bank Mandate form using the link below:</b><br/>
                                 <div id="bankmandatelink_p">
-                                    <u><a href="{!BankMAndateUrl}" target="_blank">BSP / CASS Local Bank Account Beneficiary</a></u>
+                                    <u><a href="{!BankMAndateUrl}" target="_blank">BSP / CASS / PASS Local Bank Account Beneficiary</a></u>
                                 </div>
                                 <br/>
                                 Kindly note the bank mandate must be issued from your Company’s Head Office and signed by two Head Office senior officers, at least one of which must be:<br/>
@@ -75,12 +124,7 @@
                                 </apex:outputPanel>
                                 <br/>
                                 <div style="font-weight:bold;margin-left:100px;display:block">
-                                    IATA Global Delivery Center (GDC)<br/>
-                                    Attn: Participation Department<br/>
-                                    Torre Europa<br/>
-                                    Paseo de la Castellana, 95, 4th floor<br/>
-                                    28046 Madrid<br/>
-                                    Spain<br/>
+                                    <apex:outputText value="{!$Label.IATA_Global_Delivery_Center_Address}" escape="false" /> 
                                 </div>
                                 <br/>
                                 <div style="padding-bottom:5px"><b>NOTE:</b>&nbsp;For countries / operations with dual currencies, please submit separate bank mandates for each currency.</div>
@@ -108,20 +152,35 @@
                     
                 </apex:pageBlockSection>
                 <div id="bankmandateupload_p" style="{!IF (newForm.Airline_wish_to_join_ICCS__c == 'No', '', 'display:none')}">
-                    <apex:pageBlockSection title="Upload Bank Mandate" columns="1">
-                        
-                        Please upload the completed Bank Mandates.                
+
+                    <apex:pageBlockSection title="Upload Bank Mandate" columns="1" rendered="{!!isPassAirline}">
+                        Please upload the completed Bank Mandates.
                         <apex:inputFile style="width:100%" id="fileToUpload" value="{!fileBody}" filename="{!fileName}" />
-                        <apex:commandButton id="btnUpload" value="Upload File" action="{!UploadFile}" />                        
-                    </apex:pageBlockSection>
+                        <apex:commandButton id="btnUpload" value="Upload File" action="{!UploadFile}" />
+                    </apex:pageBlockSection>   
+
+                    <apex:pageBlockSection title="Upload Bank Mandate" columns="1" rendered="{!isPassAirline}">
+                        <apex:outputpanel >
+                            <c:Loading />
+                            Please upload the completed Bank Mandates, for each selected country (and currency, if applicable):
+                            <apex:dataTable value="{!wrapperPassCountries}" var="country" style="width:100%">
+                                <apex:column style="width:25%">{!country.countryName}</apex:column>
+                                <apex:column style="width:75%">
+                                    <apex:commandButton value="Upload file" id="uploadFilesButton" onclick="uploadFileFunction('{!newCase.id}', '012w0000000YcHdAAK', '{!OTHERS}', '{!country.countryIsoCode}','{!credentialName}');return false;"/>
+                                </apex:column>
+                            </apex:dataTable>
+                        </apex:outputpanel>
+                    </apex:pageBlockSection>     
+
                 </div>
+
                 
                 <!-- Attachment List -->
                 <div id="bankmandateattachment_p" style="{!IF(OR(newForm.Airline_wish_to_join_ICCS__c == 'No'), '', 'display:none')}">
-                    <apex:pageBlockSection title="Attachments">
+                    <apex:pageBlockSection id="AttachmentTable" title="Attachments" columns="1">
                         
-                        <apex:pageBlockTable value="{!attachList}" var="attach" >
-                            <apex:column value="{!attach.Name}" />
+                        <apex:pageBlockTable value="{!attachList}" var="attach" style="width:100%">
+                            <apex:column style="width:100%" value="{!attach.Name}"/>
                         </apex:pageBlockTable>
                         
                     </apex:pageBlockSection>
@@ -237,17 +296,16 @@
 
                     </div>
                 </apex:pageBlockSection>
-              
+                
                 <!-- Accept terms and conditions -->   
                 <apex:pageBlockSection title="Terms and conditions" columns="1">
                     <div class="aplabel">
-                        <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <b>{!apcountry}</b>
-                            and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
+                        <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in {!IF(isPassAirline==true && isGSSAUser==false,'the selected countries',apcountry)} and that the {!IF(isPassAirline==true,'PASS','ISS')} Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and {!IF(isPassAirline==true,'postal operators','agents')} free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
                         <p>
-                            I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the ISS Participant, and that I am fully authorized to bind the ISS Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
+                            I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the {!IF(isPassAirline==true,'PASS','ISS')} Participant, and that I am fully authorized to bind the {!IF(isPassAirline==true,'PASS','ISS')} Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
                         </p><br/> 
                         <p>
-                            I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
+                            I also confirm that said participation in the {!IF(isPassAirline==true,'PASS','ISS')} system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the {!IF(isPassAirline==true,'PASS','ISS')} Participant with respect to the applicable laws and governmental regulations.
                         </p>
                     
                     <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
@@ -264,7 +322,7 @@
                      </apex:outputText>
                     </div>
                     <div class="aplabel">
-                    By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this BSP Participation Details Form on behalf of my Airline.
+                    By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this {!IF(isPassAirline==true,'PASS','BSP')} Participation Details Form on behalf of my Airline.
                          
                     <br/>
                     <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/>
