@@ -260,9 +260,8 @@ public class AMS_OscarCase_RiskMgmt {
 						else
 							ls = new list<AMS_ChangeCodes__c>();
 
-							ls.add(conf);
-							mapChangeCodeToCreate.put(c.Id, ls);
-						}
+						ls.add(conf);
+						mapChangeCodeToCreate.put(c.Id, ls);
 					}
 				}
 			}
@@ -364,7 +363,7 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 
 			if(!notifications.isEmpty())
-					insert notifications;
+				insert notifications;
 		}
 	}
 

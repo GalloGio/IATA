@@ -1643,6 +1643,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             List<Case> caseLast24Hours = new List<Case>();
             Set<Id> accountIds = new Set<Id>();
             for (Case aCase : trigger.new) { // Fill a set of Account Ids for the cases select statement
+                Case aCaseOld = Trigger.oldMap.get(aCase.Id);
                 // Only for Sidra small amount cases, only cases created within the last 24 hours
                 System.debug('____ [cls CaseBeforeTrigger - trgSidraCaseBeforeInsertUpdate UPDATE analyze ' + aCase.Subject + 'which has IRR_Withdrawal_Reason__c =  ' + aCase.IRR_Withdrawal_Reason__c + ']');
                 if (aCase.RecordTypeId == SIDRAcaseRecordTypeID && 
@@ -1652,8 +1653,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
                     caseLast24Hours.add(aCase);
-                }     
-                Case aCaseOld = Trigger.oldMap.get(aCase.Id);   
+                }  
                 if (aCase.RecordTypeId == SEDAcaseRecordTypeID) {
                     if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
                         aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
