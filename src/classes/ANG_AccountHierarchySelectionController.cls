@@ -346,7 +346,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 	
-	private Boolean isMulticountry = false;
 	private Boolean existsLocClassDomesticError = false;
 	private Boolean isMulticountry = false;
 	private Boolean isCashOrCashless = false;

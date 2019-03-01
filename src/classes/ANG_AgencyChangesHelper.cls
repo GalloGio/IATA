@@ -622,6 +622,10 @@ public with sharing class ANG_AgencyChangesHelper {
 	
 	}
 
+	public static AChangeStructure applyChangeOfLocationType(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
+		return applyChangeOfLocationType(oscarToProcess, toReturn, accountHierarchyRelationships, false);
+	}
+
 	public static AChangeStructure applyChangeOfLocationType(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships, Boolean isMulticountry){
 
 		if(isMulticountry){
