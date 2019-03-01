@@ -9,7 +9,7 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
         insert ctry;
 
 		Account acc = new Account(name = 'account name', Sector__c = 'Travel Agent', Category__c = 'Non-IATA Passenger Agent', IATACode__c = '1234567',
-            Location_Type__c =AMS_Utils.GE, Location_Class__c = AMS_Utils.LC_PASSENGER, recordtypeid = AMS_Utils.RECTYPE_IATAAGENCY, IATA_ISO_Country__c = ctry.id );
+            Location_Type__c = AMS_Utils.HE, Location_Class__c = AMS_Utils.LC_PASSENGER, recordtypeid = AMS_Utils.RECTYPE_IATAAGENCY, IATA_ISO_Country__c = ctry.id );
         insert acc;
 
 		//Create Oscar - 
@@ -26,8 +26,6 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 
         oscar.Oscar_Communication_Case_Id__c = oscarCase.id;
         update oscar;
-
-        //System.debug('JR debug OSCAR: ' + [SELECT ID, Oscar_Communication_Case_Id__c, Billing_Document_Number__c FROM AMS_Oscar__c limit 1]);
 
 		//create Remote Invocation 
 		Remote_Invocation__c ri = new Remote_Invocation__c(Internal_ID__c = oscarCase.id,
@@ -103,15 +101,15 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 
 		test.StartTest();
 
-		try{
-			//This will trigger the interface 
-	        ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
-	        update ri;
+	
+		//This will trigger the interface 
+        ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+        update ri;
 
-		}catch(Exception e){
-        	Boolean expectedExceptionThrown = e.getMessage().contains('Remote Invocation (' + ri.Internal_ID__c +') must have a Payment Type');
-        	System.assert(expectedExceptionThrown);
-        }
+        Remote_Invocation__c ri_AfterUpdate = [SELECT Internal_ID__c, Status__c, Status_Detail__c FROM Remote_Invocation__c limit 1];
+
+        Boolean expectedExceptionThrown = ri_AfterUpdate.Status_Detail__c.contains('Remote Invocation Artefact IATA code (' + ri_AfterUpdate.Internal_ID__c +') must have a Payment Type');
+        System.assert(expectedExceptionThrown);
 
 		test.StopTest();
 	}
@@ -130,15 +128,14 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 		artifact.Payment_type__c = 'SPDR';
 		update artifact;
 
-		try{
-			//This will trigger the interface 
-	        ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
-	        update ri;
+		//This will trigger the interface 
+        ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+        update ri;
 
-		}catch(Exception e){
-        	Boolean expectedExceptionThrown = e.getMessage().contains('Remote Invocation Internal ID ('+ ri.Internal_ID__c+') doesn\'t match the Artifact Internal ID ('+ artifact.Internal_ID__c+')');
-        	System.assert(expectedExceptionThrown);
-        }
+		Remote_Invocation__c ri_AfterUpdate = [SELECT Internal_ID__c, Status__c, Status_Detail__c FROM Remote_Invocation__c limit 1];
+
+        Boolean expectedExceptionThrown = ri_AfterUpdate.Status_Detail__c.contains('Remote Invocation IATA code ('+ ri_AfterUpdate.Internal_ID__c+') doesn\'t match the Artifact IATA code ('+ artifact.Internal_ID__c+')');
+        System.assert(expectedExceptionThrown);
 
 		test.StopTest();
 	}
@@ -151,7 +148,7 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
         insert ctry;
 
 		Account acc = new Account(name = 'account name 2', Sector__c = 'Travel Agent', Category__c = 'Non-IATA Passenger Agent', IATACode__c = '1234568',
-            Location_Type__c =AMS_Utils.GE, Location_Class__c = AMS_Utils.LC_PASSENGER, recordtypeid = AMS_Utils.RECTYPE_IATAAGENCY, IATA_ISO_Country__c = ctry.id );
+            Location_Type__c =AMS_Utils.HE, Location_Class__c = AMS_Utils.LC_PASSENGER, recordtypeid = AMS_Utils.RECTYPE_IATAAGENCY, IATA_ISO_Country__c = ctry.id );
         insert acc;
 
 		//Create Oscar - 
@@ -178,15 +175,14 @@ public class ANG_SAP_PPA_RemoveInvocation_Test {
 
 		test.StartTest();
 
-		try{
-			//This will trigger the interface 
-	        ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
-	        update ri;
+		//This will trigger the interface 
+        ri.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
+        update ri;
 
-		}catch(Exception e){
-        	Boolean expectedExceptionThrown = e.getMessage().contains('Remote Invocation (' + ri.Internal_ID__c + ') doesn\'t have a artifact');
-        	System.assert(expectedExceptionThrown);
-        }
+        Remote_Invocation__c ri_AfterUpdate = [SELECT Internal_ID__c, Status__c, Status_Detail__c FROM Remote_Invocation__c Where ID = :ri.ID];
+
+       	Boolean expectedExceptionThrown =  ri_AfterUpdate.Status_Detail__c.contains('Remote Invocation IATA code (' + ri_AfterUpdate.Internal_ID__c + ') doesn\'t have a artifact');
+        System.assert(expectedExceptionThrown);
 
 		test.StopTest();
 	}
