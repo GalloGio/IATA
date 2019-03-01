@@ -650,12 +650,7 @@ public with sharing class AMS_OSCAR_Automation {
 
 				// ENHC0012518 - BEGIN 
                     if(oscar.Is_NewGen__c){
-                        Portal_Application_Right__c par = new Portal_Application_Right__c (
-                                    Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
-                                    Contact__c = [select name, Contact__r.name, Portal_administrator__c, ANG_AE_fromOnlineForm__c, AMS_Pax_Accreditation_Form__r.IATACode__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c and Portal_administrator__c = true].Contact__c,
-                                    Portal_Application__c = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1].Id
-						);
-                        insert par;
+                        System.enqueueJob(new PortalRightsForPortalAdmins(oscar));
                     }
                 // ENHC0012518 - END
                     oscar.Approval_disapproval_date__c = Date.today();
@@ -1326,4 +1321,26 @@ public with sharing class AMS_OSCAR_Automation {
         }
     }
 
+ 
+    /**
+    	Portal_Application_Right__c triggers are query heavy and often trigger a Case or Contact, both also query heavy
+    	resulting oftenly in a query limit exception.
+    **/
+    public class PortalRightsForPortalAdmins implements Queueable{ 
+		
+		public AMS_OSCAR__c oscar;
+		
+		public PortalRightsForPortalAdmins(AMS_OSCAR__c oscar){
+			this.oscar = oscar;
+		}
+
+		public void execute (QueueableContext context){
+			Portal_Application_Right__c par = new Portal_Application_Right__c (
+                                    Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
+                                    Contact__c = [select name, Contact__r.name, Portal_administrator__c, ANG_AE_fromOnlineForm__c, AMS_Pax_Accreditation_Form__r.IATACode__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c and Portal_administrator__c = true].Contact__c,
+                                    Portal_Application__c = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1].Id
+						);
+            insert par;
+		}
+	}
 }
