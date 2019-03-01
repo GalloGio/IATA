@@ -349,12 +349,14 @@
                 }
             }
 
-            //untested!
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip({'placement':'auto'});
-  //comment the following line out to see page move on click
-  $('a[data-toggle="tooltip"]').click(function(e){e.preventDefault()})
-})
+           
+            
+              $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip({'placement':'auto'});
+                //comment the following line out to see page move on click
+                $('a[data-toggle="tooltip"]').click(function(e){e.preventDefault()})
+              })
+            
 
 </script>  
 <style type="text/css">

@@ -18,6 +18,11 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
         <c:ISSP_Header />
         <apex:stylesheet value="{!URLFOR($Resource.BootstrapDatepicker, 'css/bootstrap-datepicker3.min.css')}" />
         <script src="{!URLFOR($Resource.BootstrapDatepicker, 'js/bootstrap-datepicker.min.js')}"></script>
+        <script src="{!URLFOR($Resource.jQuery224min)}"></script>
+        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormatS, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
+        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormatS, '/intl-tel-input-master/src/js/data.js')}"></script>
+        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormatS, '/intl-tel-input-master/src/spec/helpers/helpers.js')}"></script>
+        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormatS, '/intl-tel-input-master/build/js/utils.js')}"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js "></script>
 <!--

@@ -94,6 +94,18 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Overall_Status__c</fullName>
+        <description>This field is the overall status of all stages</description>
+        <externalId>false</externalId>
+        <label>Overall Status</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Process_Name__c</fullName>
         <description>Name of process</description>
         <externalId>false</externalId>

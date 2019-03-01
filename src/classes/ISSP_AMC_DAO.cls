@@ -249,6 +249,7 @@ public class ISSP_AMC_DAO {
             caseRecord.BSPCountry__c = testAcc.IATA_ISO_Country__r.Name;
             caseRecord.RecordTypeId = recordTypeId;
             caseRecord.Status = ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN;
+            caseRecord.Visible_on_ISS_Portal__c = true;
             
             if(isToInsert){
                 insert caseRecord;

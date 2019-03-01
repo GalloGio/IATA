@@ -101,7 +101,7 @@
             var dateLimit = -2208988800000;
 
             if(element.value  != null && element.value != ""){
-                if (elementDate < dateLimit || element.value.length != 10 || elementDate > todayMS - 86400000) {
+                if (element.value.length != 10) {
                     //x.remove("parentClass");
                     x.add("has-error");
                     x.add("has-feedback");

@@ -150,7 +150,7 @@
     </listViews>
     <nameField>
         <displayFormat>POAR-{00000}</displayFormat>
-        <label>Participant Online App Requirement Name</label>
+        <label>Name</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Participant Online App Requirements</pluralLabel>

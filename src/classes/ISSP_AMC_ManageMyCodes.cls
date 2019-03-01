@@ -37,6 +37,7 @@ public class ISSP_AMC_ManageMyCodes {
 	//public Id caseLocationCodeApplicationId {get;set;}
 	public Id caseBaggageApplicationId {get;set;}
 	public Id caseAccountingOrPrefixApplicationId {get;set;}
+	public User myUser{get;set;}
 
 	public ISSP_AMC_ManageMyCodes(){
 		answer = false;
@@ -93,110 +94,26 @@ public class ISSP_AMC_ManageMyCodes {
 				}
 			}
 		}
+		myUser	= [SELECT Id,Profile_Name__c FROM User WHERE Id =:UserInfo.getUserId()];
 
 	}
 
-	public PageReference requestAirlineDesignators() {
-		String caseUrl;
-		erro= '';
-		if(caseDesignatorApplicationId != null){
-			caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
-		}
-		else {
-			String participationId = designatorApplicationId == null ? '' : 'participationId=' + designatorApplicationId + '&';
-			caseUrl = '/ISSP_AMC_Airline_Designators?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';	
-		}
-		PageReference pr = new PageReference(caseUrl);
-		pr.setRedirect(true);
-		return pr;
-	}
+	public Boolean isThereACase{get;set;}
+	public Boolean isThereAParticipation{get;set;}
+  	public Boolean 	displayPopupDeleteSection { get; set; }
+  	public String caseNum {get;set;}
 
-	/*public PageReference navigateLocationIdentifier(){
-		String caseUrl;
-		if(caseDesignatorApplicationId != null){
-			caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
-		}
-		else {
-			String participationId = locationCodeApplicationId == null ? '' : 'participationId=' + locationCodeApplicationId + '&';
-			caseUrl = '/ISSP_AMC_Location_Identifier?' + participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';
-		}
-		PageReference pr = new PageReference(caseUrl);
-		pr.setRedirect(true);
-		return pr;
-	}*/
+  	public Boolean noPermissionToViewCase {get;set;}
+  	public Boolean isDesignator {get;set;}
+  	public Boolean isAccountingPrefix {get;set;}
+  	public Boolean isLocation {get;set;}
+  	public Boolean isBaggage {get;set;}
 
-	public PageReference requestBaggageTagRange(){
-		String caseUrl;
-		erro= '';
-		if(caseBaggageApplicationId != null){
-			caseUrl = '/ISSP_Case?caseId=' + caseBaggageApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
-		}
-		else {
-			String participationId = baggageApplicationId == null ? '' : 'participationId=' + baggageApplicationId + '&';
-			caseUrl = '/ISSP_AMC_Baggage_Tag_Range?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';
-		}
-		PageReference pr = new PageReference(caseUrl);
-		pr.setRedirect(true);
-		return pr;
-	}
+  	public String getCaseNumber(Id caseId){
 
-	public PageReference requestAccountingOrPrefixCode(){
-		String caseUrl;
-		erro= '';
-		if(caseAccountingOrPrefixApplicationId != null){
-			caseUrl = '/ISSP_Case?caseId=' + caseAccountingOrPrefixApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
-		}
-		else {
-			String participationId = accountingOrPrefixApplicationId == null ? '' : 'participationId=' + accountingOrPrefixApplicationId + '&';
-			caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';
-		}
-		PageReference pr = new PageReference(caseUrl);
-		pr.setRedirect(true);
-		return pr;
-	}
-
-	
-
-	/*public List<Participation_Code__c> getCodes(){
-		accountRecord = ISSP_AMC_DAO.getAccountInfo();
-		System.debug('ID:::: ' + accountRecord.Id);
-		List<Participation_Code__c> pcodeListObj =[
-			SELECT 
-				Id, Account__c, Code_Type__c, Code_Value__c
-			FROM
-				Participation_Code__c
-			WHERE
-				Account__c = :accountRecord.Id];
-
-        return pcodeListObj;
-	}
-
-	public List<String> getLocationCodes(){
-		pcodeListObj = getCodes();
-
-		for(Participation_Code__c pc : pcodeListObj){
-			if(pc.Code_Type__c == 'Location Code'){
-				if(!pcodeList.Contains(pc.Code_Value__c)){
-					pcodeList.add(pc.Code_Value__c);
-				}
-			}
-		}
-
-		return pcodeList;
-	}
-
-	public List<String> getBaggageCodes(){
-		pcodeListObj = getCodes();
-		for(Participation_Code__c pc : pcodeListObj){
-			if(pc.Code_Type__c == 'Baggage Code'){
-				if(!pcodeListBag.Contains(pc.Code_Value__c)){
-					pcodeListBag.add(pc.Code_Value__c);
-				}
-			}
-		}
-
-		return pcodeListBag;
-	}*/
+  		return [SELECT Id,CaseNumber FROM Case WHERE Id=:caseId].CaseNumber;
+  		
+  	}
 
 
 
@@ -269,4 +186,261 @@ public class ISSP_AMC_ManageMyCodes {
 		}
 		return null;
 	}
+
+
+	public void  closePopupDeleteSection() {
+		isThereACase = false;
+		isThereAParticipation = false;
+		noPermissionToViewCase = false;
+		isDesignator = false;
+		isAccountingPrefix = false;
+		isLocation = false;
+		isBaggage = false;
+	}
+	
+	String caseUrl;
+	public PageReference redirectToCase(){
+		system.debug(isDesignator);
+		system.debug(isAccountingPrefix);
+		system.debug(isLocation);
+		system.debug(isBaggage);
+
+
+		if(isDesignator == true){
+			//getCaseNumber(caseDesignatorApplicationId);
+          	caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+		}
+		if(isAccountingPrefix == true){
+			//getCaseNumber(caseAccountingOrPrefixApplicationId);
+			caseUrl = '/ISSP_Case?caseId=' + caseAccountingOrPrefixApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+		}
+		/*if(isLocation == true){
+			//getCaseNumber(caseLocationCodeApplicationId);
+			caseUrl = '/ISSP_Case?caseId=' + caseLocationCodeApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+		}*/
+		if(isBaggage == true){
+			//getCaseNumber(caseBaggageApplicationId);
+            caseUrl = '/ISSP_Case?caseId=' + caseBaggageApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+		}
+
+
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}
+
+	public PageReference redirectToParticipation(){
+		system.debug(isDesignator);
+		system.debug(isAccountingPrefix);
+		system.debug(isLocation);
+		system.debug(isBaggage);
+
+
+		if(isDesignator == true){
+          	caseUrl = '/ISSP_AMC_Airline_Designators?' + designatorApplicationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';	
+		}
+		if(isAccountingPrefix == true){
+			caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?' + accountingOrPrefixApplicationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';
+		}
+		/*if(isLocation == true){
+			caseUrl = '/ISSP_AMC_Location_Identifier?' + 'participationId=' + locationCodeApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';
+		}*/
+		if(isBaggage == true){
+            caseUrl = '/ISSP_AMC_Baggage_Tag_Range?' + 'participationId=' + baggageApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';
+		}
+
+
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}
+
+	public PageReference navigateAirlineDesignators() {
+		String caseUrl;
+		if(caseDesignatorApplicationId != null){
+			UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
+                	FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :caseDesignatorApplicationId];
+
+		
+			if(!recordAccess.hasReadAccess){
+				noPermissionToViewCase = true;
+			}
+			//system.debug('CASE NUMBER '+ [SELECT Id,CaseNumber FROM Case WHERE Id=:'caseDesignatorApplicationId'].CaseNumber);
+			caseNum = getCaseNumber(caseDesignatorApplicationId);
+			isThereACase = true;
+			isDesignator = true;
+			return null;
+		}
+		else{
+
+			if(designatorApplicationId != null){
+				if(myUser.Profile_Name__c != 'ISS Portal Airline Delegated Admin User'){
+					UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
+	                	FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :designatorApplicationId];
+
+			
+					if(!recordAccess.hasReadAccess && !recordAccess.hasEditAccess){
+						noPermissionToViewCase = true;
+					}
+				}
+				isThereAParticipation = true;
+				isDesignator = true;
+				return null;
+			}
+			else{
+				String participationId = designatorApplicationId == null ? '' : 'participationId=' + designatorApplicationId + '&';
+				caseUrl = '/ISSP_AMC_Airline_Designators?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';	
+			}
+
+			//String participationId = designatorApplicationId == null ? '' : 'participationId=' + designatorApplicationId + '&';
+			//caseUrl = '/ISSP_AMC_Airline_Designators?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';	
+		}
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}
+
+
+	/*public PageReference navigateAirlineDesignators() {
+		String caseUrl;
+		if(caseDesignatorApplicationId != null){
+			// pop-up
+			// Your Airline already have a case of this type created. Press this link to view (ONLY IF IT HAS PERMISSIONS)
+
+			isThereACase = true;
+				//caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+			
+
+			
+		}
+		else {
+			String participationId = designatorApplicationId == null ? '' : 'participationId=' + designatorApplicationId + '&';
+			caseUrl = '/ISSP_AMC_Airline_Designators?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';	
+		}
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}*/
+
+
+	public PageReference navigateAccountingOrPrefixCode(){
+		String caseUrl;
+
+		if(caseAccountingOrPrefixApplicationId != null){
+			UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
+                FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :caseAccountingOrPrefixApplicationId];
+		
+			if(!recordAccess.hasReadAccess){
+				noPermissionToViewCase = true;
+			}
+			caseNum = getCaseNumber(caseAccountingOrPrefixApplicationId);
+			isThereACase = true;
+			isAccountingPrefix = true;
+			return null;
+		}
+		else {
+
+			if(accountingOrPrefixApplicationId != null){
+				if(myUser.Profile_Name__c != 'ISS Portal Airline Delegated Admin User'){
+					UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
+	                	FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :accountingOrPrefixApplicationId];
+
+			
+					if(!recordAccess.hasReadAccess && !recordAccess.hasEditAccess){
+						noPermissionToViewCase = true;
+					}
+				}
+				isThereAParticipation = true;
+				isAccountingPrefix = true;
+				return null;
+			}
+			else{
+				String participationId = accountingOrPrefixApplicationId == null ? '' : 'participationId=' + accountingOrPrefixApplicationId + '&';
+				caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';	
+			}
+
+			//String participationId = accountingOrPrefixApplicationId == null ? '' : 'participationId=' + accountingOrPrefixApplicationId + '&';
+			//caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';
+		}
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}
+
+	/*public PageReference navigateAccountingOrPrefixCode(){
+		String caseUrl;
+		if(caseAccountingOrPrefixApplicationId != null){
+			caseUrl = '/ISSP_Case?caseId=' + caseAccountingOrPrefixApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+		}
+		else {
+			String participationId = accountingOrPrefixApplicationId == null ? '' : 'participationId=' + accountingOrPrefixApplicationId + '&';
+			caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';
+		}
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}*/
+
+
+	public List <ISSP_AMC_DAO.AplicationRequirements> appRequirementList;
+	public String step = '1';
+	public Participation_Online_Application__c participation ;
+
+		
+
+	public PageReference navigateBaggageTagRange(){
+		String caseUrl;
+
+
+		if(caseBaggageApplicationId != null){
+			UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
+                FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :caseBaggageApplicationId];
+			if(!recordAccess.hasReadAccess){
+				noPermissionToViewCase = true;
+			}
+			caseNum = getCaseNumber(caseBaggageApplicationId);
+			isThereACase = true;
+			isBaggage = true;
+			return null;
+			//caseUrl = '/ISSP_Case?caseId=' + caseBaggageApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
+		}
+		else {
+
+			if(baggageApplicationId != null){
+				if(myUser.Profile_Name__c != 'ISS Portal Airline Delegated Admin User'){
+					UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
+                	FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :baggageApplicationId];
+
+			
+					if(!recordAccess.hasReadAccess && !recordAccess.hasEditAccess){
+						noPermissionToViewCase = true;
+					}
+				}
+				
+				isThereAParticipation = true;
+				isBaggage = true;
+				return null;
+			}
+
+			if(baggageApplicationId == null){
+				ISSP_AMC_Baggage_Tag_Range baggage = new ISSP_AMC_Baggage_Tag_Range();
+				baggage.calculateApplicationRequirementsToShow();
+				ISSP_AMC_DAO.saveForm(baggage.participation, baggage.appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_BAGGAGE_CODE);
+				baggageApplicationId = baggage.participation.Id; 
+
+				caseUrl = '/ISSP_AMC_Baggage_Tag_Range?' + 'participationId=' + baggageApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';
+			}
+			
+
+			
+			/*
+			String participationId = baggageApplicationId == null ? '' : 'participationId=' + baggageApplicationId + '&';
+			caseUrl = '/ISSP_AMC_Baggage_Tag_Range?' + participationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';*/
+		}
+		PageReference pr = new PageReference(caseUrl);
+		pr.setRedirect(true);
+		return pr;
+	}
+
+
 }

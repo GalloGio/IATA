@@ -21,6 +21,7 @@ public without sharing class ISSP_AMC_Integration {
     public static HttpResponse doPost(Id caseIdReceived) {
         string payload;
         HttpResponse res = new HttpResponse();
+        ACLIResponse acliResp = new ACLIResponse();
         try {
             ACLIForm acliForms = applicationInfoMapping(caseIdReceived);
             //if ( acliForms.isEmpty() ) throw new customException('No ACLI Forms to process');
@@ -29,7 +30,6 @@ public without sharing class ISSP_AMC_Integration {
 
 
             res = sendRequest(payload, caseIdReceived);
-            
 
             System.debug('payload ' + payload);
             
@@ -125,6 +125,7 @@ public without sharing class ISSP_AMC_Integration {
                                                                         AOC_Railway_Company__c,
                                                                         AAO_Domestic__c,
                                                                         AAO_International__c,
+                                                                        Does_the_airline_presently_hold_a_three__c,
                                                                         Case__r.account.Accounting_Code__c,
                                                                         Case__r.account.Airline_Prefix__c,
                                                                         case__r.account.IATA_ISO_Billing_State__c,
@@ -154,6 +155,8 @@ public without sharing class ISSP_AMC_Integration {
             acliFormFields.Legal_Name = applicationFromOscar.Legal_Name__c;
             acliFormFields.OscarCase = applicationFromOscar.Case__c;
             acliFormFields.RecordType = applicationFromOscar.RecordType.DeveloperName;
+
+            acliFormFields.Does_the_airline_presently_hold_a_three =  applicationFromOscar.Does_the_airline_presently_hold_a_three__c;
 
             acliFormFields.AOC_Scheduled_Passenger = applicationFromOscar.AOC_Scheduled_Passenger__c;
             acliFormFields.AOC_Non_Scheduled_Passenger = applicationFromOscar.AOC_Non_Scheduled_Passenger__c;
@@ -261,6 +264,7 @@ public without sharing class ISSP_AMC_Integration {
             acliFormFields.CodePreferences.add(applicationFromOscar.Preference_of_Code_1__c);
             acliFormFields.CodePreferences.add(applicationFromOscar.Preference_of_Code_2__c);
             acliFormFields.CodePreferences.add(applicationFromOscar.Preference_of_Code_3__c);
+            acliFormFields.ICAO_Code = applicationFromOscar.ICAO_Code__c;
 
             /*acliFormFields.Baggage_Reason_For_Use_1 = applicationFromOscar.Baggage_Reason_For_Use_1__c;
             acliFormFields.Baggage_Reason_For_Use_2 = applicationFromOscar.Baggage_Reason_For_Use_2__c;
@@ -274,7 +278,7 @@ public without sharing class ISSP_AMC_Integration {
                     applicationFromOscar.Does_Metropolitan_area_currently_exists__c;
             acliFormFields.GPS_Coordinates = applicationFromOscar.GPS_Coordinates__c;*/
 
-            //acliFormFields.ICAO_Code = applicationFromOscar.ICAO_Code__c;
+
             /*acliFormFields.Has_company_assigned_numeric_code = applicationFromOscar.Has_company_assigned_numeric_code__c;
             acliFormFields.Has_the_company_published_their_schedule = applicationFromOscar.Has_the_company_published_their_schedule__c;
             acliFormFields.Is_ULD_participation_IATA_program = applicationFromOscar.Is_ULD_participation_IATA_program__c;*/
@@ -365,7 +369,8 @@ public without sharing class ISSP_AMC_Integration {
         public string   IATA_ISO_State_Code                               {get; set;}
         public string   IATA_ISO_Billing_State_Code                       {get; set;}
 
-        //public string   ICAO_Code                                         {get; set;}
+        public string   ICAO_Code                                         {get; set;}
+        public String Does_the_airline_presently_hold_a_three               {get;set;}
 
         /*public Boolean  Baggage_Reason_For_Use_1                          {get; set;}
         public Boolean  Baggage_Reason_For_Use_2                          {get; set;}
@@ -481,7 +486,7 @@ public without sharing class ISSP_AMC_Integration {
             system.debug('MC  --> ACLI Response status: ' + res.getStatusCode());
                 acliResp = (ACLIResponse)System.JSON.deserialize(res.getBody(), ACLIResponse.class);
             if(res.getStatusCode() == 201){
-                system.debug('FILLLLI ' + acliResp);
+                //system.debug('FILLLLI ' + acliResp);
                 //String status = acliResp.Status
 
                 update new Case(Id = caseIdReceived, Coding_Application_ID__c = acliResp.requestId);
@@ -489,9 +494,8 @@ public without sharing class ISSP_AMC_Integration {
             }else if(res.getStatusCode() == 400){
                 //String status = errors[0].Status;
                 String detail = acliResp.errors[0].detail;
-                System.debug('FILIPA MM ' + detail);
-                //System.debug('FILIPA MM STATUS ' + status);
-                system.debug('FILLLLI ' + acliResp);
+                //System.debug('FILIPA MM ' + detail);
+                //system.debug('FILLLLI ' + acliResp);
             }
             if(Test.isRunningTest()){
                 CalloutException e = (CalloutException)CalloutException.class.newInstance();

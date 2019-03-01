@@ -110,6 +110,11 @@ public class ISSP_AMC_Apply_New_Code {
   		
   	}
 
+  	public String getCaseNum(Id participationId){
+  		String numCase = [SELECT Id,Case__c FROM Participation_Online_Application__c WHERE Id=:participationId].Case__c;
+  		return getCaseNumber(numCase);
+  	}
+
     public void  closePopupDeleteSection() {
 		isThereACase = false;
 		isThereAParticipation = false;
@@ -205,6 +210,7 @@ public class ISSP_AMC_Apply_New_Code {
 						noPermissionToViewCase = true;
 					}
 				}
+				caseNum = getCaseNum(designatorApplicationId);
 				isThereAParticipation = true;
 				isDesignator = true;
 				return null;
@@ -272,6 +278,8 @@ public class ISSP_AMC_Apply_New_Code {
 						noPermissionToViewCase = true;
 					}
 				}
+
+				caseNum = getCaseNum(accountingOrPrefixApplicationId);
 				isThereAParticipation = true;
 				isAccountingPrefix = true;
 				return null;
@@ -342,6 +350,7 @@ public class ISSP_AMC_Apply_New_Code {
 						noPermissionToViewCase = true;
 					}
 				}
+				caseNum = getCaseNum(locationCodeApplicationId);
 				isThereAParticipation = true;
 				isLocation = true;
 				return null;
@@ -395,7 +404,7 @@ public class ISSP_AMC_Apply_New_Code {
 						noPermissionToViewCase = true;
 					}
 				}
-				
+				caseNum = getCaseNum(baggageApplicationId);
 				isThereAParticipation = true;
 				isBaggage = true;
 				return null;

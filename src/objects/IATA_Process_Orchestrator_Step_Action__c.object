@@ -68,6 +68,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Approvel_Process_User__c</fullName>
+        <externalId>false</externalId>
+        <label>Approvel Process User</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Approver__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -162,7 +173,7 @@
     <fields>
         <fullName>Stage__c</fullName>
         <externalId>false</externalId>
-        <formula>IATA_Process_Orchestrator__r.Process_Step_Stage__c</formula>
+        <formula>CASE(IATA_Process_Orchestrator__r.Process_Step_Stage__c,&quot;STAGE_A&quot;, &quot;Stage A&quot;,&quot;STAGE_B&quot;, &quot;Stage B&quot;, &quot;STAGE_C&quot;, &quot;Stage C&quot;, &quot;STAGE_D&quot;, &quot;Stage D&quot;, &quot;Stage E&quot;)</formula>
         <label>Stage</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

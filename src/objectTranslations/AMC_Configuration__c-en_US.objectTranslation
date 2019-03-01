@@ -33,6 +33,10 @@
         <name>CaseManageCodesRecordType__c</name>
     </fields>
     <fields>
+        <label><!-- Case Number Of Days To Delete To --></label>
+        <name>Case_Number_Of_Days_To_Delete_To__c</name>
+    </fields>
+    <fields>
         <label><!-- First Approver Orchestrator --></label>
         <name>First_Approver_Orchestrator__c</name>
     </fields>

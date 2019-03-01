@@ -27,6 +27,231 @@
         <type>Flexipage</type>
         <profile>Admin</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Accounting_or_Prefix_Code</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Accounting_or_Prefix_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Coding and MITA</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Accounting_or_Prefix_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Distribution</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Accounting_or_Prefix_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Supervisor - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Baggage_Code</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Baggage_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Coding and MITA</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Baggage_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Distribution</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Baggage_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Supervisor - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Designator_Code</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Designator_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Coding and MITA</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Designator_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Distribution</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Designator_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Supervisor - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Location_Code</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Location_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Coding and MITA</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Location_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Distribution</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Participation_Online_Application_Record_Page7</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Participation_Online_Application__c</pageOrSobjectType>
+        <recordType>Participation_Online_Application__c.Location_Code</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Supervisor - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Airline_Coding_Application</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Supervisor - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Airline_Coding_Application</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Distribution</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Airline_Coding_Application</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Coding and MITA</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.InternalCasesEuropeSCE</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Supervisor - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.InternalCasesEuropeSCE</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Distribution</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.InternalCasesEuropeSCE</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Coding and MITA</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Invoicing_Collection_Cases</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Supervisor - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Invoicing_Collection_Cases</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Distribution</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Invoicing_Collection_Cases</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Coding and MITA</profile>
+    </profileActionOverrides>
     <setupExperience>service</setupExperience>
     <tabs>standard-Case</tabs>
     <tabs>Participation_Online_Application__c</tabs>

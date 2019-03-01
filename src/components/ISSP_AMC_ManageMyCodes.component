@@ -74,10 +74,43 @@
                     </apex:commandLink>
                 </apex:outputPanel>
 
-                <apex:outputPanel rendered="{!!hasDesignatorValue}">
-                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!requestAirlineDesignators}">
+                <apex:outputPanel id="noDesigValue" rendered="{!!hasDesignatorValue}">
+                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!navigateAirlineDesignators}" reRender="idModal">
                             
                     </apex:commandLink>
+                    <apex:outputPanel id="popupDeleteSection" rendered="{!IF(isThereACase == true,true,false)}">
+                        <div class="test">
+                        <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                            <apex:outputPanel styleClass="Content" layout="black" > 
+                                <center>
+                                    <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}{!caseNum}." />
+                                        <div>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_VIEW_CASE}" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
+                                            disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="idModal" styleClass="btn btn_iata_primary"/>
+                                        </div>
+                                    </center>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="popupDeleteSection2" rendered="{!IF(isThereAParticipation == true,true,false)}">
+                        <div class="test">
+                        <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                            <apex:outputPanel styleClass="Content" layout="black" > 
+                                <center>
+                                    <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE_EDIT}{!caseNum}." />
+                                        <div>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+                                            disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="idModal" styleClass="btn btn_iata_primary"/>
+                                        </div>
+                                    </center>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
             </div>
         </div>
@@ -108,10 +141,43 @@
                     </apex:commandLink>
                 </apex:outputPanel>
 
-                <apex:outputPanel rendered="{!!hasAccountingCode}">
-                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!requestAccountingOrPrefixCode}">
+                <apex:outputPanel id="noAccCode" rendered="{!!hasAccountingCode}">
+                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!navigateAccountingOrPrefixCode}" reRender="idModal">
                             
                     </apex:commandLink>
+                    <apex:outputPanel id="popupDeleteSection3" rendered="{!IF(isThereACase == true,true,false)}">
+                        <div class="test">
+                        <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                            <apex:outputPanel styleClass="Content" layout="black" > 
+                                <center>
+                                    <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}{!caseNum}." />
+                                        <div>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_VIEW_CASE}" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
+                                            disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="idModal" styleClass="btn btn_iata_primary"/>
+                                        </div>
+                                    </center>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="popupDeleteSection4" rendered="{!IF(isThereAParticipation == true,true,false)}">
+                        <div class="test">
+                        <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                            <apex:outputPanel styleClass="Content" layout="black" > 
+                                <center>
+                                    <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE_EDIT}{!caseNum}." />
+                                        <div>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+                                            disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="idModal" styleClass="btn btn_iata_primary"/>
+                                        </div>
+                                    </center>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
             </div>
         </div>
@@ -143,10 +209,43 @@
                 </apex:outputPanel>
 
 
-                <apex:outputPanel rendered="{!!hasPrefixCode}">
-                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!requestAccountingOrPrefixCode}">
+                <apex:outputPanel id="noPrefCode" rendered="{!!hasPrefixCode}">
+                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!navigateAccountingOrPrefixCode}" reRender="idModal">
                             
                     </apex:commandLink>
+                    <apex:outputPanel id="popupDeleteSection5" rendered="{!IF(isThereACase == true,true,false)}">
+                        <div class="test">
+                        <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                            <apex:outputPanel styleClass="Content" layout="black" > 
+                                <center>
+                                    <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}{!caseNum}." />
+                                        <div>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_VIEW_CASE}" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
+                                            disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="idModal" styleClass="btn btn_iata_primary"/>
+                                        </div>
+                                    </center>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="popupDeleteSection6" rendered="{!IF(isThereAParticipation == true,true,false)}">
+                        <div class="test">
+                        <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                            <apex:outputPanel styleClass="Content" layout="black" > 
+                                <center>
+                                    <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE_EDIT}{!caseNum}." />
+                                        <div>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+                                            disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="idModal" styleClass="btn btn_iata_primary"/>
+                                        </div>
+                                    </center>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
             </div>
         </div>
@@ -229,7 +328,7 @@
                     <apex:outputText style="margin-left: 5%; color:#7697D3" value="{!$Label.ISSP_AMC_NO_CODE_ASSIGNED}"/>
                 </div>
                 <div class="col-md-4 col-md-offset-1" style="margin-top:3%">
-                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!requestBaggageTagRange}">
+                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!navigateBaggageTagRange}">
                             
                     </apex:commandLink>
                 </div>
@@ -262,13 +361,48 @@
                 </apex:outputPanel>
 
 
-                <apex:outputPanel rendered="{!!hasBaggageCode}">
-                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!requestBaggageTagRange}">
+                <apex:outputPanel id="noBaggageCode" rendered="{!!hasBaggageCode}">
+                    <apex:commandLink styleClass="btn btn_iata_primary" type="button" value="{!$Label.ISSP_AMC_REQUEST_BUTTON_LABEL}" style="width:100%;  margin:0px;" action="{!navigateBaggageTagRange}" reRender="idModal">
 
                     </apex:commandLink>
+                    <apex:outputPanel id="popupDeleteSection7" rendered="{!IF(isThereACase == true,true,false)}">
+                        <div class="test">
+                        <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                            <apex:outputPanel styleClass="Content" layout="black" > 
+                                <center>
+                                    <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}{!caseNum}." />
+                                        <div>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_VIEW_CASE}" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
+                                            disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="idModal" styleClass="btn btn_iata_primary"/>
+                                        </div>
+                                    </center>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="popupDeleteSection8" rendered="{!IF(isThereAParticipation == true,true,false)}">
+                        <div class="test">
+                        <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                            <apex:outputPanel styleClass="Content" layout="black" > 
+                                <center>
+                                    <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE_EDIT}{!caseNum}." />
+                                        <div>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+                                            disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                            <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="idModal" styleClass="btn btn_iata_primary"/>
+                                        </div>
+                                    </center>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
                 </apex:outputPanel>
             </div>
         </div>
+
+
 
         <div class="modal-footer" style="margin-top: 3%;">
             <div class="col-md-8 textAlign">
@@ -303,4 +437,48 @@
             function man(){
             }
     </script>
+    <style type="text/css">
+            .test {
+                background: radial-gradient(rgba(0, 0, 0,.8), rgba(0, 0, 0, .5)4%);
+                position: fixed;
+                z-index: 9998;
+                margin: auto;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+            }
+        
+        .PopupBackground {
+                    
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                /* bring your own prefixes */
+                transform: translate(-50%, -50%);
+
+                position: fixed;
+                z-index: 9998;
+                margin: auto;
+                color: black;
+                text-align: center;
+                background-color: white;
+                border: 1px solid rgba(0,0,0,.2);
+                border-radius: 6px;
+                outline: 0;
+                padding: 1%;
+        }
+
+
+        .content{
+            background-color: white;
+            border-width: 8px;
+            border-style: solid;
+            z-index: 9999;
+            padding:10px;
+            position: fixed;
+            margin: auto;
+            
+        }
+    </style>
 </apex:component>

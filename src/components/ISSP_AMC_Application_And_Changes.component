@@ -61,24 +61,24 @@
                                 <td>
                                     <!-- AIRLINE DESIGNATORS -->
                                         <!-- DRAFT -->
-                                        <apex:outputLink value="/ISSP_AMC_Airline_Designators?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
+                                        <apex:outputLink value="/ISSP_AMC_Airline_Designators?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:outputLink>
                                     <!-- END: AIRLINE DESIGNATORS -->
                                     <!-- ACCOUNTING OR PREFIX CODE -->
                                         <!-- DRAFT -->
-                                        <apex:outputLink value="/ISSP_AMC_Accounting_Or_Prefix_Code?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
+                                        <apex:outputLink value="/ISSP_AMC_Accounting_Or_Prefix_Code?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:outputLink>
                                     <!-- END: ACCOUNTING OR PREFIX CODE -->
                                     <!-- LOCATION IDENTIFIER -->
-                                        <apex:outputLink value="/ISSP_AMC_Location_Identifier?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open',caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
+                                        <apex:outputLink value="/ISSP_AMC_Location_Identifier?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open',caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:outputLink>
                                     <!-- END: LOCATION IDENTIFIER -->
                                     <!-- BAGGAGE TAG RANGE -->
                                         <!-- DRAFT -->
-                                        <apex:outputLink value="/ISSP_AMC_Baggage_Tag_Range?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Airline Coding Application', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
+                                        <apex:outputLink value="/ISSP_AMC_Baggage_Tag_Range?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
                                         </apex:outputLink>
                                     <!-- END: BAGGAGE TAG RANGE -->

@@ -392,7 +392,7 @@
         <description>Billing  Street address option 1</description>
         <externalId>false</externalId>
         <label>Billing  Street address 1</label>
-        <length>40</length>
+        <length>80</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

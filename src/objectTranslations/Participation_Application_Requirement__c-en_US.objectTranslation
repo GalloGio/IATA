@@ -505,6 +505,30 @@
             <translation><!-- Recommended_Loc_Identifier__c --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>SIS_Email__c</masterLabel>
+            <translation><!-- SIS_Email__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIS_First_Name__c</masterLabel>
+            <translation><!-- SIS_First_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIS_Last_Name__c</masterLabel>
+            <translation><!-- SIS_Last_Name__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIS_Phone__c</masterLabel>
+            <translation><!-- SIS_Phone__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIS_Salutation__c</masterLabel>
+            <translation><!-- SIS_Salutation__c --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SIS_Title__c</masterLabel>
+            <translation><!-- SIS_Title__c --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>SITA__c</masterLabel>
             <translation><!-- SITA__c --></translation>
         </picklistValues>

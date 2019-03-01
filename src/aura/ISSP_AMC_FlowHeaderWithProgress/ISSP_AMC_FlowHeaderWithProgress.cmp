@@ -33,62 +33,63 @@
                 </div>
             </div>
             <article class="slds-path slds-region_medium">
-                <div class="slds-grid slds-path__track" style="margin-top:-5%;">
+                <div class="slds-grid slds-path__track">
                     <div class="slds-grid slds-path__scroller-container ">
                         <div class="slds-path__scroller" role="application">
                             <div class="slds-path__scroller_inner " >
-                                <ul class="slds-path__nav firts" role="listbox" aria-orientation="horizontal"  >
+                                <ul class="slds-path__nav " role="listbox" aria-orientation="horizontal"  >
                                     <aura:iteration items="{!v.stageWithStatusMap}" var="stage">
-                                        <aura:if isTrue="{!stage.value == 'Completed'}" >        
+                                        <li class="slds-path__item" role="presentation">
+                                            <span aria-selected="false" class="slds-path__link path-item-status-fix" id="path-1" role="option" tabindex="0">
+                                                <ui:outputText value="{!stage.value}"/>
+                                            </span>
+                                        </li>
+                                    </aura:iteration>
+                                </ul>
+                                <ul class="slds-path__nav" style="margin-top=-5px;" role="listbox" aria-orientation="horizontal"  >
+                                    <aura:iteration items="{!v.stageWithStatusMap}" var="stage">
+                                        <aura:if isTrue="{!stage.value == 'Completed'}" >   
                                             <li class="slds-path__item iata-status-completed "  role="presentation" >
-                                                <div class="LabelTooltip">
-                                                    <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0">
-                                                        <span class="slds-path__title">
-                                                            <ui:outputText value="{!stage.key}"/></span>
-                                                        <span class="tooltiptext">{!stage.tooltip}</span > 
-                                                    </span>
-                                                </div>
+                                                <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0">
+                                                    <span class=" slds-truncate"  title="{!stage.tooltip}">
+                                                        <span class="slds-path__title" >{!stage.key}</span>
+                                                    </span> 
+                                                </span>
                                             </li>
                                             <aura:set attribute="else">
                                                 <aura:if isTrue="{!stage.value == 'Progressing'}">
                                                     <li class="slds-path__item iata-status-progressing" role="presentation">
-                                                        <div class="LabelTooltip">
-                                                            <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0" >
-                                                                <span class="slds-path__title"><ui:outputText value="{!stage.key}"/></span>
-                                                                <span class="tooltiptext">{!stage.tooltip}</span>                                                                     
-                                                            </span>
-                                                        </div>
+                                                        <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0">
+                                                            <span class=" slds-truncate"  title="{!stage.tooltip}">
+                                                                <span class="slds-path__title" >{!stage.key}</span>
+                                                            </span> 
+                                                        </span>
                                                     </li>
                                                     <aura:set attribute="else">
                                                         <aura:if isTrue="{!stage.value == 'Fail'}">
                                                             <li class="slds-path__item iata-status-fail" role="presentation">
-                                                                <div class="LabelTooltip">
-                                                                    <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0">
-                                                                        <span class="slds-path__title"><ui:outputText value="{!stage.key}"/></span>
-                                                                        <span class="tooltiptext">{!stage.tooltip}</span> 
-                                                                        
-                                                                    </span>
-                                                                </div>
+                                                                <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0">
+                                                                    <span class=" slds-truncate"  title="{!stage.tooltip}">
+                                                                        <span class="slds-path__title" >{!stage.key}</span>
+                                                                    </span> 
+                                                                </span>
                                                             </li>
                                                             <aura:set attribute="else">
                                                                 <aura:if isTrue="{!stage.value == 'Pending Customer'}">
                                                                     <li class="slds-path__item iata-status-pending-customer" role="presentation">
-                                                                        <div class="LabelTooltip">
-                                                                            <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0">
-                                                                                <span class="slds-path__title"><ui:outputText value="{!stage.key}"/></span>
-                                                                                <span class="tooltiptext">{!stage.tooltip}</span> 
-                                                                                
-                                                                            </span>
-                                                                        </div>
+                                                                        <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0">
+                                                                            <span class=" slds-truncate"  title="{!stage.tooltip}">
+                                                                                <span class="slds-path__title" >{!stage.key}</span>
+                                                                            </span> 
+                                                                        </span>
                                                                     </li>
                                                                     <aura:set attribute="else">                                    
                                                                         <li class="slds-path__item iata-status-incomplete" role="presentation">
-                                                                            <div class="LabelTooltip">
-                                                                                <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0">
-                                                                                    <span class="slds-path__title"><ui:outputText value="{!stage.key}"/></span>
-                                                                                    <span class="tooltiptext">{!stage.tooltip}</span> 
-                                                                                </span>
-                                                                            </div>
+                                                                            <span aria-selected="false" class="slds-path__link path-item-fix" id="path-1" role="option" tabindex="0">
+                                                                                <span class=" slds-truncate"  title="{!stage.tooltip}">
+                                                                                    <span class="slds-path__title" >{!stage.key}</span>
+                                                                                </span> 
+                                                                            </span>
                                                                         </li>
                                                                     </aura:set>
                                                                 </aura:if>
@@ -98,15 +99,6 @@
                                                 </aura:if>
                                             </aura:set>
                                         </aura:if>
-                                    </aura:iteration>
-                                </ul>
-                                <ul class="slds-path__nav second" role="listbox" aria-orientation="horizontal"  >
-                                    <aura:iteration items="{!v.stageWithStatusMap}" var="stage">
-                                        <li class="slds-path__item" role="presentation">
-                                            <span aria-selected="false" class="slds-path__link path-item-status-fix" id="path-1" role="option" tabindex="0">
-                                                <ui:outputText value="{!stage.value}"/>
-                                            </span>
-                                        </li>
                                     </aura:iteration>
                                 </ul>
                             </div>
