@@ -193,7 +193,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 		AmazonFile__c azFile = new AmazonFile__c(
 				Name='ICE POP' + ' ' + '20180615W' + ' ' + '13737.04',
-				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'File');
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'File'),
 				Remittance_Period__c = '20180615W',
 				Category__c = 'ICE POP',
 				File_Identifier_picklist__c = 'ICE_POP',

@@ -29,8 +29,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	boolean AMS_OSCARCaseTrigger = true;
 	boolean trgAccelyaRequestSetCountry = true;
 	boolean trgCase = true;
-
-	List<Case> cases = new list<Case>();
 	
 	if(!Test.isRunningTest()){
 		trgCaseIFAP_AfterInsertDeleteUpdateUndelete = GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;     //55555555555555
