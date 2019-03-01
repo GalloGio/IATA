@@ -10934,6 +10934,14 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>Case Number</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_CASE_SYNC</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_CASE_SYNC</shortDescription>
+        <value>Case successfully synchronized</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_CHECK_THE_REQUIREMENTS</fullName>
         <categories>Page Labels</categories>
         <language>en_US</language>
@@ -11172,6 +11180,13 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <value>Draft changes must be submitted within 60 days, otherwise you will need to restart the change request.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_EDIT_CASE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EDIT_CASE</shortDescription>
+        <value>Edit Case</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_EMAIL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -11234,6 +11249,13 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <shortDescription>ISSP_AMC_EXISTING_CASE</shortDescription>
         <value>Your company has already create a case to request the code. 
 Click here to view the case number:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_EXISTING_CASE_EDIT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_EXISTING_CASE_EDIT</shortDescription>
+        <value>Your company has already create a case to request the code. Click here to edit the case number:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_EXISTING_CASE_ERROR_MESSAGE</fullName>
@@ -12417,6 +12439,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>4. Submit to IATA</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_SYN_CONNECTION</fullName>
+        <categories>Page Labels</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SYN_CONNECTION</shortDescription>
+        <value>At the moment we can&apos;t synchronize the case, please try again later</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_Signed_Letter_CRS</fullName>
         <categories>Page Labels</categories>
         <language>en_US</language>
@@ -12662,6 +12692,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMC_VAT</shortDescription>
         <value>VAT</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_VIEW_CASE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_VIEW_CASE</shortDescription>
+        <value>View Case</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_WC_ACCOUNTING</fullName>
