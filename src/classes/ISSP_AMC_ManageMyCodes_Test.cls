@@ -34,7 +34,7 @@ public class ISSP_AMC_ManageMyCodes_Test {
 					PageReference pageRef = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef);
 					ISSP_AMC_ManageMyCodes controller = new ISSP_AMC_ManageMyCodes();
-					controller.requestBaggageTagRange();
+					controller.navigateBaggageTagRange();
 					controller.createCase();
 					controller.clearMessage();
 					controller.changeAnswer();
@@ -71,7 +71,7 @@ public class ISSP_AMC_ManageMyCodes_Test {
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef1);
 					ISSP_AMC_ManageMyCodes ctrl = new ISSP_AMC_ManageMyCodes();
-					ctrl.requestBaggageTagRange();
+					ctrl.navigateBaggageTagRange();
 				}
 			}
 		Test.StopTest();
@@ -108,7 +108,7 @@ public class ISSP_AMC_ManageMyCodes_Test {
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef1);
 					ISSP_AMC_ManageMyCodes ctrl = new ISSP_AMC_ManageMyCodes();
-					ctrl.requestBaggageTagRange();
+					ctrl.navigateBaggageTagRange();
 				}
 			}
 		Test.StopTest();
@@ -136,7 +136,7 @@ public class ISSP_AMC_ManageMyCodes_Test {
 					PageReference pageRef = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef);
 					ISSP_AMC_ManageMyCodes controller = new ISSP_AMC_ManageMyCodes();
-					controller.requestAccountingOrPrefixCode();
+					controller.navigateAccountingOrPrefixCode();
 				}
 			}
 		Test.StopTest();
@@ -170,7 +170,7 @@ public class ISSP_AMC_ManageMyCodes_Test {
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef1);
 					ISSP_AMC_ManageMyCodes ctrl = new ISSP_AMC_ManageMyCodes();
-					ctrl.requestAccountingOrPrefixCode();
+					ctrl.navigateAccountingOrPrefixCode();
 				}
 			}
 		Test.StopTest();
@@ -206,7 +206,7 @@ public class ISSP_AMC_ManageMyCodes_Test {
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef1);
 					ISSP_AMC_ManageMyCodes ctrl = new ISSP_AMC_ManageMyCodes();
-					ctrl.requestAccountingOrPrefixCode();
+					ctrl.navigateAccountingOrPrefixCode();
 				}
 			}
 		Test.StopTest();
@@ -234,7 +234,7 @@ public class ISSP_AMC_ManageMyCodes_Test {
 					PageReference pageRef = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef);
 					ISSP_AMC_ManageMyCodes controller = new ISSP_AMC_ManageMyCodes();
-					controller.requestAirlineDesignators();
+					controller.navigateAirlineDesignators();
 				}
 			}
 		Test.StopTest();
@@ -268,7 +268,7 @@ public class ISSP_AMC_ManageMyCodes_Test {
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef1);
 					ISSP_AMC_ManageMyCodes ctrl = new ISSP_AMC_ManageMyCodes();
-					ctrl.requestAirlineDesignators();
+					ctrl.navigateAirlineDesignators();
 				}
 			}
 		Test.StopTest();
@@ -304,7 +304,7 @@ public class ISSP_AMC_ManageMyCodes_Test {
 					PageReference pageRef1 = Page.ISSP_AMC_Home;
 					Test.setCurrentPageReference(pageRef1);
 					ISSP_AMC_ManageMyCodes ctrl = new ISSP_AMC_ManageMyCodes();
-					ctrl.requestAirlineDesignators();
+					ctrl.navigateAirlineDesignators();
 				}
 			}
 		Test.StopTest();

@@ -1,20 +1,21 @@
 public with sharing class ISSP_AMC_FlowDAO {
     //For getting users list from custom settings object
     
-    @AuraEnabled
+   @AuraEnabled
     public static List<String> getUsersCustomSettingList(){
         List<String> PicklistUserInfo = new List<String>();
         
-        for (ISSP_AMC_Aproval_Process__c setting : ISSP_AMC_Aproval_Process__c.getAll().values()){
+        for (ISSP_AMC_Approval_Process__c setting : ISSP_AMC_Approval_Process__c.getAll().values()){
             PicklistUserInfo.add(setting.Name);
         } 
        
         return PicklistUserInfo;
     }
-    
+   
      @AuraEnabled
-    public static void updateStepActionApprovelProcessUser(String approvelUserName){
+    public static void updateStepActionApprovelProcessUser(Id stepActionId, String approvelUserName){
         IATA_Process_Orchestrator_Step_Action__c stepAction = new IATA_Process_Orchestrator_Step_Action__c();
+        stepAction.Id = stepActionId;
         stepAction.Approvel_Process_User__c = approvelUserName;
         System.debug('approvelUserName'+approvelUserName);
         update stepAction;
@@ -155,21 +156,23 @@ ISSP_AMC_ApiCallLightningComponent.makeAPICall();
 }*/
     
     @AuraEnabled
-    public static void requestForApproval(Id processOrchestratorId, String stage, String approvelUser ){
-        System.debug('approvelUser '+approvelUser);
-        
+    public static void requestForApproval(Id processOrchestratorId, String stage){
+            
         stage = stage.replace(' ', '_');
         
         List <IATA_Process_Orchestrator_Step_Action__c> stepActionList = new List <IATA_Process_Orchestrator_Step_Action__c>([
-            SELECT  Id, Action_name__c, IATA_Process_Orchestrator__r.Process_Step_Name__c, IATA_Process_Orchestrator__r.Process_Step_Stage__c, Status__c
+            SELECT  Id, Action_name__c, IATA_Process_Orchestrator__r.Process_Step_Name__c, IATA_Process_Orchestrator__r.Process_Step_Stage__c, Status__c , Approvel_Process_User__c
             FROM    IATA_Process_Orchestrator_Step_Action__c
             WHERE   IATA_Process_Orchestrator__r.IATA_Orchestrator_Process__c = :processOrchestratorId
             AND     IATA_Process_Orchestrator__r.Process_Step_Stage__c = :stage
         ]);     
         
-        ISSP_AMC_Aproval_Process__c ApprovelProcessUser =[Select id, name 
-                                                          From ISSP_AMC_Aproval_Process__c  
-                                                          Where name =: approvelUser]; 
+        IATA_Process_Orchestrator_Step_Action__c processOrchestratorStepAction = [SELECT id, Approvel_Process_User__c 
+                                                                                  FROM  IATA_Process_Orchestrator_Step_Action__c 
+                                                                                  WHERE IATA_Process_Orchestrator__r.IATA_Orchestrator_Process__c = :processOrchestratorId
+                                                                                  AND   IATA_Process_Orchestrator__r.Process_Step_Stage__c = :stage];
+        
+      	List<User> approvelUser = [SELECT Id, name FROM user WHERE name =: stepActionList.get(0).Approvel_Process_User__c];
         
         
         /*AMC_Configuration__c amcConfiguration = AMC_Configuration__c.getInstance();
@@ -188,8 +191,8 @@ String.isNotEmpty(amcConfiguration.First_Approver_Orchestrator__c)){*/
         // set nex approver ids (mandatory)
         //request.setNextApproverIds(new Id[] {UserInfo.getUserId()});
         
-        request.setNextApproverIds(new Id[] {ApprovelProcessUser.Id});
-        System.debug('ApprovelProcessUser.Id'+ApprovelProcessUser.Id);
+        request.setNextApproverIds(new Id[] {approvelUser.get(0).Id});
+        System.debug('approvelUser.get(0).Id'+approvelUser.get(0).Id);
         
         // Submit on behalf of a specific submitter
         //request.setSubmitterId(user1.Id);

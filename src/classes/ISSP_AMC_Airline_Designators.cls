@@ -307,11 +307,15 @@ public without sharing class ISSP_AMC_Airline_Designators {
 
     public void CalculateWhichComponentsToShowWithCases(){
         displayMessage = false;
+        step = '1';
         CalculateWhichComponentsToShow();
         if(participation.Case__c == null){
             //ISSP_AMC_DAO.getCase(participation, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_DESIGNATOR_CODE);
             ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_DESIGNATOR_CODE);
         }
+        ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_DESIGNATOR_CODE);
+
+
     }
     public void CalculateWhichComponentsToShow(){
 

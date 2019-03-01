@@ -113,8 +113,7 @@
     
     requestApproval : function(component, event, helper) {
         var action = component.get("c.requestForApproval");
-        
-        console.log('v.approvelUser '+component.get("v.approvelUser"));
+       
         action.setParams({ 
             "processOrchestratorId" : component.get("v.processOrchestratorId"),
             "stage" : component.get("v.stage")

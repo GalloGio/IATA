@@ -5,10 +5,12 @@
     <aura:attribute name="CurrentStage" type="String"  />
     <aura:attribute name="processOrchestratorId" type="String" />
     <aura:attribute name="optionsUser" type="List" />
+    <aura:attribute name = "stepActionId" type = "String" />
     
     <aura:attribute name="picklists" type="ISSP_AMC_FlowDAO.PicklistInfo[]" />
     
     <aura:registerEvent name="refreshProgressEvent" type="c:ISSP_AMC_RefreshProgressEvent"/>
+    
     
     
     <!--<div style="height: 100%;">-->

@@ -30,7 +30,7 @@
                         pickListValueMap: newMap
                     });
                 }
-                
+                component.set("v.stepActionId",picklistInfo.stepActionId);
                 component.set("v.picklists", optList);
                 
             }
@@ -50,9 +50,10 @@
                 }
         });
         
+        
         $A.enqueueAction(action);
         
-        var picklistUser = component.get("c.getUsersCustomSettingList");
+         var picklistUser = component.get("c.getUsersCustomSettingList");
         var input = component.find("MultiSelect");
         var opts=[];
         
@@ -65,7 +66,9 @@
         });
         $A.enqueueAction(picklistUser);
         
+        
     },
+   
     handleChange : function(component, event, helper) {
         console.log("event", event.getParam("value"));
         var stepActionId = event.getParam("value").split("#")[0];
@@ -112,10 +115,34 @@
         $A.enqueueAction(action);
     },
     handleChangeUser: function(component, event, helper) {
-        
+        var stepActionId = component.get("v.stepActionId")
         var approvelUserName = event.getParam("value");
         var action = component.get("c.updateStepActionApprovelProcessUser");
-        action.setParams({ "approvelUserName" : approvelUserName});
+
+        action.setParams({"stepActionId" : stepActionId, "approvelUserName" : approvelUserName});
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                console.log('sucess');
+                
+            }
+            else if (state === "INCOMPLETE") {
+                // do something
+            }
+                else if (state === "ERROR") {
+                    var errors = response.getError();
+                    if (errors) {
+                        if (errors[0] && errors[0].message) {
+                            console.log("Error message: " + 
+                                        errors[0].message);
+                        }
+                    } else {
+                        console.log("Unknown error");
+                    }
+                }
+        });
+        
+        $A.enqueueAction(action);
         
         
     }
