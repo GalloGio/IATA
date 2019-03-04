@@ -399,16 +399,17 @@ j$.get(&quot;/&quot; + objectPrefix + &quot;/e&quot;, function( data ) {
 
 function getRelatedEmails() {
   try {
+		  var topParentId = getTopParentId();
     var query = &quot;SELECT Id, Email&quot;
      + &quot; FROM Contact&quot;
      + &quot; WHERE Accountid IN (&quot;
      + &quot;   SELECT Id&quot;
      + &quot;   FROM Account&quot;
-     + &quot;   WHERE Id = &apos;{!Airline_Input__c.AirlineId__c}&apos; OR Top_parent__c = &apos;{!Airline_Input__c.AirlineId__c}&apos;&quot;
+     + &quot;   WHERE Id = &apos;&quot; + topParentId + &quot;&apos; OR Top_parent__c = &apos;&quot; + topParentId + &quot;&apos;&quot;
      + &quot; )&quot;
      + &quot; AND Status__c = &apos;Active&apos;&quot;
      + &quot; AND Airline_Credit_Risk_Manager__c = True&quot;;
-    
+
     var queryResult = sforce.connection.query(query);
     var records = queryResult.getArray(&quot;records&quot;);
   
@@ -424,6 +425,30 @@ function getRelatedEmails() {
   }
 }
 
+function getTopParentId() {
+  try {
+    var query = &quot;SELECT Id, Top_Parent__c&quot;
+     + &quot; FROM Account&quot;
+     + &quot; WHERE Id = &apos;{!Airline_Input__c.AirlineId__c}&apos;&quot;;
+
+    var queryResult = sforce.connection.query(query);
+    var records = queryResult.getArray(&quot;records&quot;);
+
+    for (var i=0; i&lt;records.length; i++) {
+				  var account = records[i];
+						if (account.Top_Parent__c==null) {
+								return account.Id;
+						} else {
+						  return account.Top_Parent__c;
+						}
+    }
+    return &apos;&apos;;
+
+  } catch (e) {
+    console.log(&apos;Error Retrieving top parent id&apos; + e);
+    return &apos;&apos;;
+  }
+}
 
 // Creating url to send an email
 var params = [];

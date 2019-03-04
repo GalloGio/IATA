@@ -149,6 +149,56 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Type_Of_Action__c</fullName>
+        <externalId>false</externalId>
+        <label>Type Of Action</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Public Case Comment</fullName>
+                    <default>false</default>
+                    <label>Public Case Comment</label>
+                </value>
+                <value>
+                    <fullName>Creating a Task</fullName>
+                    <default>false</default>
+                    <label>Creating a Task</label>
+                </value>
+                <value>
+                    <fullName>Send NOI</fullName>
+                    <default>false</default>
+                    <label>Send NOI</label>
+                </value>
+                <value>
+                    <fullName>Case Closure</fullName>
+                    <default>false</default>
+                    <label>Case Closure</label>
+                </value>
+                <value>
+                    <fullName>Case Escalation</fullName>
+                    <default>false</default>
+                    <label>Case Escalation</label>
+                </value>
+                <value>
+                    <fullName>Case Reopening</fullName>
+                    <default>false</default>
+                    <label>Case Reopening</label>
+                </value>
+                <value>
+                    <fullName>Send Email</fullName>
+                    <default>false</default>
+                    <label>Send Email</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Value_Type__c</fullName>
         <externalId>false</externalId>
         <label>Value Type</label>
@@ -172,7 +222,7 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
-    <label>FDS KPI Reporting</label>
+    <label>KPI Reporting</label>
     <listViews>
         <fullName>All</fullName>
         <columns>Area_Concerned__c</columns>
@@ -189,11 +239,204 @@
         </sharedTo>
     </listViews>
     <nameField>
-        <label>FDS KPI Reporting Name</label>
+        <label>KPI Reporting Name</label>
         <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>FDS KPI Reporting</pluralLabel>
+    <pluralLabel>KPI Reporting</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>CSC</fullName>
+        <active>true</active>
+        <label>CSC</label>
+        <picklistValues>
+            <picklist>Area_Concerned__c</picklist>
+            <values>
+                <fullName>Agency Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Suspension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing %26 Collection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Remittance %26 Settlement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Action__c</picklist>
+            <values>
+                <fullName>Case Closure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Case Escalation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Case Reopening</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Creating a Task</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Case Comment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send NOI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Value_Type__c</picklist>
+            <values>
+                <fullName>Number</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Percentage</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Global_reporting</fullName>
+        <active>true</active>
+        <label>Global reporting</label>
+        <picklistValues>
+            <picklist>Area_Concerned__c</picklist>
+            <values>
+                <fullName>Agency Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Suspension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DPC Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing %26 Collection</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Remittance %26 Settlement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_Of_Action__c</picklist>
+            <values>
+                <fullName>Case Closure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Case Escalation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Case Reopening</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Creating a Task</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Case Comment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send NOI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Value_Type__c</picklist>
+            <values>
+                <fullName>Number</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Percentage</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
