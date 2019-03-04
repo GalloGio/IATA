@@ -56,7 +56,7 @@ private class AirlineInputHandlerTest {
         Case c1 = new Case(recordtypeID = chinaRTID,
                           Region__c = 'China & North Asia',
                           BSPCountry__c = 'China',
-                          Status = 'Financial Security Requested',
+                          Status = 'Open',
                           FS_Submitted_Date__c = date.today(),
                           FS_Deadline_Date__c = twoweeksAgo,
                           Origin = 'asd',

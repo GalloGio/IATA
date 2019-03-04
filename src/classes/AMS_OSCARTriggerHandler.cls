@@ -171,6 +171,8 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-125 End ***/
 
         handleAnnualRevalidation((List<AMS_OSCAR__c>)Trigger.New, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+
+        handleGDIRequestEndorsementCertificate((Map<Id,AMS_OSCAR__c>)Trigger.newMap, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 		
 		//Newgen 13/09/2018: Temporary removed
 		//if(test.IsRunningTest())
@@ -587,6 +589,14 @@ public class AMS_OSCARTriggerHandler {
                     if (resultLoad)
                         boolean result = helper.processAutomation(updatedOSCAR.Process__c, step, (String)updatedOSCAR.get(step + '__c'), updatedOSCAR);
 
+                }else if(updatedOSCAR.Send_invoice__c && !oldOSCAR.Send_invoice__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
+                    updatedOSCAR.Payment_requested__c = Date.today();
+                    updatedOSCAR.STEP47__c = 'Passed';
+                    updatedOSCAR.STEP48__c = 'In Progress';
+
+                }else if(updatedOSCAR.Endorsement_Requested__c && !oldOSCAR.Endorsement_Requested__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
+                    updatedOSCAR.Endorsement_requested_date__c = Date.today();
+                    updatedOSCAR.step49__c = 'Passed';
                 }
             }
 
@@ -4603,7 +4613,44 @@ public class AMS_OSCARTriggerHandler {
         for(Id oscarId: oscarsToProcess){
             ID jobID = System.enqueueJob(new ANG_RollbackEngineHelper(oscarId));
         }
+
+    }
+
+    // NEWGEN-4426
+    public static void handleGDIRequestEndorsementCertificate(Map<Id, AMS_OSCAR__c> newMap, Map<Id, AMS_OSCAR__c> oldMap) {
+
+        //START validation 1: Check if Endorsement_Requested__c was set to true
+        Map<Id,AMS_OSCAR__c> oscarsToProcessMap = new Map<Id,AMS_OSCAR__c>();
+        for(AMS_OSCAR__c oscar :  newMap.values())
+            if(oscar.Endorsement_Requested__c && oscar.Endorsement_Requested__c <> oldMap.get(oscar.Id).Endorsement_Requested__c){
+                oscarsToProcessMap.put(oscar.Id,oscar);
+            }
+
+        if(oscarsToProcessMap.isEmpty())
+            return;
+        //END Validation 1
+
+        //START Validation 2: check if oscar has an opportunity created
+        Map<Id,Opportunity> oppOscarIdMap = new Map<Id,Opportunity>();
+        for(Opportunity opp : [SELECT Id, Related_Oscar__c, GDI_Offer_Id__c FROM Opportunity WHERE Related_Oscar__c IN :oscarsToProcessMap.keySet()])
+            oppOscarIdMap.put(opp.Related_Oscar__c, opp);
+
+        Map<String,String> iataCodes = new Map<String,String>();
+
+        for(AMS_OSCAR__c oscar :oscarsToProcessMap.values()) {
+            if(!oppOscarIdMap.containsKey(oscar.Id) || String.isBlank(oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c) ) {
+               oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
+            } else {
+                iataCodes.put(oscar.IATACode__c,oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c);
+            }
+        }
+
+        if(iataCodes.isEmpty())
+            return;
+
+        for(String key : iataCodes.keySet())
+            ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
         
-    }        
+    }          
 
 }
