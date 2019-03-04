@@ -348,6 +348,8 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 		pendingOscar.Process__c = AMS_Utils.AGENCYCHANGES;
 		insert pendingOscar;
 
+        Test.startTest();
+
 		Case oscarCase = new Case(
 			Oscar__c = pendingOscar.Id, 
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'),
@@ -355,8 +357,6 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 	    );
         insert oscarCase;
 		
-        Test.startTest();
-  
         AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(
             Hierarchy_Name__c='Test Hierarchy'
        	);
