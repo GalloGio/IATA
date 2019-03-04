@@ -145,6 +145,16 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
         set;
     }
 
+    //ACAMBAS - WMO-436 - Begin
+    public Account getAccount() {
+        if (userContact != null) {
+            Account acc = [SELECT Id, Name, Identify_as_Key_Customer__c FROM Account WHERE Id =: userContact.AccountId LIMIT 1][0];
+            return acc;
+        }
+        return null;
+    }
+    //ACAMBAS - WMO-436 - End
+
     public Id getContactId() {
         if (userContact != null){
             return userContact.Id;

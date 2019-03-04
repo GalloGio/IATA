@@ -411,12 +411,76 @@
            * 2017-10-27   paulo.bastos@rightitservices.com  Creation
            ********************************************************************************************************/
             var eventHandlerChatRequest = function (result) {
-                popUpChatConsoleAlert("{!$Label.LVA_ConsoleNewChatReqTitle}",
+
+                //ACAMBAS - WMO-436 - Begin
+                sforce.console.chat.getDetailsByChatKey(result.chatKey, getCustomDetailsChatRequest);
+
+                /*popUpChatConsoleAlert("{!$Label.LVA_ConsoleNewChatReqTitle}",
                                       "{!$Label.LVA_ConsoleNewChatReqDesc}",// "+"<b>" + result.chatKey + "</b>",
                                        undefined,
                                        undefined,
-                                       "{!$Label.LVA_ConsoleNewChatReqDesc}");
+                                       "{!$Label.LVA_ConsoleNewChatReqDesc}");*/
+
+                //ACAMBAS - WMO-436 - End
             };
+
+
+            //ACAMBAS - WMO-436 - Begin
+        
+            function getCustomDetailsChatRequest(result) {
+                var keyCustomer;
+                
+                if (result.success == true) {
+                    var customDetails = result.details.customDetails;
+                   
+                    for(var i=0; i < customDetails.length; i++) {
+                        if(customDetails[i].label == "keyCustomer") {
+                            keyCustomer = customDetails[i].value;
+                            break;
+                        }
+                    }
+                }
+                
+                if(keyCustomer == "true") {
+                    keyCustomerTxt = " <b>(KEY CUSTOMER!)</b>";
+                }
+                
+                popUpChatConsoleAlert("{!$Label.LVA_ConsoleNewChatReqTitle}",
+                                      "{!$Label.LVA_ConsoleNewChatReqDesc}" + keyCustomerTxt,
+                                       undefined,
+                                       undefined,
+                                       "{!$Label.LVA_ConsoleNewChatReqDesc}" + keyCustomerTxt);
+            };
+        
+        
+            var eventHandlerChatStarted = function (result) {           
+                sforce.console.chat.getDetailsByChatKey(result.chatKey, getCustomDetailsChatStarted);
+            };
+          
+          
+            function getCustomDetailsChatRequest(result) {
+                var keyCustomer;
+                
+                if (result.success == true) {
+                    var customDetails = result.details.customDetails;
+                   
+                    for(var i=0; i < customDetails.length; i++) {
+                        if(customDetails[i].label == "keyCustomer") {
+                            keyCustomer = customDetails[i].value;
+                            break;
+                        }
+                    }
+                }
+                
+                if(keyCustomer == "true") {
+                    keyCustomerTxt = " <b>(KEY CUSTOMER!)</b>";
+                }
+                 
+                alert("keyCustomer: " + keyCustomer);
+
+            };
+        
+            //ACAMBAS - WMO-436 - End
 
 
             /////////////////////////////////////////////////
@@ -424,6 +488,7 @@
             /////////////////////////////////////////////////
             sforce.console.chat.onAgentStateChanged(eventHandlerAgentStateChanged);
             sforce.console.chat.onChatRequested(eventHandlerChatRequest);
+            sforce.console.chat.onChatStarted(eventHandlerChatStarted); //ACAMBAS - WMO-436
 
         </script>
 
