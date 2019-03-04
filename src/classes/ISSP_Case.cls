@@ -130,6 +130,15 @@ public without sharing class ISSP_Case {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
 
+            //ACAMBAS - WMO-389 - Start
+            if(newCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
+                newCase.Subject = 'IMPORTANT: ';
+                newCase.Subject = (newCase.BSP_CASS__c != null) ? newCase.Subject + newCase.BSP_CASS__c + ' Payment' : newCase.Subject;
+                newCase.Subject = (newCase.IATA_Code__c != null) ? newCase.Subject + ' - IATA Code ' + newCase.IATA_Code__c : newCase.Subject;
+                newCase.Subject = (newCase.Remittance_period__c != null) ? newCase.Subject + ' - Period ' +  newCase.Remittance_period__c : newCase.Subject;
+            }
+            //ACAMBAS - WMO-389 - End
+
             if(newCase.status == TIP_Utils.CASE_STATUS_DRAFT && newCase.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS){ //Transparency in Payment's portal access assignment
                 User user = DAL_ISSP.getUser(Userinfo.getUserId());
                 Id appListId;
