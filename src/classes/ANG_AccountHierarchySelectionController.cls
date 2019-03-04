@@ -857,7 +857,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		System.debug('JR debug newParent:' + newParent.Top_Parent__r.Location_Type__c);
 
 		//TEST SCENARIO 1
-		if(!diffDestination(oscar.New_parent__c) && newParent.Location_Type__c != AMS_Utils.GE || (newParent.Top_Parent__r != null && newParent.Top_Parent__r.Location_Type__c != AMS_Utils.GE))
+		//if(newParent.Location_Type__c != AMS_Utils.GE && (newParent.Top_Parent__r == null || (newParent.Top_Parent__r != null && newParent.Top_Parent__r.Location_Type__c != AMS_Utils.GE)))
+		if(newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
 			errorChecks.put('Multicountry to Standard or Lite hierarchy', true);
 
 
@@ -884,7 +885,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		//TEST SCENARIO 4
-		if(newParent.Location_Type__c != AMS_Utils.GE && diffDestination(oscar.New_parent__c))
+		if(newParent.Location_Type__c != AMS_Utils.GE && diffDestination(oscar.New_parent__c) && newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
 			errorChecks.put('Multicountry change hierarchy must select GE', true);
 	}
 
