@@ -301,6 +301,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Mobile__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Fax</field>
             </layoutItems>
             <layoutItems>
@@ -492,6 +496,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_FA_Opt_out__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Amount_at_Risk__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sales_at_Risk__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

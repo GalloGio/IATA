@@ -148,12 +148,12 @@ private class ISSP_WS_DisableUserTest {
         contact.FirstName = 'firstname';
         contact.LastName = 'lastname';
         contact.User_Portal_Status__c = ISSP_Constant.NEW_CONTACT_STATUS;
-        contact.Email = 'test@email.com';
+        contact.Email = 'test@email.com' + (Math.random()*1000000000);
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
-        insert user;
+		insert user;
         
         delete [SELECT Id FROM ISSP_Web_Service_Log__c];
         
@@ -192,7 +192,7 @@ private class ISSP_WS_DisableUserTest {
                 Right__c = 'Access Denied');
         insert appRight;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -231,7 +231,7 @@ private class ISSP_WS_DisableUserTest {
                 Right__c = 'Access Denied');
         insert appRight;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -270,7 +270,7 @@ private class ISSP_WS_DisableUserTest {
                 Right__c = 'Access Denied');
         insert appRight;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -309,7 +309,7 @@ private class ISSP_WS_DisableUserTest {
                 Right__c = 'Access Denied');
         insert appRight;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -348,7 +348,7 @@ private class ISSP_WS_DisableUserTest {
                 Right__c = 'Access Denied');
         insert appRight;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -387,7 +387,7 @@ private class ISSP_WS_DisableUserTest {
                 Right__c = 'Access Denied');
         insert appRight;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -426,7 +426,7 @@ private class ISSP_WS_DisableUserTest {
                 Right__c = 'Access Denied');
         insert appRight;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -459,7 +459,7 @@ private class ISSP_WS_DisableUserTest {
         // removing CASS01 app to test a missing app
         delete [SELECT Id FROM Portal_Applications__c WHERE Id=:APP_IDS.CASSLinkExport__c];
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -494,7 +494,7 @@ private class ISSP_WS_DisableUserTest {
             Contact__c = contact.Id,
             Right__c = 'Access Granted');
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -563,7 +563,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         user.isActive = false;
         user.Portal_User_Frozen_Checkbox__c = false;
@@ -595,7 +595,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -629,7 +629,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
@@ -668,7 +668,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
 
@@ -708,7 +708,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
 
@@ -748,7 +748,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
 
@@ -788,7 +788,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
 
@@ -828,7 +828,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
 
@@ -868,7 +868,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
 
@@ -908,7 +908,7 @@ private class ISSP_WS_DisableUserTest {
         contact.Email = 'test@email.com';
         insert contact;
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
 
@@ -951,8 +951,8 @@ private class ISSP_WS_DisableUserTest {
         
         APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
-        user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
+		user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
         delete [SELECT Id FROM ISSP_Web_Service_Log__c];
@@ -982,7 +982,7 @@ private class ISSP_WS_DisableUserTest {
         
         APP_IDS = ISSP_Portal_Service_Ids__c.getInstance();
         
-        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email, IATA_AIRLINE_RT.developerName, contact.Id, false);
+        User user = ISSP_WS_Utilities.createUser(contact.FirstName, contact.LastName, contact.email + (Math.random()*1000000000), IATA_AIRLINE_RT.developerName, contact.Id, false);
         user.FederationIdentifier = String.valueOf(contact.Id).substring(0, 15);
         insert user;
         
