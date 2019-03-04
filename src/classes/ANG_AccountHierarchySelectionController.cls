@@ -199,7 +199,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					'All agents from the same BSP not selected',
 					'VMFR must be applied to all agencies in the same BSP'
 				);
-				
+
 				errorMessages.put(
 					'Only two agents selected with different location types',
 					'For change of location type, only two accounts can be selected with different location type'
@@ -208,6 +208,21 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				errorMessages.put(
 					'Standard or Lite to Multicountry hierarchy', 
 					'The selected new parent is part of a multicountry hierarchy. Please process a conversion in this scenario.'
+				);
+
+				errorMessages.put(
+					'Multicountry to Standard or Lite hierarchy',
+					'You cannot select a Standard or Lite hierarchy as the New Parent.'
+				);
+
+				errorMessages.put(
+					'Multicountry AE account alone in a BSP',
+					'You cannot leave an AE account alone in a BSP. Please choose all the accounts in that BSP or perform a change of Location Type.'
+				);
+
+				errorMessages.put(
+					'Multicountry change hierarchy must select GE',
+					'You cannot choose an Account as a target for the destination hierarchy which does not have a valid Location type (GE).'
 				);
 				
 			}
@@ -836,20 +851,20 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			}
 			
 		}
-
+		
 		onlyTwoAgenciesSelected = (selectedCount == 2);
 		diffLocationTypesSelected = (locationTypeSet.size() > 1);
 		
-		allAgenciesFromSameBSPSelected =
+		allAgenciesFromSameBSPSelected = 
 			(firstItemBSP != null && 
 			bspCountMap.get(firstItemBSP) == selectedCount);
 
 		if((tocList.contains(AMS_Utils.ANG_LEGAL_NAME) || tocList.contains(AMS_Utils.ANG_LEGAL_STATUS) || 
-			tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) || 
-			tocList.contains(AMS_Utils.ANG_OWNERSHIP) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) ||
+				tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) || 
+				tocList.contains(AMS_Utils.ANG_OWNERSHIP) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) ||
 			tocList.contains(AMS_Utils.ANG_TRADE_NAME) || tocList.contains(AMS_Utils.ANG_VMFR)) && !isSingleBSPSelected)
 		{
-			errorChecks.put('Agents must be in the same BSP', true);
+				errorChecks.put('Agents must be in the same BSP', true);
 		}
 
 		if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)){
@@ -876,7 +891,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		//TEST SCENARIO 1
 		//if(newParent.Location_Type__c != AMS_Utils.GE && (newParent.Top_Parent__r == null || (newParent.Top_Parent__r != null && newParent.Top_Parent__r.Location_Type__c != AMS_Utils.GE)))
-		if(newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
+		if(newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY )
 			errorChecks.put('Multicountry to Standard or Lite hierarchy', true);
 
 

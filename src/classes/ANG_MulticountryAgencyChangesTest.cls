@@ -898,4 +898,136 @@ private class ANG_MulticountryAgencyChangesTest {
 
 	}
 
+
+	/**
+	* Change of Hierarchy test validations 
+	* 
+	*/
+	@isTest
+	static void changeOfHierarchyValidationForMulticountry(){
+
+		Id agencyRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+		Account acct = 
+			[SELECT 
+				Id, 
+				Name, 
+				IATA_ISO_Country__c, 
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c, 
+				Location_Class__c, 
+				Location_Type__c,
+				ANG_Accreditation_Model__c
+			 FROM 
+			 	Account 
+			 WHERE 
+			 	Name = 'Multicountry HE FR'
+			 AND
+			 	Location_Type__c = :AMS_Utils.HE
+			];
+
+
+      	AMS_OSCAR__c oscar = createNecessaryData(acct);
+
+		PageReference pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_AccountHierarchySelectionController con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
+
+		Set<Id> accountsInvolvedSet = new Set<Id>();
+		accountsInvolvedSet.add(acct.Id);
+
+		for(ANG_AccountHierarchySelectionController.HierarchyItem item : hierarchyValues){
+			if(item.acc.Location_Type__c == AMS_Utils.GE){
+				item.selected = true;
+				break;
+			}
+		}
+
+		IATA_ISO_Country__c ctry = [SELECT id, name FROM IATA_ISO_Country__c WHERE name = 'Portugal' limit 1];
+
+	//Test Scenario 1
+		Test.startTest();
+
+		//Create Standard HE Cash account 
+		Account heAccount = new Account();
+		heAccount.Name = 'Main HE Account HE';
+		heAccount.Sector__c = 'Travel Agent';
+		heAccount.IATACode__c = '12345678';
+		heAccount.Category__c = 'IATA Passenger Sales Agent';
+		heAccount.Location_Class__c = 'P';
+		heAccount.Location_Type__c = 'HE';
+		heAccount.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+		heAccount.IATA_ISO_Country__c = ctry.Id;
+		heAccount.ANG_IEP_HE_AccntNum__c = '1232132323';
+		heAccount.ANG_IEP_Status__c = 'Suspended';
+		heAccount.ANG_HE_CashCondition__c = true;
+		heAccount.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
+		heAccount.ANG_HE_RiskStatus__c = 'Not Applicable';
+		heAccount.RecordTypeId = agencyRecTypeId;
+
+		insert heAccount;
+
+		con.oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		con.oscar.New_parent__c = heAccount.id;
+		con.save();
+
+		//Check test scenario 1 
+		ApexPages.Message[] pageMessagesScenario1 = ApexPages.getMessages();
+
+		System.assertEquals('You cannot select a Standard or Lite hierarchy as the New Parent.', pageMessagesScenario1[0].getSummary());
+
+	//Test Scenario 3
+
+		//Create Multicountry GE account 
+		Account accountGE = new Account();
+
+		accountGE.Name = 'Multicountry GE PT';
+		accountGE.Location_Type__c = AMS_Utils.GE;
+		accountGE.Location_Class__c = 'P';
+		accountGE.IATA_ISO_Country__c = ctry.Id;
+		accountGE.RecordTypeId = agencyRecTypeId;
+		accountGE.IATACode__c = '12300099';
+		accountGE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+		accountGE.Status__c = 'Approved';
+		accountGE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
+		insert accountGE;
+
+		//Perform Save
+		con.oscar.New_parent__c = accountGE.id;
+		con.save();
+
+		
+		Boolean checkErrorMessage = false;
+		for(ApexPages.Message msg : ApexPages.getMessages()){
+			if(msg.getSummary().contains('You cannot leave an AE account alone in a BSP'))
+				checkErrorMessage = true;
+		}
+
+		System.assert(checkErrorMessage);
+
+
+		//Test Scenario 4 
+		heAccount.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+		update heAccount;
+
+		//Perform Save
+		con.oscar.New_parent__c = heAccount.id;
+		con.save();
+
+		checkErrorMessage = false;
+		for(ApexPages.Message msg : ApexPages.getMessages()){
+			if(msg.getSummary().contains('You cannot choose an Account as a target for the destination hierarchy which does not have a valid Location type (GE).'))
+				checkErrorMessage = true;
+		}
+
+		System.assert(checkErrorMessage);
+		
+		Test.stopTest();
+	}
 }
