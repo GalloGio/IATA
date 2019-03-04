@@ -1,0 +1,10 @@
+<apex:page standardController="Case">
+    <apex:includeLightning />    
+    <div id="lightning" />
+
+    <script>
+        $Lightning.use("c:DetailPageMessagesApp", function() {
+            $Lightning.createComponent("c:DetailPageMessagesCmp", {paramRecordId : "{!Case.Id}", paramObjectName : "Case"}, "lightning");
+        });
+    </script>
+</apex:page>
