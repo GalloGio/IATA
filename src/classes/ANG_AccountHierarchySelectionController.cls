@@ -887,8 +887,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	 */
 	private void runValidationChangeHierarchyforMulticountry(){
 
-		System.debug('JR debug newParent:' + newParent.Top_Parent__r.Location_Type__c);
-
 		//TEST SCENARIO 1
 		//if(newParent.Location_Type__c != AMS_Utils.GE && (newParent.Top_Parent__r == null || (newParent.Top_Parent__r != null && newParent.Top_Parent__r.Location_Type__c != AMS_Utils.GE)))
 		if(newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY )
