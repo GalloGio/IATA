@@ -3,7 +3,7 @@ private class FinancialSecurityUtil_Test {
 
 	@isTest public static void testHandleFSBeforeUpdate() {
 
-		Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+		Profile p = [SELECT Id FROM Profile WHERE Name='FDS Hub Analyst ARM'];
 		User u = new User(Alias = 'standt', Email='testusertempname@foo.bar',
 	               EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
 	               LocaleSidKey='en_US', ProfileId = p.Id,
