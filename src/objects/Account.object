@@ -13558,7 +13558,6 @@ S-SSI
 T-TIDS
 V-Travel Service Intermediaries-TSI (USA Only) 
 X-Handling Agents and Shipping Lines
-L-PASS
 J-Joint Vent</inlineHelpText>
         <label>Location Class</label>
         <required>false</required>
