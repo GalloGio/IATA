@@ -30,9 +30,10 @@
                         pickListValueMap: newMap
                     });
                 }
+                
                 component.set("v.stepActionId",picklistInfo.stepActionId);
                 component.set("v.picklists", optList);
-                
+                console.log(picklistInfo.stepActionId);
             }
             else if (state === "INCOMPLETE") {
                 // do something
@@ -117,14 +118,19 @@
     handleChangeUser: function(component, event, helper) {
         var stepActionId = component.get("v.stepActionId")
         var approvelUserName = event.getParam("value");
+        
+        var appEvent = $A.get("e.c:ISSP_AMC_RefreshProgressEvent");
+        appEvent.setParams({
+            "approvelUser" : approvelUserName });
+        appEvent.fire();
+        
+        
         var action = component.get("c.updateStepActionApprovelProcessUser");
-
         action.setParams({"stepActionId" : stepActionId, "approvelUserName" : approvelUserName});
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 console.log('sucess');
-                
             }
             else if (state === "INCOMPLETE") {
                 // do something

@@ -1,18 +1,18 @@
 public with sharing class ISSP_AMC_FlowDAO {
     //For getting users list from custom settings object
     
-   @AuraEnabled
+    @AuraEnabled
     public static List<String> getUsersCustomSettingList(){
         List<String> PicklistUserInfo = new List<String>();
         
         for (ISSP_AMC_Approval_Process__c setting : ISSP_AMC_Approval_Process__c.getAll().values()){
             PicklistUserInfo.add(setting.Name);
         } 
-       
+        
         return PicklistUserInfo;
     }
-   
-     @AuraEnabled
+    
+    @AuraEnabled
     public static void updateStepActionApprovelProcessUser(Id stepActionId, String approvelUserName){
         IATA_Process_Orchestrator_Step_Action__c stepAction = new IATA_Process_Orchestrator_Step_Action__c();
         stepAction.Id = stepActionId;
@@ -62,7 +62,6 @@ public with sharing class ISSP_AMC_FlowDAO {
         return false;
     }
     
-    
     @AuraEnabled
     public static List <PicklistInfo> getPicklistsFromProcessOrchestrator(Id processOrchestratorId, String stage){
         List <PicklistInfo> picklistInfoList = new List <PicklistInfo>();
@@ -104,8 +103,8 @@ public with sharing class ISSP_AMC_FlowDAO {
         String detail = '';
         try {
             /*List<Case> casesToSendList = new List<Case>([SELECT id FROM Case WHERE id =: caseId]);
-System.debug('FILIPA case: ' + casesToSendList);
-if(!casesToSendList.isEmpty()){*/
+            System.debug('FILIPA case: ' + casesToSendList);
+            if(!casesToSendList.isEmpty()){*/
             res = ISSP_AMC_Integration.doPost(caseId);
             //System.debug('FILI STATUS ' + res.getStatusCode());
             Map<String, Object> m =
@@ -150,14 +149,14 @@ if(!casesToSendList.isEmpty()){*/
         return configs;
     }
     
-    /*@AuraEnabled
-public static void apiCall(){
-ISSP_AMC_ApiCallLightningComponent.makeAPICall();
-}*/
+        /*@AuraEnabled
+    public static void apiCall(){
+    ISSP_AMC_ApiCallLightningComponent.makeAPICall();
+    }*/
     
     @AuraEnabled
     public static void requestForApproval(Id processOrchestratorId, String stage){
-            
+        
         stage = stage.replace(' ', '_');
         
         List <IATA_Process_Orchestrator_Step_Action__c> stepActionList = new List <IATA_Process_Orchestrator_Step_Action__c>([
@@ -167,18 +166,14 @@ ISSP_AMC_ApiCallLightningComponent.makeAPICall();
             AND     IATA_Process_Orchestrator__r.Process_Step_Stage__c = :stage
         ]);     
         
-        IATA_Process_Orchestrator_Step_Action__c processOrchestratorStepAction = [SELECT id, Approvel_Process_User__c 
-                                                                                  FROM  IATA_Process_Orchestrator_Step_Action__c 
-                                                                                  WHERE IATA_Process_Orchestrator__r.IATA_Orchestrator_Process__c = :processOrchestratorId
-                                                                                  AND   IATA_Process_Orchestrator__r.Process_Step_Stage__c = :stage];
-        
-      	List<User> approvelUser = [SELECT Id, name FROM user WHERE name =: stepActionList.get(0).Approvel_Process_User__c];
+        List<User> approvelUser = [SELECT Id, name FROM user WHERE name =: stepActionList.get(0).Approvel_Process_User__c];
         
         
         /*AMC_Configuration__c amcConfiguration = AMC_Configuration__c.getInstance();
 
-if(!stepActionList.isEmpty() && amcConfiguration.First_Approver_Orchestrator__c != null &&
-String.isNotEmpty(amcConfiguration.First_Approver_Orchestrator__c)){*/
+        if(!stepActionList.isEmpty() && amcConfiguration.First_Approver_Orchestrator__c != null &&
+        String.isNotEmpty(amcConfiguration.First_Approver_Orchestrator__c)){*/
+                
         
         // Create an approval request for the case
         Approval.ProcessSubmitRequest request = new Approval.ProcessSubmitRequest();
@@ -192,27 +187,26 @@ String.isNotEmpty(amcConfiguration.First_Approver_Orchestrator__c)){*/
         //request.setNextApproverIds(new Id[] {UserInfo.getUserId()});
         
         request.setNextApproverIds(new Id[] {approvelUser.get(0).Id});
-        System.debug('approvelUser.get(0).Id'+approvelUser.get(0).Id);
         
         // Submit on behalf of a specific submitter
         //request.setSubmitterId(user1.Id);
         
-        // Submit the approval request for the case
+        // Submit the approval request for the case 
+        
         Approval.ProcessResult result = Approval.process(request);
-        System.debug('result '+result);
-        // }
+        
     }
     
     
-    /*public static Map<String, RecordType> getRecordTypesForObject(String sobjectName) {
-Map<String, RecordType> recordTypes = new Map<String, RecordType>();
-for (RecordType rt : [  SELECT  Id,Name,SobjectType,DeveloperName
-FROM    RecordType
-WHERE   SobjectType = :sobjectName AND IsActive = true]){
-recordTypes.put(rt.DeveloperName, rt);
-}
-return recordTypes;
-}*/
+            /*public static Map<String, RecordType> getRecordTypesForObject(String sobjectName) {
+        Map<String, RecordType> recordTypes = new Map<String, RecordType>();
+        for (RecordType rt : [  SELECT  Id,Name,SobjectType,DeveloperName
+        FROM    RecordType
+        WHERE   SobjectType = :sobjectName AND IsActive = true]){
+        recordTypes.put(rt.DeveloperName, rt);
+        }
+        return recordTypes;
+        }*/
     
     @AuraEnabled
     public static void createRelatedCases(Id caseId, String stage){

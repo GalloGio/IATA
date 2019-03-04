@@ -504,6 +504,7 @@ public without sharing class ISSP_AMC_Integration {
             }
 
         }catch(CalloutException e){
+            //No body found in HTTP response
             system.debug('MC  --> ACLI exception: ' + e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage()));
             ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
             log.Web_Service__c = req.getEndpoint(); //'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;

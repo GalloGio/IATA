@@ -345,6 +345,11 @@
 				ISSP_AMC_DAO.saveForm(participation, appRequirementList, step,ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE);
 				//ISSP_AMC_DAO.getCase(participation, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE);
 			}
+			else{
+				step = '1';
+				ISSP_AMC_DAO.saveForm(participation, appRequirementList, step,ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE);
+
+			}
 		}
 		public void CalculateWhichComponentsToShow(){
 			

@@ -20,7 +20,7 @@
                 <lightning:combobox name="progress" label="{!picklist.stepActionName}" value="{!picklist.stepStatus}" required="false" options="{!picklist.pickListValueMap}" onchange="{! c.handleChange }" readonly="{!picklist.stepActionName == 'Request for approval'}"/>     
                 <aura:if isTrue="{!picklist.stepActionName == 'Request for approval'}">
                     <br/>
-                    <lightning:combobox aura:id="MultiSelect" name="Approver" label="Approver" value=""  options="{!v.optionsUser}" onchange="{!c.handleChangeUser}"/>
+                    <lightning:combobox aura:id="MultiSelect" name="Approver" label="Approver" value=""  required="true" options="{!v.optionsUser}" onchange="{!c.handleChangeUser}"/>
                 </aura:if> 
             </div>
             <div class="slds-col" />

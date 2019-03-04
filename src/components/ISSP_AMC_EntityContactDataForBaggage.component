@@ -26,6 +26,12 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
             background: -o-linear-gradient(top, white 0%, white 100%)!important;
             background: linear-gradient(to bottom, white 0%, white 100%)!important;
         }
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding : 0px;
+            margin-left: 0px;
+            display: inline;
+            border: 0px;
+        }
 
         .hidden{
             display: none !important;

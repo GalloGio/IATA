@@ -6,14 +6,17 @@
         
         var self = this;
         
+        var currentStage = component.get("v.stage");
+        var splitStages = currentStage.split(":");
+        var finalStage = splitStages[splitStages.length-1].replace('_', ' ');
+        component.set("v.stage", finalStage);
+        
+        var approvelUserName = event.getParam("approvelUser");
+        component.set("v.approvelUserName", approvelUserName);
+        
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
-                
-                var currentStage = component.get("v.stage");
-                var splitStages = currentStage.split(":");
-                var finalStage = splitStages[splitStages.length-1].replace('_', ' ');
-                component.set("v.stage", finalStage);
                 
                 var returnValue = response.getReturnValue();
                 var stageA_Status = "";
@@ -61,10 +64,11 @@
                 
                 if((stageA_Status != "Completed" ||
                     stageB_Status != "Completed" ||
-                    stageC_Status != "Completed")){
+                    stageC_Status != "Completed") || 
+                   (approvelUserName == undefined)){
                     component.set("v.requestApprovalVariant", "destructive");
-                }
-                else {
+                    
+                }else {
                     component.set("v.requestApprovalVariant", "neutral");
                 }
                 
@@ -88,7 +92,7 @@
                 }
             var action2 = component.get("c.disableButton");
             
-            action2.setParams({ "caseId" : component.get("v.caseRecordId")});
+            action2.setParams({ "caseId" : component.get("v.caseRecordId") });
             action2.setCallback(self, function(response) {
                 var state = response.getState();
                 
@@ -109,29 +113,45 @@
         });
         
         $A.enqueueAction(action);
+        
     },
     
     requestApproval : function(component, event, helper) {
         var action = component.get("c.requestForApproval");
-       
+        
         action.setParams({ 
             "processOrchestratorId" : component.get("v.processOrchestratorId"),
             "stage" : component.get("v.stage")
         });
         
-        
-        action.setCallback(this, function(response) {
-            component.find('notifLib').showNotice({
-                "variant": "info",
-                "header": "Request for Approval",
-                "message": "The case was requested for approval.",
-                closeCallback: function() {
-                    //$A.get('e.force:refreshView').fire();
-                }
-            });
-            $A.get('e.force:refreshView').fire();
+                action.setCallback(this, function(response) {
+           
+            var state = response.getState();
+            var resultsToast = $A.get("e.force:showToast");
+            if(state === "SUCCESS") { 
+                
+                resultsToast.setParams({
+                    "title": "Request for Approval",
+                    "type": 'success',
+                    "message": "The case was requested for approval.",
+                    "duration":' 5000',
+                    "mode": 'pester'
+                    
+                });             
+            } else if (state === "ERROR"){
+                
+                resultsToast.setParams({
+                    "title": "Request for Approval",
+                    "type": 'error',
+                    "duration":' 5000',
+                    "mode": 'pester',
+                    "message": 'It was not possible to submit the approval'
+                    
+                }); 
+            }
+            resultsToast.fire();
+            
         });
-        
         $A.enqueueAction(action);
     },
     

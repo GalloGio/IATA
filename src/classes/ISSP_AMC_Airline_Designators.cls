@@ -313,7 +313,11 @@ public without sharing class ISSP_AMC_Airline_Designators {
             //ISSP_AMC_DAO.getCase(participation, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_DESIGNATOR_CODE);
             ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_DESIGNATOR_CODE);
         }
-        ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_DESIGNATOR_CODE);
+        else{
+            step ='1';
+            ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_DESIGNATOR_CODE);
+
+        }
 
 
     }

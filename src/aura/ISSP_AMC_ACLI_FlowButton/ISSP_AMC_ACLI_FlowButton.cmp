@@ -34,7 +34,6 @@
     
     <lightning:workspaceAPI aura:id="workspace" />
     
-
     <div class="slds-grid slds-grid_align-end">
         <div class="slds-p-top_large slds-p-bottom_large">
             
