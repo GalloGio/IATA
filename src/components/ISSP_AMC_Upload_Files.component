@@ -45,7 +45,7 @@
                                 <div class="col-md-4">
                                     <apex:outputPanel rendered="{!certificateIncorporationRegistration == null}">
                                         <div class="col-md-offset-2">
-                                            <a title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CertificateIncorporationRegistration'); return false;" style="cursor: pointer;" class="btn btn-primary btn-sm">
+                                            <a reRender="out" title="Upload" escape="false" target="_blank" onclick="callComponentRunClickActionMethod('{!participationBackend.Case__c}', '{!recordTypeId}', 'ISSP_AMC_CertificateIncorporationRegistration');" style="cursor: pointer;" class="btn btn-primary btn-sm">
                                                 <span class="glyphicon glyphicon-upload" aria-hidden="true"/> {!$Label.ISSP_AMC_UPLOAD}
                                             </a>
                                         </div>
@@ -688,7 +688,7 @@
 
 
                 $(document).ready(function(){
-                  $('[data-toggle="tooltip"]').tooltip({'placement':'auto'});
+                  $('[data-toggle="tooltip"]').tooltip({'placement':'auto'})
                   //comment the following line out to see page move on click
                   $('a[data-toggle="tooltip"]').click(function(e){e.preventDefault()})
                 })

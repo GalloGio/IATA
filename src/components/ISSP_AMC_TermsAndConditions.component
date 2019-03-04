@@ -37,8 +37,8 @@
 			<apex:outputPanel id="termsCheckBox">
 				<div class="col-sm-offset-2 checkbox termbox">
 	                <label class="control-label {!IF(AND(hasError, participation.Terms_Conditions_Agreement__c == false), 'requiredSelectBox', '')}">
-	                    <apex:inputCheckbox value="{!participation.Terms_Conditions_Agreement__c}" >
-	                        <apex:actionSupport event="onchange" rerender="termsCheckBox" status="Loading"/>
+	                    <apex:inputCheckbox onclick="startLoading()" value="{!participation.Terms_Conditions_Agreement__c}" >
+	                        <apex:actionSupport event="onchange" rerender="termsCheckBox" oncomplete="stopLoading()"/>
 	                    </apex:inputCheckbox>
 	                    <apex:outputLabel value="{!$Label.ISSP_AMC_TERMS_AGREE}" />
 	                </label>

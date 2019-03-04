@@ -78,6 +78,20 @@
         <label><!-- Total Number of Actions --></label>
         <name>Total_Number_of_Actions__c</name>
     </fields>
+    <layouts>
+        <layout>IATA Orchestrator Process Step Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>IATA Process Orchestrator Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <recordTypes>
         <description><!-- Represents an IATA Process Step --></description>
         <label><!-- IATA Process Step --></label>

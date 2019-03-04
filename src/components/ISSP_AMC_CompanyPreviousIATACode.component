@@ -85,8 +85,8 @@
     						<label for="twoCharacterRadio">{!$Label.ISSP_AMC_PREVIOUSLY_ASSIGNED_2CHAR_IATA_A4A_CODE}</label>
     					</div>
     					<div class="col-md-4">
-		    				<apex:selectRadio id="twoCharacterRadio" value="{!participation.Has_airline_assigned_two_char_code__c}" styleClass="{!IF(AND(hasError, participation.Has_airline_assigned_two_char_code__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
-		    					<apex:actionSupport event="onchange" rerender="twoCharacterRadioPanel" status="Loading" />
+		    				<apex:selectRadio onclick="startLoading()" id="twoCharacterRadio" value="{!participation.Has_airline_assigned_two_char_code__c}" styleClass="{!IF(AND(hasError, participation.Has_airline_assigned_two_char_code__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
+		    					<apex:actionSupport event="onchange" rerender="twoCharacterRadioPanel" oncomplete="stopLoading()" />
 								<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
 								<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
 							</apex:selectRadio>

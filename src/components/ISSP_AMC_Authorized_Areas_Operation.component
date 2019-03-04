@@ -14,8 +14,8 @@
                     <div class="col-sm-3 col-md-offset-3">
                         <div class="checkbox">
                             <label class="{!IF(AND(hasError, AND(participation.AAO_Domestic__c == false, participation.AAO_International__c == false)), 'requiredSelectBox', '')}">
-                                <apex:inputCheckbox value="{!participation.AAO_Domestic__c}">
-                                    <apex:actionSupport event="onchange" rerender="authorizedCB" status="Loading"/>
+                                <apex:inputCheckbox value="{!participation.AAO_Domestic__c}" onclick="startLoading()">
+                                    <apex:actionSupport event="onchange" rerender="authorizedCB" oncomplete="stopLoading()"/>
                                 </apex:inputCheckbox>
                                 {!$Label.ISSP_AMC_Authorized_Areas_Operation_Domestic}
                             </label>
@@ -24,8 +24,8 @@
                     <div class="col-sm-3">
                         <div class="checkbox">
                             <label class="{!IF(AND(hasError, AND(participation.AAO_Domestic__c == false, participation.AAO_International__c == false)), 'requiredSelectBox', '')}">
-                                <apex:inputCheckbox value="{!participation.AAO_International__c}" >
-                                    <apex:actionSupport event="onchange" rerender="authorizedCB" status="Loading"/>
+                                <apex:inputCheckbox value="{!participation.AAO_International__c}" onclick="startLoading()">
+                                    <apex:actionSupport event="onchange" rerender="authorizedCB" oncomplete="stopLoading()"/>
                                 </apex:inputCheckbox>
                                 {!$Label.ISSP_AMC_Authorized_Areas_Operation_International}
                             </label>

@@ -15,40 +15,40 @@
                                          
                                             <div class="checkbox">
                                                 <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
-                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_1__c}" >
-                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    <apex:inputCheckbox onclick="startLoading()" value="{!participation.Baggage_Reason_For_Use_1__c}" >
+                                                        <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="baggageCheckboxes" status="Loading"/>
                                                     </apex:inputCheckbox>
                                                     <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_1}"/>
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
-                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_2__c}">
-                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    <apex:inputCheckbox onclick="startLoading()" value="{!participation.Baggage_Reason_For_Use_2__c}">
+                                                        <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="baggageCheckboxes" status="Loading"/>
                                                     </apex:inputCheckbox>
                                                     <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_2}"/>
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
-                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_3__c}">
-                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    <apex:inputCheckbox onclick="startLoading()" value="{!participation.Baggage_Reason_For_Use_3__c}">
+                                                        <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="baggageCheckboxes" status="Loading"/>
                                                     </apex:inputCheckbox>
                                                     <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_3}"/>
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
-                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_4__c}">
-                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    <apex:inputCheckbox onclick="startLoading()" value="{!participation.Baggage_Reason_For_Use_4__c}">
+                                                        <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="baggageCheckboxes" status="Loading"/>
                                                     </apex:inputCheckbox>
                                                     <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_4}"/>
                                                 </label>
                                             </div>
                                             <div class="checkbox">
                                                 <label class="{!IF(AND(hasError,AND(participation.Baggage_Reason_For_Use_1__c == false, participation.Baggage_Reason_For_Use_2__c == false,participation.Baggage_Reason_For_Use_3__c == false,participation.Baggage_Reason_For_Use_4__c == false,participation.Baggage_Reason_For_Use_5__c == false)), 'requiredSelectBox', '')}">
-                                                    <apex:inputCheckbox value="{!participation.Baggage_Reason_For_Use_5__c}">
-                                                        <apex:actionSupport event="onchange" rerender="baggageCheckboxes" status="Loading"/>
+                                                    <apex:inputCheckbox onclick="startLoading()" value="{!participation.Baggage_Reason_For_Use_5__c}">
+                                                        <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="baggageCheckboxes" status="Loading"/>
                                                     </apex:inputCheckbox>
                                                     <apex:outputText value="{!$Label.ISSP_AMC_BAGGAGE_REASON_FOR_USE_5}"/>
                                                 </label>

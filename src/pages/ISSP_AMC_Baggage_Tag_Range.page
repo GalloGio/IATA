@@ -234,6 +234,10 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                     position: fixed !important;
                     transform:translate(-35%,-40%)!important;
                 }
+                .tooltip{
+                    max-width: 200px !important;
+                    width: 200px !important;
+                }
             </style>
             
             

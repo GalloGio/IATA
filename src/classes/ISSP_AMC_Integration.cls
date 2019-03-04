@@ -424,17 +424,19 @@ public without sharing class ISSP_AMC_Integration {
         public String errorCode {get; set;}
         public String errorDescription {get; set;}
 
-        public String status            {get; set;}
-        public String requestId         {get; set;}
+        @AuraEnabled public String status            {get; set;}
+        @AuraEnabled public String requestId         {get; set;}
         //public String caseNumber        {get; set;}
-        public String OscarCase        {get; set;}
+        @AuraEnabled public String OscarCase        {get; set;}
         //public String detail        {get; set;}
-        public List<Error> errors {get;set;}
+        @AuraEnabled public String error             {get;set;}
+        @AuraEnabled public List<Error> errors {get;set;}
 
     }
 
     public class Error{
-        public String detail        {get; set;}
+        @AuraEnabled public String detail        {get; set;}
+        @AuraEnabled public String status        {get; set;}
     }
 
     public static HttpResponse sendRequest(string theBody, Id caseIdReceived){

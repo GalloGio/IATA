@@ -33,7 +33,7 @@
                 
                 component.set("v.stepActionId",picklistInfo.stepActionId);
                 component.set("v.picklists", optList);
-                console.log(picklistInfo.stepActionId);
+              
             }
             else if (state === "INCOMPLETE") {
                 // do something
@@ -71,7 +71,7 @@
     },
    
     handleChange : function(component, event, helper) {
-        console.log("event", event.getParam("value"));
+       // console.log("event", event.getParam("value"));
         var stepActionId = event.getParam("value").split("#")[0];
         var stepStatus = event.getParam("value").split("#")[1];
         
@@ -132,20 +132,6 @@
             if (state === "SUCCESS") {
                 console.log('sucess');
             }
-            else if (state === "INCOMPLETE") {
-                // do something
-            }
-                else if (state === "ERROR") {
-                    var errors = response.getError();
-                    if (errors) {
-                        if (errors[0] && errors[0].message) {
-                            console.log("Error message: " + 
-                                        errors[0].message);
-                        }
-                    } else {
-                        console.log("Unknown error");
-                    }
-                }
         });
         
         $A.enqueueAction(action);

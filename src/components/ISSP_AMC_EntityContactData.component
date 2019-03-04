@@ -152,8 +152,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 <div class="checkbox">
                                     <label>
                                         
-                                        <apex:inputCheckbox id="chkbilling" value="{!controllerParticipation.Is_the_billing_contact_same_the_HOC__c}" >
-                                            <apex:actionSupport event="onchange" reRender="ebpPanel,ebpPageBlock" />
+                                        <apex:inputCheckbox onclick="startLoading()" id="chkbilling" value="{!controllerParticipation.Is_the_billing_contact_same_the_HOC__c}" >
+                                            <apex:actionSupport event="onchange" reRender="ebpPanel,ebpPageBlock" oncomplete="stopLoading()" />
                                         </apex:inputCheckbox>
                                         
                                         {!$Label.ISSP_AMC_BILLING_CONTACT_SAME_HEAD_OFFICE}
@@ -844,5 +844,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                     t.remove("has-feedback");
                 }
             }
+
+            
         </script> 
 </apex:component>

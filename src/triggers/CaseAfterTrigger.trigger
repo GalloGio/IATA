@@ -29,6 +29,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	boolean AMS_OSCARCaseTrigger = true;
 	boolean trgAccelyaRequestSetCountry = true;
 	boolean trgCase = true;
+	boolean trgCaseCheckOwnerChangeForOrchestrator = true;
 	
 	//EM: To be removed
 	if (Test.isRunningTest()) {
@@ -315,6 +316,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		AMS_OSCARCaseTrigger = GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;                                     //55555555555555
 		trgAccelyaRequestSetCountry = GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;                       //33333333333333
 		trgCase = GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;                                                               //33333333333333
+		trgCaseCheckOwnerChangeForOrchestrator = GlobalCaseTrigger__c.getValues('ISSP_AMC_CaseTriggerHelper').ON_OFF__c;
 	}
     /**********************************************************************************************************************************/
     
@@ -1225,6 +1227,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 		}
 		/*AMS_OSCARCaseTrigger Trigger.isUpdate*/
+
+		if(trgCaseCheckOwnerChangeForOrchestrator){
+			ISSP_AMC_CaseTriggerHelper.isOwnerChanged();
+		}
 
 		/*ANG Triggers*/
 		new ANG_CaseTriggerHandler().onAfterUpdate();

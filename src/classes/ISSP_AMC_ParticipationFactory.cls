@@ -1598,7 +1598,8 @@ public with sharing class ISSP_AMC_ParticipationFactory {
             isPublicAmazonFile__c = true,
             endpoint__c = 'https://apisbx.iata.org/acli-coding/requests',
             username__c = '9b5e2abd65ee4c8e9bff0e97bd8c4e16',
-            password__c = '8ac07dac22564502AB51BfBF6f24D217'
+            password__c = '8ac07dac22564502AB51BfBF6f24D217',
+            Case_Number_Of_Days_To_Delete_To__c  = 60          // edited by Sam Anjos 01/03/2019 for case clean up batch
         );
 
         if(insertSetting){
@@ -1606,7 +1607,110 @@ public with sharing class ISSP_AMC_ParticipationFactory {
         }
     }
 
-    
 
+    /*
+        Purpose: Create a method to generate the cases for test class
+        Parameters: String recordTypeName, Integer numberOfRecords
+        Returns: List<Case>
+        Throws [Exceptions]:
+        Created by: Sam Anjos
+    */
+    public static List<Case> createAListOfCases (String recordTypeName, Integer numberOfRecords){
+
+        List<Case> testCaseList = new List<Case>();
+
+        for ( integer index = 0; index < numberOfRecords ; index ++){
+            Case testCase = new Case();
+            testCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get(recordTypeName).getRecordTypeId();
+            testCase.Subject = 'Case number ' + index + ' to test Batch';
+            testCase.Status = 'Open';
+
+            testCaseList.add(testCase);
+        }
+
+        insert testCaseList;
+
+        return testCaseList;
+    }
+
+    /*
+       Purpose: Create a method to generate the Participation_Online_Application__c for test class
+       Parameters: List<Case> testCaseList
+       Returns: List<Participation_Online_Application__c>
+       Throws [Exceptions]:
+       Created by: Sam Anjos
+   */
+    public static  List<Participation_Online_Application__c> createParticipationOnlineApplication (List<Case> testCaseList, Integer offSetDaysOfCreation){
+
+        List<Participation_Online_Application__c> participationOnlineApplicationsList= new List<Participation_Online_Application__c>();
+        for ( integer index = 0; index < testCaseList.size() ; index ++){
+
+            Participation_Online_Application__c newPartOnlineApp = new Participation_Online_Application__c();
+            newPartOnlineApp.Case__c = testCaseList[index].Id;
+            newPartOnlineApp.CreatedDate = Date.today().addDays(offSetDaysOfCreation);
+            newPartOnlineApp.LastModifiedDate = Date.today().addDays(offSetDaysOfCreation);
+
+            participationOnlineApplicationsList.add(newPartOnlineApp);
+
+        }
+
+        insert participationOnlineApplicationsList;
+
+        return participationOnlineApplicationsList;
+    }
+
+    /*
+      Purpose: Create a method to generate the Participation_Application_Requirement__c for test class
+      Parameters: Integer numberOfRecords
+      Returns: List<Participation_Application_Requirement__c>
+      Throws [Exceptions]:
+      Created by: Sam Anjos
+  */
+    public static List<Participation_Application_Requirement__c> createParticipationApplicationRequirement (Integer numberOfRecords){
+
+        List<Participation_Application_Requirement__c> participationApplicationRequirementsList = new List<Participation_Application_Requirement__c>();
+
+        for ( integer index = 0 ; index < numberOfRecords ; index ++){
+
+            Participation_Application_Requirement__c newPartAppRequirement = new Participation_Application_Requirement__c();
+            newPartAppRequirement.ACLI_Codes__c = 'Designator Code';
+
+            participationApplicationRequirementsList.add(newPartAppRequirement);
+        }
+
+
+        insert participationApplicationRequirementsList;
+
+        return participationApplicationRequirementsList;
+
+    }
+
+    /*
+    Purpose: Create a method to generate the Participant_Online_App_Requirement__c for test class
+    Parameters: Participation_Online_Application__c newPartOnlineApp,
+                Participation_Application_Requirement__c newPartAppRequirement,
+                Integer numberOfRecords
+    Returns: List<Participation_Application_Requirement__c>
+    Throws [Exceptions]:
+    Created by: Sam Anjos
+    */
+    public static List<Participant_Online_App_Requirement__c> createParticipantOnlineAppRequirement(List <Participation_Online_Application__c> newPartOnlineApp,List<Participation_Application_Requirement__c> newPartAppRequirement,Integer numberOfRecords){
+
+        List<Participant_Online_App_Requirement__c> participantOnlineAppRequirementsList = new List<Participant_Online_App_Requirement__c>();
+
+        for ( integer index = 0 ; index < numberOfRecords ; index ++){
+
+            Participant_Online_App_Requirement__c newPartOnlineAppRequirements = new Participant_Online_App_Requirement__c();
+            newPartOnlineAppRequirements.Participation_Online_Application__c = newPartOnlineApp[0].Id;
+            newPartOnlineAppRequirements.Participation_Application_Requirement__c = newPartAppRequirement[0].Id;
+
+            participantOnlineAppRequirementsList.add(newPartOnlineAppRequirements);
+        }
+
+
+        insert participantOnlineAppRequirementsList;
+
+        return participantOnlineAppRequirementsList;
+    }
 
 }

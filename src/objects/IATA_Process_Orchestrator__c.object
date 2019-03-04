@@ -306,6 +306,8 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>IATA_Orchestrator_Process__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATED_DATE</columns>
         <columns>Associated_Case__c</columns>
         <columns>Process_Name__c</columns>
         <columns>Total_Actions__c</columns>

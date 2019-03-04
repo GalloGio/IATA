@@ -10427,7 +10427,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_ACCOUNTING_OR_PREFIX_CODE_DESC</shortDescription>
-        <value>This code is meant for transport documents (e.g. the accounting code 076 at the beginning of a ticket number identifies it to be a traffic document of Middle East Airlines). The same number can be used for cargo documentation and is known as an &quot;airline prefix&quot;.</value>
+        <value>This code is meant for transportion documents (e.g. the accounting code 076 at the beginning of a ticket number identifies it to be a traffic document of Middle East Airlines). The same number can be used for cargo documentation and is known as an &quot;airline prefix&quot;.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_ACCOUNT_PREFIX_CODE</fullName>
@@ -10760,7 +10760,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_BAGAGE_TAG_RANGE_DESC</shortDescription>
-        <value>Airlines and CRSs may reuest the assignment of a unique three-letter code to identify an airport (r.g. GVA = Genava), Bus, or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
+        <value>Airlines and CRSs may request the assignment of a unique three-letter code to identify an airport (r.g. GVA = Genava). Bus or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_BAGGAGE_REASON_FOR_USE_1</fullName>
@@ -11406,7 +11406,7 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_IATA_CODES_BODY</shortDescription>
-        <value>IATA Codes are integral part of the travel industry, and essential for the identification of an airline, it&apos;s destsinations and it&apos;s traffic documents. They are also fundamental to the smooth running of hundreds of electronic applications which have been built arround these coding systems for passenger and cargo traffic purposes.</value>
+        <value>IATA Codes are integral part of the travel industry and essential for the identification of an airline, its destinations and its traffic documents. They are also fundamental to the smooth running of hundreds of electronic applications which have been built around these coding systems for passenger and cargo traffic purposes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_IATA_CODE_VALIDATION</fullName>
@@ -11572,7 +11572,7 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_LOCATION_IDENTIFIER_DESC</shortDescription>
-        <value>Airlines and CRSs may reuest the assignment of a unique three-letter code to identify an airport (r.g. GVA = Genava), Bus, or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
+        <value>Airlines and CRSs may request the assignment of a unique three-letter code to identify an airport (r.g. GVA = Genava). Bus or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_LOCATION_NAME</fullName>

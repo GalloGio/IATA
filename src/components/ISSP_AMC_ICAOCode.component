@@ -19,8 +19,8 @@
                             
                         </div>
                         <div class="col-md-4">
-                            <apex:selectRadio id="twoCharacterRadio" value="{!participation.Does_the_airline_presently_hold_a_three__c}" styleClass="{!IF(AND(hasError, participation.Does_the_airline_presently_hold_a_three__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
-                                <apex:actionSupport event="onchange" rerender="radioPanel" status="Loading" />
+                            <apex:selectRadio id="twoCharacterRadio" onclick="startLoading()" value="{!participation.Does_the_airline_presently_hold_a_three__c}" styleClass="{!IF(AND(hasError, participation.Does_the_airline_presently_hold_a_three__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
+                                <apex:actionSupport event="onchange" rerender="radioPanel" oncomplete="stopLoading()" />
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                             </apex:selectRadio>
@@ -120,11 +120,11 @@
             }
         }
         
-        $(document).ready(function(){
-          $('[data-toggle="tooltip"]').tooltip({'placement':'auto'});
+        /*$(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip({'placement':'auto'})
           //comment the following line out to see page move on click
           $('a[data-toggle="tooltip"]').click(function(e){e.preventDefault()})
-        })
+        })*/
 
     </script>
 

@@ -14,20 +14,17 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
     <html>
     
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        
+        <!--<apex:includeScript value="{!$Resource.jquery2_1_4}"/> -->
         <c:ISSP_Header />
+
         <apex:stylesheet value="{!URLFOR($Resource.BootstrapDatepicker, 'css/bootstrap-datepicker3.min.css')}" />
         <script src="{!URLFOR($Resource.BootstrapDatepicker, 'js/bootstrap-datepicker.min.js')}"></script>
-        <script src="{!URLFOR($Resource.jQuery224min)}"></script>
-        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormatS, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
-        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormatS, '/intl-tel-input-master/src/js/data.js')}"></script>
-        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormatS, '/intl-tel-input-master/src/spec/helpers/helpers.js')}"></script>
-        <script src="{!URLFOR($Resource.InternationalPhoneNumberFormatS, '/intl-tel-input-master/build/js/utils.js')}"></script>
+        <!--<script src="{!URLFOR($Resource.jQuery224min)}"></script>-->
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js "></script>
-<!--
-        <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
-        -->
+
+        
+        
 
         <body>
             <style>
@@ -240,6 +237,10 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                     position: fixed !important;
                     transform:translate(-35%,-40%)!important;
                 }
+                .tooltip{
+                    max-width: 200px !important;
+                    width: 200px !important;
+                }
             </style>
             
             
@@ -322,6 +323,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                     $('#showHocTable').DataTable();
 
                 });
+
+
             </script>
 
             <div class="container">
@@ -398,8 +401,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-4">
                                                     <div class="checkbox">
                                                         <label class="{!IF(AND(hasError,AND(participation.AOC_Scheduled_Passenger__c == false, participation.AOC_Scheduled_Cargo__c == false,participation.AOC_Non_Scheduled_Passenger__c == false,participation.AOC_Non_Scheduled_Cargo__c == false,participation.AOC_Ferry_Company__c == false,participation.AOC_CRS__c == false,participation.AOC_ULD__c == false,participation.AOC_Bus_Company__c == false,participation.AOC_Railway_Company__c == false)), 'requiredSelectBox', '')}">
-                                                            <apex:inputCheckbox value="{!participation.AOC_Scheduled_Passenger__c}">
-                                                                <apex:actionSupport event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
+                                                            <apex:inputCheckbox onclick="startLoading()" value="{!participation.AOC_Scheduled_Passenger__c}">
+                                                                <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" >
                                                                     <apex:param name="operationTypeParam" value="ScheduledAirline" assignTo="{!selectedOperationType}" />
                                                                 </apex:actionSupport>
                                                             </apex:inputCheckbox>
@@ -410,8 +413,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-4">
                                                     <div class="checkbox">
                                                         <label class="{!IF(AND(hasError,AND(participation.AOC_Scheduled_Passenger__c == false, participation.AOC_Scheduled_Cargo__c == false,participation.AOC_Non_Scheduled_Passenger__c == false,participation.AOC_Non_Scheduled_Cargo__c == false,participation.AOC_Ferry_Company__c == false,participation.AOC_CRS__c == false,participation.AOC_ULD__c == false,participation.AOC_Bus_Company__c == false,participation.AOC_Railway_Company__c == false)), 'requiredSelectBox', '')}">
-                                                            <apex:inputCheckbox value="{!participation.AOC_Scheduled_Cargo__c}">
-                                                                <apex:actionSupport event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
+                                                            <apex:inputCheckbox onclick="startLoading()" value="{!participation.AOC_Scheduled_Cargo__c}">
+                                                                <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
                                                                     <apex:param name="operationTypeParam" value="ScheduledAirline" assignTo="{!selectedOperationType}" />
                                                                 </apex:actionSupport>
                                                             </apex:inputCheckbox>
@@ -422,8 +425,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-4">
                                                     <div class="checkbox">
                                                         <label class="{!IF(AND(hasError,AND(participation.AOC_Scheduled_Passenger__c == false, participation.AOC_Scheduled_Cargo__c == false,participation.AOC_Non_Scheduled_Passenger__c == false,participation.AOC_Non_Scheduled_Cargo__c == false,participation.AOC_Ferry_Company__c == false,participation.AOC_CRS__c == false,participation.AOC_ULD__c == false,participation.AOC_Bus_Company__c == false,participation.AOC_Railway_Company__c == false)), 'requiredSelectBox', '')}">
-                                                            <apex:inputCheckbox value="{!participation.AOC_Non_Scheduled_Passenger__c}">
-                                                                <apex:actionSupport event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
+                                                            <apex:inputCheckbox onclick="startLoading()" value="{!participation.AOC_Non_Scheduled_Passenger__c}">
+                                                                <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
                                                                     <apex:param name="operationTypeParam" value="NonScheduledAirline" assignTo="{!selectedOperationType}" />
                                                                 </apex:actionSupport>
                                                             </apex:inputCheckbox>
@@ -436,8 +439,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-4">
                                                     <div class="checkbox">
                                                         <label class="{!IF(AND(hasError,AND(participation.AOC_Scheduled_Passenger__c == false, participation.AOC_Scheduled_Cargo__c == false,participation.AOC_Non_Scheduled_Passenger__c == false,participation.AOC_Non_Scheduled_Cargo__c == false,participation.AOC_Ferry_Company__c == false,participation.AOC_CRS__c == false,participation.AOC_ULD__c == false,participation.AOC_Bus_Company__c == false,participation.AOC_Railway_Company__c == false)), 'requiredSelectBox', '')}">
-                                                            <apex:inputCheckbox value="{!participation.AOC_Non_Scheduled_Cargo__c}">
-                                                                <apex:actionSupport event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
+                                                            <apex:inputCheckbox onclick="startLoading()" value="{!participation.AOC_Non_Scheduled_Cargo__c}">
+                                                                <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
                                                                     <apex:param name="operationTypeParam" value="NonScheduledAirline" assignTo="{!selectedOperationType}" />
                                                                 </apex:actionSupport>
                                                             </apex:inputCheckbox>
@@ -448,8 +451,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-4">
                                                     <div class="checkbox">
                                                         <label class="{!IF(AND(hasError,AND(participation.AOC_Scheduled_Passenger__c == false, participation.AOC_Scheduled_Cargo__c == false,participation.AOC_Non_Scheduled_Passenger__c == false,participation.AOC_Non_Scheduled_Cargo__c == false,participation.AOC_Ferry_Company__c == false,participation.AOC_CRS__c == false,participation.AOC_ULD__c == false,participation.AOC_Bus_Company__c == false,participation.AOC_Railway_Company__c == false)), 'requiredSelectBox', '')}">
-                                                            <apex:inputCheckbox value="{!participation.AOC_Ferry_Company__c}">
-                                                                <apex:actionSupport event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
+                                                            <apex:inputCheckbox onclick="startLoading()" value="{!participation.AOC_Ferry_Company__c}">
+                                                                <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
                                                                     <apex:param name="operationTypeParam" value="Ferry" assignTo="{!selectedOperationType}" />
                                                                 </apex:actionSupport>
                                                             </apex:inputCheckbox>
@@ -460,8 +463,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-4">
                                                     <div class="checkbox">
                                                         <label class="{!IF(AND(hasError,AND(participation.AOC_Scheduled_Passenger__c == false, participation.AOC_Scheduled_Cargo__c == false,participation.AOC_Non_Scheduled_Passenger__c == false,participation.AOC_Non_Scheduled_Cargo__c == false,participation.AOC_Ferry_Company__c == false,participation.AOC_CRS__c == false,participation.AOC_ULD__c == false,participation.AOC_Bus_Company__c == false,participation.AOC_Railway_Company__c == false)), 'requiredSelectBox', '')}">
-                                                            <apex:inputCheckbox value="{!participation.AOC_CRS__c}">
-                                                                <apex:actionSupport event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
+                                                            <apex:inputCheckbox onclick="startLoading()" value="{!participation.AOC_CRS__c}">
+                                                                <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
                                                                     <apex:param name="operationTypeParam" value="CRS" assignTo="{!selectedOperationType}" />
                                                                 </apex:actionSupport>
                                                             </apex:inputCheckbox>
@@ -474,8 +477,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-4">
                                                     <div class="checkbox">
                                                         <label class="{!IF(AND(hasError,AND(participation.AOC_Scheduled_Passenger__c == false, participation.AOC_Scheduled_Cargo__c == false,participation.AOC_Non_Scheduled_Passenger__c == false,participation.AOC_Non_Scheduled_Cargo__c == false,participation.AOC_Ferry_Company__c == false,participation.AOC_CRS__c == false,participation.AOC_ULD__c == false,participation.AOC_Bus_Company__c == false,participation.AOC_Railway_Company__c == false)), 'requiredSelectBox', '')}">
-                                                            <apex:inputCheckbox value="{!participation.AOC_ULD__c}">
-                                                                <apex:actionSupport event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
+                                                            <apex:inputCheckbox onclick="startLoading()" value="{!participation.AOC_ULD__c}">
+                                                                <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
                                                                     <apex:param name="operationTypeParam" value="ULD" assignTo="{!selectedOperationType}" />
                                                                 </apex:actionSupport>
                                                             </apex:inputCheckbox>
@@ -486,8 +489,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-4">
                                                     <div class="checkbox">
                                                         <label class="{!IF(AND(hasError,AND(participation.AOC_Scheduled_Passenger__c == false, participation.AOC_Scheduled_Cargo__c == false,participation.AOC_Non_Scheduled_Passenger__c == false,participation.AOC_Non_Scheduled_Cargo__c == false,participation.AOC_Ferry_Company__c == false,participation.AOC_CRS__c == false,participation.AOC_ULD__c == false,participation.AOC_Bus_Company__c == false,participation.AOC_Railway_Company__c == false)), 'requiredSelectBox', '')}">
-                                                            <apex:inputCheckbox value="{!participation.AOC_Bus_Company__c}">
-                                                                <apex:actionSupport event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
+                                                            <apex:inputCheckbox onclick="startLoading()" value="{!participation.AOC_Bus_Company__c}">
+                                                                <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
                                                                     <apex:param name="operationTypeParam" value="Bus" assignTo="{!selectedOperationType}" />
                                                                 </apex:actionSupport>
                                                             </apex:inputCheckbox>
@@ -498,8 +501,8 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                 <div class="col-sm-4">
                                                     <div class="checkbox">
                                                         <label class="{!IF(AND(hasError,AND(participation.AOC_Scheduled_Passenger__c == false, participation.AOC_Scheduled_Cargo__c == false,participation.AOC_Non_Scheduled_Passenger__c == false,participation.AOC_Non_Scheduled_Cargo__c == false,participation.AOC_Ferry_Company__c == false,participation.AOC_CRS__c == false,participation.AOC_ULD__c == false,participation.AOC_Bus_Company__c == false,participation.AOC_Railway_Company__c == false)), 'requiredSelectBox', '')}">
-                                                            <apex:inputCheckbox value="{!participation.AOC_Railway_Company__c}">
-                                                                <apex:actionSupport event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
+                                                            <apex:inputCheckbox onclick="startLoading()" value="{!participation.AOC_Railway_Company__c}">
+                                                                <apex:actionSupport oncomplete="stopLoading()" event="onchange" rerender="step1Panel,step2Panel,step3Panel,step4Panel" action="{!CalculateWhichComponentsToShowWithCases}" status="Loading">
                                                                     <apex:param name="operationTypeParam" value="Railway" assignTo="{!selectedOperationType}" />
                                                                 </apex:actionSupport>
                                                             </apex:inputCheckbox>

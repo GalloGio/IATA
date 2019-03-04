@@ -243,6 +243,10 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                     position: fixed !important;
                     transform:translate(-35%,-40%)!important;
                 }
+                .tooltip{
+                    max-width: 200px !important;
+                    width: 200px !important;
+                }
             </style>
             
             
@@ -438,7 +442,9 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                                                 <label for="country" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LOCATION_TYPE}</label>
                                                                 <div class="col-sm-3">
                                                                     <apex:selectList id="country" styleClass="form-control" size="1" value="{!participation.Location_Type__c}" >
-                                                                    <apex:actionSupport reRender="step2Panel,step3Panel" event="onchange" action="{!changeListReqs}" status="Loading"/>
+                                                                    
+                                                                    <apex:actionSupport status="Loading" oncomplete="window.location.reload()" reRender="step2Panel,step3Panel" event="onchange" action="{!changeListReqs}"/>
+
                                                                         <apex:selectOptions value="{!locationList}"/>
                                                                     </apex:selectList>
                                                                 </div>                            
