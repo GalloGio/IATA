@@ -2686,6 +2686,41 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_Community</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Community</shortDescription>
+        <value>Community</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Portal_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Portal_Status</shortDescription>
+        <value>Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SelectCommunity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SelectCommunity</shortDescription>
+        <value>Select Community</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SelectPortalStatus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SelectPortalStatus</shortDescription>
+        <value>Select Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_selectReason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_selectReason</shortDescription>
+        <value>Select Reason</value>
+    </labels>
+    <labels>
         <fullName>Campaign_already_created</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29102,6 +29137,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>New product id created</value>
     </labels>
     <labels>
+        <fullName>NoEligibleUserForContact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Eligible User</shortDescription>
+        <value>No Eligible User for this Contact</value>
+    </labels>
+    <labels>
         <fullName>NoSameName</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -33573,6 +33615,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>regular price</shortDescription>
         <value>Regular Price</value>
+    </labels>
+    <labels>
+        <fullName>resetPasswordConfirmMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>resetPasswordConfirmMessage</shortDescription>
+        <value>Reset password for this user for the selected community?</value>
     </labels>
     <labels>
         <fullName>select_all</fullName>

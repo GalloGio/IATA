@@ -1,0 +1,36 @@
+<template>
+    <lightning-card title={label.changeUserPortalStatusLABEL} icon-name="utility:user_role">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" flexibility="auto" padding="around-small" if:true={loading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" flexibility="auto" padding="around-small" if:true={renderIdMessage} style="background:orange">
+                   {label.activeIdCardUserLABEL}
+            </lightning-layout-item>
+            <lightning-layout-item size="7" flexibility="auto" padding="around-small">
+                <lightning-combobox name="communitySelected" label={label.communityLABEL} placeholder={label.selectCommunityLABEL}
+                    value={CommunityVal} options={communityOptions.data} onchange={handleCommChange} disabled={noUser}
+                    required>
+                </lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item size="7" flexibility="auto" padding="around-small">
+                <lightning-combobox name="communitySelected" label={label.portalStatusLABEL} placeholder={label.selectPortalStatusLABEL}
+                    value={PortalStatVal} options={portalStatusOptions.data} onchange={handlePortalStatusChange}
+                   required>
+                </lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item size="7" flexibility="auto" padding="around-small" if:true={inactiveStatus}>
+                <lightning-combobox name="communitySelected" label={label.reasonLABEL} placeholder={label.selectReasonLABEL}
+                    value={InactReasonVal} options={rejectRegionsOptions.data} onchange={handleReasonCommChange}
+                    required>
+                </lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" flexibility="auto" padding="around-small">
+                <lightning-button icon-name="utility:send" name="sendPasswordbtn" label={label.submitLABEL}
+                    title={label.submitLABEL} onclick={submitAction} disabled={noSelected}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>
