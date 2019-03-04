@@ -1237,8 +1237,6 @@ public without sharing class ISSP_APProcess {
                              ORDER BY ISO_Country_formula__c];
             }
         }
-
-        List<SelectOption> options = new List<SelectOption>();
         Set<String> sISOCode = New Set<String>();
 
             options.add(new SelectOption('', '--None--'));
