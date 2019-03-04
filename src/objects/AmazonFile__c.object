@@ -2955,6 +2955,21 @@
         <active>true</active>
         <label>ICCS File</label>
         <picklistValues>
+            <picklist>Action__c</picklist>
+            <values>
+                <fullName>Create Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder 30 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reminder on Expiry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Communications</fullName>
@@ -3038,6 +3053,17 @@
             <picklist>Subcategory__c</picklist>
             <values>
                 <fullName>Client</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>AOP Local Air Operating Permit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commercial Registry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
