@@ -7,6 +7,8 @@ public with sharing class ISSP_SIS_AccountHandler {
     
     public static final ID RT_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
     public static set<ID> ALLOWED_COUNTRIES = null;
+    public static set<String> ALLOWED_STATUS = ISSP_SIS_Account_Allowed_Status__c.getAll().keyset();
+
     public static Boolean BLOCK_EXECUTION = false;
     
     public static map<String,list<ISSP_SIS_Account_Status__c>> MAP_SIS_ACCOUNT_STATUS = null;
@@ -47,10 +49,8 @@ public with sharing class ISSP_SIS_AccountHandler {
         list<Id> listInsertAccountId = new list<Id>();
         list<Id> listUpdateAccountId = new list<Id>();
         for (Account account: listAccount) {
-            if (validSISAccount(account) && (account.Status__c == 'Approved' 
-                || account.Status__c == 'Cash basis/no commission' 
-                || account.Status__c == 'Cash basis/with commission' 
-                || account.Status__c == 'Changes processed')) {
+            if (validSISAccount(account)
+                && ALLOWED_STATUS.contains(account.Status__c)) {
                 if (String.isBlank(account.SIS_ID__c)) {
                     listInsertAccountId.add(account.Id);
                 } else {
@@ -144,10 +144,7 @@ public with sharing class ISSP_SIS_AccountHandler {
             }      
         }
 
-        if(accountnew.Status__c == 'Approved' 
-                || accountnew.Status__c == 'Cash basis/no commission' 
-                || accountnew.Status__c == 'Cash basis/with commission' 
-                || accountnew.Status__c == 'Changes processed') {
+        if(ALLOWED_STATUS.contains(accountnew.Status__c)) {
             for (String fieldName: ISSP_WS_SIS_Callout_CreateAccount.LIST_FIELD_NAMES) {
                 if (fieldName!='BillingAddress')
                 if (accountNew.get(fieldName) != accountOld.get(fieldName)) {
