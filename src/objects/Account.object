@@ -3939,6 +3939,18 @@ Airline_designator__c &amp;IATACode__c&amp;Site</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Amount_at_Risk__c</fullName>
+        <description>Theoretical Guarantee agent&apos;s should have</description>
+        <externalId>false</externalId>
+        <label>Amount at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>AnnualRevenue</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -15498,6 +15510,18 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_at_Risk__c</fullName>
+        <description>Agency risk management to keep track of Sales at Risk</description>
+        <externalId>false</externalId>
+        <label>Sales at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>SanctionNotice__c</fullName>
@@ -94285,7 +94309,12 @@ $User.ProfileId = &apos;00ew0000001QRzD&apos;,
 $User.ProfileId = &apos;00ew0000001QoBp&apos;,
 $User.ProfileId = &apos;00ew0000001QRzC&apos;,
 $User.ProfileId = &apos;00e20000001QJgR&apos;,
-$User.ProfileId = &apos;00ew0000001R6Za&apos;)))</errorConditionFormula>
+$User.ProfileId = &apos;00e20000001QJSd&apos;,
+$User.ProfileId = &apos;00e20000001QJSs&apos;,
+$User.ProfileId = &apos;00e1r0000021q6N&apos;,
+$User.ProfileId = &apos;00e1r0000021q6S&apos;,
+$User.ProfileId = &apos;00ew0000001R6Za&apos;,
+$User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
         <errorMessage>You are not allowed to modify AMS data, Please contact agency management or your system admin</errorMessage>
     </validationRules>
     <validationRules>
