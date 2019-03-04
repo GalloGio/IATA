@@ -36,7 +36,7 @@ public without sharing class DetailPageMessages {
     private static void createMessage(Detail_Page_Layout_Custom_Message__mdt message, SObject record, List<MessageWrapper> response, Pattern p) {
         Map<String,SObject> records = new Map<String,SObject>();
         
-        String queryStr = message.Query__c.replace('{!recordId}', '\''+ ((Id) record.get('Id')) + '\'');
+        String queryStr = replaceQueryVariables(message.Query__c, record, p);
         queryStr += message.Multiple_Records__c ? '' : ' LIMIT 1';
         List<SObject> relatedRecords = Database.query(queryStr);
         
@@ -47,6 +47,16 @@ public without sharing class DetailPageMessages {
         }
     }
 
+    private static String replaceQueryVariables(String queryStr, SObject record, Pattern p) {
+        String res = queryStr;
+        Matcher m = p.matcher(queryStr);
+        while(m.find()) {
+            String var = m.group();
+            res = res.replace('{!'+ var +'}', '\'' + String.valueOf(record.get(var)) + '\'');
+        }
+        return res;
+    }
+
     private static String mergeMessage(Detail_Page_Layout_Custom_Message__mdt message, SObject mainRecord, SObject relatedRecord, Pattern p) {
         String res = message.Message__c;
         Matcher m = p.matcher(message.Message__c);
@@ -54,7 +64,7 @@ public without sharing class DetailPageMessages {
             String var = m.group();
             System.debug(var);
             List<String> fieldPath = var.split('\\.');
-            SObject reference = fieldPath.remove(0) == message.Main_Object__c ? mainRecord : relatedRecord;
+            SObject reference = fieldPath.remove(0) == message.Related_Object__c ? relatedRecord : mainRecord;
             res = res.replace('{!'+var+'}', getSafeValue(fieldPath, reference)); 
         }
 
@@ -63,10 +73,11 @@ public without sharing class DetailPageMessages {
 
     private static String getSafeValue(List<String> fieldPath, SObject record) {
         String returnValue = '<null>';
-
+        System.debug('record: ' + record);
         Integer i=1;
         SObject currRecord = record;
         for(String node : fieldPath) {
+            System.debug('node: ' + node);
             if(i == fieldPath.size()) {
                 Object val = currRecord.get(node);
                 if(val == null) {

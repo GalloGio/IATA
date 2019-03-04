@@ -14,7 +14,7 @@
                 <div class="slds-p-horizontal_small">
                     <div class="grid">
                         <div class="col-1">
-                            <lightning:icon iconName="{!item.icon}" variant="{!item.variant}" size="large"/>	
+                            <lightning:icon iconName="{!item.icon}" variant="{!item.variant}" size="medium"/>	
                         </div>
                         <div class="col-2">
                             <ui:outputRichText value="{!item.message}"/>
@@ -29,7 +29,7 @@
                     <div class="slds-grid slds-wrap">
                         <div class="grid">
                             <div class="col-1">
-                                <lightning:icon iconName="{!item.icon}" variant="{!item.variant}" size="large"/>
+                                <lightning:icon iconName="{!item.icon}" variant="{!item.variant}" size="medium"/>	
                             </div>
                             <div class="col-2">
                                 <ui:outputRichText value="{!item.message}"/>

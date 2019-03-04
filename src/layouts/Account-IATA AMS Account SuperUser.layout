@@ -61,7 +61,7 @@
         <label>Agency Information</label>
         <layoutColumns>
             <layoutItems>
-                <height>100</height>
+                <height>45</height>
                 <page>DetailPageMessagesClassic</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Commissioner case warning</label>
+    <label>Commissioner case warning-Case</label>
     <protected>false</protected>
     <values>
         <field>Icon__c</field>
@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Main_Object__c</field>
-        <value xsi:type="xsd:string">Account</value>
+        <value xsi:type="xsd:string">Case</value>
     </values>
     <values>
         <field>Message__c</field>
@@ -24,7 +24,8 @@ Please contact {!Case.Owner.Name} before interacting with the customer.</value>
         <value xsi:type="xsd:string">SELECT Id, Owner.Name, CaseNumber
 FROM Case
 WHERE RecordType.DeveloperName = &apos;ProcessEuropeSCE&apos; AND IsClosed = false
-AND (NOT Owner.Name LIKE &apos;%Recycle%&apos;) AND Reason1__c = &apos;Commissioner Review&apos; AND AccountId = {!Id}</value>
+AND (NOT Owner.Name LIKE &apos;%Recycle%&apos;) AND Reason1__c = &apos;Commissioner Review&apos; AND AccountId = {!AccountId} AND
+Id &lt;&gt; {!Id}</value>
     </values>
     <values>
         <field>Related_Object__c</field>

@@ -12,10 +12,10 @@
         <label>Account Information</label>
         <layoutColumns>
             <layoutItems>
-                <height>100</height>
+                <height>45</height>
                 <page>DetailPageMessagesClassic</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
             <layoutItems>
