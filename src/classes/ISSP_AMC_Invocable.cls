@@ -1,5 +1,5 @@
-global class ISSP_AMC_Invocable {
-    
+global without sharing class ISSP_AMC_Invocable {
+
     public static boolean isULD = false;
     public static boolean isFBR = false;
     public static boolean isCRS = false;
@@ -37,10 +37,12 @@ global class ISSP_AMC_Invocable {
                 IATA_Process_Orchestrator__c sp = new IATA_Process_Orchestrator__c();
                 sp.process_step_stage__c = stage;
                 sp.recordTypeId=recordTypeId;
-                sp.IATA_Orchestrator_Process__c = theParent.id;     
-                           
+                sp.IATA_Orchestrator_Process__c = theParent.id;
+                sp.Associated_Case__c = theCase.id;
+                
                 if(stage.equals('STAGE_A')){
                     sp.Process_Step_Name__c = 'Perform Sanity Check';
+
                     insert sp;
                     
                     List<String> stageActionList = new List<String>();

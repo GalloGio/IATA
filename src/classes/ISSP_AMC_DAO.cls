@@ -404,8 +404,7 @@ public class ISSP_AMC_DAO {
                                 ISSP_AMC_Upload_Files.deleteAttachment(requirement.AmazonFile__c, requirement.AmazonFile__r.Full_Name_Unique__c);
                             }
                         }
-                    }
-                    System.debug('JCFF DELETE junctionToDeleteList : ' + junctionToDeleteList);
+                    }System.debug('JCFF DELETE junctionToDeleteList : ' + junctionToDeleteList);
                     delete junctionToDeleteList;
                 }
                 else {
@@ -704,13 +703,13 @@ public class ISSP_AMC_DAO {
                         }
                         else if(participation.Has_airline_assigned_two_char_code__c == 'Yes'){
                             if((participation.Previously_assigned_IATA_code__c == null) || String.isEmpty(participation.Previously_assigned_IATA_code__c)){
-                                errorSectionFields += '<li>' + Label.ISSP_AMC_IATA_A4A_CODE + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
+                                errorSectionFields += '<li>' + Label.ISSP_AMC_IATA_CODE + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
                                 hasError = true; 
                                 parOnlineRecord.Status__c = 'Incomplete';
                             }
                             else{
-                                if(participation.Previously_assigned_IATA_code__c.length() != 2  || (participation.Previously_assigned_IATA_code__c.isNumeric())){
-                                    errorSectionFields += '<li>' + Label.ISSP_AMC_IATA_A4A_CODE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
+                                if(participation.Previously_assigned_IATA_code__c.length() != 2  || participation.Previously_assigned_IATA_code__c.isNumeric()){
+                                    errorSectionFields += '<li>' + Label.ISSP_AMC_IATA_CODE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
                                     hasError = true; 
                                     parOnlineRecord.Status__c = 'Incomplete';
                                 }
@@ -1498,13 +1497,13 @@ public class ISSP_AMC_DAO {
                         }
                         else if(participation.Has_airline_assigned_two_char_code__c == 'Yes'){
                             if((participation.Previously_assigned_IATA_code__c == null) || String.isEmpty(participation.Previously_assigned_IATA_code__c)){
-                                errorSectionFields += '<li>' + Label.ISSP_AMC_IATA_A4A_CODE + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
+                                errorSectionFields += '<li>' + Label.ISSP_AMC_IATA_CODE + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
                                 hasError = true; 
                                 parOnlineRecord.Status__c = 'Incomplete';
                             }
                             else{
-                                if(participation.Previously_assigned_IATA_code__c.length() != 2  || (participation.Previously_assigned_IATA_code__c.isNumeric())){
-                                    errorSectionFields += '<li>' + Label.ISSP_AMC_IATA_A4A_CODE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
+                                if(participation.Previously_assigned_IATA_code__c.length() != 3  || !participation.Previously_assigned_IATA_code__c.isNumeric()){
+                                    errorSectionFields += '<li>' + Label.ISSP_AMC_IATA_CODE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
                                     hasError = true; 
                                     parOnlineRecord.Status__c = 'Incomplete';
                                 }

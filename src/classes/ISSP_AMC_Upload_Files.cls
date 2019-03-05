@@ -169,38 +169,41 @@ public class ISSP_AMC_Upload_Files {
 	Delete an attachment archived attachment or Amazon Attachment
 	**/
 	@RemoteAction
-	public static boolean deleteAttachment(string strId, String fullName) {
+	public static void deleteAttachment(string strId, String fullName) {
 
 		String idType = String.ValueOf(Id.valueOf(strId).getSObjectType());
 		Boolean result = false;
 		if (idType.equals('Attachment')) {
-			result = deleteSalesforceAttachment(strId);
+			//result = deleteSalesforceAttachment(strId);
+			deleteSalesforceAttachment(strId);
 		}
 		if (idType.equals('AmazonFile__c')) {
-			result = deleteAmazonAttachment(strId, fullName);
-			result = deleteSalesforceJunctionAttachment(strId);
+			//result = deleteAmazonAttachment(strId, fullName);
+			//result = deleteSalesforceJunctionAttachment(strId);
+			deleteSalesforceJunctionAttachment(strId);
 		}
-		return result;
+		//return result;
 	}
 
 	/**
         Delete a standard attachment in Salesforce
     **/
-
-	private static boolean deleteSalesforceAttachment(String id) {
+    @Future
+	private static void deleteSalesforceAttachment(String id) {
 		try {
 			delete [SELECT Id  FROM Attachment where Id = :id];
-			return true;
+			//return true;
 		} catch (Exception e) {
 			System.debug(e.getMessage());
-			return false;
+			//return false;
 		}
 	}
 
 	/**
 	Delete a standard attachment in junctionObject
 	**/
-	private static boolean deleteSalesforceJunctionAttachment(String id) {
+	@Future
+	private static void deleteSalesforceJunctionAttachment(String id) {
 		try {
 			List <Participant_Online_App_Requirement__c> appReq = [SELECT AmazonFile__c, AmazonFile__r.Full_Name_Unique__c FROM Participant_Online_App_Requirement__c where AmazonFile__c = :id LIMIT 1];
 			if(appReq != null && !appReq.isEmpty()){
@@ -208,26 +211,27 @@ public class ISSP_AMC_Upload_Files {
 				appReq[0].AmazonFile__c = null;
 				update appReq;
 			}
-			return true;
+			//return true;
 		} catch (Exception e) {
 			System.debug(e.getMessage());
-			return false;
+			//return false;
 		}
 	}
 
 	/**
         Delete a file in Amazon Bucket, including AmazonFile object in Amazon
     **/
-	private static boolean deleteAmazonAttachment(String strId, String fullName) {
+    @Future
+	private static void deleteAmazonAttachment(String strId, String fullName) {
 		try {
 			Id sObjectId = Id.ValueOf(strId);
 			WrapperAttach attach = WrapperAttach.getAmazonAttachment( sObjectId, fullName);
 			Boolean result = attach.moveToBucket();
-			return result;
+			//return result;
 
 		} catch (Exception e) {
 			System.debug(e.getMessage());
-			return false;
+			//return false;
 		}
 	}
 

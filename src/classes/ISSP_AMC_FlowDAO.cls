@@ -2,22 +2,21 @@ public with sharing class ISSP_AMC_FlowDAO {
     //For getting users list from custom settings object
 
     @AuraEnabled
-    public static List<String> getUsersCustomSettingList(){
-        List<String> PicklistUserInfo = new List<String>();
+    public static Map<Id, String> getUsersCustomSettingList(){
+        Map<Id, String> picklistUserInfo = new Map<Id, String>();
 
         for (ISSP_AMC_Approval_Process__c setting : ISSP_AMC_Approval_Process__c.getAll().values()){
-            PicklistUserInfo.add(setting.Name);
+            picklistUserInfo.put(setting.Id_user__c, setting.Name);
         }
 
-        return PicklistUserInfo;
+        return picklistUserInfo;
     }
 
     @AuraEnabled
-    public static void updateStepActionApprovelProcessUser(Id stepActionId, String approvelUserName){
+    public static void updateStepActionApprovelProcessUser(Id stepActionId, Id approvelUserId){
         IATA_Process_Orchestrator_Step_Action__c stepAction = new IATA_Process_Orchestrator_Step_Action__c();
         stepAction.Id = stepActionId;
-        stepAction.Approvel_Process_User__c = approvelUserName;
-        System.debug('approvelUserName'+approvelUserName);
+        stepAction.Approver__c = approvelUserId;
         update stepAction;
     }
 
@@ -158,41 +157,33 @@ ISSP_AMC_ApiCallLightningComponent.makeAPICall();
         stage = stage.replace(' ', '_');
 
         List <IATA_Process_Orchestrator_Step_Action__c> stepActionList = new List <IATA_Process_Orchestrator_Step_Action__c>([
-                SELECT  Id, Action_name__c, IATA_Process_Orchestrator__r.Process_Step_Name__c, IATA_Process_Orchestrator__r.Process_Step_Stage__c, Status__c , Approvel_Process_User__c
+                SELECT  Id, Action_name__c, IATA_Process_Orchestrator__r.Process_Step_Name__c, IATA_Process_Orchestrator__r.Process_Step_Stage__c, Status__c , Approver__c
                 FROM    IATA_Process_Orchestrator_Step_Action__c
                 WHERE   IATA_Process_Orchestrator__r.IATA_Orchestrator_Process__c = :processOrchestratorId
         AND     IATA_Process_Orchestrator__r.Process_Step_Stage__c = :stage
         ]);
 
-        List<User> approvelUser = [SELECT Id, name FROM user WHERE name =: stepActionList.get(0).Approvel_Process_User__c];
+        if(stepActionList != null && !stepActionList.isEmpty()){
+            // Create an approval request for the case
+            Approval.ProcessSubmitRequest request = new Approval.ProcessSubmitRequest();
+            request.setComments('Submitting request for approval.');
+            request.setObjectId(stepActionList.get(0).Id);
 
+            // Submit the record to specific process
+            request.setProcessDefinitionNameOrId('ACLI_Approve_Code_Assignment2');
 
-        /*AMC_Configuration__c amcConfiguration = AMC_Configuration__c.getInstance();
+            // set nex approver ids (mandatory)
+            //request.setNextApproverIds(new Id[] {UserInfo.getUserId()});
 
-        if(!stepActionList.isEmpty() && amcConfiguration.First_Approver_Orchestrator__c != null &&
-        String.isNotEmpty(amcConfiguration.First_Approver_Orchestrator__c)){*/
+            request.setNextApproverIds(new Id[] { stepActionList.get(0).Approver__c });
 
+            // Submit on behalf of a specific submitter
+            //request.setSubmitterId(user1.Id);
 
-        // Create an approval request for the case
-        Approval.ProcessSubmitRequest request = new Approval.ProcessSubmitRequest();
-        request.setComments('Submitting request for approval.');
-        request.setObjectId(stepActionList.get(0).Id);
+            // Submit the approval request for the case
 
-        // Submit the record to specific process
-        request.setProcessDefinitionNameOrId('ACLI_Approve_Code_Assignment2');
-
-        // set nex approver ids (mandatory)
-        //request.setNextApproverIds(new Id[] {UserInfo.getUserId()});
-
-        request.setNextApproverIds(new Id[] {approvelUser.get(0).Id});
-
-        // Submit on behalf of a specific submitter
-        //request.setSubmitterId(user1.Id);
-
-        // Submit the approval request for the case
-
-        Approval.ProcessResult result = Approval.process(request);
-
+            Approval.ProcessResult result = Approval.process(request);
+        }
     }
 
 

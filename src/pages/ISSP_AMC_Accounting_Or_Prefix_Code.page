@@ -560,7 +560,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                     <div class="col-sm-12">&nbsp;</div>
                                     <div class="col-sm-12">
                                         <c:ISSP_AMC_Authorized_Areas_Operation participation="{!participation}" rendered="{!ISSP_AMC_Authorized_Areas_Operation}" hasError="{!hasError}" />
-                                        <c:ISSP_AMC_PreviousIATACode participation="{!participation}" rendered="{!ISSP_AMC_PreviousIATACode}" hasError="{!hasError}"/>
+                                        <c:ISSP_AMC_PreviousIATACode participation="{!participation}" preferencevalidation="accountingorprefix" rendered="{!ISSP_AMC_PreviousIATACode}" hasError="{!hasError}"/>
                                         <c:ISSP_AMC_ICAOCode participation="{!participation}" rendered="{!ISSP_AMC_ICAOCode}" hasError="{!hasError}" />
                                         <c:ISSP_AMC_SchedulesPublication participation="{!participation}" rendered="{!ISSP_AMC_SchedulesPublication}" hasError="{!hasError}"/>
                                         <c:ISSP_AMC_PreferenceOfCode participation="{!participation}" rendered="{!ISSP_AMC_PreferenceOfCode}" preferencevalidation="accountingorprefix" hasError="{!hasError}"/>

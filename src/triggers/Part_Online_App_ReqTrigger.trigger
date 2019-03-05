@@ -18,4 +18,9 @@ trigger Part_Online_App_ReqTrigger on Participant_Online_App_Requirement__c (
     		Part_Online_App_ReqTriggerHandler.handleBeforeDelete(Trigger.old);
     	}	    
 	} 
+	if (Trigger.isAfter) {
+    	if (Trigger.isDelete) {
+    		Part_Online_App_ReqTriggerHandler.handleAfterDelete(Trigger.old);
+    	}	    
+	} 
 }

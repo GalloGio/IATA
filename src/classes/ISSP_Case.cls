@@ -740,6 +740,9 @@ public without sharing class ISSP_Case {
             if ( filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Solution Provided')){
                 returnVal=Label.ISSP_Solution_Provided;
             }
+            else if (filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Completed')){
+                returnVal='Assigned';
+            }
             /*
             else if (filedName.equalsIgnoreCase('CaseType') && fieldValueToMapp.equals('Solution Provided')){
 

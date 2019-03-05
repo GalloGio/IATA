@@ -1,4 +1,4 @@
-public class ISSP_AMC_Application_And_Changes {
+public without sharing class  ISSP_AMC_Application_And_Changes {
 
 	public List <Case> AMCDraftCases { get; set; }
 

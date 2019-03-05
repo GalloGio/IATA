@@ -1,6 +1,7 @@
 <apex:component >
 	<apex:attribute name="participation" description="Participation" type="Participation_Online_Application__c" required="true" />
 	<apex:attribute name="hasError" description="Any Error Occurred" type="Boolean" required="false" />
+	 <apex:attribute name="preferencevalidation" description="ValidationOfPreferenceCode" type="String" required="true"/>
 
 	<div class="panel panel-primary" id="PREVIOUSIATACODE">
   		<div class="panel-heading">
@@ -14,7 +15,12 @@
 				<div class="form-group">
 					<div class="col-md-offset-1 col-md-11">
                     	<div class="col-md-8">
-    						<label for="twoCharacterRadio">{!$Label.ISSP_AMC_PREVIOUS_IATA_CODE_QUESTION}</label>
+                    		<apex:outputPanel rendered="{!IF(preferencevalidation == 'designator', true, false)}">
+    							<label for="twoCharacterRadio">{!$Label.ISSP_AMC_PREVIOUS_IATA_CODE_QUESTION}</label>
+    						</apex:outputPanel>
+    						<apex:outputPanel rendered="{!IF(preferencevalidation == 'accountingorprefix', true, false)}">
+    							<label for="twoCharacterRadio">{!$Label.ISSP_AMC_PREVIOUS_IATA_CODE_ACCPREF}</label>
+    						</apex:outputPanel>
     					</div>
     					<div class="col-md-4">
 		    				<apex:selectRadio id="twoCharacterRadio" onclick="startLoading()" value="{!participation.Has_airline_assigned_two_char_code__c}" styleClass="{!IF(AND(hasError, participation.Has_airline_assigned_two_char_code__c == null), 'requiredSelectRadio', '')}"  style="width:100px;">
@@ -36,7 +42,8 @@
 								</div>
 								<div class="col-md-3">
 									<div class="{!IF(AND(hasError, OR(participation.Previously_assigned_IATA_code__c == null, participation.Previously_assigned_IATA_code__c == "")), 'has-error has-feedback', '')}">
-										<apex:inputText size="2" maxlength="2" id="IATACode" onchange="codeValidation2Character(this)" styleClass="form-control codel" value="{!participation.Previously_assigned_IATA_code__c}" />
+										<apex:inputText id="IATACode" onchange="validationPreferenceOfCode(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')"
+										onfocus="validationPreferenceOfCode(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control prefcode" value="{!participation.Previously_assigned_IATA_code__c}" />
 										<span class="{!IF(AND(hasError, OR(participation.Previously_assigned_IATA_code__c == null, participation.Previously_assigned_IATA_code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}" aria-hidden="true"> </span>
 								        <span class="sr-only">(error)</span>
 						                
@@ -55,71 +62,126 @@
 	</div>
 
 	<script>
+		//Two Character Code Validation
+	    function validationPreferenceOfCode(element, errorClass, parentClass){
+            var x = '{!preferencevalidation}';
+            var a = document.getElementsByClassName("prefcode");
+            if(x == 'designator'){            	
+                var t = element.parentElement.classList;
+                var y = element.parentElement.children;
+                for(var i = 0; i < a.length; i++){
+                    a[i].setAttribute("size", 2);
+                    a[i].setAttribute("maxlength", 2);
+                }
+                filter = /^([0-9][0-9])+$/;
+                filter2 = /^([a-zA-Z0-9]*\W+[a-zA-Z0-9]*)+$/;
+                if(element.value  != null && element.value != ""){
+                    if (filter.test(element.value) || filter2.test(element.value) || element.value.length != 2) {
+                            t.remove("parentClass");
+                            t.add("has-error");
+                            t.add("has-feedback");
+                            for (var i = 0; i < y.length; i++) {
+                                if(y[i].classList == "errorClass"  || y[i].classList == ""){
+                                    y[i].classList.remove("errorClass");
+                                    y[i].classList.add("glyphicon");
+                                    y[i].classList.add("glyphicon-remove"); 
+                                    y[i].classList.add("form-control-feedback");
+                                }
+                                if(y[i].classList == "errormessage"){
+                                    element.value="";
+                                    y[i].innerHTML = "{!$Label.ISSP_AMC_2DIGITS_CODE}";
 
-		$(document).ready(function(){
-            var codeList = document.getElementsByClassName('codel');
-            for(var i=0; i<codeList.length; i++){              
-                if(codeList[i].value != null && codeList[i].value != ""){
-                    codeValidation2Character(codeList[i]);
+                                }                   
+                            }
+                    } 
+                    else{
+                        for (var i = 0; i < y.length; i++) {
+                            if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                                y[i].classList.add("errorClass");
+                                y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                            }
+                            if(y[i].classList =="errormessage"){
+                                y[i].innerHTML = ""
+                            }
+                        }
+                        t.add("parentClass");
+                        t.remove("has-error");
+                        t.remove("has-feedback");
+                    }
+                }
+                else{
+                    for (var i = 0; i < y.length; i++) {
+                        if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            y[i].classList.add("errorClass");
+                            y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(y[i].classList =="errormessage"){
+                            y[i].innerHTML = ""
+                        }
+                    }
+                    t.add("parentClass");
+                    t.remove("has-error");
+                    t.remove("has-feedback");
                 }
             }
-        });
+            else if(x == 'accountingorprefix'){
+                var o = element.parentElement.classList;
+                var w = element.parentElement.children;
+                for(var i = 0; i < a.length; i++){   
+                    a[i].setAttribute("size", 3);
+                    a[i].setAttribute("maxlength", 3);
+                }
+                filter = /^([0-9]{3})+$/;
+                filter2 = /^([a-zA-Z0-9]*\W+[a-zA-Z0-9]*)+$/;
+                if(element.value  != null && element.value != ""){
+                    if (!filter.test(element.value) || filter2.test(element.value) || element.value.length != 3) {
+                        o.remove("parentClass");
+                        o.add("has-error");
+                        o.add("has-feedback");
+                        for (var i = 0; i < w.length; i++) {
+                            if(w[i].classList == "errorClass" || w[i].classList == ""){
+                                w[i].classList.remove("errorClass");
+                                w[i].classList.add("glyphicon");
+                                w[i].classList.add("glyphicon-remove"); 
+                                w[i].classList.add("form-control-feedback");
+                            }
+                            if(w[i].classList =="errormessage"){
+                                element.value="";
+                                w[i].innerHTML = "{!$Label.ISSP_AMC_3NUMBERS_CODE}";
 
-		//Two Character Code Validation
-	    function codeValidation2Character(element) {
-	        var x = element.parentElement.classList;
-	        var y = element.parentElement.children;
-	        var filter = /^([0-9]{2})+$/;
-	        var filter2 = /^([a-zA-Z0-9]*\W+[a-zA-Z0-9]*)+$/;
-	        if(element.value  != null && element.value != ""){
-	            if (filter.test(element.value) || filter2.test(element.value) || element.value.length != 2) {
-	                //x.remove("codeValid");
-	                x.add("has-error");
-	                x.add("has-feedback");
-	                for (var i = 0; i < y.length; i++) {
-	                    if(y[i].classList == "{!IF(AND(hasError, OR(participation.Previously_assigned_IATA_code__c == null, participation.Previously_assigned_IATA_code__c == "")), 'glyphicon glyphicon-remove form-control-feedback', '')}"){
-	                        //y[i].classList.remove("invalidCode");
-	                        y[i].classList.add("glyphicon");
-	                        y[i].classList.add("glyphicon-remove"); 
-	                        y[i].classList.add("form-control-feedback");
-	                    }
-	                    if(y[i].classList =="errormessage"){
-	                    	element.value= "";
-	                        y[i].innerHTML = "{!$Label.ISSP_AMC_2DIGITS_CODE}";
-	                        //y[i].innerHTML = "The code must have 2 digits and may include letters or letters and numbers."
-
-	                    }                   
-	                }
-	            } 
-	            else{
-	                for (var i = 0; i < y.length; i++) {
-	                    if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
-	                        //y[i].classList.add("invalidCode");
-	                        y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
-	                    }
-	                    if(y[i].classList =="errormessage"){
-	                        y[i].innerHTML = ""
-	                    }
-	                }
-	                //x.add("codeValid");
-	                x.remove("has-error");
-	                x.remove("has-feedback");
-	            }
-	        }
-	        else{
-	            for (var i = 0; i < y.length; i++) {
-	                if(y[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
-	                    //y[i].classList.add("invalidCode");
-	                    y[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
-	                }
-	                if(y[i].classList =="errormessage"){
-	                    y[i].innerHTML = ""
-	                }
-	            }
-	            //x.add("codeValid");
-	            x.remove("has-error");
-	            x.remove("has-feedback");
-	        }
-	    }
+                            }                   
+                        }
+                    } 
+                    else{
+                        for (var i = 0; i < w.length; i++) {
+                            if(w[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                                w[i].classList.add("errorClass");
+                                w[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                            }
+                            if(w[i].classList =="errormessage"){
+                                w[i].innerHTML = ""
+                            }
+                        }
+                        o.add("parentClass");
+                        o.remove("has-error");
+                        o.remove("has-feedback");
+                    }
+                }
+                else{
+                    for (var i = 0; i < w.length; i++) {
+                        if(w[i].classList == "glyphicon glyphicon-remove form-control-feedback"){
+                            w[i].classList.add("errorClass");
+                            w[i].classList.remove("glyphicon", "glyphicon-remove", "form-control-feedback");
+                        }
+                        if(w[i].classList =="errormessage"){
+                            w[i].innerHTML = ""
+                        }
+                    }
+                    o.add("parentClass");
+                    o.remove("has-error");
+                    o.remove("has-feedback");
+                }
+            }
+        }
 	</script>
 </apex:component>

@@ -29,9 +29,10 @@
                         stepStatus: picklistInfo.stepStatus,
                         pickListValueMap: newMap
                     });
+
+                    component.set("v.stepActionId",picklistInfo.stepActionId);
                 }
                 
-                component.set("v.stepActionId",picklistInfo.stepActionId);
                 component.set("v.picklists", optList);
               
             }
@@ -54,13 +55,15 @@
         
         $A.enqueueAction(action);
         
-         var picklistUser = component.get("c.getUsersCustomSettingList");
+        var picklistUser = component.get("c.getUsersCustomSettingList");
         var input = component.find("MultiSelect");
         var opts=[];
         
-        picklistUser.setCallback(this, function(a) {
-            for(var i=0;i< a.getReturnValue().length;i++){
-                opts.push({"class": "optionClass", label: a.getReturnValue()[i], value: a.getReturnValue()[i]});
+        picklistUser.setCallback(this, function(response) {
+            var returnValue = response.getReturnValue();
+            for(var key in returnValue){
+                console.log("picklist users: " + returnValue[key] + ' key: ' + key);
+                opts.push({"class": "optionClass", label: returnValue[key], value: key});
             }
             component.set("v.optionsUser", opts);
             
@@ -117,25 +120,24 @@
     },
     handleChangeUser: function(component, event, helper) {
         var stepActionId = component.get("v.stepActionId")
-        var approvelUserName = event.getParam("value");
-        
-        var appEvent = $A.get("e.c:ISSP_AMC_RefreshProgressEvent");
-        appEvent.setParams({
-            "approvelUser" : approvelUserName });
-        appEvent.fire();
-        
-        
+        var approvelUserId = event.getParam("value");
+
+        console.log("stepActionId: " + stepActionId);
+        console.log("approvelUserId: " + approvelUserId);
+                
         var action = component.get("c.updateStepActionApprovelProcessUser");
-        action.setParams({"stepActionId" : stepActionId, "approvelUserName" : approvelUserName});
+        action.setParams({"stepActionId" : stepActionId, "approvelUserId" : approvelUserId});
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 console.log('sucess');
             }
+
+            var appEvent = $A.get("e.c:ISSP_AMC_RefreshProgressEvent");
+            appEvent.fire();
         });
         
         $A.enqueueAction(action);
-        
         
     }
 })

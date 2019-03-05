@@ -718,7 +718,7 @@ public without sharing class OneId_RegistrationProcessController {
 
                 System.debug('Adding ACLI service');
                 con.Primary_Contact__c = true;
-                //con.User_Portal_Status__c = 'Approved Admin';
+                con.User_Portal_Status__c = 'Approved Admin';
 
                 checkConAvailable(con);
 
