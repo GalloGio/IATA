@@ -252,8 +252,8 @@
                 <apex:actionFunction action="{!deleteMCForm}" name="deleteMCForm" reRender="onGoingMultiCountryForms">
                     <apex:param value="" name="mcFormNumber" assignTo="{!mcFormIdToDelete}"/>
                 </apex:actionFunction>
-                <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="allSections" oncomplete="rerenderAllSections();"/>
-                <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" status="loadStatusSpinner" rerender="allSections" oncomplete="rerenderAllSections();"/>
+                <apex:actionFunction action="{!submitMultiCountryApplication}" name="submitMultiCountryApplication" status="loadStatusSpinner" rerender="other-forms, DraftCases" oncomplete="rerenderAllSections();"/>
+                <apex:actionFunction action="{!discardMCApplication}" name="discardMCApplication" status="loadStatusSpinner" rerender="other-forms, DraftCases" oncomplete="rerenderAllSections();"/>
 
                 <div class="container" style="width: 100%" id="allSections">
                     <div class="row">
