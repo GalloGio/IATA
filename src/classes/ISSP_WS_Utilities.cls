@@ -290,12 +290,7 @@ public without sharing class ISSP_WS_Utilities {
     **/
     @future
     public static void invokeGiveSISAppToAccountUsers(list<Id> listAccountId) {
-        list<User> listUser =
-            [SELECT Id, ContactId
-            FROM User
-            WHERE ProfileId IN :ISSP_Constant.adminIdSet
-            AND (Contact.AccountId IN :listAccountId
-                OR Contact.Account.Top_Parent__c IN :listAccountId)];
+        list<User> listUser = [SELECT Id, ContactId FROM User WHERE ProfileId IN :ISSP_Constant.adminIdSet AND (Contact.AccountId IN :listAccountId OR Contact.Account.Top_Parent__c IN :listAccountId)];
 
         list<Id> listContactId = new list<Id>();
         for (User user: listUser) {
@@ -313,10 +308,7 @@ public without sharing class ISSP_WS_Utilities {
 
         map<Id,Portal_Application_Right__c> mapContactAppId = new map<Id,Portal_Application_Right__c>();
         for (Portal_Application_Right__c appRight:
-                [SELECT Id, Right__c, Contact__c
-                FROM Portal_Application_Right__c
-                WHERE Contact__c IN :listContactId
-                AND Portal_Application__c = :app.Id]) {
+                [SELECT Id, Right__c, Contact__c FROM Portal_Application_Right__c WHERE Contact__c IN :listContactId AND Portal_Application__c = :app.Id]) {
             mapContactAppId.put(appRight.Contact__c, appRight);
         }
 
