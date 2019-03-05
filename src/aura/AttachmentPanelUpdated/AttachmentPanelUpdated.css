@@ -1,2 +1,4 @@
-.THIS {
+.THIS .datatableWrapper{
+    max-height: 150px;
+    overflow-y: scroll;
 }

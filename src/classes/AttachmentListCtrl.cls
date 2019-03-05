@@ -75,7 +75,7 @@ public with sharing class AttachmentListCtrl {
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         propWrapper.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
         if(propWrapper.sObjectType=='Case')
-	        propWrapper.relatedCase = [Select CaseNumber, Id, parent.OSCAR__c, parent.RecordType__c, parent.RecordTypeId,OSCAR__c from Case where id = :parentId];
+	        propWrapper.relatedCase = [Select CaseNumber, Id, parentId,parent.OSCAR__c, parent.RecordType__c, parent.RecordTypeId,OSCAR__c from Case where id = :parentId];
 
         //showFileIdentifier
         propWrapper.showFileIdentifier = false; //default
@@ -86,7 +86,7 @@ public with sharing class AttachmentListCtrl {
         } else {
         	if(propWrapper.sObjectType=='Case'){
 	            // check if case is in recordtypes SAAM (ProcessEuropeSCE) or Oscar Communication
-	            propWrapper.cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :parentId];
+	            propWrapper.cse = [Select Recordtype.DeveloperName, parentId,Status, Reason1__c FROM Case where id = :parentId];
 	            set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
 	            propWrapper.showFileIdentifier = setRecordTypes.contains(propWrapper.cse.Recordtype.DeveloperName);
         	}
@@ -142,7 +142,7 @@ public with sharing class AttachmentListCtrl {
                 if(fullAttachmentAccess){
                     //Get attachments 
                     List<Attachment> lstAttachAux = [SELECT IsPrivate, Id, ParentId, OwnerId, Name, CreatedById, CreatedBy.Name, LastModifiedDate, BodyLength, 
-                                                     LastModifiedById, CreatedDate, Description, ContentType
+                                                     LastModifiedById, CreatedDate, Description, ContentType,body
                                                      FROM Attachment WHERE ParentId = :parentId AND (NOT Name LIKE 'TMP_FINANCIAL_2DELETE%') ORDER BY CreatedDate DESC ];
                     Set <Id> setAttachIds = new Set <Id>();
                     
@@ -621,6 +621,192 @@ public with sharing class AttachmentListCtrl {
             System.debug('Error creating an AmazonFile__c object: ' + e.getMessage());
             return false;
         }
+    }
+
+    @AuraEnabled
+    public static list<CaseWrapper> getParentCaseRelatedCases(string parentId,string caseId){
+       list<CaseWrapper> lstRelatedCases = new list<CaseWrapper>();
+
+       system.debug(parentId);
+       system.debug(caseId);
+       
+        for (Case c : [SELECT Id, ParentId, CaseNumber, Status, Subject, Account.Name, Owner.Name, RecordType.Name, CreatedDate
+                                FROM Case
+                                WHERE Id <> :caseId AND (
+                                Id = :parentId
+                                OR (ParentId <> null    AND ParentId = :parentId)
+                                OR ParentId = :caseId) ]) {
+            CaseWrapper cw = new CaseWrapper();
+            cw.CaseRecord = c;
+            cw.isSelected = false;
+
+            if ( c.Id == parentId)           cw.strRelationship = 'Parent';
+            else if (c.ParentId == caseId)       cw.strRelationship = 'Child';
+            else if (c.ParentId == parentId) cw.strRelationship = 'Sibling';
+
+            lstRelatedCases.add(cw);
+        }
+
+        return lstRelatedCases;
+    }
+
+
+    @AuraEnabled
+    public static ApexMessageHandling transferAttachments(string selIdAttachmentStr,string targetSingleCase,string targetCaseStr,string parentId,boolean isPortal,boolean isSAAMorSIDRA,string caseParentId) {
+
+
+        system.debug(selIdAttachmentStr);
+        system.debug(targetCaseStr);
+        system.debug('ds');
+        system.debug(parentId);
+        system.debug(caseParentId);
+        // Save new attachments
+        Integer success = 0;
+        Integer errors = 0;
+
+        // check if there is any attachment selected
+        
+        
+      
+        set<id> selAttachIdSet= new set<id>();
+        for(string attId:(List<String>)System.JSON.deserialize(selIdAttachmentStr, List<String>.class)){
+            selAttachIdSet.add(attId);
+        }
+
+
+        list<WrapperAttach> listAttachmentSelected= new list<WrapperAttach>();
+        for(WrapperAttach wa: getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA)){
+            system.debug(wa);
+            if(selAttachIdSet.contains(wa.id))
+                listAttachmentSelected.add(wa);
+        }
+
+        system.debug(listAttachmentSelected);
+
+        if ( listAttachmentSelected.isEmpty() ) {
+           // ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.Select_one_Attachment));
+            
+            return new ApexMessageHandling(false,Label.Select_one_Attachment);
+        }
+        
+         if (targetCaseStr==null ) {
+            return new ApexMessageHandling(false,Label.Select_one_Case);
+        }
+
+        set<id> targetCaseSet= new set<id>();
+        for(string attId:(List<String>)System.JSON.deserialize(targetCaseStr, List<String>.class)){
+            targetCaseSet.add(attId);
+        }
+
+
+
+
+        list<case> selectedTargeCaseList= new list<case>();
+
+        list<case> singleCaseFetch=[SELECT Id, ParentId, CaseNumber, Status, Subject, Account.Name, Owner.Name, RecordType.Name, CreatedDate
+                                FROM Case where casenumber=:targetSingleCase];
+        if (!singleCaseFetch.isEmpty() ) {
+            selectedTargeCaseList.add(singleCaseFetch.get(0));
+        }
+
+
+
+        for(CaseWrapper cw:getParentCaseRelatedCases(caseParentId,parentId)){
+          
+            if(targetCaseSet.contains(cw.CaseRecord.id))
+                selectedTargeCaseList.add(cw.CaseRecord);
+        }
+
+        // check if there is any target case selected
+        if (selectedTargeCaseList.isEmpty() ) {
+            return new ApexMessageHandling(false,Label.Select_one_Case);
+        }
+
+        for(case cw : selectedTargeCaseList  ){
+            if(parentId == cw.id ){
+                return new ApexMessageHandling(false,'You selected the same source case as destination, please reselect a proper case');
+            }
+        }
+
+        
+
+        // list of attachments to be created
+        list<Attachment> lstNewAttachments = new list<Attachment>();
+        //list<Archived_Attachment__c> lstNewArchived = new list<Archived_Attachment__c>();
+        list<AmazonFile__c> lstNewAmazon = new list<AmazonFile__c>();
+
+        // go through the list of related cases and create the new attachment(s) for every selected case
+        for (case cw : selectedTargeCaseList) {
+            for (WrapperAttach attach : listAttachmentSelected) {
+                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,cw + '<br/>'+ attach));
+                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'is SF ' + attach.getIsSalesforce() ));
+
+                // if is a regular attachment, clone it
+                if (attach.getIsSalesforce() ) {
+                    Attachment newAtt = attach.fileAttachment.clone();
+                    newAtt.Body = attach.fileAttachment.Body;
+                    newAtt.ParentId = cw.Id;
+                    newAtt.OwnerId = UserInfo.getUserId();//added by MGO INC254433
+                    lstNewAttachments.add(newAtt);
+                }
+                /*
+                // if is an archived file, clone it
+                if (attach.getIsArchived() ) {
+                    Archived_Attachment__c newAtt = attach.fileArchived.clone();
+                    newAtt.Case__c = cw.CaseRecord.Id;
+                    lstNewArchived.add(newAtt);
+                }
+                */
+                // if it is an amazon file, clone it and do the copy to amazon
+                if (attach.getIsAmazon() ) {
+                    AmazonFile newAtt = attach.transfer(cw.Id);
+
+                    if ( newAtt == null ) errors++;
+                    else lstNewAmazon.add(newAtt.amazonFile);
+                }
+            }
+        }
+
+        if (!lstNewAttachments.isEmpty()) {
+            Database.SaveResult[] srList = Database.insert(lstNewAttachments, false);
+            for (Database.SaveResult sr : srList) {
+                if (sr.isSuccess()) {
+                    success ++;
+                } else {
+                    errors ++;
+                    System.debug('ERROR inserting attachment ' + String.ValueOf(sr.getErrors()));
+                }
+            }
+        }
+        if (!lstNewAmazon.isEmpty()) {
+            Database.SaveResult[] srList = Database.insert(lstNewAmazon, false);
+            for (Database.SaveResult sr : srList) {
+                if (sr.isSuccess()) {
+                    success ++;
+                } else {
+                    errors ++;
+                    System.debug('ERROR inserting attachment ' + String.ValueOf(sr.getErrors()));
+                    
+                }
+            }
+        }
+        String message = Label.Response_message;
+        message = message.replace('{0}', String.ValueOf(success));
+        message = message.replace('{1}', String.ValueOf(errors));
+        message = message.replace('{2}', String.ValueOf(parentId));
+        if(errors==0){
+            return new ApexMessageHandling(true,'');
+        }else{
+            return new ApexMessageHandling(false,message);
+        }
+    }
+
+    public class CaseWrapper {
+        @AuraEnabled
+        public Case CaseRecord {get; set;}
+        public Boolean isSelected {get; set;}
+        @AuraEnabled
+        public String strRelationship {get; set;}
     }
 
 
