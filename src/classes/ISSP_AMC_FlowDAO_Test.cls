@@ -113,7 +113,7 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
+		
 		System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -135,6 +135,7 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 				insert orchestrator;
 				List <ID> orchestratorList = new List<ID>();
 				orchestratorList.add(orchestrator.Id);
+				Test.StartTest();
 
 				ISSP_AMC_Invocable.invokeACLICustomImpl(orchestratorList);
 				ISSP_AMC_FlowDAO.getStageWithStatusMap(orchestrator.Id);
@@ -245,9 +246,9 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 		ISSP_AMC_ParticipationFactory.createLocationIdentifierRequirements(true);
 		//ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Off-line Point', false);
 
-		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
+		User myUser = [select Id,Name from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest();
+		
 		System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -259,20 +260,55 @@ public with sharing class ISSP_AMC_FlowDAO_Test {
 				pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createLocationIdentifierParticipation('ParName', true, 'Off-line Point', false).Id);
 				ISSP_AMC_Location_Identifier controller = new ISSP_AMC_Location_Identifier();
 				controller.step = 'Submit';
-				controller.saveParticipation();
 
+				
+
+				controller.saveParticipation();
 				IATA_Process_Orchestrator__c orchestrator = new IATA_Process_Orchestrator__c();
 				orchestrator.associated_case__c = controller.participation.case__c;
 				orchestrator.RecordTypeId = [SELECT Id,Name FROM RecordType WHERE Name='Orchestrator'][0].Id;
+				
 				insert orchestrator;
+				/*orchestrator.IATA_Orchestrator_Process__c = orchestrator.Id;
+				update orchestrator;*/
 				List <ID> orchestratorList = new List<ID>();
 				orchestratorList.add(orchestrator.Id);
 
 				ISSP_AMC_Invocable.invokeACLICustomImpl(orchestratorList);
 
-				ISSP_AMC_FlowDAO.requestForApproval(orchestrator.Id, 'STAGE D');
-				ISSP_AMC_FlowDAO.createRelatedCases(controller.participation.case__c, 'STAGE D');
+				
+				
+				/*User approvalUser = new User(
+				     ProfileId = [SELECT Id FROM Profile WHERE Name = 'IDFS Distribution'].Id,
+				     LastName = 'last',
+				     Email = 'approvalUser@approvalUser.com',
+				     Username = 'approvalUser@approvalUser.com' + System.currentTimeMillis(),
+				     Alias = 'alias',
+				     TimeZoneSidKey = 'America/Los_Angeles',
+				     EmailEncodingKey = 'UTF-8',
+				     LanguageLocaleKey = 'en_US',
+				     LocaleSidKey = 'en_US',
+				     License_Cost_Center__c= 'ISF005CH01'
+				);
+				insert approvalUser;*/
 
+				IATA_Process_Orchestrator_Step_Action__c stepaction = new IATA_Process_Orchestrator_Step_Action__c();
+				stepaction.Approvel_Process_User__c = myUser.name;
+				stepaction.Action_name__c = 'STAGE D';
+				stepaction.IATA_Process_Orchestrator__c = orchestrator.Id;
+				insert stepaction;
+
+
+				
+				//ISSP_AMC_FlowDAO.getUsersCustomSettingList = new List<String>();
+
+
+				Test.StartTest();
+
+				ISSP_AMC_FlowDAO.updateStepAction(stepaction.Id, 'Completed');
+				ISSP_AMC_FlowDAO.updateStepActionApprovelProcessUser(stepaction.Id, 'Cesar Gonzalez');
+				ISSP_AMC_FlowDAO.createRelatedCases(controller.participation.case__c, 'STAGE D');
+				//ISSP_AMC_FlowDAO.requestForApproval(orchestrator.Id, 'STAGE D');
 
 
 				Test.stopTest();
