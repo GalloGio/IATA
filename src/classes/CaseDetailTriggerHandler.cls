@@ -26,18 +26,24 @@ public class CaseDetailTriggerHandler {
     private void calculateScore() {
         String weightField;
         Integer totalScore = 0;
+        Decimal totalYesNoScore = 0;
 
         for(Case_Detail__c caseDetail : triggerNew) {
             List<Case_Detail_Score_Fields_Weight__c> scoreWeights = Case_Detail_Score_Fields_Weight__c.getall().values();
 
             for(Case_Detail_Score_Fields_Weight__c sw : scoreWeights) {
-                if(caseDetail.get(sw.Name) == true) {
+                if(caseDetail.get(sw.Name) == 'Yes') {
                     Decimal fieldScore = (caseDetail.RecordTypeId == CALL_MONITORING) ? sw.Call_Monitoring_Weight__c : sw.Case_Monitoring_Weight__c;
                     totalScore = totalScore + Integer.valueOf(fieldScore);
                 }
-
+                if(caseDetail.get(sw.Name) == 'Yes' || caseDetail.get(sw.Name) == 'No') {
+                    Decimal fieldScore = (caseDetail.RecordTypeId == CALL_MONITORING) ? sw.Call_Monitoring_Weight__c : sw.Case_Monitoring_Weight__c;
+                    totalYesNoScore = totalYesNoScore + fieldScore;
+                }
             }
+
             caseDetail.Score1__c = String.valueOf(totalScore);
+            caseDetail.PercentScore__c = totalScore/totalYesNoScore*100;
         }
     }
 
