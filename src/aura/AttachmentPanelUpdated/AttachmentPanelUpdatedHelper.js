@@ -673,18 +673,20 @@
             }else if (state === "INCOMPLETE") {
                 // do something
             }
-                else if (state === "ERROR") {
-                    var errors = response2.getError();
-                    if (errors) {
-                        if (errors[0] && errors[0].message) {
-                            console.log("Error message: " +
-                                        errors[0].message);
-                        }
-                    } else {
-                        console.log("Unknown error");
+            else if (state === "ERROR") {
+                var errors = response2.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        console.log("Error message: " +
+                                    errors[0].message);
                     }
+                } else {
+                    console.log("Unknown error");
                 }
-        });
+            }
+            component.set("v.showLoadingSpinner", false);
+        }
+        );
         $A.enqueueAction(changeAttachVisibilityAction);
     }
 })
