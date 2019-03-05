@@ -2116,6 +2116,7 @@
     <fields>
         <fullName>Billing_payment_Bilateral__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Part of Section 4 of the PASS Online Accreditation Form for the Branch Office Accreditation</description>
         <externalId>false</externalId>
         <label>Billing payment Bilateral</label>
         <trackHistory>false</trackHistory>

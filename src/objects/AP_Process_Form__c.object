@@ -153,6 +153,7 @@
     </fields>
     <fields>
         <fullName>Accept_Online_Corrections__c</fullName>
+        <description>Field used in the PASS Airline Online Process form</description>
         <externalId>false</externalId>
         <label>Accept Online Corrections</label>
         <required>false</required>
@@ -2876,7 +2877,9 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
     </fields>
     <fields>
         <fullName>GSSA_HQ_Post_Code__c</fullName>
+        <description>Postal Code of the Headquarters Office of the GSSA</description>
         <externalId>false</externalId>
+        <inlineHelpText>Postal Code of the Headquarters Office of the GSSA</inlineHelpText>
         <label>HQ Office Post Code of GSSA</label>
         <length>255</length>
         <required>false</required>

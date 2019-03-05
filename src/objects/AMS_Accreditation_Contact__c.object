@@ -680,6 +680,7 @@
     <fields>
         <fullName>PASS_contact__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Checkbox indicating if the Accreditation Contact is related to a PASS Accreditation Process</description>
         <externalId>false</externalId>
         <label>PASS contact</label>
         <trackHistory>false</trackHistory>

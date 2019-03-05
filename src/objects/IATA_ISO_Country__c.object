@@ -179,6 +179,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
     <fields>
         <fullName>AMS_Settlement_System_PASS__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup for the ISS Operation used when the Iso Country is used in a PASS Process</description>
         <externalId>false</externalId>
         <label>PASS Billing environment</label>
         <referenceTo>AMS_Settlement_System__c</referenceTo>
@@ -2500,6 +2501,7 @@ Disabled: SAAM case created, no link to OSCAR.</inlineHelpText>
     </fields>
     <fields>
         <fullName>PASS__c</fullName>
+        <description>Checkbox that indicates if the Iso country can be used in a PASS Process</description>
         <externalId>false</externalId>
         <label>PASS</label>
         <required>false</required>

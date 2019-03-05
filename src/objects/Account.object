@@ -14616,6 +14616,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>PASS_Participant_formula__c</fullName>
+        <description>Checkbox indicating if there are any PASS Participations related to the Account</description>
         <externalId>false</externalId>
         <formula>IF( Airline_PASS_Participations__c &gt; 0, &apos;Yes&apos;, &apos;No&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
