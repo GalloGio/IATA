@@ -227,7 +227,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <label>EasyPay Model</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1529,6 +1529,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Estonia</label>
                 </value>
                 <value>
+                    <fullName>Eswatini</fullName>
+                    <default>false</default>
+                    <label>Eswatini</label>
+                </value>
+                <value>
                     <fullName>Ethiopia</fullName>
                     <default>false</default>
                     <label>Ethiopia</label>
@@ -1984,11 +1989,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Suriname</label>
                 </value>
                 <value>
-                    <fullName>Swaziland</fullName>
-                    <default>false</default>
-                    <label>Swaziland</label>
-                </value>
-                <value>
                     <fullName>Sweden</fullName>
                     <default>false</default>
                     <label>Sweden</label>
@@ -2172,6 +2172,16 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>Enable change code generation and account update when portal users make minor changes to their Agency account information - Phone, FAX, Trade Name etc. (For OSCAR Enabled countries)</inlineHelpText>
         <label>Enable Minor Changes from Portal</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_NewGen_Pilot__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag used to enable a country to NewGen pilot</description>
+        <externalId>false</externalId>
+        <label>Enable NewGen Pilot</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -2925,6 +2935,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <fullName>All_The_Countries</fullName>
         <columns>NAME</columns>
         <columns>ISO_Code__c</columns>
+        <columns>LVA_CountryLanguage__c</columns>
         <columns>Region__c</columns>
         <columns>Sub_Region__c</columns>
         <columns>AMS_Settlement_System__c</columns>

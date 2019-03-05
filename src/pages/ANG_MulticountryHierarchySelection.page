@@ -164,7 +164,7 @@
 
 					<apex:column value="{!hi.acc['Name']}"/>
 					<apex:column value="{!hi.acc['IATA_ISO_Country__r.Name']}"/>
-                    <apex:column value="{!hi.acc['BillingStreet']} , {!hi.acc['BillingCity']}, {!hi.acc['BillingPostalCode']} "/>
+                    <apex:column headerValue="Account Address" value="{!hi.acc['BillingStreet']} , {!hi.acc['BillingCity']}, {!hi.acc['BillingPostalCode']} "/>
 
 				</apex:pageBlockTable>
 

@@ -56,7 +56,9 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		'VMFR' => new List<String>{'ANG_RHC_Information__c'},
 		'Accreditation type' => new List<String>{'Agency_Authorization__c', 'Portal_Application_Right__c', 'ANG_RHC_Information__c','ANG_Agency_Risk_Event__c'},
 		'Location type to different legal entity' => new List<String>{'ANG_RHC_Information__c','Financial_Security__c','ANG_Agency_Risk_Event__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c','Agency_Authorization__c'},
-		'Trade name' => new List<String>{'ANG_RHC_Information__c'}
+		'Trade name' => new List<String>{'ANG_RHC_Information__c'},
+		'Conversion to GoLite' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'},
+		'Conversion to Domestic with Cash' => new List<String>{'Agency_Authorization__c','ANG_Agency_Risk_Event__c','ANG_RHC_Information__c','AMS_Agencies_Hierarchy__c','AMS_Agencies_relationhip__c'}
 	};
 
 	private Map<String,String> whereClausesMap = new Map<String,String>{
@@ -73,6 +75,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			'AMS_AGENCIES_HIERARCHY__C' => ' Id in (select Hierarchy__c  from AMS_AGENCIES_RELATIONHIP__C WHERE Child_Account__c in:objectIds or Parent_Account__c in:objectIds)',
 			'AMS_AGENCIES_RELATIONHIP__C' => ' Child_Account__c in:objectIds or Parent_Account__c in:objectIds '
 	};
+
+	private Set<String> headLocationTypesSet = new Set<String>{AMS_Utils.GE, AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
 
 	private Map<String,Set<String>> fieldsInEntity;
 
@@ -286,20 +290,26 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		Set<Id> accountIds = new Set<Id>();
 		
-		Account acct = [Select Id, Location_Type__c, ParentId from Account where Id =:accountOscar];
+		Account acct = [Select Id, Location_Type__c, ParentId, ANG_Accreditation_Model__c from Account where Id =:accountOscar];
 		Id accountId = acct.Id;
-		
-		if(acct.Location_Type__c <> AMS_Utils.HE)
-			accountId = acct.ParentId;
 
-		for(Account acctToSearch: [Select Id from Account where ParentId =:accountId])
+		Boolean isMulticountry = acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
+		if((isMulticountry && acct.Location_Type__c != AMS_Utils.GE) || 
+		   (!isMulticountry && !this.headLocationTypesSet.contains(acct.Location_Type__c))
+		){
+			accountId = acct.ParentId;
+		}
+		
+        for(Account acctToSearch: [Select Id from Account where ParentId =:accountId]){
 			accountIds.add(acctToSearch.Id);
+        }
 	
 		accountIds.add(accountId);
 
 		return accountIds;
-	}
 
+	}
 
 	public List<sObject> getObject(String selectedObject, Set<Id> objectIds, Set<String> objectFields, String adhocConditions){
 

@@ -22,11 +22,10 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
-    <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
     <showEmailCheckbox>true</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>
-    <showSolutionSection>true</showSolutionSection>
+    <showSolutionSection>false</showSolutionSection>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
         <masterLabel>00hw000000SuCmz</masterLabel>

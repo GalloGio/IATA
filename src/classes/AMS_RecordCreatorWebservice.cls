@@ -272,15 +272,18 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGFOP))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
  
-         if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
+        if(typeOfProcess.equalsIgnoreCase(OPTINOPTOUT))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
 
-         if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
             return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
 
         if(typeOfProcess.equalsIgnoreCase(NEWNGLOBAL)) {
             return AMS_Utils.RECTYPE_NEWGE;
         }
+	
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI))
+            return AMS_Utils.RECTYPE_GDI;
         
         return null;
     }

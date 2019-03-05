@@ -22,6 +22,9 @@ public class AMS_AgencyRegulationTriggerHandler {
         Set<String> regulationPerAccount = new Set<String>();
 
         Map<Id,String> agencyRegulationsAccStatus = new Map<Id,String>();
+
+        Set<String> accountStatusToDiscard = new Set<String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING};
+
         for(AMS_Agency_Regulation__c agRegStatus : [SELECT Id, Account__r.Status__c FROM AMS_Agency_Regulation__c WHERE Id IN :agencyRegulations])
         {
             agencyRegulationsAccStatus.put(agRegStatus.Id, agRegStatus.Account__r.Status__c);
@@ -29,7 +32,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
 
-            if(agencyRegulationsAccStatus.get(agReg.Id) != AMS_Utils.ACC_S0_TERMINATED){
+            if(!accountStatusToDiscard.contains(agencyRegulationsAccStatus.get(agReg.Id))){
 
                 accountIds.add(agReg.Account__c);
             
@@ -79,7 +82,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
             //get contacts of first accounts
             if(!accountIds.isEmpty()) {
-                List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+                List<Contact> allContacts = queryKeyContacts(accountIds);//WMO-383
 
                 for(Contact c: allContacts){
                     if(!keyContactsPerAccount.containsKey(c.AccountId))
@@ -92,7 +95,7 @@ public class AMS_AgencyRegulationTriggerHandler {
             system.debug('accountIdsHOs: ' + accountIdsHOs);
             //get contacts of topParents and relate them with first account
             if(!accountIdsHOs.isEmpty()){
-                List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+                List<Contact> allContactsHOs = queryKeyContacts(accountIdsHOs);//WMO-383
 
                 for(Contact cHO: allContactsHOs){
 
@@ -113,6 +116,14 @@ public class AMS_AgencyRegulationTriggerHandler {
             AMS_AgencyRegulationAutoRenewal b = new AMS_AgencyRegulationAutoRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount, renewalCertPerAccount);
             database.executebatch(b,1);
         }
+    }
+
+    //WMO-383 - added Status__c = Active
+    private static List<Contact> queryKeyContacts(Set<Id> accountIds) {
+        return [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c 
+                FROM Contact 
+                WHERE AccountId IN :accountIds AND IsEmailBounced = FALSE AND Status__c = 'Active' AND 
+                    (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')];
     }
 
     //clean the Notification Date for manually changed agency regulations
@@ -172,8 +183,13 @@ public class AMS_AgencyRegulationTriggerHandler {
                     count++;
                 }
             }
-            if(china != null && a.IATA_ISO_Country__c == china.Id && count >= 3) {
-                isCompliant = true;
+            //AMSU-208
+            if(china != null && a.IATA_ISO_Country__c == china.Id) {
+                if(a.Location_type__c == 'HO') {
+                    isCompliant = count >= 2;
+                } else {
+                     isCompliant = count >= 1;
+                }
             }
             else if(a.Location_type__c == 'HO' && count >= 2) {
                 isCompliant = true;

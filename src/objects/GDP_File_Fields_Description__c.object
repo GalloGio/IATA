@@ -431,6 +431,7 @@
         <columns>Visible__c</columns>
         <columns>Hidden_Column__c</columns>
         <columns>Order__c</columns>
+        <columns>Do_not_Track__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>GDP_File_Description__c</field>
@@ -471,6 +472,7 @@
         <columns>API_Name__c</columns>
         <columns>API_Object_Name__c</columns>
         <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
         <columns>TXT_Hidden_Column__c</columns>
         <columns>Visible__c</columns>
         <columns>Do_not_Track__c</columns>
@@ -481,6 +483,35 @@
             <value>Reference - GSS Non Member</value>
         </filters>
         <label>91- Field Tracking - GSS NonMember</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>WW_R_Tracking_GSS_Member_NewGen</fullName>
+        <columns>NAME</columns>
+        <columns>Position__c</columns>
+        <columns>API_Name__c</columns>
+        <columns>API_Object_Name__c</columns>
+        <columns>Filter_Field_API_Name__c</columns>
+        <columns>Filter_Field_Value__c</columns>
+        <columns>TXT_Hidden_Column__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Do_not_Track__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>GDP_File_Description__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>API_Name__c</field>
+            <operation>contains</operation>
+            <value>__r</value>
+        </filters>
+        <filters>
+            <field>Do_not_Track__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>WW- __R - Tracking - GSS Member NewGen</label>
         <language>en_US</language>
     </listViews>
     <listViews>

@@ -40,14 +40,16 @@ public class AMS_OSCAR_ProcessViewerController {
 
             if(this.oscar.AMS_Online_Accreditation__c == null)
                 return false;
-                
+                    
             // NG Processes specific conditions
             If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c) && oscar.Process__c != AMS_Utils.NEWHELITE && oscar.Process__c != AMS_Utils.NEWHESTANDARD && oscar.Process__c != AMS_Utils.NEWGESTANDARD) {
                 return (
                     oscar != null
-                    && (oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null
-
-                    || !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c)
+                    && ( oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null 
+                        //NEWGEN-4850
+                        && oscar.Process__c != AMS_Utils.MCAE
+                        
+                        || !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c )
                 );
             }
             return (
@@ -105,11 +107,20 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public Boolean getIsGDIWithNoParentCase(){
+           
+        // NG Processes specific conditions
+        if(oscar.Process__c <> AMS_Utils.NGGDI) return false;
+        case c = [SELECT parentid FROM CASE WHERE OSCAR__c = :oscar.id];
+        return (c.parentid == null);
+        
+    }
+
     public Boolean isNewGenHEProcess{
         get{
             return (
                 oscar != null
-                && (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
+                && (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.MCAE)
             );
         }
     }

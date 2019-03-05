@@ -250,6 +250,13 @@
         <value>Issue Billing Document</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action20</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action20</shortDescription>
+        <value>Open related Financial Security</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action3</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -394,11 +401,32 @@
         <value>Application Disapproval</value>
     </labels>
     <labels>
-        <fullName>AMS_OSCAR_GOGLOBAL</fullName>
+	<fullName>AMS_OSCAR_GOGLOBAL</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_GOGLOBAL</shortDescription>
         <value>GoGlobal Hierarchy selection</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_ENDORSEMENT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>GDI Endorsement</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_FINANCIAL_SECURITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_fees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_fees</shortDescription>
+        <value>GDI fees</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_MASTERDATA</fullName>
@@ -780,11 +808,39 @@
         <value>Notice of Termination</value>
     </labels>
     <labels>
-        <fullName>AMS_OSCAR_STEP45</fullName>
+	<fullName>AMS_OSCAR_STEP45</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_STEP45</shortDescription>
         <value>Confirm the hierarchy structure</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP46</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP46</shortDescription>
+        <value>Request invoice</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP47</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP47</shortDescription>
+        <value>Issue billing document</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP48</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP48</shortDescription>
+        <value>Confirm payment received</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP49</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP49</shortDescription>
+        <value>Request endorsement details</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
@@ -792,6 +848,13 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP5</shortDescription>
         <value>Application Reconsideration</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP50</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP50</shortDescription>
+        <value>Confirm Financial Security Information</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
@@ -1291,6 +1354,94 @@ IATA Customer Service</value>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</shortDescription>
         <value>Portal Service Role</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Agreement</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Agreement</shortDescription>
+        <value>I agree</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Breadcrumb</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Breadcrumb</shortDescription>
+        <value>The list of Financial Institutions providing Financial Security Insurance in your country</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Navigate_Portal</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Navigate_Portal</shortDescription>
+        <value>Go to GDI Portal</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Display_Records</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Display_Records</shortDescription>
+        <value>Display records per page:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_First</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_First</shortDescription>
+        <value>First Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Last</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Last</shortDescription>
+        <value>Last Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Next</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Next</shortDescription>
+        <value>Next Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Previous</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Previous</shortDescription>
+        <value>Previous Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Terms_Conditions</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Terms_Conditions</shortDescription>
+        <value>By applying for your Financial Security to be provided to IATA by Euler Hermes, you consent to IATA sharing with Euler Hermes information it holds which is relevant to your financial standing, whether obtained directly from you when applying for IATA Accreditation or which IATA has maintained throughout your period of membership of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningError</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningError</shortDescription>
+        <value>Sorry, there was an issue setting up your GDI access. Try again and if the issue persists please contact Customer Support</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningWait</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningWait</shortDescription>
+        <value>Please wait. You&apos;ll be redirected to the GDI Portal in a few moments.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_HeadEntity</fullName>
@@ -2002,6 +2153,41 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG_ISSP_e_mail_address</shortDescription>
         <value>E-mail address</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Already Has Locations Only Allow AE Error</shortDescription>
+        <value>There cannot be an HE account in the same BSP of the GE account.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Already Has Locations Only Allow AE With Correct HE Error</shortDescription>
+        <value>The hierarchy already has locations in this BSP. The agency can only be an AE with the correct HE Parent Account in this BSP.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Already Has Locations Only Allow HE Error</shortDescription>
+        <value>The hierarchy does not have any location in this BSP. The agency can only be a HE in this BSP.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Multicountry_Country_not_Enabled_for_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Country not Enabled for Multicountry</shortDescription>
+        <value>The selected country is not enabled for multicountry</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Multicountry_Process_Parent_Account_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Multicountry Process Parent Account Error</shortDescription>
+        <value>Please process the Parent Account accreditation OSCAR before proceeding.</value>
     </labels>
     <labels>
         <fullName>ANG_NEW_GE_lock</fullName>
@@ -2814,7 +3000,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -2835,7 +3021,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - RecordType</shortDescription>
-        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope</value>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global</value>
     </labels>
     <labels>
         <fullName>Case_Area_ICH</fullName>
@@ -6767,6 +6953,38 @@ The sum of percentage cannot exceed 100%</value>
         <value>ID Card Application Attachments</value>
     </labels>
     <labels>
+        <fullName>IDCard_BSP_Agent_Billing_Reports_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Agent_Billing_Reports_Procedures</shortDescription>
+        <value>Learn about the Agent reporting process in the Billing and Settlement Plan (BSP) and how to interpret billing reports. This course will enable travel agent users to understand the BSP Agent reporting process, show how to identify BSP Reporting documents and correct any discrepancies, if and when they occur. You will be shown the BSP reporting calendar for Travel Agents and the range of Billing Reports issued by BSP in the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-billing-agent-tttg46.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Agent_Remittance_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Agent_Remittance_Procedures</shortDescription>
+        <value>Examine the Agent Remittance process of the Billing and Settlement Plan (BSP), including the reporting calendar and debt identification. This module will familiarize you with the Agent BSP Remittance process; BSP Reporting calendar for Agents; and how to find, verify and timelines for the amount a travel agent owes to the BSP. You will also learn what to do if the amount due does not seem to be correct, the importance of timely remittance, and the consequences of failing to settle by the remittance date. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-agent-remittance-tttg47.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Essentials_for_Travel_Agents</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Essentials_for_Travel_Agents</shortDescription>
+        <value>BSP Essentials for Travel Agents is a training course providing essential knowledge of the Billing and Settlement Plan (BSP), specifically for travel agents. It is designed to raise the learner’s awareness of the BSP system and processes, and improve an Agent’s efficiency and level of knowledge. This course is intended to explain elements of the BSP system that are common to all parts of the world and is divided into five learning modules covering the fundamental components of the BSP system. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-essentials-tttg49.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_BSP_Standard_Documents_Procedures</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_BSP_Standard_Documents_Procedures</shortDescription>
+        <value>The course will enable travel agent users to understand ticketing authority, know the main standard traffic documents used in the BSP system, issue a virtual MPD, provide refunds, understand document enquiries and accept credit card payments for commercial transactions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-documents-procedures-tttg45.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Back</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7532,6 +7750,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_IndustryEntrySuperior</shortDescription>
         <value>Entry industry date must be superior to birth date</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Intro_to_the_BSP_System_Language</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Intro_to_the_BSP_System_Language</shortDescription>
+        <value>Learn how the IATA Billing and Settlement Plan (BSP) works and how it benefits a travel agency. This course will enable travel agent users to describe the BSP system and how it works; explain the benefits of being a BSP travel agency; identify BSP participants and explain their roles; identify the steps in reporting airline ticket transactions; find information on BSP procedures; and learn common BSP terms and definitions. More Details &lt;a href=\&quot;https://www.iata.org/training/courses/Pages/bsp-system-language-tttg43.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlBSPlink_Description</fullName>
@@ -10520,6 +10746,20 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Apply_New_Office</shortDescription>
         <value>Apply for a New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</shortDescription>
+        <value>Apply for New Travel Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</shortDescription>
+        <value>Apply for New Cargo Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Apply_New_Travel_Head_Entity</fullName>
@@ -20149,7 +20389,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CustomFooter_Small</shortDescription>
-        <value>© International Air Transport Association (IATA) 2017. All rights reserved.</value>
+        <value>© International Air Transport Association (IATA) 2019. All rights reserved.</value>
     </labels>
     <labels>
         <fullName>ISSP_DDS_BTN_OPTOIN</fullName>
@@ -21466,6 +21706,30 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Filter_by_Type_Of_Participation</shortDescription>
         <value>Filter by type of participation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions</shortDescription>
+        <value>Financial Institutions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Header</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Header</shortDescription>
+        <value>Financial Institution Insurance Providers</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Subheader</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Subheader</shortDescription>
+        <value>The following Financial Institutions provide Financial Security Insurance in your country</value>
     </labels>
     <labels>
         <fullName>ISSP_Financial_Securities_Converted_Total_Amount</fullName>
@@ -22883,7 +23147,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP</shortDescription>
-        <value>SALUTATION</value>
+        <value>Salutation</value>
     </labels>
     <labels>
         <fullName>ISSP_MyProfile_SECTOR</fullName>
@@ -23826,7 +24090,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PasswordChanged_FRED</shortDescription>
-        <value>Your password has now been changed. Please sign in again.</value>
+        <value>Your request has been received and you will be notified by email as soon as your access to FRED+ has been approved.</value>
     </labels>
     <labels>
         <fullName>ISSP_PasswordMatch</fullName>
@@ -23852,7 +24116,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <shortDescription>ISSP_Payment_Link_Description</shortDescription>
         <value>Payment Link can be used to pay IATA invoices by credit card.&lt;br/&gt;
 &lt;b&gt;Warning!&lt;/b&gt;&lt;br/&gt;
-Please note that many IATA invoices for accredited agents are collected through the BPS/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
+Please note that many IATA invoices for accredited agents are collected through the BSP/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
     </labels>
     <labels>
         <fullName>ISSP_Payment_Link_Description_CNS</fullName>
@@ -24854,6 +25118,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Related contacts</shortDescription>
         <value>Related contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Release_Version</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Release_Version</shortDescription>
+        <value>Release Version</value>
     </labels>
     <labels>
         <fullName>ISSP_Relocate_Contact</fullName>
@@ -29999,6 +30271,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_FRED_Troubleshooting_Link</shortDescription>
         <value>https://fred.iata.org/contact</value>
+    </labels>
+    <labels>
+        <fullName>OneId_FRED_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_FRED_URL</shortDescription>
+        <value>Your password has now been changed. Please go to &lt;a href=&quot;https://fred.iata.org&quot;&gt; FRED.iata.org&lt;/a&gt; to sign in again.</value>
     </labels>
     <labels>
         <fullName>OneId_ForgotPassword</fullName>

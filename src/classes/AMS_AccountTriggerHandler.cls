@@ -22,7 +22,7 @@ public class AMS_AccountTriggerHandler {
     public static Integer runningVCU = 0;
 
     public static void handleBeforeInsert(List<Account> accs){
-    	System.debug('[AMS_AccountTriggerHandler] Before Insert');
+
         Set<String> disallowedSources = new Set<String>();
         disallowedSources.add('AIMS1');
         disallowedSources.add('AIMS2');
@@ -30,26 +30,8 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
         
-        List<Id> parentIds = new List<Id>();
-        for(Account ac: accs){
-        	if((ac.Location_Type__c == 'AE' || ac.Location_Type__c == 'HE') && (ac.Location_Class__c == 'P' || ac.Location_Class__c == 'D'))
-        		parentIds.add(ac.ParentId);
-        }
-        
-        //since ParentId is a hierarchy field and not a lookup, we need a Id -> Account map
-        List<Account> aList = [select id, name, Top_Parent__c, ParentId, Location_Type__c, Location_Class__c, IATA_ISO_Country__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.name, ANG_IsNewGenAgency__c from account where (Id in :parentIds OR ParentId in :parentIds) AND ANG_IsNewGenAgency__c = true AND (Top_Parent__r.Location_Type__c = 'GE' OR Location_Type__c = 'GE')];
-        
-        Map<Id,Account> aAccounts = new Map<Id,Account>();
-        for(Account pa : aList)
-        	aAccounts.put(pa.Id, pa);
-
-		//Mapping MC hierarchy subtrees. Parent Account -> direct children accounts
-		Map<Id,List<Account>> accMap = new Map<Id,List<Account>>();
-        accMap = accountMapBuild(aList);
-        
         for(Account ag : accs){
             validateCharacters(ag);//AMSU-179
-	    System.debug('[AMS_AccountTriggerHandler]ag: ' + ag);
             if(!disallowedSources.contains(ag.Source_System__c)){
                 if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
                     setCassNumberOnHO(ag);
@@ -59,50 +41,18 @@ public class AMS_AccountTriggerHandler {
                     }
                 }
             }
-            
-            //NEWGEN-4815
-            System.debug('[AMS_AccountTriggerHandler] if(accMap.containsKey(ag.ParentId)): '+ accMap.containsKey(ag.ParentId));
-            if(accMap.containsKey(ag.ParentId)){    
-            	System.debug('[AMS_AccountTriggerHandler] ag.Location_Type__c =  ' + ag.Location_Type__c);
-            	
-            	//SENAIO 1
-            	if(ag.Location_Type__c == 'HE'){
-            		
-            		if(aAccounts.get(ag.parentId).Location_Type__c != 'GE')
-            			ag.addError('HE Accounts must have a GE Parent Account');
-            		
-            		for(Account brotherAccount1: accMap.get(ag.ParentId)){
-            		
-            			if(brotherAccount1.Id != null && (brotherAccount1.IATA_ISO_Country__r.AMS_Settlement_System__c == ag.IATA_ISO_Country__r.AMS_Settlement_System__c))
-            				ag.addError('The BSP is already in the multicountry hierarchy, the new agency can only be an AE in that BSP');
-            		}
-            	}
-            	//SENARIO 2
-            	else if(ag.Location_Type__c == 'AE'){
-            		System.debug('[AMS_AccountTriggerHandler] Is inside else');
-            		
-					//restrictions caused by the parent account
-            		if(aAccounts.get(ag.parentId).Location_Type__c == 'AE')
-            			ag.addError('AE Accounts must have a GE or HE Parent Account');
-            		
-            		else if(aAccounts.get(ag.parentId).IATA_ISO_Country__r.AMS_Settlement_System__c != ag.IATA_ISO_Country__r.AMS_Settlement_System__c)
-            			ag.addError('The BSP is not in the multicountry hierarchy yet, the new agency can only be an HE in that BSP');
-            		
-            		//restriction caused by simbing accounts
-            		for(Account brotherAccount2: accMap.get(ag.ParentId)){
-            			
-            			if(((brotherAccount2.IATA_ISO_Country__r.AMS_Settlement_System__c == ag.IATA_ISO_Country__r.AMS_Settlement_System__c && brotherAccount2.Location_Type__c == 'HE') || ag.IATA_ISO_Country__r.AMS_Settlement_System__c != aAccounts.get(ag.parentId).IATA_ISO_Country__r.AMS_Settlement_System__c) && brotherAccount2.Id != null)
-            				ag.addError('The BSP is not in the multicountry hierarchy yet, the new agency can only be an HE in that BSP');
-            		}
-            	}
-            }
+
         }
+
     }
 
     public static void handleAfterInsert(List<Account> accs){
         //Operations assignment update:
         //we want to set all operation to a dedicated Operation based on their Countries
         List<Account> operationHelpercandidate = new List<Account>();
+
+        Set<Id> parentIdSet = new Set<Id>();
+        List<Account> accountLst = new List<Account>();
 
         for(Account ag: accs){
             if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent'){
@@ -111,6 +61,22 @@ public class AMS_AccountTriggerHandler {
                     operationHelpercandidate.add(ag);
                 }
             }
+
+            if(ANG_MulticountryHelper.shouldRunMulticountryValidations(ag)){
+                accountLst.add(ag);
+                if(String.isBlank(ag.ParentId))
+                    parentIdSet.add(ag.ID);
+                else
+                    parentIdSet.add(ag.ParentId);
+            }
+
+        }
+
+        //Ideally this would be done on BeforeInsert
+        //However, doing this on AfterInsert we only have to perform a single query
+        //This simplifies the necessary logic plus allows reusability for the AfterUpdate
+        if(!accountLst.isEmpty()){
+            ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
         }
 
         if(operationHelpercandidate != null && operationHelpercandidate.size()>0){
@@ -131,6 +97,7 @@ public class AMS_AccountTriggerHandler {
             }
             if(ag.Status__c!= null && ag.Status__c!=oldMap.get(ag.Id).Status__c)
                 ag.Date_Organisation_Status_attained__c = Date.today();
+        
         }
 
        System.debug('Start CASS verification');
@@ -155,6 +122,26 @@ public class AMS_AccountTriggerHandler {
         handleDDUpdates(accs, oldMap);
         // copy information to related regulation objects if Is_your_firm_handling_Dangerous_Goods__c changed
         copyHandlingInformationToRegulations(accs, oldMap);
+
+        Set<Id> parentIdSet = new Set<Id>();
+        List<Account> accountLst = new List<Account>();
+
+        for(Account acct : accs){
+            if(ANG_MulticountryHelper.shouldRunMulticountryValidations(acct)){
+                accountLst.add(acct);
+                if(String.isBlank(acct.ParentId))
+                    parentIdSet.add(acct.ID);
+                else
+                    parentIdSet.add(acct.ParentId);
+            }
+        }
+
+        //Ideally this would be done on BeforeUpdate
+        //However, doing this on AfterUpdate we only have to perform a single query
+        //This simplifies the necessary logic plus allows reusability for the AfterInsert
+        if(!accountLst.isEmpty()){
+            ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
+        }
 
     }
 
@@ -604,21 +591,5 @@ public class AMS_AccountTriggerHandler {
             update certs;
         }
     }
-    
-    private static Map<Id,List<Account>> accountMapBuild(List<Account> accList){
-    	Map<Id,List<Account>> toReturn = new Map<Id,List<Account>>();
-    	List<Account> children;
-    	
-    	for(Account dad :accList){
-    		children = new List<Account>();
-    		for(Account child: accList){
-    			
-    			if(child.ParentId == dad.id)
-    				children.add(child);
-    		}
-    		toReturn.put(dad.Id,children);
-    	}
-    	 	
-    	return toReturn;
-    }
+
 }

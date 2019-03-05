@@ -49,7 +49,7 @@ global class ANG_OscarProcessHelper {
 					Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, 
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
-					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,
+					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode,ANG_IsNewGenAgency__c ,
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
 					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
@@ -69,7 +69,7 @@ global class ANG_OscarProcessHelper {
 					FROM AMS_Pax_Accreditation_Form__c
 					WHERE Id = :onlineAccreditationId FOR UPDATE];
 
-			AMS_OSCAR__c oscar = [select Account__c, Flag_IATACode_Formula__c, Flag_IATACode__c, Flag_Data_to_Account__c, AMS_Online_Accreditation__c, Process__c, recordTypeID,
+			AMS_OSCAR__c oscar = [select Account__c, Account__r.Parent.Status__c, Flag_IATACode_Formula__c, Flag_IATACode__c, Flag_Data_to_Account__c, AMS_Online_Accreditation__c, Process__c, recordTypeID,
 					Is_PCI_compliant__c, Account__r.Top_Parent__r.Id , AMS_Online_Accreditation__r.Id,Account__r.Location_Type__c,RecordType.DeveloperName,
 					Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP17__c,STEP8__c,Process_Start_Date__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c, 
 					AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c, Account__r.Location_Class__c,
@@ -89,8 +89,14 @@ global class ANG_OscarProcessHelper {
 			updater.acctMap.put(theAccount.Id,theAccount);
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
 			
-			/*** AMSU-162 ***/
-			if(AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) && !isShippingAddressValid(theAccreditation)) {
+			if(oscar.Process__c == AMS_Utils.MCAE && !ANG_MulticountryHelper.allowIATACodeGeneration(oscar)){
+				isIATACodeGenerationRunning = false;
+				System.debug('[ANG_OscarProcessHelper] In order to generate a IATA code the parent account should have the change code NEW generated');
+				return new String[]{'-1', Label.ANG_Multicountry_Process_Parent_Account_Error, '-1'};
+			}
+            
+			/*** AMSU-162 ***/                                                       /************************ ENHC0012583 *************************/
+			if((AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)) && !isShippingAddressValid(theAccreditation)) {
 				isIATACodeGenerationRunning = false;
 				System.debug('[ANG_OscarProcessHelper] Incomplete shipping address.');
 				return new String[]{'-1','Incomplete shipping address.','-1'};
@@ -112,7 +118,17 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1','In order to generate a IATA code you must first pass the Sanity Check.','-1'};
 
             }
+            /*** INC456141 start ***/
+            if((theAccount.Location_Type__c == 'HE' && theAccount.Location_Class__c == 'T') || (theAccount.Location_Type__c == 'AE' && theAccount.Location_Class__c == 'T')) {
+            	isIATACodeGenerationRunning = false;
+            	return new String[]{'-1','Location type T does not match with location class HE/AE. Please either correct the location class or location type on the Account level to match T with HO/BR or P with HE/AE.','-1'};
+            }
 
+            if((theAccount.ANG_IsNewGenAgency__c == true && (theAccount.Location_Type__c == 'HO' || theAccount.Location_Type__c == 'BR'))) {
+            	isIATACodeGenerationRunning = false;
+            	return new String[]{'-1','NewGen Agencies cannot have location type = HO or BR.','-1'};
+            }
+            /*** INC456141 end ***/
             if(oscar.Process__c.containsIgnoreCase('NEW') && oscar.Account__r.Location_Type__c != 'HO' && oscar.Account__r.Location_Type__c != 'HE' && oscar.Account__r.Top_Parent__r.Status__c == AMS_Utils.ACC_S0_TERMINATED){
             	isIATACodeGenerationRunning = false;
             	System.debug('[ANG_OscarProcessHelper] IATA code generation is not allowed in hierarchies with HO/HE status Terminated.');
@@ -239,6 +255,13 @@ global class ANG_OscarProcessHelper {
 				returnMessage += 'The Oscar already has a Change Code inserted (skipped). \n\r';
 		        System.debug('[ANG_OscarProcessHelper] The Oscar already has a Change Code inserted (skipped).');
 
+			}
+
+			//NEWGEN-4852 - Copy Parent Account (GE/HE) information to the staging area of AE in same BSP - Change Code NEW
+			if(iataCodeGeneration && changecodeGeneration && (oscar.Process__c == AMS_Utils.NEWGESTANDARD || (oscar.Process__c == AMS_Utils.MCAE && oscar.Account__r.Location_Type__c == AMS_Utils.HE))){
+				System.debug('[ANG_OscarProcessHelper] Call asynchronous process ANG_MulticountryCopyParentInfo for Change Code - NEW');
+				ID jobID = System.enqueueJob(new ANG_MulticountryCopyParentInfo(new List<ID>{theAccount.id}, 'NEW'));
+				System.debug('[ANG_OscarProcessHelper] JobID:' + jobID);
 			}
 
 			if(iataCodeGeneration && dataMigration && changecodeGeneration && !updater.oscarMap.get(oscar.Id).Flag_Data_to_SAPECC__c){
@@ -553,6 +576,82 @@ global class ANG_OscarProcessHelper {
 		return updater;
 
 	}
+
+	//ACAMBAS - NEWGEN-4445 - Start
+	public static void createGenericChangeCode(AMS_Oscar__c theOSCAR, String changeCodeId) {
+
+		if(changeCodeId == null) return;
+
+		Savepoint sp = Database.setSavepoint();
+
+        try {
+
+			Account accnt = [SELECT Id, Status__c, CNS_Agency__c,
+									(SELECT Id, Reason_Code__c, Reason_Description__c
+									 FROM Agencies_Applied_Change_codes__r 
+									 WHERE Active__c = true)
+							 FROM Account
+							 WHERE Id = :theOSCAR.account__c FOR UPDATE];
+
+			List<Agency_Applied_Change_code__c> appliedChangeCodesLst = accnt.getSObjects('Agencies_Applied_Change_codes__r');
+
+			Agency_Applied_Change_code__c activeChangeCode = null;
+
+			if(appliedChangeCodesLst != null && appliedChangeCodesLst.size() > 0){
+				activeChangeCode = appliedChangeCodesLst.get(0);
+			}
+
+	        AMS_OSCAR_JSON.ChangeCode changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeId, theOSCAR.ANG_Type_Of_Change__c, accnt.Status__c, activeChangeCode, null);
+	
+			AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {accnt}, true);
+
+			theOSCAR.First_Step_Completed__c = true;
+
+			if(theOSCAR.Process__c == AMS_Utils.NGCHINACONVERSION) {
+				createChangeCodeOnChildrenAccounts(theOSCAR, changeCodeId);
+			}
+
+        } catch (Exception ex) {
+            Database.rollback(sp); 
+            throw ex;
+        }
+	}
+	//ACAMBAS - NEWGEN-4445 - End
+	
+	//ACAMBAS - NEWGEN-4822 - Start
+	private static void createChangeCodeOnChildrenAccounts(AMS_Oscar__c theOSCAR, String changeCodeId) {
+
+		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c,
+												(SELECT Id, Reason_Code__c, Reason_Description__c
+									 			 FROM Agencies_Applied_Change_codes__r 
+									 			 WHERE Active__c = true) 
+									 	  FROM Account 
+									 	  WHERE ParentId =: theOSCAR.Account__c];
+
+		Set<Account> childrenAccountsSet = new Set<Account>();
+		childrenAccountsSet.addAll(childrenAccounts);
+		Set<Account> targetAccounts = ANG_ConversionHelper.filterByStatus(childrenAccountsSet);
+		
+		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
+		List<AMS_OSCAR_JSON.ChangeCode> changeCodesList = new List<AMS_OSCAR_JSON.ChangeCode>();
+		AMS_OSCAR_JSON.ChangeCode changeCode;
+
+		for(Account accnt : targetAccounts) {
+			Agency_Applied_Change_code__c activeChangeCode = null;
+			List<Agency_Applied_Change_code__c> appliedChangeCodesLst = accnt.getSObjects('Agencies_Applied_Change_codes__r');
+
+			if(appliedChangeCodesLst != null && appliedChangeCodesLst.size() > 0){
+				activeChangeCode = appliedChangeCodesLst.get(0);
+			}
+
+			changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeId, theOSCAR.ANG_Type_Of_Change__c, accnt.Status__c, activeChangeCode, null);
+			changeCodesList.add(changeCode);
+			oscars.add(theOSCAR);
+		}
+
+		AMS_ChangeCodesHelper.createAAChangeCodes(changeCodesList, oscars, new List<Account>(targetAccounts), true);
+	}
+	//ACAMBAS - NEWGEN-4822 - End
 
 	public static EntityUpdater execCreateAMLCase(AMS_OSCAR__c oscar, EntityUpdater updater) {
 
@@ -1265,7 +1364,8 @@ global class ANG_OscarProcessHelper {
 	/*** AMSU-37 ***/
 	public static Boolean doAgainIATACodeGeneration(AMS_Oscar__c oscar, Account agency) {
 		Set<String> accountStatus = new Set<String> {'12-APPLICATION DISAPPROVED', '11-APPLICATION WITHDRAWN'};
-		Set<String> processes = AMS_Utils.oscarNewProcesses; 
+		Set<String> processes = AMS_Utils.oscarNewProcesses;
+		processes.addall(AMS_Utils.oscarNewGenNewAppProcesses);
 		Set<String> appliedChangeCodes = new Set<String> {'DIS', 'NWD'}; 
 		List<Agency_Applied_Change_code__c> changeCodes = agency.Agencies_Applied_Change_codes__r;
 
@@ -1454,6 +1554,101 @@ global class ANG_OscarProcessHelper {
         return casesToUpdate;
     }
 
+    public static List<AMS_OSCAR__c> createGDIOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc){
+
+    	Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
+		OscarObjectsWrapper oscarObjs;
+		
+		Map<String,Object> fieldsOfObject;
+
+		List<Case> casesToInsert = new List<Case>();
+
+		Map<Id,Account> accountMap = new Map<Id,Account>();
+
+		//Case:
+		for(Account acc : accs){
+
+			accountMap.put(acc.Id,acc);
+
+			System.debug('[ANG_OscarProcessHelper.createGDIOscars] - Inserting GDI Oscar for Account: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+
+			Contact keyContact = fetchKeyContactForGDI(contactsAcc.get(acc.Id));
+
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin', 'GDI Portal');
+	        fieldsOfObject.put('Reason1__c','GDI setup');
+	        fieldsOfObject.put('Subject','GDI setup - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        
+	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+	        //assign to queue
+	        if(!Test.isRunningTest()){
+	       		Database.DMLOptions dmo = new Database.DMLOptions();
+	       	 	dmo.assignmentRuleHeader.useDefaultRule = true;
+	        	cse.setOptions(dmo);
+	        }
+
+	        oscarObjs = new OscarObjectsWrapper();
+	        oscarObjs.cse = cse;
+	        oscarObjs.con = keyContact;
+
+	        accOscarObjsMap.put(acc.id,oscarObjs);
+	        casesToInsert.add(cse);
+		}
+
+		if (!casesToInsert.isEmpty())
+       		insert casesToInsert;
+
+       	Set<Id> casesIds = new Set<Id>();
+	    for (Case cse : casesToInsert){
+	    	casesIds.add(cse.Id);
+	    }
+
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c, CaseNumber from Case where Id in :casesIds]){
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).CaseNumber = insertedCase.CaseNumber;
+       	}
+
+		//AMS_OSCAR__c:
+		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
+
+        for (Account acc : accs){
+        
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGGDI);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
+			fieldsOfObject.put('Name',accOscarObjsMap.get(acc.Id).CaseNumber);
+			
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_GDI, acc.Id, fieldsOfObject);		
+	        oscarsToInsert.add(oscar);
+	        accOscarObjsMap.get(acc.Id).oscar = oscar;
+    	}
+
+    	if(!oscarsToInsert.isEmpty())
+    		insert oscarsToInsert;
+
+		List<Case> casesToUpdate = new List<Case>();
+
+		for (Account acc: accs){
+			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
+			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
+		}
+
+		if(!casesToUpdate.isEmpty())
+			update casesToUpdate;
+
+        return oscarsToInsert;
+
+    }
+
       private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate,Map<Id,List<Contact>> keyContactMap){
 		
 		List<Contact> contactsToSend = new List<Contact>();
@@ -1594,6 +1789,27 @@ global class ANG_OscarProcessHelper {
 
  		return toReturn;
 	}
+
+	private static Contact fetchKeyContactForGDI(List<Contact> contacts){
+
+		if(contacts == null || contacts.isEmpty())
+			return null;
+
+		List<Contact> admins = new List<Contact>();
+
+		for (Contact con :contacts){
+
+			if(con.Financial_Assessment_Contact__c)
+				return con;
+			if(con.User_Portal_Status__c == 'Approved Admin')
+				admins.add(con);
+		} 
+
+		if (!admins.isEmpty())
+ 			return admins[0];
+
+ 		return contacts[0];
+	}
     
 
 	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<String,Set<Id>> templateContIdMap, Map<String,String> mapNotificationsTemplates){
@@ -1692,6 +1908,7 @@ global class ANG_OscarProcessHelper {
     	public AMS_Oscar__c oscar;
     	public Id ownerId;
     	public Contact con;
+    	public String caseNumber;
 
     	public OscarObjectsWrapper(){
 

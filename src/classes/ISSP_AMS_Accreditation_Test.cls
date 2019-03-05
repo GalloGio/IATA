@@ -690,7 +690,7 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
             ctrl.goToFinalStep();
 
-            ctrl.isTerminatedAgent = true; //rui
+            ctrl.isTerminatedAgent = true;
             ctrl.goToFinalStep();
             ctrl.isTerminatedAgent = false;
 
@@ -702,7 +702,7 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
             ctrl.goToFinalStep();
 
-            ctrl.isTerminatedAgent = true; //rui
+            ctrl.isTerminatedAgent = true;
             ctrl.goToFinalStep();
             ctrl.isTerminatedAgent = false;
 
@@ -710,7 +710,7 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
             ctrl.goToFinalStep();
 
-            ctrl.isTerminatedAgent = true; //rui
+            ctrl.isTerminatedAgent = true;
             ctrl.goToFinalStep();
             ctrl.isTerminatedAgent = false;
 
@@ -3045,7 +3045,7 @@ private class ISSP_AMS_Accreditation_Test {
 
             Pagereference pr1 = ctrl2.goToFinalStep();
 
-            ctrl2.isTerminatedAgent = true; //rui
+            ctrl2.isTerminatedAgent = true;
             ctrl2.goToFinalStep();
             ctrl2.isTerminatedAgent = false;
 
@@ -3135,7 +3135,7 @@ private class ISSP_AMS_Accreditation_Test {
 
             Pagereference pr1 = ctrl2.goToFinalStep();
 
-            ctrl2.isTerminatedAgent = true; //rui
+            ctrl2.isTerminatedAgent = true;
             ctrl2.goToFinalStep();
             ctrl2.isTerminatedAgent = false;
 
@@ -3532,7 +3532,7 @@ private class ISSP_AMS_Accreditation_Test {
 
             PageReference pageRef = accr.goToFinalStep();
 
-            accr.isTerminatedAgent = true; //rui
+            accr.isTerminatedAgent = true;
             accr.goToFinalStep();
             accr.isTerminatedAgent = false;
 
@@ -3540,7 +3540,7 @@ private class ISSP_AMS_Accreditation_Test {
 
             pageRef = accr.goToFinalStep();
 
-            accr.isTerminatedAgent = true; //rui
+            accr.isTerminatedAgent = true;
             accr.goToFinalStep();
             accr.isTerminatedAgent = false;
         }
@@ -3910,7 +3910,7 @@ private class ISSP_AMS_Accreditation_Test {
             ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
             ctrl.goToFinalStep();
 
-            ctrl.isTerminatedAgent = true; //rui
+            ctrl.isTerminatedAgent = true;
             ctrl.goToFinalStep();
             ctrl.isTerminatedAgent = false;
         }

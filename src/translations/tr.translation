@@ -257,6 +257,10 @@
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action20 --></label>
+        <name>AMS_OSCAR_Action20</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_OSCAR_Action3 --></label>
         <name>AMS_OSCAR_Action3</name>
     </customLabels>
@@ -331,6 +335,18 @@
     <customLabels>
         <label><!-- AMS OSCAR DISAPPROVAL --></label>
         <name>AMS_OSCAR_DISAPPROVAL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_ENDORSEMENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_FINANCIAL_SECURITY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_fees --></label>
+        <name>AMS_OSCAR_GDI_fees</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -545,8 +561,28 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP46 --></label>
+        <name>AMS_OSCAR_STEP46</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP47 --></label>
+        <name>AMS_OSCAR_STEP47</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP48 --></label>
+        <name>AMS_OSCAR_STEP48</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP49 --></label>
+        <name>AMS_OSCAR_STEP49</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP5 --></label>
         <name>AMS_OSCAR_STEP5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP50 --></label>
+        <name>AMS_OSCAR_STEP50</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
@@ -807,6 +843,50 @@
     <customLabels>
         <label>Rolü De?i?ikli?i</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Agreement --></label>
+        <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Breadcrumb --></label>
+        <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Navigate_Portal --></label>
+        <name>ANG_ISSP_GDI_Navigate_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_Display_Records --></label>
+        <name>ANG_ISSP_GDI_Page_Display_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_First --></label>
+        <name>ANG_ISSP_GDI_Page_First</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_Last --></label>
+        <name>ANG_ISSP_GDI_Page_Last</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_Next --></label>
+        <name>ANG_ISSP_GDI_Page_Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_Previous --></label>
+        <name>ANG_ISSP_GDI_Page_Previous</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Terms_Conditions --></label>
+        <name>ANG_ISSP_GDI_Terms_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_UserProvisioningError --></label>
+        <name>ANG_ISSP_GDI_UserProvisioningError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_UserProvisioningWait --></label>
+        <name>ANG_ISSP_GDI_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
         <label>Ana Kurulu?:</label>
@@ -3569,6 +3649,22 @@
         <name>IDCard_Attachments</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_BSP_Agent_Billing_Reports_Procedures --></label>
+        <name>IDCard_BSP_Agent_Billing_Reports_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Agent_Remittance_Procedures --></label>
+        <name>IDCard_BSP_Agent_Remittance_Procedures</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Essentials_for_Travel_Agents --></label>
+        <name>IDCard_BSP_Essentials_for_Travel_Agents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_BSP_Standard_Documents_Procedures --></label>
+        <name>IDCard_BSP_Standard_Documents_Procedures</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_Back --></label>
         <name>IDCard_Back</name>
     </customLabels>
@@ -3983,6 +4079,10 @@
     <customLabels>
         <label><!-- IDCard_IndustryEntrySuperior --></label>
         <name>IDCard_IndustryEntrySuperior</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_Intro_to_the_BSP_System_Language --></label>
+        <name>IDCard_Intro_to_the_BSP_System_Language</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_IntroduccionAlBSPlink_Description --></label>
@@ -5640,6 +5740,14 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
     <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Office --></label>
         <name>ISSP_AMS_Apply_New_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2 --></label>
+        <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
@@ -11325,23 +11433,35 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <label><!-- ISSP_Financial_Insititutions --></label>
+        <name>ISSP_Financial_Insititutions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Insititutions_Header --></label>
+        <name>ISSP_Financial_Insititutions_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Insititutions_Subheader --></label>
+        <name>ISSP_Financial_Insititutions_Subheader</name>
+    </customLabels>
+    <customLabels>
+        <label>Toplam teminat altındaki tutar (çevrilmiş)</label>
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <label>Detaylar</label>
         <name>ISSP_Financial_Securities_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <label>Teminat mektupları</label>
         <name>ISSP_Financial_Securities_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <label>Özet</label>
         <name>ISSP_Financial_Securities_Summary</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <label>Toplam teminat altındaki tutar</label>
         <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
@@ -12533,7 +12653,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label>IATA faturalarını kredi kartıyla ödemek için Ödeme Linki kullanılabilir.&lt;br/&gt;
 &lt;b&gt;Uyarı!&lt;/b&gt;&lt;br/&gt;
-Akredite edilmiş acenteler için bir çok IATA faturası BPS/CASS yoluyla tahsil edilmektedir. Kredi kartıyla ödeme yapmadan önce fatura bilgilerinizi kontrol ederek faturanızın daha önceden ödenmemiş olduğundan emin olmalısınız.</label>
+Akredite edilmiş acenteler için bir çok IATA faturası BSP/CASS yoluyla tahsil edilmektedir. Kredi kartıyla ödeme yapmadan önce fatura bilgilerinizi kontrol ederek faturanızın daha önceden ödenmemiş olduğundan emin olmalısınız.</label>
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>
@@ -13056,6 +13176,10 @@ Parolanızı sıfırlamak isterseniz lütfen giriş ekranına geri dönün ve �
     <customLabels>
         <label>İlgili kişiler</label>
         <name>ISSP_Related_contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
     </customLabels>
     <customLabels>
         <label>Başka bir hesap altında yeniden konumlandır</label>
@@ -15661,6 +15785,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
     <customLabels>
         <label><!-- OneId_FRED_Troubleshooting_Link --></label>
         <name>OneId_FRED_Troubleshooting_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_FRED_URL --></label>
+        <name>OneId_FRED_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_ForgotPassword --></label>
