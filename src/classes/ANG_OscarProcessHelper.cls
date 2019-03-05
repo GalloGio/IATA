@@ -1348,6 +1348,117 @@ global class ANG_OscarProcessHelper {
 
 	}
 
+	webservice static String[] createOscarCorrectionCase(Id accreditationId){
+		
+		Savepoint sp = Database.setSavepoint();
+		AMS_OSCAR__c oscar = null;
+		Case newCaseOscar = null;
+
+		try{
+
+			System.debug('Starting to create Oscar Correction from Staging area');
+			
+			List<String> fieldList = new List<String>();
+
+			Map<String, Schema.SObjectField> schemaFieldMap = AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().fields.getMap();
+
+			for (String field : schemaFieldMap.keySet()){
+					fieldList.add(field);
+			}
+
+			AMS_Pax_Accreditation_Form__c acr = Database.query('SELECT '+String.join(fieldList, ', ')+', HO_Account__r.BillingCountry, HO_Account__r.Region_formula__c, HO_Account__r.IATACode__c, HO_Account__r.Name FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId LIMIT 1');
+
+			AMS_Pax_Accreditation_Form__c newAccr = acr.clone(false, true, false, false);
+
+			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c,SIDRA_Lite_Reason__c from Case where Id = :newAccr.SAAM_Case__c LIMIT 1 ];
+
+	        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+
+			Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
+	        fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('ContactId',c.ContactId);
+	        fieldsOfObject.put('ParentId',c.Id);
+	        fieldsOfObject.put('BSPCountry__c',newAccr.HO_Account__r.BillingCountry);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('ContactId',c.ContactId);
+	        fieldsOfObject.put('Origin','Internal User');
+	        fieldsOfObject.put('Reason1__c','Corrections');
+	        fieldsOfObject.put('Region__c',newAccr.HO_Account__r.Region_formula__c);
+	        fieldsOfObject.put('Subject','Correction - ' + newAccr.HO_Account__r.IATACode__c + ' - ' + newAccr.HO_Account__r.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
+	        newCaseOscar =ANG_EntityCreator.createCase(caseRT, newAccr.HO_Account__c, fieldsOfObject);
+
+	        insert newCaseOscar;
+
+
+
+	        newAccr.SAAM_Case__c = newCaseOscar.Id;
+	        insert newAccr;
+
+            // need to create the accreditation contacts as well..
+			
+            			fieldList.clear();
+			schemaFieldMap = AMS_Accreditation_Contact__c.sObjectType.getDescribe().fields.getMap();
+
+			for (String field : schemaFieldMap.keySet()){
+					fieldList.add(field);
+			}
+
+			List<AMS_Accreditation_Contact__c> contactsList = Database.query('SELECT '+String.join(fieldList, ', ')+' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :accreditationId');
+
+			List<AMS_Accreditation_Contact__c> newAccreditationContactList = new List<AMS_Accreditation_Contact__c>();
+
+			for(AMS_Accreditation_Contact__c ac: contactsList){
+
+				AMS_Accreditation_Contact__c newAc = ac.clone(false, true, false, false);
+				newAc.AMS_Pax_Accreditation_Form__c = newAccr.Id;
+				newAccreditationContactList.add(newAc);
+            }
+
+			if(!newAccreditationContactList.isEmpty())
+				insert newAccreditationContactList;
+            
+			fieldsOfObject = new Map<String,Object>();
+
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGCORRECTION);
+	        fieldsOfObject.put('SIDRA_lite_reason__c',c.SIDRA_Lite_Reason__c);
+			fieldsOfObject.put('Status__c','Open');			
+			fieldsOfObject.put('AMS_Online_Accreditation__c',newAccr.Id);
+			fieldsOfObject.put('Change_effective_as_of__c',newAccr.Effective_Date_Of_Change__c);
+	        fieldsOfObject.put('Oscar_Communication_Case_Id__c',newCaseOscar.id);
+
+			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCORRECTION, newAccr.HO_Account__c, fieldsOfObject);
+
+			insert oscar;
+
+			newCaseOscar.Oscar__c = oscar.Id;
+
+			update newCaseOscar;
+
+			newCaseOscar = [Select Id, Casenumber from Case where Id=:newCaseOscar.Id LIMIT 1];
+
+		}catch(Exception ex){
+
+       		Database.rollback(sp);
+
+        	String exMessage = 'Unhandle error on process:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+
+	        System.debug('[ANG_OscarProcessHelper create changes oscar case] Process failed with the following exception:' + ex.getStackTraceString());
+
+	        isIATACodeGenerationRunning = false;
+
+			return new String[]{'-1',exMessage};
+
+		}
+
+		System.debug('Created oscar with id: ' + oscar.Id);
+
+		return new String[]{newCaseOscar.Id,newCaseOscar.Casenumber};
+
+	}
+
 	/*** AMSU-37 ***/
 	public static Boolean doAgainIATACodeGeneration(AMS_Oscar__c oscar, Account agency) {
 		Set<String> accountStatus = new Set<String> {'12-APPLICATION DISAPPROVED', '11-APPLICATION WITHDRAWN'};
