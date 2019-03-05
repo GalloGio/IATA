@@ -276,7 +276,7 @@ global with sharing class ISSP_CaseList {
                     fieldPathSet.add(f.getFieldPath());
                 }
                 //basto1p
-                String query = '  Account.Name , Contact.Name, Owner.Name, E2CP__AdditionalCC__c   ';
+                String query = '  Account.Name , Contact.Name, Owner.Name, E2CP__AdditionalCC__c, BSP_CASS__c, IATA_Code__c, Remittance_period__c   ';
                 Boolean hasStatus = false;
                 
                 for(String fieldPath  : fieldPathSet) {
@@ -340,6 +340,15 @@ global with sharing class ISSP_CaseList {
             //Add mapping for Status field
             statusFieldValMapKey=ISSP_Case.STATUS_FLD_NAME+Item.Status;
             mapFieldsValue.put(statusFieldValMapKey,ISSP_Case.getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,Item.Status));
+        
+            //ACAMBAS - WMO-389 - Start
+            if(Item.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
+                Item.Subject = 'IMPORTANT: ';
+                Item.Subject = (Item.BSP_CASS__c != null) ? Item.Subject + Item.BSP_CASS__c + ' Payment' : Item.Subject;
+                Item.Subject = (Item.IATA_Code__c != null) ? Item.Subject + ' - IATA Code ' + Item.IATA_Code__c : Item.Subject;
+                Item.Subject = (Item.Remittance_period__c != null) ? Item.Subject + ' - Period ' +  Item.Remittance_period__c : Item.Subject;
+            }
+            //ACAMBAS - WMO-389 - End
 
         }
         system.debug('basto1p - mapFieldsValue='+mapFieldsValue);
