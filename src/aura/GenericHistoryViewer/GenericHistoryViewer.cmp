@@ -37,16 +37,16 @@
                                             <lightning:recordViewForm recordId="{!row.newValue}" objectApiName="{!row.lookupObject}">
                                                 <lightning:outputField fieldName="Name" variant="label-hidden"/>
                                             </lightning:recordViewForm>
-                                        </a>.
+                                        </a>
                                     </td>
                                 </tr>
                             </table>
 
                             <aura:set attribute="else">
                                 <aura:renderIf isTrue="{!row.oldValue == row.newValue}">
-                                    <b>{!row.fieldName}</b> changed.
+                                    <b>{!row.fieldName}</b> changed
                                     <aura:set attribute="else">
-                                       <b>{!row.fieldName}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>.
+                                       <b>{!row.fieldName}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>
                                     </aura:set>
                                 </aura:renderIf>
                             </aura:set>

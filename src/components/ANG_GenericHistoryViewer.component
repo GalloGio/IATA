@@ -48,11 +48,11 @@
                         <b>
                             <apex:outputField rendered="{!row.isLookUpValueNew}"  value="{!row.newObj[row.fieldAPIName]}"/>
                             <apex:outputText rendered="{!!row.isLookUpValueNew}" value="{!row.newValue}"/>
-                        </b>.                       
+                        </b>                       
                     </apex:outputPanel>
 
                     <apex:outputPanel rendered="{!AND(row.fieldName <> 'created', row.oldValue == row.newValue)}">
-                        <b>{!row.fieldName}</b> changed.                    
+                        <b>{!row.fieldName}</b> changed                    
                     </apex:outputPanel>
             </apex:column>
         </apex:pageBlockTable>

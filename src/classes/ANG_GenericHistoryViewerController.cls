@@ -32,11 +32,12 @@ public with sharing class ANG_GenericHistoryViewerController {
         System.debug('### Custom history query ' + theCustomQuery);
 
         //TODO: NEED TO REFINE THIS QUERY TO MAKE IT WORK FOR CUSTOM OBJECTS AS WELL, HISTORY TABLE IS DIFFERENTLY NAMED
-        String theStandardQuery = 'SELECT CreatedDate, CreatedById, CreatedBy.Name, Field, NewValue, OldValue FROM ' + trackedObjApiName + 'History WHERE ' + trackedObjApiName + 'Id = \'' + trackedObjId + '\' ORDER BY CreatedDate DESC,ID DESC';
+        String theStandardQuery;
+        if(trackedObjApiName != 'User') theStandardQuery = 'SELECT CreatedDate, CreatedById, CreatedBy.Name, Field, NewValue, OldValue FROM ' + trackedObjApiName + 'History WHERE ' + trackedObjApiName + 'Id = \'' + trackedObjId + '\' ORDER BY CreatedDate DESC,ID DESC';
         System.debug('### Standard history query ' + theStandardQuery);
 
         List<SObject> customHistoryRecords = database.query(theCustomQuery);
-        List<SObject> standardHistoryRecords = database.query(theStandardQuery);
+        List<SObject> standardHistoryRecords = String.isBlank(theStandardQuery) ? new List<SObject>() : database.query(theStandardQuery);
 
         /*if(standardHistoryRecords.isEmpty() && Test.isRunningTest() && trackedObjApiName == 'Account') {
             standardHistoryRecords.add(new AccountHistory(AccountId=trackedObjId, Field='Type'));
