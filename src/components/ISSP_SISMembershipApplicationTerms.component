@@ -24,22 +24,6 @@
             </a>
         </apex:outputPanel>
 
-        <apex:outputpanel rendered="{!showParticipation}">
-            {!$Label.ISSP_SIS_Membership_Originals_To_IATA}
-
-            <p style="font-weight: bold; margin-left: 3em; margin-top: 1em;">
-                IATA Global Delivery Center (GDC)
-            </p>
-            <p style="margin-left: 3em;">
-                Attn: Participation Department<br/>
-                Torre Europa<br/>
-                Paseo de la Castellana, 95<br/>
-                28046 Madrid<br/>
-                Spain<br/>
-                Ref nr {!newForm.Case__r.CaseNumber}<br/>
-            </p>
-        </apex:outputpanel>
-
     </apex:pageBlockSection>
 
     <apex:pageBlockSection columns="1" id="section9" collapsible="false">
