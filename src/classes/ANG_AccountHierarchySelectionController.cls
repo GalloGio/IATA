@@ -12,6 +12,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		set;
 	}
 
+	private Account currentGE;
+
 	private String oscarId{
 		get{
 			if(String.isEmpty(oscarId)) oscarId = ApexPages.currentPage().getParameters().get('Id');
@@ -90,6 +92,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				if(tocList.contains(AMS_Utils.CONVERTTONEWGENPILOT)){ notes.add('The conversion to GoLite must be applied to the full hierarchy'); }
 				else if(tocList.contains(AMS_Utils.CONVERTTOLEGACY)){ notes.add('The conversion to Domestic with Cash must be applied to the full hierarchy'); }
 				else if(tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)){ notes.add('The conversion to International must be applied to the full hierarchy'); }
+				
+				if(diffDestination(oscar.New_parent__c) && onlyGE_BSPLeft() && diffDestination(oscar.New_parent__c)) notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
 			
 			}
 
@@ -223,6 +227,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				errorMessages.put(
 					'Multicountry change hierarchy must select GE',
 					'You cannot choose an Account as a target for the destination hierarchy which does not have a valid Location type (GE).'
+				);
+				
+				errorMessages.put(
+					'All selected locations are in the same BSP', 
+					'All the selected locations are in the same BSP, please process a Conversion or select additional locations.'
 				);
 				
 			}
@@ -832,6 +841,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		for(HierarchyItem item : hierarchyValues){
 
+			if(item.acc.Location_Type__c == AMS_Utils.GE) currentGE = item.acc;
+
 			if(item.selected || item.main){
 
 				selectedCount++;
@@ -878,6 +889,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		if(tocList.contains(AMS_Utils.ANG_VMFR) && !allAgenciesFromSameBSPSelected){
 			errorChecks.put('All agents from the same BSP not selected', true);
 		}
+
+        if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && !diffDestination(oscar.New_parent__c) && isSingleBSPSelected) errorChecks.put('All selected locations are in the same BSP', true);
+
 	}
 
 
@@ -920,6 +934,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			errorChecks.put('Multicountry change hierarchy must select GE', true);
 	}
 
+	private boolean onlyGE_BSPLeft(){
+		for (HierarchyItem i : hierarchy.values())
+			if(!i.selected && i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c != currentGE.IATA_ISO_Country__r.AMS_Settlement_System__c) return false;
+
+		return true;
+	}
 
 	// ***********************************
 	// *********** wrappers **************
