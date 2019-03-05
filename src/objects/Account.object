@@ -9941,6 +9941,19 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
         </valueSet>
     </fields>
     <fields>
+        <fullName>Financial_Assessment_Points__c</fullName>
+        <description>Number of points obtained on the financial assessment (only for Hong Kong and Macao)</description>
+        <externalId>false</externalId>
+        <label>Financial Assessment Points</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Financial_Review_Result__c</fullName>
         <description>Used to copy the last one from the case IATA FINANCIAL REVIEW IFAP</description>
         <externalId>false</externalId>

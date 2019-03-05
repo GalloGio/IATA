@@ -281,6 +281,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Financial_Assessment_Points__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SIDRA_Exclude_from_report_exceptions__c</field>
             </layoutItems>
         </layoutColumns>
