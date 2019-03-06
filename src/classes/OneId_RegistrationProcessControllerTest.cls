@@ -461,7 +461,7 @@ private class OneId_RegistrationProcessControllerTest {
 
         String serviceName = 'ISSP';
 
-        Test.startTest();
+        
         Contact c;
         
 
@@ -479,14 +479,17 @@ private class OneId_RegistrationProcessControllerTest {
 
                     c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
 
-                    OneId_RegistrationProcessController.registration(a,c,serviceName);
+                    Test.startTest();
 
-                    OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'FRED');
+                        OneId_RegistrationProcessController.registration(a,c,serviceName);
 
+                        OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'FRED');
+
+                    Test.stopTest();
                 }
             }
 
-        Test.stopTest();
+        
 
         List<User> aUser = [select id, profile.name from user where contactId = :c.id];
 

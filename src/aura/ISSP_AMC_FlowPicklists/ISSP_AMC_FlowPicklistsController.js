@@ -121,9 +121,6 @@
     handleChangeUser: function(component, event, helper) {
         var stepActionId = component.get("v.stepActionId")
         var approvelUserId = event.getParam("value");
-
-        console.log("stepActionId: " + stepActionId);
-        console.log("approvelUserId: " + approvelUserId);
                 
         var action = component.get("c.updateStepActionApprovelProcessUser");
         action.setParams({"stepActionId" : stepActionId, "approvelUserId" : approvelUserId});
@@ -132,8 +129,10 @@
             if (state === "SUCCESS") {
                 console.log('sucess');
             }
-
+            
             var appEvent = $A.get("e.c:ISSP_AMC_RefreshProgressEvent");
+            appEvent.setParams({
+                "approvelUser" : approvelUserId });
             appEvent.fire();
         });
         

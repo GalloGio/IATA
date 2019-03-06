@@ -17,11 +17,11 @@
     <aura:attribute name="showSpinner" type="Boolean" default="false" description="Defines when to display the spinner"/>
     <aura:attribute name="apiServerPartner" type="String" required="false" />
 	<aura:attribute name="errorMessage" type="String"/>
-
     <aura:attribute name="requestApprovalVariant" type="String" required="false" default="neutral" />
     <aura:attribute name="relatedCaseVariant" type="String" required="false" default="neutral" />
     <aura:attribute name="assignmentLetterVariant" type="String" required="false" default="neutral" />
     <aura:attribute name="sendCaseVariant" type="String" required="false" default="destructive" />
+    <aura:attribute name="approvelUser" type="String"/>
 
     <aura:attribute name="url" type="ACLI_Process__mdt"/>
     <aura:attribute name="apiServer" type="String" required="false"/>

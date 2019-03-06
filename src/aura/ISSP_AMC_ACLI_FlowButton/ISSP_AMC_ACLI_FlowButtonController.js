@@ -5,6 +5,8 @@
         action.setParams({ "processOrchestratorId" : component.get("v.processOrchestratorId") });
 
         var self = this;
+        var approvelID = event.getParam("approvelUser");
+        component.set("v.approvelUser", approvelID);
 
         action.setCallback(this, function(response) {
             var state = response.getState();
@@ -60,8 +62,9 @@
                 }
 
                 if((stageA_Status != "Completed" ||
-                     stageB_Status != "Completed" ||
-                     stageC_Status != "Completed")){
+                    stageB_Status != "Completed" ||
+                    stageC_Status != "Completed" ||
+                    approvelID == undefined)){
                     component.set("v.requestApprovalVariant", "destructive");
                 }
                 else {
@@ -111,29 +114,45 @@
         $A.enqueueAction(action);
     },
 
-	requestApproval : function(component, event, helper) {
-        var action = component.get("c.requestForApproval");
+	 requestApproval : function(component, event, helper) {
 
-        action.setParams({ 
+        var action = component.get("c.requestForApproval");
+         
+        action.setParams({
             "processOrchestratorId" : component.get("v.processOrchestratorId"),
             "stage" : component.get("v.stage")
         });
+            action.setCallback(this, function(response) {
 
+            var state = response.getState();
+            var resultsToast = $A.get("e.force:showToast");
 
-        action.setCallback(this, function(response) {
-    		component.find('notifLib').showNotice({
-                "variant": "info",
-                "header": "Request for Approval",
-                "message": "The case was requested for approval.",
-                closeCallback: function() {
-                    //$A.get('e.force:refreshView').fire();
-                }
-            });
-            $A.get('e.force:refreshView').fire();
+            if(state === "SUCCESS") {
+                resultsToast.setParams({
+                    "title": "Request for Approval",
+                    "type": 'success',
+                    "message": "The case was requested for approval.",
+                    "duration":' 5000',
+                    "mode": 'pester'
+
+                });           
+
+            } else if (state === "ERROR"){
+                resultsToast.setParams({
+                    "title": "Request for Approval",
+                    "type": 'error',
+                    "duration":' 5000',
+                    "mode": 'pester',
+                    "message": 'It was not possible to submit the approval'
+                });
+            }
+
+            resultsToast.fire();
         });
 
         $A.enqueueAction(action);
-	},
+
+    },
 
 	createRelatedCase : function(component, event, helper) {
         component.set("v.showSpinner",true);
