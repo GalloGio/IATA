@@ -13331,6 +13331,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_SIS_Membership_AutoBilling_Helptext</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP SIS Membership AutoBilling Helptext2 --></label>
+        <name>ISSP_SIS_Membership_AutoBilling_Helptext2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_SIS_Membership_BankMandateDescription --></label>
         <name>ISSP_SIS_Membership_BankMandateDescription</name>
     </customLabels>

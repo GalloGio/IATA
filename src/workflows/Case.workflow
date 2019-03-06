@@ -17862,14 +17862,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </actions>
         <active>true</active>
         <description>When a new case for SIS E-Joining is submitted( its status changes from Draft to Open) this notification is sent</description>
-        <formula>AND(
-  RecordType.DeveloperName=&apos;IDFS_Airline_Participation_Process&apos;,
-  ISPICKVAL(CaseArea__c,&apos;Airline Joining&apos;),
-  ISPICKVAL(Reason1__c,&apos;SIS Client&apos;),
-  ISPICKVAL(Classification_SIS__c,&apos;SIS Membership&apos;),
-  ISPICKVAL(Status,&apos;For Review and Acceptance&apos;),
-  ISPICKVAL($User.UserType,&apos;PowerPartner&apos;)
-)</formula>
+        <formula>AND(   RecordType.DeveloperName=&apos;IDFS_Airline_Participation_Process&apos;,   ISPICKVAL(CaseArea__c,&apos;Airline Joining&apos;),   ISPICKVAL(Reason1__c,&apos;SIS Client&apos;),   ISPICKVAL(Classification_SIS__c,&apos;SIS Membership&apos;),   ISPICKVAL(Status,&apos;For Review and Acceptance&apos;),   ISPICKVAL($User.UserType,&apos;PowerPartner&apos;) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

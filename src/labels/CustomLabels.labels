@@ -25966,6 +25966,14 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <value>Only one file allowed</value>
     </labels>
     <labels>
+        <fullName>ISSP_SIS_Membership_Originals_To_IATA</fullName>
+        <categories>ISSP SIS Membership</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_SIS_Membership_Originals_To_IATA</shortDescription>
+        <value>Originals should be sent to IATA Madrid office to the following address, but only after the approval of IATA:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SIS_Membership_Participation_Agreement</fullName>
         <categories>ISSP SIS Membership</categories>
         <language>en_US</language>
