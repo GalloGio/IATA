@@ -1123,6 +1123,7 @@ private class ISSP_APProcess_Test
             testCase.Country_Concerned__c='PT;ES';
             testCase.CaseArea__c='Airline Joining';
             testCase.BSPCountry__c='Multiple';
+            testCase.IFAP_Country_ISO__c = 'PT';
             insert testCase;
 
             AP_Process_Form__c apProcessForm = new AP_Process_Form__c();
@@ -1229,6 +1230,7 @@ private class ISSP_APProcess_Test
             testCase.Country_Concerned__c='PT';
             testCase.CaseArea__c='Airline Joining';
             testCase.BSPCountry__c='Multiple';
+            testCase.IFAP_Country_ISO__c = 'PT';
             insert testCase;
 
             AP_Process_Form__c apProcessForm = new AP_Process_Form__c();

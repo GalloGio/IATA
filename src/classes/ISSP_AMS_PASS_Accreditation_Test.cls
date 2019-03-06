@@ -985,7 +985,7 @@ private class ISSP_AMS_PASS_Accreditation_Test
 
             Case testCase = ISSP_ObjectFactory.createNewCase();
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Status = 'Open - EDMC';
+            testCase.Status = 'Open';
             testCase.Customer_recovery__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
@@ -1088,7 +1088,7 @@ private class ISSP_AMS_PASS_Accreditation_Test
 
             Case testCase = ISSP_ObjectFactory.createNewCase();
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
-            testCase.Status = 'Open - EDMC';
+            testCase.Status = 'Open';
             testCase.Customer_recovery__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
