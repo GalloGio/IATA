@@ -783,6 +783,8 @@ public with sharing class ANG_AgencyChangesHelper {
 			oscarAccount.ANG_HE_CashCondition__c = false;
 			oscarAccount.ANG_HE_RiskHistoryAssessment__c = null;
 			oscarAccount.ANG_HE_RiskStatus__c = null;
+			oscarAccount.Assessment_Performed_Date__c = null;
+			oscarAccount.Financial_Review_Result__c = null;
 
 			if(switchAccreditationModel){
 				oscarAccount.ANG_Accreditation_Model__c = newAccreditationModel;
