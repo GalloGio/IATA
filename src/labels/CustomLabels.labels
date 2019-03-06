@@ -2126,6 +2126,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Non-compliance</value>
     </labels>
     <labels>
+        <fullName>ANG_OnGoing_OSCAR_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_OnGoing_OSCAR_Warning</shortDescription>
+        <value>Please finalize any ongoing OSCAR process before proceeding with the conversion.</value>
+    </labels>
+    <labels>
         <fullName>ANG_OSCAR_CHANGE_APPROVAL_FINALIZATION</fullName>
         <language>en_US</language>
         <protected>false</protected>
