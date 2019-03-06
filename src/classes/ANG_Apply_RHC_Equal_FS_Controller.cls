@@ -8,10 +8,12 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public String actionValue {get; private set;}
 	public String bspValue {get; private set;}
 	public String iataCode {get; private set;}
+	public String percentageFS {get; private set;}
 	public String previousModeValue {get; private set;}
 	public String previousActionValue {get; private set;}
 	public String previousBspValue {get; private set;}
 	public String previousIataCode {get; private set;}
+	public String percentageFSisReadOnly {get; private set;}
 	public Boolean renderConfirmButton {
 		get {
 			return (actionValue != '' && modeValue != '' && actionValue == previousActionValue && ((previousModeValue == 'BSP' && bspValue == previousBspValue && modeValue == 'BSP') || (previousModeValue == 'IATA_Code' && iataCode == previousIataCode && modeValue == 'IATA_Code')));
@@ -22,6 +24,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public ApexPages.StandardSetController ssController {get; private set;}
 	public Boolean hasNext {get {return ssController.getHasNext();} set;}
     public Boolean hasPrevious {get {return ssController.getHasPrevious();} set;}
+    public Boolean isValidPercentageFS {get {return percentageFS.isNumeric() && Decimal.valueof(percentageFS) > 0 ;} set;}
 	public List<ANG_RHC_Information__c> agencies {
 		get {return (ssController != null) ? (List<ANG_RHC_Information__c>)ssController.getRecords() : agencies;}
 		private set;
@@ -50,11 +53,16 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     }
 
     private void populateActions() {
+
         actions = new List<SelectOption>();
 
         actions.add(new SelectOption('', 'Select Action'));
-        actions.add(new SelectOption('Apply_RHC','Apply RHC equal FS'));
-        actions.add(new SelectOption('Revert_RHC','Revert RHC equal FS'));
+        //actions.add(new SelectOption('Apply_RHC','Apply RHC equal FS'));
+        //actions.add(new SelectOption('Revert_RHC','Revert RHC equal FS'));
+        actions.add(new SelectOption('Apply_RHC_regardless','Apply RHC = FS% regardless of Risk Status'));
+        actions.add(new SelectOption('Revert_RHC_regardless','Revert RHC = FS% regardless of Risk Status'));
+        actions.add(new SelectOption('Apply_RHC_per_FS','Apply RHC = FS % per Risk Status'));
+        actions.add(new SelectOption('Revert_RHC_per_FS','Revert RHC = FS % per Risk Status'));
     }
 
     private void populateBSPs() {
@@ -95,7 +103,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	batchStatusBool = false;
     	batchJob = null;
 
-    	Boolean rhcFlag = actionValue == 'Apply_RHC' ? false : true;
+    	Boolean rhcFlag = actionValue == 'Apply_RHC_regardless' ? false : true; //Apply_RHC_per_FS
 
     	if (modeValue == 'BSP') {
     		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
@@ -108,6 +116,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
 							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
 							AND ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Name = :bspValue 
+							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
 						ORDER BY ANG_AccountId__r.Name];
     	} else if (modeValue == 'IATA_Code') {
     		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
@@ -120,7 +129,10 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
 							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
     						AND ANG_AccountId__r.IATACode__c = :iataCode
+							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
     					ORDER BY Name];
+
+    		//if(!rhcFlag) percentageFS agencies[0].
     	}
 
     	agenciesFetched = agencies.size();
@@ -165,6 +177,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public void setActionValue (String actionValue) {
 		this.actionValue = actionValue;
 		this.renderConfirmButton = false;
+		this.percentageFS = '';
 	}
 
 	public void setBspValue (String bspValue) {
@@ -174,6 +187,11 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 
 	public void setIataCode (String iataCode) {
 		this.iataCode = iataCode;
+		this.renderConfirmButton = false;
+	}
+
+	public void setPercentageFS (String percentageFS) {
+		this.percentageFS = percentageFS;
 		this.renderConfirmButton = false;
 	}
 

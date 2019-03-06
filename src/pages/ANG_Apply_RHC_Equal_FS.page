@@ -6,8 +6,31 @@
     	}
 	</style>
 
-    <apex:sectionHeader title="Apply RHC equal FS" description="This will set RHC equals to Financial Security amount for all the selected agents. Existing rules will be overridden"/>
-    <apex:form>
+    <script type="text/javascript">
+        function inputLimiter(e,allow) {
+            var AllowableCharacters = '';
+
+            if (allow == 'Letters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';}
+            if (allow == 'Numbers'){AllowableCharacters='1234567890';}
+            if (allow == 'NameCharacters'){AllowableCharacters=' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-.\'';}
+            if (allow == 'NameCharactersAndNumbers'){AllowableCharacters='1234567890 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-\'';}
+            if (allow == 'Currency'){AllowableCharacters='1234567890.';}
+
+            var k = document.all?parseInt(e.keyCode): parseInt(e.which);
+            if (k!=13 && k!=8 && k!=0){
+                if ((e.ctrlKey==false) && (e.altKey==false)) {
+                return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+                } else {
+                return true;
+                }
+            } else {
+                return true;
+            }
+        }
+    </script>
+
+    <apex:sectionHeader title="Apply RHC equal FS %" description="This will set RHC equals to a percentage Financial Security amount for all the selected agents"/>
+    <apex:form >
 
         <apex:actionFunction name="changeInput" reRender="actionModeBlock"/>
         <apex:actionFunction name="controlButtons" reRender="searchButton, confirmButton"/>
@@ -19,8 +42,8 @@
 
                 <apex:pageblockSectionItem id="actionSelection">
                     <apex:outputLabel value="Action"/>
-                    <apex:outputPanel>
-                        <apex:selectList size="1" value="{!actionValue}" onchange="controlButtons();">
+                    <apex:outputPanel >
+                        <apex:selectList size="1" value="{!actionValue}" onchange="changeInput(); controlButtons();">
                             <apex:selectoptions value="{!actions}"/>
                         </apex:selectList>
                     </apex:outputPanel>
@@ -28,7 +51,7 @@
 
                 <apex:pageblockSectionItem id="modeSelection">
                     <apex:outputLabel value="Mode"/>
-                    <apex:outputPanel>
+                    <apex:outputPanel >
                         <apex:selectList size="1" value="{!modeValue}" onchange="changeInput(); controlButtons();">
                             <apex:selectoptions value="{!modes}"/>
                         </apex:selectList>
@@ -37,7 +60,7 @@
 
                 <apex:pageblockSectionItem id="bspSelection" rendered="{!modeValue == 'BSP'}">
                     <apex:outputLabel value="Select a BSP Code"/>
-                    <apex:outputPanel>
+                    <apex:outputPanel >
                         <apex:selectList size="1" value="{!bspValue}" onchange="controlButtons();">
                             <apex:selectoptions value="{!bsps}"/>
                         </apex:selectList>
@@ -46,16 +69,25 @@
 
                 <apex:pageblockSectionItem id="iataCodeText" rendered="{!modeValue == 'IATA_Code'}">
                     <apex:outputLabel value="Please insert the IATA Code (8 Digit Code)"/>
-                    <apex:outputPanel>
-                        <apex:inputText value="{!iataCode}" id="iataCodeInput" onkeyup="controlButtons();"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!iataCode}" id="iataCodeInput" onkeyup="controlButtons();" onkeypress="return inputLimiter(event,'Numbers');"/>
+                    </apex:outputPanel>
+                </apex:pageblockSectionItem>
+
+                <apex:pageblockSectionItem id="percentageFS" rendered="{!modeValue != ''}">
+                    <apex:outputLabel value="% of FS"/>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!percentageFS}" id="percentageFSInput" rendered="{!IF(actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_FS' , 'true','false')}" onkeyup="controlButtons();" onkeypress="return inputLimiter(event,'Numbers');"/>
+                        <apex:outputText value="{!percentageFS}" rendered="{!IF(actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_FS' , 'false','true')}"/>
+
                     </apex:outputPanel>
                 </apex:pageblockSectionItem>
                 
             </apex:pageBlockSection>
 
             <apex:pageBlockButtons id="searchButtonBlock" location="bottom">
-                <apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), pollerBool)}" action="{!fetchAgencies}" onclick="getAgenciesTable();"/>
-                <apex:commandButton value="{!IF(actionValue == 'Apply_RHC', 'Apply RHC equal FS', IF(actionValue == 'Revert_RHC', 'Revert RHC equal FS', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton), batchStatusBool)}" action="{!applyOrRevertRHC}"/>
+                <apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(OR (actionValue == 'Apply_RHC_regardless', actionValue == 'Apply_RHC_per_FS') ,!isValidPercentageFS), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), pollerBool)}" action="{!fetchAgencies}" onclick="getAgenciesTable();"/>
+                <apex:commandButton value="{!IF(actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_FS' , 'Apply RHC equal FS %', IF(actionValue == 'Revert_RHC_regardless' || actionValue == 'Revert_RHC_per_FS', 'Revert RHC equal FS %', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton), batchStatusBool)}" action="{!applyOrRevertRHC}"/>
             </apex:pageBlockButtons>
         </apex:pageBlock>
 
