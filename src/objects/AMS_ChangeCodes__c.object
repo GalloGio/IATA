@@ -669,5 +669,20 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <label>Risk Change Code (R4) - NOT</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>TOSCA_CC</fullName>
+        <columns>Change_Code__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
+        <columns>NAME</columns>
+        <columns>Billable__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Change_Code__c</field>
+            <operation>contains</operation>
+            <value>NEW,CAD,CER,CHL,FIN,LSP,LSW</value>
+        </filters>
+        <label>TOSCA_CC</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Protected</visibility>
 </CustomObject>

@@ -439,7 +439,23 @@ public class GSS_DeltaTriggerHelper {
         
         //TODO OPTIMIZATION: future serialize statement for batch asynch processing
         System.debug('DeltaList: '+DeltaList);
-        if (DeltaList.Size()>0) insert DeltaList;
+        //Abdellah: Old Code if (DeltaList.Size()>0) insert DeltaList;
+        if (DeltaList.Size()==0) return; 
+
+        //reuse the code of ams2gdp
+        List<ams2gdp_Error> errors = new List<ams2gdp_Error>(); 
+        Database.SaveResult[] saveresultlist = Database.insert(DeltaList,false);
+        // Iterate through saveResultList based on isSuccess capture the failed records
+        for (Database.SaveResult sr : saveresultlist) {
+            if (sr.isSuccess()) continue;
+            // Operation failed, so get all errors                
+            for(Database.Error err : sr.getErrors()) {
+                errors.add(new ams2gdp_Error('GDP Delta Insert',null, null, 'Error Code: '+err.getStatusCode() + ' Msg: ' + err.getMessage()));
+            }
+        }
+        if (errors.isEmpty()) return;
+        //Log the current Errors
+        ams2gdp_Utils.logErrors(errors);
     } // end of calculateDeltas
     
     
