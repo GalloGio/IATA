@@ -29,7 +29,7 @@ private class OneIdProfileCompanySettingsTest {
             OneIdProfileCompanySettings.getCategoryPicklistValues();         
             OneIdProfileCompanySettings.getPreferredLanguagePicklistValues();
             OneIdProfileCompanySettings.getUserInfo();         
-            OneIdProfileCompanySettings.saveProfileEdit('string' , 'string1', 'string2', 'string3', 'string4', 'string5', 'string6', 'string7');               
+            OneIdProfileCompanySettings.saveProfileEdit('string' , 'string1', 'string2', 'string3', 'string4', 'string5', 'string6', 'string7', 'string8');               
 
             Test.stopTest();
             

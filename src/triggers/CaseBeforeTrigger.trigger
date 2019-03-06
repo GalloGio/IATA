@@ -78,6 +78,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
     ID ProcessISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     ID SIDRAcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+    ID SIDRALiteCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite'); //ACAMBAS - WMO-384
     ID SIDRABRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_BR');
     ID sisHelpDeskCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_SIS_Help_Desk');
     Id RT_ICCS_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Product_Management');
@@ -90,6 +91,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID AirlineCodingRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
     //ID ProcesscaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
     ID EuropecaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+    ID GlobalcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
     ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesAmericas');
     ID AfricaMEcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesMENA');
     ID AsiaPacificcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ExternalCasesIDFSglobal');
@@ -672,7 +674,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     if ((aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == ProcessISSPcaseRecordTypeID) || (aCase.RecordTypeId == EuropecaseRecordTypeID)
                             || (aCase.RecordTypeId == AmericacaseRecordTypeID) || (aCase.RecordTypeId == AfricaMEcaseRecordTypeID) || (aCase.RecordTypeId == AsiaPacificcaseRecordTypeID)
                             || (aCase.RecordTypeId == ChinaAsiacaseRecordTypeID) || (aCase.RecordTypeId == InternalcaseRecordTypeID) || (aCase.RecordTypeId == InvCollectioncaseRecordTypeID)
-                            || (aCase.RecordTypeId == CSProcesscaseRecordTypeID) || (aCase.RecordTypeId == SEDAcaseRecordTypeID) || (aCase.RecordTypeId == ISSPcaseRecordTypeID)) { //TF - SP9-C5
+                            || (aCase.RecordTypeId == CSProcesscaseRecordTypeID) || (aCase.RecordTypeId == SEDAcaseRecordTypeID) || (aCase.RecordTypeId == ISSPcaseRecordTypeID)
+                            || (aCase.RecordTypeId == GlobalcaseRecordTypeID)) { //TF - SP9-C5
                         system.debug('CORRECT RECORD TYPE');
                         system.debug('isInsert: ' + Trigger.isInsert);
                         system.debug('isUpdate: ' + Trigger.isUpdate);
@@ -743,7 +746,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 for (Account acc : lstMatchedAccounts) {
                     for (Case c : mapCasesPerWebIATACode.get(acc.Site)) {
                         if (c.AccountId != acc.Id) {
-                            if ( c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
+                            if ( c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == GlobalcaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
                                     || c.RecordTypeId == AsiaPacificcaseRecordTypeID || c.RecordTypeId == ChinaAsiacaseRecordTypeID || c.RecordTypeId == ISSPcaseRecordTypeID ) {
                                 // For these record types, set the Account Concerned field
                                 system.debug('FOUND AND SETTING Account Concerned');
@@ -794,7 +797,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             for (Account acc : lstMatchedAccounts) {
                                 for (Case c : mapCasesListPerAccountSite.get(acc.Site)) {
                                     if (c.AccountId != acc.Id) {
-                                        if (c.AccountId != null && (c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
+                                        if (c.AccountId != null && (c.RecordTypeId == EuropecaseRecordTypeID || c.RecordTypeId == GlobalcaseRecordTypeID || c.RecordTypeId == AmericacaseRecordTypeID || c.RecordTypeId == AfricaMEcaseRecordTypeID
                                                                     || c.RecordTypeId == AsiaPacificcaseRecordTypeID || c.RecordTypeId == ChinaAsiacaseRecordTypeID || c.RecordTypeId == ISSPcaseRecordTypeID) ) {
                                             // For these record types, set the Account Concerned field
                                             system.debug('FOUND AND SETTING Account Concerned');
@@ -1256,6 +1259,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         c.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
                     }
                 }
+                //ACAMBAS - WMO-384 - Start
+                if((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == SIDRALiteCaseRecordTypeID) && !String.isEmpty(c.DEF_Approval_Rejection__c)) {
+                    c.DEF_Approval_Rejection_Date__c = DateTime.now();    
+                }
+                //ACAMBAS - WMO-384 - End  
             }
             map<String, CurrencyType> mapCurrencyTypePerCurrencyCode = new map<String, CurrencyType>();
             if (! setCurrencies.isEmpty()) {
@@ -1722,8 +1730,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
                 }     
+                Case aCaseOld = Trigger.oldMap.get(aCase.Id);   
                 if (aCase.RecordTypeId == caseSEDARecordTypeID) {
-                    Case aCaseOld = Trigger.oldMap.get(aCase.Id);
                     if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
                         aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
                     }
@@ -1745,6 +1753,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         originalCase.addError('Please complete the repayment instalment section to be able to confirm that the agreement has been reached');
                     }
                 }
+                //ACAMBAS - WMO-384 - Start
+                if((aCase.RecordTypeId == SIDRAcaseRecordTypeID || aCase.RecordTypeId == SIDRALiteCaseRecordTypeID) && acase.DEF_Approval_Rejection__c != aCaseOld.DEF_Approval_Rejection__c) {
+                    aCase.DEF_Approval_Rejection_Date__c = DateTime.now();    
+                }
+                //ACAMBAS - WMO-384 - End 
             }
 
             if (accountIds.size() > 0) { // This list should be empty if all of the cases aren't related to the Sidra Small amount process
@@ -1827,11 +1840,20 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 for (Case updatedCase : System.Trigger.new) {
                     updatedCase.Last_Status_Change__c  = updatedCase.Last_Status_Change__c <> null ? updatedCase.Last_Status_Change__c : System.now();
                     Case oldCase = System.Trigger.oldMap.get(updatedCase.Id);
+                    Id processRTId = RecordTypeSingleton.getInstance().getRecordType('Case', 'CS_Process_IDFS_ISS').Id;
+
                     // this very next section is for the kpi
-                    if ((oldCase.Status != updatedCase.Status) || (updatedCase.BusinessHoursId <> null && updatedCase.BusinessHoursId <> oldCase.BusinessHoursId)
-                        || (oldCase.First_Business_Day__c == null)) {
-                        casesIdSoCalculate.add(updatedCase.id);
-                    }
+                    if (
+                        // if record type changed and new record type is process case record type
+                        (oldCase.recordTypeId != updatedCase.recordTypeId && updatedCase.recordTypeId == processRTId) ||
+                        // if status changed...
+                        (oldCase.Status != updatedCase.Status) || 
+                        // if new case has business hours and they have changed
+                        (updatedCase.BusinessHoursId <> null && updatedCase.BusinessHoursId <> oldCase.BusinessHoursId) ||
+                        // if first business day not present...
+                        (oldCase.First_Business_Day__c == null)) {
+                            casesIdSoCalculate.add(updatedCase.id);
+                        }
                     // the following section is used for the
                     // nex short day , to find the very next business day
                     if (updatedCase.BusinessHoursId <> null && updatedCase.Short_Payment_Date__c <> null ) {

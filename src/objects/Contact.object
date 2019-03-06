@@ -19253,7 +19253,7 @@ myuser={!User.Id}</url>
         <encodingKey>UTF-8</encodingKey>
         <height>600</height>
         <linkType>url</linkType>
-        <masterLabel>Contact Related List</masterLabel>
+        <masterLabel>Contacts detailed view</masterLabel>
         <openType>sidebar</openType>
         <protected>false</protected>
         <requireRowSelection>false</requireRowSelection>
