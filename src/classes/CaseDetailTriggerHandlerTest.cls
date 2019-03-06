@@ -14,7 +14,7 @@ public class CaseDetailTriggerHandlerTest {
 		Case c = new Case();
 		insert c;
 
-		Case_Detail__c cd = new Case_Detail__c(Case__c = c.Id, RecordTypeId = CALL_MONITORING, Identified_themselves__c = true, Mentioned_IATA__c = true);
+		Case_Detail__c cd = new Case_Detail__c(Case__c = c.Id, RecordTypeId = CALL_MONITORING, Identified_themselves__c = 'Yes', Mentioned_IATA__c = 'Yes');
 		insert cd;
 
 		List<Case_Detail__c> caseDetailList = [SELECT Score1__c FROM Case_Detail__c WHERE Id =: cd.Id];
