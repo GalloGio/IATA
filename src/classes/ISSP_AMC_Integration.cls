@@ -139,7 +139,7 @@ public without sharing class ISSP_AMC_Integration {
                                                                         Is_the_billing_contact_same_the_HOC__c
                                                                     FROM Participation_Online_Application__c
                                                                     WHERE Case__c =: oscarCaseId
-        AND (RecordType.DeveloperName = 'Designator_Code' OR RecordType.DeveloperName = 'Accounting_or_Prefix_Code') AND case__r.Status =: caseStatus];
+        AND (RecordType.DeveloperName = 'Designator_Code' OR RecordType.DeveloperName = 'Accounting_or_Prefix_Code')];
 
         //for(Participation_Online_Application__c applicationFromOscar :applicationFromOscarList) {
             //acliFormFields  = new ACLIForm();
