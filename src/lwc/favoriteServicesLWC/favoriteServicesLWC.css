@@ -1,0 +1,10 @@
+.withPointerTile {
+    border: 1px solid #d8dde6;
+    cursor:pointer; 
+    height: 250px;
+}
+
+.noPointerTile {
+    border: 1px solid #d8dde6;
+    height: 250px;
+}
