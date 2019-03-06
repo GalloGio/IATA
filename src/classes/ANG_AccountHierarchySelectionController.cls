@@ -93,7 +93,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				else if(tocList.contains(AMS_Utils.CONVERTTOLEGACY)){ notes.add('The conversion to Domestic with Cash must be applied to the full hierarchy'); }
 				else if(tocList.contains(AMS_Utils.CONVERTTOINTERNATIONAL)){ notes.add('The conversion to International must be applied to the full hierarchy'); }
 				
-				if(diffDestination(oscar.New_parent__c) && onlyGE_BSPLeft() && diffDestination(oscar.New_parent__c)) notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
+				if(diffDestination(oscar.New_parent__c) && this.isMulticountry && onlyGE_BSPLeft() && diffDestination(oscar.New_parent__c)) notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
 			
 			}
 
@@ -409,6 +409,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					Boolean main = (a.Id == oscar.Account__c);
 					Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
 					hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
+					if(item.acc.Location_Type__c == AMS_Utils.GE) currentGE = item.acc;
 					
 					if(this.isMulticountry){
 
@@ -840,8 +841,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		integer selectedCount = 0;
 
 		for(HierarchyItem item : hierarchyValues){
-
-			if(item.acc.Location_Type__c == AMS_Utils.GE) currentGE = item.acc;
 
 			if(item.selected || item.main){
 
