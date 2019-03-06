@@ -180,7 +180,7 @@ public with sharing class ANG_GenericHistoryViewerController {
             
             for(String fld : fieldsToSearch){
                 
-                if(fld == null || fld.length() < 4){
+                if(fld == null || fld.length() < 15) { //ACAMBAS - WMO-390: an id should have at least 15 characters
                     toReturn.put(fld,false);
                     continue;
                 }
