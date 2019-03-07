@@ -800,6 +800,25 @@ public with sharing class AttachmentListCtrl {
             return new ApexMessageHandling(false,message);
         }
     }
+    @AuraEnabled
+    public static ApexMessageHandling createAttachment(String parentId, String body, String name,Long filesize, string contentType){
+
+        Attachment newAtt = new Attachment();
+                    newAtt.Body = EncodingUtil.base64Decode(body);
+                    newAtt.ParentId = parentId;
+                    newAtt.ContentType = contentType;
+                    newAtt.Name = name;
+                    newAtt.OwnerId = UserInfo.getUserId();
+        
+        
+
+        Database.SaveResult sr =Database.insert(newAtt);
+        if (!sr.isSuccess()) {
+            return new ApexMessageHandling(false,sr.getErrors()[0].getMessage());
+        }
+           
+        return new ApexMessageHandling(true,'');
+    }
 
     public class CaseWrapper {
         @AuraEnabled

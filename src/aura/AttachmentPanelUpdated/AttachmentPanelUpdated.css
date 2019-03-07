@@ -2,3 +2,8 @@
     max-height: 150px;
     overflow-y: scroll;
 }
+
+.THIS .card-max-size{
+    max-height: 300px;
+    overflow-y: scroll;
+}

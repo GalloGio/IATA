@@ -688,5 +688,108 @@
         }
         );
         $A.enqueueAction(changeAttachVisibilityAction);
+    },
+    uploadAttachments: function (component, files, helper) {
+        var parentId = component.get("v.recordId");
+        console.log(files[0]);
+
+        var fileCounter = {
+            value: 0,
+            reset: function (val) { value = val; },
+            //increase: function() { value++; },
+            //decrease: function() { value--; },
+            refreshIfEmpty: function () {
+                value--;
+                if (value == 0) refreshList();
+            }
+        }
+
+
+
+        function uploadFile(file, component) {
+
+            var createAttachmentAction = component.get("c.createAttachment");
+
+            if (file.size > 3000000) {
+                var toastEvent = $A.get("e.force:showToast");
+                toastEvent.setParams({
+                    mode: 'dismissable',
+                    title: 'ERROR',
+                    message: 'File Max size 3Mb',
+                    type: 'error'
+                });
+                toastEvent.fire();
+
+                fileCounter.value = fileCounter.value - 1;
+                if (fileCounter.value == 0) {
+                    helper.helperGetAttachList(component);
+                }
+
+            } else {
+                var reader = new FileReader();
+                reader.readAsBinaryString(file);
+                console.log(reader.result);
+                reader.onload = function (e) {
+                    var arrayBuffer = reader.result;
+                    createAttachmentAction.setParams({
+                        "parentId": parentId,
+                        "body": btoa(arrayBuffer),
+                        "name": file.name,
+                        "contentType": file.type,
+                        "filesize": file.size
+                    });
+
+                    createAttachmentAction.setCallback(this, function (response) {
+                        var state = response.getState();
+                        var resp = response.getReturnValue();
+                        if (state === "SUCCESS") {
+                            console.log('pfofofo' + resp);
+                            var toastEvent = $A.get("e.force:showToast");
+                            toastEvent.setParams({
+                                mode: 'dismissable',
+                                title: resp.isSuccess ? 'Success' : 'Warning',
+                                message: resp.errorMsg == '' ? 'File Uploaded with Success!' : resp.errorMsg,
+                                type: resp.isSuccess ? 'success' : 'error'
+
+                            });
+                            toastEvent.fire();
+
+                        } else if (state === "INCOMPLETE") {
+                            // do something
+                        }
+                        else if (state === "ERROR") {
+                            var errors = response.getError();
+                            if (errors) {
+                                if (errors[0] && errors[0].message) {
+                                    var toastEvent = $A.get("e.force:showToast");
+                                    toastEvent.setParams({
+                                        mode: 'dismissable',
+                                        title: 'ERROR',
+                                        message: 'Unexpected Error. Please Contact the Administrator',
+                                        type: 'error'
+                                    });
+                                    toastEvent.fire();
+                                }
+                            } else {
+                                console.log("Unknown error");
+                            }
+                        }
+
+                        fileCounter.value = fileCounter.value - 1;
+                        if (fileCounter.value == 0) {
+                            helper.helperGetAttachList(component);
+                        }
     }
+                    );
+                    $A.enqueueAction(createAttachmentAction);
+                }
+            }
+        }
+        fileCounter.value = files.length;
+        $.each(files, function (i, file) {
+            uploadFile(file, component);
+        });
+
+    }
+
 })

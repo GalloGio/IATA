@@ -1,7 +1,6 @@
 <aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="AttachmentListCtrl"
     access="GLOBAL">
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+  
     <ltng:require scripts="{!$Resource.jquery2_1_4}" afterScriptsLoaded="{!c.aftersScriptsLoadedScript}" />
     <ltng:require scripts="{!join(',',
                            $Resource.jszip + '/jszip.min.js',
@@ -40,6 +39,7 @@
 
     <aura:attribute name="showLoadingSpinner" type="Boolean" default="true" />
 
+    <aura:attribute name="isUploadingAttachments" type="Boolean" default="false" />
     <!-- POPUP SETTINGS -->
     <aura:attribute name="viewEditAttachmentPopup" type="Boolean" default="false" />
     <aura:attribute name="transferAttachmentsPopup" type="Boolean" default="false" />
@@ -52,7 +52,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <input id="file-field" multiple="true" name="file" style="display: none;" type="file" />
-
+   
     <aura:if isTrue="{!v.showLoadingSpinner}">
         <lightning:spinner alternativeText="Loading" />
     </aura:if>
@@ -119,11 +119,11 @@
                 </aura:if>
             </aura:if>
         </aura:set>
-        <p class="slds-p-horizontal_small">
-
+       
+        <p  class=" slds-p-horizontal_small card-max-size" >
             <aura:if isTrue="{!v.lstAttachmentsLength > 0}">
                 <lightning:datatable columns="{! v.columns }" data="{! v.lstAttachments }" keyField="{! v.keyField }"
-                    hideCheckboxColumn="true" onrowaction="{!c.attachLineActionHandler}" />
+                    hideCheckboxColumn="true" onrowaction="{!c.attachLineActionHandler}"/>
             </aura:if>
 
         </p>

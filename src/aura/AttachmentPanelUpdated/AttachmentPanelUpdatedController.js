@@ -9,7 +9,14 @@
                 //uploadFiles(this.files, $('[id$=fileIdentifierPick]').val());
                 //console.log(this.files);
                 component.set("v.showLoadingSpinner", true);
-                helper.uploadFiles(component, this.files, $('[id$=fileIdentifierPick]').val());
+
+                var isUploadingAttachment= component.get("v.isUploadingAttachments");
+               
+                if(isUploadingAttachment){
+                    helper.uploadAttachments(component, this.files,helper);
+                }else{
+                    helper.uploadFiles(component, this.files, $('[id$=fileIdentifierPick]').val());
+                }
             });
         });
     },
@@ -768,17 +775,9 @@
     },
 
     uploadFileNonSAAMSIDRAButtonHandler: function (component, event, helper) {
-        var parentId = component.get("v.recordId");
-        var panelProperties = component.get("v.panelProperties");
-
-        var link = '/p/attach/NoteAttach?pid=' + parentId + '& parentname=' + panelProperties.relatedCase.CaseNumber + '&retURL=%2F' + parentId;
-
-        var urlEvent = $A.get("e.force:navigateToURL");
-        urlEvent.setParams({
-            "url": link
-        });
-        urlEvent.fire();
-    }
-
-
+      
+        component.set("v.isUploadingAttachments",true);
+        $("#file-field").click();
+    },
+    
 })
