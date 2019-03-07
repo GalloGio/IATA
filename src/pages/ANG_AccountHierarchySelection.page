@@ -46,9 +46,13 @@
 
 
 		function bindCheckboxes() {
+			$('[data-group="select"]').on("change", function () {
+				rerenderNotes();
+			}
+
 			$('[data-group="main"]').on("change", function () {
 				var $clicked = $(this);
-
+				rerenderNotes();
 				if($clicked.prop("checked")){
 					$('[data-group="main"]').not($clicked).each(function () {
 						if($(this).prop("checked")){
@@ -97,7 +101,7 @@
 	</style>
 	
 	<apex:sectionHeader title="Newgen ISS Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
-	
+	<apex:actionFunction name="rerenderNotes" rerender="notes" />
 	<apex:form styleClass="pos-relative">
 		<apex:pageBlock mode="edit" rendered="{!editable}">
 
