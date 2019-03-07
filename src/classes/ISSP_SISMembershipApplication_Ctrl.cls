@@ -82,7 +82,7 @@ global class ISSP_SISMembershipApplication_Ctrl {
         this.account = [
             SELECT Id,Name,Legal_name__c,Status__c,Country_ISO_Code__c,
                 Sector__c, Category__c,Airline_Prefix__c,Airline_designator__c,
-                Give_SIS_Membership__c,SIS_Status__c,SIS_Sub_Status__c,
+                Give_SIS_Membership__c,SIS_Status__c,SIS_Sub_Status__c, Region_formula__c,
                 BillingStreet,BillingCity,BillingState,BillingPostalCode,BillingCountry
             FROM Account
             WHERE Id = :hqAccountId];
@@ -183,6 +183,7 @@ global class ISSP_SISMembershipApplication_Ctrl {
                 CaseArea__c = 'Airline Joining',
                 Reason1__c = 'SIS Client',
                 Classification_SIS__c = 'SIS Membership',
+                Region__c = account.Region_formula__c,
                 Type = selectedType,
                 Defect_Issue__c = MAP_DEFECT_ISSUE.get(selectedType),
                 Subject = 'SIS Participation - ' + account.name + ' - ' + selectedType,

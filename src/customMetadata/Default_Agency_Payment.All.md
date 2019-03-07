@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Country_Codes__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">All</value>
     </values>
     <values>
         <field>Default_Amount__c</field>

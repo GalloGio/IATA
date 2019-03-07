@@ -1,7 +1,7 @@
 public class AmazonFileTrgHelper {
 
-    public static final ID RT_CERTIFICATE_ID = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByDeveloperName().get('Certificate').getRecordTypeId();
-    private static final ID RT_SAAM_ID = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('ProcessEuropeSCE').getRecordTypeId();
+    public static final ID RT_CERTIFICATE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'Certificate');
+    private static final ID RT_SAAM_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 
     public static String sapNumberRequiredJSON{
         get{

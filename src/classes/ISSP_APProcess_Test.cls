@@ -547,7 +547,7 @@ private class ISSP_APProcess_Test
     
     @isTest static void test_method_f()
     {
-        String RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId;
+        Id RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
         AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c(
             DPC_System__c = 'Maestro'
         );
