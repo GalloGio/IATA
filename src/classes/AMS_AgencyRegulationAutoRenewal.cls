@@ -49,8 +49,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			accts.add(agReg.Account__c);
 		}
 
-		//DGR, TSA
-		Map<Id, AMS_Agency_Regulation__c> allCertificates = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c, Notification_Sent__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND (Type_of_Certificate__c = 'DGR' OR Type_of_Certificate__c = 'TSA')]);
+		//DGR, TSA and CATA
+		Map<Id, AMS_Agency_Regulation__c> allCertificates = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATACode__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c, Notification_Sent__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND (Type_of_Certificate__c = 'DGR' OR Type_of_Certificate__c = 'TSA' OR Type_of_Certificate__c = 'CATA')]);
 
 		system.debug('allCertificates: ' + allCertificates);
 
@@ -91,6 +91,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		}
 
 		Map<String, Id> countryTemplates = DGRemailTemplates('DGR');
+        Map<String, Id> countryTemplatesCATA = DGRemailTemplates('CATA');
         OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
@@ -171,6 +172,34 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					}
 				}
 			}
+			else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){
+				system.debug('creating renewal for CATA');
+
+
+				Integer activeCATAInAccount = allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
+				Integer cATAToRenewInAccount = certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
+				Integer numberOfRemainingCATAInAccountToExpire = activeCATAInAccount-cATAToRenewInAccount;
+
+				if(renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) == -1){
+					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c,  numberOfRemainingCATAInAccountToExpire);
+				}
+
+				Integer numberOfActiveCATA = renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c);
+
+				system.debug('creating renewal for CATA ' + numberOfRemainingCATAInAccountToExpire);
+
+				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveCATA, 0, 0,agReg.Type_Of_Certificate__c)){
+
+                    System.debug('## enter isCountBelowThreshold CATA');
+
+					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
+
+					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplatesCATA, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
+
+					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) + 1);
+				}
+
+			}
 			else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_TSA){
 				//only create renewal if account is going below DGR requirements
 				String key = allCertificates.get(agReg.Id).Account__r.IATA_ISO_Country__c + allCertificates.get(agReg.Id).Account__r.Location_Class__c;
@@ -214,8 +243,11 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
     			}
         	}
 
+            //China
+            if(typeOfCertificate == AMS_Utils.CERT_CATA && accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveCertificates == 0)
+            	return true;
             //India has this particular exception to the normal behaviour, no check is to be done
-            if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999)
+            else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999)
             	return false;
             else if(accountData.Location_Class__c == 'C'){
                 if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveCertificates < 2 )
