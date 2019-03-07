@@ -93,12 +93,12 @@ public class ANG_MulticountryHelper {
 	* Executes the validations on accounts 
 	* in a multicountry hierarchy
 	*
-	* @param accountsHePerBspMap: Map<Id, Set<Id>>
+	* @param accountsHePerBspMap: Map<String, Set<Id>>
 	* @param account: Account
 	* @return vw: ValidationWrapper
 	*
 	*/
-	private static ValidationWrapper runMulticountryValidations(Account account, Map<Id, Set<Id>> accountsHePerBspMap){
+	private static ValidationWrapper runMulticountryValidations(Account account, Map<String, Set<Id>> accountsHePerBspMap){
 
 		ValidationWrapper vw = new ValidationWrapper();
 		vw.valid = true;
@@ -124,9 +124,10 @@ public class ANG_MulticountryHelper {
         }
         else if(account.Location_Type__c == AMS_Utils.HE){
 
-            Id bspId = account.IATA_ISO_Country__r.AMS_Settlement_System__c;
+            String bspId = account.IATA_ISO_Country__r.AMS_Settlement_System__c;
+            String topParent = account.Top_Parent__c;
 
-            Set<Id> accountIds = accountsHePerBspMap.get(bspId);
+            Set<Id> accountIds = accountsHePerBspMap.get(bspId+topParent);
 
 			if(account.Parent.Location_Type__c == AMS_Utils.GE && account.IATA_ISO_Country__r.AMS_Settlement_System__c == account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
             	vw.valid = false;
@@ -160,6 +161,7 @@ public class ANG_MulticountryHelper {
             [SELECT
                 Id,
                 ParentId,
+                Top_Parent__c,
                 Location_Type__c,
                 Location_Class__c,
                 Parent.Location_Type__c,
@@ -179,35 +181,37 @@ public class ANG_MulticountryHelper {
             ]
         );
 
-		system.debug('Account Map: ' + accountMap);
+       	System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - fetchMulticountryAccounts] Account Map: ' + accountMap);
 
         return accountMap;
 
 	}
 
 	/**
-	* Aggregate HE accounts for each BSP
+	* Aggregate HE accounts for each BSP/GE
 	* 
 	* @param accountLst: List<Account>
-	* @return accountsHePerBspMap: Map<Id, Set<Id>>
+	* @return accountsHePerBspMap: Map<String, Set<Id>>
 	*
 	*/
-	private static Map<Id, Set<Id>> aggregateHeadEntitiesForEachBSP(List<Account> accountLst){
+	private static Map<String, Set<Id>> aggregateHeadEntitiesForEachBSP(List<Account> accountLst){
 
-		Map<Id, Set<Id>> accountsHePerBspMap = new Map<Id, Set<Id>>();
+		Map<String, Set<Id>> accountsHePerBspMap = new Map<String, Set<Id>>();
 
         for(Account acct : accountLst){
 
             if(acct.Location_Type__c == AMS_Utils.HE){
 
-                Id bspId = acct.IATA_ISO_Country__r.AMS_Settlement_System__c;
+                String bspId     = acct.IATA_ISO_Country__r.AMS_Settlement_System__c;
+                String topParent = acct.Top_Parent__c;
+                String aggrKey   = bspId+topParent;
 
-                if(accountsHePerBspMap.containsKey(bspId)){
-                    accountsHePerBspMap.get(bspId).add(acct.Id);
+                if(accountsHePerBspMap.containsKey(aggrKey)){
+                    accountsHePerBspMap.get(aggrKey).add(acct.Id);
                     continue;
                 }
 
-                accountsHePerBspMap.put(bspId, new Set<Id>{acct.Id});   
+                accountsHePerBspMap.put(aggrKey, new Set<Id>{acct.Id});   
             }
 
         }
@@ -231,20 +235,23 @@ public class ANG_MulticountryHelper {
 
 		if(acctWithRelshipsMap.isEmpty()) return;
 
-        Map<Id, Set<Id>> accountsHePerBspMap = aggregateHeadEntitiesForEachBSP(acctWithRelshipsMap.values());
+        Map<String, Set<Id>> accountsHePerBspMap = aggregateHeadEntitiesForEachBSP(acctWithRelshipsMap.values());
         
         for(Account acct : accountLst){
     	
             Account acctWithRelships = acctWithRelshipsMap.get(acct.Id);
-            ValidationWrapper vw;
-            if(acctWithRelships != null){
-            	vw = runMulticountryValidations(acctWithRelships, accountsHePerBspMap);
+           
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - processMulticountryValidations] Processing account: ' + acct);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - processMulticountryValidations] Processing account with relations: ' + acctWithRelships);
 
-	            if(!vw.valid){
-	               	acct.addError(vw.message);
-            	}
-            }
-        }
+			if(acctWithRelships != null){
+				ValidationWrapper vw = runMulticountryValidations(acctWithRelships, accountsHePerBspMap);
+				if(!vw.valid){
+					acct.addError(vw.message);
+				}
+			}
+
+		}
 
 	}
 
