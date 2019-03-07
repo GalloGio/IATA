@@ -33831,4 +33831,11 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>AMS_CountrySAttr_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_CountrySAttr_Validation</shortDescription>
+        <value>Irregularities for FS Request cannot be greather or equal than Irregularity Threshold for this location class.</value>
+    </labels>
 </CustomLabels>
