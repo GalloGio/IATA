@@ -101,9 +101,9 @@
 	</style>
 	
 	<apex:sectionHeader title="Newgen ISS Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
-	<apex:actionFunction name="rerenderNotes" rerender="notes" />
 	<apex:form styleClass="pos-relative">
 		<apex:pageBlock mode="edit" rendered="{!editable}">
+		<apex:actionFunction name="rerenderNotes" rerender="notes" />
 
 			<apex:panelGrid id="fields" columns="2" rendered="{!showTopPanel}">
 				<apex:pageBlockSection id="controlField" columns="1">
