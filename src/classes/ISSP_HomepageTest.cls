@@ -1,6 +1,53 @@
 @isTest
 private class ISSP_HomepageTest {
-    
+
+    @testSetup static void customSettingSetup() {
+        Portal_Applications__c insuranceApp = new Portal_Applications__c(Name = 'Insurance Providers',
+                                                                        ANG_Restrict_by_Agency_Category__c = 'IATA Passenger Sales Agent; IATA Cargo Agent',
+                                                                        Agency__c = true);
+        
+        Portal_Applications__c otherApp = new Portal_Applications__c(Name = 'Other', 
+                                                                    Agency__c = true,
+                                                                    ANG_Accredited_Agents_Only__c = true,
+                                                                    ANG_Restrict_by_Agency_Sector__c = 'Travel Agent');
+        insert new List<Portal_Applications__c>{insuranceApp, otherApp};
+    }
+
+    @isTest static void testServiceList() {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'Portugal', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
+                                    IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
+                                    IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP', ISO_Code__c = 'pt',
+                                    IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test', Region__c = 'Europe',
+                                    Informatica_Value__c = 'test', Multicountry_Enabled__c = true, Hide_Tax_Number_VAT__c = true, ANG_Enable_NewGen__c = true,
+                                    AMS_Default_State__c = 'PT');
+        insert country;
+
+        Account a = new Account(Name = 'agency',
+                                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+                                Location_Type__c = 'HE',
+                                Location_Class__c = 'P',
+                                Status__c = 'Approved',
+                                Sector__c = 'Travel Agent',
+                                Category__c = 'IATA Passenger Sales Agent',
+                                IATA_ISO_Country__c = country.Id);
+        insert a;
+
+        Contact c = ISSP_ObjectFactory.createNewContact();
+        c.Email = 'hey@hdasoojdihu.com';
+        c.AccountId = a.Id;
+        c.Financial_Assessment_Contact__c = true;
+        insert c;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(c);
+        c.OwnerId = newUser.Id;
+        update c;
+
+        Test.startTest();
+        System.runAs(newUser) {
+            ISSP_Homepage ctrl = new ISSP_Homepage();
+        }
+        Test.stopTest();
+    }
    
     public static testMethod void testISSP_HomepageTest() {
         

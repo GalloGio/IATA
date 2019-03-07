@@ -149,7 +149,6 @@ public class ISSP_AvailableServices_Test {
         );
 
         insert new List<Portal_Application_Right__c>{appRight,appRight2};
-
     }
 
     public static testMethod void testServices_1() {
@@ -164,6 +163,18 @@ public class ISSP_AvailableServices_Test {
         
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report'); 
         insert app;
+
+        String communityName = cttr.communityName;
+        String tocDocId = cttr.TOCdocumentId;
+        String servId = cttr.ServId;
+
+        Boolean isIccsMembershipInactive = cttr.isIccsMembershipInactive;
+        Boolean isIccsMembershipProspect = cttr.isIccsMembershipProspect;
+        Boolean isIccsMembershipActive = cttr.isIccsMembershipActive;
+        Boolean isIccsMembershipMember = cttr.isIccsMembershipMember;
+        Boolean isIccsMembershipWithdrawn = cttr.isIccsMembershipWithdrawn;
+        Boolean isIccsMembershipSuspended = cttr.isIccsMembershipSuspended;
+        String iccsPortalApplicationName = cttr.iccsPortalApplicationName;
         
         cttr.initialization();
         
@@ -517,13 +528,9 @@ public class ISSP_AvailableServices_Test {
         insert app;
         
         cttr.initialization();               
-        
     }
 
-
     public static testMethod void testnewAppsRequest2() {
-        
-
 		Test.startTest();
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
@@ -539,39 +546,6 @@ public class ISSP_AvailableServices_Test {
                 ANG_Accredited_Agents_Only__c = false,
                 Agency__c = true); 
         insert app;
-		
-		
-		/*
-        Portal_Applications__c easyPay1 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-                //ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false                
-            );
-        
-		
-		
-        Portal_Applications__c easyPay2 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
-                //ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.CARGO_AGENT,
-                ANG_Accredited_Agents_Only__c = false                
-            );
-
-
-        insert new List<Portal_Applications__c>{easyPay1, easyPay2};
-        
-        Test.startTest();
-        
-        ISSP_AvailableServices cttr = new ISSP_AvailableServices();
-        cttr.initialization();
-
-        ISSP_AvailableServices.newAppsRequest2 (easyPay1.Id, easyPay1.Name, con.Id, 'portalServiceRole', false, 'defaultPortalUserRole');
-
-        ISSP_AvailableServices.newAppsRequest2 (easyPay2.Id, easyPay2.Name, con.Id, 'portalServiceRole', true, 'defaultPortalUserRole');
-
-        ISSP_AvailableServices.newAppsRequest2 (app.Id, app.Name, con.Id, 'portalServiceRole', false, 'defaultPortalUserRole');
-		*/
-        
-
     }
 
     public static testMethod void testPoolerMethods() {
@@ -624,21 +598,16 @@ public class ISSP_AvailableServices_Test {
         }
     }   
 
-
     public static testMethod void testnewAppsRequest3() {
-            
         Account acc = ISSP_ObjectFactory.createNewAccount();        
         acc.Location_Type__c = 'HO';
-
         insert acc;
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.lastName = 'IATA';
         con.AccountId = acc.id;
         con.Authorized_Signatory__c = true;
-
         insert con;
-
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
@@ -665,17 +634,10 @@ public class ISSP_AvailableServices_Test {
 
             insert acc2;    
 
-            //Account.Location_Type__c,
-            //Account.Top_Parent__r.Location_Type__c, 
-            
-            //Account.Is_Branch_Abroad__c = true;
-            //Account.Status__c
-
             Contact con2 = ISSP_ObjectFactory.createNewContact();
             con2.AccountId = acc2.id;
             con2.Authorized_Signatory__c = true;
             con2.Email = 'ISSP_test_092393@test.test';
-            //con2.User_Portal_Status__c =
 
             insert con2;
             
@@ -687,17 +649,12 @@ public class ISSP_AvailableServices_Test {
     }     
 
     public static testMethod void testnewAppsRequest4() {
-            
         Account acc = ISSP_ObjectFactory.createNewAccount();        
-
         insert acc;
-
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.id;
-
         insert con;
-
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
@@ -793,21 +750,17 @@ public class ISSP_AvailableServices_Test {
             cttr.initialization();
         }
         Test.stopTest();
-    }    
-
+    }
 
     public static testMethod void testnewAppsRequest6() {
             
         Account acc = ISSP_ObjectFactory.createNewAccount();        
-
         insert acc;
 
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.id;
-
         insert con;
-
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
@@ -850,7 +803,17 @@ public class ISSP_AvailableServices_Test {
                 Default_User_Role__c = true,
                 Min_Users_With_Role__c = 2
             );
-            insert car;
+
+            Connected_App_Roles__c car2 = new Connected_App_Roles__c(
+                Name = 'OtherAppRole',
+                Connected_App__c = 'Other',
+                Permission_set_SSO__c = 'IEP_EdenRed',
+                Role__c = 'IEP Admin',
+                Default_User_Role__c = true,
+                Min_Users_With_Role__c = 2
+            );
+
+            insert new List<Connected_App_Roles__c>{car, car2};
 
             Portal_Applications__c easyPay1 = new Portal_Applications__c (
                     Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
@@ -875,15 +838,11 @@ public class ISSP_AvailableServices_Test {
     public static testMethod void testnewAppsRequest7() {
             
         Account acc = ISSP_ObjectFactory.createNewAccount();        
-
         insert acc;
-
 
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.id;
-
         insert con;
-
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User']; 
 
@@ -949,5 +908,4 @@ public class ISSP_AvailableServices_Test {
         }
         Test.stopTest();
     }    
-    
 }
