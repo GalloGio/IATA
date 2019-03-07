@@ -113,6 +113,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
             Company_Registration_ID__c,TAX_VAT_Registration_Number__c,Billing_File_Emrgcy_Contact_Number__c,Who_requested_to_join_TOU__c,Legal_Name_of_account__c,
             RecordTypeId, RecordType.DeveloperName, Do_you_want_to_add_Bank_Details__c, Data_Exporting_Organization_Name__c,Data_Exporting_Organization_Address__c,
             Data_Exporting_Organization_Phone__c,Data_Exporting_Organization_Fax__c,Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,
+            Data_Exporting_Organization_Email__c,
             Contact_Title__c,Contact_First_name__c,Contact_Last_name__c,Contact_email__c,Contact_number__c,
             Case__c, Case__r.CaseNumber, Case__r.BSPCountry__c, Case__r.Id, Case__r.RecordtypeId, Case__r.AccountId, Case__r.CaseArea__c, Case__r.Reason1__c, Case__r.Status, Case__r.Type,
             Case__r.Visible_on_ISS_Portal__c
@@ -226,10 +227,10 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
 
     /**
         This is the action of submit button
-        It actually sends the form to be processes, so it is markes as Open
+        It actually sends the form to be processes, so it is marked as 'For Review and Acceptance'
     **/
     public PageReference submitForm() {
-        this.newCase.Status = 'Open';
+        this.newCase.Status = 'For Review and Acceptance';
         if(validateFields() && saveDraft()) {
             // upload agreement
             uploadForm(this.newCase.Id, getFormFileName());
@@ -247,16 +248,8 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         Get the file name for the output form, it depends on the sis type
     **/
     private String getFormFileName() {
-        if (getisISPA()) {
-             return 'Standard Agreement for SIS Participation - ' + this.account.Name;
-        }
-        if (getisISUA()) {
-             return 'Standard Participation Agreement For SIS e-Invoicing Services - Non Transportation - ' + this.account.Name;
-        }
-        if (getisTOU()) {
-             return 'Standard Participation Agreement for SIS e-Invoicing services – Invoice Receiver - ' + this.account.Name;
-        }
-        return '';
+        String filename = 'Agreement for SIS e-Invoicing services-' + this.account.Name;
+        return fileName.left(75).trim() + '.pdf';
     }
 
     /**
@@ -383,7 +376,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
     **/
     public list<SelectOption> getListCountryOptions() {
         list<SelectOption> listOptions = new list<SelectOption>();
-        for (IATA_ISO_Country__c country: [SELECT Id,Name FROM IATA_ISO_Country__c]) {
+        for (IATA_ISO_Country__c country: [SELECT Id,Name FROM IATA_ISO_Country__c ORDER BY Name ASC]) {
             listOptions.add(new SelectOption(country.Id,country.Name));
         }
         return listOptions;
