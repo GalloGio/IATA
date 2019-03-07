@@ -257,6 +257,10 @@
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action20 --></label>
+        <name>AMS_OSCAR_Action20</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_OSCAR_Action3 --></label>
         <name>AMS_OSCAR_Action3</name>
     </customLabels>
@@ -331,6 +335,18 @@
     <customLabels>
         <label><!-- AMS OSCAR DISAPPROVAL --></label>
         <name>AMS_OSCAR_DISAPPROVAL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_ENDORSEMENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_FINANCIAL_SECURITY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_fees --></label>
+        <name>AMS_OSCAR_GDI_fees</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -545,8 +561,28 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP46 --></label>
+        <name>AMS_OSCAR_STEP46</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP47 --></label>
+        <name>AMS_OSCAR_STEP47</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP48 --></label>
+        <name>AMS_OSCAR_STEP48</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP49 --></label>
+        <name>AMS_OSCAR_STEP49</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP5 --></label>
         <name>AMS_OSCAR_STEP5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP50 --></label>
+        <name>AMS_OSCAR_STEP50</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
@@ -807,6 +843,50 @@
     <customLabels>
         <label>دور خدمات البوابة</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Agreement --></label>
+        <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Breadcrumb --></label>
+        <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Navigate_Portal --></label>
+        <name>ANG_ISSP_GDI_Navigate_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_Display_Records --></label>
+        <name>ANG_ISSP_GDI_Page_Display_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_First --></label>
+        <name>ANG_ISSP_GDI_Page_First</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_Last --></label>
+        <name>ANG_ISSP_GDI_Page_Last</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_Next --></label>
+        <name>ANG_ISSP_GDI_Page_Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Page_Previous --></label>
+        <name>ANG_ISSP_GDI_Page_Previous</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Terms_Conditions --></label>
+        <name>ANG_ISSP_GDI_Terms_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_UserProvisioningError --></label>
+        <name>ANG_ISSP_GDI_UserProvisioningError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_UserProvisioningWait --></label>
+        <name>ANG_ISSP_GDI_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
         <label>الكيان الرئيسي:</label>
@@ -11355,23 +11435,35 @@ and
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Converted_Total_Amount --></label>
+        <label><!-- ISSP_Financial_Insititutions --></label>
+        <name>ISSP_Financial_Insititutions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Insititutions_Header --></label>
+        <name>ISSP_Financial_Insititutions_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Financial_Insititutions_Subheader --></label>
+        <name>ISSP_Financial_Insititutions_Subheader</name>
+    </customLabels>
+    <customLabels>
+        <label>مجموع المبلغ المضمون (محول)</label>
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Details --></label>
+        <label>التفاصيل</label>
         <name>ISSP_Financial_Securities_Details</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Information --></label>
+        <label>الضمانات المالية</label>
         <name>ISSP_Financial_Securities_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Summary --></label>
+        <label>الملخص</label>
         <name>ISSP_Financial_Securities_Summary</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Financial_Securities_Total_Amount --></label>
+        <label>مجموع المبلغ المضمون</label>
         <name>ISSP_Financial_Securities_Total_Amount</name>
     </customLabels>
     <customLabels>
@@ -13071,6 +13163,10 @@ and
         <name>ISSP_Related_contacts</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Release_Version --></label>
+        <name>ISSP_Release_Version</name>
+    </customLabels>
+    <customLabels>
         <label>الإنتقال إلى حساب آخر</label>
         <name>ISSP_Relocate_Contact</name>
     </customLabels>
@@ -13221,6 +13317,10 @@ and
     <customLabels>
         <label><!-- ISSP SIS Membership AutoBilling Helptext --></label>
         <name>ISSP_SIS_Membership_AutoBilling_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership AutoBilling Helptext2 --></label>
+        <name>ISSP_SIS_Membership_AutoBilling_Helptext2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_SIS_Membership_BankMandateDescription --></label>

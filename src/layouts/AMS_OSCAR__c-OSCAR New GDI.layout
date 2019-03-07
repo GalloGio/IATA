@@ -66,6 +66,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Payment_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Invoice_status__c</field>
             </layoutItems>
             <layoutItems>

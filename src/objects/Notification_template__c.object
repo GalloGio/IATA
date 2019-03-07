@@ -342,6 +342,7 @@ Language__c ,
         <fullName>All_templates</fullName>
         <columns>NAME</columns>
         <columns>Subject__c</columns>
+        <columns>Identifier__c</columns>
         <columns>Language__c</columns>
         <columns>Type__c</columns>
         <columns>Expire_in_days__c</columns>

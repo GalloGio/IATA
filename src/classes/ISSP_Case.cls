@@ -6,6 +6,7 @@ public without sharing class ISSP_Case {
     private static Id APAC_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ExternalCasesIDFSglobal');
     private static Id CHINA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_China_North_Asia');
     private static Id EUROPE_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+    private static Id GLOBAL_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
     private static Id IDFS_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ComplaintIDFS');
     private static Id INTER_DPC_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
@@ -129,6 +130,15 @@ public without sharing class ISSP_Case {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
 
+            //ACAMBAS - WMO-389 - Start
+            if(newCase.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
+                newCase.Subject = 'IMPORTANT: ';
+                newCase.Subject = (newCase.BSP_CASS__c != null) ? newCase.Subject + newCase.BSP_CASS__c + ' Payment' : newCase.Subject;
+                newCase.Subject = (newCase.IATA_Code__c != null) ? newCase.Subject + ' - IATA Code ' + newCase.IATA_Code__c : newCase.Subject;
+                newCase.Subject = (newCase.Remittance_period__c != null) ? newCase.Subject + ' - Period ' +  newCase.Remittance_period__c : newCase.Subject;
+            }
+            //ACAMBAS - WMO-389 - End
+
             if(newCase.status == TIP_Utils.CASE_STATUS_DRAFT && newCase.CaseArea__c == TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS){ //Transparency in Payment's portal access assignment
                 User user = DAL_ISSP.getUser(Userinfo.getUserId());
                 Id appListId;
@@ -218,7 +228,7 @@ public without sharing class ISSP_Case {
         and is closed for more than 2 months
     **/
     public Boolean getHideForClosedCases() {
-        set<String> validRecordtypes = new set<String>{AME_RECORD_TYPE_ID, AMERICAS_RECORD_TYPE_ID, APAC_RECORD_TYPE_ID, CHINA_RECORD_TYPE_ID, EUROPE_RECORD_TYPE_ID, IDFS_RECORD_TYPE_ID};
+        set<String> validRecordtypes = new set<String>{AME_RECORD_TYPE_ID, AMERICAS_RECORD_TYPE_ID, APAC_RECORD_TYPE_ID, CHINA_RECORD_TYPE_ID, EUROPE_RECORD_TYPE_ID, GLOBAL_RECORD_TYPE_ID, IDFS_RECORD_TYPE_ID};
         //AMSU-119
         //return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
         return ((validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14)) || isMSOcase );
