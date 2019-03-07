@@ -66,16 +66,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
         get{
             notes = new Set<String>();
 
-            if(oscar.ANG_Type_Of_Change__c != null){
-                
-                if(tocList.contains(AMS_Utils.ANG_LEGAL_NAME) || tocList.contains(AMS_Utils.ANG_LEGAL_STATUS) || tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_OWNERSHIP)) notes.add('Change of legal name / legal status / shareholding / ownership can be applied to any agency in the current hierarchy');
-                
-                if(isMulticountry && (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))) notes.add('Change of location type will swap the selected agencies.');
-                else if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY) ) notes.add('Change of location type will swap the current agency with the current HE.');                
-                
-                if(tocList.contains(AMS_Utils.ANG_LOCATION)) notes.add('Change of location can be applied only to a single agency.');               
-				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE of another hierarchy or one of the selected AE.');
-                if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null && newParent != null){
+			if(oscar.ANG_Type_Of_Change__c != null){
+				
+				if(tocList.contains(AMS_Utils.ANG_LEGAL_NAME) || tocList.contains(AMS_Utils.ANG_LEGAL_STATUS) || tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_OWNERSHIP)) notes.add('Change of legal name / legal status / shareholding / ownership can be applied to any agency in the current hierarchy');
+				
+				if(isMulticountry && (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))) notes.add('Change of location type will swap the selected agencies.');
+				else if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY) ) notes.add('Change of location type will swap the current agency with the current HE.');				
+				
+				if(tocList.contains(AMS_Utils.ANG_LOCATION)) notes.add('Change of location can be applied only to a single agency.');				
+				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE or GE of another hierarchy or one of the selected AE.');
+				if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null && newParent != null){
 
                     //NEWGEN-5008 - TEST SCENARIO 2/A AND 2/B
                     if(this.isMulticountry){
@@ -579,16 +579,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
         if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && !tocList.contains(AMS_Utils.ANG_HIERARCHY) && !isAllHierarchySelected()) errorChecks.put(AMS_Utils.ANG_ACCREDITATION_TYPE, true);
 
-        if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
-            if(oscar.New_parent__c == null){
-                errorChecks.put(AMS_Utils.ANG_HIERARCHY, true);
-            }else{
-                if(isTerminatedAccount(oscar.New_parent__c)) errorChecks.put('Terminated Accounts', true);
-                if(!this.isMulticountry && isMovingTopLocationTypeAccount()  && !isAllHierarchySelected()) errorChecks.put('Orphan Accounts', true);
-				if(diffDestination(oscar.New_parent__c)  && !hasTopLocationType(oscar.New_parent__c)) errorChecks.put('Top Location Type', true);
-                if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected()) errorChecks.put('Location Type Change Detected', true);
-                if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c)) errorChecks.put('Must include New Parent', true);
-                if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c)) errorChecks.put('Multiple Hierarchies', true);
+		if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
+			if(oscar.New_parent__c == null){
+				errorChecks.put(AMS_Utils.ANG_HIERARCHY, true);
+			}else{
+				if(isTerminatedAccount(oscar.New_parent__c)) errorChecks.put('Terminated Accounts', true);
+				if(!this.isMulticountry && isMovingTopLocationTypeAccount()  && !isAllHierarchySelected()) errorChecks.put('Orphan Accounts', true);
+				if(!this.isMulticountry && diffDestination(oscar.New_parent__c)  && !hasTopLocationType(oscar.New_parent__c)) errorChecks.put('Top Location Type', true);
+				if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected()) errorChecks.put('Location Type Change Detected', true);
+				if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c)) errorChecks.put('Must include New Parent', true);
+				if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c)) errorChecks.put('Multiple Hierarchies', true);
 
                 //NEWGEN-5007 
                 if(this.isCashOrCashless && (newParent.Location_Type__c == AMS_Utils.GE || (newParent.Top_Parent__r != null && newParent.Top_Parent__r.Location_Type__c == AMS_Utils.GE))) errorChecks.put('Standard or Lite to Multicountry hierarchy', true);
