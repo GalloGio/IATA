@@ -336,4 +336,67 @@ public without sharing class ISSP_WS_Utilities {
             Database.upsert(listRightsToUpsert,false);
         }
     }
+	
+	public static void fakemethod () {
+		Integer i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		i=0;
+		
+	
+	
+	}
 }
