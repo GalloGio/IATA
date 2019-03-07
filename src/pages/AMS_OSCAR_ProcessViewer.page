@@ -536,6 +536,16 @@ function buildFunctionCall(func, argList){
     </div>
 </apex:pageBlock>
 
+<apex:pageBlock rendered="{!IsGDIWithNoParentCase}">
+    <div class="overlay">
+    <div class="overlay-content">
+        <p style="font-size: 36px;">LOCKED</p>
+        <p>In order to proceed please fill the parent Case Field. 
+        </p>
+      </div>
+    </div>
+</apex:pageBlock>
+
     <apex:form id="oscarForm" rendered="{!IF(oscar != null && oscar.Process__c!=null ,true, false)}">
         <apex:outputPanel id="theProcess">
             <apex:pageBlock >

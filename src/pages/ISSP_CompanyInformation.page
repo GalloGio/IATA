@@ -45,7 +45,7 @@
                             <apex:outPutPanel layout="block" rendered="{!isLegalNamePopulated}">
                                 <label class="lbl col-lg-5" style="padding-left:28px" for="exampleInputEmail1">{!$ObjectType.Account.fields.Legal_name__c.Label}</label>
                                 <div class="col-lg-7">
-                                    {!con.Account.Top_Parent__r.Legal_name__c}
+                                    {!LegalNameToShow}
                                 </div>
                             </apex:outPutPanel>
                             </div>
@@ -53,7 +53,7 @@
                             <div class="row">
                                 <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Name_on_AOC__c.Label}</label>
                                 <div class="col-lg-7">
-                                    {!con.Account.Top_Parent__r.Name_on_AOC__c}
+                                    {!NameOnAOC}
                                 </div>                            
                             </div>
                             </apex:outPutPanel>

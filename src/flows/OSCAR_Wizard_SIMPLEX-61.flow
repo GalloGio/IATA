@@ -42,44 +42,6 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
-    <actionCalls>
-        <name>Get_Contact</name>
-        <label>Get Contact</label>
-        <locationX>27</locationX>
-        <locationY>1136</locationY>
-        <actionName>AMS_GetAccountContact</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>OscarCaseCreation</targetReference>
-        </connector>
-        <inputParameters>
-            <name>accountIds</name>
-            <value>
-                <elementReference>accountId</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>ContactToProcess</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Send_PCI_notification</name>
-        <label>Send PCI notification</label>
-        <locationX>25</locationX>
-        <locationY>1226</locationY>
-        <actionName>AMS_PCI_WizardNotification</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>NeedsStagingArea</targetReference>
-        </connector>
-        <inputParameters>
-            <name>caseIds</name>
-            <value>
-                <elementReference>OscarCaseId</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
     <apexPluginCalls>
         <name>AMS_FillCaseTypeOfCustomer</name>
         <label>AMS_FillCaseTypeOfCustomer</label>
@@ -87,7 +49,7 @@
         <locationY>785</locationY>
         <apexClass>AMS_FillCaseTypeOfCustomer</apexClass>
         <connector>
-            <targetReference>Is_PCI_Case</targetReference>
+            <targetReference>OscarCaseCreation</targetReference>
         </connector>
         <inputParameters>
             <name>Category_Input</name>
@@ -109,13 +71,29 @@
     <assignments>
         <name>AssignContactNotFoundMessage</name>
         <label>AssignContactNotFoundMessage</label>
-        <locationX>1258</locationX>
-        <locationY>520</locationY>
+        <locationX>1274</locationX>
+        <locationY>511</locationY>
         <assignmentItems>
             <assignToReference>errormessagecontactlookup</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>The contact input was not found, please refine your criteria.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ContactChooser</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignContactNotFoundMessageIFAP</name>
+        <label>AssignContactNotFoundMessageIFAP</label>
+        <locationX>1203</locationX>
+        <locationY>595</locationY>
+        <assignmentItems>
+            <assignToReference>errormessagecontactlookup</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>The contact input is not IFAP, please refine your criteria.</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -219,44 +197,14 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NewPCICompliantValue</assignToReference>
+            <assignToReference>GDIValue</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>PCI_Compliant</elementReference>
+                <elementReference>GDI</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>IsValidProcessAccountDecision</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssingCase</name>
-        <label>AssingCase</label>
-        <locationX>6</locationX>
-        <locationY>909</locationY>
-        <assignmentItems>
-            <assignToReference>OscarCaseId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>varPCICase.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>createdOscarName</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>varPCICase.CaseNumber</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>OscarId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>varPCICase.OSCAR__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>EmptyScreen</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -771,8 +719,8 @@
     <assignments>
         <name>TradeNameAssignment_0</name>
         <label>TradeNameAssignment</label>
-        <locationX>4</locationX>
-        <locationY>249</locationY>
+        <locationX>43</locationX>
+        <locationY>235</locationY>
         <assignmentItems>
             <assignToReference>AccountTradeName</assignToReference>
             <operator>Assign</operator>
@@ -787,8 +735,8 @@
     <assignments>
         <name>TypeOfOscarProcessAssignment_acc</name>
         <label>TypeOfOscarProcessAssignment</label>
-        <locationX>328</locationX>
-        <locationY>299</locationY>
+        <locationX>347</locationX>
+        <locationY>194</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
@@ -801,15 +749,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>TypeOfOscarProcessAssignment_no_PCI</name>
-        <label>TypeOfOscarProcessAssignment no PCI</label>
-        <locationX>171</locationX>
-        <locationY>179</locationY>
+        <name>TypeOfOscarProcessAssignment_not</name>
+        <label>TypeOfOscarProcessAssignment</label>
+        <locationX>348</locationX>
+        <locationY>309</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>noPCIChoice</elementReference>
+                <elementReference>Type_of_OSCAR_process_not_acc</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -817,15 +765,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>TypeOfOscarProcessAssignment_not</name>
-        <label>TypeOfOscarProcessAssignment</label>
-        <locationX>461</locationX>
-        <locationY>412</locationY>
+        <name>TypeOfOscarProcessAssignmentWithGDI</name>
+        <label>TypeOfOscarProcessAssignmentWithGDI</label>
+        <locationX>470</locationX>
+        <locationY>400</locationY>
         <assignmentItems>
             <assignToReference>Type_of_OSCAR_process_man</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Type_of_OSCAR_process_not_acc</elementReference>
+                <elementReference>Type_of_OSCAR_process_not_acc_w_gdi</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -838,6 +786,14 @@
         <dataType>String</dataType>
         <value>
             <stringValue>MAJOR.CHANGES</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>GDI</name>
+        <choiceText>GDI</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ANG.GDI.1.0</stringValue>
         </value>
     </choices>
     <choices>
@@ -929,14 +885,6 @@
         </value>
     </choices>
     <choices>
-        <name>PCI_Compliant</name>
-        <choiceText>PCI Compliant</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>PCI.COMPLIANT.1.0</stringValue>
-        </value>
-    </choices>
-    <choices>
         <name>ProcessWithBSPLink</name>
         <choiceText>Process with BSPLink</choiceText>
         <dataType>String</dataType>
@@ -979,7 +927,7 @@
     <decisions>
         <name>CheckIfEmailIsFound</name>
         <label>CheckIfEmailIsFound</label>
-        <locationX>1439</locationX>
+        <locationX>1438</locationX>
         <locationY>523</locationY>
         <defaultConnector>
             <targetReference>ContactChooserScreen</targetReference>
@@ -999,6 +947,28 @@
                 <targetReference>AssignContactNotFoundMessage</targetReference>
             </connector>
             <label>No Contact</label>
+        </rules>
+        <rules>
+            <name>No_Contact_for_IFAP</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>GDIValue</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>isIFAP</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignContactNotFoundMessageIFAP</targetReference>
+            </connector>
+            <label>No Contact for IFAP</label>
         </rules>
     </decisions>
     <decisions>
@@ -1136,139 +1106,40 @@
         </rules>
     </decisions>
     <decisions>
-        <name>has_a_PCI_case</name>
-        <label>has a PCI case?</label>
-        <locationX>3</locationX>
-        <locationY>707</locationY>
+        <name>Is_GDI_eligible</name>
+        <label>Is GDI eligible</label>
+        <locationX>630</locationX>
+        <locationY>305</locationY>
         <defaultConnector>
-            <targetReference>ChangeFieldsAssignmentAccountToProcess</targetReference>
+            <targetReference>Process_Chooser_not_Accredited</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>varPCICase</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>AccountToProcess.Location_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>BR</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AccountToProcess.Location_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>AO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AccountToProcess.Location_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HO</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>PCI_Case_found</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_PCI_available</name>
-        <label>Is PCI available</label>
-        <locationX>472</locationX>
-        <locationY>182</locationY>
-        <defaultConnector>
-            <targetReference>Process_Chooser_Accredited_noPCI</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes_PCI_isAvailable</name>
-            <conditionLogic>(1 OR 2) AND 3 AND (4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10)</conditionLogic>
-            <conditions>
-                <leftValueReference>AccountToProcess.Location_Class__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>P</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Location_Class__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>D</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountRecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>IATA_Agency</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Approved</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Cash basis/no commission</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Cash basis/with commission</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Changes processed</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Listed</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Review</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Under review</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Process_Chooser_Accredited</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_PCI_Case</name>
-        <label>Is PCI Case</label>
-        <locationX>219</locationX>
-        <locationY>786</locationY>
-        <defaultConnector>
-            <targetReference>OscarCaseCreation</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes_isPCI</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>NewPCICompliantValue</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Contact</targetReference>
+                <targetReference>Process_Chooser_Not_Accredited_GDI_Eligible</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -1276,10 +1147,10 @@
     <decisions>
         <name>isAccountAccredited</name>
         <label>isAccountAccredited</label>
-        <locationX>732</locationX>
-        <locationY>305</locationY>
+        <locationX>716</locationX>
+        <locationY>193</locationY>
         <defaultConnector>
-            <targetReference>Process_Chooser_not_Accredited</targetReference>
+            <targetReference>Is_GDI_eligible</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
@@ -1290,7 +1161,7 @@
                 <operator>NotEqualTo</operator>
             </conditions>
             <connector>
-                <targetReference>GetAccountRecordType</targetReference>
+                <targetReference>Process_Chooser_Accredited</targetReference>
             </connector>
             <label>Accredited</label>
         </rules>
@@ -1456,13 +1327,6 @@
                     <elementReference>NewProcessOscarCorrection</elementReference>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>PCI_Compliant</elementReference>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>OscarRecordTypeLookup</targetReference>
             </connector>
@@ -1592,31 +1456,6 @@
                 <targetReference>ErrorMessageNoValidProcessScreen</targetReference>
             </connector>
             <label>IsValidChange</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Needs_PCI_notification</name>
-        <label>Needs PCI notification</label>
-        <locationX>219</locationX>
-        <locationY>1040</locationY>
-        <defaultConnector>
-            <targetReference>NeedsStagingArea</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes_PCI_Notification</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>NewPCICompliantValue</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Send_PCI_notification</targetReference>
-            </connector>
-            <label>Yes</label>
         </rules>
     </decisions>
     <decisions>
@@ -1766,56 +1605,12 @@
             </connector>
             <label>IsBrWithoutParentId</label>
         </rules>
-        <rules>
-            <name>IsCERT</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-            <conditions>
-                <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>NewProcessCertificateValue</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Location_Class__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>P</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>AccountToProcess.Location_Class__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>C</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>GetProductCategory</targetReference>
-            </connector>
-            <label>IsCERT</label>
-        </rules>
-        <rules>
-            <name>Is_PCI</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>PCI_Compliant</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Search_for_PCI_Cases</targetReference>
-            </connector>
-            <label>Is PCI</label>
-        </rules>
     </decisions>
     <decisions>
         <name>NeedsStagingArea</name>
         <label>NeedsStagingArea</label>
         <locationX>223</locationX>
-        <locationY>1198</locationY>
+        <locationY>1197</locationY>
         <defaultConnector>
             <targetReference>FillAMSAccreditationGDS</targetReference>
         </defaultConnector>
@@ -1835,6 +1630,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>NewProcessCertificate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Type_of_OSCAR_process_man</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>GDIValue</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -1868,7 +1670,7 @@
             <label>DoesItHaveParentId</label>
         </rules>
     </decisions>
-    <description>The BR category does not change to the HO category when they both have different categories</description>
+    <description>The BR Location class does not change to the HO location class when they both have different LC. INC353410</description>
     <dynamicChoiceSets>
         <name>RecordChoiceContact</name>
         <dataType>String</dataType>
@@ -1899,10 +1701,7 @@
     <formulas>
         <name>AccountForTheCase</name>
         <dataType>String</dataType>
-        <expression>IF({!OscarProcessType} = &apos;NEW.MSO.1.0&apos;,
-{!airlineId},
-{!AccountToProcess.Id}
-)</expression>
+        <expression>{!AccountToProcess.Id}</expression>
     </formulas>
     <formulas>
         <name>AccountRoleFirstName</name>
@@ -1963,27 +1762,15 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBRValue}  , &apos;New BR / IP&apos
 IF({!Type_of_OSCAR_process_man} = {!NewProcessSAValue}  , &apos;New SA / CHV – New Code&apos;,
 IF({!Type_of_OSCAR_process_man} = {!NewProcessAHAValue}  , &apos;GSA / MSO / Handling Agent&apos;,
 IF({!Type_of_OSCAR_process_man} = {!NewProcessGSSAValue}  , &apos;New GSSA&apos;,
-IF({!Type_of_OSCAR_process_man} = {!NewProcessTIDSValue} , &apos;New TIDS&apos;,
+IF({!Type_of_OSCAR_process_man} = {!NewProcessTIDSValue} , &apos;TIDS&apos;,
 IF({!Type_of_OSCAR_process_man} = {!NewProcessGSAValue}  , &apos;GSA / MSO / Handling Agent&apos;,
 IF({!Type_of_OSCAR_process_man} = {!NewProcessMSOValue}  , &apos;GSA / MSO / Handling Agent&apos;,
 IF({!Type_of_OSCAR_process_man} = {!NewProcessOscarCorrectionValue}  , &apos;Corrections&apos;,
 IF({!Type_of_OSCAR_process_man} = {!Agency_ChangesValue}  , &apos;Agency Changes&apos;,
 IF({!Type_of_OSCAR_process_man} = {!VoluntaryRelinquishmentValue}  , &apos;CLO - Closure&apos;,
 IF({!Type_of_OSCAR_process_man} = {!NewProcessCertificateValue}  , &apos;PAX/CARGO Certificate&apos;,
-IF({!Type_of_OSCAR_process_man} = {!NewPCICompliantValue}, &apos;PCI DSS Compliant&apos;,
-IF({!Type_of_OSCAR_process_man} = {!NewProcessBRAbroadValue}  , &apos;New BR Abroad&apos; , &apos; &apos;)))))))))))))))</expression>
-    </formulas>
-    <formulas>
-        <description>CNSCase</description>
-        <name>CNSCase</name>
-        <dataType>Boolean</dataType>
-        <expression>IF(and({!AccountRTDevName.DeveloperName} = &apos;IATA_Agency&apos;, {!AccountToProcess.CNS_Account__c} = TRUE,{!CaseArea} = &apos;Accreditation Process&apos;), TRUE, FALSE )</expression>
-    </formulas>
-    <formulas>
-        <description>CNSGroups</description>
-        <name>CNSGroups</name>
-        <dataType>String</dataType>
-        <expression>IF(and({!AccountRTDevName.DeveloperName} = &apos;IATA_Agency&apos;, {!AccountToProcess.CNS_Account__c} = TRUE,{!CaseArea} = &apos;Accreditation Process&apos;),&apos;CNS Team&apos; , &apos; &apos; )</expression>
+IF({!Type_of_OSCAR_process_man} = {!NewProcessBRAbroadValue}  , &apos;New BR Abroad&apos; , 
+IF({!Type_of_OSCAR_process_man} = {!GDIValue}  , &apos;GDI setup&apos; , &apos; &apos;)))))))))))))))</expression>
     </formulas>
     <formulas>
         <name>ContactIdToUse</name>
@@ -1994,14 +1781,8 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessBRAbroadValue}  , &apos;New BR Abr
         <name>ErrorMessageFormula</name>
         <dataType>String</dataType>
         <expression>IF({!IsValidChangeFormula} == &apos;NOK&apos;, &apos;The wizard for Agency changes is not available for TIDS, MSO, GSA, GSSA and AHA Accounts. Please make sure your account is correct or has the correct Category.&apos;,
-IF({!IsValidLocationType} == &apos;NOK&apos; &amp;&amp; {!AccountLocationClass} == &apos;I&apos;, &apos;Agency changes can&amp;apos;t be performed for class I. Please create a correction case.&apos;,
 IF({!IsValidLocationType} == &apos;NOK&apos;, &apos;The process only starts if the account has the proper process / location class.&apos;,
-&apos;&apos;)))</expression>
-    </formulas>
-    <formulas>
-        <name>IATACodeToCase</name>
-        <dataType>String</dataType>
-        <expression>IF(ISBLANK({!ProductCategoryId}), &apos;&apos;, {!AccountToProcess.IATACode__c})</expression>
+&apos;&apos;))</expression>
     </formulas>
     <formulas>
         <name>IsProcessHO</name>
@@ -2026,11 +1807,10 @@ IF( ({!Type_of_OSCAR_process_man} = {!NewProcessGSSAValue} &amp;&amp;  {!Account
 IF( ({!Type_of_OSCAR_process_man} = {!NewProcessMSOValue} &amp;&amp;  {!AccountLocationClass}  != &apos;M&apos; ) , &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_man} = {!NewProcessTIDSValue} &amp;&amp;  {!AccountLocationClass}  != &apos;T&apos; ) , &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_man} = {!NewProcessAHAValue} &amp;&amp;  {!AccountLocationClass}  != &apos;X&apos; ), &apos;NOK&apos; , 
-IF( ({!Type_of_OSCAR_process_man} = {!Agency_ChangesValue} &amp;&amp;  {!AccountLocationClass}  == &apos;I&apos; ), &apos;NOK&apos; ,
 IF( ({!Type_of_OSCAR_process_man} = {!VoluntaryRelinquishmentValue} &amp;&amp; {!VRProcess} = {!VR_Passenger_Cargo}  &amp;&amp;  NOT(OR({!AccountLocationClass}  == &apos;C&apos;, {!AccountLocationClass}  == &apos;P&apos;, {!AccountLocationClass}  == &apos;D&apos;, {!AccountLocationClass}  == &apos;R&apos;, {!AccountLocationClass}  == &apos;I&apos;, {!AccountLocationClass}  == &apos;Q&apos; )) ), &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_man} = {!VoluntaryRelinquishmentValue} &amp;&amp; {!VRProcess} = {!VR_Code_Assignment}  &amp;&amp;  NOT(OR({!AccountLocationClass}  == &apos;G&apos;, {!AccountLocationClass}  == &apos;M&apos;, {!AccountLocationClass}  == &apos;X&apos;, {!AccountLocationClass}  == &apos;T&apos; )) ), &apos;NOK&apos; , 
 IF( ({!Type_of_OSCAR_process_man} = {!NewProcessCertificateValue} &amp;&amp;  NOT(OR({!AccountLocationClass}  == &apos;C&apos;, {!AccountLocationClass}  == &apos;P&apos; )) ), &apos;NOK&apos; , 
-&apos;OK&apos; )))))))))</expression>
+&apos;OK&apos; ))))))))</expression>
     </formulas>
     <formulas>
         <name>NewProcessHoFormula</name>
@@ -2060,23 +1840,19 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessMSOValue}  , &apos;NEW.MSO.1.0&apo
 IF({!Type_of_OSCAR_process_man} = {!NewProcessOscarCorrectionValue}  , &apos;CORRECTION.1.0&apos;,
 IF(({!Type_of_OSCAR_process_man} = {!VoluntaryRelinquishmentValue} &amp;&amp; {!VRProcess} = {!VR_Passenger_Cargo} ) , &apos;VR.1.0&apos;,
 IF(({!Type_of_OSCAR_process_man} = {!VoluntaryRelinquishmentValue} &amp;&amp; {!VRProcess} = {!VR_Code_Assignment}) , &apos;VR.1.0.CA&apos;,
-IF({!Type_of_OSCAR_process_man} = {!NewPCICompliantValue}, &apos;PCI.COMPLIANT.1.0&apos;, 
-IF({!Type_of_OSCAR_process_man} = {!NewProcessBRAbroadValue}  , &apos;NEW.BR.ABROAD&apos; , &apos;MAJOR.CHANGES&apos;)))))))))))))))))</expression>
+IF({!Type_of_OSCAR_process_man} = {!NewProcessBRAbroadValue}  , &apos;NEW.BR.ABROAD&apos; , 
+IF({!Type_of_OSCAR_process_man} = {!GDIValue}  , &apos;ANG.GDI.1.0&apos; , &apos;MAJOR.CHANGES&apos;)))))))))))))))))</expression>
     </formulas>
     <formulas>
         <name>OscarRecordTypeFormula</name>
         <dataType>String</dataType>
         <expression>If({!process} = &apos;CORRECTION.1.0&apos; , &apos;CORRECTION&apos; ,
-	IF({!Type_of_OSCAR_process_man} = {!Agency_ChangesValue}  , &apos;CHANGE&apos;, 
-		IF({!Type_of_OSCAR_process_man} = {!VoluntaryRelinquishmentValue}  , &apos;VOLUNTARY_RELINQUISHMENT&apos;, 
-			IF({!Type_of_OSCAR_process_man} = {!NewProcessOscarCorrectionValue}, &apos;CORRECTION&apos;,
-				IF({!Type_of_OSCAR_process_man} = {!NewPCICompliantValue}, &apos;CERTIFICATION&apos;, 
-					IF({!Type_of_OSCAR_process_man} = {!NewProcessCertificateValue}  , &apos;CERTIFICATE&apos;, &apos;NEW&apos;)
-				)
-			)
-		)
-	)
-)</expression>
+IF({!Type_of_OSCAR_process_man} = {!Agency_ChangesValue}  , &apos;CHANGE&apos;, 
+IF({!Type_of_OSCAR_process_man} = {!VoluntaryRelinquishmentValue}  , &apos;VOLUNTARY_RELINQUISHMENT&apos;, 
+IF({!Type_of_OSCAR_process_man} = {!NewProcessOscarCorrectionValue}  , &apos;CORRECTION&apos;,
+IF({!Type_of_OSCAR_process_man} = {!NewProcessCertificateValue}  , &apos;CERTIFICATE&apos;,
+IF({!Type_of_OSCAR_process_man} = {!GDIValue}  , &apos;ANG_New_HE&apos;,
+&apos;NEW&apos;))))))</expression>
     </formulas>
     <formulas>
         <name>PercentageAdjustmentFormula</name>
@@ -2105,14 +1881,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
         <name>TypeOfOscarProcessFormula</name>
         <dataType>String</dataType>
         <expression>{!Type_of_OSCAR_process_man}</expression>
-    </formulas>
-    <formulas>
-        <name>TypeOfSubcategory</name>
-        <dataType>String</dataType>
-        <expression>IF(TEXT({!AccountToProcess.Location_Class__c}) = &apos;P&apos;, 
-	&apos;PAX Certificate. Paper Printed Copy&apos;, 
-	IF(TEXT({!AccountToProcess.Location_Class__c}) = &apos;C&apos;, &apos;CARGO Certificate. Paper Printed Copy&apos;, &apos;&apos;)
-)</expression>
     </formulas>
     <interviewLabel>OSCAR Wizard (SIMPLEX) {!$Flow.CurrentDateTime}</interviewLabel>
     <label>OSCAR Wizard (SIMPLEX)</label>
@@ -2905,7 +2673,7 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
         <inputAssignments>
             <field>Location_Class__c</field>
             <value>
-                <elementReference>AccountLocationClass</elementReference>
+                <elementReference>AccountToProcess.Location_Class__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3049,11 +2817,11 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
     <recordCreates>
         <name>OscarCaseCreation</name>
         <label>OscarCaseCreation</label>
-        <locationX>218</locationX>
-        <locationY>940</locationY>
+        <locationX>226</locationX>
+        <locationY>784</locationY>
         <assignRecordIdToReference>OscarCaseId</assignRecordIdToReference>
         <connector>
-            <targetReference>Needs_PCI_notification</targetReference>
+            <targetReference>NeedsStagingArea</targetReference>
         </connector>
         <inputAssignments>
             <field>AccountId</field>
@@ -3074,12 +2842,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>CNSCase__c</field>
-            <value>
-                <elementReference>CNSCase</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>CaseArea__c</field>
             <value>
                 <elementReference>CaseArea</elementReference>
@@ -3092,18 +2854,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Groups__c</field>
-            <value>
-                <elementReference>CNSGroups</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>IATACodeProduct__c</field>
-            <value>
-                <elementReference>IATACodeToCase</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>OSCAR__c</field>
             <value>
                 <elementReference>OscarId</elementReference>
@@ -3113,12 +2863,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <field>Origin</field>
             <value>
                 <elementReference>CaseOriginFormula</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Product_Category_ID__c</field>
-            <value>
-                <elementReference>ProductCategoryId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -3156,8 +2900,8 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
     <recordCreates>
         <name>OSCARCreation</name>
         <label>OSCARCreation</label>
-        <locationX>694</locationX>
-        <locationY>777</locationY>
+        <locationX>697</locationX>
+        <locationY>778</locationY>
         <assignRecordIdToReference>OscarId</assignRecordIdToReference>
         <connector>
             <targetReference>CaseRecordTypeOSCARLookup</targetReference>
@@ -3405,26 +3149,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
         </outputAssignments>
     </recordLookups>
     <recordLookups>
-        <name>AccountRTDevNameFL</name>
-        <label>AccountRTDevNameFL</label>
-        <locationX>730</locationX>
-        <locationY>196</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>isAccountAccredited</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>AccountToProcess.RecordTypeId</elementReference>
-            </value>
-        </filters>
-        <object>RecordType</object>
-        <outputReference>AccountRTDevName</outputReference>
-        <queriedFields>DeveloperName</queriedFields>
-    </recordLookups>
-    <recordLookups>
         <name>AccountToProcessLookup_0</name>
         <label>AccountToProcessLookup</label>
         <locationX>554</locationX>
@@ -3559,15 +3283,12 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
         <queriedFields>IATA_ISO_Shipping_State__c</queriedFields>
         <queriedFields>CNS_Agency__c</queriedFields>
         <queriedFields>Link_agent_name__c</queriedFields>
-        <queriedFields>RecordTypeId</queriedFields>
-        <queriedFields>Status__c</queriedFields>
-        <queriedFields>CNS_Account__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>AccountToProcessLookup_1_0</name>
         <label>AccountToProcessLookup</label>
-        <locationX>5</locationX>
-        <locationY>167</locationY>
+        <locationX>194</locationX>
+        <locationY>187</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>TradeNameAssignment_0</targetReference>
@@ -3786,7 +3507,7 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
         <name>ContactRecordLookup</name>
         <label>ContactRecordLookup</label>
         <locationX>1439</locationX>
-        <locationY>400</locationY>
+        <locationY>399</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CheckIfEmailIsFound</targetReference>
@@ -3799,6 +3520,10 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             </value>
         </filters>
         <object>Contact</object>
+        <outputAssignments>
+            <assignToReference>isIFAP</assignToReference>
+            <field>Designated_IFAP_Contact__c</field>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>DoesContactExists</assignToReference>
             <field>Id</field>
@@ -3909,55 +3634,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
         <object>RecordType</object>
         <outputAssignments>
             <assignToReference>Current_OwnerAccreditationContRT</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>GetAccountRecordType</name>
-        <label>GetAccountRecordType</label>
-        <locationX>601</locationX>
-        <locationY>307</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Is_PCI_available</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>AccountToProcess.RecordTypeId</elementReference>
-            </value>
-        </filters>
-        <object>RecordType</object>
-        <outputReference>AccountRecordType</outputReference>
-        <queriedFields>DeveloperName</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>GetProductCategory</name>
-        <label>GetProductCategory</label>
-        <locationX>431</locationX>
-        <locationY>589</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>ChangeFieldsAssignmentAccountToProcess</targetReference>
-        </connector>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>IATA Certificate</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Short_Description__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>TypeOfSubcategory</elementReference>
-            </value>
-        </filters>
-        <object>Product_Category__c</object>
-        <outputAssignments>
-            <assignToReference>ProductCategoryId</assignToReference>
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
@@ -4138,11 +3814,11 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
     <recordLookups>
         <name>ParentAccountToProcessLookup_0</name>
         <label>ParentAccountToProcessLookup</label>
-        <locationX>726</locationX>
-        <locationY>82</locationY>
+        <locationX>717</locationX>
+        <locationY>81</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AccountRTDevNameFL</targetReference>
+            <targetReference>isAccountAccredited</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -4349,49 +4025,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
         </outputAssignments>
     </recordLookups>
     <recordLookups>
-        <name>Search_for_PCI_Cases</name>
-        <label>Search for PCI Cases</label>
-        <locationX>6</locationX>
-        <locationY>609</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>has_a_PCI_case</targetReference>
-        </connector>
-        <filters>
-            <field>AccountId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>accountId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsClosed</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Reason1__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>PCI DSS Compliant</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>RecordType__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>OSCAR Communication</stringValue>
-            </value>
-        </filters>
-        <object>Case</object>
-        <outputReference>varPCICase</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>CaseNumber</queriedFields>
-        <queriedFields>OSCAR__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
         <name>SearchAccountRolesOwners</name>
         <label>SearchAccountRolesOwners</label>
         <locationX>565</locationX>
@@ -4573,7 +4206,7 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
         <name>UpdateSectorCategoryOnBRSAAccount</name>
         <label>UpdateSectorCategoryOnBRSAAccount</label>
         <locationX>1254</locationX>
-        <locationY>294</locationY>
+        <locationY>293</locationY>
         <connector>
             <targetReference>ContactChooser</targetReference>
         </connector>
@@ -4588,6 +4221,12 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <field>Category__c</field>
             <value>
                 <elementReference>AccountCategory</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Location_Class__c</field>
+            <value>
+                <elementReference>AccountToProcess.Location_Class__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -4611,14 +4250,12 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>The Account {!AccountToProcess.Name} is marked as {!AccountToProcess.Location_Type__c} and does not have a parent Id. Please close the wizard and fill its Parent Id before continuing.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>BSPlinkServicesScreen</name>
         <label>BSPlink Selection</label>
-        <locationX>298</locationX>
-        <locationY>570</locationY>
+        <locationX>285</locationX>
+        <locationY>517</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4639,8 +4276,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ContactChooser</name>
@@ -4674,8 +4309,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;{!errormessagecontactlookup}&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ContactChooserScreen</name>
@@ -4701,19 +4334,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>EmptyScreen</name>
-        <label>EmptyScreen</label>
-        <locationX>7</locationX>
-        <locationY>1020</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorBRWithoutParent</name>
@@ -4728,8 +4348,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>The Account {!AccountToProcess.Name} does not have a Parent selected. Please close the wizard and fill its Parent Account before continuing.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorCNSValidation</name>
@@ -4744,14 +4362,12 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>It is not possible to mix CNS Agencies with non-CNS Agencies within the same hierarchy.</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorCNSwithBRabroad</name>
         <label>ErrorCNSwithBRabroad</label>
-        <locationX>458</locationX>
-        <locationY>507</locationY>
+        <locationX>402</locationX>
+        <locationY>471</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -4760,8 +4376,6 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>It&apos;s not possible to choose a branch abroad for a CNS Agency</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>ErrorMessageNoValidProcessScreen</name>
@@ -4779,33 +4393,12 @@ IF(({!FinalLocationClass} = &apos;C&apos; &amp;&amp; {!Type_of_OSCAR_process_man
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#FF0000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;{!ErrorMessageFormula}&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>PCI_Case_found</name>
-        <label>PCI Case found</label>
-        <locationX>5</locationX>
-        <locationY>823</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>AssingCase</targetReference>
-        </connector>
-        <fields>
-            <name>PCICaseFoundMSG</name>
-            <fieldText>There is PCI case already created for this agency. Please click next to be redirect for case {!varPCICase.CaseNumber}.</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Process_Chooser_Accredited</name>
         <label>Process Chooser - Accredited</label>
-        <locationX>474</locationX>
-        <locationY>300</locationY>
+        <locationX>492</locationX>
+        <locationY>193</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4835,61 +4428,17 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <choiceReferences>VoluntaryRelinquishment</choiceReferences>
             <choiceReferences>NewProcessOscarCorrection</choiceReferences>
             <choiceReferences>NewProcessCertificate</choiceReferences>
-            <choiceReferences>PCI_Compliant</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Please choose a process :</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Process_Chooser_Accredited_noPCI</name>
-        <label>Process Chooser - Accredited</label>
-        <locationX>327</locationX>
-        <locationY>182</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>TypeOfOscarProcessAssignment_no_PCI</targetReference>
-        </connector>
-        <fields>
-            <name>description</name>
-            <fieldText>OSCAR WIZARD
-              
-This is a wizard designed to help you create a new OSCAR process.
-
-OSCAR stands for Online Solution for Customer Application Request, and must be linked to an existing Account.</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>noPCIChoice</name>
-            <choiceReferences>NewProcessHO</choiceReferences>
-            <choiceReferences>NewProcessBR</choiceReferences>
-            <choiceReferences>NewProcessBRAbroad</choiceReferences>
-            <choiceReferences>NewProcessSA</choiceReferences>
-            <choiceReferences>NewProcessTIDS</choiceReferences>
-            <choiceReferences>NewProcessGSA</choiceReferences>
-            <choiceReferences>NewProcessAHA</choiceReferences>
-            <choiceReferences>Agency_Changes</choiceReferences>
-            <choiceReferences>VoluntaryRelinquishment</choiceReferences>
-            <choiceReferences>NewProcessOscarCorrection</choiceReferences>
-            <choiceReferences>NewProcessCertificate</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Please choose a process :</fieldText>
-            <fieldType>RadioButtons</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Process_Chooser_not_Accredited</name>
         <label>Process Chooser - Not Accredited</label>
-        <locationX>641</locationX>
-        <locationY>426</locationY>
+        <locationX>482</locationX>
+        <locationY>297</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4920,8 +4469,43 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Process_Chooser_Not_Accredited_GDI_Eligible</name>
+        <label>Process Chooser - Not Accredited - GDI Eligible</label>
+        <locationX>632</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>TypeOfOscarProcessAssignmentWithGDI</targetReference>
+        </connector>
+        <fields>
+            <name>ProcessChooserIntroText_2</name>
+            <fieldText>OSCAR WIZARD
+              
+This is a wizard designed to help you create a new OSCAR process.
+
+OSCAR stands for Online Solution for Customer Application Request, and must be linked to an existing Account.</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Type_of_OSCAR_process_not_acc_w_gdi</name>
+            <choiceReferences>NewProcessHO</choiceReferences>
+            <choiceReferences>NewProcessBR</choiceReferences>
+            <choiceReferences>NewProcessBRAbroad</choiceReferences>
+            <choiceReferences>NewProcessSA</choiceReferences>
+            <choiceReferences>NewProcessTIDS</choiceReferences>
+            <choiceReferences>NewProcessGSA</choiceReferences>
+            <choiceReferences>NewProcessGSSA</choiceReferences>
+            <choiceReferences>NewProcessAHA</choiceReferences>
+            <choiceReferences>GDI</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Please choose a process :</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
     </screens>
     <screens>
         <name>ResultPage</name>
@@ -4936,14 +4520,12 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldText>&lt;SPAN ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;B&gt;We are all set !&lt;/B&gt;&lt;/FONT&gt;&lt;/SPAN&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;/FONT&gt;&lt;/DIV&gt;&lt;DIV ALIGN=&quot;LEFT&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;You&amp;apos;ve completed the wizard.&lt;/FONT&gt;&lt;/DIV&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>VRProcessSelection</name>
         <label>VR Process Selection</label>
-        <locationX>3</locationX>
-        <locationY>514</locationY>
+        <locationX>79</locationX>
+        <locationY>513</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4964,8 +4546,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <startElementReference>isComingFromLeftSidePanelDec</startElementReference>
     <variables>
@@ -5143,14 +4723,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         </value>
     </variables>
     <variables>
-        <name>AccountRecordType</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>RecordType</objectType>
-    </variables>
-    <variables>
         <name>AccountRoleOwnerRT</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -5164,14 +4736,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>AMS_Account_Role__c</objectType>
-    </variables>
-    <variables>
-        <name>AccountRTDevName</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>RecordType</objectType>
     </variables>
     <variables>
         <name>AccountSector</name>
@@ -5406,6 +4970,13 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         </value>
     </variables>
     <variables>
+        <name>GDIValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>HierarchyId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -5420,6 +4991,13 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>isIFAP</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>LocationClassCASSAssociate</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -5427,16 +5005,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <isOutput>false</isOutput>
         <value>
             <stringValue>R</stringValue>
-        </value>
-    </variables>
-    <variables>
-        <name>NewPCICompliantValue</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>PCI.COMPLIANT.1.0</stringValue>
         </value>
     </variables>
     <variables>
@@ -5600,13 +5168,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ProductCategoryId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
         <name>Type_of_OSCAR_process_man</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -5615,14 +5176,6 @@ OSCAR stands for Online Solution for Customer Application Request, and must be l
         <value>
             <elementReference>NewProcessOscarCorrection</elementReference>
         </value>
-    </variables>
-    <variables>
-        <name>varPCICase</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Case</objectType>
     </variables>
     <variables>
         <name>VoluntaryRelinquishmentValue</name>
