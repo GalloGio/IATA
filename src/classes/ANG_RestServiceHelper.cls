@@ -1,5 +1,6 @@
 global class ANG_RestServiceHelper {
 	global static string Caller_GDI = 'GDI';
+	global static string Caller_SAP = 'SAP';
 	global static string Caller_Mulesoft = 'Mulesoft';
 	global static string URIRequest_GDIOffer = 'gdi-create-offer';
 	global static string URIRequest_AccountFiles = 'account-files';
