@@ -53,6 +53,18 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>BSP__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BSP</label>
+        <referenceTo>AMS_Settlement_System__c</referenceTo>
+        <relationshipLabel>BSP Attributes</relationshipLabel>
+        <relationshipName>BSP_Attributes</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Class_Type__c</fullName>
         <description>Location Class of the Account</description>
         <externalId>false</externalId>
@@ -177,6 +189,49 @@ J-Joint Vent</inlineHelpText>
         </valueSet>
     </fields>
     <fields>
+        <fullName>FS_Percentage__c</fullName>
+        <description>Percentage of Financial Security</description>
+        <externalId>false</externalId>
+        <label>% of Financial Security</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Limit_Cash_Condition__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Has Limit Cash Condition?</description>
+        <externalId>false</externalId>
+        <label>Limit Cash Condition</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Max_FA_Points__c</fullName>
+        <description>Max Financial Assessment Points</description>
+        <externalId>false</externalId>
+        <label>Max FA Points</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Min_FA_Points__c</fullName>
+        <externalId>false</externalId>
+        <label>Min FA Points</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Operation__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
         <description>Lookup field to theh BSP Attribute field (AMS Operation Code)</description>
@@ -188,6 +243,31 @@ J-Joint Vent</inlineHelpText>
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>RHC_Amnt_Calc_Type__c</fullName>
+        <description>Remittance Holding Capacity Amount Calculation Type</description>
+        <externalId>false</externalId>
+        <label>RHC Amount Calculation Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Formula</fullName>
+                    <default>false</default>
+                    <label>Formula</label>
+                </value>
+                <value>
+                    <fullName>Fixed Percentage</fullName>
+                    <default>false</default>
+                    <label>Fixed Percentage</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Remittance_Frequency__c</fullName>
@@ -243,6 +323,18 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Risk_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Risk Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Risk_Status</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>UniqueKey__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>Unique identifier on the object to ensure no duplicates.</description>
@@ -261,6 +353,304 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>BSP Attributes</pluralLabel>
+    <recordTypes>
+        <fullName>Cash_Condition_Conf</fullName>
+        <active>true</active>
+        <label>Cash Condition Conf</label>
+        <picklistValues>
+            <picklist>Class_Type__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RHC_Amnt_Calc_Type__c</picklist>
+            <values>
+                <fullName>Fixed Percentage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Formula</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_Frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Risk_Status__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>RHC_Amount_Conf</fullName>
+        <active>true</active>
+        <label>RHC Amount Conf</label>
+        <picklistValues>
+            <picklist>Class_Type__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>RHC_Amnt_Calc_Type__c</picklist>
+            <values>
+                <fullName>Fixed Percentage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Formula</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_Frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Risk_Status__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>Remittance_Frequency</fullName>
         <active>true</active>
@@ -345,6 +735,17 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>RHC_Amnt_Calc_Type__c</picklist>
+            <values>
+                <fullName>Fixed Percentage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Formula</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Remittance_Frequency__c</picklist>
             <values>
                 <fullName>B</fullName>
@@ -383,8 +784,124 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Risk_Status__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Cash_Condition_FS_BSP_mandatory</fullName>
+        <active>true</active>
+        <description>Prevent the creation of a BSP Attribute without a BSP</description>
+        <errorConditionFormula>AND( 
+    RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;, 
+    ISBLANK(BSP__c)
+)</errorConditionFormula>
+        <errorMessage>BSP is a mandatory field.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Cash_Condition_FS_Percentage_Mandatory</fullName>
+        <active>true</active>
+        <description>Prevent creation of BSP Attribute with an empty Financial Security empty for Cash_Condition_Conf Record Type</description>
+        <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;,
+Limit_Cash_Condition__c = true,
+ OR(
+     ISBLANK(FS_Percentage__c), 
+     FS_Percentage__c &lt; 0
+ )
+)</errorConditionFormula>
+        <errorMessage>Financial Security percentage is a required or must be setted with value higher than 0</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RHC_Amount_Conf_FS_Percentage_validation</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; with a % of FS &lt; 0</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
+    FS_Percentage__c &lt; 0
+)</errorConditionFormula>
+        <errorMessage>% of Financial Security must be &gt;=0</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RHC_Amount_Conf_FixedPercent_Blank_Value</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; RHC Amount Calculation type &quot;Fixed Percentage&quot; without having fields: Max_FA_Points__c, Min_FA_Points__c, FS_Percentage__c filled</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
+ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;), 
+       OR(
+          ISBLANK(Max_FA_Points__c),
+          ISBLANK(Min_FA_Points__c),
+          ISBLANK(FS_Percentage__c)
+       ) 
+)</errorConditionFormula>
+        <errorMessage>RHC Amount Calculation Type &apos;Fixed Percentage&apos;, the fields Min FA Points, Max FA Points and % of Financial Security are mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RHC_Amount_Conf_Formula_Blank_Values</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; RHC Amount Calculation type &quot;Formula&quot; having fields: Max_FA_Points__c, Min_FA_Points__c, FS_Percentage__c not blank</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
+    ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Formula&quot;), 
+       OR(
+         !ISBLANK(Max_FA_Points__c),
+         !ISBLANK(Min_FA_Points__c),
+         !ISBLANK(FS_Percentage__c)
+        )
+)</errorConditionFormula>
+        <errorMessage>For RHC Amount Calculation Type &apos;Formula&apos;, the fields Min FA Points, Max FA Points and % of Financial Security must be blank</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RHC_Amount_Conf_Mandatory_BSP</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; without BSP__c</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
+    ISBLANK(BSP__c) 
+)</errorConditionFormula>
+        <errorMessage>BSP is a mandatory field</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RHC_Amount_Conf_Mandatory_RiskStatus</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; without Risk Status</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;,
+    ISPICKVAL(Risk_Status__c, &apos;&apos;)
+)</errorConditionFormula>
+        <errorMessage>Risk Status is a mandatory field</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RHC_Amount_Conf_Min_Max_Fa_Points</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos;, with  Min_FA_Points__c &gt;= Max_FA_Points__c</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
+    Min_FA_Points__c &gt;= Max_FA_Points__c
+)</errorConditionFormula>
+        <errorMessage>Min FA Points must be &lt; Max FA Points</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>RHC_Amount_RHC_Amnt_Calc_Type_Mandatory</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; without RHC_Amnt_Calc_Type__c</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
+    ISPICKVAL(RHC_Amnt_Calc_Type__c, &apos;&apos;)
+)</errorConditionFormula>
+        <errorMessage>RHC Amount Calculation Type is a mandatory field</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
