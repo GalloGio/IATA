@@ -621,9 +621,6 @@ public without sharing class ISSP_Registration {
         else    // unknown type
             return null;
 
-        /* WMO-385 */
-        whereStr += ' AND Location_Class__c <> \'M\'';
-
         // get recordTypes from Map
         system.debug('isAgency: ' + isAgency);
         system.debug('isNotIATA: ' + isNotIATA);
