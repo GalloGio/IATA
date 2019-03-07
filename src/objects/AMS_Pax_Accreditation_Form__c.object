@@ -27221,6 +27221,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <errorMessage>CASS Number should be inserted for Accounts with Location Class equals to C, R, I Q or G (for GSSA application processes) or for Cargo Agents.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Change_Location_Class_after_IATACode_gen</fullName>
+        <active>true</active>
+        <description>Once the IATA Code is generated the Location Class can no longer be changed.</description>
+        <errorConditionFormula>AND(   
+ISCHANGED(Location_Class__c), 
+NOT( ISBLANK( IATACode__c ) ) 
+)</errorConditionFormula>
+        <errorDisplayField>Location_Class__c</errorDisplayField>
+        <errorMessage>Agent needs to be pointed to create a new account and new application.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>ISSP_AMS_T_C_Accepted_on_Submit</fullName>
         <active>false</active>
         <errorConditionFormula>Submitted_to_IATA__c ==TRUE &amp;&amp; Accept_terms_and_conditions__c == FALSE</errorConditionFormula>
