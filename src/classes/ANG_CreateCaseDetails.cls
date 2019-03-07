@@ -22,7 +22,7 @@ global without sharing class ANG_CreateCaseDetails {
     
 	public static final set<string> setValidPaymentStatus = new set<string>{'Paid','Outstanding','N/A'};	//Valid account type
     public static final set<string> setValidRequest = new set<string>{ANG_RestServiceHelper.URIRequest_CasePaymentStatus};    //Valid type of request, part of URI
-    public static final set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_GDI};			//Valid caller
+    public static final set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_SAP};			//Valid caller
 
     @HttpPost
     global static void doPost(){
@@ -99,7 +99,7 @@ global without sharing class ANG_CreateCaseDetails {
             string paymentStatus = payloadList.paymentStatus; //e.g.: Paid
 
 			if(caller==null || caller== '' || !setValidCaller.contains(caller)){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Caller not specified or invalid:'+caller)), 400);
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'Caller not specified or invalid:'+caller)), 403);
                 return false;
             }
 
@@ -113,7 +113,7 @@ global without sharing class ANG_CreateCaseDetails {
             list<Case> lsCase;
 			AMS_OSCAR__c oscar;
 
-			lsCase = [SELECT Id, OSCAR__c FROM Case where Id =: caseId];
+			lsCase = [SELECT Id, OSCAR__c,  Account.ANG_IsNewGenAgency__c, Reason1__c  FROM Case where Id =: caseId];
 
 			if(lsCase==null || lsCase.isEmpty()){
                 ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Case with Id' + caseId +' not found')), 404);
@@ -125,12 +125,23 @@ global without sharing class ANG_CreateCaseDetails {
                 return false;
             }
             
+            
             Case gdiCase = lsCase.get(0);
             
 			//Perform Validations
 
 			if(gdiCase.OSCAR__c == null){
 				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);
+				return false;
+            }
+
+            if(gdiCase.Reason1__c != 'GDI setup'){
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Case Type with Id' + caseId +' is not GDI but instead: ' + gdiCase.Reason1__c) ), 403);
+				return false;
+            }
+
+            if(!gdiCase.Account.ANG_IsNewGenAgency__c){
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Account Related the Case with Id' + caseId +' is not a NewGen agency') ), 403);
 				return false;
             }
 
