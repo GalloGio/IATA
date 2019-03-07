@@ -56,7 +56,7 @@ public with sharing class ISSP_AMC_Invocable_Test {
 		
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest(); 
+		
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -77,6 +77,7 @@ public with sharing class ISSP_AMC_Invocable_Test {
 				List <ID> orchestratorList = new List<ID>();
 				orchestratorList.add(orchestrator.Id);
 				
+				Test.StartTest(); 
 				ISSP_AMC_Invocable.invokeACLICustomImpl(orchestratorList);
 				
 				//ISSP_AMC_FlowDAO.requestForApproval(controller.participation.case__c);
@@ -85,9 +86,9 @@ public with sharing class ISSP_AMC_Invocable_Test {
 				ISSP_AMC_FlowDAO.loadURL();
 				//ISSP_AMC_FlowDAO.apiCall();
 				//ISSP_AMC_FlowDAO.updateStepAction(Id stepActionId, String stepStatus);
+				Test.stopTest();
 
-
-			Test.stopTest();
+			
 
 			}
 		}
@@ -102,7 +103,7 @@ public with sharing class ISSP_AMC_Invocable_Test {
 		
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest(); 
+		 
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -122,15 +123,12 @@ public with sharing class ISSP_AMC_Invocable_Test {
 				insert orchestrator;
 				List <ID> orchestratorList = new List<ID>();
 				orchestratorList.add(orchestrator.Id);
-				
-				ISSP_AMC_Invocable.invokeACLICustomImpl(orchestratorList);
-				
-				//ISSP_AMC_FlowDAO.requestForApproval(controller.participation.case__c);
-				ISSP_AMC_FlowDAO.createRelatedCases(controller.participation.case__c, 'STAGE C');
-
-
-
-			Test.stopTest();
+				Test.StartTest();
+					ISSP_AMC_Invocable.invokeACLICustomImpl(orchestratorList);
+					
+					//ISSP_AMC_FlowDAO.requestForApproval(controller.participation.case__c);
+					ISSP_AMC_FlowDAO.createRelatedCases(controller.participation.case__c, 'STAGE C');
+				Test.stopTest();
 
 			}
 		}
@@ -144,7 +142,7 @@ public with sharing class ISSP_AMC_Invocable_Test {
 		
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest(); 
+		
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetup();
@@ -165,14 +163,13 @@ public with sharing class ISSP_AMC_Invocable_Test {
 				List <ID> orchestratorList = new List<ID>();
 				orchestratorList.add(orchestrator.Id);
 				
-				ISSP_AMC_Invocable.invokeACLICustomImpl(orchestratorList);
-				
-				//ISSP_AMC_FlowDAO.requestForApproval(controller.participation.case__c);
-				ISSP_AMC_FlowDAO.createRelatedCases(controller.participation.case__c, 'STAGE F');
+				Test.StartTest(); 
+					ISSP_AMC_Invocable.invokeACLICustomImpl(orchestratorList);
+					
+					//ISSP_AMC_FlowDAO.requestForApproval(controller.participation.case__c);
+					ISSP_AMC_FlowDAO.createRelatedCases(controller.participation.case__c, 'STAGE F');
 
-
-
-			Test.stopTest();
+				Test.stopTest();
 
 			}
 		}
