@@ -1168,6 +1168,7 @@ private class ISSP_AMS_PASS_Accreditation_Test
             Case testCase2 = ISSP_ObjectFactory.createNewCase();
             testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase2.Status='On Hold_External';
+            testCase2.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
             insert testCase2;
 
             test.newCase = testCase2;
@@ -1176,6 +1177,7 @@ private class ISSP_AMS_PASS_Accreditation_Test
             Case testCase3 = ISSP_ObjectFactory.createNewCase();
             testCase3.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase3.Status='Closed_Disapproved';
+            testCase3.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
             insert testCase3;
 
             test.newCase = testCase3;
