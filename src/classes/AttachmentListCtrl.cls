@@ -655,11 +655,6 @@ public with sharing class AttachmentListCtrl {
     public static ApexMessageHandling transferAttachments(string selIdAttachmentStr,string targetSingleCase,string targetCaseStr,string parentId,boolean isPortal,boolean isSAAMorSIDRA,string caseParentId) {
 
 
-        system.debug(selIdAttachmentStr);
-        system.debug(targetCaseStr);
-        system.debug('ds');
-        system.debug(parentId);
-        system.debug(caseParentId);
         // Save new attachments
         Integer success = 0;
         Integer errors = 0;
@@ -790,10 +785,9 @@ public with sharing class AttachmentListCtrl {
                 }
             }
         }
-        String message = Label.Response_message;
-        message = message.replace('{0}', String.ValueOf(success));
-        message = message.replace('{1}', String.ValueOf(errors));
-        message = message.replace('{2}', String.ValueOf(parentId));
+        list<object> formattingArguments = new list<object>{String.ValueOf(success),String.ValueOf(errors),String.ValueOf(parentId)};
+       
+        string message =string.format(Label.Response_message, formattingArguments);
         if(errors==0){
             return new ApexMessageHandling(true,'');
         }else{
@@ -802,6 +796,7 @@ public with sharing class AttachmentListCtrl {
     }
     @AuraEnabled
     public static ApexMessageHandling createAttachment(String parentId, String body, String name,Long filesize, string contentType){
+      
 
         Attachment newAtt = new Attachment();
                     newAtt.Body = EncodingUtil.base64Decode(body);
