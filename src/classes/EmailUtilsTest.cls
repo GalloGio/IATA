@@ -1,7 +1,7 @@
 @isTest
 private class EmailUtilsTest {
 	
-	@isTest static void sendEmailAlert() {	
+	@isTest static void createEmailsTest() {	
 		Contact con = new Contact(LastName = 'test', Email = 'test@test.com');
 		insert con;
 
@@ -9,6 +9,12 @@ private class EmailUtilsTest {
 		c.contactId = con.Id;
 		insert c;
 
-		EmailUtils.sendEmailAlert(new List<Contact> { con } , 'Portal_Case_Comment_Autoreply', 'noreply@iata.org', c.Id);
+		List<Messaging.SingleEmailMessage> emailsToSend = new list<Messaging.SingleEmailMessage>();
+
+		emailsToSend = EmailUtils.createEmails(new List<Contact> { con } , 'Portal_Case_Comment_Autoreply', 'noreply@iata.org', c.Id);
+	
+		System.debug('----------> emailsToSend: ' + emailsToSend);
+
+		System.assertEquals(1, emailsToSend.size());
 	}
 }

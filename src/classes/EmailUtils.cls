@@ -14,7 +14,7 @@ public class EmailUtils {
         return owea[0].Id;
     }
 
-    public static void sendEmailAlert(List<Contact> recipients, String templateId, String orgAddress, String whatId) {
+    public static List<Messaging.SingleEmailMessage> createEmails(List<Contact> recipients, String templateId, String orgAddress, String whatId) {
         Map<String, EmailTemplate> templatesMap = new Map<String, EmailTemplate>();
         Map<Id, EmailTemplate> contactEmailTemplateMap = new Map<Id, EmailTemplate>();
         List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
@@ -56,16 +56,10 @@ public class EmailUtils {
             mail.setTemplateId(template.Id);
             mail.setTargetObjectId(con.Id);
             //mail.setSubject(template.Subject);
-            
-            //if(!String.isBlank(template.HtmlValue)) mail.setHtmlBody(template.HtmlValue);
-            //if(!String.isBlank(template.Body)) mail.setPlainTextBody(template.Body);
 
             emailsToSend.add(mail);               
         }
 
-        if(emailsToSend.size() > 0) {
-            system.debug('### sendEmailAlert - emailsToSend: ' + emailsToSend);
-            Messaging.sendEmail(emailsToSend);
-        }
+        return emailsToSend;
     }
 }

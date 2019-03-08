@@ -47,11 +47,30 @@ public class ISSP_AddComment {
       update tmpCase;
 
       //ACAMBAS - WMO-395 - Start
-      
-      List<User> userList = [SELECT Id, ContactId FROM User WHERE Id = :userInfo.getUserId()];
-      List<Contact> contactList = [SELECT Id, Preferred_Language__c, Email FROM Contact WHERE Id = :userList[0].ContactId];
+    
+      List<Case_RTs_for_Auto_Reply_Email__c> eligibleCaseRTs = [SELECT Record_Type_Name__c FROM Case_RTs_for_Auto_Reply_Email__c];
 
-      EmailUtils.sendEmailAlert(contactList, 'Portal_Case_Comment_Autoreply', 'noreply@iata.org', tmpCase.Id);
+      //RecordType caseRT = [SELECT DeveloperName FROM RecordType WHERE Id = :tmpCase.RecordTypeId][0];
+
+      Boolean isEligibleCaseRT = false;
+
+      for(Case_RTs_for_Auto_Reply_Email__c cs : eligibleCaseRTs) {
+          if(cs.Record_Type_Name__c == tmpCase.RecordType.Name) {
+              isEligibleCaseRT = true;
+              break;
+          }
+      }
+
+      if(isEligibleCaseRT) {
+          User user = [SELECT Id, ContactId FROM User WHERE Id = :userInfo.getUserId()][0];
+          List<Contact> contactList = [SELECT Id, Preferred_Language__c, Email FROM Contact WHERE Id = :user.ContactId];
+
+          List<Messaging.SingleEmailMessage> emailsToSend = EmailUtils.createEmails(contactList, 'Portal_Case_Comment_Autoreply', 'noreply@iata.org', tmpCase.Id);
+
+          if(emailsToSend.size() > 0) {
+              Messaging.sendEmail(emailsToSend);
+          }
+      }
 
       //ACAMBAS - WMO-395 - End
 
