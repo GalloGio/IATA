@@ -751,16 +751,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
         }
 
-        if(isHOAccredited) {
-            amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
-            amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
-            if(amsLocationTypeLabelHq == null) {
-                amsLocationTypeLabelHq = amsLocationTypeLabel;
-            }
-        } else {
-            amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
-            amsLocationTypeLabelHq = amsLocationTypeLabel;
-        }
+        amsLocationLabelTranslation();
 
         namPaxAgent = (sector == 'Travel Agent' && namEnabled);
 
@@ -881,6 +872,13 @@ public without sharing class ISSP_AMS_Accreditation {
         if (isocountry != null) {
             amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
         }
+    }
+
+    public String countriesByIsoMap {
+        get {
+            return JSON.serialize(IATAIsoCountryDAO.getMapIataIsoCountryByIsoCode());
+        }
+        set;
     }
 
     public List<SelectOption> countryISOCodeList {
@@ -1038,17 +1036,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public List<SelectOption> getBranchAccounts() {
-        List<SelectOption> options = new List<SelectOption>();
-
-        List<Account> accountList = getBranchList(false);
-
-        for (Account thisAccount : accountList) {
-            String theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
-
-            options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
-        }
-        
-        return options;
+        return getAccountOptions(getBranchList(false));
     }
 
     public String getContactAccount() {
@@ -1065,11 +1053,16 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public List<SelectOption> getAgencyCodesConcerned() {
         List<Account> accountList;
-        List<SelectOption> options = new List<SelectOption>();
-
+        
         if (newForm.Agency_Codes_Concerned__c != null) {
             accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
         }
+
+        return getAccountOptions(accountList);
+    }
+
+    private List<SelectOption> getAccountOptions(List<Account> accountList) {
+        List<SelectOption> options = new List<SelectOption>();
 
         for (Account thisAccount : accountList) {
             String theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
@@ -1333,6 +1326,18 @@ public without sharing class ISSP_AMS_Accreditation {
         return res;
     }
 
+    private void amsLocationLabelTranslation() {
+        amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+        if(isHOAccredited) {
+            amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
+            if(amsLocationTypeLabelHq == null) {
+                amsLocationTypeLabelHq = amsLocationTypeLabel;
+            }
+        } else {
+            amsLocationTypeLabelHq = amsLocationTypeLabel;
+        }
+    }
+
     public Pagereference save() {
         SYSTEM.DEBUG('Saving Record - STEP A');
 
@@ -1351,16 +1356,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-            if(isHOAccredited) {
-                amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
-                amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
-                if(amsLocationTypeLabelHq == null) {
-                    amsLocationTypeLabelHq = amsLocationTypeLabel;
-                }
-            } else {
-                amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
-                amsLocationTypeLabelHq = amsLocationTypeLabel;
-            }
+            amsLocationLabelTranslation();
 
             if(ISSP_Utilities.isCNS()) newCase.CNSCase__c=true;
 
@@ -1819,36 +1815,18 @@ public without sharing class ISSP_AMS_Accreditation {
                         if (thisRegion.selected) {
                             if (regionSelection == '') {
                                 regionSelection = thisRegion.region;
-                                if (thisRegion.consignments == '' || thisRegion.consignments == null) {
-                                    thisRegion.consignments = '0';
-                                }
-                                if (thisRegion.tons == '' || thisRegion.tons == null) {
-                                    thisRegion.tons = '0';
-                                }
-                                if (thisRegion.airfreight == '' || thisRegion.airfreight == null) {
-                                    thisRegion.airfreight = '0';
-                                }
-                                if (thisRegion.percentage == '' || thisRegion.percentage == null) {
-                                    thisRegion.percentage = '0';
-                                }
+                                
+                                regionSelectionAllignment(thisRegion);
+
                                 regionConsignments = thisRegion.consignments;
                                 regionTons = thisRegion.tons;
                                 regionAirFreight = thisRegion.airfreight;
                                 regionPercentage = thisRegion.percentage;
                             } else {
                                 regionSelection = regionSelection + ';' + thisRegion.region;
-                                if (thisRegion.consignments == '' || thisRegion.consignments == null) {
-                                    thisRegion.consignments = '0';
-                                }
-                                if (thisRegion.tons == '' || thisRegion.tons == null) {
-                                    thisRegion.tons = '0';
-                                }
-                                if (thisRegion.airfreight == '' || thisRegion.airfreight == null) {
-                                    thisRegion.airfreight = '0';
-                                }
-                                if (thisRegion.percentage == '' || thisRegion.percentage == null) {
-                                    thisRegion.percentage = '0';
-                                }
+
+                                regionSelectionAllignment(thisRegion);
+                                
                                 regionConsignments = regionConsignments + ';' + thisRegion.consignments;
                                 regionTons = regionTons + ';' + thisRegion.tons;
                                 regionAirFreight = regionAirFreight + ';' + thisRegion.airfreight;
@@ -1903,6 +1881,23 @@ public without sharing class ISSP_AMS_Accreditation {
             if (!Test.IsRunningTest()) fetchAMSProcessForm();
 
         } catch (DmlException ex) { ApexPages.addMessages(ex); }
+    }
+
+    private regionSelection regionSelectionAllignment(regionSelection thisRegion) {
+        if (thisRegion.consignments == '' || thisRegion.consignments == null) {
+            thisRegion.consignments = '0';
+        }
+        if (thisRegion.tons == '' || thisRegion.tons == null) {
+            thisRegion.tons = '0';
+        }
+        if (thisRegion.airfreight == '' || thisRegion.airfreight == null) {
+            thisRegion.airfreight = '0';
+        }
+        if (thisRegion.percentage == '' || thisRegion.percentage == null) {
+            thisRegion.percentage = '0';
+        }
+
+        return thisRegion;
     }
 
     public static String mapCompanyTypes(String companyType) {
@@ -3113,9 +3108,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public boolean validateCharactersInPersonWindow() {
@@ -3177,9 +3170,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public boolean validateCharactersInCompanyWindow() {
@@ -3195,9 +3186,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     /*** AMSU--112 Start ***/
@@ -3420,9 +3409,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public void sendConfirmationEmail(Case newCase) {
@@ -3585,14 +3572,11 @@ public without sharing class ISSP_AMS_Accreditation {
     public AMS_Accreditation_Country_CheckList__c CountryCheckList {
         get{
             String iso = (isMultiCountryNewAE) ? mcformCountryISO : newCase.IFAP_Country_ISO__c;
-            System.debug('rui iso. ' + iso + ' ' + sector);
 
             List<AMS_Accreditation_Country_CheckList__c> aux = [SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
                                                                 FROM AMS_Accreditation_Country_CheckList__c
                                                                 WHERE IATA_ISO_Country__r.ISO_Code__c = :iso
                                                                     AND Operation__c = :sector];
-
-            System.debug('rui2: ' + aux);
 
             return (!aux.isEmpty()) ? aux[0] : null;
         }
@@ -4132,16 +4116,11 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Boolean getIsEmpty() {
-        if (getAMSDraftCases().isEmpty()) return true;
-            
-        return false;
+        return getAMSDraftCases().isEmpty();
     }
 
     Public Boolean getIsNotEmpty() {
-        List<Case> AMSCases = getAMSDraftCases();
-        if (AMSCases.isEmpty()) return false;
-            
-        return true;
+        return !getAMSDraftCases().isEmpty();
     }
 
     // Initialize setCon and return a list of records
@@ -4627,14 +4606,22 @@ public without sharing class ISSP_AMS_Accreditation {
         return requirementListToReturn;
     }
 
+    private String translateApplyLanguage() {
+        String selectedLang = 'English';
+        
+        if (applyLanguage == 'fr') {
+            selectedLang = 'French';
+        } else if (applyLanguage == 'es') {
+            selectedLang = 'Spanish';
+        }
+
+        return selectedLang;
+    }
+
     private void retCargoCountryReqments(boolean isFromValidation) {
         Set<String> allowIdentifierSet = new Set<String>();
 
-        String selectedLang;
-
-        if (applyLanguage == 'fr') selectedLang = 'French';
-        else if (applyLanguage == 'es') selectedLang = 'Spanish';
-        else selectedLang = 'English';
+        String selectedLang = translateApplyLanguage();
 
         Id CargoReqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Cargo_Agent');
 
@@ -4686,7 +4673,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         ORDER BY Sort_Order__c ASC];
 
             this.List_CountryReqments = filterRequirementList(selectedLang, auxReqsList);
-            if (this.List_CountryReqments.isEmpty()) { //null rui
+            if (this.List_CountryReqments.isEmpty()) {
                 this.List_CountryReqments = filterRequirementList('English', auxReqsList);
                 if (!finalLang.equalsIgnoreCase('') && this.List_CountryReqments.isEmpty()) {
                     this.List_CountryReqments = filterRequirementList(finalLang, auxReqsList);
@@ -4736,14 +4723,11 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private void retNoCCargoCountryReqments(boolean isFromValidation) {
-        String selectedLang;
-        string agentType;
+        String agentType;
 
         AggregateResult[] distinctReqmentLangs;
 
-        if (applyLanguage == 'fr') selectedLang = 'French';
-        else if (applyLanguage == 'es') selectedLang = 'Spanish';
-        else selectedLang = 'English';
+        String selectedLang = translateApplyLanguage();
 
         if(isocountry.EACP_Country__c && hqAccount.Category__c=='IATA Cargo Agent') {
             agentType = 'EACP Intermediary';
@@ -4851,14 +4835,10 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private void retNoCTravelCountryReqments(boolean isFromValidation) {
-        String selectedLang;
+        String selectedLang = translateApplyLanguage();
         Id ChangeReqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Change');
 
         AggregateResult[] distinctReqmentLangs;
-
-        if (applyLanguage == 'fr') selectedLang = 'French';
-        else if (applyLanguage == 'es') selectedLang = 'Spanish';
-        else selectedLang = 'English';
 
         List<AMS_Accreditation_Requirement__c> auxReqsList;
 
@@ -4978,9 +4958,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     private boolean validateFacilities() {
@@ -5032,9 +5010,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     private boolean validateNewAccModelHO(boolean isnewgenError){
@@ -6085,9 +6061,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         } //EO Local Agency details e.g. for China, validation
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public Boolean validateCGOCASSAssociate(Integer cntIFAPContacts, Integer cntAuthorisedSig, Integer cntCASSContact) {
@@ -6181,9 +6155,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public Boolean validateBROfficeDetails() {
@@ -6213,9 +6185,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public Id getRegionalQueue() {

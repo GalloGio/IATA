@@ -108,7 +108,7 @@ public class IATAIsoCountryDAO {
 	 * 
 	 * @return Map of Iata_Iso_Country 
 	 */
-	private static Map<String, IATA_ISO_Country__c> getMapIataIsoCountryByIsoCode(){
+	public static Map<String, IATA_ISO_Country__c> getMapIataIsoCountryByIsoCode(){
 		if(IATAIsoCountryDAO.mapIataIsoCountrybyIsoCode == null) {
 
 			IATAIsoCountryDAO.mapIataIsoCountrybyIsoCode = new Map<String, IATA_ISO_Country__c>();
