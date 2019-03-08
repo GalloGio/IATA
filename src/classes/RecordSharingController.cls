@@ -116,16 +116,9 @@ public with sharing class RecordSharingController {
     */
 
     @AuraEnabled(cacheable=true)
-    public static Boolean getUserPermission() {
-        Boolean userPermission;
+    public static Boolean getUserPermission(string recId) {
         
-        userPermission = [
-            SELECT PermissionsManagePartnerNetConn
-            FROM Profile
-            WHERE Id IN (SELECT ProfileId FROM User WHERE Id = :UserInfo.getUserId())
-        ].PermissionsManagePartnerNetConn;
-
-        return userPermission;
+        return [SELECT RecordId, HasEditAccess,HasAllAccess FROM UserRecordAccess WHERE UserId =: UserInfo.getUserId() AND RecordId =:Id.valueOf(recId)].HasAllAccess;
     }    
 
     /* 
