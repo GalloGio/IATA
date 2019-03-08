@@ -43,7 +43,7 @@ public class CaseDetailTriggerHandler {
             }
 
             caseDetail.Score1__c = String.valueOf(totalScore);
-            caseDetail.PercentScore__c = totalScore/totalYesNoScore*100;
+            caseDetail.PercentScore__c = (totalYesNoScore != 0) ? totalScore/totalYesNoScore*100 : 0;
         }
     }
 
