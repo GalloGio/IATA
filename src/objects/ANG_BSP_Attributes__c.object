@@ -83,7 +83,7 @@ V-Travel Service Intermediaries-TSI (USA Only)
 X-Handling Agents and Shipping Lines
 J-Joint Vent</inlineHelpText>
         <label>Class Type</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -240,7 +240,7 @@ J-Joint Vent</inlineHelpText>
         <referenceTo>AMS_Operation__c</referenceTo>
         <relationshipLabel>BSP Attributes</relationshipLabel>
         <relationshipName>BSP_Attributes</relationshipName>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -274,7 +274,7 @@ J-Joint Vent</inlineHelpText>
         <description>Account&apos;s Remittance Frequency</description>
         <externalId>false</externalId>
         <label>Remittance Frequency</label>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -892,7 +892,7 @@ ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;),
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
     Min_FA_Points__c &gt;= Max_FA_Points__c
 )</errorConditionFormula>
-        <errorMessage>Min FA Points must be &lt; Max FA Points</errorMessage>
+        <errorMessage>Min FA Points must be lower than Max FA Points</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>RHC_Amount_RHC_Amnt_Calc_Type_Mandatory</fullName>
@@ -902,6 +902,33 @@ ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;),
     ISPICKVAL(RHC_Amnt_Calc_Type__c, &apos;&apos;)
 )</errorConditionFormula>
         <errorMessage>RHC Amount Calculation Type is a mandatory field</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Remittance_Frequency_Required_Class_Type</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Remittance_Frequency&apos; without selecting the Class_Type fields</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Remittance_Frequency&apos;, 
+        ISPICKVAL(Class_Type__c, &apos;&apos;)
+)</errorConditionFormula>
+        <errorMessage>Class Type is a required field for Record Type Remittance_Frequency</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Remittance_Frequency_Required_Operation</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Remittance_Frequency&apos; without Operation field</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Remittance_Frequency&apos;, 
+ISBLANK(Operation__c)
+)</errorConditionFormula>
+        <errorMessage>Operation is a required field for Record Type Remittance_Frequency</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Remittance_Frequency_Required_RF</fullName>
+        <active>true</active>
+        <description>Prevent the creation of BSP Attribute &apos;Remittance_Frequency&apos; without selecting the Remittance Frequency field</description>
+        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Remittance_Frequency&apos;, 
+ISPICKVAL(Remittance_Frequency__c, &apos;&apos;) 
+)</errorConditionFormula>
+        <errorMessage>Remittance Frequency is a required field for Record Type Remittance_Frequency</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
