@@ -61,8 +61,8 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
         //actions.add(new SelectOption('Revert_RHC','Revert RHC equal FS'));
         actions.add(new SelectOption('Apply_RHC_regardless','Apply RHC = FS% regardless of Risk Status'));
         actions.add(new SelectOption('Revert_RHC_regardless','Revert RHC = FS% regardless of Risk Status'));
-        actions.add(new SelectOption('Apply_RHC_per_FS','Apply RHC = FS % per Risk Status'));
-        actions.add(new SelectOption('Revert_RHC_per_FS','Revert RHC = FS % per Risk Status'));
+        actions.add(new SelectOption('Apply_RHC_per_RS','Apply RHC = FS % per Risk Status'));
+        actions.add(new SelectOption('Revert_RHC_per_RS','Revert RHC = FS % per Risk Status'));
     }
 
     private void populateBSPs() {
@@ -103,12 +103,12 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	batchStatusBool = false;
     	batchJob = null;
 
-    	Boolean rhcFlag = actionValue == 'Apply_RHC_regardless' ? false : true; //Apply_RHC_per_FS
+    	Boolean rhcFlag = actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ? false : true; //Apply_RHC_per_RS
 
     	if (modeValue == 'BSP') {
     		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
 							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
-							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c 
+							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c
 						FROM ANG_RHC_Information__c
 						WHERE ANG_RHC_Amount_Equals_FS__c = :rhcFlag
 							AND ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
@@ -121,7 +121,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	} else if (modeValue == 'IATA_Code') {
     		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
 							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
-							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c  
+							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c  
     					FROM ANG_RHC_Information__c 
     					WHERE ANG_RHC_Amount_Equals_FS__c = :rhcFlag
     						AND ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
@@ -132,7 +132,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
     					ORDER BY Name];
 
-    		//if(!rhcFlag) percentageFS agencies[0].
+    		if(actionValue == 'Revert_RHC_regardless' && !agencies.isEmpty()) percentageFS = '' + agencies[0].RHC_Amount_Equals_FS_Percent__c;
     	}
 
     	agenciesFetched = agencies.size();
