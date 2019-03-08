@@ -48,7 +48,7 @@
 		function bindCheckboxes() {
 			$('[data-group="select"]').on("change", function () {
 				rerenderNotes();
-			}
+			});
 
 			$('[data-group="main"]').on("change", function () {
 				var $clicked = $(this);
