@@ -940,6 +940,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (trgCase) { //FLAG
             system.debug('trgCase Trigger.isInsert');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
+            DPCCasesUtil.addAdditionalContactsBefore(Trigger.new);
         }
         /*trgCase Trigger.isInsert*/
 
