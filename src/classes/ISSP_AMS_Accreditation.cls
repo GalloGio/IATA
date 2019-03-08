@@ -3108,9 +3108,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public boolean validateCharactersInPersonWindow() {
@@ -3172,9 +3170,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public boolean validateCharactersInCompanyWindow() {
@@ -3190,9 +3186,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     /*** AMSU--112 Start ***/
@@ -3415,9 +3409,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public void sendConfirmationEmail(Case newCase) {
@@ -4124,16 +4116,11 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Boolean getIsEmpty() {
-        if (getAMSDraftCases().isEmpty()) return true;
-            
-        return false;
+        return getAMSDraftCases().isEmpty();
     }
 
     Public Boolean getIsNotEmpty() {
-        List<Case> AMSCases = getAMSDraftCases();
-        if (AMSCases.isEmpty()) return false;
-            
-        return true;
+        return !getAMSDraftCases().isEmpty();
     }
 
     // Initialize setCon and return a list of records
@@ -4971,9 +4958,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     private boolean validateFacilities() {
@@ -5025,9 +5010,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     private boolean validateNewAccModelHO(boolean isnewgenError){
@@ -6078,9 +6061,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         } //EO Local Agency details e.g. for China, validation
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public Boolean validateCGOCASSAssociate(Integer cntIFAPContacts, Integer cntAuthorisedSig, Integer cntCASSContact) {
@@ -6174,9 +6155,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public Boolean validateBROfficeDetails() {
@@ -6206,9 +6185,7 @@ public without sharing class ISSP_AMS_Accreditation {
             errorFound = true;
         }
 
-        if (errorFound) return false;
-
-        return true;
+        return !errorFound;
     }
 
     public Id getRegionalQueue() {
