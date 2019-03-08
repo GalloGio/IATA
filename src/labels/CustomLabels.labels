@@ -2126,13 +2126,6 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Non-compliance</value>
     </labels>
     <labels>
-        <fullName>ANG_OnGoing_OSCAR_Warning</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_OnGoing_OSCAR_Warning</shortDescription>
-        <value>Please finalize any ongoing OSCAR process before proceeding with the conversion.</value>
-    </labels>
-    <labels>
         <fullName>ANG_OSCAR_CHANGE_APPROVAL_FINALIZATION</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2166,6 +2159,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG Oscar Risk values Warning</shortDescription>
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: The new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OnGoing_OSCAR_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_OnGoing_OSCAR_Warning</shortDescription>
+        <value>Please finalize any ongoing OSCAR process before proceeding with the conversion.</value>
     </labels>
     <labels>
         <fullName>ANG_PCI_COMPLIANT</fullName>
@@ -32694,6 +32694,13 @@ Remittance date: {4}
         <protected>false</protected>
         <shortDescription>SIS Operations</shortDescription>
         <value>SIS Operations</value>
+    </labels>
+    <labels>
+        <fullName>SSW_New_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SSW New Users</shortDescription>
+        <value>003w000001tTc3i,003w000001sLm30,00320000005pXm5,0031r00002SZ68U,0031r00002SXscd,0031r000029cxR6,003w000001gpW8N,00320000001209R,00320000005dLUm,0031r00002IYvOF,0031r00002SZEef,003w000001sLmLd,003w000001xkqUm,003w000001K8fNw,00320000005dLLJ,0032000000EKamA,003w000001bfQZM,003w000001C3xn0,00320000005mg3u,003w000001sLm8u,0031r00002SZGG0,0031r00002SZIQa,0031r00002SZJbv,003w000001JUBmP,003w000001zF7fB,0032000000LFfdk,00320000010qi7T,0031r00002SZOl3,00320000005mf5P,0031r00002WMa7f,0031r00002DetvZ,0031r000024nLI2,0031r00002NcNYj,0031r00002NaMXn,0031r00002NavpT</value>
     </labels>
     <labels>
         <fullName>Salutation</fullName>
