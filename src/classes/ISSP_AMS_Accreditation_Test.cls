@@ -3943,6 +3943,7 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.isMultiCountryNewAE = true;
 
             List<SelectOption> mcIsoList = ctrl.countryISOCodeList;
+            String countriesMap = ctrl.countriesByIsoMap;
 
             ctrl.save();
         }
