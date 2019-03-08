@@ -1261,6 +1261,10 @@
         <name>ANG_OSCAR_WARNING_RISK</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_OnGoing_OSCAR_Warning --></label>
+        <name>ANG_OnGoing_OSCAR_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_PCI_COMPLIANT --></label>
         <name>ANG_PCI_COMPLIANT</name>
     </customLabels>
@@ -17155,6 +17159,10 @@ IATA Treasury Dashboard — динамичный информационный в
     <customLabels>
         <label><!-- SIS Operations --></label>
         <name>SIS_Operations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SSW New Users --></label>
+        <name>SSW_New_Users</name>
     </customLabels>
     <customLabels>
         <label><!-- Salutation --></label>
