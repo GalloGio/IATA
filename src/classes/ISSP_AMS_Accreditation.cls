@@ -883,6 +883,13 @@ public without sharing class ISSP_AMS_Accreditation {
         }
     }
 
+    public String countriesByIsoMap {
+        get {
+            return JSON.serialize(IATAIsoCountryDAO.getMapIataIsoCountryByIsoCode());
+        }
+        set;
+    }
+
     public List<SelectOption> countryISOCodeList {
         get {
             List<SelectOption> options = new List<SelectOption>();
