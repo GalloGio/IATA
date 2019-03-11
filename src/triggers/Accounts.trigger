@@ -1,6 +1,12 @@
 trigger Accounts on Account (after delete, after insert, after undelete,
     after update, before delete, before insert, before update) {
 
+    if(Trigger.isBefore){
+    	if(Trigger.isInsert){
+            AccountHandler.beforeInsert(Trigger.new);
+    	}
+    }
+
     if ( Trigger.isAfter ) {
         if (Trigger.isInsert) {
             AccountHandler.afterInsert(Trigger.new);

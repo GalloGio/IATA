@@ -582,6 +582,12 @@ public class ISSP_CaseTest {
         contact.status__c = 'Active';
         contact.Email = 'teamcontact@email.com';
         insert contact;
+        Contact contact2 = ISSP_ObjectFactory.createNewContact();
+        contact2.AccountId = account.Id;
+        contact2.User_Portal_Status__c = 'Approved Admin';
+        contact2.status__c = 'Active';
+        contact2.Email = 'teamcontact2@email.com';
+        insert contact2;
 
        Id p = [select id from profile where name='ISS Portal DPC Admin'].id;
 
@@ -590,8 +596,13 @@ public class ISSP_CaseTest {
                 localesidkey='en_US', profileid = p, country='United States',IsActive =true,
                 ContactId = contact.Id, FederationIdentifier = contact.Id,
                 timezonesidkey='America/Los_Angeles', username=contact.Email);
-
         insert user;
+        User user2 = new User(alias = 'test456', email=contact2.Email,
+                emailencodingkey='UTF-8', lastname='Testing', languagelocalekey='en_US',
+                localesidkey='en_US', profileid = p, country='United States',IsActive =true,
+                ContactId = contact2.Id, FederationIdentifier = contact2.Id,
+                timezonesidkey='America/Los_Angeles', username=contact2.Email);
+        insert user2;
 
        List<ISSP_DPC__c> mcs = new List<ISSP_DPC__c>();
        ISSP_DPC__c accaRoleIds = new ISSP_DPC__c(name='ACCA Roles', Value__c=null);
@@ -611,7 +622,7 @@ public class ISSP_CaseTest {
         ApexPages.currentPage().getParameters().put('caseArea', 'Area1');
         Test.startTest();
         // system.runAs(thisUser){
-           system.runAs(user) {
+           system.runAs(user2) {
             ISSP_Case cttr = new ISSP_Case();
             cttr.pageLoad();
             cttr.whoToContact = account.Id;

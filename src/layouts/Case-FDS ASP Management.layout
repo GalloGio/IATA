@@ -3,6 +3,7 @@
     <customButtons>Send_Email_to_Contact</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>E2CP__New_Comment</customButtons>
+    <customButtons>Accept_Case</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -300,6 +301,10 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedAttachmentList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ICCS_Attachment__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
