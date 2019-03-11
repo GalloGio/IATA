@@ -19,6 +19,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Validated</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Validated</literalValue>
+        <name>Validated</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Validated_step1</fullName>
         <field>ValidationStatus</field>
         <literalValue>Validated</literalValue>
@@ -27,4 +36,11 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <knowledgePublishes>
+        <fullName>Publish_as_a_new_version</fullName>
+        <action>PublishAsNew</action>
+        <label>Publish as a new version</label>
+        <language>en_US</language>
+        <protected>false</protected>
+    </knowledgePublishes>
 </Workflow>
