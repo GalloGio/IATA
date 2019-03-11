@@ -52,7 +52,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = a1.Id;
         oscarCase.ContactId = co1.Id;
-        oscarCase.Status = OSCAR.Status__c;
         insert oscarCase;
 
 
