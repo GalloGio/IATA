@@ -8,10 +8,10 @@
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>IDFSAfricaMERegionalOfficeI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>IDFSAfricaMERegionalOffice</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <users>
-            <user>martinsp@iata.org</user>
+            <user>martinsp@iata.org.inactive</user>
         </users>
     </queueMembers>
     <queueSobject>

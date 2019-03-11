@@ -243,6 +243,13 @@
         <value>Issue Billing Document</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action20</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action20</shortDescription>
+        <value>Open related Financial Security</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action3</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -385,6 +392,27 @@
         <protected>false</protected>
         <shortDescription>AMS OSCAR DISAPPROVAL</shortDescription>
         <value>Application Disapproval</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_ENDORSEMENT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>GDI Endorsement</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_FINANCIAL_SECURITY</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_ENDORSEMENT</shortDescription>
+        <value>Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_GDI_fees</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_GDI_fees</shortDescription>
+        <value>GDI fees</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_MASTERDATA</fullName>
@@ -766,11 +794,46 @@
         <value>Notice of Termination</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP46</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP46</shortDescription>
+        <value>Request invoice</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP47</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP47</shortDescription>
+        <value>Issue billing document</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP48</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP48</shortDescription>
+        <value>Confirm payment received</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP49</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP49</shortDescription>
+        <value>Request endorsement details</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP5</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP5</shortDescription>
         <value>Application Reconsideration</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP50</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP50</shortDescription>
+        <value>Confirm Financial Security Information</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
@@ -1263,6 +1326,94 @@ IATA Customer Service</value>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</shortDescription>
         <value>Portal Service Role</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Agreement</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Agreement</shortDescription>
+        <value>I agree</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Breadcrumb</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Breadcrumb</shortDescription>
+        <value>The list of Financial Institutions providing Financial Security Insurance in your country</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Navigate_Portal</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Navigate_Portal</shortDescription>
+        <value>Go to GDI Portal</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Display_Records</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Display_Records</shortDescription>
+        <value>Display records per page:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_First</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_First</shortDescription>
+        <value>First Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Last</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Last</shortDescription>
+        <value>Last Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Next</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Next</shortDescription>
+        <value>Next Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Page_Previous</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Page_Previous</shortDescription>
+        <value>Previous Page</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_Terms_Conditions</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_Terms_Conditions</shortDescription>
+        <value>By applying for your Financial Security to be provided to IATA by Euler Hermes, you consent to IATA sharing with Euler Hermes information it holds which is relevant to your financial standing, whether obtained directly from you when applying for IATA Accreditation or which IATA has maintained throughout your period of membership of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningError</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningError</shortDescription>
+        <value>Sorry, there was an issue setting up your GDI access. Try again and if the issue persists please contact Customer Support</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_GDI_UserProvisioningWait</fullName>
+        <categories>ISSP, ANG, GDI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_GDI_UserProvisioningWait</shortDescription>
+        <value>Please wait. You&apos;ll be redirected to the GDI Portal in a few moments.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_HeadEntity</fullName>
@@ -2008,6 +2159,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <protected>false</protected>
         <shortDescription>ANG Oscar Risk values Warning</shortDescription>
         <value>The approval of this application will have an impact on the Agency&apos;s risk properties: The new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OnGoing_OSCAR_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_OnGoing_OSCAR_Warning</shortDescription>
+        <value>Please finalize any ongoing OSCAR process before proceeding with the conversion.</value>
     </labels>
     <labels>
         <fullName>ANG_PCI_COMPLIANT</fullName>
@@ -2771,7 +2929,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -2792,7 +2950,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - RecordType</shortDescription>
-        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope</value>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global</value>
     </labels>
     <labels>
         <fullName>Case_Area_ICH</fullName>
@@ -20122,7 +20280,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CustomFooter_Small</shortDescription>
-        <value>© International Air Transport Association (IATA) 2017. All rights reserved.</value>
+        <value>© International Air Transport Association (IATA) 2019. All rights reserved.</value>
     </labels>
     <labels>
         <fullName>ISSP_DDS_BTN_OPTOIN</fullName>
@@ -21439,6 +21597,30 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Filter_by_Type_Of_Participation</shortDescription>
         <value>Filter by type of participation</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions</shortDescription>
+        <value>Financial Institutions</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Header</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Header</shortDescription>
+        <value>Financial Institution Insurance Providers</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Financial_Insititutions_Subheader</fullName>
+        <categories>ISSP, Portal, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Financial_Insititutions_Subheader</shortDescription>
+        <value>The following Financial Institutions provide Financial Security Insurance in your country</value>
     </labels>
     <labels>
         <fullName>ISSP_Financial_Securities_Converted_Total_Amount</fullName>
@@ -23825,7 +24007,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <shortDescription>ISSP_Payment_Link_Description</shortDescription>
         <value>Payment Link can be used to pay IATA invoices by credit card.&lt;br/&gt;
 &lt;b&gt;Warning!&lt;/b&gt;&lt;br/&gt;
-Please note that many IATA invoices for accredited agents are collected through the BPS/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
+Please note that many IATA invoices for accredited agents are collected through the BSP/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
     </labels>
     <labels>
         <fullName>ISSP_Payment_Link_Description_CNS</fullName>
@@ -24829,6 +25011,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Related contacts</value>
     </labels>
     <labels>
+        <fullName>ISSP_Release_Version</fullName>
+        <categories>Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Release_Version</shortDescription>
+        <value>Release Version</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Relocate_Contact</fullName>
         <categories>ISSP, IFAP</categories>
         <language>en_US</language>
@@ -25128,8 +25318,15 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership AutoBilling Helptext</shortDescription>
-        <value>As part of this service, IS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis IS will generate a Revenue Recognition File (File Format defined in the IS Participation Guide) containing the billing records of coupons included in the Auto-Billing Invoices.
-The Auto-Billed invoices are automatically closed and finalized by IS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, IS generates an Invoice Posting File which includes details of all Auto-Billed invoices.</value>
+        <value>As part of this service, SIS will store the prorate records received through the Value Determination process and generate invoices on behalf of the Billing Entity. On a daily basis SIS will generate a Revenue Recognition File containing the billing records of coupons included in the Auto-Billing Invoices.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_SIS_Membership_AutoBilling_Helptext2</fullName>
+        <categories>ISSP SIS Membership2</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP SIS Membership AutoBilling Helptext2</shortDescription>
+        <value>This Revenue Recognition File along with the optional ISR data is forwarded to the billing entity. SIS allows the billing entity to correct/update the values of the Auto-Billing invoices though the IS-WEB. Any update made on IS-WEB is reported back to the billing entity in the next Revenue Recognition File. The Auto-Billed invoices are automatically closed and finalized by SIS and processed further like any other IS-IDEC/IS-XML invoices. At the end of the billing period, SIS generates an IS-IDEC file for the billing entity called Invoice Posting File which includes details of all Auto-Billed invoices. The billing entity can use it to carry out any account postings for such invoices within its Revenue Accounting/General Ledger System.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_BankMandateDescription</fullName>
@@ -25138,7 +25335,7 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_BankMandateDescription</shortDescription>
         <value>Download this document and upload a signed version:
- &lt;a target=&quot;#&quot; href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Bank-Details-Form.pdf&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
+ &lt;a target=&quot;#&quot; href=&quot;https://iata--c.eu12.content.force.com/servlet/servlet.FileDownload?file=0151r000005g5rF&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext</fullName>
@@ -25194,7 +25391,9 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description ISPA</shortDescription>
-        <value>Joining SIS instantly connects you with more than 420 airlines and intermodal entities exchanging interline billing data electronically. SIS eliminates the paper from the interline billing and settlement processes increasing efficiency and reducing costs; it enables processing automation which helps reduce billing duplication and simplifies reconciliation.</value>
+        <value>Joining SIS instantly connects you with more than 420 airlines and intermodal entities exchanging interline billing data electronically. SIS eliminates the paper from the interline billing and settlement processes increasing efficiency and reducing costs; it enables processing automation which helps reduce billing duplication and simplifies reconciliation.
+&lt;br/&gt;
+Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/IS-Participation-Agreement.zip&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Description_ISUA</fullName>
@@ -25202,7 +25401,9 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description ISUA</shortDescription>
-        <value>By facilitating the exchange of billing data information and digital invoices, SIS enables airlines and aviation business partners such as ground handlers, maintenance companies, manufacturers, airports and others, to engage in business through a single channel, contributing to a simpler and more efficient environment.​​ Introduction to SIS e-Invoicing ​(&lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Introduction_to_SIS.pdf&quot; target=&quot;_blank&quot;&gt;pdf&lt;/a&gt;)</value>
+        <value>By facilitating the exchange of billing data information and digital invoices, SIS enables airlines and aviation business partners such as ground handlers, maintenance companies, manufacturers, airports and others, to engage in business through a single channel, contributing to a simpler and more efficient environment.​​ Introduction to SIS e-Invoicing ​(&lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Introduction_to_SIS.pdf&quot; target=&quot;_blank&quot;&gt;pdf&lt;/a&gt;)
+&lt;br/&gt;
+Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Standard_Participation_Agreement_for_SIS_e-Invoicing_Services-Non_transportation_ISUA.pdf&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Description_TOU</fullName>
@@ -25210,7 +25411,9 @@ The Auto-Billed invoices are automatically closed and finalized by IS and proces
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP SIS Membership Description TOU</shortDescription>
-        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;http://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xls&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.</value>
+        <value>Join SIS for free to receive legally compliant electronic invoices from your suppliers, interline partners or IATA via a secure platform, eliminating the risk of fraud. Joining SIS allows you to instantly connect to all airlines and suppliers already using the platform; you can check if any of your business partners are already using SIS &lt;a href=&quot;http://www.iata.org/services/finance/sis/Documents/SIS-Member-List.xls&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;.
+&lt;br/&gt;
+Review the standard participation agreement &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Standard_Participation_Agreement_for_SIS_e-Invoicing_Services-Invoice_Receiver_TOU.pdf&quot; target=&quot;#&quot;&gt;here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Digital_Signature_Application_Helptext</fullName>
@@ -25423,7 +25626,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section4_Subtitle2</shortDescription>
-        <value>The Value Determination and Auto Billing are optional services provided by SIS in conjunction with A&amp;A, and can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®.</value>
+        <value>The Value Determination and Auto Billing are optional services provided by SIS in conjunction with &lt;a href=&quot;https://www.atpco.net/&quot; target=&quot;#&quot;&gt;A&amp;A&lt;/a&gt;, and can be utilized by Passenger billing entities that store prorated coupon values within ARC COMPASS®. Subscribers to these services are restricted to &lt;a href=&quot;https://www.atpco.net/&quot; target=&quot;#&quot;&gt;A&amp;A&lt;/a&gt; members only.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section4_Title</fullName>
@@ -25439,7 +25642,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</fullName>
@@ -25455,7 +25658,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Title</shortDescription>
-        <value>Section 5 - iiNET</value>
+        <value>Section 5</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</fullName>
@@ -25463,7 +25666,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section6_Subtitle1</shortDescription>
-        <value>After this application is reviewed, we will provide the set of documents needed to complete you ICH membership</value>
+        <value>After this application is reviewed, we will provide the set of documents needed to complete your ICH membership</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section6_Title</fullName>
@@ -25575,7 +25778,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section2_Subtitle1</shortDescription>
-        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, to the following address of each Party and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
+        <value>Any notice to be served under this Agreement shall be in writing and sent either by first class post, by facsimile or e-mail, and in such case will be deemed to be received upon the earlier of actual receipt or two (2) working days after sending.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section2_Title</fullName>
@@ -25615,7 +25818,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification testing is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</fullName>
@@ -25631,7 +25834,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Title</shortDescription>
-        <value>Section 4 - iiNET</value>
+        <value>Section 4</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</fullName>
@@ -25967,7 +26170,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Who_requested_to_join_TOU</shortDescription>
-        <value>Who requested your Company to join SIS as TOU?</value>
+        <value>Who requested your Company to join SIS as Invoice Receiver?</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Your_Current</fullName>
@@ -32491,6 +32694,13 @@ Remittance date: {4}
         <protected>false</protected>
         <shortDescription>SIS Operations</shortDescription>
         <value>SIS Operations</value>
+    </labels>
+    <labels>
+        <fullName>SSW_New_Users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SSW New Users</shortDescription>
+        <value>003w000001tTc3i,003w000001sLm30,00320000005pXm5,0031r00002SZ68U,0031r00002SXscd,0031r000029cxR6,003w000001gpW8N,00320000001209R,00320000005dLUm,0031r00002IYvOF,0031r00002SZEef,003w000001sLmLd,003w000001xkqUm,003w000001K8fNw,00320000005dLLJ,0032000000EKamA,003w000001bfQZM,003w000001C3xn0,00320000005mg3u,003w000001sLm8u,0031r00002SZGG0,0031r00002SZIQa,0031r00002SZJbv,003w000001JUBmP,003w000001zF7fB,0032000000LFfdk,00320000010qi7T,0031r00002SZOl3,00320000005mf5P,0031r00002WMa7f,0031r00002DetvZ,0031r000024nLI2,0031r00002NcNYj,0031r00002NaMXn,0031r00002NavpT</value>
     </labels>
     <labels>
         <fullName>Salutation</fullName>

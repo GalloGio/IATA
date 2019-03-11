@@ -6531,9 +6531,184 @@
                 "IsDependent": false
               }
             ]
+          },
+          {
+            "Name": "AMS_OSCAR_AGENCYFEES",
+            "Steps": [
+              {
+                "Name": "STEP8",
+                "Required": [
+                  "STEP6"
+                ],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step8_succeeded"
+                  },
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step8_inProgress"
+                  }
+                ],
+                "DisplayFields": [
+                  "Billing_Document_Number__c",
+                  "Send_invoice__c",
+                  "Issue_billing_document__c",
+                  "STEP8__c"
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP9",
+                "Required": [
+                  "STEP6"
+                ],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_failed"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP9__c"
+                ],
+                "IsDependent": true
+              }
+            ]
           }
         ]
-      },{
+      },
+      {
+        "Name": "ANG.GDI.1.0",
+        "Flows": [
+          {
+            "Name": "AMS_OSCAR_GDI_fees",
+            "Steps": [
+              {
+                "Name": "STEP46",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step46_passed"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP46__c"                  
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP47",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step47_passed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Billing_Document_Number__c",
+                  "Send_invoice__c",
+                  "STEP47__c"                  
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP48",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_passed"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_failed"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step48_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP48__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+
+          {
+            "Name": "AMS_OSCAR_GDI_ENDORSEMENT",
+            "Steps": [
+              {
+                "Name": "STEP49",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step49_passed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Endorsement_Requested__c",
+                  "STEP49__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_GDI_FINANCIAL_SECURITY",
+            "Steps": [
+              {
+                "Name": "STEP50",
+                "Required": [],
+                "Actions": [
+                  {
+                      "FunctionName": "openFS",
+                      "ActionLabel": "AMS_OSCAR_Action20",
+                      "args": [
+                        "oscarid"
+                      ]
+                }
+              ],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step50_passed"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step50_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Financial_Security_Received__c",
+                  "STEP50__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
+      },
+      {
         "Name": "ANG.MAJOR.CHANGES.CHINA.1.0",
         "Flows": [
           {
@@ -7049,7 +7224,7 @@
             ]
           }
         ]
-      }   
+      }     
     ]
   }
 }

@@ -584,6 +584,11 @@
                     <default>false</default>
                     <label>ZMW</label>
                 </value>
+                <value>
+                    <fullName>ANG</fullName>
+                    <default>false</default>
+                    <label>ANG</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>8</visibleLines>
