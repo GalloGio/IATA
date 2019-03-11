@@ -62,7 +62,7 @@
     <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>TrackingHistory</fullName>
-        <description>used for tracking purposes</description>
+        <description>used for tracking purposes - do NOT include any fields which cause mixed dml operations (e.g. profile, role, ...)</description>
         <displayedFields>
             <field>ToU_accepted__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -75,26 +75,6 @@
         </displayedFields>
         <displayedFields>
             <field>Title</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ProfileId</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>UserRoleId</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Username</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Email</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>

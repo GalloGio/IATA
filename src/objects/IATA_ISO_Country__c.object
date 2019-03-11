@@ -227,7 +227,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <label>EasyPay Model</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1529,6 +1529,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Estonia</label>
                 </value>
                 <value>
+                    <fullName>Eswatini</fullName>
+                    <default>false</default>
+                    <label>Eswatini</label>
+                </value>
+                <value>
                     <fullName>Ethiopia</fullName>
                     <default>false</default>
                     <label>Ethiopia</label>
@@ -1982,11 +1987,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <fullName>Suriname</fullName>
                     <default>false</default>
                     <label>Suriname</label>
-                </value>
-                <value>
-                    <fullName>Swaziland</fullName>
-                    <default>false</default>
-                    <label>Swaziland</label>
                 </value>
                 <value>
                     <fullName>Sweden</fullName>
@@ -2926,6 +2926,7 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <fullName>All_The_Countries</fullName>
         <columns>NAME</columns>
         <columns>ISO_Code__c</columns>
+        <columns>LVA_CountryLanguage__c</columns>
         <columns>Region__c</columns>
         <columns>Sub_Region__c</columns>
         <columns>AMS_Settlement_System__c</columns>
