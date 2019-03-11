@@ -174,7 +174,7 @@ global without sharing class ANG_CreateCaseDetails {
 				return false;
             }
 
-			oscar.Invoice_status__c = paymentStatus;
+			oscar.Invoice_status__c = paymentStatusMap.get(paymentStatus);
 
             if(oscar.Payment_Type__c == 'PPA' ){
                 
