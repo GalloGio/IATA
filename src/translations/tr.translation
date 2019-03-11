@@ -1261,6 +1261,10 @@
         <name>ANG_OSCAR_WARNING_RISK</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_OnGoing_OSCAR_Warning --></label>
+        <name>ANG_OnGoing_OSCAR_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_PCI_COMPLIANT --></label>
         <name>ANG_PCI_COMPLIANT</name>
     </customLabels>
@@ -13334,6 +13338,10 @@ Parolanızı sıfırlamak isterseniz lütfen giriş ekranına geri dönün ve �
         <name>ISSP_SIS_Membership_AutoBilling_Helptext</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP SIS Membership AutoBilling Helptext2 --></label>
+        <name>ISSP_SIS_Membership_AutoBilling_Helptext2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_SIS_Membership_BankMandateDescription --></label>
         <name>ISSP_SIS_Membership_BankMandateDescription</name>
     </customLabels>
@@ -17150,6 +17158,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- SIS Operations --></label>
         <name>SIS_Operations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SSW New Users --></label>
+        <name>SSW_New_Users</name>
     </customLabels>
     <customLabels>
         <label><!-- Salutation --></label>
