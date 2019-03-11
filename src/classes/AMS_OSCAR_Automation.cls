@@ -1464,12 +1464,17 @@ public with sharing class AMS_OSCAR_Automation {
 		}
 
 		public void execute (QueueableContext context){
-			Portal_Application_Right__c par = new Portal_Application_Right__c (
-                                    Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
-                                    Contact__c = [select name, Contact__r.name, Portal_administrator__c, ANG_AE_fromOnlineForm__c, AMS_Pax_Accreditation_Form__r.IATACode__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c and Portal_administrator__c = true].Contact__c,
-                                    Portal_Application__c = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1].Id
-						);
-            insert par;
+           List<AMS_Accreditation_Contact__c> accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
+           Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];
+			
+            if(!accredList.isEmpty() && accredList.get(0).Contact__c != null){
+                Portal_Application_Right__c par = new Portal_Application_Right__c (
+                                        Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
+                                        Contact__c = accredList.get(0).Contact__c,
+                                        Portal_Application__c = pa.Id
+                            );
+                insert par;
+            }
 		}
 	}
 }
