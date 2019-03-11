@@ -56,6 +56,17 @@ Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Special_Remarks__c</fullName>
+        <description>Field to define remarks that make change codes not billable</description>
+        <externalId>false</externalId>
+        <label>Special Remarks</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>AMS Change Codes Billable Setup</label>
     <visibility>Protected</visibility>
 </CustomObject>
