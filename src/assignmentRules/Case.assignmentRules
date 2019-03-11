@@ -4,6 +4,20 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>Vendor_Relations_Business_Analytics</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Vendor Relations – Business Analytics</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Due_Diligence_Publications</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -3217,16 +3231,8 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>Cases_IDPC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>IDPC</value>
-            </criteriaItems>
+            <formula>OR(AND(Account_Concerned__c = &apos;0011r00002DnBrF&apos;,RecordType.DeveloperName=&apos;Inter_DPCs&apos;), 
+AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;InternalCasesEuropeSCE&apos;))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
