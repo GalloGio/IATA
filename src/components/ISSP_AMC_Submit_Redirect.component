@@ -10,7 +10,7 @@
             <div style="border:1px solid black; background:white; text-align:center;
                         display: inline-block; padding: 1em; padding-left: 3em; padding-right: 3em;
                         position: absolute; top:40%; left:45%; z-index:101;" >
-                <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>Work in Progress. <br/> In case of sucess you will be redirected
+                <apex:image url="{!URLFOR($Resource.loadinggif)}"/><br/>{!$Label.ISSP_AMC_WORK_IN_PROGRESS} <br/> {!$Label.ISSP_AMC_SUCCESS_REDIRECT}
             </div>
             </div>
             </apex:outputPanel>

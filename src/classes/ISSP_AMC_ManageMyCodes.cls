@@ -116,6 +116,10 @@ public class ISSP_AMC_ManageMyCodes {
   	}
 
 
+	public String getCaseNum(Id participationId){
+		String numCase = [SELECT Id,Case__c FROM Participation_Online_Application__c WHERE Id=:participationId].Case__c;
+		return getCaseNumber(numCase);
+	}
 
 	public void getAccountInfo(){
 		accountRecord = ISSP_AMC_DAO.getAccountInfo();
@@ -283,6 +287,7 @@ public class ISSP_AMC_ManageMyCodes {
 						noPermissionToViewCase = true;
 					}
 				}
+				caseNum = getCaseNum(designatorApplicationId);
 				isThereAParticipation = true;
 				isDesignator = true;
 				return null;
@@ -350,6 +355,7 @@ public class ISSP_AMC_ManageMyCodes {
 						noPermissionToViewCase = true;
 					}
 				}
+				caseNum = getCaseNum(accountingOrPrefixApplicationId);
 				isThereAParticipation = true;
 				isAccountingPrefix = true;
 				return null;
@@ -416,7 +422,7 @@ public class ISSP_AMC_ManageMyCodes {
 						noPermissionToViewCase = true;
 					}
 				}
-				
+				caseNum = getCaseNum(baggageApplicationId);
 				isThereAParticipation = true;
 				isBaggage = true;
 				return null;

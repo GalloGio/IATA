@@ -9,6 +9,9 @@
         component.set("v.approvelUser", approvelID);
 
         action.setCallback(this, function(response) {
+
+            component.set("v.showSpinner",true); //DavidB
+
             var state = response.getState();
             if (state === "SUCCESS") {
 
@@ -109,6 +112,7 @@
                });
 
                $A.enqueueAction(action2);
+               component.set("v.showSpinner",false);
         });
 
         $A.enqueueAction(action);

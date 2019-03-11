@@ -42,13 +42,6 @@ public class ISSP_AMC_OrchestratorHandler_Test {
 
 
 				Test.stopTest();
-
-				/*Test.startTest();
-				action2.Status__c = 'Fail';
-				update action2;
-				Test.stopTest();
-
-				System.assertEquals(oneOrchestrator.IATA_Orchestrator_Process__r.Overall_Status__c, 'Fail');*/
 			}
 		}
 	}
@@ -85,17 +78,7 @@ public class ISSP_AMC_OrchestratorHandler_Test {
 
 				IATA_Process_Orchestrator__c orchestratorSon = createOrchSon(controller, orchestrator);
 
-				//IATA_Process_Orchestrator_Step_Action__c action = createActionpOrch(orchestratorSon,'Completed');
-				//actionList.add(action);
-
-				//IATA_Process_Orchestrator_Step_Action__c action2 = createActionpOrch(orchestratorSon,'Pending Customer');
-
-				//IATA_Process_Orchestrator_Step_Action__c action3 = createActionpOrch(orchestratorSon,'Fail');
-
 				IATA_Process_Orchestrator_Step_Action__c action4 = createActionpOrch(orchestratorSon,'Progressing');
-
-				//IATA_Process_Orchestrator_Step_Action__c action5 = createActionpOrch(orchestratorSon,'Not Applicable');
-
 
 				List<IATA_Process_Orchestrator__c> oneOrchestratorList = [SELECT Status__c, IATA_Orchestrator_Process__r.Overall_Status__c, IATA_Orchestrator_Process__c
 						FROM IATA_Process_Orchestrator__c
@@ -103,13 +86,6 @@ public class ISSP_AMC_OrchestratorHandler_Test {
 
 
 				Test.stopTest();
-
-				/*Test.startTest();
-				action2.Status__c = 'Fail';
-				update action2;
-				Test.stopTest();
-
-				System.assertEquals(oneOrchestrator.IATA_Orchestrator_Process__r.Overall_Status__c, 'Fail');*/
 			}
 		}
 	}
@@ -146,17 +122,7 @@ public class ISSP_AMC_OrchestratorHandler_Test {
 
 				IATA_Process_Orchestrator__c orchestratorSon = createOrchSon(controller, orchestrator);
 
-				//IATA_Process_Orchestrator_Step_Action__c action = createActionpOrch(orchestratorSon,'Completed');
-				//actionList.add(action);
-
-				//IATA_Process_Orchestrator_Step_Action__c action2 = createActionpOrch(orchestratorSon,'Pending Customer');
-
-				//IATA_Process_Orchestrator_Step_Action__c action3 = createActionpOrch(orchestratorSon,'Fail');
-
 				IATA_Process_Orchestrator_Step_Action__c action4 = createActionpOrch(orchestratorSon,'Pending Customer');
-
-				//IATA_Process_Orchestrator_Step_Action__c action5 = createActionpOrch(orchestratorSon,'Not Applicable');
-
 
 				List<IATA_Process_Orchestrator__c> oneOrchestratorList = [SELECT Status__c, IATA_Orchestrator_Process__r.Overall_Status__c, IATA_Orchestrator_Process__c
 						FROM IATA_Process_Orchestrator__c
@@ -164,13 +130,6 @@ public class ISSP_AMC_OrchestratorHandler_Test {
 
 
 				Test.stopTest();
-
-				/*Test.startTest();
-				action2.Status__c = 'Fail';
-				update action2;
-				Test.stopTest();
-
-				System.assertEquals(oneOrchestrator.IATA_Orchestrator_Process__r.Overall_Status__c, 'Fail');*/
 			}
 		}
 	}
@@ -215,13 +174,6 @@ public class ISSP_AMC_OrchestratorHandler_Test {
 
 
 				Test.stopTest();
-
-				/*Test.startTest();
-				action2.Status__c = 'Fail';
-				update action2;
-				Test.stopTest();
-
-				System.assertEquals(oneOrchestrator.IATA_Orchestrator_Process__r.Overall_Status__c, 'Fail');*/
 			}
 		}
 	}
@@ -267,13 +219,6 @@ public class ISSP_AMC_OrchestratorHandler_Test {
 
 
 				Test.stopTest();
-
-				/*Test.startTest();
-				action2.Status__c = 'Fail';
-				update action2;
-				Test.stopTest();
-
-				System.assertEquals(oneOrchestrator.IATA_Orchestrator_Process__r.Overall_Status__c, 'Fail');*/
 			}
 		}
 	}
@@ -320,12 +265,6 @@ public class ISSP_AMC_OrchestratorHandler_Test {
 
 				Test.stopTest();
 
-				/*Test.startTest();
-				action2.Status__c = 'Fail';
-				update action2;
-				Test.stopTest();
-
-				System.assertEquals(oneOrchestrator.IATA_Orchestrator_Process__r.Overall_Status__c, 'Fail');*/
 			}
 		}
 	}

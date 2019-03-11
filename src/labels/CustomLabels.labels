@@ -10537,7 +10537,7 @@ Systems (CASS)?</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_AIRLINE_DESIGNATORS_DESC</shortDescription>
-        <value>Airline as well as ralway, bus and ferry companies, computer reservations systems (CRSs) and ULD owners/leasing companies may be assigned an &lt;strong&gt;IATA two character designator code.&lt;/strong&gt;</value>
+        <value>Airline as well as railway, bus and ferry companies, computer reservations systems (CRSs) and ULD owners/leasing companies may be assigned an &lt;strong&gt;IATA two-character designator code.&lt;/strong&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_AIRLINE_DESIGNATOR_CHANGE</fullName>
@@ -10760,7 +10760,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_BAGAGE_TAG_RANGE_DESC</shortDescription>
-        <value>Airlines and CRSs may request the assignment of a unique three-letter code to identify an airport (r.g. GVA = Genava). Bus or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
+        <value>Airlines and CRSs may request the assignment of a unique three-letter code to identify an airport (e.g. GVA = Geneva). Bus or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_BAGGAGE_REASON_FOR_USE_1</fullName>
@@ -11255,7 +11255,7 @@ Click here to view the case number:</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_EXISTING_CASE_EDIT</shortDescription>
-        <value>Your company has already create a case to request the code. Click here to edit the case number:</value>
+        <value>Your company has already created a case to request this code. Click here to edit the case number:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_EXISTING_CASE_ERROR_MESSAGE</fullName>
@@ -11406,7 +11406,7 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_IATA_CODES_BODY</shortDescription>
-        <value>IATA Codes are integral part of the travel industry and essential for the identification of an airline, its destinations and its traffic documents. They are also fundamental to the smooth running of hundreds of electronic applications which have been built around these coding systems for passenger and cargo traffic purposes.</value>
+        <value>IATA Codes are an integral part of the travel industry and essential for the identification of an airline, its destinations and its traffic documents. They are also fundamental to the smooth running of hundreds of electronic applications which have been built around these coding systems for passenger and cargo traffic purposes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_IATA_CODE_VALIDATION</fullName>
@@ -11572,7 +11572,7 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_LOCATION_IDENTIFIER_DESC</shortDescription>
-        <value>Airlines and CRSs may request the assignment of a unique three-letter code to identify an airport (r.g. GVA = Genava). Bus or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
+        <value>Airlines and CRSs may request the assignment of a unique three-letter code to identify an airport (e.g. GVA = Geneva). Bus or ferry locations may be eligible for an IATA location identifier if these locations are involved in intermodal airline travel.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_LOCATION_NAME</fullName>
@@ -11972,6 +11972,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMC_PREVIOUSLY_ASSIGNED_IATA_A4A_CODE</shortDescription>
         <value>Has this company ever been assigned a numeric code by IATA or A4A?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_PREVIOUS_IATA_CODE_ACCPREF</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_PREVIOUS_IATA_CODE_ACCPREF</shortDescription>
+        <value>Has the airline ever been assigned an IATA three numeric accounting or prefix code?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_PREVIOUS_IATA_CODE_QUESTION</fullName>
@@ -12439,6 +12446,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>4. Submit to IATA</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_SUCCESS_REDIRECT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_SUCCESS_REDIRECT</shortDescription>
+        <value>In case of success you will be redirected.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_SYN_CONNECTION</fullName>
         <categories>Page Labels</categories>
         <language>en_US</language>
@@ -12773,6 +12787,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMC_WITHOUT_CODES</shortDescription>
         <value>Your company does not hold any codes yet</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMC_WORK_IN_PROGRESS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMC_WORK_IN_PROGRESS</shortDescription>
+        <value>Work in Progress.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMC_YEAR_CODE_HELD</fullName>

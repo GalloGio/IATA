@@ -19,6 +19,13 @@
                 font-size: 1.5em;
             }
 
+            .dataTables_wrapper .dataTables_paginate .paginate_button {
+                padding : 0px;
+                margin-left: 0px;
+                display: inline;
+                border: 0px;
+            }
+
             .redFringe{
                 background-color: #eb3014;
                 width: 44px;
@@ -37,7 +44,7 @@
     </div>
     
     <div class="panel-body" style="padding-top: 25px;">
-
+    <apex:form >
         <!-- NO RESULTS -->
         <apex:outputPanel rendered="{!AMCDraftCases.size <= 0}">
             <apex:outputText styleClass="bg-info" value="{!$Label.ISSP_AMS_No_Pending}"/>
@@ -45,6 +52,7 @@
         
         <!-- WITH RESULTS -->
         <apex:outputPanel rendered="{!AMCDraftCases.size > 0}">
+        
             <div class="table-responsive-md">
                 <table id="ongoingCasesTable" class="table table-striped">
                     <thead>
@@ -61,32 +69,33 @@
                                 <td>
                                     <!-- AIRLINE DESIGNATORS -->
                                         <!-- DRAFT -->
-                                        <apex:outputLink value="/ISSP_AMC_Airline_Designators?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateAirlineDesignators}"  rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Designator Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
-                                        </apex:outputLink>
+                                        </apex:commandLink>
                                     <!-- END: AIRLINE DESIGNATORS -->
                                     <!-- ACCOUNTING OR PREFIX CODE -->
                                         <!-- DRAFT -->
-                                        <apex:outputLink value="/ISSP_AMC_Accounting_Or_Prefix_Code?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateAccountingOrPrefixCode}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == '3 Digit Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
-                                        </apex:outputLink>
+                                        </apex:commandLink>
                                     <!-- END: ACCOUNTING OR PREFIX CODE -->
-                                    <!-- LOCATION IDENTIFIER -->
-                                        <apex:outputLink value="/ISSP_AMC_Location_Identifier?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open',caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
+                                    <!-- LOCATION IDENTIFIER value="/ISSP_AMC_Location_Identifier?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home"-->
+                                        <apex:commandLink action="{!navigateLocationIdentifier}" rendered="{!AND(caseItem.Status == 'Open',caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Location ID Form')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
-                                        </apex:outputLink>
+                                        </apex:commandLink>
                                     <!-- END: LOCATION IDENTIFIER -->
                                     <!-- BAGGAGE TAG RANGE -->
                                         <!-- DRAFT -->
-                                        <apex:outputLink value="/ISSP_AMC_Baggage_Tag_Range?participationId={!caseItem.Participation_Online_Applications__r[0].Id}&mid=M3S1&retURL=%2FISSP_AMC_Home" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
+                                        <apex:commandLink action="{!navigateBaggageTagRange}" rendered="{!AND(caseItem.Status == 'Open', caseItem.CaseArea__c == 'Coding & MITA Airline Coding', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')}" onclick="startLoading();">
                                             {!caseItem.CaseNumber}
-                                        </apex:outputLink>
+                                        </apex:commandLink>
                                     <!-- END: BAGGAGE TAG RANGE -->
 
-                                    <!-- NOT OPEN -->
-                                    <apex:outputLink value="/ISSP_Case?caseId={!caseItem.Id}&mid=M1S2&retURL=%2FISSP_AMC_Home" rendered="{!OR(caseItem.Status != 'Open', NOT(OR(caseItem.Reason1__c == 'Designator Form', caseItem.Reason1__c == '3 Digit Form', caseItem.Reason1__c == 'Location ID Form', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')) )}" onclick="startLoading();">
+                                    <!-- NOT OPEN /ISSP_Case?caseId={!caseItem.Id}&mid=M1S2&retURL=%2FISSP_AMC_Home -->
+                                    <apex:commandLink action="{!navigateToManageCases}" rendered="{!OR(caseItem.Status != 'Open', NOT(OR(caseItem.Reason1__c == 'Designator Form', caseItem.Reason1__c == '3 Digit Form', caseItem.Reason1__c == 'Location ID Form', caseItem.Reason1__c == 'Baggage Tag Identifier Codes')) )}" onclick="startLoading();">
                                         {!caseItem.CaseNumber}
-                                    </apex:outputLink>
+                                        <apex:param name="caseId" value="{!caseItem.Id}" assignTo="{!caseManageId}" />
+                                    </apex:commandLink>
                                 </td>
                                 <td><apex:outputText value="{!caseItem.Subject}" /></td>
                                 <td><apex:outputText value="{!caseItem.Status}" /></td>
@@ -98,9 +107,48 @@
                             </tr>
                         </apex:repeat>
                     </tbody>
+
+
                 </table>
+            </div>
+            
+        </apex:outputPanel>
+        <apex:outputPanel id="appandchanges">
+        <apex:outputPanel id="popupDeleteSection" rendered="{!IF(isThereACase == true,true,false)}">
+            <div class="test">
+            <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                <apex:outputPanel styleClass="Content" layout="black" > 
+                    <center>
+                        <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}{!caseNum}." />
+                            <div>
+                                <apex:commandButton value="{!$Label.ISSP_AMC_VIEW_CASE}" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
+                                disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="appandchanges" styleClass="btn btn_iata_primary"/>
+                            </div>
+                        </center>
+                    </apex:outputPanel>
+                </apex:outputPanel>
             </div>
         </apex:outputPanel>
 
+        <apex:outputPanel id="popupDeleteSection2" rendered="{!IF(isThereAParticipation == true,true,false)}">
+            <div class="test">
+            <apex:outputPanel styleClass="PopupBackground section-header modal-content" layout="black" >
+                <apex:outputPanel styleClass="Content" layout="black" > 
+                    <center>
+                        <apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE_EDIT}{!caseNum}." />
+                            <div>
+                                <apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+                                disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+                                <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="appandchanges" styleClass="btn btn_iata_primary"/>
+                            </div>
+                        </center>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+        
+        </apex:outputPanel>
+    </apex:form>
     </div>
 </apex:component>

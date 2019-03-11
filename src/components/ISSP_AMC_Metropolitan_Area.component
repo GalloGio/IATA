@@ -20,7 +20,7 @@
                         	</div>
                         	<div class="col-md-4">
 	                            <apex:selectRadio onclick="startLoading()" id="aocRadio" value="{!participation.Does_Metropolitan_area_currently_exists__c}" styleClass="{!IF(AND(hasError, participation.Does_Metropolitan_area_currently_exists__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
-	                                <apex:actionSupport event="onchange" rerender="aocPanel" oncomplete="rerenderValidation(); stopLoading()" />
+	                                <apex:actionSupport event="onchange" rerender="aocPanel" oncomplete="stopLoading()" />
 	                                <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
 	                                <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
 	                            </apex:selectRadio>
