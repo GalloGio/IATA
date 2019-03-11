@@ -20,7 +20,7 @@
 @RestResource(urlMapping='/case-create-details/*')
 global without sharing class ANG_CreateCaseDetails {
     
-	public static final set<string> setValidPaymentStatus = new set<string>{'Paid','Outstanding','N/A'};	//Valid account type
+	public static final set<string> setValidPaymentStatus = new set<string>{'Paid','Outstanding','N/A','Fully paid','Over paid','Partially paid','Not paid'};	//Valid Payment Status
     public static final set<string> setValidRequest = new set<string>{ANG_RestServiceHelper.URIRequest_CasePaymentStatus};    //Valid type of request, part of URI
     public static final set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_SAP};			//Valid caller
 
@@ -83,6 +83,16 @@ global without sharing class ANG_CreateCaseDetails {
 		
 		private RestRequest req;
 		private String caseId;
+
+        private final Map<String,String> paymentStatusMap = new Map<String,String>{
+            'Fully paid' => 'Paid',
+            'Over paid' => 'Over paid',
+            'Partially paid' => 'Partially paid',
+            'Not paid' => 'Outstanding',
+            'Paid' => 'Paid',
+            'Outstanding' => 'Outstanding',
+            'N/A' => 'N/A'
+            };
 
 		public CasePaymentStatus(RestRequest req, String caseId){
 			this.req = req;
