@@ -14,12 +14,16 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isCargoAgency{get;set;}
     public Boolean isCertificationOSCAR{get;set;}
     public Boolean isNewGenProcess{get;set;}
-    public Boolean isNewAE{get{return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
+    public Boolean isNewAE { get{ return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
     public Boolean displayErrorMsg{get{return false;} set;}
+    public Boolean showStagingArea {get; set;}
+
+    private Set<Id> hierarchyAccountIds = new Set<Id>();
+    private Map<Id, Account> hierarchyAccountsMap = new Map<Id, Account>();
+    private Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = new Map<Id, List<AMS_Agencies_relationhip__c>>();
 
     //FM AMSU-1
     public ID corrRT {get{return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');}set;}
-        
 
         //this flag will controll if picklist or multipicklist is displayed for Remittance Frequency 
     public Boolean allowMultipleRemittances{
@@ -189,7 +193,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;
         if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && oscarObj.Process__c == AMS_Utils.NEWAE) return false;     
 
-        if(!isAgencyChanges && !isAgencyCorrection) return true;     
+        if(!isAgencyChanges && !isAgencyCorrection) return true;
 
         //check per field
         return editableFields.contains(fieldName);
@@ -476,19 +480,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 return isAllHierarchySelected;
             }else{
                 Map<Id, List<AMS_Process_Detail__c>> processDetailPerOSCAR = new Map<Id, List<AMS_Process_Detail__c>>();
-                Set<Id> accountIds = new Set<Id>();
                 Set<Id> oscarIds = new Set<Id>();
                 Set<Id> oscarOnlineAccredIds = new Set<Id>();
-                Map<Id, Account> accounts = new Map<Id, Account>();
                 
-                //store all the updates to be made on account as consequence of migration of data from staging area to master data
-                Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct>();
-                
-                accountIds.add(oscarObj.Account__c);
-                accountIds.add(oscarObj.AMS_Target_Agency__c);
                 oscarIds.add(oscarObj.Id);
                 oscarOnlineAccredIds.add(oscarObj.AMS_Online_Accreditation__c);
-
 
                 Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = new Map<Id, AMS_Pax_Accreditation_Form__c>([SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
                     ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Country__r.Due_diligence_mandatory__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
@@ -505,6 +501,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 List<AMS_Process_Detail__c> allProcessDetails = new List<AMS_Process_Detail__c>([SELECT Id, Account__c, OSCAR__c, Account__r.Status__c,Account__r.Is_Branch_Abroad__c, RecordType.Developername FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscarIds and RecordType.Developername = 'Agency_Involved']);
 
                 for (AMS_Process_Detail__c pd : allProcessDetails) {
+
                     //TERMINATED AGENCIES IGNORED
                     if(pd.Account__c != null && pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
                         if (processDetailPerOSCAR.get(pd.OSCAR__c) == null)
@@ -517,23 +514,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         isBranchAbroadSelected = true;
                     }
 
-                }
-
-                Set<Id> oscarAccountIds = new Set<Id>();
-                oscarAccountIds.add(oscarObj.Account__c);
-                Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(oscarAccountIds);
-
-                for (List<AMS_Agencies_relationhip__c> hierarchyRelations : accountHierarchyRelationships.values()) {
-                    for (AMS_Agencies_relationhip__c relationship : hierarchyRelations) {
-                        if(relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Parent_Account__r.Status__c != '' ){
-                            accountIds.add(relationship.Parent_Account__c);
-                            accounts.put(relationship.Parent_Account__c, new Account(id = relationship.Parent_Account__c, Status__c = relationship.Parent_Account__r.Status__c));
-                        }
-                        if(relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Child_Account__r.Status__c != '' ){
-                            accountIds.add(relationship.Child_Account__c);
-                            accounts.put(relationship.Child_Account__c, new Account(id = relationship.Child_Account__c, Status__c = relationship.Child_Account__r.Status__c));
-                        }
-                    }
                 }
 
                 List<AMS_Process_Detail__c> pds = processDetailPerOSCAR.get(oscarObj.Id);
@@ -549,19 +529,18 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                     }
                 }
 
-                if(accounts.size() < 2){
+                if(this.hierarchyAccountsMap.size() < 2){
                     isSingleAccountHierarchy = true;
                 }
 
                 system.debug('applyChangeCodesWithDependencies() -> processDetailPerOSCAR : ' + processDetailPerOSCAR);
-                system.debug('applyChangeCodesWithDependencies() -> accountHierarchyRelationships : ' + accountHierarchyRelationships);
-                system.debug('applyChangeCodesWithDependencies() -> accountIds : ' + accountIds);
-                system.debug('applyChangeCodesWithDependencies() -> accounts : ' + accounts);
+                system.debug('applyChangeCodesWithDependencies() -> accountHierarchyRelationships : ' + this.accountHierarchyRelationships);
+                system.debug('applyChangeCodesWithDependencies() -> accountIds : ' + this.hierarchyAccountsMap.keySet());
+                system.debug('applyChangeCodesWithDependencies() -> hierarchyAccountsMap : ' + this.hierarchyAccountsMap);
                 system.debug('applyChangeCodesWithDependencies() -> agenciesAffected : ' + agenciesAffected);
                 
-
                 //Checks if all Hierarchy was Selected
-                isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, accountHierarchyRelationships.get(oscarObj.Account__c), accounts);
+                isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, this.accountHierarchyRelationships.get(oscarObj.Account__c), this.hierarchyAccountsMap);
                 return isAllHierarchySelected;
                 //system.debug('applyChangeCodesWithDependencies() -> isAllHierarchySelected : ' + isAllHierarchySelected);
             }
@@ -599,14 +578,13 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     }
     /*** AMSU-121 End ***/
 
-    public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c','Abbreviated_name__c'};
+    public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c'};
 
 
     // The extension constructor initializes the private member
     // variable oscarObj by using the getRecord method from the standard
     // controller.
     public AMS_OSCAR_Case_Detail_Controller() {
-
 
         this.objectId = ApexPages.currentPage().getParameters().get('id');
 
@@ -622,6 +600,49 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
  
         }else{
             System.debug('## Could not fetch any Oscar or does not have an accreditation object');
+        }
+        
+        this.showStagingArea = (oscarObj.Process__c != AMS_Utils.NGCHINACONVERSION);
+
+        this.accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarObj.Account__c});
+
+        for (AMS_Agencies_relationhip__c relationship : this.accountHierarchyRelationships.get(oscarObj.Account__c)) {
+
+            if(oscarObj.Process__c == AMS_Utils.NGCHINACONVERSION){
+                hierarchyAccountIds.add(relationship.Parent_Account__c);
+                hierarchyAccountIds.add(relationship.Child_Account__c);
+            }
+            
+            if(relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Parent_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Parent_Account__r.Status__c != '' ){
+                hierarchyAccountsMap.put(relationship.Parent_Account__c, new Account(id = relationship.Parent_Account__c, Status__c = relationship.Parent_Account__r.Status__c));
+            }
+            if(relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED && relationship.Child_Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && relationship.Child_Account__r.Status__c != '' ){
+                hierarchyAccountsMap.put(relationship.Child_Account__c, new Account(id = relationship.Child_Account__c, Status__c = relationship.Child_Account__r.Status__c));
+            }
+
+        }
+
+        Integer pendingCases = 0;
+
+        if(oscarObj.Process__c == AMS_Utils.NGCHINACONVERSION){
+
+            //Just in case there is a single agency in the hierachy
+            hierarchyAccountIds.add(oscarObj.Account__c);
+        
+            pendingCases = 
+                [SELECT 
+                    COUNT() 
+                 FROM
+                    Case
+                 WHERE
+                     AccountId IN :hierarchyAccountIds 
+                 AND RecordType.DeveloperName = 'OSCAR_Communication' 
+                 AND Status NOT IN ('Closed_ Not Accepted', 'Closed_Rejected', 'Closed_Withdrawn', 'Closed')
+                ];
+        }
+
+        if(oscarObj.Process__c == AMS_Utils.NGCHINACONVERSION && pendingCases > 1){
+            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, Label.ANG_OnGoing_OSCAR_Warning));
         }
 
     }
@@ -675,7 +696,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
                         ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c,
                         AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, STEP6__c, //FM AMSU-1
-                        Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c //AMSU-151
+                        Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c //AMSU-151 
                         FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;

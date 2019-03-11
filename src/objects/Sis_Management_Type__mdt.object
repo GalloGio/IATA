@@ -67,7 +67,7 @@
         <fullName>Enables_Automated_Posting_Reconciliati__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
-        <label>Enables Automated Posting &amp; Reconciliati</label>
+        <label>Automated Posting &amp; Reconciliation</label>
         <required>false</required>
         <type>Picklist</type>
         <valueSet>
@@ -244,7 +244,7 @@
         <fullName>Transaction_Fees__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
-        <label>Transaction Fees</label>
+        <label>Fees</label>
         <required>false</required>
         <type>Picklist</type>
         <valueSet>

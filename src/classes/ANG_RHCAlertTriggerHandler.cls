@@ -257,7 +257,7 @@ public class ANG_RHCAlertTriggerHandler{
 
         Map<Id,ANG_Risk_Alert__c> accountAlerts = new Map<Id,ANG_Risk_Alert__c>();
 
-       for(ANG_Risk_Alert__c ralert : [Select Id, ANG_Direction__c, ANG_Account__c,ANG_Threshold_Level__c from ANG_Risk_Alert__c where ANG_Account__c in: accountIds and Id not in:triggerNew Order by CreatedDate ASC])
+       for(ANG_Risk_Alert__c ralert : [Select Id, ANG_Direction__c, ANG_Account__c,ANG_Threshold_Level__c from ANG_Risk_Alert__c where RecordTypeId =:ANG_RHCHelper.RECTYPE_RISKALERT_RHC AND ANG_Account__c in: accountIds and Id not in:triggerNew Order by CreatedDate ASC])
             accountAlerts.put(ralert.ANG_Account__c, ralert);   
 
         for(ANG_Risk_Alert__c ralert:triggerNew){
@@ -799,7 +799,7 @@ public class ANG_RHCAlertTriggerHandler{
             log.System__c = 'bsplink';
             errorMessage = 'Following locations were not deactivated in BSPLink:\n';
             successMessage = 'Following locations were deactivated successfully in BSPLink:\n';
-            responses = AMS_BSPLinkIntegration.ProcessBSPLinkFromCase('Deactivation', (new List<Id>{accountIds[i]}) ,'FromSidra', sidraLiteCaseIds[i]);
+            responses = AMS_BSPLinkIntegration.ProcessBSPLinkFromCase('UrgentDeactivation', (new List<Id>{accountIds[i]}) ,'FromSidra', sidraLiteCaseIds[i]);
             for (AMS_BSPLinkIntegration.Response r: responses) {
                 if (r.result == 'Ok') {
                     successMessage = successMessage + '\n ' + r.IATACode;

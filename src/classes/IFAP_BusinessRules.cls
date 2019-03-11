@@ -609,4 +609,23 @@ public with sharing class IFAP_BusinessRules {
 
         return false;
     }
+
+    /**
+    * Compare the status of the last IFAP from the list provided (used on Risk Event Creation)
+    **/
+    public static boolean isPreviousIFAPStatusEquals(List<Case> cases, String status){
+        if(cases == null || cases.isEmpty()) return false;
+
+        Case lastIFAP;
+        DateTime auxlastCreatedDT;
+
+        for(Integer i = 0; i < cases.size(); i++){
+
+            if(i == 0 || cases[i].CreatedDate > auxlastCreatedDT){
+                auxlastCreatedDT = cases[i].CreatedDate;
+                lastIFAP = cases[i];
+            }
+        }
+        return lastIFAP.Status == status;
+    }
 }

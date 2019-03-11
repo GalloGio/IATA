@@ -384,4 +384,14 @@
 
 </div>
 
+<div class="footer">
+    <hr />
+    <div style="float: left; width: 80%;">
+        Standard Participation Agreement for SIS e-Invoicing Services – Invoice Receiver (October 2018)
+    </div>
+    <div style="float: right; width: 20%; text-align: right;">
+        <apex:outputText value="{!$Label.ISSP_AMS_PDF_Page}"/> <span class="pagenumber"/> OF <span class="pagecount"/>
+    </div>
+</div>
+
 </apex:component>

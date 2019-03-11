@@ -189,7 +189,7 @@ public with sharing class ISSP_SearchResultCO {
 		//basto1p
 		if (objectName == 'Case'){
 			
-			soqlQuery += ', Contact.Name';
+			soqlQuery += ', Contact.Name, RecordTypeId, BSP_CASS__c, IATA_Code__c, Remittance_period__c';
 
 			if (!hasStatus) {
 				soqlQuery += ', Status';
@@ -221,6 +221,22 @@ public with sharing class ISSP_SearchResultCO {
 			mapFieldsValue=new Map<String, String>();
 			String statusFieldValMapKey='';
 			for (SObject Item : objList) {
+
+				//ACAMBAS - WMO-389 - Start
+	            if(Item.get('RecordTypeId') == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA')) {
+	            	//String subject = (String) Item.get('Subject');
+	            	String iataCode = (String) Item.get('IATA_Code__c');
+	            	String bSPCASS = (String) Item.get('BSP_CASS__c');
+	            	String remittancePeriod = (String) Item.get('Remittance_period__c');
+
+	            	String subject = 'IMPORTANT: ';
+	                subject = (bSPCASS != null) ? subject + bSPCASS + ' Payment' : subject;
+	                subject = (iataCode != null) ? subject + ' - IATA Code ' + iataCode : subject;
+	                subject = (remittancePeriod != null) ? subject + ' - Period ' +  remittancePeriod : subject;
+
+	                Item.put('Subject', subject);
+	            }
+	            //ACAMBAS - WMO-389 - End
 
 				System.debug('basto1p - Item.get(Status)='+Item.get('Status'));
 				//Add mapping for Status field

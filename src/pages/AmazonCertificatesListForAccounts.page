@@ -1,0 +1,286 @@
+<apex:page standardController="Account" showHeader="false" sidebar="false" extensions="AmazonCertificateListController" cache="false">
+
+    <apex:includeScript value="/soap/ajax/33.0/connection.js"/>
+    <apex:includeScript value="/soap/ajax/33.0/apex.js"/>
+    <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+<style>
+    .ui-widget-overlay {
+        z-index: 98 !important;
+    }
+    .ui-dialog {
+        z-index: 99 !important;
+    }
+    .action-link {
+        color:#015ba7;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    var fileCounter = {
+        value: 0,
+        reset: function(val) {    value = val; },
+        refreshIfEmpty: function() {
+            value--;
+            if (value==0) refreshList();
+        }
+    }
+
+    function openDialog() {
+        $( '#dialog' ).dialog({
+            width: '550px',
+            modal: true,
+            resizable: false,
+            draggable: false,
+            close: function( event, ui ) {$( '#dialog' ).dialog('destroy');}
+        });
+    }
+
+    function clickUploadFileButton() {
+        if(validateInputs("dataToSubmit")) {
+            browseFiles();
+        }
+        return false;
+    }
+
+    function validateInputs(identifier) {
+        var $type = $("[id$='"+identifier+"_Type__c']");
+        if($type.val() == '') {
+            alert('Please fill Type');
+            return false;
+        }
+        var $expiryDate = $("[id$='"+identifier+"_Expiry_Date__c']");
+        if($expiryDate.val() == '') {
+            alert('Please fill Expity Date');
+            return false;
+        }
+        var inputExpiryDate = new Date($expiryDate.val() + ' 12:00:00');
+        var todayPlus60= new Date().setDate(new Date().getDate()+60);
+        if(inputExpiryDate<todayPlus60) {
+            alert('Expiry Date cannot be earlier than in 60 days');
+            return false;
+        }
+        return true;
+    }
+
+    function onButtonClicked() {
+        uploadFiles(this.files);
+    }
+
+    function browseFiles() {
+        var fileInput = $("#file-field");
+        fileInput.bind("change", onButtonClicked);
+        fileInput.click();
+    }
+
+    function uploadFiles(files) {
+        try{
+            $( '#dialog' ).dialog('destroy');
+        }catch(err){}
+
+        fileCounter.reset(files.length);
+        $.each(files, function(i, file) {
+            uploadFile(file);
+        });
+    }
+
+    function uploadFile(file) {
+        AmazonCertificateListController.createUploadFile("{!account.id}",file.name,file.type, file.size, function(result, event){
+            if(event.type == "exception") {
+                alert("Exception!!");
+                stopLoading();
+                fileCounter.refreshIfEmpty();
+                return false;
+            }
+            if(!event.status) {
+                alert("Bad status " + event.status);
+                stopLoading();
+                fileCounter.refreshIfEmpty();
+                return false;
+            }
+            if( ! result["isSuccess"]){
+                console.log(result);
+                alert(result["errorMessage"].replace("&#39;","'").replace("&amp", "&").replace(";",""));
+                stopLoading();
+                fileCounter.refreshIfEmpty();
+                return false;
+            }
+            var credentialNames = result;
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(file);
+            reader.onload = function(e) {
+                var arrayBuffer = reader.result;
+                remoteFunctionPut(credentialNames, file, reader.result);
+            };
+        }, {buffer: true, escape: true, timeout: 120000} );
+    }
+
+    function remoteFunctionPut(credentialNames, file, fileBody) {
+        sforce.connection.sessionId = "{!$Api.Session_ID}";
+        sforce.connection.init("{!$Api.Session_ID}", credentialNames.amazonFilePath);
+        var xhr = new XMLHttpRequest();
+        // salesforce overrides original XMLHttpRequest in IE
+        if (!xhr.upload && window.Sarissa && window.Sarissa.originalXMLHttpRequest) {
+            xhr = new Sarissa.originalXMLHttpRequest();
+        }
+
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                fileCounter.refreshIfEmpty();
+                var status = this.status;
+                if (status == 200) {
+                } else {
+                    if (this.responseText) {
+                        getResponseFromXML(this.responseText);
+                    } else {
+                        var message = '';
+                        if (this.statusText) {
+                            message = 'Status: '+this.status+'. Error: '+this.statusText;
+                        }
+                        else if (this.responseText) {
+                            message = 'Status: '+this.status+'. Error: '+this.responseText;
+                        }
+                        else {
+                            message = 'Status:'+this.status+'. Error: Unknown error.';
+                        }
+                    }
+                }
+            }
+        };
+
+        xhr.open("PUT", credentialNames.amazonFilePath);
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("Authorization",credentialNames.authorization);
+        xhr.setRequestHeader("X-Amz-Date",credentialNames.timestamp);
+        xhr.setRequestHeader("Content-Type",file.type+';charset=UTF-8');
+        xhr.send(fileBody);
+
+        callToCreateAmazonFileObject(file, credentialNames.fullFileName);
+    }
+
+    function getResponseFromXML(response) {
+        parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(response, "text/xml");
+        if (xmlDoc.getElementsByTagName("Message")[0].childNodes[0].nodeValue) {
+            alert ('Error. Message from Amazon S3: '+xmlDoc.getElementsByTagName("Message")[0].childNodes[0].nodeValue);
+            stopLoading();
+        }
+    }
+
+    function callToCreateAmazonFileObject(file, path) {
+        startLoading();
+        var datatype = $("[id$='dataToSubmit_Type__c'] :selected").val();
+        var expiryDate = $("[id$='dataToSubmit_Expiry_Date__c']").val();
+        AmazonCertificateListController.createAmazonFileObject(
+            path,
+            file.size,
+            "{!account.Id}",
+            expiryDate,
+            datatype,
+            function(result, event){
+                refreshList();
+            }
+        );
+    }
+    function navigateToUrl (url){ 
+        window.top.location.href = url; 
+    }
+    function downloadFile(id) {
+        startLoading();
+        AmazonCertificateListController.getS3Url(id, function(result, event){
+            if(event.type == "exception") {
+                alert("Connection Failed");
+                stopLoading();
+                return false;
+            }
+            var url = result.replace(/&amp[;]/g, "&");
+            navigateToUrl(url);
+        }, {buffer: true, escape: true, timeout: 120000} );
+    }
+</script>
+    <c:Loading />
+
+    <apex:form id="mainform" >
+
+        <apex:actionFunction name="refreshList" action="{!refreshListCertificates}" rerender="mainform" status="Loading"/>
+
+        <apex:pageMessages />
+
+        <apex:pageblock id="fileList" title="Certificates" >
+
+<!--            BUTTONS -->
+            <apex:pageblockButtons location="top" >
+                <apex:commandButton value="New File" onclick="openDialog(); return false;" immediate="true" />
+            </apex:pageblockButtons>
+
+            <apex:pageBlockTable id="tableAttachments" value="{!listCertificates}" var="cert" Title="title">
+
+<!--                ACTIONS -->
+                <apex:column headerValue="{!$Label.Action}">
+                    <!-- EDIT ACTION -->
+                    <a escape="false" target="_blank" onclick="navigateToUrl('/{!cert.Id}/e');" class="action-link">{!$Label.Edit}</a>
+                    &nbsp;|&nbsp;
+                    <!-- VIEW ACTION -->
+                    <a escape="false" target="_blank" onclick="downloadFile('{!cert.Id}');" class="action-link">{!$Label.View}</a>
+                </apex:column>
+
+                <apex:column headerValue="{!$Label.File_Name}">
+                    <apex:outputLink value="../{!cert.Id}" target="_blank">{!cert.Name}</apex:outputLink>
+                </apex:column>
+
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Type__c.Label}" >
+                    <apex:outputField value="{!cert.Type__c}"/>
+                </apex:column>
+
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Expiry_Date__c.Label}" >
+                    <apex:outputField value="{!cert.Expiry_Date__c}"/>
+                </apex:column>
+
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.Expired__c.Label}" >
+                    <apex:outputField value="{!cert.Expired__c}"/>
+                </apex:column>
+
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.CreatedDate.Label}" >
+                    <apex:outputField value="{!cert.CreatedDate}"/>
+                </apex:column>
+
+                <apex:column headerValue="{!$ObjectType.AmazonFile__c.fields.CreatedById.Label}" >
+                    <apex:outputField value="{!cert.CreatedById}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageblock>
+        
+        <!-- BEGIN modal to upload files -->
+        <div id="dialog" style="display: none;" title="{!$Label.Select_File}">
+            <input id="file-field" multiple="true" name="file" style="display: none;" type="file" />
+
+            <apex:pageBlock title="{!$Label.Description_Edit}" mode="edit" tabStyle="AmazonFile__c" >
+
+                <apex:pageBlockButtons location="top" >
+                    <input class="btn" id="btnUpload" value="{!$Label.Upload_File}" type="submit" onclick="clickUploadFileButton();" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="1">
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Type__c.Label}"/>
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:inputField id="dataToSubmit_Type__c" value="{!amazonFileToUpload.Type__c}" required="true"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.AmazonFile__c.fields.Expiry_Date__c.Label}"/>
+                        <apex:inputField id="dataToSubmit_Expiry_Date__c" value="{!amazonFileToUpload.Expiry_Date__c}" required="true"/>
+                    </apex:pageBlockSectionItem>
+
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </div>
+        <!-- END modal to upload files -->
+
+    </apex:form>
+</apex:page>
