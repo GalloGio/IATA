@@ -1545,7 +1545,7 @@
                                                             <table width="100%">
                                                                 <tr>
                                                                     <td width="100%">
-                                                                        <apex:commandLink onclick="downloadZIP('{!dailyFileDownloadListJSON}');" value="{!$Label.ISSP_DownloadAll}"></apex:commandLink>
+                                                                        <apex:commandLink onclick="downloadZIP('{!dailyFileDownloadListJSON}');return false;" value="{!$Label.ISSP_DownloadAll}"></apex:commandLink>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -1850,7 +1850,7 @@
                                                                         <table width="100%">
                                                                             <tr>
                                                                                 <td width="100%">
-                                                                                    <apex:commandLink onclick="downloadZIP('{!weeklyFileDownloadListJSON}');" value="{!$Label.ISSP_DownloadAll}"></apex:commandLink>
+                                                                                    <apex:commandLink onclick="downloadZIP('{!weeklyFileDownloadListJSON}');return false;" value="{!$Label.ISSP_DownloadAll}"></apex:commandLink>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
