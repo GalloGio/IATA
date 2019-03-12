@@ -344,6 +344,13 @@ public without sharing class ISSP_APProcess {
                     newForm.Airline_Local_address_in_the_BSP_Country__c = newCase.BSPCountry__c;
                 }
 
+                if(isPASSAirline){
+                    newForm.Receive_HOT_files__c='YES';
+                    newForm.Receive_PDF_Reports__c='YES';
+                    showHideHotFilesPreferenceMethod();
+                    showHidePdfReportsPreferenceMethod();
+                }
+
                 if(isPASSGSSA){
                     newForm.GSSA_Legal_Name__c = newCase.Account.Name;
                     newForm.GSSA_Code__c = '';
@@ -353,11 +360,6 @@ public without sharing class ISSP_APProcess {
                     newForm.GSSA_HQ_Post_Code__c = strParentBillingCode;
                     newForm.GSSA_HQ_Country__c = strParentBillingCountry;
                     newForm.GSSA_VAT_Id__c = '';
-                    newForm.Receive_HOT_files__c='YES';
-                    newForm.Receive_PDF_Reports__c='YES';
-
-                    showHideHotFilesPreferenceMethod();
-                    showHidePdfReportsPreferenceMethod();
                 } 
 
                 getCityData();//TF
