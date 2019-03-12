@@ -19409,6 +19409,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Email</value>
     </labels>
     <labels>
+        <fullName>ISSP_CCOthers_Invalid_Contact</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Invalid Contact</shortDescription>
+        <value>This contact cannot be added because it belongs to another account</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CNS_Documents</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>

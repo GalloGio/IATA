@@ -1651,14 +1651,15 @@ public without sharing class ISSP_Case {
                     FROM User
                     WHERE ContactId = :contact.Id
                     AND isActive = true
-                    AND Contact.AccountId = :newCase.Account_Concerned__c
+                    AND Contact.AccountId IN (:newCase.Account_Concerned__c,:newCase.AccountId)
                     AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User') ];
                 if (!listUser.isEmpty()) {
                     memberId = listUser[0].Id;
                 } else {
-                    if (contact.AccountId != newCase.Account_Concerned__c){
+                    if (contact.AccountId != newCase.Account_Concerned__c || contact.AccountId != newCase.AccountId){
                         //if it's DPC, a user is not found and the selected contact is not in the
-                        //same Account Concerned then we cannot continue
+                        //same Account Concerned or related account then we cannot continue
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Warning,Label.ISSP_CCOthers_Invalid_Contact));
                         return;
                     }
                 }
