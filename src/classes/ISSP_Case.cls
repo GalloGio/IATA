@@ -1534,15 +1534,16 @@ public without sharing class ISSP_Case {
                 setEmail.add(email);
             }
         }
+        User myUser = [SELECT Id, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
         List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
         List<String> lsNewEmails = new List<String>();
-        // only add Users from Account_Concerned__c
+        // only add Users from Account_Concerned__c or from current user's account
         List<User> lsUsers =
             [SELECT Id, Name, Email, AccountId, Contact.AccountId
             FROM User
             WHERE Email IN :setEmail
             AND isActive = true
-            AND Contact.AccountId = :newCase.Account_Concerned__c];
+            AND Contact.AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)];
 
         for(User user : lsUsers) {
             CaseTeamMember teammember = new CaseTeamMember(
@@ -1561,7 +1562,7 @@ public without sharing class ISSP_Case {
                 WHERE Email IN :setEmail
                 AND User_Portal_Status__c IN ('Approved Admin', 'Approved User')
                 AND Status__c = 'Active'
-                AND AccountId = :newCase.Account_Concerned__c
+                AND AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)
                 LIMIT 1];
 
             for(Contact contact : listContact) {
