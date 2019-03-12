@@ -107,6 +107,13 @@ public without sharing class ISSP_Financial_Institutions {
         }
         private set;
     }
+    public Boolean userCanRequestGDI {
+        get {
+            if (userCanRequestGDI == null) userCanRequestGDI = false;
+            return userCanRequestGDI;
+        }
+        private set;
+    }
 
     public ISSP_Financial_Institutions() {}
 
@@ -144,7 +151,9 @@ public without sharing class ISSP_Financial_Institutions {
                     gdiAppRightRequested = true;
 
             } else {
-                User currentPortalUser = [SELECT Id, ContactId, Contact.Account.Country_ISO_Code__c, Contact.Account.Region_formula__c, Contact.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, Contact.Account.Category__c
+                User currentPortalUser = [SELECT Id, ContactId, Contact.Account.Country_ISO_Code__c, 
+                                            Contact.Account.Region_formula__c, Contact.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, 
+                                            Contact.Account.Category__c, Contact.Account.Sector__c, Contact.Account.Status__c
                                           FROM User 
                                           WHERE Id = :UserInfo.getUserId() 
                                           LIMIT 1];
@@ -152,7 +161,12 @@ public without sharing class ISSP_Financial_Institutions {
                 conId = currentPortalUser.ContactId;
                 agencyCountry = currentPortalUser.Contact.Account.Country_ISO_Code__c;
                 agencyRegion = currentPortalUser.Contact.Account.Region_formula__c;
+                Account userAcc = currentPortalUser.Contact.Account;
                 countryIsGDIEnabled = (currentPortalUser.Contact.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c && currentPortalUser.Contact.Account.Category__c == 'IATA Passenger Sales Agent');
+                userCanRequestGDI = (!gdiAppRightDenied && !gdiAppRightGranted && !gdiAppRightRequested 
+                    && userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
+                    && userAcc.Sector__c == AMS_Utils.SECTOR_PASSENGER
+                    && AMS_Utils.ACTIVEAGENCYSTATUS.contains(userAcc.Status__c));
             }
         }
 

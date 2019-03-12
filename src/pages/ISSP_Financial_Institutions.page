@@ -93,7 +93,7 @@
                                         
                                         <apex:outputText value="{!financialInstitution.Name}" rendered="{!financialInstitution.Website__c == ''}"/>
                                         
-                                        <apex:commandButton styleClass="btn_iata_primary btn" value="Request GDI Access" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(NOT(gdiAppRightDenied), NOT(gdiAppRightGranted), NOT(gdiAppRightRequested), CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
+                                        <apex:commandButton styleClass="btn_iata_primary btn" value="Request GDI Access" onclick="showTermsAndConditionsModal(); return false;" reRender="" rendered="{!AND(userCanRequestGDI, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
 
                                         <apex:outputText value="{!$Label.ISSP_Access_Denied}" rendered="{!AND(gdiAppRightDenied, CONTAINS(financialInstitution.Name, 'Euler Hermes'))}" style="float: right;"/>
 
