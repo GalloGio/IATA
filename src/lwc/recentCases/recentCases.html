@@ -1,5 +1,12 @@
 <template>
-    <lightning-card variant="Narrow" title="Recent Cases" icon-name="standard:case">
+    <lightning-card>
+        <div slot="title">
+            <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+            Recent Cases
+            </div>
+            <div slot="actions">
+                <lightning-button variant="base" label="See All" title="See All" icon-name="utility:forward" icon-position="right"></lightning-button>
+            </div>        
         <div class="slds-m-around__medium">
             <template if:true={loading}>
                 <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
@@ -7,11 +14,10 @@
             <template if:false={loading}>
                 <div if:true={dataRecords}>
                     <lightning-datatable
-                        key-field="id"
+                        key-field="Id"
                         data={data}
                         columns={columns}
-                        hide-checkbox-column
-                        onrowaction={handleRowAction}>
+                        hide-checkbox-column>
                     </lightning-datatable>
                 </div>
                 <div if:false={dataRecords}>

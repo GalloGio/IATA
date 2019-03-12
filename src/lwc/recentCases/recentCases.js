@@ -16,8 +16,9 @@ export default class RecentCases extends LightningElement {
 
     @wire(getRecentCases)
     wiredRecentCases(results) {
-        if (results.data) {
-            this.data = results.data.myRecentCases;
+        this.loading = true;
+        if (results.data) {            
+            this.data = results.data;
             this.loading = false;
         } else if (results.error) {
             this.error = results.error;
