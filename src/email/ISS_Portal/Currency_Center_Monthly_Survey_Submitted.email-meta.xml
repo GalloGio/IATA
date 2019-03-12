@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to notify users that Monthly Survey is submitted</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Currency Center Monthly Survey Submitted</name>
+    <style>freeForm</style>
+    <subject>IATA Monthly Survey Submitted</subject>
+    <textOnly>Dear Colleague,
+
+Please note {!Currency_Center_Survey__c.Airline__c} reported currency repatriation issues for {!Currency_Center_Survey__c.Country_Name__c} as part of the Annual Remittance of Foreign Balances Survey 2019.
+
+ 
+
+You can access the information in the Currency Center. Please note the data of all airlines across the different countries will be aggregated and analyzed once the survey is closed on {!CASE(MONTH(TODAY()),1,&apos;January&apos;,2,&apos;February&apos;,3,&apos;March&apos;,4,&apos;April&apos;,5,&apos;May&apos;,6,&apos;June&apos;,7,&apos;July&apos;,8,&apos;August&apos;,9,&apos;September&apos;,10,&apos;October&apos;,11,&apos;November&apos;,12,&apos;December&apos;,&apos;&apos;)}  15th .
+
+ 
+Currency Center</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
