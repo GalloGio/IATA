@@ -11,9 +11,6 @@ public with sharing class ApexMessageHandling {
     }
     public ApexMessageHandling(boolean succ,string msg){
         isSuccess = succ;
-        if(succ)
-            successMsg = '';
-        else
-            errorMsg = msg;
+        errorMsg = msg;
     }
 }
