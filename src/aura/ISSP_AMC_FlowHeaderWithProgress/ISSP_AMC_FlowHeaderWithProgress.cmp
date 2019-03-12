@@ -5,10 +5,13 @@
     <aura:attribute name="CurrentStage" type="String"  />
     <aura:attribute name="Heading" type="String" />
     <aura:attribute name="processOrchestratorId" type="String" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" description="Defines when to display the spinner"/>
     
     <aura:attribute name="stageWithStatusMap" type="Map" />
     
     <aura:handler event="c:ISSP_AMC_RefreshProgressEvent" action="{!c.doInit}"/>
+
+    <lightning:spinner class="{!if(v.showSpinner,'slds-show','slds-hide')}" style="position: fixed;" alternativeText="Loading" size="medium"/>
     
     
     <div class="slds-grid slds-grid_vertical">

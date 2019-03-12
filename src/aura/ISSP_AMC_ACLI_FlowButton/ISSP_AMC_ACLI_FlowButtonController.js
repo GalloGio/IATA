@@ -119,6 +119,7 @@
     },
 
 	 requestApproval : function(component, event, helper) {
+         component.set("v.showSpinner",true); //DavidB
 
         var action = component.get("c.requestForApproval");
          
@@ -127,6 +128,7 @@
             "stage" : component.get("v.stage")
         });
             action.setCallback(this, function(response) {
+                component.set("v.showSpinner",false);
 
             var state = response.getState();
             var resultsToast = $A.get("e.force:showToast");
@@ -159,6 +161,7 @@
     },
 
 	createRelatedCase : function(component, event, helper) {
+        
         component.set("v.showSpinner",true);
 
          var action = component.get("c.createRelatedCases");
@@ -166,6 +169,7 @@
          action.setParams({ "caseId" : component.get("v.caseRecordId"),
                             "stage" : component.get("v.stage")});
             action.setCallback(this, function(response) {
+                component.set("v.showSpinner",false);
                 var state = response.getState();
 
                 if (state === "SUCCESS") {
@@ -175,7 +179,7 @@
                     console.log("Failed with state: " + response.getError()[0].message);
                 }
                 $A.get('e.force:refreshView').fire();
-                 component.set("v.showSpinner",false);
+                 
             });
 
             $A.enqueueAction(action);
@@ -194,18 +198,20 @@
         $A.enqueueAction(action);*/
 	},
 	sendAssignmentLetter : function(component, event, helper) {
+        component.set("v.showSpinner",true);
 	
         var workspaceAPI = component.find("workspace");
 
         //var letterUrl = 'https://composer.congamerge.com?SolMgr=1&sessionId=' + {!API.Session_ID} + '&serverUrl=' + {!API.Partner_Server_URL_290} + '&Id=' + {!caseRecordId} + '&QueryId=[Participation]a7z0D00000004w5?pv0=' + {!caseRecordId} + '&AttachmentParentId=' + {!caseRecordId};
         var caseId = component.get("v.caseRecordId");
+        
         //var apiServer = component.get("v.apiServerPartner");
         //var c = $A.get("!API.Partner_Server_URL_370");
         //{!API.Partner_Server_URL_370}
         var cenas = '/apex/APXTConga4__Conga_Composer?serverUrl=' + $A.get("!API.Partner_Server_URL_370") + '&id=' + caseId + '&QueryId=[Participation]a7z0D00000004w5?pv0=' + caseId + '&AttachmentParentId=' + caseId + '&TemplateGroup=Conga+templates';
         //var url = component.set("v.url", cenas);
         window.open(cenas);
-       
+        component.set("v.showSpinner",false);
         /*workspaceAPI.openSubtab({
                 parentTabId: workspaceAPI.getTabInfo,
                 url: cenas,

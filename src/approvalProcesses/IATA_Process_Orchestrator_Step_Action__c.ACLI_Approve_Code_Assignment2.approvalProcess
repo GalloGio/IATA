@@ -3,7 +3,8 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
-        <type>owner</type>
+        <submitter>bricenoa@iata.org</submitter>
+        <type>user</type>
     </allowedSubmitters>
     <approvalPageFields>
         <field>Name</field>

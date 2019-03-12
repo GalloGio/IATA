@@ -70,7 +70,7 @@ public class ISSP_AMC_DAO {
 
     public static List<String> getTypeOperationList(Participation_Online_Application__c participation, String acliCode) {
         List<String> operationTypeList = new List<String>();
-        if (acliCode == ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_DESIGNATOR_CODE) {
+        if (acliCode == ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_DESIGNATOR_CODE || acliCode == ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE) {
             if(participation.AOC_Scheduled_Passenger__c) operationTypeList.add('\'Scheduled Passenger\'');
             if(participation.AOC_Scheduled_Cargo__c)  operationTypeList.add('\'Scheduled Cargo\'');
             if(participation.AOC_Non_Scheduled_Passenger__c) operationTypeList.add('\'Non-Scheduled Passenger\'');
@@ -309,7 +309,11 @@ public class ISSP_AMC_DAO {
     }
 
     private static List<Participant_Online_App_Requirement__c> getJunctionToDelete(Map<Id, Participation_Application_Requirement__c> currentRequirementMap, Map<Id, Participant_Online_App_Requirement__c> currentOnlineAppRequiredMap ) {
+        
+        system.debug('DB:Entra no getJunctionToDelete');
         List <Participant_Online_App_Requirement__c> junctionToDelete = new List <Participant_Online_App_Requirement__c>();
+        system.debug('DB:Entra no currentOnlineAppRequiredMap' + currentOnlineAppRequiredMap);
+        system.debug('DB:Entra no currentRequirementMap' + currentRequirementMap);
         if (currentOnlineAppRequiredMap == null || currentRequirementMap == null) return junctionToDelete;
         for(Participant_Online_App_Requirement__c parRecord: currentOnlineAppRequiredMap.values()) {
             if(parRecord.Participation_Application_Requirement__c != null && !currentRequirementMap.containsKey(parRecord.Participation_Application_Requirement__c)) {
@@ -319,6 +323,7 @@ public class ISSP_AMC_DAO {
             }
 
         }
+        system.debug('DB:Entra no junctionToDelete' + junctionToDelete);
         return junctionToDelete;
     }
 
@@ -387,17 +392,22 @@ public class ISSP_AMC_DAO {
             //JCFF Delete issue
             List<Participant_Online_App_Requirement__c> junctionToDeleteList = ISSP_AMC_DAO.getJunctionToDelete(currentRequirementMap, currentOnlineAppRequiredMap );
             if(junctionToDeleteList != null && junctionToDeleteList.size() > 0){
+                system.debug('DB:: junctionToDeleteList != null');
                 if(step == ISSP_AMC_Constants.AMC_SAVE_STEPSUBMIT){
+                    system.debug('DB:: STEP SUBMIT');
                     Set <Id> fileSet = new Set <Id>();
                     for(Participant_Online_App_Requirement__c junctionItemToDelete : junctionToDeleteList){
                         if(junctionItemToDelete.AmazonFile__c != null){
                             fileSet.add(junctionItemToDelete.AmazonFile__c);
                         }
                     }
+                    system.debug('DB:.file set '+fileSet);
                     List <Participant_Online_App_Requirement__c> appReq = new List <Participant_Online_App_Requirement__c>([SELECT AmazonFile__c, AmazonFile__r.Full_Name_Unique__c 
                                                                                                                             FROM Participant_Online_App_Requirement__c 
                                                                                                                             WHERE AmazonFile__c IN :fileSet]);
+                    system.debug('DB:: appReq'+appReq);                                                                                                     
                     if(appReq != null && !appReq.isEmpty()){
+                        system.debug('DB:: appReq != null'); 
                         for(Participant_Online_App_Requirement__c requirement : appReq){
                             if(requirement.AmazonFile__c != null){
                                 System.debug('JCFF DELETE deleteAttachment :');
@@ -412,6 +422,7 @@ public class ISSP_AMC_DAO {
                     System.debug('JCFF UPDATE junctionToDeleteList : ' + junctionToDeleteList);
                     update junctionToDeleteList;   
                 }
+                system.debug('DB:: junctionToDeleteList '+junctionToDeleteList); 
             }
             //JCFF end delete issue
 
@@ -972,6 +983,11 @@ public class ISSP_AMC_DAO {
             System.debug('saveDesignatorCode ' + ex.getMessage());
         }
         
+        System.debug('TIAGO MENDES junctionToInsert::' + junctionToInsert);
+        System.debug('TIAGO MENDES junctionToDelete::' + junctionToDelete);
+        System.debug('TIAGO MENDES junctionToUpdate::' + junctionToUpdate);
+        System.debug('TIAGO MENDES junctionToUpdate::' + junctionToUpdate.size());
+        System.debug('TIAGO MENDES:: FIM DO DESIGNATOR');
         return saveFormUtility;
     }
     
@@ -1438,7 +1454,7 @@ public class ISSP_AMC_DAO {
                             String errorEntityFields = '<ul>';
 
                             if(participation.SIS_Salutation__c == null || String.isEmpty(participation.SIS_Salutation__c)){
-                                errorSectionFields += '<li>' + Label.ISSP_AMC_CONTACT_SALUTE + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
+                                errorEntityFields += '<li>' + Label.ISSP_AMC_CONTACT_SALUTE + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
                                 hasError = true;
                             }
                             if(participation.SIS_First_Name__c == null || String.isEmpty(participation.SIS_First_Name__c)){
@@ -1687,7 +1703,8 @@ public class ISSP_AMC_DAO {
                         }
                     }
                 }
-            }
+
+                }
             else{
                 if(participation.AOC_Scheduled_Passenger__c == false  && participation.AOC_Scheduled_Cargo__c == false && participation.AOC_Non_Scheduled_Passenger__c == false && participation.AOC_Non_Scheduled_Cargo__c == false
                     && participation.AOC_Ferry_Company__c == false && participation.AOC_CRS__c == false && participation.AOC_Bus_Company__c == false && participation.AOC_Railway_Company__c == false){
@@ -1723,6 +1740,11 @@ public class ISSP_AMC_DAO {
             System.debug('saveDesignatorCode ' + ex.getMessage());
         }
         
+        System.debug('TIAGO MENDES junctionToInsert::' + junctionToInsert);
+        System.debug('TIAGO MENDES junctionToDelete::' + junctionToDelete);
+        System.debug('TIAGO MENDES junctionToUpdate::' + junctionToUpdate);
+        System.debug('TIAGO MENDES junctionToUpdate::' + junctionToUpdate.size());
+        System.debug('TIAGO MENDES:: FIM DO ACCOUTING');
         return saveFormUtility;
     }
 
@@ -1870,7 +1892,7 @@ public class ISSP_AMC_DAO {
                             String errorEntityFields = '<ul>';
 
                             if(participation.SIS_Salutation__c == null || String.isEmpty(participation.SIS_Salutation__c)){
-                                errorSectionFields += '<li>' + Label.ISSP_AMC_CONTACT_SALUTE + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
+                                errorEntityFields += '<li>' + Label.ISSP_AMC_CONTACT_SALUTE + ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
                                 hasError = true;
                             }
                             if(participation.SIS_First_Name__c == null || String.isEmpty(participation.SIS_First_Name__c)){

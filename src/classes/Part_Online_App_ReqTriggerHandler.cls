@@ -16,6 +16,7 @@ public class Part_Online_App_ReqTriggerHandler {
 		Set<Id> poaIdSet = new Set<Id>();
 		Set<Id> parIdSet = new Set<Id>();
 
+		System.debug('Entrei no trigger');
 		System.debug('TM junctionToDelete :: ' + junctionToDelete);
 		
 		List<Participation_Online_Application__c> poaToCleanList = new List<Participation_Online_Application__c>();
@@ -36,9 +37,10 @@ public class Part_Online_App_ReqTriggerHandler {
 			for(Participation_Online_Application__c poaRecord : poaList) {
 			    for (Participant_Online_App_Requirement__c poar : junctionToDelete) {
 			    	
-			    	
+			    	system.debug('DB:: Trigger');
 
 			    	if(poar.Participation_Online_Application__c == poaRecord.Id && parClearMap.containsKey(poar.Participation_Application_Requirement__c)){
+                        system.debug('DB:: Trigger 2' );
 			    		if(poaRecordMap.containsKey(poar.Participation_Online_Application__c)) {
 			    			poaUpdateRecord = poaRecordMap.get(poar.Participation_Online_Application__c);
 			    		} else{
@@ -47,8 +49,11 @@ public class Part_Online_App_ReqTriggerHandler {
 			    			poaRecordMap.put(poaUpdateRecord.id,poaUpdateRecord);
 			    		}
 			    		parFields = parClearMap.get(poar.Participation_Application_Requirement__c);
+                        system.debug('DB:: Trigger parFields' +parFields);
 			    		for (String fieldName : parFields) {
+                            system.debug('DB:: Trigger fieldName' +fieldName);
 			    			if (Part_Online_App_ReqTriggerHandler.objectFieldsMap.containsKey(fieldName)) {
+                                system.debug('DB:: Trigger entra no if.containsKey' );
 			    				fieldType = Part_Online_App_ReqTriggerHandler.objectFieldsMap.get(fieldName).getDescribe().getType();
 			    				switch on fieldType {
 			    					when Boolean {

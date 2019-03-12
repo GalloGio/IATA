@@ -6,12 +6,12 @@
     <aura:attribute name="processOrchestratorId" type="String" />
     <aura:attribute name="optionsUser" type="List" />
     <aura:attribute name = "stepActionId" type = "String" />
-    
+    <aura:attribute name="showSpinner" type="Boolean" default="false" description="Defines when to display the spinner"/>
     <aura:attribute name="picklists" type="ISSP_AMC_FlowDAO.PicklistInfo[]" />
     
     <aura:registerEvent name="refreshProgressEvent" type="c:ISSP_AMC_RefreshProgressEvent"/>
     
-    
+    <lightning:spinner class="{!if(v.showSpinner,'slds-show','slds-hide')}" style="position: fixed;" alternativeText="Loading" size="medium"/>
     
     <!--<div style="height: 100%;">-->
     <div class="slds-grid slds-gutters slds-wrap slds-grid_align-center slds-grid_vertical-align-start">

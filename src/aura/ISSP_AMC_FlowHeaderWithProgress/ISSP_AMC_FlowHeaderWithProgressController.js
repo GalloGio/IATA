@@ -1,6 +1,6 @@
 ({
     doInit : function (component, event, helper) {
-
+        component.set("v.showSpinner",true);
         var action = component.get("c.getStageWithStatusMap");
         action.setParams({ "processOrchestratorId" : component.get("v.processOrchestratorId") });
 
@@ -47,5 +47,6 @@
         });
 
         $A.enqueueAction(action);
+        component.set("v.showSpinner",false);
     }
 })

@@ -74,6 +74,7 @@
     },
    
     handleChange : function(component, event, helper) {
+        component.set("v.showSpinner",true);
        // console.log("event", event.getParam("value"));
         var stepActionId = event.getParam("value").split("#")[0];
         var stepStatus = event.getParam("value").split("#")[1];
@@ -82,6 +83,7 @@
         action.setParams({ "stepActionId" : stepActionId, "stepStatus" : stepStatus });
         
         action.setCallback(this, function(response) {
+            component.set("v.showSpinner",false);
             var state = response.getState();
             if (state === "SUCCESS") {
                 
@@ -119,14 +121,17 @@
         $A.enqueueAction(action);
     },
     handleChangeUser: function(component, event, helper) {
-        var stepActionId = component.get("v.stepActionId")
+        component.set("v.showSpinner",true);
+        var stepActionId = component.get("v.stepActionId");
         var approvelUserId = event.getParam("value");
                 
         var action = component.get("c.updateStepActionApprovelProcessUser");
         action.setParams({"stepActionId" : stepActionId, "approvelUserId" : approvelUserId});
         action.setCallback(this, function(response) {
+            component.set("v.showSpinner",false);
             var state = response.getState();
             if (state === "SUCCESS") {
+                
                 console.log('sucess');
             }
             

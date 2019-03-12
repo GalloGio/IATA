@@ -339,7 +339,8 @@
 		public Boolean ISSP_AMC_Reciprocal_Two_Way{ get; set; }
 
 		public void CalculateWhichComponentsToShowWithCases(){
-			displayMessage = false; 
+			displayMessage = false;
+			step = '1'; 
 			CalculateWhichComponentsToShow();
 			if(participation.Case__c == null){
 				ISSP_AMC_DAO.saveForm(participation, appRequirementList, step,ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE);
