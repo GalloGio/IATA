@@ -260,24 +260,32 @@ public with sharing class AMS_AccreditationContactHelper
         if (ac.AddressPostcode__c != null) con.OtherPostalCode =  ac.AddressPostcode__c;
         if (ac.AddressCountry__c != null) con.OtherCountry =  ac.AddressCountry__c;
 
-        if(!verifyChangesOnContact(con,clonedCon))
+        if(!verifyChangesOnContactOrAccount(con,clonedCon))
             return null;
 
         return con;
     }
 
-    public static boolean verifyChangesOnContact(Contact oldContact, Contact newContact){
+    public static boolean verifyChangesOnContactOrAccount(sObject oldRecord, sObject newRecord){
 
-        Schema.SObjectType objType = Contact.getSObjectType();
-        Map<String, Schema.SObjectField> mapString = Schema.SObjectType.Contact.fields.getMap();
+        Map<String, Schema.SObjectField> mapString;
+
+        if(oldRecord.getSObjectType() == Contact.SObjectType){
+
+            mapString = Schema.SObjectType.Contact.fields.getMap();
+
+        } else if(oldRecord.getSObjectType() == Account.SObjectType){
+
+            mapString = Schema.SObjectType.Account.fields.getMap();
+        }
 
         boolean changed = false;
 
         try {
 
             for (String str : mapString.keyset()) {
-                if(newContact.get(str) != oldContact.get(str)){ 
-                    System.debug('Contact was changed on field:'+str);
+                if(newRecord.get(str) != oldRecord.get(str)){ 
+                    System.debug('Record was changed on field:'+str);
                     changed = true;
                 } 
             } 
@@ -286,7 +294,7 @@ public with sharing class AMS_AccreditationContactHelper
             return true;
         }
         
-        System.debug('verifyChangesOnContact returning:'+changed);
+        System.debug('verifyChangesOnContactOrAccount returning:'+changed);
         
         return changed;
     }
@@ -297,6 +305,22 @@ public with sharing class AMS_AccreditationContactHelper
         acc.Legal_Name__c = ac.Name;
         acc.Registration_Number__c = ac.Registration_Number__c;
         acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+        return acc;
+    }
+
+    public static Account updateNewAccountFields(Account acc, AMS_Accreditation_Contact__c ac)
+    {
+
+        Account clonedAcc = acc.clone(true, false, false, false);
+
+        acc.Name = ac.Name;
+        acc.Legal_Name__c = ac.Name;
+        acc.Registration_Number__c = ac.Registration_Number__c;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+        if(!verifyChangesOnContactOrAccount(acc,clonedAcc))
+            return null;
 
         return acc;
     }
