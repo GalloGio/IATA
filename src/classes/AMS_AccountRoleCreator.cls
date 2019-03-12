@@ -95,7 +95,7 @@ public with sharing class AMS_AccountRoleCreator
         String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
         Set<Id> accreditationFormIds = aoMap.keySet();
 
-        String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c,Company__r.name, AMS_Pax_Accreditation_Form__r.ANG_IsNewGenAgency__c ';
+        String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c, Company__r.name, Company__r.Legal_Name__c, Company__r.Registration_Number__c, Company__r.RecordTypeId, AMS_Pax_Accreditation_Form__r.ANG_IsNewGenAgency__c ';
         query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c IN :accreditationFormIds AND (RecordTypeId in ';
         query = query + '(' + recordTypesPerson +' ) ';
         query = query + ' OR RecordTypeId in ';
@@ -148,21 +148,29 @@ public with sharing class AMS_AccountRoleCreator
 
                 if(bucket.isLinkedWithContactOrCompany) {
 
-                    bucket.updateCompany(accreditationContact.Company__c);
+                    Account companyToUpdate = new Account();
+                    companyToUpdate.Id = accreditationContact.Company__c;
+                    companyToUpdate.Name = accreditationContact.Company__r.name;
+                    companyToUpdate.Legal_Name__c = accreditationContact.Company__r.Legal_Name__c;
+                    companyToUpdate.Registration_Number__c = accreditationContact.Company__r.Registration_Number__c;
+                    companyToUpdate.RecordTypeId = accreditationContact.Company__r.RecordTypeId;
+
+                    bucket.updateCompany(companyToUpdate);
 
                 } else {
 
                     bucket.createNewCompany();
                 }
 
-                companiesToUpsert.put(bucket.accreditationContact.Id, bucket.company);
+                if(bucket.isToUpsertCompany)
+                    companiesToUpsert.put(bucket.accreditationContact.Id, bucket.company);
 
             } else {
 
                 if(bucket.isLinkedWithContactOrCompany) {
 
                     bucket.contact = allContactsFromAccount.get(accreditationContact.Contact__c == null ? accreditationContact.Person_AMS__r.Contact__c : accreditationContact.Contact__c);
-                    bucket.updateTheContact(bucket.contact.Id);
+                    bucket.updateTheContact(bucket.contact);
 
                     if(duplicateContactsInAccCon.containsKey(bucket.contact.Id))
                         throw new AMS_ApplicationException('Duplicated Contact with Id: ' + bucket.contact.Id + ' in the Accreditation Contacts: ' + bucket.accreditationContact.First_Name__c + ' ' + bucket.accreditationContact.Last_Name__c + ' and ' + duplicateContactsInAccCon.get(bucket.contact.Id));
@@ -447,6 +455,7 @@ public with sharing class AMS_AccountRoleCreator
         private Boolean isOwner;
         private Boolean isToCorrect;
         private Boolean isToUpsertContact;
+        private Boolean isToUpsertCompany;
 
         public AccreditationContactBucket(AMS_Accreditation_Contact__c accreditationContact, AMS_OSCAR__c oscar, Boolean isJustToClone, Boolean isToCorrect) {
             this.accreditationContact = accreditationContact;
@@ -463,6 +472,7 @@ public with sharing class AMS_AccountRoleCreator
             this.isOwner = accreditationContact.Agency_owner__c;
             this.isToCorrect = isToCorrect;
             this.isToUpsertContact = false;
+            this.isToUpsertCompany = false;
         }
 
         public void createNewContact() {
@@ -471,9 +481,9 @@ public with sharing class AMS_AccountRoleCreator
             isToUpsertContact = true;
         }
 
-        public void updateTheContact(Id conId) {
+        public void updateTheContact(Contact con) {
 
-            Contact contactAux = AMS_AccreditationContactHelper.updateNewContactFields(new Contact(Id = conId), accreditationContact);
+            Contact contactAux = AMS_AccreditationContactHelper.updateNewContactFields(con, accreditationContact);
 
             if(contactAux != null) {
                 contact = contactAux;
@@ -484,11 +494,17 @@ public with sharing class AMS_AccountRoleCreator
         public void createNewCompany() {
 
             company = AMS_AccreditationContactHelper.populateNewAccountFields(new Account(), accreditationContact);
+            isToUpsertCompany = true;
         }
 
-        public void updateCompany(Id accId) {
+        public void updateCompany(Account acc) {
 
-            company = AMS_AccreditationContactHelper.populateNewAccountFields(new Account(Id = accId), accreditationContact);
+            Account companyAux = AMS_AccreditationContactHelper.updateNewAccountFields(acc, accreditationContact);
+
+            if(companyAux != null) {
+                company = companyAux;
+                isToUpsertCompany = true;
+            }
         }
 
         public void createNewRole() {
