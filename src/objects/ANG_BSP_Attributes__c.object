@@ -807,19 +807,21 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
-        <fullName>Cash_Condition_FS_BSP_mandatory</fullName>
+        <fullName>BSP_mandatory_field</fullName>
         <active>true</active>
-        <description>Prevent the creation of a BSP Attribute without a BSP</description>
+        <description>Prevent the creation of a BSP Attribute without a BSP value</description>
         <errorConditionFormula>AND( 
-    RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;, 
+    OR(RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;, 
+       RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;)
+, 
     ISBLANK(BSP__c)
 )</errorConditionFormula>
         <errorMessage>BSP is a mandatory field.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Cash_Condition_FS_Percentage_Mandatory</fullName>
+        <fullName>Cash_Condition_FS_Percentage_Validation</fullName>
         <active>true</active>
-        <description>Prevent creation of BSP Attribute with an empty Financial Security empty for Cash_Condition_Conf Record Type</description>
+        <description>Prevent creation of BSP Attribute with an empty Financial Security empty for Cash_Condition_Conf Record Type if the Limit_Cash_Condition__c  is selected</description>
         <errorConditionFormula>AND(
 RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;,
 Limit_Cash_Condition__c = true,
@@ -828,12 +830,12 @@ Limit_Cash_Condition__c = true,
      FS_Percentage__c &lt; 0
  )
 )</errorConditionFormula>
-        <errorMessage>Financial Security percentage is a required or must be setted with value higher than 0</errorMessage>
+        <errorMessage>% of Financial Security is required and must be &gt;= 0</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>RHC_Amount_Conf_FS_Percentage_validation</fullName>
         <active>true</active>
-        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; with a % of FS &lt; 0</description>
+        <description>Prevent the creation of BSP Attribute &apos;RHC_Amount_Conf&apos; with a % of FS &lt; 0</description>
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
     FS_Percentage__c &lt; 0
 )</errorConditionFormula>
@@ -851,7 +853,7 @@ ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;),
           ISBLANK(FS_Percentage__c)
        ) 
 )</errorConditionFormula>
-        <errorMessage>RHC Amount Calculation Type &apos;Fixed Percentage&apos;, the fields Min FA Points, Max FA Points and % of Financial Security are mandatory</errorMessage>
+        <errorMessage>For RHC Amount Calculation Type &apos;Fixed Percentage&apos;, the fields Min FA Points, Max FA Points and % of Financial Security are mandatory</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>RHC_Amount_Conf_Formula_Blank_Values</fullName>
@@ -868,18 +870,9 @@ ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;),
         <errorMessage>For RHC Amount Calculation Type &apos;Formula&apos;, the fields Min FA Points, Max FA Points and % of Financial Security must be blank</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>RHC_Amount_Conf_Mandatory_BSP</fullName>
-        <active>true</active>
-        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; without BSP__c</description>
-        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
-    ISBLANK(BSP__c) 
-)</errorConditionFormula>
-        <errorMessage>BSP is a mandatory field</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>RHC_Amount_Conf_Mandatory_RiskStatus</fullName>
         <active>true</active>
-        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; without Risk Status</description>
+        <description>Prevent the creation of BSP Attribute &apos;RHC_Amount_Conf&apos; without Risk Status</description>
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;,
     ISPICKVAL(Risk_Status__c, &apos;&apos;)
 )</errorConditionFormula>
@@ -888,7 +881,7 @@ ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;),
     <validationRules>
         <fullName>RHC_Amount_Conf_Min_Max_Fa_Points</fullName>
         <active>true</active>
-        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos;, with  Min_FA_Points__c &gt;= Max_FA_Points__c</description>
+        <description>Prevent the creation of BSP Attribute &apos;RHC_Amount_Conf&apos;, with  Min_FA_Points__c &gt;= Max_FA_Points__c</description>
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
     Min_FA_Points__c &gt;= Max_FA_Points__c
 )</errorConditionFormula>
@@ -897,7 +890,7 @@ ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;),
     <validationRules>
         <fullName>RHC_Amount_RHC_Amnt_Calc_Type_Mandatory</fullName>
         <active>true</active>
-        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; without RHC_Amnt_Calc_Type__c</description>
+        <description>Prevent the creation of BSP Attribute &apos;RHC_Amount_Conf&apos; without RHC_Amnt_Calc_Type__c</description>
         <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
     ISPICKVAL(RHC_Amnt_Calc_Type__c, &apos;&apos;)
 )</errorConditionFormula>
