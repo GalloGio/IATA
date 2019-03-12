@@ -807,11 +807,13 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
-        <fullName>Cash_Condition_FS_BSP_mandatory</fullName>
+        <fullName>BSP_mandatory_field</fullName>
         <active>true</active>
-        <description>Prevent the creation of a BSP Attribute without a BSP</description>
+        <description>Prevent the creation of a BSP Attribute without a BSP value</description>
         <errorConditionFormula>AND( 
-    RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;, 
+    OR(RecordType.DeveloperName = &apos;Cash_Condition_Conf&apos;, 
+       RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;)
+, 
     ISBLANK(BSP__c)
 )</errorConditionFormula>
         <errorMessage>BSP is a mandatory field.</errorMessage>
@@ -828,7 +830,7 @@ Limit_Cash_Condition__c = true,
      FS_Percentage__c &lt; 0
  )
 )</errorConditionFormula>
-        <errorMessage>Financial Security percentage is a required or must be setted with value higher than 0</errorMessage>
+        <errorMessage>% of Financial Security is required and must be &gt;= 0</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>RHC_Amount_Conf_FS_Percentage_validation</fullName>
@@ -851,7 +853,7 @@ ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;),
           ISBLANK(FS_Percentage__c)
        ) 
 )</errorConditionFormula>
-        <errorMessage>RHC Amount Calculation Type &apos;Fixed Percentage&apos;, the fields Min FA Points, Max FA Points and % of Financial Security are mandatory</errorMessage>
+        <errorMessage>For RHC Amount Calculation Type &apos;Fixed Percentage&apos;, the fields Min FA Points, Max FA Points and % of Financial Security are mandatory</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>RHC_Amount_Conf_Formula_Blank_Values</fullName>
@@ -866,15 +868,6 @@ ISPICKVAL(RHC_Amnt_Calc_Type__c, &quot;Fixed Percentage&quot;),
         )
 )</errorConditionFormula>
         <errorMessage>For RHC Amount Calculation Type &apos;Formula&apos;, the fields Min FA Points, Max FA Points and % of Financial Security must be blank</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>RHC_Amount_Conf_Mandatory_BSP</fullName>
-        <active>true</active>
-        <description>Prevent the creation of BSP Attribute &apos;Cash_Condition_Conf&apos; without BSP__c</description>
-        <errorConditionFormula>AND(RecordType.DeveloperName = &apos;RHC_Amount_Conf&apos;, 
-    ISBLANK(BSP__c) 
-)</errorConditionFormula>
-        <errorMessage>BSP is a mandatory field</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>RHC_Amount_Conf_Mandatory_RiskStatus</fullName>
