@@ -87,35 +87,44 @@ private class ANG_ConversionHelperEnhancedTest {
 
         Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
-        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='BR',Name='Agency BR1 ACCREDITED',Short_Name__c='Agency BR1 ACCREDITED', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
-        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Agency BR2 TERMINATED 2017',Short_Name__c='Agency BR2 TERMINATED 2016', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-4));
-        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Agency BR3 TERMINATED 2016',Short_Name__c='Agency BR2 TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-10));
-        Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='BR',Name='Agency BR4 ACCREDITED (T)',Short_Name__c='Agency BR4 ACCREDITED (T)', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account topParent = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO1 ACCREDITED',Short_Name__c='Agency HO1 ACCREDITED', Sector__c = 'Travel Agent', Category__c = 'IATA Passenger Sales Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED, Financial_Review_Result__c = 'Satisfactory - No Action');
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='HO',Name='Agency HO2 TERMINATED 2017',Short_Name__c='Agency HO2 TERMINATED 2016', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-4));
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='HO',Name='Agency HO3 TERMINATED 2016',Short_Name__c='Agency HO2 TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-10));
+        Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='HO',Name='Agency HO4 ACCREDITED (T)',Short_Name__c='Agency HO4 ACCREDITED (T)', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
         
         Account a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='ST',Name='Agency ST1 ACCREDITED (P)',Short_Name__c='Agency ST1 ACCREDITED (P)', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
         Account a6 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234566',Location_Type__c='ST',Name='Agency ST2 TERMINATED (P) 2017',Short_Name__c='Agency ST2 TERMINATED (P) 2017', Sector__c = 'Travel Agent',  Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-4));
 		Account a7 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234567',Location_Type__c='ST',Name='Agency ST3 TERMINATED (P) 2016',Short_Name__c='Agency ST3 TERMINATED (P) 2016', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-10));
+	
+		insert new List<Account>{topParent,a2,a3,a4,a5,a6,a7};
 
-        insert new List<Account>{a1,a2,a3,a4,a5,a6,a7};
+		Account childAcc = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='BR',Name='Agency BR1 TERMINATED',Short_Name__c='Agency BR1 TERMINATED', Sector__c = 'Travel Agent', Category__c = 'IATA Passenger Sales Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Expiry_Date__c = Date.today().addMonths(-4), Top_Parent__c = topParent.Id);
 
+		insert childAcc;
+
+		AMS_Agencies_Hierarchy__c amsHierarchy = new AMS_Agencies_Hierarchy__c (Hierarchy_Name__c = topParent.IATACode__c + ' Hierarchy' , CurrencyIsoCode = 'USD');
+
+		insert amsHierarchy;
+
+		AMS_Agencies_relationhip__c amsRelationship = new AMS_Agencies_relationhip__c (Hierarchy__c = amsHierarchy.Id,  Parent_Account__c = topParent.Id, Child_Account__c = childAcc.Id );
+		insert amsRelationship;
         Test.startTest();
 
-		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
+			Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure('US');
 
-		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+			structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
 
-		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
+			ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
 
-		System.assertEquals(4,finalStruct.totalHierarchies);
-		System.assertEquals(2,finalStruct.totalValidHierarchies);
-		System.assertEquals(2,finalStruct.totalInvalidHierarchies);
-		System.assertEquals(0,finalStruct.totalMigratedHierarchies);
+			System.assertEquals(4,finalStruct.totalHierarchies);
+			System.assertEquals(3,finalStruct.totalValidHierarchies);
+			System.assertEquals(1,finalStruct.totalInvalidHierarchies);
+			System.assertEquals(0,finalStruct.totalMigratedHierarchies);
 
-		ANG_ConversionHelper.printStatistics(finalStruct);
+			ANG_ConversionHelper.printStatistics(finalStruct);
 
-    	Id conversionBatchId = ANG_ConversionHelper.runMigration('US');
-
-		Test.stopTest();
+	    	Id conversionBatchId = ANG_ConversionHelper.runMigration('US');
+	    Test.stopTest();
 
 		List<Account> accounts = [SELECT Id, IATACode__c, Name, Location_Class__c, Location_Type__c FROM Account ORDER BY IATACode__c];
 
@@ -124,23 +133,27 @@ private class ANG_ConversionHelperEnhancedTest {
 		for(Account acct: accounts){
 			accountMap.put(acct.Name,acct);
 		}
+		
+		
+		System.assertEquals(accountMap.get('Agency HO1 ACCREDITED').Location_Type__c,'HE');
+		System.assertEquals(accountMap.get('Agency HO1 ACCREDITED').Location_Class__c,'P');
 
-		System.assertEquals(accountMap.get('Agency BR1 ACCREDITED').Location_Type__c,'BR');
-		System.assertEquals(accountMap.get('Agency BR1 ACCREDITED').Location_Class__c,'P');
+		System.assertEquals(accountMap.get('Agency BR1 TERMINATED').Location_Type__c,'AE');
+		System.assertEquals(accountMap.get('Agency BR1 TERMINATED').Location_Class__c,'P');
 
-		System.assertEquals(accountMap.get('Agency BR2 TERMINATED 2017').Location_Type__c,'AE');
-		System.assertEquals(accountMap.get('Agency BR2 TERMINATED 2017').Location_Class__c,'P');
+		System.assertEquals(accountMap.get('Agency HO2 TERMINATED 2017').Location_Type__c,'HE');
+		System.assertEquals(accountMap.get('Agency HO2 TERMINATED 2017').Location_Class__c,'P');
 
-		System.assertEquals(accountMap.get('Agency BR3 TERMINATED 2016').Location_Type__c,'BR');
-		System.assertEquals(accountMap.get('Agency BR3 TERMINATED 2016').Location_Class__c,'P');
+		System.assertEquals(accountMap.get('Agency HO3 TERMINATED 2016').Location_Type__c,'HO');
+		System.assertEquals(accountMap.get('Agency HO3 TERMINATED 2016').Location_Class__c,'P');
 
-		System.assertEquals(accountMap.get('Agency BR4 ACCREDITED (T)').Location_Type__c,'BR');
-		System.assertEquals(accountMap.get('Agency BR4 ACCREDITED (T)').Location_Class__c,'T');
+		System.assertEquals(accountMap.get('Agency HO4 ACCREDITED (T)').Location_Type__c,'HO');
+		System.assertEquals(accountMap.get('Agency HO4 ACCREDITED (T)').Location_Class__c,'T');
 
 		System.assertEquals(accountMap.get('Agency ST1 ACCREDITED (P)').Location_Type__c,'ST');
 		System.assertEquals(accountMap.get('Agency ST1 ACCREDITED (P)').Location_Class__c,'P');
 
-		System.assertEquals(accountMap.get('Agency ST2 TERMINATED (P) 2017').Location_Type__c,'AE');
+		System.assertEquals(accountMap.get('Agency ST2 TERMINATED (P) 2017').Location_Type__c,'ST');
 		System.assertEquals(accountMap.get('Agency ST2 TERMINATED (P) 2017').Location_Class__c,'P');
 
 		System.assertEquals(accountMap.get('Agency ST3 TERMINATED (P) 2016').Location_Type__c,'ST');
@@ -155,12 +168,10 @@ private class ANG_ConversionHelperEnhancedTest {
 
         Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
-        //Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='BR',Name='Agency BR1 ACCREDITED',Short_Name__c='Agency BR1 ACCREDITED', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
-        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='BR',Name='Agency BR2 TERMINATED 2017',Short_Name__c='Agency BR2 TERMINATED 2016', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-4));
-        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='Agency BR3 TERMINATED 2016',Short_Name__c='Agency BR2 TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-10));
-        Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='BR',Name='Agency BR4 ACCREDITED (T)',Short_Name__c='Agency BR4 ACCREDITED (T)', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='HO',Name='Agency HO2 TERMINATED 2017',Short_Name__c='Agency HO2 TERMINATED 2016', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-4));
+        Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='HO',Name='Agency HO3 TERMINATED 2016',Short_Name__c='Agency HO3 TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-10));
+        Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='HO',Name='Agency HO4 ACCREDITED (T)',Short_Name__c='Agency HO4 ACCREDITED (T)', Sector__c = 'Travel Agent', Location_Class__c = 'T', Status__c = AMS_Utils.ACC_S9_APPROVED);
         
-        //Account a5 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234565',Location_Type__c='ST',Name='Agency ST1 ACCREDITED (P)',Short_Name__c='Agency ST1 ACCREDITED (P)', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
         Account a6 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234566',Location_Type__c='ST',Name='Agency ST2 TERMINATED (P) 2017',Short_Name__c='Agency ST2 TERMINATED (P) 2017', Sector__c = 'Travel Agent',  Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-4));
 		Account a7 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234567',Location_Type__c='ST',Name='Agency ST3 TERMINATED (P) 2016',Short_Name__c='Agency ST3 TERMINATED (P) 2016', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-10));
 
@@ -201,20 +212,20 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		//System.assertEquals(accountMap.get('Agency BR1 ACCREDITED').Location_Type__c,'AE'); -> Validation rule that states that you cannot have an active AE with no ParentId
 		//System.assertEquals(accountMap.get('Agency BR1 ACCREDITED').Location_Class__c,'P'); -> Validation rule that states that you cannot have an active AE with no ParentId
+											
+		System.assertEquals(accountMap.get('Agency HO2 TERMINATED 2017').Location_Type__c,'HE');
+		System.assertEquals(accountMap.get('Agency HO2 TERMINATED 2017').Location_Class__c,'P');
 
-		System.assertEquals(accountMap.get('Agency BR2 TERMINATED 2017').Location_Type__c,'AE');
-		System.assertEquals(accountMap.get('Agency BR2 TERMINATED 2017').Location_Class__c,'P');
+		System.assertEquals(accountMap.get('Agency HO3 TERMINATED 2016').Location_Type__c,'HO');
+		System.assertEquals(accountMap.get('Agency HO3 TERMINATED 2016').Location_Class__c,'P');
 
-		System.assertEquals(accountMap.get('Agency BR3 TERMINATED 2016').Location_Type__c,'BR');
-		System.assertEquals(accountMap.get('Agency BR3 TERMINATED 2016').Location_Class__c,'P');
-
-		System.assertEquals(accountMap.get('Agency BR4 ACCREDITED (T)').Location_Type__c,'BR');
-		System.assertEquals(accountMap.get('Agency BR4 ACCREDITED (T)').Location_Class__c,'T');
+		System.assertEquals(accountMap.get('Agency HO4 ACCREDITED (T)').Location_Type__c,'HO');
+		System.assertEquals(accountMap.get('Agency HO4 ACCREDITED (T)').Location_Class__c,'T');
 
 		//System.assertEquals(accountMap.get('Agency ST1 ACCREDITED (P)').Location_Type__c,'AE'); -> Validation rule that states that you cannot have an active AE with no ParentId
 		//System.assertEquals(accountMap.get('Agency ST1 ACCREDITED (P)').Location_Class__c,'P'); -> Validation rule that states that you cannot have an active AE with no ParentId
 
-		System.assertEquals(accountMap.get('Agency ST2 TERMINATED (P) 2017').Location_Type__c,'AE');
+		System.assertEquals(accountMap.get('Agency ST2 TERMINATED (P) 2017').Location_Type__c,'ST');
 		System.assertEquals(accountMap.get('Agency ST2 TERMINATED (P) 2017').Location_Class__c,'P');
 
 		System.assertEquals(accountMap.get('Agency ST3 TERMINATED (P) 2016').Location_Type__c,'ST');

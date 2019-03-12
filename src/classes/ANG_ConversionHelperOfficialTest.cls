@@ -427,7 +427,7 @@ private class ANG_ConversionHelperOfficialTest {
 
         Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
 
-        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='BR',Name='BR1',Short_Name__c='BR1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='HO1',Short_Name__c='HO', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
         Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='ST',Name='ST1',Short_Name__c='ST1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
         Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='BR',Name='BR2',Short_Name__c='BR2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-3));
         Account a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234564',Location_Type__c='ST',Name='ST2',Short_Name__c='ST2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED,Expiry_Date__c = Date.today().addMonths(-3));
@@ -447,8 +447,8 @@ private class ANG_ConversionHelperOfficialTest {
 		ANG_ConversionHelper.printStatistics(finalStruct);
 
 		System.assertEquals(4,finalStruct.totalHierarchies);
-		System.assertEquals(2,finalStruct.totalValidHierarchies);
-		System.assertEquals(2,finalStruct.totalInvalidHierarchies);
+		System.assertEquals(3,finalStruct.totalValidHierarchies);
+		System.assertEquals(1,finalStruct.totalInvalidHierarchies);
 		System.assertEquals(0,finalStruct.totalMigratedHierarchies);
 
 		System.debug('[ANG_ConversionHelperEnhancedTestTest4] Finish Printing Statistics before migration');
@@ -477,27 +477,27 @@ private class ANG_ConversionHelperOfficialTest {
 		for(Account acc: accounts)
 			accountsMap.put(acc.Name,acc);
 
-		System.assertEquals('BR',accountsMap.get('BR1').Location_Type__c);
-		System.assertEquals('AE',accountsMap.get('BR2').Location_Type__c);
+		System.assertEquals('HE',accountsMap.get('HO1').Location_Type__c);
+		System.assertEquals('BR',accountsMap.get('BR2').Location_Type__c);
 		System.assertEquals('ST',accountsMap.get('ST1').Location_Type__c);
-		System.assertEquals('AE',accountsMap.get('ST2').Location_Type__c);
+		System.assertEquals('ST',accountsMap.get('ST2').Location_Type__c);
 
-		System.assertEquals('P',accountsMap.get('BR1').Location_Class__c);
+		System.assertEquals('P',accountsMap.get('HO1').Location_Class__c);
 		System.assertEquals('P',accountsMap.get('BR2').Location_Class__c);
 		System.assertEquals('P',accountsMap.get('ST1').Location_Class__c);
 		System.assertEquals('P',accountsMap.get('ST2').Location_Class__c);
 
-		System.assertEquals(AMS_Utils.ACC_S9_APPROVED,accountsMap.get('BR1').Status__c);
+		System.assertEquals(AMS_Utils.ACC_S9_APPROVED,accountsMap.get('HO1').Status__c);
 		System.assertEquals(AMS_Utils.ACC_S0_TERMINATED,accountsMap.get('BR2').Status__c);
 		System.assertEquals(AMS_Utils.ACC_S9_APPROVED,accountsMap.get('ST1').Status__c);
 		System.assertEquals(AMS_Utils.ACC_S0_TERMINATED,accountsMap.get('ST2').Status__c);
 
-		System.assertEquals(null,accountsMap.get('BR1').Top_Parent__c);
+		System.assertEquals(null,accountsMap.get('HO1').Top_Parent__c);
 		System.assertEquals(null,accountsMap.get('BR2').Top_Parent__c);
 		System.assertEquals(null,accountsMap.get('ST1').Top_Parent__c);
 		System.assertEquals(null,accountsMap.get('ST2').Top_Parent__c);
 
-		System.assertEquals(null,accountsMap.get('BR1').ParentId);
+		System.assertEquals(null,accountsMap.get('HO1').ParentId);
 		System.assertEquals(null,accountsMap.get('BR2').ParentId);
 		System.assertEquals(null,accountsMap.get('ST1').ParentId);
 		System.assertEquals(null,accountsMap.get('ST2').ParentId);
