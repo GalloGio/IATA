@@ -332,4 +332,70 @@ public class trgSidraCaseBeforeInsertUpdate_Test {
         cases = [SELECT Id, IRR_Withdrawal_Reason__c, Action_needed_Small_Amount__c FROM Case WHERE ID = :testcase.Id];
         system.assertEquals(false, cases[0].Action_needed_Small_Amount__c);
     }
+
+    @isTest
+    static void TestSidraCases_3() {
+        Case aCase;
+        integer c = 0;
+        ID SidraPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+
+        Account account1 = new Account(IATACode__c = '1234567');    // 7 digits
+        account1.Name = 'Test account';
+        account1.BillingCity = 'Montreal';
+        account1.BillingCountry = 'Canada';
+        account1.BillingStreet = 'some street';
+        account1.Type = 'IATA Passenger Sales Agent';
+        account1.Location_Type__c = 'HO';
+        insert account1;
+
+
+        Contact con = new Contact();
+        con.FirstName = 'Dummy';
+        con.LastName = 'Contact';
+        con.Type_of_Contact__c = 'IFAP Contact';
+        con.AccountId = account1.Id;
+        con.Email = 'some@email.org';
+        con.Financial_Assessment_Contact__c = true;
+        insert con;
+
+        Case testcase = new Case(
+            ContactId = con.Id,
+            AccountId = con.accountId,
+            Subject = 'TestCase Sidra Small Amount ' + c,
+            Origin = 'Web',
+            RecordTypeId = SidraPcaseRecordTypeID,
+            Description = 'description ' + c++,
+            Billing_Amount__c = 4000000,
+            Short_Payment_Amount__c = 5,
+            CurrencyExchangeRateUSD__c = 1,
+            SIDRA_exchange_rate_updated__c = true,
+            Late_Payment_Date__c = Date.today(),
+            BSP_CASS__c = 'BSP',
+            Update_AIMS_Repayment_agreed__c = null
+        );
+        insert testcase;
+
+        Test.StartTest();
+
+        //update Update_AIMS_Repayment_agreed__c without any Repayment Instalment
+        try {
+            testCase.Update_AIMS_Repayment_agreed__c = DateTime.now();
+            update testCase;
+            System.assert(false,'Exception expected');
+        } catch(Exception e) {
+            System.assert(true);
+        }
+
+        //update Update_AIMS_Repayment_agreed__c WITH a Repayment Instalment
+        Case_Detail__c caseDetail = new Case_Detail__c(
+            Case__c = testCase.Id,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c','Repayment_Instalment')
+        );
+        insert caseDetail;
+        testCase.Update_AIMS_Repayment_agreed__c = DateTime.now();
+        update testCase;
+
+        Test.stopTest();
+    }
+
 }

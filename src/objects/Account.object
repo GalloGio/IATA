@@ -94284,7 +94284,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
     </validationRules>
     <validationRules>
         <fullName>Block_non_AGM_user_from_modifying_agents</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Avoids AMS data being changed from profiles outside AGM and SF administration.</description>
         <errorConditionFormula>AND(
 RecordType.DeveloperName = &apos;IATA_Agency&apos;,
