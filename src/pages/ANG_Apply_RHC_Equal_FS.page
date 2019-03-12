@@ -83,6 +83,30 @@
                     </apex:outputPanel>
                 </apex:pageblockSectionItem>
                 
+
+                <apex:pageBlock mode="edit" id="AttributesBlock" rendered="{!hasAttributesToShow}">
+                    <apex:pageBlockSection columns="1" title="BSP Attributes">
+                        <apex:pageBlockTable value="{!attributesToShow}" var="a" rendered="{!hasAttributesToShow}">
+
+                            <apex:column value="{!a.Risk_Status__c}"/>
+
+                            <apex:column headerValue="{!$ObjectType.ANG_BSP_Attributes__c.fields.Min_FA_Points__c.Label}" rendered="{!showCountrySpecificColumns}">
+                                <apex:inputField value="{!a.Min_FA_Points__c}"/>
+                            </apex:column>
+
+                            <apex:column headerValue="{!$ObjectType.ANG_BSP_Attributes__c.fields.Max_FA_Points__c.Label}" rendered="{!showCountrySpecificColumns}">
+                                <apex:inputField value="{!a.Max_FA_Points__c}"/>
+                            </apex:column>
+
+                            <apex:column headerValue="{!$ObjectType.ANG_BSP_Attributes__c.fields.FS_Percentage__c.Label}">
+                                <apex:inputField value="{!a.FS_Percentage__c}"/>
+                            </apex:column>
+
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+
+
             </apex:pageBlockSection>
 
             <apex:pageBlockButtons id="searchButtonBlock" location="bottom">
