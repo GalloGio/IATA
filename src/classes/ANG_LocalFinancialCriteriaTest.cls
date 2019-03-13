@@ -413,16 +413,13 @@ private class ANG_LocalFinancialCriteriaTest {
 		attr.RHC_Amnt_Calc_Type__c = calcType;
 		attr.FS_Percentage__c = percentage;
 		attr.Limit_Cash_Condition__c = limitCash;
-		attr.UniqueKey__c = String.valueOf(attr.BSP__c) + String.valueOf(attr.RecordTypeId);
 
 		if(riskStatus != NULL){
 			attr.Risk_Status__c =riskStatus;
-			attr.UniqueKey__c += attr.Risk_Status__c;
 		}
 
 		if(minFaPoints != NULL){
     		attr.Min_FA_Points__c = minFaPoints;
-    		attr.UniqueKey__c += attr.Min_FA_Points__c;
 		}
 
 		if(maxFaPoints != NULL){
@@ -500,7 +497,7 @@ private class ANG_LocalFinancialCriteriaTest {
 	
 	@isTest static void rhcCashConditionCalcTypeTest() {
 
-		Account acct = [SELECT Id, ANG_HE_RiskStatus__c FROM Account WHERE Name = 'Agent SG'];
+		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent SG'];
 
 		Financial_Security__c fs = createFinancialData(acct.Id);
 
@@ -533,17 +530,7 @@ private class ANG_LocalFinancialCriteriaTest {
 	
 	@isTest static void rhcWithoutCashConditionCalcTypeTest() {
 
-		Account acct = 
-            [SELECT 
-                Id,
-                ANG_RiskStatus__c,
-                ANG_HE_RiskStatus__c,
-                IATA_ISO_Country__r.AMS_Settlement_System__c
-             FROM 
-                Account 
-             WHERE 
-                Name = 'Agent SG'
-            ];
+		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent SG'];
 
 		Financial_Security__c fs = createFinancialData(acct.Id);
 
@@ -589,9 +576,7 @@ private class ANG_LocalFinancialCriteriaTest {
 			 	Name = 'Agent HK'
 			];
 
-		Test.startTest();
 		rhcFixedPercentageCalcTypeRiskStatusTest(agentHK, 'A', 100, 200, FIXED_PERCENTAGE_RISK_A1, FIXED_PERCENTAGE_RISK_A2);
-		Test.stopTest();
 
 	}
 
@@ -609,9 +594,7 @@ private class ANG_LocalFinancialCriteriaTest {
 			 	Name = 'Agent MO'
 			];
 
-		Test.startTest();
 		rhcFixedPercentageCalcTypeRiskStatusTest(agentMO, 'B', 74, 100, FIXED_PERCENTAGE_RISK_B1, FIXED_PERCENTAGE_RISK_B2);
-		Test.stopTest();
 
 	}
 
@@ -629,9 +612,7 @@ private class ANG_LocalFinancialCriteriaTest {
 			 	Name = 'Agent MO'
 			];
 
-		Test.startTest();
 		rhcFixedPercentageCalcTypeRiskStatusTest(agentMO, 'C', 100, NULL, FIXED_PERCENTAGE_RISK_C, NULL);
-		Test.stopTest();
 
 	}
 
@@ -750,8 +731,6 @@ private class ANG_LocalFinancialCriteriaTest {
         Account agentHK =
             [SELECT 
                 Id,
-                Name,
-                ANG_HE_RiskStatus__c, 
                 Financial_Assessment_Points__c 
              FROM 
                 Account
