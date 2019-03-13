@@ -27264,7 +27264,15 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Change_Location_Class_after_IATACode_gen</fullName>
         <active>true</active>
         <description>Once the IATA Code is generated the Location Class can no longer be changed.</description>
-        <errorConditionFormula>AND(   
+        <errorConditionFormula>AND(
+        OR( 
+ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c, &quot;NEW.HO.1.0&quot;), 
+ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c, &quot;ANG.NEW.HE.LITE.1.0&quot;), 
+ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;), 
+ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c, &quot;ANG.NEW.AE.1.0&quot;), 
+ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c, &quot;NEW.MSO.1.0&quot;), 
+ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c, &quot;NEW.TIDS.1.0&quot;), 
+ISPICKVAL(SAAM_Case__r.OSCAR__r.Process__c, &quot;NEW.BR&quot;)),    
 ISCHANGED(Location_Class__c), 
 NOT( ISBLANK( IATACode__c ) ) 
 )</errorConditionFormula>
