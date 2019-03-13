@@ -310,10 +310,7 @@ public class ISSP_AMC_DAO {
 
     private static List<Participant_Online_App_Requirement__c> getJunctionToDelete(Map<Id, Participation_Application_Requirement__c> currentRequirementMap, Map<Id, Participant_Online_App_Requirement__c> currentOnlineAppRequiredMap ) {
         
-        system.debug('DB:Entra no getJunctionToDelete');
         List <Participant_Online_App_Requirement__c> junctionToDelete = new List <Participant_Online_App_Requirement__c>();
-        system.debug('DB:Entra no currentOnlineAppRequiredMap' + currentOnlineAppRequiredMap);
-        system.debug('DB:Entra no currentRequirementMap' + currentRequirementMap);
         if (currentOnlineAppRequiredMap == null || currentRequirementMap == null) return junctionToDelete;
         for(Participant_Online_App_Requirement__c parRecord: currentOnlineAppRequiredMap.values()) {
             if(parRecord.Participation_Application_Requirement__c != null && !currentRequirementMap.containsKey(parRecord.Participation_Application_Requirement__c)) {
@@ -323,7 +320,6 @@ public class ISSP_AMC_DAO {
             }
 
         }
-        system.debug('DB:Entra no junctionToDelete' + junctionToDelete);
         return junctionToDelete;
     }
 
@@ -392,22 +388,20 @@ public class ISSP_AMC_DAO {
             //JCFF Delete issue
             List<Participant_Online_App_Requirement__c> junctionToDeleteList = ISSP_AMC_DAO.getJunctionToDelete(currentRequirementMap, currentOnlineAppRequiredMap );
             if(junctionToDeleteList != null && junctionToDeleteList.size() > 0){
-                system.debug('DB:: junctionToDeleteList != null');
+            
                 if(step == ISSP_AMC_Constants.AMC_SAVE_STEPSUBMIT){
-                    system.debug('DB:: STEP SUBMIT');
+                    
                     Set <Id> fileSet = new Set <Id>();
                     for(Participant_Online_App_Requirement__c junctionItemToDelete : junctionToDeleteList){
                         if(junctionItemToDelete.AmazonFile__c != null){
                             fileSet.add(junctionItemToDelete.AmazonFile__c);
                         }
                     }
-                    system.debug('DB:.file set '+fileSet);
                     List <Participant_Online_App_Requirement__c> appReq = new List <Participant_Online_App_Requirement__c>([SELECT AmazonFile__c, AmazonFile__r.Full_Name_Unique__c 
                                                                                                                             FROM Participant_Online_App_Requirement__c 
                                                                                                                             WHERE AmazonFile__c IN :fileSet]);
-                    system.debug('DB:: appReq'+appReq);                                                                                                     
+                                                                                                                      
                     if(appReq != null && !appReq.isEmpty()){
-                        system.debug('DB:: appReq != null'); 
                         for(Participant_Online_App_Requirement__c requirement : appReq){
                             if(requirement.AmazonFile__c != null){
                                 System.debug('JCFF DELETE deleteAttachment :');
@@ -422,7 +416,6 @@ public class ISSP_AMC_DAO {
                     System.debug('JCFF UPDATE junctionToDeleteList : ' + junctionToDeleteList);
                     update junctionToDeleteList;   
                 }
-                system.debug('DB:: junctionToDeleteList '+junctionToDeleteList); 
             }
             //JCFF end delete issue
 
@@ -982,12 +975,6 @@ public class ISSP_AMC_DAO {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,ex.getMessage()));
             System.debug('saveDesignatorCode ' + ex.getMessage());
         }
-        
-        System.debug('TIAGO MENDES junctionToInsert::' + junctionToInsert);
-        System.debug('TIAGO MENDES junctionToDelete::' + junctionToDelete);
-        System.debug('TIAGO MENDES junctionToUpdate::' + junctionToUpdate);
-        System.debug('TIAGO MENDES junctionToUpdate::' + junctionToUpdate.size());
-        System.debug('TIAGO MENDES:: FIM DO DESIGNATOR');
         return saveFormUtility;
     }
     
@@ -1247,7 +1234,6 @@ public class ISSP_AMC_DAO {
                         if(parOnlineRecord.AmazonFile__c == null){
                             parOnlineRecord.Status__c = 'Incomplete';
                             fileErrorMessages.add(Label.ISSP_AMC_TrafficAgreement_Valid_IATA_Code);
-                            system.debug('TRAFFIC DB');
                         }
                     }
                     /*public Integer i=0;
@@ -1681,7 +1667,6 @@ public class ISSP_AMC_DAO {
                         if(parOnlineRecord.AmazonFile__c == null){
                             parOnlineRecord.Status__c = 'Incomplete';
                             fileErrorMessages.add(Label.ISSP_AMC_TrafficAgreement_Valid_IATA_Code);
-                            system.debug('TRAFFIC DB');
                         }
                     }
                     if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_AUTHORIZATION_TRANSPORTATION_SERVICES){
@@ -1740,11 +1725,6 @@ public class ISSP_AMC_DAO {
             System.debug('saveDesignatorCode ' + ex.getMessage());
         }
         
-        System.debug('TIAGO MENDES junctionToInsert::' + junctionToInsert);
-        System.debug('TIAGO MENDES junctionToDelete::' + junctionToDelete);
-        System.debug('TIAGO MENDES junctionToUpdate::' + junctionToUpdate);
-        System.debug('TIAGO MENDES junctionToUpdate::' + junctionToUpdate.size());
-        System.debug('TIAGO MENDES:: FIM DO ACCOUTING');
         return saveFormUtility;
     }
 
@@ -2117,10 +2097,8 @@ public class ISSP_AMC_DAO {
         Contact contactInfo = OneIdProfileCompanySettings.getUserContact();
 
         AMC_Configuration__c amcConfiguration = AMC_Configuration__c.getInstance();
-        system.debug('DB__DAO'+amcConfiguration);
-        system.debug('DB__DAO+CaseDesignatorCodeRecordType__c'+amcConfiguration.CaseDesignatorCodeRecordType__c);
         Id recordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get(amcConfiguration.CaseDesignatorCodeRecordType__c).RecordTypeId;
-        system.debug('DB__DAO'+recordTypeId);
+        
         List<Case> caseList = [
                     SELECT 
                         id, CaseNumber, ContactId, Status, Subject, CreatedDate, CaseArea__c, Reason1__c, 
@@ -2136,8 +2114,6 @@ public class ISSP_AMC_DAO {
                     AND
                         Case_Group__c != 'Recycle Bin'
                 ];
-
-        system.debug('DB__Case List+ getOngoingApplicationsChanges  + '+caseList);
         return caseList;
     }
 
@@ -2159,7 +2135,6 @@ public class ISSP_AMC_DAO {
     public static List<SelectOption> countryList {
 
         get {
-        system.debug('LANGUAGE: ' + UserInfo.getLanguage());
         String currentLanguage = UserInfo.getLanguage();
         List<SelectOption> options = new List<SelectOption>();
         list<IATA_ISO_Country__c> isoList;
