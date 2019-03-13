@@ -33,21 +33,24 @@ private class ISSP_CurrencyCenterSurveyListingCtrlTest {
 																		Survey__c = 'Annual',
 																		Status__c = 'Draft',
 																		Year_Survey__c = String.valueOf(System.now().year()),
-																		Month_Survey__c = '');
+																		Month_Survey__c = '',
+																		RecordTypeId = ISSP_CurrencyCenterUtil.rtIdAnnualSurvey);
 		ccsList.add(ccs);
 
 		ccs = new Currency_Center_Survey__c(Airline__c = headQuarter.Id,
 				Survey__c = 'Monthly',
 				Status__c = 'Draft',
 				Year_Survey__c = String.valueOf(System.now().year()),
-				Month_Survey__c = String.valueOf(System.now().month()));
+				Month_Survey__c = String.valueOf(System.now().month()),
+				RecordTypeId = ISSP_CurrencyCenterUtil.rtIdMonthlySurvey);
 		ccsList.add(ccs);
 
 		ccs = new Currency_Center_Survey__c(Airline__c = headQuarter.Id,
 				Survey__c = 'Monthly',
 				Status__c = 'Draft',
 				Year_Survey__c = String.valueOf(System.now().year()),
-				Month_Survey__c = String.valueOf(System.now().addMonths(1).month()));
+				Month_Survey__c = String.valueOf(System.now().addMonths(1).month()),
+				RecordTypeId = ISSP_CurrencyCenterUtil.rtIdMonthlySurvey);
 		ccsList.add(ccs);
 		insert ccsList;
 
