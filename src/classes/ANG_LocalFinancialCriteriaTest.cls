@@ -533,7 +533,17 @@ private class ANG_LocalFinancialCriteriaTest {
 	
 	@isTest static void rhcWithoutCashConditionCalcTypeTest() {
 
-		Account acct = [SELECT Id, ANG_HE_RiskStatus__c FROM Account WHERE Name = 'Agent SG'];
+		Account acct = 
+            [SELECT 
+                Id,
+                ANG_RiskStatus__c,
+                ANG_HE_RiskStatus__c,
+                IATA_ISO_Country__r.AMS_Settlement_System__c
+             FROM 
+                Account 
+             WHERE 
+                Name = 'Agent SG'
+            ];
 
 		Financial_Security__c fs = createFinancialData(acct.Id);
 
@@ -550,6 +560,7 @@ private class ANG_LocalFinancialCriteriaTest {
 		ANG_RHC_Information__c rhcUpdated = 
 			[SELECT 
 				ANG_RHC_Amount__c, 
+                ANG_CashCondition__c,
 				ANG_RHC_Amount_Forecasted__c 
 			 FROM 
 			 	ANG_RHC_Information__c 
@@ -688,8 +699,6 @@ private class ANG_LocalFinancialCriteriaTest {
 
       	Financial_Security__c fs = createFinancialData(acct.Id);
 
-      	system.debug([SELECT ID, ANG_Minimum_Financial_Security__c FROM Financial_Security__c]);
-
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
 			ANG_AccountId__c = acct.Id,
 			CurrencyIsoCode = 'EUR',
@@ -735,5 +744,69 @@ private class ANG_LocalFinancialCriteriaTest {
 		System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
+
+    @isTest static void triggerRhcCalculationOnPointsChangeTest() {
+        
+        Account agentHK =
+            [SELECT 
+                Id,
+                Name,
+                ANG_HE_RiskStatus__c, 
+                Financial_Assessment_Points__c 
+             FROM 
+                Account
+             WHERE
+                Name = 'Agent HK'
+            ];
+
+        agentHK.Financial_Assessment_Points__c = 100;
+        update agentHK;
+
+        Financial_Security__c fs = createFinancialData(agentHK.Id);
+
+        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+            ANG_AccountId__c = agentHK.Id,
+            CurrencyIsoCode = 'EUR',
+            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+            RHC_Amount_Equals_FS_Percent__c = 100
+        );
+
+        insert rhcInfo;
+
+        ANG_RHC_Information__c rhcUpdated = 
+            [SELECT 
+                ANG_RHC_Amount__c, 
+                ANG_RHC_Amount_Forecasted__c 
+             FROM 
+                ANG_RHC_Information__c 
+             WHERE 
+                Id = :rhcInfo.Id
+            ];
+
+        Decimal expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A1/100);
+        
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+
+        agentHK.Financial_Assessment_Points__c = 176;
+
+        update agentHK;
+
+        rhcUpdated = 
+            [SELECT 
+                ANG_RHC_Amount__c, 
+                ANG_RHC_Amount_Forecasted__c 
+             FROM 
+                ANG_RHC_Information__c 
+             WHERE 
+                Id = :rhcInfo.Id
+            ];
+
+        expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A2/100);
+        
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+
+    }
 
 }

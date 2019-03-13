@@ -139,7 +139,7 @@ public class ANG_RHCHelper {
 			//retrieve % of FS from the RHC information (rhcAmountFsPercent) 
 			//and calculate RHC amount
 			if(rhc.ANG_RHC_Amount_Equals_FS__c){
-				System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Amount Equals FS');
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Amount Equals FS');
 				applyRhcAmountFsPercentage(rhc, fsAmount, rhcAmountFsPercent);
 				continue;
 			}
@@ -151,8 +151,8 @@ public class ANG_RHCHelper {
 			//fetch the cash condition record from BSP Attributes
 			//and apply RHC amount = % FS
 			if(rhc.ANG_CashCondition__c && fsAmount > 0){
-				System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - calculateRHCAmount] Cash Condition');
-				ANG_BSP_Attributes__c bspAttrCash = bspAttributesMap.get(relatedBspId + RECTYPE_CASH_CONDITION_CONFIG);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Cash Condition');
+				ANG_BSP_Attributes__c bspAttrCash = bspAttributesMap.get(relatedBspId + '.' + RECTYPE_CASH_CONDITION_CONFIG);
 				Decimal fsPercentage = (bspAttrCash.FS_Percentage__c == null) ? 0 : bspAttrCash.FS_Percentage__c;
 				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
 				continue;
@@ -169,6 +169,10 @@ public class ANG_RHCHelper {
 			//If the agent contains Financial Assessment Points finds the BSP attribute
 			//that contains the interval [Min FA Points ~ Max FA Points]
 			for(ANG_BSP_Attributes__c bspAttr : bspAttributesMap.values()){
+
+				if(bspAttr.RecordTypeId == RECTYPE_CASH_CONDITION_CONFIG){
+					continue;
+				}
 				
 				String bspAttrKey = (String.valueOf(bspAttr.BSP__c) + 
 									 String.valueOf(bspAttr.RecordTypeId) + 
@@ -189,17 +193,17 @@ public class ANG_RHCHelper {
 
 			}
 
-			System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - calculateRHCAmount] BSP Attribute to use: ' + bspAttrRhc);
+			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] BSP Attribute to use: ' + bspAttrRhc);
 
 			//If the field "RHC Amount Calculation Type" is "Fixed Percentage", 
 			//then apply RHC amount and forecasted = % of FS from the BSP Attributes record
 			if(bspAttrRhc != NULL && bspAttrRhc.RHC_Amnt_Calc_Type__c == RHC_AMOUNT_CALC_TYPE_FIXED_PERC){
-				System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: ' + RHC_AMOUNT_CALC_TYPE_FIXED_PERC);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: ' + RHC_AMOUNT_CALC_TYPE_FIXED_PERC);
 				double fsPercentage = (bspAttrRhc.FS_Percentage__c == null) ? 0 : bspAttrRhc.FS_Percentage__c;
 				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
 			} 
 			else {
-				System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
 				Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
 				Decimal provisionalRHC = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 : rhc.ANG_RHC_Amount_Provisional__c;
 				Decimal exceedingFS = rhc.ANG_Exceeding_Financial_Security__c == null ? 0 : rhc.ANG_Exceeding_Financial_Security__c;
