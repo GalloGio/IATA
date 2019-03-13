@@ -61,24 +61,9 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
-        <fullName>TrackingHistory</fullName>
-        <description>used for tracking purposes - do NOT include any fields which cause mixed dml operations (e.g. profile, role, ...)</description>
-        <displayedFields>
-            <field>ToU_accepted__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Date_ToU_accepted__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Title</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>TrackingHistory</label>
+        <fullName>FieldsExcludedFromTracking</fullName>
+        <description>The fields in this list will be tracked on the User Tracking History object</description>
+        <label>FieldsExcludedFromTracking</label>
     </fieldSets>
     <fields>
         <fullName>AMP_Digest_Daily_or_Weekly__c</fullName>
