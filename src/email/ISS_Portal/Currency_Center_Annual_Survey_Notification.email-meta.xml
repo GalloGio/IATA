@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to remind users to submit Annual Survey</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Currency Center Annual Survey Notification</name>
+    <style>freeForm</style>
+    <subject>Annual Survey reminder</subject>
+    <textOnly>Dear Currency Center users,
+
+This serves as a reminder to complete your Annual Survey on the Remittance of Foreign Balance for the year {!YEAR(TODAY())-1}. 
+Please ensure you provide us with complete information by latest 15th March {!YEAR(TODAY())}.
+
+Should you have any queries, please log a case in your IATA Customer portal under the topic &quot;Currency Center&quot;
+Kind regards,
+Currency Center Team</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
