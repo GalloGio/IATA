@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Custom setting that defines for which case record types should be presented a pop-up informing that customer is a key customer.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Record_Type__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Case Record Type name</description>
+        <externalId>false</externalId>
+        <label>Record Type</label>
+        <length>100</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>Case RTs for Key Customer alert</label>
+    <visibility>Public</visibility>
+</CustomObject>
