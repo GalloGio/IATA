@@ -16,6 +16,8 @@ private class ANG_LocalFinancialCriteriaTest {
 	@testSetup
 	static void setup() {
 
+        Test.startTest();
+
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
 			Name = 'BSP-SG',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
@@ -315,7 +317,7 @@ private class ANG_LocalFinancialCriteriaTest {
         	createBSPAttribute(
         		bspFR.Id, 
         		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		300, 
+        		NULL, 
         		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA, 
         		'A', 
         		NULL, 
@@ -328,7 +330,7 @@ private class ANG_LocalFinancialCriteriaTest {
         	createBSPAttribute(
         		bspFR.Id, 
         		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		400, 
+        		NULL, 
         		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA, 
         		'B', 
         		NULL, 
@@ -341,7 +343,7 @@ private class ANG_LocalFinancialCriteriaTest {
         	createBSPAttribute(
         		bspFR.Id, 
         		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		500, 
+        		NULL, 
         		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA, 
         		'C', 
         		NULL, 
@@ -401,6 +403,8 @@ private class ANG_LocalFinancialCriteriaTest {
         );
 
         insert new List<Account>{agentSG, agentHK, agentMO, agentFR};
+        
+        Test.stopTest();
         
 	}
 
