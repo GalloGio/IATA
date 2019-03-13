@@ -18,7 +18,7 @@ private class ISSP_HomepageTest {
                                     IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
                                     IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP', ISO_Code__c = 'pt',
                                     IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test', Region__c = 'Europe',
-                                    Informatica_Value__c = 'test', Multicountry_Enabled__c = true, Hide_Tax_Number_VAT__c = true, ANG_Enable_NewGen__c = true,
+                                    Informatica_Value__c = 'test', Hide_Tax_Number_VAT__c = true, ANG_Enable_NewGen__c = true,
                                     AMS_Default_State__c = 'PT');
         insert country;
 
