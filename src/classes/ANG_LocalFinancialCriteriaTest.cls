@@ -16,6 +16,8 @@ private class ANG_LocalFinancialCriteriaTest {
 	@testSetup
 	static void setup() {
 
+        Test.startTest();
+
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
 			Name = 'BSP-SG',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
@@ -315,7 +317,7 @@ private class ANG_LocalFinancialCriteriaTest {
         	createBSPAttribute(
         		bspFR.Id, 
         		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		300, 
+        		NULL, 
         		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA, 
         		'A', 
         		NULL, 
@@ -328,7 +330,7 @@ private class ANG_LocalFinancialCriteriaTest {
         	createBSPAttribute(
         		bspFR.Id, 
         		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		400, 
+        		NULL, 
         		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA, 
         		'B', 
         		NULL, 
@@ -341,7 +343,7 @@ private class ANG_LocalFinancialCriteriaTest {
         	createBSPAttribute(
         		bspFR.Id, 
         		ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG, 
-        		500, 
+        		NULL, 
         		ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA, 
         		'C', 
         		NULL, 
@@ -402,6 +404,8 @@ private class ANG_LocalFinancialCriteriaTest {
 
         insert new List<Account>{agentSG, agentHK, agentMO, agentFR};
         
+        Test.stopTest();
+        
 	}
 
 	private static ANG_BSP_Attributes__c createBSPAttribute(String bspId, String recTypeId, Decimal percentage, String calcType, String riskStatus, Decimal minFaPoints, Decimal maxFaPoints, Boolean limitCash){
@@ -413,16 +417,13 @@ private class ANG_LocalFinancialCriteriaTest {
 		attr.RHC_Amnt_Calc_Type__c = calcType;
 		attr.FS_Percentage__c = percentage;
 		attr.Limit_Cash_Condition__c = limitCash;
-		attr.UniqueKey__c = String.valueOf(attr.BSP__c) + String.valueOf(attr.RecordTypeId);
 
 		if(riskStatus != NULL){
 			attr.Risk_Status__c =riskStatus;
-			attr.UniqueKey__c += attr.Risk_Status__c;
 		}
 
 		if(minFaPoints != NULL){
     		attr.Min_FA_Points__c = minFaPoints;
-    		attr.UniqueKey__c += attr.Min_FA_Points__c;
 		}
 
 		if(maxFaPoints != NULL){
@@ -500,7 +501,7 @@ private class ANG_LocalFinancialCriteriaTest {
 	
 	@isTest static void rhcCashConditionCalcTypeTest() {
 
-		Account acct = [SELECT Id, ANG_HE_RiskStatus__c FROM Account WHERE Name = 'Agent SG'];
+		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent SG'];
 
 		Financial_Security__c fs = createFinancialData(acct.Id);
 
@@ -533,7 +534,7 @@ private class ANG_LocalFinancialCriteriaTest {
 	
 	@isTest static void rhcWithoutCashConditionCalcTypeTest() {
 
-		Account acct = [SELECT Id, ANG_HE_RiskStatus__c FROM Account WHERE Name = 'Agent SG'];
+		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent SG'];
 
 		Financial_Security__c fs = createFinancialData(acct.Id);
 
@@ -550,6 +551,7 @@ private class ANG_LocalFinancialCriteriaTest {
 		ANG_RHC_Information__c rhcUpdated = 
 			[SELECT 
 				ANG_RHC_Amount__c, 
+                ANG_CashCondition__c,
 				ANG_RHC_Amount_Forecasted__c 
 			 FROM 
 			 	ANG_RHC_Information__c 
@@ -578,9 +580,7 @@ private class ANG_LocalFinancialCriteriaTest {
 			 	Name = 'Agent HK'
 			];
 
-		Test.startTest();
 		rhcFixedPercentageCalcTypeRiskStatusTest(agentHK, 'A', 100, 200, FIXED_PERCENTAGE_RISK_A1, FIXED_PERCENTAGE_RISK_A2);
-		Test.stopTest();
 
 	}
 
@@ -598,9 +598,7 @@ private class ANG_LocalFinancialCriteriaTest {
 			 	Name = 'Agent MO'
 			];
 
-		Test.startTest();
 		rhcFixedPercentageCalcTypeRiskStatusTest(agentMO, 'B', 74, 100, FIXED_PERCENTAGE_RISK_B1, FIXED_PERCENTAGE_RISK_B2);
-		Test.stopTest();
 
 	}
 
@@ -618,9 +616,7 @@ private class ANG_LocalFinancialCriteriaTest {
 			 	Name = 'Agent MO'
 			];
 
-		Test.startTest();
 		rhcFixedPercentageCalcTypeRiskStatusTest(agentMO, 'C', 100, NULL, FIXED_PERCENTAGE_RISK_C, NULL);
-		Test.stopTest();
 
 	}
 
@@ -688,8 +684,6 @@ private class ANG_LocalFinancialCriteriaTest {
 
       	Financial_Security__c fs = createFinancialData(acct.Id);
 
-      	system.debug([SELECT ID, ANG_Minimum_Financial_Security__c FROM Financial_Security__c]);
-
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
 			ANG_AccountId__c = acct.Id,
 			CurrencyIsoCode = 'EUR',
@@ -735,5 +729,67 @@ private class ANG_LocalFinancialCriteriaTest {
 		System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
+
+    @isTest static void triggerRhcCalculationOnPointsChangeTest() {
+        
+        Account agentHK =
+            [SELECT 
+                Id,
+                Financial_Assessment_Points__c 
+             FROM 
+                Account
+             WHERE
+                Name = 'Agent HK'
+            ];
+
+        agentHK.Financial_Assessment_Points__c = 100;
+        update agentHK;
+
+        Financial_Security__c fs = createFinancialData(agentHK.Id);
+
+        ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+            ANG_AccountId__c = agentHK.Id,
+            CurrencyIsoCode = 'EUR',
+            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+            RHC_Amount_Equals_FS_Percent__c = 100
+        );
+
+        insert rhcInfo;
+
+        ANG_RHC_Information__c rhcUpdated = 
+            [SELECT 
+                ANG_RHC_Amount__c, 
+                ANG_RHC_Amount_Forecasted__c 
+             FROM 
+                ANG_RHC_Information__c 
+             WHERE 
+                Id = :rhcInfo.Id
+            ];
+
+        Decimal expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A1/100);
+        
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+
+        agentHK.Financial_Assessment_Points__c = 176;
+
+        update agentHK;
+
+        rhcUpdated = 
+            [SELECT 
+                ANG_RHC_Amount__c, 
+                ANG_RHC_Amount_Forecasted__c 
+             FROM 
+                ANG_RHC_Information__c 
+             WHERE 
+                Id = :rhcInfo.Id
+            ];
+
+        expectedAmount = (FS_AMOUNT * FIXED_PERCENTAGE_RISK_A2/100);
+        
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == expectedAmount);
+        System.assert(rhcUpdated.ANG_RHC_Amount__c == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+
+    }
 
 }

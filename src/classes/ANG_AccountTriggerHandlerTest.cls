@@ -510,23 +510,5 @@ private class ANG_AccountTriggerHandlerTest {
 			return res;
 		}
 	}
-	
-	static testMethod void triggerRhcCalculationOnPointsChangeTest() {
-		
-		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
-
-		a.Financial_Assessment_Points__c = 100;
-
-		update a;
-
-		Test.startTest();
-
-		a.Financial_Assessment_Points__c = 400;
-
-		update a;
-
-		Test.stopTest();
-		
-	}
 
 }
