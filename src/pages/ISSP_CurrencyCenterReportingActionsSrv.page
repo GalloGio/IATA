@@ -1,0 +1,123 @@
+<apex:page controller="ISSP_CurrencyCenterReportingActionsCtrl"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+    <html>
+        <c:ISSP_Header ></c:ISSP_Header>
+
+        <head>
+            <link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/reporting_actions.css')}" />
+
+            <script type="text/javascript">
+
+                $(document).ready(function(){
+                    $('[data-toggle="tooltip"]').tooltip();
+                })
+
+                /*** handle popover for indicators definitions***/
+                $(function () {
+                    $('[data-toggle="popover"]').popover(
+                            { container: 'body',
+                                html: 'true',
+                                placement: 'auto left',
+                                trigger: 'focus' });
+                })
+
+                function openForm(form) {
+                    if(form == "monthlySurvey") {
+                        document.getElementById(form).style.display = "block";
+                        document.getElementById("annualSurvey").style.display = "none";  
+                    } else if (form == "annualSurvey") {
+                        document.getElementById(form).style.display = "block";
+                        document.getElementById("monthlySurvey").style.display = "none";
+                    }
+                }
+                window.addEventListener('message', function(event){
+                    if (event.data === 'close'){
+                        modal.hide();
+                    }
+                })
+            </script>
+        </head>
+
+        <body>
+            <div class="container">
+                <c:ISSP_CustomNavigation />
+                <apex:form id="form">
+
+                    <div class="row">
+                        <div class="col-xs-12 service-header" style="min-height: auto !important;">
+                            <div class="row hidden-print">
+                                <a href="/ISSP_CurrencyCenterHome" class="back-home-link">{!$Label.CurrencyCenter_Back_Home}</a>
+                            </div>
+                            <div class="row page-title-wrapper hidden-print">
+                                <div class="">
+                                    <div class="page-title">{!$Label.CurrencyCenter_Reporting_And_Actions}</div>
+                                </div>
+                            </div>
+                            <div>
+                                <style>
+                                    .tabLink {
+                                        text-align: center;
+                                        color: #0075BC;
+                                        float:left;
+                                        border: none;
+                                        cursor: pointer;
+                                        padding: 8px 8px;                
+                                        font-size: 18px; 
+                                        width: 18%;
+                                        border-top-left-radius: 12px;
+                                        border-top-right-radius: 12px;
+                                    }
+
+                                    /* Active */
+                                    .active {
+                                        background-color: white;
+                                    }
+
+                                    /* Dummy Separator */
+                                    .stealth {
+                                        width: 0%;
+                                        padding: 6px 6px;                          
+                                        background-color: #7030A0;
+                                    }
+
+                                    /* Inactive */
+                                    .inactive {
+                                        color: #AEAEAE;
+                                        background-color: #E6E6E6;
+                                    }
+                                </style>
+                                <p>&nbsp;</p>
+                                <a class="tabLink inactive" href="/ISSP_CurrencyCenterReportingActions">Reports</a>
+                                <a class="tabLink stealth" disabled="true" href=""></a>
+                                <a class="tabLink active" disabled="true" href="/ISSP_CurrencyCenterReportingActionsSrv">Surveys</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONTENT -->
+                    <div class="row margin-top-bottom">
+                        <p>&nbsp;</p>
+                        <table width="100%">
+                            <tr valign="top">
+                                <!-- REPORT LIST -->
+                                <td align="left" valign="top" width="68%">
+                                    <c:ISSP_CurrencyCenterSurveyListing />
+                                </td>
+                                <td/>
+                                <!-- UPCOMING EVENTS & ACTIONS -->
+                                <td align="left" valign="top" width="30%">
+                                    <c:ISSP_CurrencyCenterEventListing />
+                                    <p>&nbsp;</p>
+                                    <c:ISSP_CurrencyCenterCalendarMini />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </apex:form>
+                <span class="hidden-print">
+                    <c:ISSP_CustomFooter />
+                </span>
+
+            </div>
+        </body>
+    </html>
+</apex:page>
