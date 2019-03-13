@@ -74,7 +74,7 @@
                     </apex:outputPanel>
                 </apex:pageblockSectionItem>
 
-                <apex:pageblockSectionItem id="percentageFS" rendered="{!modeValue != '' || actionValue == 'Apply_RHC_per_RS' || actionValue == 'Revert_RHC_per_RS'}">
+                <apex:pageblockSectionItem id="percentageFS" rendered="{!modeValue != '' && actionValue != 'Apply_RHC_per_RS' && actionValue != 'Revert_RHC_per_RS'}">
                     <apex:outputLabel value="% of FS"/>
                     <apex:outputPanel >
                         <apex:inputText value="{!percentageFS}" id="percentageFSInput" rendered="{!IF(actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' , 'true','false')}" onkeyup="controlButtons();" onkeypress="return inputLimiter(event,'Numbers');"/>
@@ -90,19 +90,32 @@
 
                             <apex:column value="{!a.Risk_Status__c}"/>
 
-                            <apex:column headerValue="{!$ObjectType.ANG_BSP_Attributes__c.fields.Min_FA_Points__c.Label}" rendered="{!showCountrySpecificColumns}">
-                                <apex:inputField value="{!a.Min_FA_Points__c}"/>
+                            <apex:column headerValue="{!$ObjectType.ANG_BSP_Attributes__c.fields.Min_FA_Points__c.Label}" rendered="{!showCountrySpecificColumns}" html-disabled="true">
+                                <apex:inputField value="{!a.Min_FA_Points__c}" rendered="{!actionValue == 'Apply_RHC_per_RS'}" onkeyup="controlButtons();" onkeypress="return inputLimiter(event,'Numbers');"/>
+                                <apex:outputField value="{!a.Min_FA_Points__c}" rendered="{!actionValue != 'Apply_RHC_per_RS'}" />
                             </apex:column>
 
                             <apex:column headerValue="{!$ObjectType.ANG_BSP_Attributes__c.fields.Max_FA_Points__c.Label}" rendered="{!showCountrySpecificColumns}">
-                                <apex:inputField value="{!a.Max_FA_Points__c}"/>
+                                <apex:inputField value="{!a.Max_FA_Points__c}" rendered="{!actionValue == 'Apply_RHC_per_RS'}" onkeyup="controlButtons();" onkeypress="return inputLimiter(event,'Numbers');"/>
+                                <apex:outputField value="{!a.Max_FA_Points__c}" rendered="{!actionValue != 'Apply_RHC_per_RS'}"/>
                             </apex:column>
 
                             <apex:column headerValue="{!$ObjectType.ANG_BSP_Attributes__c.fields.FS_Percentage__c.Label}">
-                                <apex:inputField value="{!a.FS_Percentage__c}"/>
+                                <apex:inputField value="{!a.FS_Percentage__c}" rendered="{!actionValue == 'Apply_RHC_per_RS'}" onkeyup="controlButtons();" onkeypress="return inputLimiter(event,'Numbers');"/>
+                                <apex:outputField value="{!a.FS_Percentage__c}" rendered="{!actionValue != 'Apply_RHC_per_RS'}"/>
                             </apex:column>
 
                         </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection>
+                        <apex:pageblockSectionItem id="percentageFS" rendered="{!modeValue != '' || actionValue == 'Apply_RHC_per_RS' || actionValue == 'Revert_RHC_per_RS'}">
+                            <apex:outputLabel value="% of FS Cash Condition"/>
+                            <apex:outputPanel >
+                                <apex:inputText value="{!percentageFS}" id="percentageFSInput" rendered="{!actionValue == 'Apply_RHC_per_RS'}" onkeyup="controlButtons();" onkeypress="return inputLimiter(event,'Numbers');"/>
+                                <apex:outputText value="{!percentageFS}" rendered="{!actionValue == 'Revert_RHC_per_RS'}"/>
+
+                            </apex:outputPanel>
+                        </apex:pageblockSectionItem>
                     </apex:pageBlockSection>
                 </apex:pageBlock>
 
@@ -110,7 +123,7 @@
             </apex:pageBlockSection>
 
             <apex:pageBlockButtons id="searchButtonBlock" location="bottom">
-                <apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(actionValue == '', AND(actionValue == 'Apply_RHC_regardless' || actionValue == 'Revert_RHC_regardless', OR( modeValue == '', AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null))), AND(actionValue == 'Apply_RHC_regardless',!isValidPercentageFS), AND(actionValue == 'Apply_RHC_per_RS', OR( bspValue == '',!isValidPercentageFS)), AND(actionValue == 'Revert_RHC_per_RS', bspValue == '') )}" action="{!fetchAgencies}" onclick="getAgenciesTable();"/>
+                <apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(actionValue == '', AND(actionValue == 'Apply_RHC_regardless' || actionValue == 'Revert_RHC_regardless', OR( modeValue == '', AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null))), AND(actionValue == 'Apply_RHC_regardless',!isValidPercentageFS), AND(actionValue == 'Apply_RHC_per_RS', bspValue == ''), AND(actionValue == 'Revert_RHC_per_RS', bspValue == '') )}" action="{!fetchAgencies}" onclick="getAgenciesTable();"/>
                 <apex:commandButton value="{!IF(actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' , 'Apply RHC equal FS %', IF(actionValue == 'Revert_RHC_regardless' || actionValue == 'Revert_RHC_per_RS', 'Revert RHC equal FS %', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton), batchStatusBool)}" action="{!applyOrRevertRHC}"/>
             </apex:pageBlockButtons>
         </apex:pageBlock>

@@ -45,7 +45,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		return temp;
 		 } private set;}
 
-	public Boolean hasAttributesToShow {get{return attributesToShow!=null && !attributesToShow.isEmpty();} private set;}
+	public Boolean hasAttributesToShow {get{return attributesToShow!=null && !attributesToShow.isEmpty() && (actionValue == 'Apply_RHC_per_RS' || actionValue == 'Revert_RHC_per_RS');} private set;}
 	public Boolean showCountrySpecificColumns {get{return countrySpecificsList.contains(bspValue);} private set;}
 
 	public Integer agenciesFetched {get; private set;}
@@ -123,7 +123,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	previousActionValue = actionValue;
     	batchStatusBool = false;
     	batchJob = null;
-    	system.debug('##test debug ');
     	Boolean rhcFlag = actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ? false : true; //Apply_RHC_per_RS
 
     	if (modeValue == 'BSP') {
@@ -131,14 +130,18 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
 							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c
 						FROM ANG_RHC_Information__c
-						WHERE ANG_RHC_Amount_Equals_FS__c = :rhcFlag
-							AND ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
+						WHERE ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
 							AND ANG_AccountId__r.Location_Type__c = 'HE'
 							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
 							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
 							AND ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Name = :bspValue 
 							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
 						ORDER BY ANG_AccountId__r.Name];
+    	
+    	bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue];
+    	
+    	for(ANG_BSP_Attributes__c bsp : bspAttributes) if (bsp.recordtypeid == CCConfRT) percentageFS = String.valueOf(bsp.FS_Percentage__c);
+
     	} else if (modeValue == 'IATA_Code') {
     		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
 							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
@@ -158,7 +161,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 
     	}
 
-    	if(actionValue == 'Apply_RHC_per_RS') bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue];
 
     	agenciesFetched = agencies.size();
 
@@ -249,15 +251,26 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 
   			for (ANG_BSP_Attributes__c attribute : bspAttributes){
   				if(attribute.recordtypeid == RHCConfRT){
-  					attribute.RHC_Amnt_Calc_Type__c = (isApply ? 'Fixed Percentage' : 'Formula');
-  					attribute.FS_Percentage__c = (isApply ? (String.isEmpty(percentageFS) ? 0 : Integer.valueOf(percentageFS)) : 0);
 
-  					if(attribute.Min_FA_Points__c == null || attribute.Max_FA_Points__c == null || attribute.FS_Percentage__c == null ){
+					/*
+  					if(isRegardlessRisk) attribute.FS_Percentage__c = (String.isEmpty(percentageFS) ? 0 :percentageFS );
+  					else attribute.FS_Percentage__c = (String.isEmpty(attribute.FS_Percentage__c) ? 0 : attribute.FS_Percentage__c );
+  					*/
+
+					attribute.FS_Percentage__c = (isRegardlessRisk ? (String.isEmpty(percentageFS) ? 0 : Decimal.valueOf(percentageFS)) : attribute.FS_Percentage__c);
+
+  					if(!countrySpecificsList.contains(bspValue) || (isRegardlessRisk && isApply)) {
+	  					attribute.Min_FA_Points__c = 0;
+	  					attribute.Max_FA_Points__c = 999999;
+  					}
+
+  					if(attribute.FS_Percentage__c == null || attribute.FS_Percentage__c == 0 || !isApply ){
 	  					attribute.Min_FA_Points__c = null;
 	  					attribute.Max_FA_Points__c = null;
 	  					attribute.FS_Percentage__c = null;
 	  					attribute.RHC_Amnt_Calc_Type__c = 'Formula'; 
-	  				} 
+	  				}
+	  				else attribute.RHC_Amnt_Calc_Type__c = 'Fixed Percentage';
 
   				}
   				else{
