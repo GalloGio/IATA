@@ -19408,62 +19408,21 @@ myuser={!User.Id}</url>
         <masterLabel>Log Phone Case</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&apos;//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js&apos;)}
-{!REQUIRESCRIPT(&apos;//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js&apos;)}
+        <url>{!REQUIRESCRIPT(&quot;/resource/1552329049000/keyCustomerAlert&quot;)}
 {!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
 {!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)}
 {!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)}
 
-try{
+try {
     var targetURL = &quot;/apex/LogPhoneCase?ContactId={!Contact.Id}&quot;;
 
     if({!Account.Identify_as_Key_Customer__c}) {
-        jQuery(function() {
-            /*Append the jQuery CSS CDN Link to the Head tag.*/
-            jQuery(&apos;head&apos;).append(&apos;&lt;link rel=&quot;stylesheet&quot; href=&quot;//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/start/jquery-ui.css&quot; type=&quot;text/css&quot; /&gt;&apos;);
-            
-            /*Create the HTML(DIV Tag) for the Dialog.*/
-            var html = &apos;&lt;div id=&quot;dialog&quot; title=&quot;{!JSENCODE($Label.KEY_CUSTOMER_ALERT_TITLE)}&quot;&gt;&apos;;
-            html += &apos;&lt;div style=&quot;float: left; width: 20%; padding-top: 6%;&quot;&gt;&lt;img src=&quot;/img/msg_icons/warning32.png&quot; alt=&quot;Warning&quot; width=&quot;32&quot; height=&quot;32&quot; class=&quot;warningLarge&quot; title=&quot;Warning&quot;&gt;&lt;/div&gt;&apos;;
-            html += &apos;&lt;div style=&quot;float: left; width: 80%;&quot;&gt;{!JSENCODE($Label.KEY_CUSTOMER_ALERT)}&lt;/div&gt;&lt;/div&gt;&apos;;
-
-            /*Check if the Dialog(DIV Tag) already exists if not then Append the same to the Body tag.*/
-            if(!jQuery(&apos;[id=dialog]&apos;).size()){
-                jQuery(&apos;body&apos;).append(html);
-            }
-
-            /*Open the jQuery Dialog.*/ 
-            jQuery( &quot;#dialog&quot; ).dialog({
-                position: [&apos;center&apos;,20],
-                autoOpen: true,
-                modal: true,
-                buttons: {
-                    &quot;Ok&quot;: function() {
-                        goToURL(targetURL);
-                        jQuery(this).dialog(&quot;close&quot;);
-                    }
-                }
-            });
-        }); 
+            displayKeyCustomerAlert(targetURL, &quot;{!$Label.KEY_CUSTOMER_ALERT_TITLE}&quot;, &quot;{!$Label.KEY_CUSTOMER_ALERT}&quot;); 
     } else {
         goToURL(targetURL);
     }
-} catch(e){
+} catch(e) {
     alert(&apos;An error has occurred. Error: &apos; + e);
-}
-
-
-function goToURL(redirectUrl)
-{
-    if (sforce.console.isInConsole()) {
-        sforce.console.getEnclosingTabId(function(enclosingResult){
-            sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
-                sforce.console.openSubtab(primaryResult.id, redirectUrl, true, &apos;&apos;, null);
-            });
-        });
-    } else {
-        window.top.location.href = redirectUrl;
-    }
 }</url>
     </webLinks>
     <webLinks>

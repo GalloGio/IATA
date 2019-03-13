@@ -145,6 +145,13 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
         set;
     }
 
+    public Id getContactId() {
+        if (userContact != null){
+            return userContact.Id;
+        }
+        return null;
+    }
+
     //ACAMBAS - WMO-436 - Begin
     public Account getAccount() {
         if (userContact != null) {
@@ -154,13 +161,6 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
         return null;
     }
     //ACAMBAS - WMO-436 - End
-
-    public Id getContactId() {
-        if (userContact != null){
-            return userContact.Id;
-        }
-        return null;
-    }
 
     public Id getAccountId() {
         if (userContact != null){

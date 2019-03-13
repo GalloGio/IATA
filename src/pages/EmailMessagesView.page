@@ -6,8 +6,7 @@
     <apex:includeScript value="/soap/ajax/26.0/connection.js"/>
     <apex:includeScript value="/soap/ajax/26.0/apex.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
-
-
+    <apex:includeScript value="{!$Resource.keyCustomerAlert}"/>
 
     <script type="text/javascript">
 
@@ -108,36 +107,25 @@
             }
         }
 
-        function SendEmail(){
+        function SendEmail() {
 
             //ACAMBAS - WMO-436 - Begin
-            if({!cse.Account.Identify_as_Key_Customer__c} == true && {!isEligibleForKeyCustomerAlert} == true) {
-                alert("{!$Label.KEY_CUSTOMER_ALERT}");           
-            }
-            //ACAMBAS - WMO-436 - End
-
-            var countryEmail = getCountryEmail();
-            var redirectUrlOne = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003&p26=" + countryEmail;
-            var redirectUrlTwo = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003";
-
-            if(countryEmail != '')
-            {
-                //window.top.location = redirectUrlOne;
-                if (sforce.console.isInConsole()) {
-                    ServiceConsoleIntegration(redirectUrlOne);
-                } else {
-                    window.top.location= redirectUrlOne;
-                } 
-            } else {
-                if (sforce.console.isInConsole()) {
-                    ServiceConsoleIntegration(redirectUrlTwo);
-                } else {
-                    window.top.location= redirectUrlTwo;
-
-                }
-                
-            }
             
+            var countryEmail = getCountryEmail();
+            var targetURL = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003";
+
+            if(countryEmail != '') {
+                targetURL = targetURL + "&p26=" + countryEmail;
+            }  
+
+            if({!cse.Account.Identify_as_Key_Customer__c} == true && {!isEligibleForKeyCustomerAlert} == true) {
+                displayKeyCustomerAlert(targetURL, "{!$Label.KEY_CUSTOMER_ALERT_TITLE}", "{!$Label.KEY_CUSTOMER_ALERT}");
+            }
+            else {
+                goToURL(targetURL);
+            }
+
+            //ACAMBAS - WMO-436 - End           
         }
          
         function openSubTab(id) {

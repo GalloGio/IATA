@@ -185,7 +185,7 @@ public class EmailMessagesViewCon {
     public EmailMessagesViewCon (ApexPages.StandardController controller) {
         try {
             if (!Test.isRunningTest()) {
-                controller.addFields(new List<String> {'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c', 'Case_Group__c', 'CNSCase__c', 'Account.Identify_as_Key_Customer__c'});
+                controller.addFields(new List<String> {'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c', 'Case_Group__c', 'CNSCase__c', 'Account.Identify_as_Key_Customer__c', 'RecordType.Name'});
             }
             this.cse = (Case)controller.getRecord();
             loadEmails();
@@ -258,15 +258,15 @@ public class EmailMessagesViewCon {
 
     //ACAMBAS - WMO-436 - Begin
     public void setEligibilityForKeyCustomerAlert() {
-        List<Case_RTs_for_Key_Customer_alert__c> csRecords = [SELECT Name FROM Case_RTs_for_Key_Customer_alert__c];
+        List<Case_RTs_for_Key_Customer_alert__c> csRecords = [SELECT Record_Type__c FROM Case_RTs_for_Key_Customer_alert__c];
 
         List<String> eligibleCaseRTs = new List<String>();
 
         for(Case_RTs_for_Key_Customer_alert__c cs : csRecords) {
-            eligibleCaseRTs.add(cs.Name);
+            eligibleCaseRTs.add(cs.Record_Type__c);
         }
 
-        this.isEligibleForKeyCustomerAlert = eligibleCaseRTs.contains(cse.RecordType.DeveloperName);
+        this.isEligibleForKeyCustomerAlert = eligibleCaseRTs.contains(cse.RecordType.Name);
     }
     //ACAMBAS - WMO-436 - End
 }

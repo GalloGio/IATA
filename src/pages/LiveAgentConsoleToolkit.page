@@ -458,7 +458,7 @@
             };
           
           
-            function getCustomDetailsChatRequest(result) {
+            function getCustomDetailsChatStarted(result) {
                 var keyCustomer;
                 
                 if (result.success == true) {
@@ -473,11 +473,12 @@
                 }
                 
                 if(keyCustomer == "true") {
-                    keyCustomerTxt = " <b>(KEY CUSTOMER!)</b>";
+                    popUpChatConsoleAlert("{!$Label.KEY_CUSTOMER_ALERT_TITLE}",
+                                          "{!$Label.KEY_CUSTOMER_ALERT}",
+                                          "warning",
+                                          undefined,
+                                          "This is a reminder that this case is related to a KEY CUSTOMER!")
                 }
-                 
-                alert("keyCustomer: " + keyCustomer);
-
             };
         
             //ACAMBAS - WMO-436 - End
