@@ -37,7 +37,7 @@ public with sharing class ISSP_CurrencyCenterSurveyListingCtrl {
 
 		String airlineId = this.account.Id;
 
-		List<Currency_Center_Survey__c> ccsList = [Select Id, Airline__c, Parent_Id__c, Survey__c, Reporting_Date__c, Status__c, Year_Survey__c, Month_Survey__c
+		List<Currency_Center_Survey__c> ccsList = [Select Id, Airline__c, Parent_Id__c, Survey__c, Reporting_Date__c, Status__c, Year_Survey__c, Month_Survey__c, RecordTypeId
 													From Currency_Center_Survey__c
 													Where (RecordTypeId=:ISSP_CurrencyCenterUtil.rtIdAnnualSurvey OR RecordTypeId=:ISSP_CurrencyCenterUtil.rtIdMonthlySurvey)
 															AND Airline__c =:airlineId
