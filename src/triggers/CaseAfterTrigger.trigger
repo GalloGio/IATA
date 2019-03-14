@@ -648,7 +648,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			Set<ID> CaseIdsNew = new Set<ID>();
 			for(Case c: trigger.new){
 				if(c.parentId != null && c.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE')
-					 && c.Reason1__c != 'FA/ FS Non-Compliance' && c.Status == 'Closed'){
+					 && c.Reason1__c != 'FA/ FS Non-Compliance'){
 					CaseIdsNew.add(c.Id);
 				}
 			}
