@@ -7,3 +7,11 @@
     max-height: 300px;
     overflow-y: scroll;
 }
+
+.THIS .dropdown-action-menu{
+ left: 0%; 
+ transform: translateX(0); 
+}
+.THIS .dropdown-action-menu a{
+color: rgba(27, 82, 151, 1);
+}
