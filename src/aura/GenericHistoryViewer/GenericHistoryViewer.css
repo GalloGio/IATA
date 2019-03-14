@@ -1,0 +1,18 @@
+.THIS .slds-form-element__static {
+    color: rgb(0, 109, 204) !important;
+    transition: color .1s linear !important;
+    font-weight: bold !important;
+}
+
+.THIS .slds-form-element__static:hover {
+    text-decoration: underline !important;
+}
+
+.THIS .td-lookup {
+    border-top:0px !important;
+    padding:0px !important;
+}
+
+.THIS .table-lookup {
+	width:100px !important;
+}
