@@ -43,7 +43,7 @@ public with sharing class ISSP_AvailableServices{
             if(currentPortalUser == null){
                 currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.AccountId, contact.name,
                                     contact.account.ANG_IEP_Status_FF__c,ContactId,
-                                    languagelocalekey,ProfileId  
+                                    languagelocalekey,ProfileId, Profile.Name
                                     from User where id =: UserInfo.getUserId()];
             }
             return currentPortalUser;
@@ -493,7 +493,7 @@ public with sharing class ISSP_AvailableServices{
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
+                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c, New_Window__c,ServiceName__c, Service_Description_Label__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
@@ -553,7 +553,7 @@ public with sharing class ISSP_AvailableServices{
                 if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
                     this.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
                     this.modalStyle = 'modal-dialog modal-lg';
-                } else if (isRequestableWithoutApproval(isAdmin,inRecord)) {
+                } else if (isRequestableWithoutApproval(isAdmin,inRecord,currentPortalUser.Profile)) {
                     this.btnLabel = System.Label.ISSP_Enable_Service;
                 } else {
                     this.btnLabel = System.Label.ISSP_New_Service_Request;
@@ -647,7 +647,7 @@ public with sharing class ISSP_AvailableServices{
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
                                                         Service_Description__c, Cannot_be_managed_by_portal_admin__c,
-                                                        Service_Description_Label__c, 
+                                                        Service_Description_Label__c, Auto_approved_for__c,
                                                         ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c                                                
                                                         FROM Portal_Applications__c WHERE Id IN :newAppIds];
                 if (!appList.isEmpty()){
@@ -776,7 +776,7 @@ public with sharing class ISSP_AvailableServices{
         String Servid = Apexpages.currentPage().getParameters().get('servId');
         system.debug('XXX Servid : '+Servid);
 
-        List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Application_URL__c, Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c,Cannot_be_managed_by_portal_admin__c from Portal_Applications__c where Id =: Servid ]);
+        List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Application_URL__c, Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c,Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c from Portal_Applications__c where Id =: Servid ]);
         system.debug('XXX Servicetmp_List : '+Servicetmp_List);
         Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin, isAuthorisedSignatory);
 
@@ -821,8 +821,8 @@ public with sharing class ISSP_AvailableServices{
         }
 
 		Boolean isAdmin = isPortalAdminUser();
-        Portal_Applications__c parentApp = [SELECT Id, Cannot_be_managed_by_portal_admin__c FROM Portal_Applications__c WHERE Id=:applicationId];
-        if(isRequestableWithoutApproval(isAdmin,parentApp)) {
+        Portal_Applications__c parentApp = [SELECT Id, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c FROM Portal_Applications__c WHERE Id=:applicationId];
+        if(isRequestableWithoutApproval(isAdmin,parentApp,currentPortalUser.Profile)) {
             appRight = 'Access Granted';
             res = 'okauto';
         }
@@ -845,8 +845,8 @@ public with sharing class ISSP_AvailableServices{
 
 
         Boolean isAdmin = isPortalAdminUser();
-        Portal_Applications__c parentApp = [SELECT Id, Cannot_be_managed_by_portal_admin__c FROM Portal_Applications__c WHERE Id=:applicationId];
-        if(isRequestableWithoutApproval(isAdmin,parentApp)) {
+        Portal_Applications__c parentApp = [SELECT Id, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c FROM Portal_Applications__c WHERE Id=:applicationId];
+        if(isRequestableWithoutApproval(isAdmin,parentApp,currentPortalUser.Profile)) {
             appRight = 'Access Granted';
             res = 'okauto';
         }
@@ -914,11 +914,16 @@ public with sharing class ISSP_AvailableServices{
 
     /**
         Returns true if the service can be requested and granted without any approval
-        To have this the requester must be an admin user and the app service must have
-        Cannot_be_managed_by_portal_admin__c = false
+        To have this the requester must be:
+          - an admin user and the app service must have Cannot_be_managed_by_portal_admin__c = false
+          - or users's profile in the allowed profiles in the app field Auto_approved_for__c
     **/
-    private static Boolean isRequestableWithoutApproval(Boolean isAdmin, Portal_Applications__c app) {
-        return isAdmin && app!=null && app.Cannot_be_managed_by_portal_admin__c == false;
+    private static Boolean isRequestableWithoutApproval(Boolean isAdmin, Portal_Applications__c app, Profile profile) {
+        return app!=null
+            && (
+                (isAdmin && app.Cannot_be_managed_by_portal_admin__c == false)
+                || (app.Auto_approved_for__c!=null && app.Auto_approved_for__c.contains(profile.Name))
+            );
     }
     
     /**
