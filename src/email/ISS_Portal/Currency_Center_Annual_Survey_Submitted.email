@@ -1,0 +1,6 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[Dear {!Contact.Name}<br><br>We would like to thank you for participating in the RFB Survey.<br><br>You will find attached the RFB Report {!YEAR(TODAY())}<span id="j_id0:j_id1:j_id88"><strong class="feedText"><strong id="ext-gen30"></strong></strong></span> with the industry findings and focus for this year’s advocacy efforts for currency repatriation. <br><br>We will continue to engage with our Members facing repatriation issues on a monthly basis to keep track of the progress and development and support the advocacy actions.<br><br>Should you have any queries, please log a case in your IATA Customer portal under the topic ""Currency Center""<br><br>Kind regards,<br>Currency Center Team.]]></td>
+</tr>
+</table>
