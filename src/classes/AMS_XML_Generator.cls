@@ -204,7 +204,7 @@ public with sharing class AMS_XML_Generator {
 
             /*NEWGEN-3267 START*/
 
-            if(changeCodeCaseNumber.get(ag.Id) <> null)
+            if(ag.Account__r.ANG_IsNewGenAgency__c && changeCodeCaseNumber.get(ag.Id) <> null)
                 getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
             
             /*NEWGEN-3267 END*/

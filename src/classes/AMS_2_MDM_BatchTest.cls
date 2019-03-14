@@ -86,6 +86,7 @@ private class AMS_2_MDM_BatchTest {
       sQuery = 'SELECT Change_Code__c, Account__c, Account__r.IATACode__c, Account__r.Location_Class__c, ' +
                         'Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c, ' +
                         'Account__r.IATA_ISO_Country__r.Iso_code__c, OSCAR__c ' +
+                        'Account__r.ANG_IsNewGenAgency__c ' +
                     'FROM Agency_Applied_Change_code__c ' +
                         'where Change_Code__c <> null ' +
                         'and Account__r.IATACode__c <> null ' +
