@@ -222,10 +222,10 @@ public with sharing class AMS_XML_Generator {
 
             /*NEWGEN-3267 START*/
 
-            if(changeCodeCaseNumber.get(ag.Id) <> null){
-                getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
+			if(ag.Account__r.ANG_IsNewGenAgency__c && changeCodeCaseNumber.get(ag.Id) <> null)
+				getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
 
-/* NEWGEN-5164 START*/
+                /* NEWGEN-5164 START*/
                 Opportunity curOpp = oscarOpportunityMap.get(ag.OSCAR__c);
                 if(curOpp != null){
 
@@ -235,7 +235,7 @@ public with sharing class AMS_XML_Generator {
                     getElementNode(liNode, 'period_from', dtOfferDate.format('yyyyMMdd'));
                     getElementNode(liNode, 'offerI_d', curOpp.GDI_Offer_Id__c);
                 }
-/* NEWGEN-5164 END */
+                /* NEWGEN-5164 END */
             }
             
             /*NEWGEN-3267 END*/
