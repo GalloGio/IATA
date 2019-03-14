@@ -27262,7 +27262,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
     </validationRules>
     <validationRules>
         <fullName>Change_Location_Class_after_IATACode_gen</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Once the IATA Code is generated the Location Class can no longer be changed.</description>
         <errorConditionFormula>AND(   
 ISCHANGED(Location_Class__c), 
