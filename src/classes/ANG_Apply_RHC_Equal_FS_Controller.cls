@@ -1,7 +1,7 @@
 public class ANG_Apply_RHC_Equal_FS_Controller {
-	private string RHCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'RHC_Amount_Conf'); 
-	private string CCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'Cash_Condition_Conf'); 
-	private Set<String> countrySpecificsList = new Set<String>{'BSP-HK','BSP-MO'};
+	public static string RHCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'RHC_Amount_Conf'); 
+	public static string CCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'Cash_Condition_Conf'); 
+	public static Set<String> countrySpecificsList = new Set<String>{'BSP-HK','BSP-MO'};
 	
 	public List<SelectOption> modes {get; private set;}
 	public List<SelectOption> actions {get; private set;}
@@ -17,7 +17,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public String previousActionValue {get; private set;}
 	public String previousBspValue {get; private set;}
 	public String previousIataCode {get; private set;}
-	public String percentageFSisReadOnly {get; private set;}
 	public Boolean renderConfirmButton {
 		get {
 			return (actionValue != '' && modeValue != '' && actionValue == previousActionValue && ((previousModeValue == 'BSP' && bspValue == previousBspValue && modeValue == 'BSP') || (previousModeValue == 'IATA_Code' && iataCode == previousIataCode && modeValue == 'IATA_Code')));
@@ -49,13 +48,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public Boolean showCountrySpecificColumns {get{return countrySpecificsList.contains(bspValue);} private set;}
 
 	public Integer agenciesFetched {get; private set;}
-	public Integer batchPercentage {get; set;}
-	public AsyncApexJob batchJob {get; set;}
-	private List<AsyncApexJob> batchJobs {get; set;}
-	public Boolean pollerBool {get; set;}
-	public Boolean batchStatusBool {get; set;}
-	public Datetime batchTimestamp {get; private set;}
-
 
 
 	public ANG_Apply_RHC_Equal_FS_Controller() {
@@ -121,8 +113,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	previousIataCode = iataCode;
     	previousModeValue = modeValue;
     	previousActionValue = actionValue;
-    	batchStatusBool = false;
-    	batchJob = null;
     	Boolean rhcFlag = actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ? false : true; //Apply_RHC_per_RS
 
     	if (modeValue == 'BSP') {
@@ -140,7 +130,9 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	
     	bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue];
     	
-    	for(ANG_BSP_Attributes__c bsp : bspAttributes) if (bsp.recordtypeid == CCConfRT) percentageFS = String.valueOf(bsp.FS_Percentage__c);
+    	if(actionValue == 'Revert_RHC_regardless')
+    		for(ANG_BSP_Attributes__c bsp : bspAttributes) 
+    			if (bsp.recordtypeid == CCConfRT) percentageFS = String.valueOf(bsp.FS_Percentage__c);
 
     	} else if (modeValue == 'IATA_Code') {
     		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
@@ -157,7 +149,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     					ORDER BY Name];
 
     		if(actionValue == 'Revert_RHC_regardless' && !agencies.isEmpty()) percentageFS = '' + agencies[0].RHC_Amount_Equals_FS_Percent__c;
-
 
     	}
 
@@ -224,7 +215,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	}
 
 	public void applyOrRevertRHC() {
-		batchJob = null;
 		
 		Boolean isRegardlessRisk = (actionValue == 'Apply_RHC_regardless' || actionValue == 'Revert_RHC_regardless');
 		Boolean isApply =( actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS');
@@ -252,11 +242,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
   			for (ANG_BSP_Attributes__c attribute : bspAttributes){
   				if(attribute.recordtypeid == RHCConfRT){
 
-					/*
-  					if(isRegardlessRisk) attribute.FS_Percentage__c = (String.isEmpty(percentageFS) ? 0 :percentageFS );
-  					else attribute.FS_Percentage__c = (String.isEmpty(attribute.FS_Percentage__c) ? 0 : attribute.FS_Percentage__c );
-  					*/
-
 					attribute.FS_Percentage__c = (isRegardlessRisk ? (String.isEmpty(percentageFS) ? 0 : Decimal.valueOf(percentageFS)) : attribute.FS_Percentage__c);
 
   					if(!countrySpecificsList.contains(bspValue) || (isRegardlessRisk && isApply)) {
@@ -280,58 +265,8 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
   			}
 
   			update bspAttributes;
-
-
-  			/*
-  			Boolean rhcFlag = actionValue == 'Apply_RHC' ? false : true;
-
-			List<AMS_Settlement_System__c> operationsToUpdate = [SELECT Id, Name, ANG_RHC_Amount_Equals_FS__c 
-   																 FROM AMS_Settlement_System__c 
-																 WHERE RecordType.Name = 'BSP'
-																	AND Name = :bspValue
-																	AND ANG_RHC_Amount_Equals_FS__c = :rhcFlag];
-
-		  	try {
-		  		for(AMS_Settlement_System__c bsp: operationsToUpdate) {
-		  			bsp.ANG_RHC_Amount_Equals_FS__c = (actionValue == 'Apply_RHC');
-		  		}
-
-		  		batchTimestamp = Datetime.now();
-
-		  		update operationsToUpdate;
-
-		  		batchStatusBool = true;
-  				pollerBool = true;
-  				batchPercentage = 0;
-		 		
-		  	} catch(Exception e) { ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for BSP: ' + bspValue + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString())); }
-		  	*/
+  			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to this BSP'));
   		}
 	}
 
-	public void getBatchStatus() {
-		if (batchJob == null) {
-			batchJobs = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
-						FROM AsyncApexJob 
-						WHERE ApexClass.Name = 'ANG_RHCEqualFSBatch'
-							AND CreatedById = :UserInfo.getUserId()
-							AND CreatedDate >= :batchTimestamp
-						ORDER BY CreatedDate DESC];
-
-			if (!batchJobs.isEmpty()) batchJob = batchJobs[0];
-		} else {
-			batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
-						FROM AsyncApexJob 
-						WHERE Id = :batchJob.Id];
-			
-			if (batchJob.JobItemsProcessed > 0) batchPercentage = batchJob.JobItemsProcessed * 100 / batchJob.TotalJobItems;
-
-			if (batchJob.status == 'Processing' && batchPercentage == 100) batchPercentage = 99;
-			if (batchJob.status == 'Completed' && batchPercentage == 0) batchPercentage = 100;
-
-			pollerBool = (batchJob.status == 'Ended' || batchJob.status == 'Completed') ? false : true;
-
-			if (!pollerBool) ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to the following agencies:'));
-		}
-	}
 }

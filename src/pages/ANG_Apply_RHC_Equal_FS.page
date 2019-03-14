@@ -124,7 +124,7 @@
 
             <apex:pageBlockButtons id="searchButtonBlock" location="bottom">
                 <apex:commandButton value="Search Agencies" id="searchButton" disabled="{!OR(actionValue == '', AND(actionValue == 'Apply_RHC_regardless' || actionValue == 'Revert_RHC_regardless', OR( modeValue == '', AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null))), AND(actionValue == 'Apply_RHC_regardless',!isValidPercentageFS), AND(actionValue == 'Apply_RHC_per_RS', bspValue == ''), AND(actionValue == 'Revert_RHC_per_RS', bspValue == '') )}" action="{!fetchAgencies}" onclick="getAgenciesTable();"/>
-                <apex:commandButton value="{!IF(actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' , 'Apply RHC equal FS %', IF(actionValue == 'Revert_RHC_regardless' || actionValue == 'Revert_RHC_per_RS', 'Revert RHC equal FS %', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton), batchStatusBool)}" action="{!applyOrRevertRHC}"/>
+                <apex:commandButton value="{!IF(actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' , 'Apply RHC equal FS %', IF(actionValue == 'Revert_RHC_regardless' || actionValue == 'Revert_RHC_per_RS', 'Revert RHC equal FS %', 'No Action Selected'))}" id="confirmButton" disabled="{!OR(OR(actionValue == '', modeValue == ''), AND(modeValue == 'BSP', bspValue == ''), AND(modeValue == 'IATA_Code', iataCode == null), NOT(agenciesFound), NOT(renderConfirmButton))}" action="{!applyOrRevertRHC}"/>
             </apex:pageBlockButtons>
         </apex:pageBlock>
 
@@ -159,7 +159,7 @@
             
         </apex:pageBlock>
 
-        <apex:pageBlock mode="edit" id="statusPageBlock" rendered="{!batchStatusBool}">
+        <!--<apex:pageBlock mode="edit" id="statusPageBlock" rendered="{!batchStatusBool}">
 
             <apex:pageBlockSection columns="1" title="Process Status">
                 <apex:actionStatus id="act" startText="Checking..." />
@@ -169,6 +169,6 @@
                 <apex:actionPoller interval="5" action="{!getBatchStatus}" enabled="{!pollerBool}" reRender="statusPageBlock, searchButton, searchResultsBlock" status="act"/>
             </apex:pageBlockSection>
 
-		</apex:pageBlock>
+		</apex:pageBlock> -->
     </apex:form>
 </apex:page>
