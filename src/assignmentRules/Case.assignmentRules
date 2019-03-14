@@ -627,7 +627,7 @@
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Invoicing / Billing request,New Account request,New Connectivity request,Update configuration request,iiNet Information request,iiNet WEB File retrieval,iiNet WEB How-to question,iiNet WEB interface</value>
+                <value>Update configuration request,General information,Integrated file processing,iiNet WEB File retrieval,iiNet WEB interface,Invoicing / Billing request,New Account request,New Connectivity request</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -646,7 +646,7 @@
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Integrated connectivity,Integrated file processing</value>
+                <value>Integrated connectivity</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
