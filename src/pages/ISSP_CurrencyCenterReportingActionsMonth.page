@@ -1,0 +1,1369 @@
+<!--
+	Class Name: ISSP_CurrencyCenterReportingActionsMonth
+	Related Classes: ISSP_CurrencyCenterMonthSurveyCtrl
+	
+	Copyright © [IATA]
+	
+	Purpose: This class aims the survey page                                                                                                       
+	
+	VERSION  AUTHOR           		 DATE              DETAIL/CHANGE REFERENCE
+	1.0 -    Luís Ferreira           15/12/2018        INITIAL DEVELOPMENT
+-->
+
+<apex:page docType="html-5.0" controller="ISSP_CurrencyCenterMonthSurveyCtrl" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+	
+	<html>
+		<head>
+      <apex:includeScript value="{!URLFOR($Resource.CurrencyCenter_Bootstrap, '/js/jquery.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.CurrencyCenter_Bootstrap, '/js/bootstrap.js')}"/>
+            
+      <link rel="stylesheet" href="/resource/CurrencyCenter_Bootstrap/css/bootstrap.css" />
+      <link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/reporting_actions.css')}" />
+      <link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/survey.css')}" />
+		</head>
+
+		<style type="text/css">
+			.PopupBackground {
+				background: radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0, .8));
+		        position: fixed;
+		        z-index: 9998;
+		        margin: auto;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+			}
+
+			.content{
+		        background-color: white;
+		        border-width: 8px;
+		        border-style: solid;
+		        z-index: 9999;
+		        padding:10px;
+		        position: fixed;
+		        margin: auto;
+		        
+		    }
+
+		    .redError {
+		    	border-color: red!important;
+		    }
+
+		    .tabError {
+			    pointer-events:none; 
+			    opacity:0.6;         
+			}
+
+			.submit {
+				pointer-events:none;
+			}
+
+			table.bankAddBtn {
+                width: auto !important;
+            }
+
+            .navbar-brand {
+                height: 50px !important;
+            }
+
+            #searchInput {
+                width: auto !important;
+            }
+
+            .navbar{
+                z-index: auto;
+            }
+
+		</style>
+		<body>
+      
+      <div class="container">
+        <c:ISSP_CustomNavigation />
+      </div>
+
+			<div id="globalForm" class="container hideCurrDate" style="max-width:1140px;">
+
+     		<apex:outputpanel >
+                <apex:actionstatus id="loadingStatus">
+                    <apex:facet name="start">
+                        <div class="waitingSearchDiv" id="el_loading" ><!-- style="background-color: #000000; height: 100%;opacity:0.65;width:100%;" -->
+                            <div class="waitingHolder">
+                                <!-- <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." style="width: 100px; height: 300px;" /> -->
+                                <div class="waitingImage">Loading&#8230;</div>
+                                <span class="waitingDescription" style="color: #FFFFFF!important; text-align: center;"><h2>Saving...</h2></span>
+                            </div>
+                        </div>
+                    </apex:facet>
+                </apex:actionstatus>
+                <apex:actionstatus id="loadingDeleteStatus">
+                    <apex:facet name="start">
+                        <div class="waitingSearchDiv" id="el_loading" ><!-- style="background-color: #000000; height: 100%;opacity:0.65;width:100%;" -->
+                            <div class="waitingHolder">
+                                <!-- <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." style="width: 100px; height: 300px;" /> -->
+                                <div class="waitingImage">Loading&#8230;</div>
+                                <span class="waitingDescription" style="color: #FFFFFF!important; text-align: center;"><h2>Deleting Country...</h2></span>
+                            </div>
+                        </div>
+                    </apex:facet>
+                </apex:actionstatus>
+                <apex:actionstatus id="loadingCountryStatus" onstop="requireFields();">
+                    <apex:facet name="start">
+                        <div class="waitingSearchDiv" id="el_loading" ><!-- style="background-color: #000000; height: 100%;opacity:0.65;width:100%;" -->
+                            <div class="waitingHolder">
+                                <!-- <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." style="width: 100px; height: 300px;" /> -->
+                                <div class="waitingImage">Loading&#8230;</div>
+                                <span class="waitingDescription" style="color: #FFFFFF!important; text-align: center;"><h2>Loading Country...</h2></span>
+                            </div>
+                        </div>
+                    </apex:facet>
+                </apex:actionstatus>
+        </apex:outputpanel>
+			   
+        <apex:form id="TheMonthlyForm">
+
+					<!-- HEADER -->
+					<div class="row">
+		                <div class="col-xs-12 service-header" style="min-height: auto !important;">
+
+		                    <div class="row hidden-print">
+		                        <a href="/ISSP_CurrencyCenterReportingActionsSrv" class="back-home-link">{!$Label.CurrencyCenter_Back_ReportingActions}</a>
+		                    </div>
+		                    <div class="row page-title-wrapper hidden-print">
+		                        <div class="">
+		                            <div class="page-title">{!$Label.CurrencyCenter_Reporting_And_Actions} - Monthly Survey {!monthSurveyString} {!yearSurvey}</div>
+		                        </div>
+		                    </div>
+		                   
+		                </div>
+	                	<div class="col-xs-12" style="background: #7030A0;">
+                            <div class="row menu-wrapper">
+                                <ul id="btnPanel" class="tabPanelSurvey" style="float: right;">
+                                    <button type="button" id="btnSave" class="btn btn-download" onclick="save()">
+                                        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>&nbsp;Save
+                                    </button>
+                                    <button type="button" id="btnSubmit" class="btn btn-download" onclick="$('#submitConfirmationModal').modal('show');">
+                                        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;Submit
+                                    </button>
+                                    <button type="button" class="btn btn-download" onclick="$('#cancelConfirmationModal').modal('show');" style="color: red;">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Cancel
+                                    </button>
+                                </ul>
+                            </div>
+	                	</div>
+		            </div>
+
+					<!-- Tab Panel -->
+					<ul id="tabPanel" class="tabPanelSurvey">
+						<li onclick="tabAction(this, event)" value="Add" id="Add_countryTab" class="tabOptionLi inactive">
+							<a id="homeTab" class="tablinks" href="#">Add Country</a>
+						</li>
+						<li onclick="tabAction(this, event)" value="Total" id="Total_tab" class="tabOptionLi">
+							<apex:commandLink value="Total" styleClass="tablinks" reRender="totalPanel"/>
+						</li>
+					</ul>
+
+					<!-- START ACTIONS FUNCTIONS -->
+					<apex:actionFunction name="setCountryName" action="{!countryObject}" reRender="pageBlockCountrySurvey" status="loadingCountryStatus">
+						<apex:param name="countryName" value=""></apex:param>
+					</apex:actionFunction>
+
+					<apex:actionFunction name="buildSurvey" action="{!buildSurvey}" reRender="pageBlockCountrySurvey" status="loadingCountryStatus">
+						<apex:param name="countryName" value=""></apex:param>
+					</apex:actionFunction>
+
+					<apex:actionFunction name="deleteCountry" action="{!deleteCountry}" reRender="totalPanel" status="loadingDeleteStatus">
+						<apex:param name="countryName" value=""></apex:param>
+					</apex:actionFunction>
+
+                    <!-- save -->
+                    <apex:actionFunction name="save" action="{!save}" reRender="" status="loadingStatus">
+                    </apex:actionFunction>
+
+                    <!-- submit -->
+                    <apex:actionFunction name="submitSurvey" action="{!Submit}" reRender="" status="loadingStatus">
+                    </apex:actionFunction>
+					<!-- END ACTIONS FUNCTIONS -->
+
+					<apex:outputPanel id="messages">
+                        <apex:outputPanel id="warningMessages" rendered="{!errorMessage}">
+                            <div class="row alert-box" id="errorMessage" > 
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <a href="#" class="close warningClose" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <h4 id="h3Text"><apex:pageMessages id="warning"></apex:pageMessages></h4>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel id="infoMessages">
+                            <div class="row alert-box" id="savedMessage">
+                                <div class="alert alert-danger alert-dismissible" role="alert" id="infoMessage">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <h4>Last Save: {!lastSaveDate} by {!parentQueryResult.LastModifiedBy.Contact.Name}</h4>
+                                </div>
+                            </div>
+                            <div class="row alert-box" id="statusMessage">
+                                <div class="alert alert-info alert-dismissible" role="alert" id="infoMessage">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <h4>Status: {!surveyStatus}</h4>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+			        <!-- START POPUPS -->
+			        <apex:outputPanel id="popupDeleteSection">
+                      <!--apex:outputPanel styleClass="PopupBackground" layout="black" rendered="{!displaypopupDeleteSection}"-->
+                          <apex:outputPanel styleClass="Content" layout="black" rendered="{!displaypopupDeleteSection}"> 
+	                           <center>
+	                           		<!--apex:outputLabel value="Are you sure you want to delete {!sectionReportKey} ({!sectionCurrencyKey}) section?" style="color: #FFFFFF;"></apex:outputLabel>
+	                           		<apex:commandButton value="Delete Report Type" action="{!deleteSection}" rerender="popupDeleteSection, sectionsPanel" oncomplete="requireFields();"/>
+	                           		<apex:commandButton value="Cancel" action="{!closePopupDeleteSection}" rerender="popupDeleteSection"/-->
+                                   <div id="deleteSectionModal" class="modal fade" role="dialog">
+                                       <div class="modal-dialog">
+
+                                           <!-- Modal content-->
+                                           <div class="modal-content">
+                                               <div class="modal-header">
+                                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                   <h4 class="modal-title">Delete section</h4>
+                                               </div>
+                                               <div class="modal-body">
+                                                   <p><apex:outputText value="Are you sure you want to delete {!sectionReportKey} ({!sectionCurrencyKey}) section?" /></p>
+                                               </div>
+                                               <div class="modal-footer" style="text-align: center;">
+                                                   <apex:commandButton value="Delete Report Type" action="{!deleteSection}" rerender="sectionsPanel" oncomplete="requireFields();$('#deleteSectionModal').modal('hide');"/>
+                                                   <span>&nbsp;</span>
+                                                   <apex:commandButton value="Cancel" action="{!closePopupDeleteSection}" rerender="" oncomplete="$('#deleteSectionModal').modal('hide');" />
+                                               </div>
+                                           </div>
+
+                                       </div>
+                                   </div>
+	                           	</center>
+                            </apex:outputPanel>
+                        <!--/apex:outputPanel-->
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="popupDeleteBankRow">
+                      <!--apex:outputPanel styleClass="PopupBackground" layout="black" rendered="{!displayPopupDeleteBankRow}"-->
+                          <apex:outputPanel styleClass="Content" layout="black" rendered="{!displayPopupDeleteBankRow}"> 
+	                           <center>
+	                           		<!--apex:outputLabel value="Are you sure you want to delete the bank record of {!sectionReportKey} ({!sectionCurrencyKey}) section?" style="color: #FFFFFF;"></apex:outputLabel>
+	                           		<apex:commandButton value="Delete Bank Record" action="{!deleteRow}" rerender="bankTable, totalCurrency, totalUSD, popupDeleteBankRow" oncomplete="requireFields();">
+	                           			<apex:param name="index" value="{!numRow}"/>
+	                           		</apex:commandButton>
+	                           		<apex:commandButton value="Cancel" action="{!closePopupDeleteBankRow}" rerender="popupDeleteBankRow"/-->
+                                   <div id="deleteBankRowModal" class="modal fade" role="dialog">
+                                       <div class="modal-dialog">
+
+                                           <!-- Modal content-->
+                                           <div class="modal-content">
+                                               <div class="modal-header">
+                                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                   <h4 class="modal-title">Delete bank record</h4>
+                                               </div>
+                                               <div class="modal-body">
+                                                   <p><apex:outputText value="Are you sure you want to delete the bank record of {!sectionReportKey} ({!sectionCurrencyKey}) section?" /></p>
+                                               </div>
+                                               <div class="modal-footer" style="text-align: center;">
+                                                   <apex:commandButton value="Delete Bank Record" action="{!deleteRow}" rerender="bankTable, totalCurrency, totalUSD, indexVar" oncomplete="requireFields();$('#deleteBankRowModal').modal('hide');">
+                                                       <apex:param name="index" value="{!numRow}"/>
+                                                   </apex:commandButton>
+                                                   <span>&nbsp;</span>
+                                                   <apex:commandButton value="Cancel" action="{!closePopupDeleteBankRow}" rerender="" oncomplete="$('#deleteBankRowModal').modal('hide');" />
+                                               </div>
+                                           </div>
+
+                                       </div>
+                                   </div>
+	                           	</center>
+                            </apex:outputPanel>
+                        <!--/apex:outputPanel-->
+                    </apex:outputPanel>
+
+					<apex:outputPanel id="popupSubmit">
+						<center>
+							<div id="submitConfirmationModal" class="modal fade" role="dialog">
+								<div class="modal-dialog">
+
+									<!-- Modal content-->
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">{!$Label.CurrencyCenter_Submission_Confirmation_Title}</h4>
+										</div>
+										<div class="modal-body">
+											<p><apex:outputText value="{!$Label.CurrencyCenter_Submission_Confirmation_Question}" /></p>
+										</div>
+										<div class="modal-footer" style="text-align: center;">
+											<apex:commandButton value="Continue" action="{!Submit}" rerender="" status="loadingStatus"/>
+											<span>&nbsp;</span>
+											<apex:commandButton value="Cancel" action="{!none}" rerender="" oncomplete="$('#submitConfirmationModal').modal('hide');"/>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</center>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="popupCancel">
+						<center>
+							<div id="cancelConfirmationModal" class="modal fade" role="dialog">
+								<div class="modal-dialog">
+
+									<!-- Modal content-->
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">{!$Label.CurrencyCenter_Cancel_Confirmation_Title}</h4>
+										</div>
+										<div class="modal-body">
+											<p><apex:outputText value="{!$Label.CurrencyCenter_Cancel_Confirmation_Question}" /></p>
+										</div>
+										<div class="modal-footer" style="text-align: center;">
+											<apex:commandButton value="Leave" action="{!none}" rerender="" oncomplete="window.open('/ISSP_CurrencyCenterReportingActionsSrv','_self');"/>
+											<span>&nbsp;</span>
+											<apex:commandButton value="Cancel" action="{!none}" rerender="" oncomplete="$('#cancelConfirmationModal').modal('hide');"/>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</center>
+					</apex:outputPanel>
+
+					<apex:outputPanel id="popupDeleteCountry">
+						<center>
+							<div id="deleteCountryConfirmationModal" class="modal fade" role="dialog">
+								<div class="modal-dialog">
+
+									<!-- Modal content-->
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">{!$Label.CurrencyCenter_DeleteCountry_Confirmation_Title}</h4>
+										</div>
+										<div class="modal-body">
+											<p><apex:outputText value="{!$Label.CurrencyCenter_DeleteCountry_Confirmation_Question}" /></p>
+										</div>
+										<div class="modal-footer" style="text-align: center;">
+											<apex:commandButton value="Yes" action="{!none}" rerender="" oncomplete="deleteCountryTab(tabToRemove,countryToDelete);"/>
+											<span>&nbsp;</span>
+											<apex:commandButton value="No" action="{!none}" rerender="" oncomplete="$('#deleteCountryConfirmationModal').modal('hide');"/>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</center>
+					</apex:outputPanel>
+                    <!-- END POPUPS -->
+					
+					<!-- Add Country to Survey Tab -->
+					<div id="loader" style="display:none;">Loading&#8230;</div>
+
+					<div class="tabcontent center-table-horinzontally" id="Add">
+						<table id="totalTable" class="totalTable" border="1">
+						  	<thead>
+						    	<tr class="dataRow">
+						      		<th class="headerRow">Search Country</th>
+						      		<th class="headerRow">Country</th>
+						      		<th class="headerRow">Add Tab</th>
+						    	</tr>
+						  	</thead>
+						  	<tbody>
+						      	<tr class="dataRow">
+						      		<th class="dataCell"><input type="text" id="searchCountry" placeholder="Search for countries.." class="disableClass"></input></th>
+						      		<th class="dataCell"><select id="selectCountryList" class="disableClass"></select></th>
+						      		<td class="dataCell">
+						      			<button id="addCountrySurvey" Class="addCountryToSurveyClass disableClass">Add Country</button></td>
+						    	</tr>
+					  		</tbody>
+						</table>	
+					</div>
+
+					<!-- Country Survey Tab -->
+					<div class="tabcontent animate-bottom" id="survey">
+
+						<apex:pageBlock id="pageBlockCountrySurvey">
+
+							<apex:outputPanel id="sectionsPanel">
+
+									<table class="totalTable" id="reportDateTable">
+										<thead>
+											<tr class="dataRow">
+												<th class="headerRow">Reporting Date</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="dataRow">
+												<td class="dataRow">
+													 <apex:inputField value="{!wccsObject.country.Reporting_Date__c}" styleClass="form-control disableClass" type="date" id="reportDate" ><!-- onchange="dateMinValidation(this, event);" -->
+			                                        	<apex:actionSupport event="onchange" action="{!calculateDelayInDays}" reRender="sectionsPanel">
+			                                            </apex:actionSupport>
+			                                        </apex:inputField>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								
+									<apex:repeat value="{!wccsObject.typeReportMap}" var="section">
+										
+										<apex:outputPanel > <!-- rendered="{!isSectionVisible}" -->
+
+											<h2 class="section" style="margin: 20px 0 20px 0;">{!wccsObject.typeReportMap[section].Reporting_Type__c} {!wccsObject.typeReportMap[section].Currency__c}</h2>
+
+											<!-- <apex:commandLink value="Delete Section" action="{!deleteSection}" reRender="sectionsPanel" style="margin-top: 20px;">
+												<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+						            			<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+											</apex:commandLink> -->
+
+											<apex:commandLink id="deleteCountry" value="Delete Section" action="{!showPopupDeleteSection}" reRender="popupDeleteSection" style="margin-top: 20px;" oncomplete="$('#deleteSectionModal').modal('show');"
+															  rendered="{!IF(NOT(defaultSectionKey == (wccsObject.typeReportMap[section].Reporting_Type__c+'|'+wccsObject.typeReportMap[section].Currency__c)),true,false)}">
+												<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+						            			<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+											</apex:commandLink>
+
+											<!-- Reporting Type Table -->
+											<apex:outputPanel id="reportingTypePanel">
+												<div class="row scrollBarTable">
+													<table id="reportingTypeTable" class="totalTable reportTable" border="1">
+													  	<thead>
+													    	<tr class="dataRow">
+													      		<th class="headerRow">Total Amount</th>
+													      		<th class="headerRow">Sales Period (Start)</th>
+													      		<th class="headerRow">Sales Period (End)</th>
+													      		<th class="headerRow">Delay in Day</th>
+													      		<th class="headerRow">USD (Equivalent)</th>
+													      		<th class="headerRow">Currency Conversion Rate</th>
+													    	</tr>
+													  </thead> 
+													  <tbody>
+													      	<tr class="dataRow">
+													      		<th class="dataCell">
+													      			<apex:outputField value="{!wccsObject.typeReportMap[section].Total_Currency__c}" label="" id="totalCurrency"/>
+													      		</th>
+													      		<td class="dataCell">
+												      			 	<apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_Start_Date__c}" type="date" label="" styleClass="disableClass changeMin">
+					                                                	 <apex:actionSupport event="onchange" action="{!calculateDelayInDays}" reRender="sectionsPanel">
+						                                                	<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+												            				<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+                                            							</apex:actionSupport>
+					                                                </apex:inputField>
+													      		</td>
+															    <td class="dataCell">
+															    	 <apex:inputField value="{!wccsObject.typeReportMap[section].Sales_Period_End_Date__c}" type="date" label="" styleClass="disableClass" html-min="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}">
+															    	 	<apex:actionSupport event="onchange" action="{!none}" reRender="bankTable"/>
+															    	 </apex:inputField>
+															    </td>
+															    <td class="dataCell">
+															    	<apex:outputText value="{!wccsObject.typeReportMap[section].Delay_in_day__c}" label=""/>
+															    </td>
+															    <td class="dataCell">
+															    	<apex:outputField value="{!wccsObject.typeReportMap[section].Total_Amount_USD__c}" label="" id="totalUSD"/>
+															    </td>
+															    <td class="dataCell">
+															    	<apex:outputText value="{!wccsObject.typeReportMap[section].Average_Exchange_Rate__c}" label=""/>
+																</td>
+													    	</tr>  
+							            					
+													  	</tbody>
+													</table>
+												</div>
+											</apex:outputPanel>
+											
+
+												<apex:outputPanel id="bankPanelAccountBalance">
+
+													<h3 style="color: #0075BC;">Bank Details
+														<button onclick="hide(this, event)" style="background: transparent; margin: 20px 0 20px 0;">
+                                                            <span class="glyphicon glyphicon-chevron-up" style="font-size: 10px; color: #0075BC"></span>
+														</button>
+													</h3>															
+
+													<div class="row scrollBarTable">
+                                                        <apex:variable value="{!0}" var="numRow" id="indexVar"/>
+
+														<apex:pageBlocktable value="{!wccsObject.bankMap[section]}" var="item" id="bankTable" styleClass="totalTable bankAddBtn"><!-- bankTable-->
+															<apex:column >
+												            	<apex:facet name="header">
+													            	<apex:outputText escape="false" value="Bank *"/>
+													            </apex:facet>
+												                <apex:selectList id="banksSelected" multiselect="false" size="1" value="{!item.Bank__c}" styleClass="disableClass required" onchange="requireFields();">
+											                		<apex:selectOptions value="{!bankOptions}" id="bankslist"></apex:selectOptions>
+											            		</apex:selectList>
+												            </apex:column>
+
+												            <apex:column >
+												            	<apex:facet name="header">
+													            	<apex:outputText escape="false" value="Amount *"/>
+													            </apex:facet>
+												                <apex:inputField value="{!item.Amount__c}" style="width: 100px" styleClass="disableClass required" id="bankAmount">
+												                	<apex:actionSupport event="onchange" action="{!calculate}" reRender="reportingTypePanel, bankTable, indexVar" oncomplete="requireFields();">
+												                		<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+												            			<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+												                	</apex:actionSupport>
+												                </apex:inputField>
+												            </apex:column>
+
+												            <apex:column id="columnPercentageBank">
+												            	<apex:facet name="header">
+													            	<apex:outputText escape="false" value="Bank %"/>
+													            </apex:facet>
+																<apex:outputText value="{0, number, ###.####}" style="width: 100px" id="bankPercentage">
+																	<apex:param value="{!item.Bank_Percentage__c}"/>
+																</apex:outputText>
+												            </apex:column>
+
+												            <apex:column >
+												            	<apex:facet name="header">
+													            	<apex:outputText escape="false" value="Sales Period Start Date"/>
+													            </apex:facet>
+													            <apex:inputField id="start" value="{!item.Sales_Period_Start_Date__c}" type="date" style="width: 150px" styleClass="disableClass" html-min="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_Start_Date__c))}" html-max="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_End_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_End_Date__c))}">
+													            	<apex:actionSupport event="onchange" action="{!none}" reRender="bankTable, indexVar"/>
+													            </apex:inputField>
+												            </apex:column>
+
+												            <apex:column >
+												            	<apex:facet name="header">
+													            	<apex:outputText escape="false" value="Sales Period End Date"/>
+													            </apex:facet>
+													            <apex:inputField value="{!item.Sales_Period_End_Date__c}" style="width: 150px" type="date" styleClass="disableClass" html-min="{!YEAR(item.Sales_Period_Start_Date__c)}-{!IF(LEN(TEXT(MONTH(item.Sales_Period_Start_Date__c)))==1, LPAD(TEXT(MONTH(item.Sales_Period_Start_Date__c)), 2, TEXT(0)), MONTH(item.Sales_Period_Start_Date__c))}-{!IF(LEN(TEXT(DAY(item.Sales_Period_Start_Date__c)))==1, LPAD(TEXT(DAY(item.Sales_Period_Start_Date__c)), 2, TEXT(0)), DAY(item.Sales_Period_Start_Date__c))}" html-max="{!YEAR(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)}-{!IF(LEN(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)))==1, LPAD(TEXT(MONTH(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)), 2, TEXT(0)), MONTH(wccsObject.typeReportMap[section].Sales_Period_End_Date__c))}-{!IF(LEN(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)))==1, LPAD(TEXT(DAY(wccsObject.typeReportMap[section].Sales_Period_End_Date__c)), 2, TEXT(0)), DAY(wccsObject.typeReportMap[section].Sales_Period_End_Date__c))}"/>
+												            </apex:column>
+
+												            <apex:column rendered="{!surveyStatus=='Draft'}">
+													            <!-- <apex:commandLink action="{!deleteRow}" id="removeRow" value="Delete Row" rerender="bankTable, reportingTypePanel" styleClass="removeRowDisableClass btnDisable">
+												            			<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+												            			<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+																		<apex:param name="index" value="{!numRow}"/>
+													            </apex:commandLink> -->
+												            </apex:column>
+
+															<apex:column rendered="{!surveyStatus=='Draft'}" >
+                                                                <apex:facet name="header">
+                                                                    <apex:commandLink id="addRow" value="Add Row" action="{!addRow}" rerender="bankTable, indexVar" styleClass="addRowDisableClass btnDisable backgroundAddRow bankAddBtnLink" oncomplete="requireFields();">
+                                                                        <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+                                                                        <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+                                                                    </apex:commandLink>
+                                                                </apex:facet>
+                                                                <apex:commandLink action="{!showPopupDeleteBankRow}" id="removeRow" value="Delete Row" rerender="popupDeleteBankRow" styleClass="removeRowDisableClass btnDisable" oncomplete="$('#deleteBankRowModal').modal('show');">
+                                                                    <apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+                                                                    <apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+                                                                    <apex:param name="index" value="{!numRow}"/>
+                                                                </apex:commandLink>
+                                                                <apex:variable var="numRow" value="{!numRow+1}"/>
+															</apex:column>
+
+														</apex:pageBlocktable>
+
+													</div>
+
+												</apex:outputPanel>
+
+											<div class="bootstrapRow"><!-- class="surveyRow" -->
+												<div class="scrollBarTable" style="width: 50%"> <!-- surveyColumn -->
+													<table id="lastAllocationTable" class="totalTable" border="1" title="Last Allocation Detais" style="margin-top:40px!important;">
+														<tr class="dataRow">
+															<th class="headerRow" colspan="2">Last Allocation Details</th>
+														</tr>
+														<tr class="dataRow">
+															<th class="headerRow">Date: </th>
+															<td class="dataCell">
+																<apex:inputField value="{!wccsObject.typeReportMap[section].Last_Allocation_Date__c}" type="date" label="" styleClass="disableClass" html-max="{!YEAR(TODAY())}-{!IF(LEN(TEXT(MONTH(TODAY())))==1, LPAD(TEXT(MONTH(TODAY())), 2, TEXT(0)), MONTH(TODAY()))}-{!IF(LEN(TEXT(DAY(TODAY())))==1, LPAD(TEXT(DAY(TODAY())), 2, TEXT(0)), DAY(TODAY()))}"/>
+															</td>
+														</tr>
+														<tr class="dataRow">
+															<th class="headerRow">Total Amount: </th>
+															<td class="dataCell">
+																<apex:inputField value="{!wccsObject.typeReportMap[section].Last_Allocation_Amount__c}" label="" styleClass="disableClass">
+
+												                	<apex:actionSupport event="onchange" action="{!calculateLastAllocationUSD}" reRender="bankTable, reportingTypeTable" >
+												                		<apex:param value="{!wccsObject.typeReportMap[section].Reporting_Type__c}" name="Reportingkey" assignTo="{!sectionReportKey}"></apex:param>
+												            			<apex:param value="{!wccsObject.typeReportMap[section].Currency__c}" name="Currencykey" assignTo="{!sectionCurrencyKey}"></apex:param>
+												                	</apex:actionSupport>
+
+												                </apex:inputField>
+															</td>
+														</tr>
+													</table>
+												</div>
+												<div class="scrollBarTable" style="width: 50%">
+													<table id="commentsTable" class="totalTable" border="1" title="Last Allocation Detais" style="margin-top:40px!important;">
+														<tr class="dataRow">
+															<th class="headerRow">Comments</th>
+														</tr>
+														<tr>
+															<td class="dataCell">
+																<apex:inputTextarea value="{!wccsObject.typeReportMap[section].Report_Type_Comments__c}" label="" styleClass="disableClass" style="padding-right: 250px;"/>
+															</td>
+														</tr>
+													</table>
+												</div>
+											</div>
+										</apex:outputPanel>
+												
+									</apex:repeat>
+
+                                <apex:outputPanel rendered="{!surveyStatus == 'Draft'}">
+									<p style="margin-top: 10px">Do you have sales in other currencies to report?
+										<span>
+											<apex:inputCheckbox value="{!wccsObject.country.Other_Currency_Business__c}" styleClass="disableClass">
+												<apex:actionSupport event="onchange" reRender="sectionsPanel"></apex:actionSupport>
+											</apex:inputCheckbox>
+										</span>
+									</p>
+									
+
+									<apex:outputPanel id="addReportType" rendered="{!wccsObject.country.Other_Currency_Business__c}"><!-- {!IF(wccsObject.country.Other_Currency_Business__c == true,true,false)} -->
+										<div class="row scrollBarTable">
+
+											<!-- Add Reporting Type Table -->
+											<apex:pageBlockTable id="firstTable" value="{!reportingTypeRecords}" var="item" styleClass="center-table-horinzontally">
+
+									            <apex:column >
+									            	<apex:facet name="header">
+										            	<apex:outputText escape="false" value="Reporting Type"/>
+										            </apex:facet>
+									                <apex:selectList value="{!selectedReportingType}" id="reportingTypeSelectList" styleClass="disableClass" multiselect="false" size="1">
+									                	<apex:selectOptions value="{!reportingType}" id="reportingtypeValue"></apex:selectOptions>
+									                	<apex:actionSupport event="onchange" action="{!none}" reRender="firstTable"></apex:actionSupport>
+									            	</apex:selectList>
+									            </apex:column>
+
+									            <apex:column >
+									            	<apex:facet name="header">
+										            	<apex:outputText escape="false" value="Reporting Type Description"/>
+										            </apex:facet>
+										            <div  style="text-align:left">
+									                <apex:outputText value="{!IF(selectedReportingType == 'Blocked Amount', 'Funds blocked due to lack of foreign exchange or reasons beyond airline\'s control.', IF(selectedReportingType == 'Pending', 'Currency repatriation in this market requires approval from the Central Bank. This status means the airline didn\'t submit yet the approval and transfer request.', if(selectedReportingType == 'Pending Transfer', 'Currency repatriation in this market requires approval from the Central Bank. This status means the approval was granted but the transfer wasn\'t processed or received yet.', IF(selectedReportingType == 'Pending Approval', 'Currency repatriation in this market requires approval from the Central Bank. This status means the approval was requested but not yet received.', 'ERROR'))))}"></apex:outputText></div>
+									            </apex:column>
+
+									            <apex:column >
+									            	<apex:facet name="header">
+										            	<apex:outputText escape="false" value="Currency"/>
+										            </apex:facet>
+													<apex:selectList id="currency" multiselect="false" size="1" value="{!selectedCurrency}" styleClass="disableClass">
+								                		<apex:selectOptions value="{!currencyType}" id="currencyValues"></apex:selectOptions>
+								            		</apex:selectList>
+									            </apex:column>
+
+									            <apex:column >
+
+										            <!--Add New Section-->
+										    		<apex:commandLink id="AddSection" value="Add Section" action="{!addSection}" styleClass="btnAddSection btnDisable" reRender="sectionsPanel">
+										    		</apex:commandLink>
+									            </apex:column>
+
+									        </apex:pageBlockTable>
+
+										</div>
+
+									</apex:outputPanel>
+								</apex:outputPanel>
+							</apex:outputPanel>
+							<div class="row">
+                                <p style="color: red;">* - Mandatory Field</p>
+                            </div>
+						</apex:pageBlock>
+					</div>
+
+					<!-- Total Tab -->
+					<div class="tabcontent" id="Total">
+						<apex:pageBlock id="totalPageBlock">
+							<apex:outputPanel id="totalPanel">
+									
+									<!-- Total Table -->
+									<!-- <div class="row scrollBarTable"> -->
+
+										<table id="totalTable" class="totalTable" border="1" style="margin-bottom: 25px;">
+										  	<thead>
+										    	<tr class="dataRow">
+										      		<th class="headerRow">Country</th>
+										      		<th class="headerRow">Amount</th>
+										      		<th class="headerRow">Currency</th>
+										      		<th class="headerRow">Sales Period (Start)</th>
+										      		<th class="headerRow">Sales Period (End)</th>
+										      		<th class="headerRow">USD (Equivalent)</th>
+										      		<th class="headerRow">Average Exchange Rate </th>
+										      		<th class="headerRow">Last Allocation Amount<br/>(Local Currency) </th>
+										      		<th class="headerRow">USD (Equivalent)</th>
+										    	</tr>
+										  </thead>
+										  <tbody>
+				            					<apex:repeat value="{!countriesKeysMap}" var="country">
+												    
+												    <apex:repeat value="{!countriesKeysMap[country]}" var="item">
+												      	<tr class="dataRow">
+												      		<th class="dataCell">{!country}</th>
+												      		<td class="dataCell"><apex:outputField value="{!wccsObjectMap[country].typeReportMap[item].Total_Currency__c}"/></td>
+														    <td class="dataCell">{!wccsObjectMap[country].typeReportMap[item].Currency__c}</td>
+														    <td class="dataCell"><span></span>{!DAY(wccsObjectMap[country].typeReportMap[item].Sales_Period_Start_Date__c)}/{!MONTH(wccsObjectMap[country].typeReportMap[item].Sales_Period_Start_Date__c)}/{!YEAR(wccsObjectMap[country].typeReportMap[item].Sales_Period_Start_Date__c)}</td>
+														    <td class="dataCell"><span></span>{!DAY(wccsObjectMap[country].typeReportMap[item].Sales_Period_End_Date__c)}/{!MONTH(wccsObjectMap[country].typeReportMap[item].Sales_Period_End_Date__c)}/{!YEAR(wccsObjectMap[country].typeReportMap[item].Sales_Period_End_Date__c)}</td>
+														    <!-- <td class="dataCell">{!wccsObjectMap[country].typeReportMap[item].Sales_Period_End_Date__c}</td> -->
+														    <td class="dataCell"><apex:outputField value="{!wccsObjectMap[country].typeReportMap[item].Total_Amount_USD__c}"/></td>
+														    <td class="dataCell">{!wccsObjectMap[country].typeReportMap[item].Average_Exchange_Rate__c}</td>
+														    <td class="dataCell"><apex:outputField value="{!wccsObjectMap[country].typeReportMap[item].Last_Allocation_Amount__c}"/></td>
+														    <td class="dataCell"><apex:outputField value="{!wccsObjectMap[country].typeReportMap[item].Last_Allocation_Total_Amount_USD__c}"/></td>
+												    	</tr>  
+												    </apex:repeat>       				
+				            					</apex:repeat>
+                                                <tr>
+                                                    <td colspan="9" height="10px"></td>
+                                                </tr>
+				            					<tr>
+				            						<th class="headerRow" colspan="5" style="font-size: 18px"> Grand Total USD </th>
+				            						<td class="dataCell" style="font-size: 18px">
+                                                        <apex:outputText value="{0, number, ###,###.00}">
+                                                            <apex:param value="{!GrandTotal}"/></apex:outputText> </td>
+                                                    <td class="headerRow" colspan="3"></td>
+				            					</tr>
+										  	</tbody>
+										</table>
+
+									<!-- </div> -->
+								
+							</apex:outputPanel>
+						</apex:pageBlock>
+					</div>
+					<!-- Hidden field to store a new value of the variable -->
+                    <!-- Error Message -->
+                    <apex:inputHidden value="{!errorMessage}" id="myHiddenField"/>
+
+                    <!-- Action function for the rerendering -->
+                    <apex:actionFunction name="passStringToController" action="{!none}" rerender="myHiddenField"/>
+			    </apex:form>
+			</div>
+
+      <div class="container">
+        <c:ISSP_CustomFooter />
+      </div>
+
+		</body>
+	</html>
+
+	<script>
+
+         /*** Methods to execute after page load ***/
+        //Gets the select list options
+        fillSelectList();
+
+        var searchBar = document.getElementById('searchCountry');
+
+        searchBar.addEventListener("keyup", searchBarEventHandler, false);
+
+        var tabToRemove = '';
+        var countryToDelete = '';
+
+        //window.onload = function(e) {
+        window.addEventListener("load", function(e) {
+        	e.preventDefault();
+
+        	//click in total
+          if(sessionStorage.getItem('key') == null) {
+              document.getElementById("Total_tab").click();
+          }
+
+        	let countrySurveyString = "{!countriesSurveyString}";
+
+        	let countrySurveyList = countrySurveyString.split("|");
+
+        	if(countrySurveyList.length > 0) {
+        		for(var i = 0; i < countrySurveyList.length - 1; i++) {
+        			//get Tab Panel
+	        		var tabPanel = document.getElementById('tabPanel');
+
+	        		//create a new tab
+	        		var newTab = document.createElement('li');
+	        		newTab.value = countrySurveyList[i];
+	        		newTab.classList.add("tabOptionLi");
+
+	        		var newLink = document.createElement('a');
+
+	        		newLink.textContent = countrySurveyList[i];
+	        		newLink.id = countrySurveyList[i];
+	        		newLink.value = countrySurveyList[i];
+	        		newLink.className = "tablinks";
+	        		newLink.onclick = function(event) {
+	        			event.preventDefault();
+
+                        document.getElementById("loader").style.display = "block";
+	        			if(sessionStorage.getItem('key') != "undefined" && sessionStorage.getItem('key') != null) {
+	        				
+	        				// Save data to sessionStorage
+							sessionStorage.setItem('key', this.id);
+							console.log("sessionStorage " + sessionStorage.getItem('key'));
+	        			} else {
+	        				console.log("sessionStorage undefined" + sessionStorage.getItem('key'));
+	        				// Remove saved data from sessionStorage
+							sessionStorage.removeItem('key');
+
+							// Save data to sessionStorage
+							sessionStorage.setItem('key', this.id);
+	        			}
+
+	        			//declare all variable
+	        			let countryValue = this.id;
+			        	let tabcontent, tablinks;
+
+			        	//set the variable in the controller
+	        			setCountryName(countryValue);
+
+        				// Get all elements with class="tabcontent" and hide them
+			        	tabContent = document.getElementsByClassName("tabcontent");
+			        	for(let i = 0; i < tabContent.length; i++) {
+			        		tabContent[i].style.display = 'none';
+			        	}
+
+			        	// Get all elements with class="tablinks" and remove the class "active"
+						tabOptionLi = document.getElementsByClassName("tabOptionLi");
+						for (i = 0; i < tabOptionLi.length; i++) {
+			        		tabOptionLi[i].classList.remove("active");
+			        		tabOptionLi[i].classList.add("inactive");
+						}
+
+						// Show the current tab, and add an "active" class to the button that opened the tab
+						document.getElementById("survey").style.display = "block";
+						this.parentElement.classList.add("active");
+						this.parentElement.classList.remove("inactive");
+
+						setTimeout(function() {
+                            if("{!surveyStatus}" == "Submitted") {
+
+                                var inputs = document.getElementsByClassName("disableClass");
+                                console.log(inputs.length);
+                                for(let i = 0; i < inputs.length; i++) {
+                                    inputs[i].setAttribute("disabled", "");
+                                }
+
+                                var btns = document.getElementsByClassName("btnDisable");
+
+                                for(let i = 0; i < btns.length; i++) {
+                                    btns[i].classList.add("hide");
+                                }
+                            }
+                            document.getElementById("loader").style.display = "none";
+
+                        }, 2000)
+
+                        /*let datesChangeMin = document.getElementsByClassName("changeMin");
+
+				    	for(let i = 0; i < datesChangeMin.length; i++) {
+				    		datesChangeMin[i].min = document.getElementById("j_id0:TheMonthlyForm:pageBlockCountrySurvey:reportDate").value;
+				    	}*/
+	        		}
+
+	        		hideSelectOption(countrySurveyList[i]);
+	        		newTab.appendChild(newLink);
+	        		if("{!surveyStatus}" == "Draft") {
+		        		//Add remove tab button
+		        		var newSpanDeleteTab = document.createElement('span');
+
+		        		newSpanDeleteTab.value = countrySurveyList[i];
+	        			newSpanDeleteTab.classList.add("closeTabSpan");
+	        			newSpanDeleteTab.classList.add("trashIcon");
+		        		newSpanDeleteTab.addEventListener("click", function() {
+
+		        			/*if(confirm("Are you sure you want to delete this country?")) {
+		        				//remove tab
+			        			removeTab(this.parentElement);
+
+			        			let deletedCountry = this.value;
+			        			//add country to the delete list in the controller
+			        			deleteCountry(deletedCountry);
+
+			        			//remove tab content Country
+			        			document.getElementById("survey").style.display = "none";
+		        			}*/
+
+                            tabToRemove = this.parentElement;
+                            countryToDelete = this.value;
+
+                            $('#deleteCountryConfirmationModal').modal('show');
+		        			
+		        		});
+
+		        		//add to the tab the delete tab
+		                newTab.appendChild(newSpanDeleteTab);
+	            	}	
+	                //add to the tab panel
+	                tabPanel.prepend(newTab);
+        		}
+
+        	}
+
+        	if("{!surveyStatus}" == "Submitted") {
+
+        		var inputs = document.getElementsByClassName("disableClass");
+        		for(let i = 0; i < inputs.length; i++) {
+        			inputs[i].setAttribute("disabled", "");
+        		}
+
+        		document.getElementById("btnSubmit").classList.add("hide");
+        		document.getElementById("btnSave").classList.add("hide");
+
+        		var btns = document.getElementsByClassName("btnDisable");
+
+                for(let i = 0; i < btns.length; i++) {
+                    btns[i].classList.add("hide");
+                }
+                document.getElementById("Total_tab").click();
+        	} else if("{!surveyStatus}" == "Draft") {
+        		if(sessionStorage.getItem('key') != "undefined" && sessionStorage.getItem('key') != null) {
+        			if(document.getElementById(sessionStorage.getItem('key')) != null) {
+						document.getElementById(sessionStorage.getItem('key')).click();
+        			} else {
+						document.getElementById("Total_tab").click();
+					}
+
+					/*let datesChangeMin = document.getElementsByClassName("changeMin");
+
+			    	for(let i = 0; i < datesChangeMin.length; i++) {
+			    		datesChangeMin[i].min = document.getElementById("j_id0:TheMonthlyForm:pageBlockCountrySurvey:reportDate").value;
+			    	}*/
+				} else {
+                    document.getElementById("Total_tab").click();
+                }
+        	}
+        });
+
+        function deleteCountryTab(tabToRemove, countryToDelete){
+            removeTab(tabToRemove);
+            deleteCountry(countryToDelete);
+            document.getElementById("survey").style.display = "none";
+            $('#deleteCountryConfirmationModal').modal('hide');
+            document.getElementById("Total_tab").click();
+        }
+
+        function searchBarEventHandler(e){
+            e.preventDefault();
+            if(e.key == 'Enter'){
+                document.getElementsByClassName("addCountryToSurveyClass")[0].click();
+            }else{
+                searchCountry();
+            }
+        }
+
+        function searchCountry(){
+	        let options = document.getElementById("selectCountryList").options
+	        let filter = searchBar.value.toUpperCase();
+	        let optionSelected = true;
+
+	        for(let i = 0; i < options.length; i++){
+
+	            let optionValue = options[i].textContent.toUpperCase();
+
+	            if (optionValue.indexOf(filter) > -1) {
+	                options[i].style.display = '';
+
+	                //Set first option (not disabled) found as selected
+	                if(optionSelected && !options[i].disabled){
+	                    options[i].selected = true;
+	                    optionSelected = false;
+	                }
+	            }else{
+	                options[i].style.display = 'none';
+	                options[i].selected = false;
+	            }
+	        }
+	    }
+
+        function tabAction(elemt, e) {
+        	e.preventDefault();
+
+        	//declare all variable
+        	let tabcontent, tablinks, tabOptionLi;
+
+        	// Get all elements with class="tabcontent" and hide them
+        	tabContent = document.getElementsByClassName("tabcontent");
+        	for(let i = 0; i < tabContent.length; i++) {
+        		tabContent[i].style.display = 'none';
+        	}
+
+        	// Get all elements with class="tablinks" and remove the class "active
+			tabOptionLi = document.getElementsByClassName("tabOptionLi");
+			for (i = 0; i < tabOptionLi.length; i++) {
+        		tabOptionLi[i].classList.remove("active");
+        		tabOptionLi[i].classList.add("inactive");
+			}
+			// Show the current tab, and add an "active" class to the button that opened the tab
+			document.getElementById(elemt.getAttribute("value")).style.display = "block";
+			elemt.classList.add("active");
+			elemt.classList.remove("inactive");
+
+			if(sessionStorage.getItem('key') != "undefined" && sessionStorage.getItem('key') != null) {
+                
+                // Save data to sessionStorage
+                sessionStorage.setItem('key', elemt.id);
+                console.log("sessionStorage " + sessionStorage.getItem('key'));
+            } else {
+                console.log("sessionStorage undefined" + sessionStorage.getItem('key'));
+                // Remove saved data from sessionStorage
+                sessionStorage.removeItem('key');
+
+                // Save data to sessionStorage
+                sessionStorage.setItem('key', elemt.id);
+            }
+
+        	if("{!surveyStatus}" == "Submitted") {
+
+        		var inputs = document.getElementsByClassName("disableClass");
+        		console.log(inputs.length);
+        		for(let i = 0; i < inputs.length; i++) {
+        			inputs[i].setAttribute("disabled", "");
+        		}
+        	} else if("{!surveyStatus}" == "Draft") {
+
+                if(sessionStorage.getItem('key') != "undefined" && sessionStorage.getItem('key') != null) {
+                    if(document.getElementById(sessionStorage.getItem('key').split("_")[0]) != null) {
+						 document.getElementById(sessionStorage.getItem('key').split("_")[0]).click();
+        			}
+                }
+            }
+        }
+
+        document.getElementsByClassName("addCountryToSurveyClass")[0].addEventListener("click", function(e) {
+            e.preventDefault();
+            document.getElementById("loader").style.display = "block";
+
+        	var selectedCountry = document.getElementById("selectCountryList").value;
+
+            //build survey
+            buildSurvey(selectedCountry);
+
+			setTimeout(function(){
+				document.getElementById("loader").style.display = "none";
+				hideSelectOption(selectedCountry);
+
+	        	if(selectedCountry != null) {
+
+	        		//get Tab Panel
+	        		var tabPanel = document.getElementById('tabPanel');
+
+	        		//create a new tab
+	        		var newTab = document.createElement('li');
+	        		newTab.value = selectedCountry;
+	        		newTab.classList.add("tabOptionLi");
+
+	        		var newLink = document.createElement('a');
+
+	        		newLink.textContent = selectedCountry;
+	        		newLink.id = selectedCountry;
+	        		newLink.value = selectedCountry;
+	        		newLink.classList.add("tablinks");
+	        		newLink.style.width = '100%';
+	        		newLink.onclick = function(event) {
+	        			event.preventDefault();
+
+	        			if(sessionStorage.getItem('key') != "undefined" && sessionStorage.getItem('key') != null) {
+	        				
+	        				// Save data to sessionStorage
+							sessionStorage.setItem('key', this.id);
+							console.log("sessionStorage " + sessionStorage.getItem('key'));
+	        			} else {
+	        				console.log("sessionStorage undefined" + sessionStorage.getItem('key'));
+	        				// Remove saved data from sessionStorage
+							sessionStorage.removeItem('key');
+
+							// Save data to sessionStorage
+							sessionStorage.setItem('key', this.id);
+	        			}
+
+	        			//declare all variable
+	        			let countryValue = this.value;
+			        	let tabcontent, tablinks;
+
+			        	//set the variable in the controller
+	        			setCountryName(countryValue);
+
+			        	// Get all elements with class="tabcontent" and hide them
+			        	tabContent = document.getElementsByClassName("tabcontent");
+			        	for(let i = 0; i < tabContent.length; i++) {
+			        		tabContent[i].style.display = 'none';
+			        	}
+
+			        	// Get all elements with class="tablinks" and remove the class "active"
+						tabOptionLi = document.getElementsByClassName("tabOptionLi");
+						for (i = 0; i < tabOptionLi.length; i++) {
+			        		tabOptionLi[i].classList.remove("active");
+			        		tabOptionLi[i].classList.add("inactive");
+						}
+
+						// Show the current tab, and add an "active" class to the button that opened the tab
+						document.getElementById("survey").style.display = "block";
+						this.parentElement.classList.add("active");
+						this.parentElement.classList.remove("inactive");
+
+	        		}
+
+	        		newTab.appendChild(newLink);
+
+	        		//Add remove tab button
+	        		var newSpanDeleteTab = document.createElement('span');
+
+	        		newSpanDeleteTab.value = selectedCountry;
+	        		newSpanDeleteTab.classList.add("closeTabSpan");
+	        		newSpanDeleteTab.classList.add("trashIcon");
+	        		newSpanDeleteTab.addEventListener("click", function() {
+
+	        			/*if(confirm("Are you sure you want to delete this country?")) {
+	        				//remove tab
+		        			removeTab(this.parentElement);
+
+		        			let deletedCountry = this.value;
+
+		        			//add country to the delete list in the controller
+		        			deleteCountry(deletedCountry);
+
+		        			//remove tab content Country
+		        			document.getElementById("survey").style.display = "none";
+	        			}*/
+
+                        tabToRemove = this.parentElement;
+                        countryToDelete = this.value;
+
+                        $('#deleteCountryConfirmationModal').modal('show');
+	        		});
+
+	        		//add to the tab the delete tab
+	                newTab.appendChild(newSpanDeleteTab);
+
+	                //add to the tab panel
+	                tabPanel.prepend(newTab);
+	        	
+        			newLink.click();
+	        	}
+	        	
+		    }, 3000);	
+        });
+
+        function removeTab(tabBtn){
+            //Enable country option
+            enableSelectOption(tabBtn.firstChild.value);
+
+            //Remove tab
+            let tabPanel = document.getElementById("tabPanel");
+            tabPanel.removeChild(tabBtn);
+
+            //call home tab
+            //showHomeTab();
+        }
+
+        function hideSelectOption(optionValue){
+            var options = document.getElementById("selectCountryList").options
+
+            /*for(let i in options){
+                if(options[i].value === optionValue){
+                    options[i].disabled = true;
+                    options[i].selected = false;
+                }
+            }*/
+            for(let i = 0; i < options.length; i++) {
+            	if(options[i].value === optionValue){
+                    options.remove(i);
+                }
+            }
+        }
+
+        function enableSelectOption(optionValue){
+            /*var options = document.getElementById("selectCountryList").options
+
+            for(let i in options){
+                if(options[i].value === optionValue){
+                    options[i].disabled = false;
+                }
+            }*/
+	        var selectList = document.getElementById("selectCountryList");
+
+            let option = document.createElement("option");
+            option.text = optionValue;
+            selectList.add(option);
+        }
+
+        function fillSelectList(){
+	        var countryString = "{!countriesNamesString}";
+
+	        var countryList = countryString.split("|");
+	        var selectList = document.getElementById("selectCountryList");
+
+	        for( let i = 0; i < countryList.length - 1; i++){
+	            let option = document.createElement("option");
+	            option.text = countryList[i];
+	            selectList.add(option);
+	        }
+	    }
+
+		function hide(elemt, event) {
+			event.preventDefault();
+			if(elemt.parentElement.nextElementSibling.classList.contains("hide")){
+				elemt.parentElement.nextElementSibling.classList.remove("hide");
+                elemt.getElementsByTagName("span")[0].classList.remove("glyphicon-chevron-down");/*icon-minimize");*/
+                elemt.getElementsByTagName("span")[0].classList.add("glyphicon-chevron-up");/*icon-maximize");*/
+
+			} else {
+				elemt.parentElement.nextElementSibling.classList.add("hide");
+                elemt.getElementsByTagName("span")[0].classList.remove("glyphicon-chevron-up");
+                elemt.getElementsByTagName("span")[0].classList.add("glyphicon-chevron-down");
+			}
+		}
+
+		/*VALIDATIONS*/
+		function validateSelectList(elemt, e) {
+            e.preventDefault();
+
+            let valueIndexTypeOperation = elemt.selectedIndex;
+            let valueTypeOperation = elemt.children[valueIndexTypeOperation].firstChild.textContent;
+
+            if(valueTypeOperation == 'Select Operation' || valueTypeOperation == 'Select Bank' || valueTypeOperation == 'Select Country') {
+                jQuery('[id$=myHiddenField]').val(true);
+                passStringToController();
+                elemt.classList.add("redError");
+                document.getElementById("btnSave").disabled = true;
+                document.getElementById("btnSubmit").disabled = true;
+            } else {
+                jQuery('[id$=myHiddenField]').val(false);
+                passStringToController();
+                elemt.classList.remove("redError");
+                document.getElementById("btnSave").disabled = false;
+                document.getElementById("btnSubmit").disabled = false;
+            }
+        }
+
+        function validateEmptyField(elemt, e) {
+            e.preventDefault();
+            let amountValue = elemt.value;
+            if(amountValue.length === 0 || !amountValue) {
+                jQuery('[id$=myHiddenField]').val(true);
+                passStringToController();
+                elemt.classList.add("redError");
+                document.getElementById("btnSave").disabled = true;
+                document.getElementById("btnSubmit").disabled = true;
+            } else {
+                jQuery('[id$=myHiddenField]').val(false);
+                passStringToController();
+                elemt.classList.remove("redError");
+                document.getElementById("btnSave").disabled = false;
+                document.getElementById("btnSubmit").disabled = false;
+            }
+        }
+
+        function validateDelayInDays(elemt, e) {
+        	e.preventDefault();
+        	console.log('TEST ' + elemt.value);
+        }
+
+        /*function dateMinValidation(elemt, e) {
+        	e.preventDefault();
+
+        	let datesChangeMin = document.getElementsByClassName("changeMin");
+
+        	for(let i = 0; i < datesChangeMin.length; i++) {
+        		datesChangeMin[i].min = elemt.value;
+        	}
+        }*/
+
+        function validateAmount(elemt) {
+        	console.log('ín validate amount');
+    		let amountValue = elemt.value;
+            if(amountValue.length < 1) {
+        		console.log(elemt);
+                jQuery('[id$=myHiddenField]').val(true);
+                passStringToController();
+                elemt.classList.add("redError");
+        		console.log(elemt);
+                document.getElementById("btnSave").disabled = true;
+                document.getElementById("btnSubmit").disabled = true;
+            } else {
+                requireFields();
+            }
+        	validateRequire();
+            
+        }
+
+        function validateRequire() {
+        	let requireInput = document.getElementsByClassName("required");
+        	console.log('in');
+
+    		for(let i = 0; i < requireInput.length; i++) {
+    			let amountValue = requireInput[i].value;
+	            if(amountValue.length < 1) {
+	            	console.log(requireInput[i]);
+	        		console.log(requireInput[i].value);
+	                jQuery('[id$=myHiddenField]').val(true);
+	                passStringToController();
+	                requireInput[i].classList.add("redError");
+	        		console.log(requireInput[i]);
+	                document.getElementById("btnSave").disabled = true;
+	                document.getElementById("btnSubmit").disabled = true;
+	                break;
+	            } else {
+	                jQuery('[id$=myHiddenField]').val(false);
+	                passStringToController();
+	                requireInput[i].classList.remove("redError");
+	                document.getElementById("btnSave").disabled = false;
+	                document.getElementById("btnSubmit").disabled = false;
+	            }
+    		}
+        }
+
+        function requireFields() {
+        	let requireInput = document.getElementsByClassName("required");
+        	let tabs = document.getElementsByClassName("tabOptionLi");
+        	console.log(tabs.length);
+    		for(let i = 0; i < requireInput.length; i++) {
+    			let amountValue = requireInput[i].value;
+	            if(amountValue.length < 1) {
+	                jQuery('[id$=myHiddenField]').val(true);
+	                passStringToController();
+	                requireInput[i].classList.add("redError");
+	                document.getElementById("btnSave").disabled = true;
+	                document.getElementById("btnSubmit").disabled = true;
+
+	                for(let i = 0; i < tabs.length; i++) {
+	               		tabs[i].classList.add("tabError");
+	               		console.log('add error');
+	               	}
+	            } else {
+	                jQuery('[id$=myHiddenField]').val(false);
+	                passStringToController();
+	                requireInput[i].classList.remove("redError");
+	                document.getElementById("btnSave").disabled = false;
+	                document.getElementById("btnSubmit").disabled = false;
+
+	                for(let i = 0; i < tabs.length; i++) {
+	               		tabs[i].classList.remove("tabError");
+	               		console.log('remove error');
+	               	}
+	            }
+    		}
+    		
+			for(let i = 0; i < requireInput.length; i++) {
+
+    			let amountValue = requireInput[i].value;
+	            if(amountValue.length < 1) {
+	                jQuery('[id$=myHiddenField]').val(true);
+	                passStringToController();
+	                requireInput[i].classList.add("redError");
+	                document.getElementById("btnSave").disabled = true;
+	                document.getElementById("btnSubmit").disabled = true;
+
+	               	for(let i = 0; i < tabs.length; i++) {
+	               		tabs[i].classList.add("tabError");
+	               		console.log('add error');
+	               	}
+	                break;
+	            }
+    		}
+
+    		if(requireInput.length < 1) {
+    			for(let i = 0; i < tabs.length; i++) {
+               		tabs[i].classList.remove("tabError");
+               		console.log('add error');
+	                document.getElementById("btnSave").disabled = false;
+	                document.getElementById("btnSubmit").disabled = false;
+               	}
+    		}
+        }
+
+	</script>
+
+</apex:page>

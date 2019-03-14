@@ -18,8 +18,10 @@ private class ANG_TrackingHistoryTest {
 		acc.VAT_Number_2__c = '666';
 		acc.Abbreviated_address__c = 'Lisbon';
 		acc.Legal_Name__c = 'Winterfell';
-
 		insert acc;
+
+		AccountHistory standardAccountHist = new AccountHistory(AccountId=acc.Id, Field='Type');
+		Insert standardAccountHist;
 
 	}
 	
@@ -52,7 +54,53 @@ private class ANG_TrackingHistoryTest {
 		}
 
 		system.assertEquals(count, 2);
+	}
 
+
+	@isTest static void testCaseChange() {
+
+		Account acc = [SELECT Id FROM Account];
+
+		Account acc2 = ISSP_ObjectFactory.createNewAccount();
+		insert acc2;
+
+		Contact con = ISSP_ObjectFactory.createNewContact();
+
+		Case c0 = new Case();
+		insert c0;
+
+		Case c1 = new Case();
+		insert c1;
+
+		Case c2 = new Case();
+		c2.ParentId = c0.Id;
+		insert c2;
+
+		/*c2.AccountId = acc.Id;
+		c2.ContactId = con.Id;
+		c2.OwnerId = UserInfo.getUserId();*/
+		c2.ParentId = c1.Id;
+		//c2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+		update c2;
+
+		List<CaseHistory> standardCaseHistList = new List<CaseHistory>{new CaseHistory(CaseId=c2.Id, Field='Account'),
+																		new CaseHistory(CaseId=c2.Id, Field='Owner'),
+																		new CaseHistory(CaseId=c2.Id, Field='Contact'),
+																		new CaseHistory(CaseId=c2.Id, Field='RecordType')};
+		insert standardCaseHistList;
+
+		
+		PageReference pageRef = Page.CaseTrackingHistory;
+        pageRef.getParameters().put('id', c2.Id);
+        Test.setCurrentPage(pageRef);
+
+        ApexPages.StandardController sc = new ApexPages.standardController(c2);
+
+        ANG_GenericHistoryViewerController histController = new ANG_GenericHistoryViewerController(sc);
+        //histController.trackedObjId = c2.Id;
+        histController.trackerObjApiName = 'ANG_Case_Tracking_History__c';
+        histController.trackedObjApiName = 'Case';
+        histController.getHistoryRecords();
 	}
 
 
