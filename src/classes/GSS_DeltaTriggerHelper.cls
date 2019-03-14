@@ -79,10 +79,10 @@ public class GSS_DeltaTriggerHelper {
                 //As the trigger helper is called in the context of a single object at the time
                 //we keep only the FieldName as key to the map.
                 String key = FieldsNameList[i];
-                if (key.Contains('__r.')) {
-                    String[] vfieldname= key.Split('\\.');
-                    key = vfieldname[0].Replace('__r','__c');
-                }
+                //if (key.Contains('__r.')) {
+                //    String[] vfieldname= key.Split('\\.');
+                //    key = vfieldname[0].Replace('__r','__c');
+                //}
                 
                 FieldStructureCls ds;
                 if (!fieldstructure.ContainsKey(key)) ds = new FieldStructureCls();
