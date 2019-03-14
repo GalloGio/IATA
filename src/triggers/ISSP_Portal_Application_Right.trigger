@@ -54,7 +54,26 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (Trigger.isAfter && Trigger.isDelete) handler.onAfterDelete();
 	//end of ANG
 
-	if (Trigger.isDelete) return;
+	if(Trigger.isDelete) {
+	
+		Set<Id> disableContactIdSet = new Set<Id>();
+
+		for(Portal_Application_Right__c access : trigger.old){
+		
+			if(Trigger.isAfter && access.Application_Name__c == 'Standards Setting Workspace'){
+				disableContactIdSet.add(access.Contact__c);
+			}
+
+		}
+		
+		if(!disableContactIdSet.isEmpty()){
+			HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.DISABLE_EXISTING_MEMBERS, disableContactIdSet, null);
+            HigherLogicIntegrationHelper.assignHLPermissionSet(disableContactIdSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
+		}
+		
+		return;
+		
+	}
 	//methods below this line should not run for delete cases
 
 	for (Portal_Application_Right__c access : trigger.new) {
@@ -178,6 +197,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 					if (access.Right__c == 'Access Granted') {
 						contactKaviAdd.add(access.Contact__c);
 					}else if (access.Right__c == 'Access Denied'){
+						//Should update user status in Higherlogic status to inactive (below9)
 						removeKaviPermissionSet.add(access.Contact__c);
 					}
 				}
@@ -312,23 +332,30 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (!contactRemove2FAIdSet.isEmpty()) {
 		ISSP_UserTriggerHandler.removeNonTdReportSharing(contactRemove2FAIdSet);
 	}
+	
+	Id provAcctId = ProvisionKaviAccess.getFakeAccount().Id;
 
-	if (!contactKaviAdd.isEmpty()) {
+	if (!contactKaviAdd.isEmpty()){
+		
+		String action = HigherLogicIntegrationHelper.PUSH_MEMBERS;
+		
 		string kaviUser = [SELECT Kavi_User__c from Contact where Id in:contactKaviAdd limit 1].Kavi_User__c;
-		if (kaviUser != null ) {
-			ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create2', contactKaviAdd);
-			}
-		else  
-		{
-			ISSP_WS_KAVI.createOrUpdateKaviUsersAccounts('create', contactKaviAdd);
+		
+		if (kaviUser != null ){
+			action = HigherLogicIntegrationHelper.PUSH_INTERNAL_MEMBERS;
 		}
+
+		HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd, provAcctId);
+
 		//RN-ENHC0012059 grant and remove the permission set to the user	
-		ISSP_WS_KAVI.addUserPSA(contactKaviAdd, 'grant'); 
+		HigherLogicIntegrationHelper.assignHLPermissionSet(contactKaviAdd, HigherLogicIntegrationHelper.GRANT_ACCESS); 
+		
 	}
 	
 	//RN-ENHC0012059 grant and remove the permission set to the user
 	if(!removeKaviPermissionSet.isEmpty()){
-		ISSP_WS_KAVI.addUserPSA(removeKaviPermissionSet, 'remove');
+		HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, removeKaviPermissionSet, provAcctId);
+		HigherLogicIntegrationHelper.assignHLPermissionSet(removeKaviPermissionSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
 	}
 
 	/*
