@@ -116,7 +116,7 @@ public class ISSP_AMC_DAO {
     public static Map<Id, Participation_Application_Requirement__c> getAllParticipationApplicationRequirementMap(String acliCode) {
         Map<Id, Participation_Application_Requirement__c> parAppReqMap = new Map<Id,Participation_Application_Requirement__c>([
             SELECT
-                Id, ACLI_Application_Requirement__c, Component_Key__c , Type_of_Requirement__c
+                Id, ACLI_Application_Requirement__c, Component_Key__c , Type_of_Requirement__c, isToShow__c
             FROM
                 Participation_Application_Requirement__c
             WHERE
@@ -830,12 +830,12 @@ public class ISSP_AMC_DAO {
                                             '<a href="#" step="step2" goto="#ULD" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a></br>');                              
                             parOnlineRecord.Status__c = 'Incomplete';
                         }
-                        //&& parAppRecRecord.NOTE_Custom_Label__c == 'ISSP_AMC_STRATEGIC_PARTNERSHIP'
                         if(parOnlineRecord.AmazonFile__c == null){
                             parOnlineRecord.Status__c = 'Incomplete';
                             if(parAppRecRecord.isToShow__c == false){
                                 fileErrorMessages.add(Label.ISSP_AMC_STRATEGIC_PARTNERSHIP);
-                            }
+                            }   
+                            
                         }
                     }
 
