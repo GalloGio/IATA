@@ -71,7 +71,6 @@ private class ANG_OscarProcessHelperTest {
 
 		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
 
-		theAccreditation.Account_Name__c='NEWGEN-559 HE5';
 		theAccreditation.ISSP_AMS_Legal_Status__c='Association';
 		theAccreditation.Branch_Office_Country__c= ctry.Id;
 		theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
@@ -545,7 +544,6 @@ private class ANG_OscarProcessHelperTest {
         Case c = [Select Id from Case LIMIT 1];
 
 		ANG_OscarProcessHelper.createFOPOscar(a.Id, c.Id);
-		ANG_OscarProcessHelper.fakemethod();
 
         Test.stopTest();
 	 }
@@ -982,6 +980,50 @@ private class ANG_OscarProcessHelperTest {
 		System.assertEquals('AGENT IS UPGRADING FROM DOMESTIC TO INTERNATIONAL', changeCodes[0].Bulletin_Information__c);
 		System.assertEquals(true, changeCodes[0].To_Publish_in_e_Bulletin__c);	
 	
+		Test.stopTest();
+	}
+	
+	@isTest static void createOscarChangesCaseTest(){
+		
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Account accHO = new Account(name = 'HO test Account', RecordTypeId = accountRT);
+		insert accHO;
+		
+		Test.startTest();
+			AMS_Pax_Accreditation_Form__c accred = [SELECT Id, HO_Account__c, SAAM_Case__c FROM AMS_Pax_Accreditation_Form__c LIMIT 1];
+			accred.HO_Account__c = accHO.Id;
+			update accred;
+			
+			String[] str = ANG_OscarProcessHelper.createOscarChangesCase(accred.Id);
+			AMS_OSCAR__c oscar = [SELECT Id, Account__c, Process__c FROM AMS_OSCAR__c WHERE Account__c =: accHO.Id];
+			Case oscarCase = [SELECT Id, Oscar__c, Casenumber FROM Case WHERE Oscar__c =: oscar.Id];
+			
+			System.assertEquals(str[0], oscarCase.Id);
+			System.assertEquals(str[1], oscarCase.Casenumber);
+			System.assertEquals(AMS_Utils.NGCHANGES, oscar.Process__c);
+			
+		Test.stopTest();
+	}
+	
+	@isTest static void createOscarCorrectionCaseTest(){
+		
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Account accHO = new Account(name = 'HO test Account', RecordTypeId = accountRT);
+		insert accHO;
+		
+		Test.startTest();
+			AMS_Pax_Accreditation_Form__c accred = [SELECT Id, HO_Account__c, SAAM_Case__c FROM AMS_Pax_Accreditation_Form__c LIMIT 1];
+			accred.HO_Account__c = accHO.Id;
+			update accred;
+			
+			String[] str = ANG_OscarProcessHelper.createOscarCorrectionCase(accred.Id);
+			AMS_OSCAR__c oscar = [SELECT Id, Account__c, Process__c FROM AMS_OSCAR__c WHERE Account__c =: accHO.Id];
+			Case oscarCase = [SELECT Id, Oscar__c, Casenumber FROM Case WHERE Oscar__c =: oscar.Id];
+			
+			System.assertEquals(str[0], oscarCase.Id);
+			System.assertEquals(str[1], oscarCase.Casenumber);
+			System.assertEquals(AMS_Utils.NGCORRECTION, oscar.Process__c);
+			
 		Test.stopTest();
 	}
 }
