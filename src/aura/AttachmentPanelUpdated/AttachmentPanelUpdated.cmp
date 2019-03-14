@@ -103,7 +103,7 @@
                             <ui:menuList aura:id="actionMenu" class="dropdown-action-menu">
                                         
                             <ui:actionMenuItem  label="{!$Label.c.Transfer_Attachments}"
-                                click="{!c.transferAttachmentsButtonHandler}" aura:class="slds-button" />
+                                click="{!c.transferAttachmentsButtonHandler}"/>
                             <aura:if isTrue="{!v.panelProperties.parentIsOSCAR}">
                                 <ui:actionMenuItem  label="{!$Label.c.Oscar_Attachments}"
                                     click="{!c.viewOscarAttachmentsButtonHandler}" />
