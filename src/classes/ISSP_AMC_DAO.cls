@@ -405,7 +405,7 @@ public class ISSP_AMC_DAO {
                         for(Participant_Online_App_Requirement__c requirement : appReq){
                             if(requirement.AmazonFile__c != null){
                                 System.debug('JCFF DELETE deleteAttachment :');
-                                ISSP_AMC_Upload_Files.deleteAttachment(requirement.AmazonFile__c, requirement.AmazonFile__r.Full_Name_Unique__c);
+                                ISSP_AMC_Upload_Files.deleteAttachmentInFuture(requirement.AmazonFile__c, requirement.AmazonFile__r.Full_Name_Unique__c);
                             }
                         }
                     }System.debug('JCFF DELETE junctionToDeleteList : ' + junctionToDeleteList);
@@ -830,12 +830,13 @@ public class ISSP_AMC_DAO {
                                             '<a href="#" step="step2" goto="#ULD" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a></br>');                              
                             parOnlineRecord.Status__c = 'Incomplete';
                         }
-                        if(parOnlineRecord.AmazonFile__c == null && uldError ==0){
+                        //&& parAppRecRecord.NOTE_Custom_Label__c == 'ISSP_AMC_STRATEGIC_PARTNERSHIP'
+                        if(parOnlineRecord.AmazonFile__c == null){
                             parOnlineRecord.Status__c = 'Incomplete';
-                            fileErrorMessages.add(Label.ISSP_AMC_STRATEGIC_PARTNERSHIP);
-                            uldError++;
+                            if(parAppRecRecord.isToShow__c == false){
+                                fileErrorMessages.add(Label.ISSP_AMC_STRATEGIC_PARTNERSHIP);
+                            }
                         }
-                        
                     }
 
                     /*if(parAppRecRecord.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_CRS){

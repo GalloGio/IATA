@@ -31,10 +31,21 @@
             </componentInstanceProperties>
             <componentName>flowruntime:interview</componentName>
             <visibilityRule>
+                <booleanFilter>(1 AND 2) OR (1 AND NOT 2 AND NOT 3)</booleanFilter>
+                <criteria>
+                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Airline_Coding_Application</rightValue>
+                </criteria>
                 <criteria>
                     <leftValue>{!Record.Status}</leftValue>
                     <operator>NE</operator>
                     <rightValue>Open</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.Subject}</leftValue>
+                    <operator>CONTAINS</operator>
+                    <rightValue>Manage Changes / Major</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>

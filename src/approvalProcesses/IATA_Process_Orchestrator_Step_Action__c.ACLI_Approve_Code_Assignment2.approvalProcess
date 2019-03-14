@@ -29,7 +29,7 @@
         <criteriaItems>
             <field>IATA_Process_Orchestrator_Step_Action__c.Status__c</field>
             <operation>equals</operation>
-            <value>Not Started,Fail</value>
+            <value>Not Started,Fail,Progressing</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>

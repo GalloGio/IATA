@@ -214,7 +214,7 @@ public class ISSP_AMC_ManageMyCodes {
 			//getCaseNumber(caseDesignatorApplicationId);
           	caseUrl = '/ISSP_Case?caseId=' + caseDesignatorApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
 		}
-		if(isAccountingPrefix == true){
+		else if(isAccountingPrefix == true){
 			//getCaseNumber(caseAccountingOrPrefixApplicationId);
 			caseUrl = '/ISSP_Case?caseId=' + caseAccountingOrPrefixApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
 		}
@@ -222,7 +222,7 @@ public class ISSP_AMC_ManageMyCodes {
 			//getCaseNumber(caseLocationCodeApplicationId);
 			caseUrl = '/ISSP_Case?caseId=' + caseLocationCodeApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
 		}*/
-		if(isBaggage == true){
+		else if(isBaggage == true){
 			//getCaseNumber(caseBaggageApplicationId);
             caseUrl = '/ISSP_Case?caseId=' + caseBaggageApplicationId + '&mid=M1S2&retURL=%2FISSP_AMC_Home';
 		}

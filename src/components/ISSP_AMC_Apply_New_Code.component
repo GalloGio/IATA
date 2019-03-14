@@ -97,8 +97,21 @@
 		                        <center>
 		                           	<apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE}{!caseNum}." />
 		                           		<div>
-		                           			<apex:commandButton value="{!$Label.ISSP_AMC_VIEW_CASE}" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
-		                           			disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
+
+                                               <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,false,true)}">
+                                                   <apex:commandButton value="{!$Label.ISSP_AMC_VIEW_CASE}" action="{!redirectToCase}" styleClass="btn btn_iata_primary" 
+		                           			        disabled="{!noPermissionToViewCase}"/>
+                                               </apex:outputPanel>
+
+                                               <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,true,false)}">
+                                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="You have no Permission">
+                                                        <button class="btn btn_iata_primary" style="pointer-events: none;" type="button" disabled="disabled">
+                                                            {!$Label.ISSP_AMC_VIEW_CASE}
+                                                        </button>
+                                                    </span>
+                                               </apex:outputPanel>
+                                               
+                                                
 		                           			<apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
 		                           		</div>
 		                           	</center>
@@ -114,10 +127,25 @@
 		                        <center>
 		                           	<apex:outputLabel value="{!$Label.ISSP_AMC_EXISTING_CASE_EDIT}{!caseNum}." />
 		                           		<div>
-		                           			<apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+		                           			<!--<apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
 		                           			disabled="{!noPermissionToViewCase}" title="You have no permissions"/>
-		                           			<apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
-		                           		</div>
+		                           			-->
+    
+                                                <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,false,true)}">
+                                                   <apex:commandButton value="{!$Label.ISSP_AMC_EDIT_CASE}" action="{!redirectToParticipation}" styleClass="btn btn_iata_primary" 
+		                           			        disabled="{!noPermissionToViewCase}"/>
+                                               </apex:outputPanel>
+
+                                               <apex:outputPanel rendered="{!IF(noPermissionToViewCase == true,true,false)}">
+                                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="You have no Permission">
+                                                        <button class="btn btn_iata_primary" style="pointer-events: none;" type="button" disabled="disabled">
+                                                            {!$Label.ISSP_AMC_EDIT_CASE}
+                                                        </button>
+                                                    </span>
+                                               </apex:outputPanel>
+
+                                                <apex:commandButton value="{!$Label.ISSP_AMC_CANCEL}" action="{!closePopupDeleteSection}" reRender="appnewcodeFrm" styleClass="btn btn_iata_primary"/>
+                                        </div>
 		                           	</center>
 	                            </apex:outputPanel>
 	                        </apex:outputPanel>
@@ -171,8 +199,8 @@
         margin: auto;
         
     }
+    
 </style>
-	
 
 
 </apex:component>
