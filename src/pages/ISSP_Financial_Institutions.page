@@ -72,7 +72,7 @@
                         <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float: left;"/>
                     </div>
                     <div style="padding-top: 16px; padding-left: 44px;">
-                        <h3>{!$Label.ISSP_Financial_Insititutions_Header}</h3>
+                        <h3>{!$Label.ISSP_Financial_Insititutions}</h3>
                         <apex:outputText value="{!$Label.ISSP_Financial_Insititutions_Subheader}" escape="false"/>
                     </div>
                     <apex:form >
