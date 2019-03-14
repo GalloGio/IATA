@@ -106,7 +106,7 @@ public class EmailMessageViewConTest{
         Insert em3;
         
        
-        Case testCase = [SELECT id, CaseNumber FROM Case where id =:ca.Id];
+        Case testCase = [SELECT id, CaseNumber, RecordType.Name FROM Case where id =:ca.Id];
         Test.startTest(); 
         System.debug('************ Case for Standard Controller ' + testCase.Id);
         PageReference pageRef = Page.EmailMessagesView;        
