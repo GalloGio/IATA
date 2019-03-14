@@ -1,0 +1,56 @@
+.withPointerTile {
+    cursor:pointer; 
+}
+
+.extIconClass{
+    color: blue !important;
+    padding-left: 85%;
+    padding-top: 5%;
+}
+
+.noExtIconClass{
+    color: white !important;
+    padding-left: 85%;
+    padding-top: 5%;
+}
+
+.bigTile{
+    height:250px;
+}
+
+.bigTile h1{
+    margin-top: 80%;
+}
+
+.smallTile{
+    height: 120px;
+}
+
+.smallTile h1{
+    margin-top: 23%;
+}
+
+.tileText{
+    bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    left: 0;
+    right: 0;
+}
+
+.tileNewServiceText{
+    margin-top: 80%;
+    bottom: 40px;
+    color: rgb(51, 51, 255);
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.tileNewServiceIcon{
+    margin-top: 20%;
+    top: 40px;
+    background-color: #E8EAFE;
+}
