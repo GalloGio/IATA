@@ -5,9 +5,7 @@
             var fileInput = $("#file-field");
 
             fileInput.bind("change", function () {
-                //startLoading();
-                //uploadFiles(this.files, $('[id$=fileIdentifierPick]').val());
-                //console.log(this.files);
+            
                 component.set("v.showLoadingSpinner", true);
 
                 var isUploadingAttachment= component.get("v.isUploadingAttachments");
@@ -45,16 +43,13 @@
         $A.enqueueAction(getReviewStatusPickValuesAction);
 
         var parentId = component.get("v.recordId");
-        //console.log(parentId);
+      
 
         var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
 
         var communityName = component.get("v.communityName");
-        //console.log(communityName);
 
         var uploaderWizard = component.get("v.uploaderWizard");
-        //console.log(uploaderWizard);
 
         //get this page properties and 
         var getPanelPropertiesAction = component.get("c.getPanelProperties");
@@ -67,7 +62,6 @@
             var state = response1.getState();
             if (state === "SUCCESS") {
                 var panelProperties = response1.getReturnValue();
-                console.log(panelProperties);
                 component.set("v.panelProperties", panelProperties);
 
                 var rowActions = helper.getRowActions.bind(this, component);
@@ -223,20 +217,14 @@
     },
 
     attachLineActionHandler: function (component, event, helper) {
-        //var selectedMenuItemValues = event.getParam("value").split("-");
-        //console.log(selectedMenuItemValues);
+        
         var action = event.getParam('action').name;
         var row = event.getParam('row').id;
-        console.log(action);
-        console.log(row);
 
         var parentId = component.get("v.recordId");
-        //console.log(parentId);
         var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
 
         var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
-        //console.log(isSAAMorSIDRA);
 
         if (action == 'edit') {
             helper.attachLineEditAction(component, row, isPortal);
@@ -261,125 +249,36 @@
         }
     },
 
-    makeAllAttachmentsPublicButtonHandler: function (component, event, helper) {
-        var parentId = component.get("v.recordId");
-        //console.log(parentId);
-        var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
-        //makeAllAttachPublic(String parentId, Boolean isPortal){
+    handleActionSelect: function (component, event, helper) {
+       
+        var action = event.getParam('value');
+        console.log(action);
 
-        var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
-        //console.log(isSAAMorSIDRA);
 
-        var makeAllAttachPublicAction = component.get("c.makeAllAttachPublic");
-        makeAllAttachPublicAction.setParams({
-            "parentId": parentId,
-            "isPortal": isPortal,
-            "isSAAMorSIDRA": isSAAMorSIDRA
-        });
-        makeAllAttachPublicAction.setCallback(this, function (response2) {
-            var state = response2.getState();
-            if (state === "SUCCESS") {
-                if (response2.getReturnValue().severity === 'SUCCESS') {
-                    var toastEvent = $A.get("e.force:showToast");
-                    toastEvent.setParams({
-                        mode: 'dismissable',
-                        title: response2.getReturnValue().severity,
-                        message: 'Record updated',
-                        type: 'success'
-                    });
-                    toastEvent.fire();
+        if (action == 'transferAttachment') {
+           helper. transferAttachmentsButtonHandler(component, event, helper);
+        }
 
-                    helper.helperGetAttachList(component);
+        if (action == 'viewOscarAttachments') {
+            helper.viewOscarAttachmentsButtonHandler(component, event, helper);
+        }
+        
+        if (action == 'makeAllPublic') {
+            helper.makeAllAttachmentsPublicButtonHandler(component, event, helper);
+        }
 
-                } else if (response2.getReturnValue().severity === 'ERROR') {
-                    var toastEvent = $A.get("e.force:showToast");
-                    toastEvent.setParams({
-                        mode: 'dismissable',
-                        title: response2.getReturnValue().severity,
-                        message: response2.getReturnValue().extraDetails,
-                        type: 'error'
-                    });
-                    toastEvent.fire();
-                }
+        if (action == 'makeAllPrivate') {
+            helper.makeAllAttachmentsPrivateButtonHandler(component, event, helper);
+        }
 
-            } else if (state === "INCOMPLETE") {
-                // do something
-            }
-            else if (state === "ERROR") {
-                var errors = response2.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
-                            errors[0].message);
-                    }
-                } else {
-                    console.log("Unknown error");
-                }
-            }
-        });
-        $A.enqueueAction(makeAllAttachPublicAction);
+        if (action == 'downloadAllFiles') {
+            helper.downloadAllFilesButtonHandler(component, event, helper);
+        }
+
+       
     },
 
-    makeAllAttachmentsPrivateButtonHandler: function (component, event, helper) {
-        var parentId = component.get("v.recordId");
-        //console.log(parentId);
-        var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
-        //makeAllAttachPrivate(String parentId, Boolean isPortal){
-
-        var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
-        //console.log(isSAAMorSIDRA);
-
-        var makeAllAttachPrivateAction = component.get("c.makeAllAttachPrivate");
-        makeAllAttachPrivateAction.setParams({
-            "parentId": parentId,
-            "isPortal": isPortal,
-            "isSAAMorSIDRA": isSAAMorSIDRA
-        });
-        makeAllAttachPrivateAction.setCallback(this, function (response2) {
-            var state = response2.getState();
-            if (state === "SUCCESS") {
-                if (response2.getReturnValue().severity === 'SUCCESS') {
-                    var toastEvent = $A.get("e.force:showToast");
-                    toastEvent.setParams({
-                        mode: 'dismissable',
-                        title: response2.getReturnValue().severity,
-                        message: 'Record updated',
-                        type: 'success'
-                    });
-                    toastEvent.fire();
-
-                    helper.helperGetAttachList(component);
-
-                } else if (response2.getReturnValue().severity === 'ERROR') {
-                    var toastEvent = $A.get("e.force:showToast");
-                    toastEvent.setParams({
-                        mode: 'dismissable',
-                        title: response2.getReturnValue().severity,
-                        message: response2.getReturnValue().extraDetails,
-                        type: 'error'
-                    });
-                    toastEvent.fire();
-                }
-
-            } else if (state === "INCOMPLETE") {
-                // do something
-            }
-            else if (state === "ERROR") {
-                var errors = response2.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
-                            errors[0].message);
-                    }
-                } else {
-                    console.log("Unknown error");
-                }
-            }
-        });
-        $A.enqueueAction(makeAllAttachPrivateAction);
-    },
+    
 
     //Attachment Delete Popup methods
     handleCancelDeletePopup: function (component, event, helper) {
@@ -388,10 +287,7 @@
 
     handleConfirmDeletePopup: function (component, event, helper) {
         var parentId = component.get("v.recordId");
-        //console.log(parentId);
         var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
-        //makeAllAttachPrivate(String parentId, Boolean isPortal){
 
         var attachId = component.get("v.attachmentIdToDelete");
         var lstAttachments = component.get("v.lstAttachments");
@@ -403,7 +299,6 @@
                 attachFullName = lstAttachments[i].fullName;
             }
         }
-        //console.log(attachFullName);
 
 
 
@@ -467,15 +362,9 @@
 
     handleConfirmEditPopup: function (component, event, helper) {
         var parentId = component.get("v.recordId");
-        //console.log(parentId);
         var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
-        //updateAttachment(String parentId, String attachId, Boolean isPortal, String description, String fileIdentifier, String reviewStatus)
-
-        //var attachId = component.get("v.attachmentIdToDelete");
 
         var editAttachment = component.get("v.editAttachment");
-        //console.log(editAttachment);
 
         var description = null;
         if (editAttachment.fileAmazon.amazonFile.Description__c) {
@@ -489,9 +378,7 @@
         if (editAttachment.fileAmazon.amazonFile.Review_Status__c) {
             reviewStatus = editAttachment.fileAmazon.amazonFile.Review_Status__c;
         }
-        //console.log(description);
-        //console.log(fileIdentifier);
-        //console.log(reviewStatus);
+       
 
         var attachId = editAttachment.id;
         var isSAAMorSIDRA= component.get("v.panelProperties").isSAAMorSIDRA;
@@ -551,126 +438,7 @@
         });
         $A.enqueueAction(updateAttachmentAction);
     },
-
-    downloadAllFilesButtonHandler: function (component, event, helper) {
-        var parentId = component.get("v.recordId");
-        //console.log(parentId);
-
-        var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
-
-        //getAllExpiringLink(String objectId, Boolean isPortal)
-        var getAllExpiringLinkAction = component.get("c.getAllExpiringLink");
-        getAllExpiringLinkAction.setParams({
-            "objectId": parentId,
-            "isPortal": isPortal
-        });
-        getAllExpiringLinkAction.setCallback(this, function (response2) {
-            var state = response2.getState();
-            if (state === "SUCCESS") {
-                //var zipfiles = new ZipFiles(response2.getReturnValue(), "files.zip");
-                //zipfiles.downloadZip();
-                helper.helperCreateZip(response2.getReturnValue(), "files.zip");
-
-
-            } else if (state === "INCOMPLETE") {
-                // do something
-            }
-            else if (state === "ERROR") {
-                var errors = response2.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
-                            errors[0].message);
-                    }
-                } else {
-                    console.log("Unknown error");
-                }
-            }
-        });
-        $A.enqueueAction(getAllExpiringLinkAction);
-
-    },
-
-    transferAttachmentsButtonHandler: function (component, event, helper) {
-        var parentId = component.get("v.panelProperties").relatedCase.ParentId;
-        var caseId = component.get("v.recordId");
-
-        //get related Cases
-        var getRelatedCasestAction = component.get("c.getParentCaseRelatedCases");
-        getRelatedCasestAction.setParams({
-            "parentId": parentId,
-            "caseId": caseId
-        });
-        getRelatedCasestAction.setCallback(this, function (response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-                var lstcases = response.getReturnValue();
-                console.log(lstcases);
-
-                lstcases.forEach(function(elem){
-                    console.log(elem.CaseRecord.RecordTypeId);
-               
-                    elem.caseNumber=elem.CaseRecord.CaseNumber,
-                    elem.subject=elem.CaseRecord.Subject,
-                    elem.status=elem.CaseRecord.Status,
-                    elem.recordType=elem.CaseRecord.RecordType.Name
-                   
-                });
-                component.set("v.relatedCaseList",lstcases);
-
-                var cols=[
-                    {
-                        label: 'Relationship',
-                        fieldName: 'strRelationship',
-                        type: 'text'
-                    },
-                    {
-                        label: 'Case Number',
-                        fieldName: 'caseNumber',
-                        type: 'text'
-                    },
-                    {
-                        label: 'Subject',
-                        fieldName: 'subject',
-                        type: 'text'
-                    },
-                    {
-                        label: 'Status',
-                        fieldName: 'status',
-                        type: 'text'
-                    },
-                    {
-                        label: 'Record Type',
-                        fieldName: 'recordType',
-                        type: 'text'
-                    }
-                ];
-                
-                component.set("v.columnscasepopup",cols);
-            } else if (state === "INCOMPLETE") {
-                // do something
-            }
-            else if (state === "ERROR") {
-                var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
-                            errors[0].message);
-                    }
-                } else {
-                    console.log("Unknown error");
-                }
-            }
-
-        });
-
-        $A.enqueueAction(getRelatedCasestAction);
-
-
-        component.set("v.transferAttachmentsPopup", true);
-
-    },
+    
     updateSelectedFilesToTransfer: function (component, event, helper) {
         var selectedRows = event.getParam('selectedRows');
         component.set("v.selectedRowsToTransfer", event.getParam("selectedRows"));
@@ -718,7 +486,6 @@
             var state = response2.getState();
             if (state === "SUCCESS") {
                var resp=response2.getReturnValue();
-               console.log(resp);
                     var toastEvent = $A.get("e.force:showToast");
                     toastEvent.setParams({
                         mode: 'dismissable',
@@ -775,7 +542,6 @@
     },
 
     uploadFileNonSAAMSIDRAButtonHandler: function (component, event, helper) {
-      
         component.set("v.isUploadingAttachments",true);
         $("#file-field").click();
     },

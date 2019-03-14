@@ -1,6 +1,6 @@
 <aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="AttachmentListCtrl"
     access="GLOBAL">
-  
+
     <ltng:require scripts="{!$Resource.jquery2_1_4}" afterScriptsLoaded="{!c.aftersScriptsLoadedScript}" />
     <ltng:require scripts="{!join(',',
                            $Resource.jszip + '/jszip.min.js',
@@ -52,7 +52,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <input id="file-field" multiple="true" name="file" style="display: none;" type="file" />
-   
+
     <aura:if isTrue="{!v.showLoadingSpinner}">
         <lightning:spinner alternativeText="Loading" />
     </aura:if>
@@ -84,6 +84,7 @@
                 </aura:if>
             </aura:if>
 
+
             <aura:if isTrue="{!not(v.isPortal)}">
                 <aura:if isTrue="{!v.panelProperties}">
                     <lightning:buttonGroup>
@@ -96,42 +97,33 @@
                             <lightning:button variant="neutral" label="Attach File"
                                 onclick="{!c.uploadFileNonSAAMSIDRAButtonHandler}" />
                         </aura:if>
-                        <ui:menu>
-                            <ui:menuTriggerLink aura:id="trigger" label="more Actions">
-                                    <lightning:buttonIcon iconName="utility:down"  alternativeText="View More" />
-                                </ui:menuTriggerLink>
-                            <ui:menuList aura:id="actionMenu" class="dropdown-action-menu">
-                                        
-                            <ui:actionMenuItem  label="{!$Label.c.Transfer_Attachments}"
-                                click="{!c.transferAttachmentsButtonHandler}"/>
-                            <aura:if isTrue="{!v.panelProperties.parentIsOSCAR}">
-                                <ui:actionMenuItem  label="{!$Label.c.Oscar_Attachments}"
-                                    click="{!c.viewOscarAttachmentsButtonHandler}" />
-                            </aura:if>
-                            <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
-                                <ui:actionMenuItem  label="{!$Label.c.Make_All_Public}"
-                                    click="{!c.makeAllAttachmentsPublicButtonHandler}" />
-                            </aura:if>
-                            <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
-                                <ui:actionMenuItem  label="{!$Label.c.Make_All_Private}"
-                                    click="{!c.makeAllAttachmentsPrivateButtonHandler}" />
-                            </aura:if>
-                            <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
-                                <ui:actionMenuItem  label="Download All Files"
-                                    click="{!c.downloadAllFilesButtonHandler}" />
-                        </aura:if>
-                  
-                                    </ui:menuList>
-                        </ui:menu>
+                        <lightning:buttonMenu aura:id="menu" onselect="{!c.handleActionSelect}" alternativeText="Show menu"
+                            menuAlignment="auto">
+                                <lightning:menuItem label="{!$Label.c.Transfer_Attachments}" value="transferAttachment" class="menu-button-link"
+                                     />
+                                <aura:if isTrue="{!v.panelProperties.parentIsOSCAR}">
+                                    <lightning:menuItem label="{!$Label.c.Oscar_Attachments}"
+                                        value="viewOscarAttachments" class="menu-button-link" />
+                                </aura:if>
+                                <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
+                                    <lightning:menuItem label="{!$Label.c.Make_All_Public}" value="makeAllPublic" class="menu-button-link" />
+                                </aura:if>
+                                <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
+                                    <lightning:menuItem label="{!$Label.c.Make_All_Private}" value="makeAllPrivate" class="menu-button-link" />
+                                </aura:if>
+                                <aura:if isTrue="{!v.panelProperties.isSAAMorSIDRA}">
+                                    <lightning:menuItem label="Download All Files" value="downloadAllFiles" class="menu-button-link" />
+                                </aura:if>
+                        </lightning:buttonMenu>
                     </lightning:buttonGroup>
                 </aura:if>
             </aura:if>
         </aura:set>
-       
-        <p  class=" slds-p-horizontal_small card-max-size" >
+
+        <p class=" slds-p-horizontal_small card-max-size">
             <aura:if isTrue="{!v.lstAttachmentsLength > 0}">
                 <lightning:datatable columns="{! v.columns }" data="{! v.lstAttachments }" keyField="{! v.keyField }"
-                    hideCheckboxColumn="true" onrowaction="{!c.attachLineActionHandler}"/>
+                    hideCheckboxColumn="true" onrowaction="{!c.attachLineActionHandler}" />
             </aura:if>
 
         </p>
@@ -263,7 +255,8 @@
                 <!--###### MODAL BOX BODY Part Start From Here ######-->
                 <div class="slds-modal__content slds-p-around_medium">
                     <aura:if isTrue="{!v.showPopupLoader}">
-                        <lightning:spinner class="slds-modal__content slds-p-around_medium" alternative-text="Loading" size="medium"></lightning:spinner>
+                        <lightning:spinner class="slds-modal__content slds-p-around_medium" alternative-text="Loading"
+                            size="medium"></lightning:spinner>
                     </aura:if>
                     <aura:if isTrue="{!v.lstAttachmentsLength > 0}">
                         {!$Label.c.The_attachments_you_select_will_be_copied_to_the_target_case}
