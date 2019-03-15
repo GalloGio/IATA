@@ -9,13 +9,13 @@
            action="{!securityCheck}">
 
     <html>
-        <c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
+        <c:ISSP_Header communityName="{!communityName}" />
         <body>
         <script src="{!URLFOR($Resource.bootbox)}" />
         <script src="{!URLFOR($Resource.datePickerFix)}" />
         <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
         <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
-        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"/>
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
 
@@ -455,7 +455,7 @@
         var countryMap = JSON.parse(JSON.stringify({!countriesByIsoMap}));
 
         if (countryMap[$('[id$=countrySelectedMC]').find(':selected').val()]['AMS_Settlement_System__c'] == countryMap['{!con.Account.IATA_ISO_Country__r.ISO_Code__c}']['AMS_Settlement_System__c']) {
-            $('[name$=separateLegalEntitySelect]').filter('[value=Yes]').prop('checked', true);
+            $('[name$=separateLegalEntitySelect]').filter('[value=No]').prop('checked', true);
             $('[name$=separateLegalEntitySelect]').attr('disabled', 'true');
         } else {
             $('[name$=separateLegalEntitySelect]').removeAttr('disabled');
