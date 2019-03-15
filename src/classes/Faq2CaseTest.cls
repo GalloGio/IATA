@@ -177,12 +177,20 @@ private class Faq2CaseTest {
     @isTest
     static void testArticleViewLine() {
         FAQ__kav article = new FAQ__kav();
+        article.UrlName = 'Test';
         FAQ__VoteStat voteStat = new FAQ__VoteStat();
         
         Test.startTest();
         
         vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
-        ctrl.createArticleStatisticsRecords(article,'Test');
+        ctrl.SelectedArticleModalView = new vfISSP_FAQ2Case.ArticleModalView();
+        ctrl.topic = '1';
+        ctrl.DataCategoryContainer = new clsDataCategoryContainer();
+        ctrl.createArticleStatisticsRecords(article,ENV.ArticleStatType.View);
+        List<ArticleStatistics__c> articleStatRecords = [SELECT URL_Name__c, Stat_Type__c
+                                                FROM ArticleStatistics__c];
+        System.debug('articleStatRecords: ' + articleStatRecords);
+        ctrl.calculateViewAndSatisfied(article);
 
         vfISSP_FAQ2Case.ArticleViewLine articleVL1 = new vfISSP_FAQ2Case.ArticleViewLine(article);
         articleVL1.getHasVoteStat();
@@ -916,9 +924,25 @@ private class Faq2CaseTest {
         LAcountriesPB.Sector__c = '';
         LAcountriesPB.Name = 'AirlinePortugueseEurope';
         insert LAcountriesPB;
+        LAcountriesPB = new LiveAgent_Countries_Per_Button__c();
+        LAcountriesPB.Button_Name__c = 'Emergency';
+        LAcountriesPB.Country__c = 'Portugal';
+        LAcountriesPB.Iso_Code__c = 'PT';
+        LAcountriesPB.Region__c = 'Europe';
+        LAcountriesPB.Sector__c = 'Airline';
+        LAcountriesPB.Name = 'EmergencyAirlineEurope';
+        insert LAcountriesPB;
         
         //Custom settings 2
         LiveAgentButtonSettings__c  LAbtnSettings = new LiveAgentButtonSettings__c();
+        LAbtnSettings.ButtonId__c= '5731r00000003xR';
+        LAbtnSettings.DeploymentId__c='572w0000000CdgF';
+        LAbtnSettings.Language__c= 'pt';
+        LAbtnSettings.Region__c= 'Europe';
+        LAbtnSettings.Sectors__c= 'Airline';
+        LAbtnSettings.Name='Emergency';
+        insert LAbtnSettings;
+        LAbtnSettings = new LiveAgentButtonSettings__c();
         LAbtnSettings.ButtonId__c= '5739E00000000R0QAI';
         LAbtnSettings.DeploymentId__c='572w0000000CdgF';
         LAbtnSettings.Language__c='pt';
@@ -933,6 +957,11 @@ private class Faq2CaseTest {
         LAtopics.LVA_ButtomCategories__c= 'BUT_CAT_EMERGENCY,BUT_CAT_ALL,BUT_CAT_PORTAL,BUT_CAT_COUNTRY,BUT_CAT_ENGLISH,BUTTON_NOT_ALLOWED';
         LAtopics.Name = '23';
         insert LAtopics;
+        LAtopics =  new ISSP_FAQ2CaseLiveAgentTopics__c();
+        LAtopics.value__c='Accreditation_Cargo_Agent__c';
+        LAtopics.LVA_ButtomCategories__c= 'BUT_CAT_4_EMERGENCY,BUT_CAT_ALL,BUT_CAT_PORTAL,BUT_CAT_COUNTRY,BUT_CAT_ENGLISH,BUTTON_NOT_ALLOWED';
+        LAtopics.Name = '24';
+        insert LAtopics;
         List <String> splitButtomCategories = (LAtopics.LVA_ButtomCategories__c).split(',');
         
         //ISO Country        
@@ -941,6 +970,7 @@ private class Faq2CaseTest {
         isoC.ISO_Code__c = 'PT';
         isoC.Case_BSP_Country__c = 'Portugal';
         isoC.Region__c = 'Europe';
+        isoC.LVA_CountryLanguage__c = 'pt';
         insert isoC;
         system.debug('isoCisoC ' + isoC);
         
@@ -1008,18 +1038,22 @@ private class Faq2CaseTest {
             system.assertEquals(false,showButton);
             
             controller.setLiveAgentButtonsNames();
+            String csButtonsListJson = controller.csButtonsListJson; //code coverage
             controller.getButtonNameFromConfigAndAddToList(LAbtnSettings.Name,splitButtomCategories[1]);
             controller.isAllowedCode(LAbtnSettings.Name);
             system.assertEquals(true,controller.isAllowedCode(LAbtnSettings.Name));
 
             
             controller.getTopicsToShowButtonFromACategory(splitButtomCategories[0]);
-            LAbtnSettings.Name='Emergency';
-            update LAbtnSettings;
+            //LAbtnSettings.Name='Emergency';
+            //update LAbtnSettings;
             controller.setLiveAgentButtonsNames();
-            controller.getButtonNameFromConfigAndAddToList(LAbtnSettings.Name,splitButtomCategories[0]);
+            System.debug('splitButtomCategories[0]: ' + splitButtomCategories[0]);
+            controller.Clicked_EmergencyRequest = true;
+            controller.subtopic = Env.SelectOptionDefaultValue;
+            controller.getButtonNameFromConfigAndAddToList('EmergencyAirlinepteurope',splitButtomCategories[0]);
             controller.isAllowedCode(LAbtnSettings.Name);
-            system.assertEquals(false,controller.isAllowedCode(LAbtnSettings.Name));
+            system.assertEquals(true,controller.isAllowedCode(LAbtnSettings.Name));
             
             Boolean isVidAllowed = controller.livAgentIntroVidIsAllowed;
             system.assertEquals(true, isVidAllowed);
@@ -1267,5 +1301,270 @@ private class Faq2CaseTest {
             controller.getCallUsEmergencyFinalString();
         }
 
+    }
+
+
+    @isTest
+    static void testFaq2Case_AirlineChargesUpdate(){
+
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+        Account headQuarter = ISSP_ObjectFactory.createNewAccount();
+        headQuarter.BillingCity = 'test2';
+        headQuarter.Name = 'test2';
+        headQuarter.RecordTypeId = rtIdHq;
+        headQuarter.Site = 'headSite';
+        insert headQuarter;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.Email = 'testxxaasddasdasda@test.com';
+        con.AccountId= headQuarter.Id;
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        System.runAs(newUser){
+            Test.startTest();
+            PageReference pageref = Page.ISSP_FAQ2Case;
+            pageref.getParameters().put('type', 'AirlineChargesUpdate');
+            Test.setCurrentPage(pageref);
+            vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
+            controller.pageLoad();
+            System.debug('isToShowFAQs: ' + controller.isToShowFAQs);
+            System.assertEquals(ISSP_CurrencyCenterUtil.FaqSubtopic_AirlineChargesUpdate, controller.subtopic);
+            Test.stopTest();
+        }
+    }
+
+    @isTest
+    static void testFaq2Case_CurrencyRepatriationIssues(){
+
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+        Account headQuarter = ISSP_ObjectFactory.createNewAccount();
+        headQuarter.BillingCity = 'test2';
+        headQuarter.Name = 'test2';
+        headQuarter.RecordTypeId = rtIdHq;
+        headQuarter.Site = 'headSite';
+        insert headQuarter;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.Email = 'testxxaasddasdasda@test.com';
+        con.AccountId= headQuarter.Id;
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        System.runAs(newUser){
+            Test.startTest();
+            PageReference pageref = Page.ISSP_FAQ2Case;
+            pageref.getParameters().put('type', 'CurrencyRepatriationIssues');
+            Test.setCurrentPage(pageref);
+            vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
+            controller.pageLoad();
+            System.debug('isToShowFAQs: ' + controller.isToShowFAQs);
+            System.assertEquals(ISSP_CurrencyCenterUtil.FaqSubtopic_CurrencyRepatriation, controller.subtopic);
+            Test.stopTest();
+        }
+    }
+
+    @isTest
+    static void testFaq2Case_RequestSurveyUpdate(){
+
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+        Account headQuarter = ISSP_ObjectFactory.createNewAccount();
+        headQuarter.BillingCity = 'test2';
+        headQuarter.Name = 'test2';
+        headQuarter.RecordTypeId = rtIdHq;
+        headQuarter.Site = 'headSite';
+        insert headQuarter;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.Email = 'testxxaasddasdasda@test.com';
+        con.AccountId= headQuarter.Id;
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        System.runAs(newUser){
+            Test.startTest();
+            PageReference pageref = Page.ISSP_FAQ2Case;
+            pageref.getParameters().put('type', 'RequestSurveyUpdate');
+            Test.setCurrentPage(pageref);
+            vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
+            controller.pageLoad();
+            System.debug('isToShowFAQs: ' + controller.isToShowFAQs);
+            System.assertEquals(ISSP_CurrencyCenterUtil.FaqSubtopic_RequestSurveyUpdate, controller.subtopic);
+            Test.stopTest();
+        }
+    }
+
+    @isTest
+    static void testFaq2Case_getSelectArtical(){
+
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+        Account headQuarter = ISSP_ObjectFactory.createNewAccount();
+        headQuarter.BillingCity = 'test2';
+        headQuarter.Name = 'test2';
+        headQuarter.RecordTypeId = rtIdHq;
+        headQuarter.Site = 'headSite';
+        insert headQuarter;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.Email = 'testxxaasddasdasda@test.com';
+        con.AccountId= headQuarter.Id;
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        System.runAs(newUser){
+            FAQ__kav article = new FAQ__kav(
+                    Title = 'test apex',
+                    Summary = 'test from apex',
+                    Answer__c = 'test',
+                    URLName = 'test'
+            );
+            insert article;
+            System.debug('article: ' + article);
+
+            PageReference pageref = Page.ISSP_FAQ2Case;
+            pageref.getParameters().put('artid', article.Id);
+            Test.setCurrentPage(pageref);
+
+            vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
+
+            ctrl.pageLoad();
+
+            ctrl.articleViewLines = new List<vfISSP_FAQ2Case.ArticleViewLine>();
+            ctrl.articleViewLines.add( new vfISSP_FAQ2Case.ArticleViewLine(article));
+            System.debug('articleViewLines: ' + ctrl.articleViewLines);
+            PageReference pr = ctrl.getSelectArtical();
+        }
+    }
+
+    @isTest
+    static void testFaq2Case_initTopicsList(){
+
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+        Account headQuarter = ISSP_ObjectFactory.createNewAccount();
+        headQuarter.BillingCity = 'test2';
+        headQuarter.Name = 'test2';
+        headQuarter.RecordTypeId = rtIdHq;
+        headQuarter.Site = 'headSite';
+        insert headQuarter;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.Email = 'testxxaasddasdasda@test.com';
+        con.AccountId= headQuarter.Id;
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        System.runAs(newUser){
+            vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
+
+            ctrl.DataCategoryContainer = new clsDataCategoryContainer();
+            clsDataCategory selectDataCategory = ctrl.DataCategoryContainer.lst_DataCategories[0];
+            ctrl.subtopic = selectDataCategory.CategoryName;
+
+            PageReference pageref = Page.ISSP_FAQ2Case;
+            pageref.getParameters().put('topic', selectDataCategory.CategoryLabel);
+            Test.setCurrentPage(pageref);
+
+            ctrl.pageLoad();
+        }
+    }
+
+    @isTest
+    static void testFaq2Case_CodeCoverage(){
+
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+        Account headQuarter = ISSP_ObjectFactory.createNewAccount();
+        headQuarter.BillingCity = 'test2';
+        headQuarter.Name = 'test2';
+        headQuarter.RecordTypeId = rtIdHq;
+        headQuarter.Site = 'headSite';
+        insert headQuarter;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.Email = 'testxxaasddasdasda@test.com';
+        con.AccountId= headQuarter.Id;
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        Portal_Applications__c papp = new Portal_Applications__c();
+        papp.Application_URL__c = '/ISSP_CurrencyCenterHome';
+        papp.Hide_on_Homepage__c = false;
+        insert papp;
+
+        Portal_Application_Right__c par = new Portal_Application_Right__c();
+        par.Contact__c = con.Id;
+        par.Right__c = 'Access Granted';
+        par.Portal_Application__c = papp.Id;
+        insert par;
+
+        System.runAs(newUser){
+            vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
+
+            ctrl.pageLoad();
+            PageReference pr = ctrl.IwishtoComplain();
+            Boolean bool1 = ctrl.isComplainLayout;
+
+            Boolean bool2 = ctrl.showChatButtons;
+            ctrl.showButton = true;
+            System.assert(true,ctrl.showChatButtons);
+
+            String lbl = ctrl.weLoveToHelpLabel;
+        }
+    }
+
+    @isTest
+    static void testFaq2Case_create(){
+
+        Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+        Account headQuarter = ISSP_ObjectFactory.createNewAccount();
+        headQuarter.BillingCity = 'test2';
+        headQuarter.Name = 'test2';
+        headQuarter.RecordTypeId = rtIdHq;
+        headQuarter.Site = 'headSite';
+        insert headQuarter;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.Email = 'testxxaasddasdasda@test.com';
+        con.AccountId= headQuarter.Id;
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        System.runAs(newUser){
+            vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
+
+            ctrl.pageLoad();
+
+            ctrl.topic = '1';
+            clsDataCategory selectDataCategory = ctrl.DataCategoryContainer.lst_DataCategories[1];
+            ctrl.refreshTopicPickList();
+            ctrl.refreshSubTopicPickList();
+
+            System.debug('testFaq2Case_create topic: ' + ctrl.topic);
+            System.debug('testFaq2Case_create subtopic: ' + ctrl.subtopic);
+
+            ISSP_FAQ2Case_CreateCaseURL__c ccu = new ISSP_FAQ2Case_CreateCaseURL__c();
+            ccu.Name = 'CCUrl';
+            ccu.Topic__c = selectDataCategory.CategoryName;
+            ccu.SubTopic__c = ctrl.subtopic;
+            ccu.URL__c = '/ISSP_Case?';
+            insert ccu;
+
+            System.debug('testFaq2Case_create ISSP_FAQ2Case_CreateCaseURL__c ccu: ' + ccu);
+
+            PageReference pr = ctrl.create();
+        }
     }
  }
