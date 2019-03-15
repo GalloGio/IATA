@@ -12,7 +12,16 @@ global with sharing class WSJavascript {
         
         Database.insert(events, false);
         
-		SignaturitRest.updateEmailStatus(new List<Tracked_Email__c>{te});
+        SignaturitRest.updateEmailStatus(new List<Tracked_Email__c>{te});
     }
 
+    /**
+        Update input case adding a DML Option to send an email
+    **/
+    webservice static void updateCase(Case caseObject, Boolean triggerUserEmail) {
+        Database.DMLOptions dlo = new Database.DMLOptions();
+        dlo.EmailHeader.triggerUserEmail = triggerUserEmail;
+        caseObject.setOptions(dlo);
+        update caseObject;
+    }
 }
