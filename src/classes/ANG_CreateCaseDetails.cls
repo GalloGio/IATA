@@ -9,11 +9,11 @@
 		INT_066
 
     Sample URI
-    /services/apexrest/case-create-details/500XXXXXXXX/payment-status
+    /services/apexrest/case-create-details/500xxxxxxxxxxxx/payment-status?caller=<NameOfExtSystem>
 
     Sample body
     [
-		{"caller":"GDI","paymentStatus":"Paid"}
+		{"paymentStatus":"Paid"}
     ]
 ***********************************************************/
 
@@ -41,6 +41,7 @@ global without sharing class ANG_CreateCaseDetails {
 
             string caseId = SplittedURI[2];   //get the case identifier code request URI
             string requestType = SplittedURI[3];    //get the payment status from the request URI
+            string requestCaller = req.params.get('caller');	//Name of the caller (e.g. GDI)    //get the payment status from the request URI
 
             if(!ANG_CreateCaseDetails.setValidRequest.contains(requestType)){
                 ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Wrong URI:'+requestType)), 400);
@@ -57,7 +58,7 @@ global without sharing class ANG_CreateCaseDetails {
 
 				CasePaymentStatus casePaymentStatus = new CasePaymentStatus(req,caseId);
 
-				if(casePaymentStatus.execute())
+				if(casePaymentStatus.execute(requestCaller))
 	            	ANG_RestServiceHelper.GenerateResponse(json.serialize(new INT066_SuccessPayload(caseId)), 200);
 			}
 
@@ -89,13 +90,13 @@ global without sharing class ANG_CreateCaseDetails {
 			this.caseId = caseId;
 		}
 
-		public boolean execute(){
+		public boolean execute(String caller){
 			
 			//payload
 			INT066_Payload payloadList = (INT066_Payload)System.JSON.deserialize(req.requestBody.toString(), INT066_Payload.class);
 
             //Retrieve parameter from the querystring
-            string caller = payloadList.caller;	//Name of the caller (e.g. GDI) 
+            //string caller = payloadList.caller;	//Name of the caller (e.g. GDI) 
             string paymentStatus = payloadList.paymentStatus; //e.g.: Paid
 
 			if(caller==null || caller== '' || !setValidCaller.contains(caller)){
