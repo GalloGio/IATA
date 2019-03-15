@@ -68,9 +68,9 @@ global class AMS_BSPLinkIntegration {
 			}
 		}
 		
-		if(bCaseToUpd && (sProcess=='Deactivation' || sProcess=='Reactivation' || sProcess=='DeactivationUndo')){
+		if(bCaseToUpd && (sProcess=='Deactivation' || sProcess=='UrgentDeactivation' || sProcess=='Reactivation' || sProcess=='DeactivationUndo')){
 			for(Case c:lsCase){
-				if(sProcess=='Deactivation') c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+				if(sProcess=='Deactivation' || sProcess=='UrgentDeactivation') c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 				if(sProcess=='Reactivation') c.Open_TKT_System__c = system.now();
 				if(sProcess=='DeactivationUndo') c.Open_TKT_System__c = system.now();
 			}
@@ -139,7 +139,7 @@ global class AMS_BSPLinkIntegration {
 	    	}
 	    	
 			//Check sProcess variable 
-			if(sProcess=='Deactivation' || sProcess == 'DeactivationUndo' || sProcess == 'Reactivation'){
+			if(sProcess=='Deactivation' || sProcess == 'UrgentDeactivation' || sProcess == 'DeactivationUndo' || sProcess == 'Reactivation'){
 				
 				//map<id, string> mapBPEEmails = new map<id, string>();
 				//for(Contact c: [select AccountId, Email from contact where Financial_Assessment_Contact__c=true and AccountId in :setAccntId])
@@ -152,7 +152,8 @@ global class AMS_BSPLinkIntegration {
 
 					for(Agency_Authorization__c AA:lsToRemove){
 						Response resp;
-						if(sProcess == 'Deactivation') 		resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter);
+						if(sProcess == 'Deactivation' || sProcess=='UrgentDeactivation')
+							resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter, sProcess);
 						
 						system.debug('DTULLO 142 --> ' + AA);
 						
@@ -162,7 +163,7 @@ global class AMS_BSPLinkIntegration {
 
 
 				    	if(resp.result == 'Ok'){
-				    		if(sProcess == 'Deactivation') AA.Status__c = 'Deactivation in process';
+				    		if(sProcess == 'Deactivation' ||  sProcess == 'UrgentDeactivation') AA.Status__c = 'Deactivation in process';
 				    		AA.Last_Request_Result__c = sProcess + ' in process';	
 				    	}
 					    else 					AA.Last_Request_Result__c = resp.description;
@@ -233,7 +234,7 @@ global class AMS_BSPLinkIntegration {
     }
     
     //Method to invoke the webservice exposed by BSPLink to deactivate an agency
-    global static Response AgentDeactivation(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param){
+    global static Response AgentDeactivation(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param, string sProcess){
     	Response oReturn = new Response();
     	
     	HttpRequest req = new HttpRequest();
@@ -248,7 +249,8 @@ global class AMS_BSPLinkIntegration {
     	BodyRequest.IsoCountryCode = AA.ISO_Country__c;	//Get Country Code of the Agency
     	BodyRequest.AgentCode = AA.IATACode__c;			//Get IATA COde
     	BodyRequest.SalesForceId = AA.Id;		//ID of the record created in the queue table
-    	req.setBody(JSON.serialize(BodyRequest));
+		if(sProcess=='UrgentDeactivation')	BodyRequest.Urgent='Yes';
+    	req.setBody(JSON.serialize(BodyRequest, true));
     	req.setTimeout(120000); 
     	
     	try{
@@ -487,7 +489,7 @@ global class AMS_BSPLinkIntegration {
     	public string IsoCountryCode;
     	public string AgentCode;
     	public string SalesForceId;
-    	
+    	public string Urgent;
     }
     
 	//Class to store the request and response for the agentReactivation

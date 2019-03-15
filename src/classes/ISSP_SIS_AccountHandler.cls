@@ -31,6 +31,21 @@ public with sharing class ISSP_SIS_AccountHandler {
     }
 
     /**
+        Finds in Custom Metadata SIS_Management_Visibility__mdt all valid combinations
+        of Sector + Category
+    **/
+    private static set<String> VALID_SIS_SECTOR_CATEGORY = null;
+    public static set<String> getValidSISSectorCategory() {
+        if (VALID_SIS_SECTOR_CATEGORY==null) {
+            VALID_SIS_SECTOR_CATEGORY = new set<String>();
+            for (SIS_Management_Visibility__mdt sisVisibility:
+            [SELECT Id, Sector__c, Category__c FROM SIS_Management_Visibility__mdt WHERE Is_Visible__c = true] ) {
+                VALID_SIS_SECTOR_CATEGORY.add(sisVisibility.Sector__c + ',' + sisVisibility.Category__c);
+            }
+        }
+        return VALID_SIS_SECTOR_CATEGORY;
+    }
+    /**
         BEFORE INSERT
     **/
     public static void beforeInsert(list<Account> listAccount) {
@@ -73,6 +88,7 @@ public with sharing class ISSP_SIS_AccountHandler {
     **/
     public static void beforeUpdate(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
         if (BLOCK_EXECUTION) return;
+        giveSISAppToAccountUsers(mapNews, mapOlds);
         validateFieldAvailableSISManagement(mapNews, mapOlds);
         updateSISStatusFields(mapNews, mapOlds);
         
@@ -244,6 +260,28 @@ public with sharing class ISSP_SIS_AccountHandler {
             if (account.Contacts.isEmpty()) {
                 mapNews.get(account.Id).Give_SIS_Membership__c.addError('Required at least one contact with "' + ISSP_SISMembershipApplication_Ctrl.APP_NAME + '"');
             } 
+        }
+    }
+
+    /**
+        Finds all suitable accounts to find portal users to give them SIS Joining App
+    **/
+    public static void giveSISAppToAccountUsers(map<Id,Account> mapNews, map<Id,Account> mapOlds) {
+        list<Id> listAccountId = new list<Id>();
+        for (Account accountNew: mapNews.values()) {
+            Account accountOld = mapOlds.get(accountNew.Id);
+            if (accountNew.Sector__c!=accountOld.Sector__c ||
+                accountNew.Category__c!=accountOld.Category__c
+            ) {
+                String key = accountNew.Sector__c + ',' + accountNew.Category__c;
+                if (getValidSISSectorCategory().contains(key)) {
+                    listAccountId.add(accountNew.Id);
+                }
+            }
+        }
+        if (!listAccountId.isEmpty()) {
+            // give SIS Joining App to all interested users inside these accounts
+            ISSP_WS_Utilities.invokeGiveSISAppToAccountUsers(listAccountId);
         }
     }
 }
