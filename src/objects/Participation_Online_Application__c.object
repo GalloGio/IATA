@@ -1041,7 +1041,7 @@
         <fullName>ISSP_AMC_ESTIMATED_ANNUAL_BAGGAGE_TAGS__c</fullName>
         <description>Estimated annual baggage tags</description>
         <externalId>false</externalId>
-        <label>ISSP_AMC_ESTIMATED_ANNUAL_BAGGAGE_TAGS</label>
+        <label>Estimated annual baggage tags</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -1054,7 +1054,7 @@
         <fullName>ISSP_AMC_ESTIMATED_ANNUAL_PASSENGERS__c</fullName>
         <description>Estimated annual passengers</description>
         <externalId>false</externalId>
-        <label>ISSP_AMC_ESTIMATED_ANNUAL_PASSENGERS</label>
+        <label>Estimated annual passengers</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>

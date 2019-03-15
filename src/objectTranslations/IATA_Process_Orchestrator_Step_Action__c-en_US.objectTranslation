@@ -9,6 +9,10 @@
         <value>IATA Process Orchestrator Step Actions</value>
     </caseValues>
     <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+    </fields>
+    <fields>
         <label><!-- Action name --></label>
         <name>Action_name__c</name>
     </fields>
@@ -58,6 +62,10 @@
     <fields>
         <label><!-- Status --></label>
         <name>Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
     </fields>
     <layouts>
         <layout>IATA Process Orchestrator Step Action Layout</layout>

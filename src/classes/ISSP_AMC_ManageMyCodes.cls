@@ -241,10 +241,10 @@ public class ISSP_AMC_ManageMyCodes {
 
 
 		if(isDesignator == true){
-          	caseUrl = '/ISSP_AMC_Airline_Designators?' + designatorApplicationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';	
+          	caseUrl = '/ISSP_AMC_Airline_Designators?' + 'participationId=' + designatorApplicationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';	
 		}
 		if(isAccountingPrefix == true){
-			caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?' + accountingOrPrefixApplicationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';
+			caseUrl = '/ISSP_AMC_Accounting_Or_Prefix_Code?' + 'participationId=' + accountingOrPrefixApplicationId + 'mid=M3S1&retURL=/ISSP_AMC_Home';
 		}
 		/*if(isLocation == true){
 			caseUrl = '/ISSP_AMC_Location_Identifier?' + 'participationId=' + locationCodeApplicationId + '&mid=M3S1&retURL=/ISSP_AMC_Home';
