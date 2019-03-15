@@ -59,6 +59,10 @@ public with sharing class ISSP_CurrencyCenterHomeController {
         return new PageReference('/ISSP_CurrencyCenterHeatMap');
     }
 
+	public PageReference GoToReportingActions() {
+		return new PageReference('/ISSP_CurrencyCenterReportingActions');
+	}
+
     public class RegionWrapper{
         public String region {get;set;}
         public String encodedRegion {get;set;}

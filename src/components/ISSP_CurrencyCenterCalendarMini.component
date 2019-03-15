@@ -1,0 +1,159 @@
+<apex:component allowDML="false" controller="ISSP_CurrencyCenterCalendarController">
+
+<script>
+function loadScript(url, callback){
+
+    var script = document.createElement("script")
+    script.type = "text/javascript";
+
+    if (script.readyState){  //IE
+        script.onreadystatechange = function(){
+            if (script.readyState == "loaded" ||
+                    script.readyState == "complete"){
+                script.onreadystatechange = null;
+                callback();
+            }
+        };
+    } else {  //Others
+        script.onload = function(){
+            callback();
+        };
+    }
+
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+</script>
+
+    <apex:stylesheet value="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/minicalendar.min.css')}"/>
+
+    <script>
+    var events = {!ListEventsJSONGrouped};
+    //console.log(MAP_FREQUENCIES);
+    //console.log(isAirline);
+    //console.log(defaultCountry);
+    //console.log(events);
+    // Load js scripts using this method due to a conflict in home page
+    loadScript("{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/moment.min.js')}",function(){
+    loadScript("{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/fullcalendar.min.js')}",function(){
+    loadScript("{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.js')}",function(){
+        initCalendar();
+        setCalendarEvents(events);
+    });
+    });
+    });
+
+
+    $(document).ready(function() {
+    });
+
+    function initCalendar() {
+        var calendar =  $('#calendar').fullCalendar({
+            aspectRatio: 1,
+            header: {
+                left:'prev',
+                center: 'title',
+                right: 'next'
+            },
+            views: {
+              listMonth: {
+                type: 'list',
+                duration: { months: 1 }
+              }
+            },
+            validRange: {
+              start: '{!TEXT(minDate)}',
+              end: '{!TEXT(maxDate)}'
+            },
+            theme: false,
+            displayEventTime: false,
+            editable: false,
+            selectable: false,
+            defaultView: 'month',
+            allDaySlot: false,
+            selectHelper: false,
+            droppable: false,
+
+            // locale
+            isRTL: false,
+            firstDay: 1,
+            monthNames: ['{!$Label.ISSP_AMS_Month_January}','{!$Label.ISSP_AMS_Month_February}','{!$Label.ISSP_AMS_Month_March}','{!$Label.ISSP_AMS_Month_April}','{!$Label.ISSP_AMS_Month_May}','{!$Label.ISSP_AMS_Month_June}','{!$Label.ISSP_AMS_Month_July}','{!$Label.ISSP_AMS_Month_August}','{!$Label.ISSP_AMS_Month_September}','{!$Label.ISSP_AMS_Month_October}','{!$Label.ISSP_AMS_Month_November}','{!$Label.ISSP_AMS_Month_December}'],
+            monthNamesShort: ['{!$Label.PKB2_month_January}','{!$Label.PKB2_month_February}','{!$Label.PKB2_month_March}','{!$Label.PKB2_month_April}','{!$Label.PKB2_month_May}','{!$Label.PKB2_month_June}','{!$Label.PKB2_month_July}','{!$Label.PKB2_month_August}','{!$Label.PKB2_month_September}','{!$Label.PKB2_month_October}','{!$Label.PKB2_month_November}','{!$Label.PKB2_month_December}'],
+            dayNames: ['{!$Label.ISSP_Weekday_Sunday}','{!$Label.ISSP_Weekday_Monday}','{!$Label.ISSP_Weekday_Tuesday}','{!$Label.ISSP_Weekday_Wednesday}','{!$Label.ISSP_Weekday_Thursday}','{!$Label.ISSP_Weekday_Friday}','{!$Label.ISSP_Weekday_Saturday}'],
+            dayNamesShort: ['{!$Label.ISSP_Weekday_Short_Sunday}','{!$Label.ISSP_Weekday_Short_Monday}','{!$Label.ISSP_Weekday_Short_Tuesday}','{!$Label.ISSP_Weekday_Short_Wednesday}','{!$Label.ISSP_Weekday_Short_Thursday}','{!$Label.ISSP_Weekday_Short_Friday}','{!$Label.ISSP_Weekday_Short_Saturday}'],
+            buttonText: {
+                month: 'Month View',
+                listMonth: 'Task List'
+            },
+            eventRender: function(event, element) {
+                element.qtip({
+                    content: {text: event.description},
+                    position: {
+                        my: 'center left',
+                        at: 'center right'
+                    },
+                    style: {
+                        classes: 'qtip-blue qtip-rounded qtip-shadow'
+                    }
+                });
+            }
+        });
+    }
+
+    function setCalendarEvents(listEvents){
+        var calendar =  $('#calendar');
+        //remove existing events
+        calendar.fullCalendar('removeEvents' , function(e){ return true; });
+        if (listEvents.length ==0) {
+            calendar.addClass("disabled");
+            showError("{!$Label.ISSP_OperationalCalendar_No_Events}");
+        } else {
+            // add new events
+            calendar.fullCalendar('renderEvents' , listEvents, true);
+            calendar.removeClass("disabled");
+            //$('.fc-event').tooltip({placement: "right"});
+        }
+    }
+
+    function showError(message) {
+        $('#calendar').addClass("disabled");
+        $("#errormessage")
+            .text(message)
+            .show();
+    }
+    function hideError() {
+        $("#errormessage").hide();
+        $('#calendar').removeClass("disabled");
+    }
+</script>
+
+    <!-- MAIN CALENDAR CONTAINER -->
+    <div class="panel panel-primary" style="border-color:rgb(230,230,230);" >
+        <!-- CONTAINER TITLE -->
+        <div class="panel-heading" style="background-image:none; background-color:#E6E6E6; border-color: rgb(230,230,230); color:#0075BC; font-family:Verdana; font-size: 14px; font-weight: bold;">
+            <h3 class="panel-title" style="background-image:none; background-color:#E6E6E6; color:#0075BC; font-family:Verdana; font-size: 14px; font-weight: bold;">
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar" style="color:#0075BC;"></span>
+                <a title="Events & Meetings" href="/ISSP_CurrencyCenterCalendar">Events &amp; Meetings</a>
+            </h3>
+        </div>
+        <!-- CONTAINER BODY -->
+        <div class="panel-body" style="padding:2px">
+            <div class="container" style="width:100%">
+                <div id="rowCalendar" class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-10">
+                        <div id="calendar-container">
+                            <div id="errormessage" class="center" style="display:none"></div>
+                            <div id='calendar'></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</apex:component>
