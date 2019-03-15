@@ -328,11 +328,6 @@
             <actionType>CustomButton</actionType>
             <sortOrder>10</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>PrintableView</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>
