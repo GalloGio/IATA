@@ -130,8 +130,9 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	
     	bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue];
     	
-		for(ANG_BSP_Attributes__c bsp : bspAttributes) 
-			if (bsp.recordtypeid == CCConfRT) percentageFS = String.valueOf(bsp.FS_Percentage__c);
+    	if(actionValue != 'Apply_RHC_regardless')
+    		for(ANG_BSP_Attributes__c bsp : bspAttributes) 
+    			if (bsp.recordtypeid == CCConfRT) percentageFS = String.valueOf(bsp.FS_Percentage__c);
 
     	} else if (modeValue == 'IATA_Code') {
     		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
