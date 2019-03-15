@@ -2972,7 +2972,7 @@ public class AMS_OSCARTriggerHandler {
                     }
                 }
 
-                if(oscar.process__c == AMS_Utils.NEWGESTANDARD && oscar.Is_PCI_compliant__c == null){
+                if((oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.MCAE) && oscar.Is_PCI_compliant__c == null){
                     oscar.addError('In order to pass this step you need to check the Is PCI compliant field.');
                     return;
                 }
