@@ -1,0 +1,38 @@
+<apex:component controller="ISSP_AMS_Accreditation" allowDML="true">
+	<div class="row" style="padding-top: 20px">
+        <div class="col-md-12">
+            <apex:pageBlock>
+                <apex:pageBlockTable id="onGoingMultiCountryForms" value="{!multiCountryApplicationForms}" var="mcForm" styleClass="table" rendered="{!mcApplicationFormsFound}">
+                    
+                    <apex:column headerValue="">
+                        <apex:outputLink value="/{!IF(mcForm.HO_Account__c != null, 'ISSP_ANG_PAX_HE?', 'ISSP_ANG_PAX_AE?isMultiCountryNewAE=true&')}caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}&modify=true" rendered="{!mcForm.Status__c == 'Completed'}">Modify</apex:outputLink>
+                        
+                        <apex:outputLink value="/{!IF(mcForm.HO_Account__c != null, 'ISSP_ANG_PAX_HE?', 'ISSP_ANG_PAX_AE?isMultiCountryNewAE=true&')}caseId={!mcForm.SAAM_Case__r.Id}&currentMCFormId={!mcForm.id}&step=3{!IF(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!mcForm.Status__c == 'InProgress'}">Edit</apex:outputLink>&nbsp;
+
+                        <apex:commandLink immediate="true" onfocus="confirmMCFormDelete('{!mcForm.Id}'); return false;" rendered="{!mcForm.HO_Account__c == null}" reRender="">Remove</apex:commandLink>
+                    </apex:column>
+
+                    <apex:column headerValue="{!$ObjectType.Case.fields.Subject.label}" style="margin-left: {!IF(mcForm.HO_Account__c == null, '40px', 'none')};">
+                        <apex:outputText value="New Associate Entity - {!mcForm.Branch_Office_Country__r.Name}" rendered="{!mcForm.HO_Account__c == null}"/>
+                        <apex:outputField value="{!mcForm.SAAM_Case__r.Subject}" rendered="{!mcForm.HO_Account__c != null}"/>
+                    </apex:column>
+
+                    <apex:column headerValue="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Status__c.label}">
+                        <apex:outputText value="{!IF(mcForm.Status__c == 'InProgress', $Label.ISSP_Draft, $Label.ISSP_Validated)}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4" id="submitMC">
+            <input type="button" class="btn btn_iata_primary" onClick="showTermsAndConditionsModal(); return false;" value="Submit Multicountry Application to IATA" id="submitMCButton"/>
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <input type="button" class="btn btn_iata_primary" onClick="discardMultiCountry();" value="Discard Application" style="float: right;"/>
+        </div>
+    </div>
+</apex:component>
