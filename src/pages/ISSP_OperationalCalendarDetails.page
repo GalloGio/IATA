@@ -155,7 +155,12 @@
             columns: ':visible',
             format: {
                 body: function ( data, row, column, node ) {
-                    return formatDate(data);
+                    var datatype= $(node).attr("data-type");
+                    if (datatype=="date") {
+                        return formatDate(data);
+                    } else {
+                        return data;
+                    }
                 }
             }
         },
@@ -168,7 +173,12 @@
             footer: true,
             format: {
                 body: function ( data, row, column, node ) {
-                    return formatDate(data);
+                    var datatype= $(node).attr("data-type");
+                    if (datatype=="date") {
+                        return formatDate(data);
+                    } else {
+                        return data;
+                    }
                 }
             }
         },
@@ -399,6 +409,7 @@
             $.each(node.cells, function (j, cell) {
                 if (colTypes[j]=="date") {
                     var jcell = $(cell);
+                    jcell.attr("data-type","date");
                     jcell.attr("data-order",jcell.text());
                     jcell.text(formatDate(jcell.text()));
                 }
