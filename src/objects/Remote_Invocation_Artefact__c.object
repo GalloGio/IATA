@@ -110,6 +110,16 @@
                     <default>false</default>
                     <label>pdf</label>
                 </value>
+                <value>
+                    <fullName>txt</fullName>
+                    <default>false</default>
+                    <label>txt</label>
+                </value>
+                <value>
+                    <fullName>zip</fullName>
+                    <default>false</default>
+                    <label>zip</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

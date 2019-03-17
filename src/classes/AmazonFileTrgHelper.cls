@@ -56,10 +56,12 @@ public class AmazonFileTrgHelper {
 
     public static void AfterInsert(list<AmazonFile__c> listNews) {
         runProcessFromActionField(listNews);
+        sendMailToPortalUsers(listNews, null);
     }
     
     public static void AfterUpdate(map<Id,AmazonFile__c> mapNews, map<Id,AmazonFile__c> mapOlds) {
         runProcessFromActionField(mapNews, mapOlds);
+        sendMailToPortalUsers(mapNews, mapOlds);
     }
 
     public static void AfterUndelete(map<Id,AmazonFile__C> trgNewMap){
@@ -378,7 +380,7 @@ public class AmazonFileTrgHelper {
         update updOscar;
     }
 
-	/*** AMSU-139 ***/
+    /*** AMSU-139 ***/
     public static void checkApprover(List<AmazonFile__c> records, Map<Id,AmazonFile__c> oldMap) {
         String usrName = UserInfo.getName();
         Set<String> statusToCheck = new Set<String> {AMS_Utils.REJECTED, AMS_Utils.REJECTED_CLOSED, AMS_Utils.ACCEPTED};
@@ -619,5 +621,241 @@ public class AmazonFileTrgHelper {
         } catch (Exception e) {
             System.debug('Error sending an email sendMassEmail(' + templateName + ',' + listCase + '): ' + e.getMessage());
         }
+    }
+
+    public static void sendMailToPortalUsers(map<Id,AmazonFile__c> mapNews, map<Id,AmazonFile__c> mapOlds) {
+        List<AmazonFile__c> listNews = new List<AmazonFile__c>();
+        for(Id key : mapNews.keyset()) {
+            listNews.add(mapNews.get(key));
+        }
+        sendMailToPortalUsers(listNews, mapOlds);          
+    }
+
+    /**
+    Send mails to portal users.
+    **/
+    public static void sendMailToPortalUsers(list<AmazonFile__c> listNews, map<Id,AmazonFile__c> mapOlds) {
+
+        Map<Id, List<AmazonFile__c>> externalReportFileMap = new Map<Id, List<AmazonFile__c>>();
+
+        Set<Id> erIds = new Set<Id>();
+
+        System.debug('ALEX listNews : ' + listNews.size());
+
+        //
+        // Send an email to all users where the amazon file is linked to an external report.
+        // when the amazon file is set to public.
+        //
+        // Each user will receive an email with his new files.
+        //
+        // The users are the contacts linked to the accounts in the external_reports linked to the amazon files.
+        // Contacts in the hierarchy will also receive mails.
+        //
+
+        //
+        // Determine the set of amazon files to send their users an email.
+        //
+        for(AmazonFile__c aFile : listNews) {
+            Id auxId = aFile.sObject_Id__c;
+            String auxStr = '' + auxId.getsobjecttype();
+
+            Boolean erFileFlag = false;
+            if(mapOlds == null) {
+                if(auxStr == 'ISSP_External_Report__c' &&
+                   aFile.isPublic__c) {
+
+                    erFileFlag = true; 
+
+                }
+            } else {
+                if(auxStr == 'ISSP_External_Report__c' && !mapOlds.get(aFile.Id).isPublic__c &&
+                   aFile.isPublic__c) {
+
+                    erFileFlag = true;
+
+                }
+            }
+            if(erFileFlag) {
+
+                List<AmazonFile__c> files = externalReportFileMap.get(aFile.sObject_Id__c);
+
+                if(files == null) {
+                    List<AmazonFile__c> auxList = new List<AmazonFile__c>();
+                    auxList.add(aFile);
+                    externalReportFileMap.put(aFile.sObject_Id__c, auxList);    
+                } else {
+                    files.add(aFile);
+                }
+
+                erIds.add(aFile.sObject_Id__c);
+            }
+
+        }
+
+        if(externalReportFileMap.keySet().size() != 0) {
+
+            //
+            // Group the amazon files by account
+            //
+            Map<Id, List<AmazonFile__c>> accountFileMap = new Map<Id, List<AmazonFile__c>>();
+
+            List<ISSP_External_Report__c> erList = [Select Id, Account__c, Report_ID__c From ISSP_External_Report__c Where Id in :erIds];
+
+            Set<Id> accountsIds = new Set<Id>();
+
+            Set<String> reportTypes = new Set<String>();
+
+            for(ISSP_External_Report__c er : erList) {
+                List<AmazonFile__c> files = accountFileMap.get(er.Account__c);
+
+                if(files == null) {
+                    List<AmazonFile__c> auxList = new List<AmazonFile__c>();
+                    auxList.addAll(externalReportFileMap.get(er.Id));
+
+                    accountFileMap.put(er.Account__c, auxList);                        
+                } else {
+                    files.addAll(externalReportFileMap.get(er.Id));
+                }
+                accountsIds.add(er.Account__c);
+                reportTypes.add(er.Report_ID__c);
+            }
+
+            // Having the amazon files grouped by account now:
+            //
+            // Group the amazon files by contact.
+            //
+            // The contacts are those that belong to the accounts and have access to the portal services
+            // in the external reports.
+            //
+            List<ISSP_External_Reports_Config__c> externalReportSetting = [SELECT Portal_Service_ID__c
+                                                                             FROM ISSP_External_Reports_Config__c
+                                                                            WHERE Report_ID__c In :reportTypes];
+
+
+            Set<Id> portalServicesId = new Set<Id>();
+
+            for(ISSP_External_Reports_Config__c erc : externalReportSetting) {
+                portalServicesId.add(erc.Portal_Service_ID__c);
+            }
+
+            List<Contact> SharingContacts_List = new List<Contact>([select Id 
+                                                                      From Contact
+                                                                     Where AccountId In :accountsIds
+                                                                        OR Account.Top_Parent__c In :accountsIds]);
+
+            Map<Id, List<AmazonFile__c>> contactFileMap = new Map<Id, List<AmazonFile__c>>();
+            Map<Id, Id> contactUserMap = new Map<Id, Id>();
+
+            if (!SharingContacts_List.isEmpty()) {
+                Set<Id> ContactIDs_set = new Set<Id>();
+
+                Map<Id, List<Id>> accountContactMap = new Map<Id, List<Id>>();
+
+                Set <Id> contactIds_haveAccess = new Set<Id>();
+                
+                for (Contact con : SharingContacts_List) {
+                    ContactIDs_set.add(con.id);
+                } 
+
+                //Get contacts with access to the portal service
+                List <Portal_Application_Right__c> accessList = [SELECT Id, Contact__c, Contact__r.AccountId FROM Portal_Application_Right__c
+                                                                    WHERE Portal_Application__c In :portalServicesId
+                                                                    AND Right__c = 'Access Granted'
+                                                                    AND Contact__c IN :ContactIDs_set];
+                
+                Set<Id> contactsIds = new Set<Id>();
+                if (!accessList.isEmpty()) {
+
+                    for (Portal_Application_Right__c thisAccess : accessList) {
+                        contactsIds.add(thisAccess.Contact__c);
+
+                        List<AmazonFile__c> files = contactFileMap.get(thisAccess.Contact__c);
+
+                        if(files == null) {
+                            List<AmazonFile__c> auxList = new List<AmazonFile__c>();
+                            auxList.addAll(accountFileMap.get(thisAccess.Contact__r.AccountId));
+                            contactFileMap.put(thisAccess.Contact__c, auxList);
+                        } else {
+                            files.addAll(accountFileMap.get(thisAccess.Contact__r.AccountId));
+                        }
+                    }
+                }
+
+                List<User> userList = [Select id, ContactId From User Where ContactId In :contactsIds];
+
+                for(User u : userList) {
+                    contactUserMap.put(u.ContactId, u.Id);
+                }
+            }
+
+
+            if(contactFileMap.keySet().size() != 0) {
+                list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
+
+                ID templateId = PortalServiceAccessTriggerHandler.getEmailTemplateIdByName(ENV.EmailTemplateData.ISSP_TIP_notifyNewExternalReports);
+
+                EmailTemplate emailTemplate = [Select Id, Subject, HtmlValue, Body
+                                                 From EmailTemplate
+                                                Where DeveloperName = :ENV.EmailTemplateData.ISSP_TIP_notifyNewExternalReports];
+
+
+                for(Id key : contactFileMap.keySet()) {
+                    List<AmazonFile__c> files = contactFileMap.get(key);
+
+                    Id userId = contactUserMap.get(key);
+
+                    System.debug('ALEX sending to user : ' + userId);
+
+                    // process the merge fields
+                    String subject = emailTemplate.Subject;
+                    //subject = subject.replace('{!Contact.FirstName}', c.FirstName);
+
+                    String htmlBody = emailTemplate.HtmlValue;
+
+                    htmlBody = htmlBody.replace('|noReply|', Label.ISSP_Email_do_not_reply);
+
+                    htmlBody = htmlBody.replace('|bodyText|', 'There are new documents available:');
+                    
+                    String auxStr = '<ul>';
+
+                    for(AmazonFile__c file : files) {
+                        auxStr += '<li>';
+
+                        auxStr += file.Name;                        
+
+                        auxStr += '</li>';
+                    }
+
+                    auxStr += '</ul>';
+
+                    htmlBody = htmlBody.replace('|docs|', auxStr);
+
+                        //build the email message
+                    Messaging.Singleemailmessage email = new Messaging.Singleemailmessage();
+                        
+                    if(userId != null) 
+                        email.setTargetObjectId(userId);
+                    else
+                        email.setTargetObjectId(key);
+
+                    email.setSaveAsActivity(false);
+
+                    email.setSubject(subject);
+                    email.setHtmlBody(htmlBody);
+ 
+                    msgList.add(email);                    
+
+                }
+
+                if(!msgList.isEmpty()) {
+                    System.debug('Mails send : ' + msgList.size());
+                    Messaging.sendEmail(msgList);
+                } else {
+                    system.debug(LoggingLevel.ERROR, 'Emails not sent !');
+                }
+            }
+
+        }
+
     }
 }

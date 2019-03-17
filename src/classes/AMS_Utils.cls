@@ -270,6 +270,9 @@ public without sharing class AMS_Utils {
 
     public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
 
+    public static final String RECTYPE_AIRLINE      = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
+    public static final String RECTYPE_AIRLINE_BR   = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline_BR');
+
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
     public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP};
@@ -410,6 +413,15 @@ public without sharing class AMS_Utils {
     public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
     public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
+
+    public static final String REPORT_TYPE_TIP_AUTO_REPORTS  = 'TIP_AUTO_REPORTS';
+    public static final String REQUEST_TYPE_TIP_AUTO_REPORTS = 'TIP_AUTO_REPORTS'; 
+    
+    public static final String REMOTE_INVOCATION_STATUS_COMPLETED    = 'Completed';
+    public static final String REMOTE_INVOCATION_STATUS_FAILED       = 'Failed'; 
+    public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
+    public static final String REMOTE_INVOCATION_STATUS_IN_PROGRESS  = 'In Progress';  
+          
 
     public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
@@ -2036,7 +2048,7 @@ public without sharing class AMS_Utils {
                 if(String.isNotBlank(insp.OSCAR__c) && insp.OSCAR__r.Process__c != null && (insp.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP || insp.OSCAR__r.Process__c == AMS_Utils.new_AHA_BSP || insp.OSCAR__r.Process__c == AMS_Utils.new_GSSA)){ 
                     insp.Date_Organisation_Status_attained__c = system.today();
                 }else{
-                	insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
+                    insp.Date_Organisation_Status_attained__c = (insp.Date_Organisation_Status_attained__c == null) ? system.today() : insp.Date_Organisation_Status_attained__c;
                 }
                 /* AMSU-161 - end */
                 
@@ -2819,7 +2831,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                         if(replaceWithSpace) sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
                     }
 
-				}
+                }
 
                 //Check for TAB (\t)
                 if(s.contains('\t')) {
@@ -3134,7 +3146,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     /*** AMSU-173 ***/
     public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
     
-	/*** AMSU-195 Start ***/
+    /*** AMSU-195 Start ***/
     /**
     *   Method that validates if the record fields contain only latin characters
     **/

@@ -63,9 +63,9 @@ private class AmazonFileTrgHelperTest {
   
         AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
         insert AmzFile;
-		
-		Test.stopTest();
-		
+        
+        Test.stopTest();
+        
         AmazonFile__C AmzFile2 = new AmazonFile__C(name ='file2',Full_Name_Unique__c = 'test name2', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
         insert AmzFile2;
         
@@ -176,5 +176,100 @@ private class AmazonFileTrgHelperTest {
         file.Action__c = 'Reminder on Expiry';
         update file;
         Test.stopTest();
+    }
+
+    @isTest static void testAutomaticReports() {
+
+        loadCredentials();
+
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'TIP Reports'); 
+        insert app;
+
+        ISSP_External_Reports_Config__c conf = new ISSP_External_Reports_Config__c(
+            name = 'bla',
+            Portal_Service_ID__c = app.Id,
+            Report_ID__c = 'TIP_AUTO_REPORTS'
+        );
+
+        insert conf;
+
+        Account acc = new Account(name = 'some airline', Sector__c = 'Airline', 
+            IATACode__c = '123', recordtypeid = AMS_Utils.RECTYPE_AIRLINE);
+
+        insert acc;
+
+        Contact contact = new Contact(
+            FirstName = 'test',
+            LastName = 'test', 
+            AccountId = acc.Id,
+            User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,
+            email = 'testiata@yopmail.com'
+            );
+        insert contact;
+
+        
+        Portal_Application_Right__c appReq = new Portal_Application_Right__c();
+        appReq.Portal_Application__c = app.Id;
+        appReq.Right__c = 'Access Granted';
+        appReq.Contact__c = contact.Id;
+        
+        insert appReq;        
+
+        Remote_Invocation__c ri = new Remote_Invocation__c (
+            Integration_Transaction_ID__c = 'ABC1',
+            Internal_ID__c = '123',
+            Request_Type__c = AMS_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
+            Source__c = 'IFG',
+            Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
+        );
+
+        insert ri;
+
+        Remote_Invocation_Artefact__c ria1 = new Remote_Invocation_Artefact__c (
+            Name__c = 'someDocument1.pdf',
+            Format__c = 'pdf',
+            Remote_Invocation__c = ri.Id
+        );
+
+        Remote_Invocation_Artefact__c ria2 = new Remote_Invocation_Artefact__c (
+            Name__c = 'someDocument2.pdf',
+            Format__c = 'pdf',
+            Remote_Invocation__c = ri.Id
+        );
+
+        List<Remote_Invocation_Artefact__c> lria = new List<Remote_Invocation_Artefact__c>();
+        lria.add(ria1);
+        lria.add(ria2);                       
+
+        insert lria;
+
+        ri.Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
+
+        update ri;
+
+        lria = [Select Id, Name, Format__c, Object_ID_Created__c, Remote_Invocation__c, Status__c From Remote_Invocation_Artefact__c Where Remote_Invocation__r.Integration_Transaction_ID__c Like 'ABC%'];
+
+        List<AmazonFile__c> files = new List<AmazonFile__c>();
+        Integer aux = 0;
+
+        for(Remote_Invocation_Artefact__c ria : lria) {
+            AmazonFile__c newFile = new AmazonFile__c(
+                sObject_Id__c = ria.Object_ID_Created__c,
+                Full_Name_Unique__c = '' + aux,
+                Name = ria.Name
+            );
+            files.add(newFile);
+            aux++;
+        }
+
+        insert files;
+
+        files = [Select Id, isPublic__c From AmazonFile__c];
+
+        for(AmazonFile__c file : files) {
+            file.isPublic__c = true;
+        }
+
+        update files;
     }
 }
