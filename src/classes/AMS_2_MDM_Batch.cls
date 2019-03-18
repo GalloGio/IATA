@@ -123,12 +123,14 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
     
                     Set<String> aModelToExcludeSet = new set<String>();
                     
+                    Map<String,String> accreditationModelMap = new Map<String,String>{'Cashless' => 'CL', 'Cash' => 'CA' , 'Multicountry' => 'MC'};
+
                     if(ccbs.Accreditation_Model_To_Exclude__c != null)
                         aModelToExcludeSet = new set<String>(ccbs.Accreditation_Model_To_Exclude__c.split(';'));
                     
                     if(au.Change_Code__c == ccbs.Change_Code__c && 
                         auxAccAccount.ANG_IsNewGenAgency__c && 
-                        aModelToExcludeSet.contains(auxAccAccount.ANG_Accreditation_Model__c))
+                        aModelToExcludeSet.contains(accreditationModelMap.get(auxAccAccount.ANG_Accreditation_Model__c)))
                         bToSend = false;
                     }
 
