@@ -111,7 +111,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
                     //WMO-456                   
                     Boolean excludeSpecialRemarks = String.isNotBlank(ccbs.Special_Remarks__c) && String.isNotBlank(auxAccAccount.Special_Remarks__c) && 
-                        auxAccAccount.Special_Remarks__c.contains(ccbs.Special_Remarks__c) && 
+                        auxAccAccount.Special_Remarks__c == ccbs.Special_Remarks__c && 
                         auxAccAccount.Location_Class__c == ccbs.Location_Class_To_Exclude__c && 
                         ( bLocation_Type_To_Exclude_Empty || bLocation_Type_To_Exclude_Contains); 
                     Boolean excludeByCountry = auxAccAccount.Country_ISO_Code__c == ccbs.Country_To_Exclude__c 

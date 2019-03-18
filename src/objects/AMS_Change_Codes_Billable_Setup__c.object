@@ -58,10 +58,11 @@ Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;
     </fields>
     <fields>
         <fullName>Special_Remarks__c</fullName>
-        <description>Field to define remarks that make change codes not billable</description>
+        <description>Field to define remarks that make change codes not billable.
+On this must be used API value of Special_Remarks__c field on Account</description>
         <externalId>false</externalId>
         <label>Special Remarks</label>
-        <length>255</length>
+        <length>2</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
