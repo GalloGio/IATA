@@ -28,6 +28,9 @@
         AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'DIS-AMS', Change_Code__c = 'DIS');
         AMS_ChangeCodes__c cc2 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'FIN-AMS', Change_Code__c = 'FIN');
         upsert new List<AMS_ChangeCodes__c>{cc1, cc2};
+        
+		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		insert pa;
     }
 
     @isTest static void insertOSCARTest() {

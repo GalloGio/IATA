@@ -46,6 +46,9 @@ public class ANG_ChinaConversionsHelperTest {
 
 	private static void setupData(String typeOfChange) {
 
+		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		insert pa;
+
 		//ACCOUNTS
 		
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name='China', ISO_Code__c='CN', Enable_NewGen_Pilot__c=true, Region__c='China & North Asia')  ;
