@@ -956,6 +956,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Name</label>
     </fieldSets>
     <fieldSets>
@@ -1003,6 +1008,11 @@
         </displayedFields>
         <displayedFields>
             <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -1091,16 +1101,31 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Location</label>
     </fieldSets>
     <fieldSets>
         <fullName>ANG_locationtype</fullName>
         <description>fields to be migrated when we have a change of location type process</description>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Location Type</label>
     </fieldSets>
     <fieldSets>
         <fullName>ANG_locationtypetodifferentlegalentity</fullName>
         <description>fields to be migrated when we have a change of Location Type to Different Legal Entity</description>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Location Type to Different Legal Entity</label>
     </fieldSets>
     <fieldSets>
@@ -1108,6 +1133,11 @@
         <description>fields to be migrated when we have a change of major shareholding</description>
         <displayedFields>
             <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -1158,6 +1188,11 @@
         <description>fields to be migrated when we have a change of minor shareholding</description>
         <displayedFields>
             <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -27227,7 +27262,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
     </validationRules>
     <validationRules>
         <fullName>Change_Location_Class_after_IATACode_gen</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Once the IATA Code is generated the Location Class can no longer be changed.</description>
         <errorConditionFormula>AND(   
 ISCHANGED(Location_Class__c), 
