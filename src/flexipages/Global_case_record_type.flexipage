@@ -15,7 +15,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>numVisibleActions</name>
-                <value>3</value>
+                <value>9</value>
             </componentInstanceProperties>
             <componentName>force:highlightsPanel</componentName>
         </componentInstances>
@@ -31,16 +31,9 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>forceChatter:recordFeedContainer</componentName>
-        </componentInstances>
-        <name>Facet-e8dbfd3e-8cbb-401f-9c9b-fbc54dc71470</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
             <componentName>force:detailPanel</componentName>
         </componentInstances>
-        <name>Facet-070d26f6-2bad-4443-8274-4243bc8985b0</name>
+        <name>Facet-9e688f50-7cb4-48d8-890f-e65d60fbe945</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -54,7 +47,7 @@
             </componentInstanceProperties>
             <componentName>force:relatedListContainer</componentName>
         </componentInstances>
-        <name>Facet-fb096601-bc4d-4591-b24c-3676deb023e4</name>
+        <name>Facet-b7cb2994-8770-4d03-940e-fa20b18d23d9</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -65,18 +58,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>Facet-e8dbfd3e-8cbb-401f-9c9b-fbc54dc71470</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.feed</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-070d26f6-2bad-4443-8274-4243bc8985b0</value>
+                <value>Facet-9e688f50-7cb4-48d8-890f-e65d60fbe945</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -86,8 +68,12 @@
         </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
+                <name>active</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
                 <name>body</name>
-                <value>Facet-fb096601-bc4d-4591-b24c-3676deb023e4</value>
+                <value>Facet-b7cb2994-8770-4d03-940e-fa20b18d23d9</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -95,14 +81,14 @@
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
-        <name>Facet-17250a05-ecff-4980-9cf4-bb38a817eb2f</name>
+        <name>Facet-8367e0f4-e65c-45d9-9793-6ad5d4a2402e</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
                 <name>tabs</name>
-                <value>Facet-17250a05-ecff-4980-9cf4-bb38a817eb2f</value>
+                <value>Facet-8367e0f4-e65c-45d9-9793-6ad5d4a2402e</value>
             </componentInstanceProperties>
             <componentName>flexipage:tabset</componentName>
         </componentInstances>
@@ -111,67 +97,7 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>externalSharing</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>parentFieldApiName</name>
-                <value>Case.Id</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListApiName</name>
-                <value>EmailMessages</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListComponentOverride</name>
-                <value>NONE</value>
-            </componentInstanceProperties>
-            <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>parentFieldApiName</name>
-                <value>Case.Id</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListApiName</name>
-                <value>CaseComments</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListComponentOverride</name>
-                <value>NONE</value>
-            </componentInstanceProperties>
-            <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>createQuickActionName</name>
-                <value>NewAccount</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>lookupFieldName</name>
-                <value>AccountId</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>updateQuickActionName</name>
-                <value>Account.Account_detail</value>
-            </componentInstanceProperties>
-            <componentName>console:relatedRecord</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>createQuickActionName</name>
-                <value>NewContact</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>lookupFieldName</name>
-                <value>ContactId</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>updateQuickActionName</name>
-                <value>Contact._LightningRelatedContact</value>
-            </componentInstanceProperties>
-            <componentName>console:relatedRecord</componentName>
+            <componentName>runtime_sales_activities:activityPanel</componentName>
         </componentInstances>
         <name>sidebar</name>
         <type>Region</type>

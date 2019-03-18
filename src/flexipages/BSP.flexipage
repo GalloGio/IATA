@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>dedicated to SIDRA record type from service app Only</description>
+    <description>dedicated to external escalation :
+ACCA</description>
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
@@ -9,7 +10,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>numVisibleActions</name>
-                <value>3</value>
+                <value>4</value>
             </componentInstanceProperties>
             <componentName>force:highlightsPanel</componentName>
         </componentInstances>
@@ -18,22 +19,12 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>force:relatedListQuickLinksContainer</componentName>
-        </componentInstances>
-        <name>subheader</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
             <componentName>force:detailPanel</componentName>
         </componentInstances>
-        <name>Facet-070d26f6-2bad-4443-8274-4243bc8985b0</name>
+        <name>Facet-1bf288ed-647b-4808-8c78-b2c0cfb3b260</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>AttachmentPanelUpdated</componentName>
-        </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
                 <name>relatedListComponentOverride</name>
@@ -41,7 +32,7 @@
             </componentInstanceProperties>
             <componentName>force:relatedListContainer</componentName>
         </componentInstances>
-        <name>Facet-fb096601-bc4d-4591-b24c-3676deb023e4</name>
+        <name>Facet-5998ad2e-70e0-49ae-8ea5-4a5c5f967925</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -52,7 +43,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>Facet-070d26f6-2bad-4443-8274-4243bc8985b0</value>
+                <value>Facet-1bf288ed-647b-4808-8c78-b2c0cfb3b260</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -62,8 +53,12 @@
         </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
+                <name>active</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
                 <name>body</name>
-                <value>Facet-fb096601-bc4d-4591-b24c-3676deb023e4</value>
+                <value>Facet-5998ad2e-70e0-49ae-8ea5-4a5c5f967925</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
@@ -71,40 +66,35 @@
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
-        <name>Facet-17250a05-ecff-4980-9cf4-bb38a817eb2f</name>
+        <name>Facet-e19fb330-1840-4747-8517-e1a30212cbeb</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentName>force:relatedListQuickLinksContainer</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentName>externalSharing</componentName>
+        </componentInstances>
+        <componentInstances>
             <componentInstanceProperties>
                 <name>tabs</name>
-                <value>Facet-17250a05-ecff-4980-9cf4-bb38a817eb2f</value>
+                <value>Facet-e19fb330-1840-4747-8517-e1a30212cbeb</value>
             </componentInstanceProperties>
             <componentName>flexipage:tabset</componentName>
         </componentInstances>
+        <name>subheader</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>parentFieldApiName</name>
-                <value>Case.Id</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListApiName</name>
-                <value>EmailMessages</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedListComponentOverride</name>
-                <value>GRID</value>
-            </componentInstanceProperties>
-            <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>SIDRA case record type</masterLabel>
+    <masterLabel>BSP link record page</masterLabel>
     <sobjectType>Case</sobjectType>
     <template>
         <name>flexipage:recordHomeWithSubheaderLeftSidebarTemplateDesktop</name>

@@ -15,19 +15,15 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>numVisibleActions</name>
-                <value>3</value>
+                <value>9</value>
             </componentInstanceProperties>
             <componentName>force:highlightsPanel</componentName>
         </componentInstances>
+        <componentInstances>
+            <componentName>force:relatedListQuickLinksContainer</componentName>
+        </componentInstances>
         <name>header</name>
         <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <componentInstances>
-            <componentName>forceChatter:recordFeedContainer</componentName>
-        </componentInstances>
-        <name>Facet-1f63d943-d851-4b51-a9f9-360e395dd5a8</name>
-        <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
@@ -48,21 +44,6 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>active</name>
-                <value>true</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>body</name>
-                <value>Facet-1f63d943-d851-4b51-a9f9-360e395dd5a8</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>title</name>
-                <value>Standard.Tab.feed</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:tab</componentName>
-        </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
                 <name>body</name>
@@ -104,36 +85,47 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <name>rightsidebar</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
+        <componentInstances>
+            <componentName>runtime_sales_activities:activityPanel</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentName>dgAI2:DG_OnDemandPrediction</componentName>
+        </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
-                <name>enableInlineEdit</name>
-                <value>true</value>
+                <name>height</name>
+                <value>300</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>entityName</name>
-                <value>Case</value>
+                <name>label</name>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>filterName</name>
-                <value>My_Open_Cases</value>
+                <name>pageName</name>
+                <value>dgec__DG_WelcomeEmailPromts</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:visualforcePage</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>heightSelector</name>
+                <value>Max-Height</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>hideActionBar</name>
-                <value>true</value>
+                <name>heightValue</name>
+                <value>500</value>
+            </componentInstanceProperties>
+            <componentName>dglc:LiveChatPrompts</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>height</name>
+                <value>300</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
-                <name>hideSearchBar</name>
-                <value>false</value>
+                <name>pageName</name>
+                <value>DG_ProposedTemplate</value>
             </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>pageSize</name>
-                <value>5</value>
-            </componentInstanceProperties>
-            <componentName>flexipage:filterListCard</componentName>
+            <componentName>flexipage:visualforcePage</componentName>
         </componentInstances>
         <name>leftsidebar</name>
         <type>Region</type>
@@ -141,7 +133,7 @@
     <masterLabel>Service console case record page</masterLabel>
     <sobjectType>Case</sobjectType>
     <template>
-        <name>flexipage:recordHomePinnedHeaderLeftSidebarTemplateDesktop</name>
+        <name>flexipage:recordHomePinnedHeaderLeftSidebarTwoColTemplateDesktop</name>
     </template>
     <type>RecordPage</type>
 </FlexiPage>
