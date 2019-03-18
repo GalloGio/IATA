@@ -33,6 +33,7 @@ public class howto_Controller_Test {
         
         system.runAs(thisUser){
             howto_controller controller = new howto_controller();
+			controller.fakemethod();
             Set <String> stringSet = controller.feedbackSourceOptions;
             Map<String,String> stringMap = howto_controller.getActivePicklistOptions('test', 'test');
             List<Schema.PicklistEntry> stringList = howto_controller.getActivePicklistEntries('test', 'test');

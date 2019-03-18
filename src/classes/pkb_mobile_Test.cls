@@ -570,6 +570,7 @@ public class pkb_mobile_Test {
     static void test_pkb_SiteMap() {
 
         pkb_SiteMap.MAX_ARTICLES = 7;
+		pkb_SiteMap.fakemethod();
         //count Initial amount of kav
 
 
