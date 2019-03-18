@@ -532,4 +532,152 @@ private class AMS_XML_GeneratorTest {
 
         Test.stopTest();
     }
-}
+
+    @isTest static void agencySalesOrderTest(){
+
+        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c(
+            Name = 'Portugal', 
+            ISO_Code__c = 'PT', 
+            Region__c = 'Europe',
+            ANG_Enable_NewGen__c = true
+        );
+
+        IATA_ISO_Country__c countryES = new IATA_ISO_Country__c(
+            Name = 'Spain', 
+            ISO_Code__c = 'ES', 
+            Region__c = 'Europe'
+        );
+
+        insert new List<IATA_ISO_Country__c>{countryPT, countryES};
+        
+        AMS_ChangeCodes__c cc = new AMS_ChangeCodes__c(
+            Name = 'TST', 
+            Change_Code__c = 'TST', 
+            Billable__c = true, 
+            Integration_RecId__c='C', 
+            Billable_Location_Class__c = 'P'
+        );
+
+        insert cc;
+
+        AMS_Change_Codes_Billable_Setup__c ccbs =  new AMS_Change_Codes_Billable_Setup__c(
+            Name = 'TST', Change_Code__c = 'TST', 
+            Country_To_Exclude__c = 'TS', 
+            Location_Class_To_Exclude__c = 'P'
+        );
+
+        insert ccbs;
+
+        Account a1 = new Account(
+            Name='New Gen Agency',
+            IATA_ISO_Country__c = countryPT.id, 
+            Sent_to_external_system__c = true, 
+            IATACode__c = '99999999', 
+            Location_Class__c = 'P',
+            RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY
+        );
+
+        Account a2 = new Account(
+            Name='Non New Gen Agency',
+            IATA_ISO_Country__c = countryES.id, 
+            Sent_to_external_system__c = true, 
+            IATACode__c = '99999998', 
+            Location_Class__c = 'P',
+            RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY
+        );
+
+        insert new List<Account>{a1, a2};
+
+        Test.startTest();
+
+        AMS_Oscar__c oscarA1 = new AMS_OSCAR__c(
+            Account__c = a1.Id,
+            RecordTypeId = AMS_Utils.RECTYPE_GDI,
+            Process__c = AMS_Utils.NGGDI
+        );
+
+        insert oscarA1;
+
+        AMS_Oscar__c oscarA2 = new AMS_OSCAR__c(
+            Account__c = a1.Id,
+            RecordTypeId = AMS_Utils.RECTYPE_GDI,
+            Process__c = AMS_Utils.NGGDI
+        );
+
+        insert oscarA2;
+
+        Case cseA1 = new Case(
+            RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+            AccountId = a1.Id,
+            Oscar__c = oscarA1.Id
+        );
+
+        Case cseA2 = new Case(
+            RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+            AccountId = a2.Id,
+            Oscar__c = oscarA2.Id
+        );
+
+        insert new List<Case>{cseA1, cseA2};
+
+        oscarA1.Oscar_Communication_Case_Id__c = cseA1.Id;
+        oscarA2.Oscar_Communication_Case_Id__c = cseA2.Id;
+
+        update oscarA1;
+        update oscarA2;
+
+        Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(
+            Account__c = a1.Id, 
+            Change_Code__c = 'TST', 
+            Sent_to_external_system__c = false,
+            Oscar__c = oscarA1.Id
+        );
+
+        Agency_Applied_Change_code__c aacc2 = new Agency_Applied_Change_code__c(
+            Account__c = a2.Id, 
+            Change_Code__c = 'TST',  
+            Sent_to_external_system__c = false,
+            Oscar__c = oscarA2.Id
+        );
+      
+        insert new List<Agency_Applied_Change_code__c>{aacc1, aacc2};
+
+        List<Agency_Applied_Change_code__c> aaccLst = new List<Agency_Applied_Change_code__c>(
+            [SELECT 
+                OSCAR__c, 
+                Account__c, 
+                Change_Code__c, 
+                Account__r.IATACode__c, 
+                Account__r.Location_Class__c,
+                Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c,
+                Account__r.IATA_ISO_Country__r.Iso_code__c, 
+                OSCAR__r.Oscar_Communication_Case_Id__c,
+                Account__r.ANG_Accreditation_Model__c, 
+                Account__r.ANG_IsNewGenAgency__c
+             FROM 
+                Agency_Applied_Change_code__c
+            ]
+        );
+
+        Agency_Applied_Change_code__c aa1 = aaccLst.get(0);
+        Agency_Applied_Change_code__c aa2 = aaccLst.get(1);
+
+        AMS_XML_Generator xmlGen = new AMS_XML_Generator();
+
+        String xmlReq1 = xmlGen.getAgencySalesOrder(new List<Agency_Applied_Change_code__c>{aa1});
+        String xmlReq2 = xmlGen.getAgencySalesOrder(new List<Agency_Applied_Change_code__c>{aa2});
+
+        if(aa1.Account__r.ANG_IsNewGenAgency__c){
+            system.assert(xmlReq1.contains('<CaseId>'));
+            system.assert(!xmlReq2.contains('<CaseId>'));
+        }
+        else {
+            system.assert(!xmlReq1.contains('<CaseId>'));
+            system.assert(xmlReq2.contains('<CaseId>'));
+        }
+
+        Test.stopTest();
+
+    }
+        
+}   
