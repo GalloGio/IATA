@@ -17,8 +17,8 @@
         <allowDelegate>false</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>arangos@iata.org</name>
-                <type>user</type>
+                <name>CNS_articles_KB</name>
+                <type>queue</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>

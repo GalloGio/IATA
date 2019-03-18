@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>KB admins</name>
-    <queueMembers>
-        <users>
-            <user>aertsr@iata.org</user>
-            <user>irturko@iata.org</user>
-        </users>
-    </queueMembers>
+    <name>CNS articles KB</name>
     <queueSobject>
         <sobjectType>KnowledgeArticleVersion</sobjectType>
     </queueSobject>
