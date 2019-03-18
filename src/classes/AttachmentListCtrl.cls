@@ -333,6 +333,15 @@ public with sharing class AttachmentListCtrl {
 		return link;
 	}
 
+     @AuraEnabled
+	public static string getExpiringLinkWithRecId(String recId ) {
+		Integer secondsValid = 300;
+        AmazonFile__c amazonFile = [select Full_Name_Unique__c from AmazonFile__C where id=:Id.valueOF(recId)];
+           
+		String link = AmazonRest.genPublicExpiringAWSLink( amazonFile.Full_Name_Unique__c, WrapperAttach.CREDENTIAL, secondsValid);
+		return link;
+	}
+
 	/**
 		Delete a standard attachment in Salesforce
 	**/
