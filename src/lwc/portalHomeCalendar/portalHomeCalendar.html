@@ -1,0 +1,115 @@
+<template>
+    <div class="slds-card_boundary">
+        <lightning-card>
+            <div slot="title">
+                <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                Weekly Calendar
+            </div>
+            <div slot="actions">
+                <lightning-button variant="base" label="See Monthly" title="See Monthly" icon-name="utility:forward" icon-position="right" onclick={goToOldPortalCalendarJS}></lightning-button>
+            </div>
+            <div class="slds-p-horizontal_small">
+                <div if:true={loading}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+                <div if:false={loading}>
+
+                    <div class="slds-m-vertical_large slds-grid slds-wrap">
+                        <div class="slds-size_5-of-7">
+                            {currentViewingMonth.monthName}, {currentViewingMonth.monthYear}
+                        </div>
+                        <div class="slds-size_1-of-7 slds-align_absolute-center" >
+                            <a onclick={previousWeek}><lightning-icon icon-name="utility:chevronleft" alternative-text="previous month" size="x-small" > </lightning-icon></a>
+                            </div>
+                        <div class="slds-size_1-of-7 slds-align_absolute-center" >
+                            <a onclick={nextWeek}><lightning-icon icon-name="utility:chevronright" alternative-text="previous month" size="x-small"> </lightning-icon></a>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="slds-grid slds-wrap slds-text-align_center">
+                        <div class="slds-col slds-size_1-of-7 dayBar">
+                            Mo
+                        </div>
+                        <div class="slds-col slds-size_1-of-7 dayBar">
+                            Tu
+                        </div>
+                        <div class="slds-col slds-size_1-of-7 dayBar">
+                            We
+                        </div>
+                        <div class="slds-col slds-size_1-of-7 dayBar">
+                            Th
+                        </div>
+                        <div class="slds-col slds-size_1-of-7 dayBar">
+                            Fr
+                        </div>
+                        <div class="slds-col slds-size_1-of-7 dayBar">
+                            Sa
+                        </div>
+                        <div class="slds-col slds-size_1-of-7 dayBar">
+                            Su
+                        </div>
+
+                        <template for:each={currentViewingWeek.lstDays} for:item="dayItem" for:index="index">
+                            <div class="slds-col slds-size_1-of-7 dayBar" id={dayItem.dayNumber} key={dayItem.dayNumber} >
+                                <div if:true={dayItem.isEmpty}>
+                                    &nbsp;
+                                </div>
+                                <div if:false={dayItem.isEmpty} >
+                                    <div if:true={dayItem.isSelected} style="background-color: #f7f8fa;cursor:pointer;">
+                                        <div class="slds-p-around_xx-small slds-align_absolute-center" >
+                                        
+                                            <div if:true={dayItem.isHighlighted} style="width:25px;height:25px;border: 2px solid #363ffb;border-radius: 5px;background-color: #363ffb;color:white;" 
+                                            data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
+                                                {dayItem.dayNumber}
+                                            </div>
+                                            <div if:false={dayItem.isHighlighted} style="width:25px;height:25px;" 
+                                            data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
+                                                {dayItem.dayNumber}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div if:false={dayItem.isSelected}>
+                                        <div class="slds-p-around_xx-small slds-align_absolute-center" style="cursor:pointer;">
+                                            <div if:true={dayItem.isHighlighted} style="width:25px;height:25px;border: 2px solid #363ffb;border-radius: 5px;background-color: #363ffb;color:white;" 
+                                            data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
+                                                {dayItem.dayNumber}
+                                            </div>
+                                            <div if:false={dayItem.isHighlighted} style="width:25px;height:25px;border: 2px solid white;border-radius: 5px;" 
+                                            data-item={dayItem.dayNumber} onclick={changeEventsButtonClick}>
+                                                {dayItem.dayNumber}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <template for:each={dayItem.lstEvents} for:item="event">
+                                        <div if:true={dayItem.isSelected} key={event.className} class="slds-p-top_small" style="background-color: #f7f8fa;">
+                                            <div class={event.className} title={event.title}>&nbsp;</div>
+                                        </div>
+                                        <div if:false={dayItem.isSelected} key={event.className} class="slds-p-top_small">
+                                            <div class={event.className} title={event.title}>&nbsp;</div>
+                                        </div>
+                                    </template>
+
+                                </div>
+                            </div>
+                        </template>
+
+                    </div>
+
+                    <div if:true={viewEvents} class="slds-p-around_medium" style="background-color: #f7f8fa;">
+                        <template for:each={lstEventsForCardFooter} for:item="eventTitle">
+                            <div key={eventTitle.className}>
+                                <span class={eventTitle.className} style="margin-right:8px;"></span>
+                                {eventTitle.title}
+                                <br/>
+                            </div>
+                        </template>
+                    </div>
+
+                </div>
+            </div>
+        </lightning-card>
+    </div>
+</template>

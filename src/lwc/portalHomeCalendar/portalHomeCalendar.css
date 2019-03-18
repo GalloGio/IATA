@@ -1,0 +1,15 @@
+.billingAvailabilityEvent{
+    height: 8px;
+    width: 8px;
+    background-color: blueviolet;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.remittanceEvent{
+    height: 8px;
+    width: 8px;
+    background-color: #f050c8;
+    border-radius: 50%;
+    display: inline-block;
+}
