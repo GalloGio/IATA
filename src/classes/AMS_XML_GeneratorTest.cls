@@ -108,7 +108,7 @@ private class AMS_XML_GeneratorTest {
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
         insert ctry ;
 
-        List<Account> accountList = new List<Account>();
+        
         Account ag1 = new Account(Name = 'Test1 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '1234567', Phone = '+351000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Accreditation_date__c = Date.newInstance(2016, 11, 11), Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Approved', TradeName__c = 'TradeName', Location_Category__c = 'A;B', GDS__c = 'A;B', Location_Type__c = 'HO', Type = 'IATA Passenger Sales Agent', GDP_Opt_In__c = True);
         Account ag2 = new Account(Name = 'Test2 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '1234567', Phone = '+351000000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Approved', Fax = '+351911234567' );
         Account ag3 = new Account(Name = 'Test3 Account', IATA_ISO_Country__c = ctr2.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351000000000000000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Accreditation_date__c = Date.newInstance(2016, 11, 11), Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Terminated' );
@@ -116,18 +116,13 @@ private class AMS_XML_GeneratorTest {
         Account ag5 = new Account(Name = 'Test5 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Status__c = 'Approved' );
         Account ag6 = new Account(Name = 'Test6 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Status__c = 'Approved' );
 
-        accountList.add(ag1);
-        accountList.add(ag2);
-        accountList.add(ag3);
-        accountList.add(ag4);
-        accountList.add(ag5);
-        accountList.add(ag6);
+        List<Account> accountList = new List<Account>{ag1,ag2,ag3,ag4,ag5,ag6};
         insert accountList;
 
         ag1.ParentId = ag6.id;
         update ag1;
 
-        List<Agency_Applied_Change_code__c> aaccList = new List<Agency_Applied_Change_code__c>();
+
         Agency_Applied_Change_code__c aacc1 = new Agency_Applied_Change_code__c(Active__c = true,
                 Account__c = ag1.Id, Change_Code__c = 'FIN', Bulletin_Information__c = 'changeCode.memoText',
                 Reason_Code__c = 'changeCode.reasonCode', Reason_Description__c = 'changeCode.reasonDesc');
@@ -152,15 +147,8 @@ private class AMS_XML_GeneratorTest {
         Agency_Applied_Change_code__c aacc8 = new Agency_Applied_Change_code__c(Active__c = true,
                 Account__c = ag4.Id, Change_Code__c = 'CAR', Bulletin_Information__c = 'changeCode.memoText',
                 Reason_Code__c = 'changeCode.reasonCode', Reason_Description__c = 'changeCode.reasonDesc');
-        aaccList.add(aacc1);
-        aaccList.add(aacc2);
-        aaccList.add(aacc3);
-        aaccList.add(aacc4);
-        aaccList.add(aacc5);
-        aaccList.add(aacc6);
-        aaccList.add(aacc7);
-        aaccList.add(aacc8);
-        insert aaccList;
+
+        insert new List<Agency_Applied_Change_code__c>{aacc1,aacc2,aacc3,aacc4,aacc5,aacc6,aacc7,aacc8};
 
         sAgIDs.add(ag1.Id);
         sAgIDs.add(ag2.Id);
@@ -528,9 +516,75 @@ private class AMS_XML_GeneratorTest {
         System.assertEquals('978123', phones[1]);
         System.assertEquals('351764345567', phones[2]);
 
+        Test.stopTest();
+    }
 
+
+
+    @isTest
+    static void test_AgencySalesOrder_GDI_GDN() {
+
+        AMS_Settlement_System__c sett_dpc = new AMS_Settlement_System__c(name = 'test_dpc', DPC_System__c = 'test_dpc');
+        insert sett_dpc;
+
+        IATA_ISO_Country__c ctr1 = new IATA_ISO_Country__c(Name = 'Test1 country', ISO_Code__c = 'PT', AMS_Settlement_System__c = sett_dpc.Id, 
+                                    ANG_Enable_NewGen__c = true, IATA_Regional_Office__c = 'Office Regional');
+        insert ctr1;
+
+        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Account acc = new Account(Name = 'Test1 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', 
+            IATACode__c = '1234567', Phone = '+351000000000',  BillingStreet = 'BillingStreet', Accreditation_date__c = Date.newInstance(2019, 03, 14),  Status__c = 'Approved', TradeName__c = 'TradeName', 
+            Location_Class__c = 'P', Location_Type__c = 'HE', Type = 'IATA Passenger Sales Agent', RecordTypeId = rtAgency );
+
+        insert acc;
+
+        Case theCommunicationCase = new Case(RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, CaseArea__c = 'GDI Setup', AccountId = acc.id);
+        insert theCommunicationCase;
+
+        AMS_OSCAR__c gdiOscar = new AMS_OSCAR__c(RecordTypeId =  AMS_Utils.RECTYPE_GDI, STEP1__c = 'In Progress', Account__c = acc.id, 
+            Oscar_Communication_Case_Id__c = theCommunicationCase.id);
+        insert gdiOscar;
+
+        //GDI Change Code 
+        Agency_Applied_Change_code__c agencyAppliedChangeCode = new Agency_Applied_Change_code__c(Active__c = true,
+                Account__c = acc.Id, Change_Code__c = 'GDI', Bulletin_Information__c = 'changeCode.memoText',
+                Reason_Code__c = 'changeCode.reasonCode', Reason_Description__c = 'changeCode.reasonDesc.GDI',
+                OSCAR__c = gdiOscar.id);
+
+        insert agencyAppliedChangeCode;
+
+        ID oppRecordtype = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDI_FinancialSecurity'); 
+        Opportunity opp = new Opportunity(AccountId = acc.id, CloseDate = Date.today(), Name ='OPP - ' , RecordTypeId = oppRecordtype, 
+            StageName = 'Pending', Related_Oscar__c = gdiOscar.id, GDI_Offer_Id__c='001', Offer_exchange_rate_date__c = Date.today());
+        insert opp;
+
+
+        Test.startTest();
+
+        Agency_Applied_Change_code__c aaChangeCode = [SELECT OSCAR__c, OSCAR__r.Oscar_Communication_Case_Id__c, Account__r.Location_Class__c, Change_Code__c,
+                                                        Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c, Account__r.IATACode__c
+                                                      FROM Agency_Applied_Change_code__c ];
+
+        AMS_XML_Generator xmlGen = new AMS_XML_Generator();
+        String response = xmlGen.getAgencySalesOrder(aaChangeCode);
 
         Test.stopTest();
+
+        System.debug('Debug response message:' + response);
+
+        DOM.Document doc = new DOM.Document();
+        doc.load(response);
+        Dom.XMLNode root = doc.getRootElement();
+
+        Dom.XMLNode line_item = root.getChildElement('line_item', null);
+
+        System.assertEquals(aaChangeCode.OSCAR__r.Oscar_Communication_Case_Id__c, line_item.getChildElement('CaseId', null).getText());
+        
+        Date offerDate =  opp.Offer_exchange_rate_date__c;
+        Datetime dtOfferDate = datetime.newInstance(offerDate.year(), offerDate.month(),offerDate.day());
+        
+        System.assertEquals(dtOfferDate.format('yyyyMMdd'), line_item.getChildElement('offerDate', null).getText());
+        System.assertEquals(opp.GDI_Offer_Id__c, line_item.getChildElement('offerId', null).getText());
     }
 
     @isTest static void agencySalesOrderTest(){

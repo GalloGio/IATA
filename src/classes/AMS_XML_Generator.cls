@@ -148,6 +148,7 @@ public with sharing class AMS_XML_Generator {
 
     //Get XML for Agency SalesOrder to send to AW WS 
     public String getAgencySalesOrder(List<Agency_Applied_Change_code__c> agencies){
+        Set<String> gdiOrGdnChangeCode = new Set<String>{'GDI','GDN'};
 
         //Begin of XML tags
         Dom.Document doc = new Dom.Document();
@@ -169,13 +170,20 @@ public with sharing class AMS_XML_Generator {
 
         Map<Id,Id> changeCodeOscarMap = new Map<Id,Id>();
         Map<Id,String> changeCodeCaseNumber = new Map<Id,String>();
+        Set<Id> setOscarID = new Set<ID>();
 
-        for(Agency_Applied_Change_code__c aacc: agencies){
+        for(Agency_Applied_Change_code__c aacc: agencies){            
+
             if(aacc.OSCAR__c <> null && aacc.OSCAR__r.Oscar_Communication_Case_Id__c <> null){
                 changeCodeCaseNumber.put(aacc.Id,aacc.OSCAR__r.Oscar_Communication_Case_Id__c);
             }
             else if(aacc.OSCAR__c <> null)
                 changeCodeOscarMap.put(aacc.OSCAR__c,aacc.Id);
+            
+            if(gdiOrGdnChangeCode.contains(aacc.Change_Code__c)){
+                setOscarID.add(aacc.OSCAR__c);
+            }
+
         }
 
 
@@ -183,9 +191,21 @@ public with sharing class AMS_XML_Generator {
             changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c),c.Id);
         }
 
-        /*NEWGEN-3267 END*/
-        
+/*NEWGEN-3267 END*/
 
+/* NEWGEN-5164 START*/
+
+        //Load opportunities related to the oscars with GDI / GDN change codes 
+        Map<Id,Opportunity> oppForGDIorGDN = new Map<Id,Opportunity>();
+        if(!setOscarID.isEmpty()){
+            for(Opportunity opp : [SELECT GDI_Offer_Id__c, Offer_exchange_rate_date__c, Related_Oscar__c
+                                 FROM Opportunity WHERE Related_Oscar__c in :setOscarID ]) {
+                oppForGDIorGDN.put(opp.Related_Oscar__c, opp);
+            }
+        }
+
+/* NEWGEN-5164 END */
+        
         //for(Account ag : agencies){
         for(Agency_Applied_Change_code__c ag : agencies){
             Dom.Xmlnode liNode = rootNode.addChildElement('line_item', null, null);
@@ -196,6 +216,7 @@ public with sharing class AMS_XML_Generator {
             //Changed on AMSU-97
             //getElementNode(liNode, 'period_from', dtToday.format('yyyyMMdd'));
             //getElementNode(liNode, 'period_to', dtToday.format('yyyyMMdd'));
+
             getElementNode(liNode, 'period_from', dtFirstDayOfMonth.format('yyyyMMdd'));
             getElementNode(liNode, 'period_to', dtLastDayOfMonth.format('yyyyMMdd'));
 
@@ -204,8 +225,23 @@ public with sharing class AMS_XML_Generator {
 
             /*NEWGEN-3267 START*/
 
-            if(ag.Account__r.ANG_IsNewGenAgency__c && changeCodeCaseNumber.get(ag.Id) <> null)
-                getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
+            /* NEWGEN-5164 START*/
+            if(ag.Account__r.ANG_IsNewGenAgency__c && changeCodeCaseNumber.get(ag.Id) <> null){
+                Opportunity curOpp = oppForGDIorGDN.get(ag.OSCAR__c);
+
+                //If it's a GDI/GDN change code and have an opportunity for the specific oscar
+                if(curOpp != NULL){
+                    getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
+                    Date offerDate =  curOpp.Offer_exchange_rate_date__c;
+                    Datetime dtOfferDate = datetime.newInstance(offerDate.year(), offerDate.month(),offerDate.day());
+                    getElementNode(liNode, 'offerDate', dtOfferDate.format('yyyyMMdd'));
+                    getElementNode(liNode, 'offerId', curOpp.GDI_Offer_Id__c);
+                }
+                else if(!gdiOrGdnChangeCode.contains(ag.Change_Code__c)){
+                    getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
+                }
+            }
+            /* NEWGEN-5164 END */
             
             /*NEWGEN-3267 END*/
         }
