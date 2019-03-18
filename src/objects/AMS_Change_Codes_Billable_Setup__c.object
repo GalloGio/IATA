@@ -8,7 +8,7 @@
         <description>Account&apos;s Accreditation Model (Accreditation_Type__c) to exclude</description>
         <externalId>false</externalId>
         <label>Accreditation Model To Exclude</label>
-        <length>255</length>
+        <length>8</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
