@@ -87,7 +87,7 @@ public class HigherLogicIntegrationWS {
 			
 			requestBody.TenantCode = '{!$Credential.Username}';
 			
-			String requestBodyJSON = JSON.serialize(requestBody);
+			String requestBodyJSON = JSON.serializePretty(requestBody);
 			
 			HttpRequest request = new HttpRequest();
 			
@@ -97,6 +97,7 @@ public class HigherLogicIntegrationWS {
 			request.setHeader('content-type', 'application/json');
 			request.setBody(requestBodyJSON);
 			
+			addLog('invoke', '200', requestBodyJSON);
 			System.debug(LoggingLevel.FINE, '____ [cls HigherLogicIntegrationWS - invoke] WS Request Body: ' + request.getBody());
 			
 			Http http = new Http();
@@ -250,7 +251,7 @@ public class HigherLogicIntegrationWS {
 		
 		HigherLogicResponse response = invoke(request);
 		
-		processHigherLogicResponse('pushMembers', response);
+		addLog('pushMembers', response.statusCode, response.responseBody);
 		
 	}
 	
@@ -261,8 +262,10 @@ public class HigherLogicIntegrationWS {
 	* @param wsResponse: HigherLogicResponse
 	*
 	*/
-	private static void processHigherLogicResponse(String action, HigherLogicResponse wsResponse){
-		wsServiceLogLst.add(createNewWSLog(action, wsResponse));
+	private static String addLog(String action, String errorCode, String body){
+		ISSP_Web_Service_Log__c log = createNewWSLog(action, errorCode, body);
+		wsServiceLogLst.add(log);
+		return JSON.serializePretty(log);
 	}
 	
 	/**
@@ -275,7 +278,7 @@ public class HigherLogicIntegrationWS {
 	* @return newLog: ISSP_Web_Service_Log__c
 	*
 	*/
-	private static ISSP_Web_Service_Log__c createNewWSLog(String wsMethod, HigherLogicResponse wsResponse){
+	private static ISSP_Web_Service_Log__c createNewWSLog(String wsMethod, String errorCode, String body){
 		
 		ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
 		
@@ -284,8 +287,8 @@ public class HigherLogicIntegrationWS {
 		newLog.System__c		 = 'Standards Setting Workspace';
 		newLog.User__c			 = UserInfo.getUserId();
 		newLog.Finished__c		 = System.now();
-		newLog.Error_Code__c	 = wsResponse.statusCode;
-		newLog.Error_Message__c	 = wsResponse.responseBody;
+		newLog.Error_Code__c	 = errorCode;
+		newLog.Error_Message__c	 = body;
 
 		if(newLog.Error_Code__c == '200'){
 			newLog.Success__c = true;

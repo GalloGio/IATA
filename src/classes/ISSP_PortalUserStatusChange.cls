@@ -697,37 +697,43 @@ public with sharing class ISSP_PortalUserStatusChange {
     public static void futureUpdateUsers(set<string> conIdSet) {
         
         Map<Id,Contact> contactMap = new Map<Id,Contact>(
-        	[SELECT 
-        		Id,
-        		email,
-        		firstName,
-        		lastname,
-        		Title,
-        		Preferred_Language__c,
-        		Status__c, 
-        		(SELECT
-        			Id,
-        			Right__c
-        		 FROM
-        		 	Portal_Application_Rights__r 
-        		 WHERE 
-        		 	 Kavi_user__c = true 
-        		 AND Portal_Application__r.Name = 'Standards Setting Workspace'
-        		 )
-        	 FROM 
-        	 	Contact 
-        	 WHERE
-        	 	Id IN :conIdSet
-        	]
+            [SELECT 
+                Id,
+                email,
+                firstName,
+                lastname,
+                Title,
+                Preferred_Language__c,
+                Status__c, 
+                (SELECT
+                    Id,
+                    Right__c
+                 FROM
+                    Portal_Application_Rights__r 
+                 WHERE 
+                     Kavi_user__c = true 
+                 AND Portal_Application__r.Name = 'Standards Setting Workspace'
+                 )
+             FROM 
+                Contact 
+             WHERE
+                Id IN :conIdSet
+            ]
         );
         
         
         if(!contactMap.values().isEmpty()){
 
-	        List<User> usersToPushHL = new List<User>();
-	        Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
+            List<User> usersToPushHL = new List<User>();
+            Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
+            Set<Id> contactSet = contactMap.keySet();
 
-            list<User> userList = [select Id,ContactId, ContactKaviId__c,languagelocalekey,email,firstname,lastname,Title,IsActive,IsPortalEnabled,username from User where ContactId in:contactMap.keySet() OR ContactKaviId__c in:contactMap.keySet()];
+            String usersQuery = String.format('SELECT {0} FROM User WHERE {1}', 
+                new List<String>{String.join(HigherLogicIntegrationHelper.getQueryFields(), ', '),
+                'ContactId IN :contactSet OR ContactKaviId__c IN :contactSet'}
+            );
+
+            List<User> userList = (List<User>) Database.query(usersQuery);
 
             for(User user : userList){
                 //Code extension to consider internal users
@@ -756,15 +762,16 @@ public with sharing class ISSP_PortalUserStatusChange {
                 System.debug(LoggingLevel.FINE, '____ [cls ISSP_PortalUserStatusChange - futureUpdateUsers] Portal Application Rights associated: ' + parLst);
                 
                 if(parLst != null && !parLst.isEmpty()){
-                	String access = parLst.get(0).Right__c;
-                	usersToPushHL.add(user);
-                	activeUserMap.put(user.Id, access == 'Access Granted');
+                    String access = parLst.get(0).Right__c;
+                    usersToPushHL.add(user);
+                    activeUserMap.put(user.Id, access == 'Access Granted');
                 }
-				                
+                                
              }
 
             HigherLogicIntegrationHelper.pushPersonMembers(usersToPushHL, activeUserMap);
-            
+
+            ISSP_UserTriggerHandler.preventTrigger = true;
             update userList;
             
         }

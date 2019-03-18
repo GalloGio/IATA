@@ -147,6 +147,34 @@ public class HigherLogicIntegrationHelper {
 		HigherLogicIntegrationWS.flushWebServiceLogs();
 		
 	}
+
+	public static List<String> getQueryFields() {
+		return new List<String>{
+			'Id',
+			'ContactKaviId__c',
+			'Username',
+			'Title',
+			'FirstName',
+			'LastName',
+			'Phone',
+			'Fax',
+			'IsActive',
+			'City',
+			'MobilePhone',
+			'State',
+			'Country',
+			'Street',
+			'Email',
+			'PostalCode',
+			'ContactId',
+			'Contact.Account.RecordTypeId',
+			'Contact.Account.Field_Head_Office__c',
+			'Contact.AccountId',
+			'Contact.Account.Name',
+			'Contact.Account.ParentId',
+			'Contact.Account.Parent.ParentId'
+		};
+	}
 	
 	/**
 	* Processes each User/Account pair 
@@ -160,42 +188,19 @@ public class HigherLogicIntegrationHelper {
 	@future(callout=true)
 	public static void pushPersonCompanyMembers(String operation, Set<Id> contactIdSet, Id provAcctId){
 	
-		String usersQuery =
-			' SELECT                                  ' +
-			' 	Id,                                   ' +
-			' 	ContactKaviId__c,                     ' +
-			' 	Username,                             ' +
-			' 	Title,                                ' +
-			' 	FirstName,                            ' +
-			' 	LastName,                             ' +
-			' 	Phone,                                ' +
-			' 	Fax,                                  ' +
-			' 	IsActive,                             ' +
-			' 	City,                                 ' +
-			' 	MobilePhone,                          ' +
-			' 	State,                                ' +
-			' 	Country,                              ' +
-			' 	Street,                               ' +
-			' 	Email,                                ' +
-			' 	PostalCode,                           ' +
-			'   ContactId,							  ' +
-			' 	Contact.Account.RecordTypeId,         ' +
-			' 	Contact.Account.Field_Head_Office__c, ' +
-			' 	Contact.AccountId,                    ' +
-			' 	Contact.Account.Name,                 ' +
-			' 	Contact.Account.ParentId,             ' +
-			' 	Contact.Account.Parent.ParentId       ' +
-			' FROM                                    ' +
-			' 	User                                  ' +
-			' WHERE									  ';
-			
+		String whereClause = '';
 		if (operation == PUSH_INTERNAL_MEMBERS){
-			usersQuery += ' ContactKaviId__c IN :contactIdSet ';
+			whereClause += ' ContactKaviId__c IN :contactIdSet ';
 		}
 		else {
-			usersQuery += ' ContactId IN :contactIdSet ';
+			whereClause += ' ContactId IN :contactIdSet ';
 		}
-		
+
+		String usersQuery = String.format('SELECT {0} FROM User WHERE {1}', 
+			new List<String>{String.join(getQueryFields(), ', '),
+			whereClause}
+		);			
+				
 		List<User> userLst = (List<User>) Database.query(usersQuery);
 		
 		List<sObject> membersToPushLst = new List<sObject>();
