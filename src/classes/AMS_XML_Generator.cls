@@ -233,8 +233,10 @@ public with sharing class AMS_XML_Generator {
                 if(curOpp != NULL){
                     getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
                     Date offerDate =  curOpp.Offer_exchange_rate_date__c;
-                    Datetime dtOfferDate = datetime.newInstance(offerDate.year(), offerDate.month(),offerDate.day());
-                    getElementNode(liNode, 'offerDate', dtOfferDate.format('yyyyMMdd'));
+                    if(offerDate != null){
+                        Datetime dtOfferDate = datetime.newInstance(offerDate.year(), offerDate.month(),offerDate.day());
+                        getElementNode(liNode, 'offerDate', dtOfferDate.format('yyyyMMdd'));
+                    }
                     getElementNode(liNode, 'offerId', curOpp.GDI_Offer_Id__c);
                 }
                 else if(!gdiOrGdnChangeCode.contains(ag.Change_Code__c)){
