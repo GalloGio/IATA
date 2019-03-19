@@ -33,8 +33,6 @@
                 var state = response.getState();
                 if (state === "SUCCESS") {
                     var responseValue = response.getReturnValue();
-                    console.log(responseValue);
-
                     if (!responseValue.isSuccess) {
                         var toastEvent = $A.get("e.force:showToast");
                         toastEvent.setParams({
@@ -57,8 +55,6 @@
                   
                     }
 
-                } else if (state === "INCOMPLETE") {
-                    // do something
                 }
                 else if (state === "ERROR") {
                     var errors = response.getError();
@@ -78,8 +74,7 @@
 
         function remoteFunctionPut(amazonCredentials, file, fileBody, fileIdentifierPick, component) {
             var amazonFilePath = amazonCredentials.endpoint + amazonCredentials.bucketName + '/' + amazonCredentials.fullFileNameEncoded;
-            console.log('amazonFilePath: ', amazonFilePath);
-
+            
             //var progressBar;
 
             var xhr = new XMLHttpRequest();
@@ -158,8 +153,7 @@
                 var state = response.getState();
                 if (state === "SUCCESS") {
                     var responseValue = response.getReturnValue();
-                    console.log(responseValue);
-
+                    
                     //fileCounter.refreshIfEmpty();
                     fileCounter.value = fileCounter.value - 1;
                     if (fileCounter.value == 0) {
@@ -170,9 +164,7 @@
                     }
                     //this.helperGetAttachList(component);
 
-                } else if (state === "INCOMPLETE") {
-                    // do something
-                }
+                } 
                 else if (state === "ERROR") {
                     var errors = response.getError();
                     if (errors) {
@@ -208,11 +200,10 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 var lstcases = response.getReturnValue();
-                console.log(lstcases);
+               
 
                 lstcases.forEach(function(elem){
-                    console.log(elem.CaseRecord.RecordTypeId);
-               
+                                 
                     elem.caseNumber=elem.CaseRecord.CaseNumber,
                     elem.subject=elem.CaseRecord.Subject,
                     elem.status=elem.CaseRecord.Status,
@@ -250,9 +241,7 @@
                 ];
                 
                 component.set("v.columnscasepopup",cols);
-            } else if (state === "INCOMPLETE") {
-                // do something
-            }
+            } 
             else if (state === "ERROR") {
                 var errors = response.getError();
                 if (errors) {
@@ -276,13 +265,9 @@
 
     makeAllAttachmentsPublicButtonHandler: function (component, event, helper) {
         var parentId = component.get("v.recordId");
-        //console.log(parentId);
         var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
-        //makeAllAttachPublic(String parentId, Boolean isPortal){
 
         var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
-        //console.log(isSAAMorSIDRA);
 
         var makeAllAttachPublicAction = component.get("c.makeAllAttachPublic");
         makeAllAttachPublicAction.setParams({
@@ -316,8 +301,7 @@
                     toastEvent.fire();
                 }
 
-            } else if (state === "INCOMPLETE") {
-            }
+            } 
             else if (state === "ERROR") {
                 var errors = response2.getError();
                 if (errors) {
@@ -335,13 +319,9 @@
 
     makeAllAttachmentsPrivateButtonHandler: function (component, event, helper) {
         var parentId = component.get("v.recordId");
-        //console.log(parentId);
         var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
-        //makeAllAttachPrivate(String parentId, Boolean isPortal){
 
         var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
-        //console.log(isSAAMorSIDRA);
 
         var makeAllAttachPrivateAction = component.get("c.makeAllAttachPrivate");
         makeAllAttachPrivateAction.setParams({
@@ -375,9 +355,7 @@
                     toastEvent.fire();
                 }
 
-            } else if (state === "INCOMPLETE") {
-                // do something
-            }
+            } 
             else if (state === "ERROR") {
                 var errors = response2.getError();
                 if (errors) {
@@ -394,12 +372,9 @@
     },
     downloadAllFilesButtonHandler: function (component, event, helper) {
         var parentId = component.get("v.recordId");
-        //console.log(parentId);
 
         var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
 
-        //getAllExpiringLink(String objectId, Boolean isPortal)
         var getAllExpiringLinkAction = component.get("c.getAllExpiringLink");
         getAllExpiringLinkAction.setParams({
             "objectId": parentId,
@@ -408,14 +383,10 @@
         getAllExpiringLinkAction.setCallback(this, function (response2) {
             var state = response2.getState();
             if (state === "SUCCESS") {
-                //var zipfiles = new ZipFiles(response2.getReturnValue(), "files.zip");
-                //zipfiles.downloadZip();
                 helper.helperCreateZip(response2.getReturnValue(), "files.zip");
 
 
-            } else if (state === "INCOMPLETE") {
-                // do something
-            }
+            } 
             else if (state === "ERROR") {
                 var errors = response2.getError();
                 if (errors) {
@@ -728,14 +699,10 @@
     helperGetAttachList: function (component) {
 
         var parentId = component.get("v.recordId");
-        //console.log(parentId);
-
         var isPortal = component.get("v.isPortal");
-        //console.log(isPortal);
-
         var isSAAMorSIDRA = component.get("v.panelProperties").isSAAMorSIDRA;
 
-        //get this page properties and 
+        //get this page properties
         var getLstAttachmentsAction = component.get("c.getAllAttachmentsByParentIdAndPortal");
         getLstAttachmentsAction.setParams({
             "parentId": parentId,
@@ -746,7 +713,6 @@
             var state = response2.getState();
             if (state === "SUCCESS") {
                 var lstCases = response2.getReturnValue();
-                //console.log(lstCases);
                 if (lstCases) {
 
                     for (var i = 0; i < lstCases.length; i++) {
@@ -754,14 +720,11 @@
                     }
 
                     component.set("v.lstAttachments", lstCases);
-                    //console.log('length ' , lstCases);
                     component.set("v.lstAttachmentsLength", lstCases.length);
 
                     component.set("v.showLoadingSpinner", false);
                 }
-            } else if (state === "INCOMPLETE") {
-                // do something
-            }
+            } 
             else if (state === "ERROR") {
                 var errors = response2.getError();
                 if (errors) {
@@ -787,8 +750,6 @@
                 attachAux = lstAttachments[i];
             }
         }
-
-        //console.log(attachAux);
         component.set("v.editAttachment", attachAux);
         component.set("v.viewEditAttachmentPopup", true);
 
@@ -895,9 +856,7 @@
                     toastEvent.fire();
                 }
 
-            } else if (state === "INCOMPLETE") {
-                // do something
-            }
+            } 
             else if (state === "ERROR") {
                 var errors = response2.getError();
                 if (errors) {
@@ -916,13 +875,10 @@
     },
     uploadAttachments: function (component, files, helper) {
         var parentId = component.get("v.recordId");
-        console.log(files[0]);
 
         var fileCounter = {
             value: 0,
             reset: function (val) { value = val; },
-            //increase: function() { value++; },
-            //decrease: function() { value--; },
             refreshIfEmpty: function () {
                 value--;
                 if (value == 0) refreshList();
@@ -953,7 +909,6 @@
             } else {
                 var reader = new FileReader();
                 reader.readAsBinaryString(file);
-                console.log(reader.result);
                 reader.onload = function (e) {
                     var arrayBuffer = reader.result;
                     createAttachmentAction.setParams({
@@ -968,7 +923,6 @@
                         var state = response.getState();
                         var resp = response.getReturnValue();
                         if (state === "SUCCESS") {
-                            console.log('pfofofo' + resp);
                             var toastEvent = $A.get("e.force:showToast");
                             toastEvent.setParams({
                                 mode: 'dismissable',
@@ -979,9 +933,7 @@
                             });
                             toastEvent.fire();
 
-                        } else if (state === "INCOMPLETE") {
-                            // do something
-                        }
+                        } 
                         else if (state === "ERROR") {
                             var errors = response.getError();
                             if (errors) {
