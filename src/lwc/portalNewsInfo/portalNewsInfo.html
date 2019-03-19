@@ -1,0 +1,38 @@
+<template>
+    <lightning-card>
+        <div slot="title">
+            <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+            For You
+        </div>
+        <template if:true={loading}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+        <template if:false={loading}>
+            <div class="slds-m-around_x-small">
+                <template if:true={dataRecords}>
+                    <div style="height: 280px;">
+                        <img src={bannerImages} class="carouselBanner">
+                    </div>
+                </template>
+            </div>
+        </template>
+        
+        <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
+            <lightning-layout-item padding="around-small">
+                <lightning-icon icon-name="utility:chevronleft" onclick={handlePrevious} size="small"
+                    style="cursor:pointer" variant="light"></lightning-icon>
+            </lightning-layout-item>
+            <template for:each={sliderIcons} for:item="sliderIcon">
+                <lightning-layout-item padding="around-small" key={sliderIcon.id}>
+                    <lightning-icon icon-name="utility:record" size="xx-small" variant={sliderIcon.variant}>
+                    </lightning-icon>
+                </lightning-layout-item>
+            </template>
+            <lightning-layout-item padding="around-small">
+                <lightning-icon icon-name="utility:chevronright" size="small" onclick={handleNext} variant="light"
+                    style="cursor:pointer">
+                </lightning-icon>
+            </lightning-layout-item>
+        </lightning-layout>        
+    </lightning-card>  
+</template>
