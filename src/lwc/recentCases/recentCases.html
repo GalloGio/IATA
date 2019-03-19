@@ -1,0 +1,40 @@
+<template>
+    <lightning-card>
+        <div slot="title">
+            <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+            Recent Cases
+        </div>
+        <div slot="actions">
+            <lightning-button variant="base" label="See All" title="See All" icon-name="utility:forward" icon-position="right"></lightning-button>
+        </div>        
+        <div class="slds-m-around__medium">
+            <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>            
+            <template if:false={loading}>
+                <div if:true={dataRecords}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={data}
+                        columns={columns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+                </div>
+                <div if:false={dataRecords}>
+                    <div class="slds-text-align_center">
+                        <div class="slds-text-heading_medium">
+                            <h1>You don't have any cases for now.</h1>
+                        </div>
+                        <div class="slds-text-body_regular">
+                            <h1>But when you have, you'll view the most recent ones with their basic details in this area.</h1> 
+                        </div>
+                        <div class="slds-m-top_medium">
+                            <h1><lightning-formatted-url value="www.salesforce.com" label="Whats is a case and when do I need it?"></lightning-formatted-url></h1>
+                            <h1><lightning-formatted-url value="www.salesforce.com" label="How can I see and update the details of a case?"></lightning-formatted-url></h1>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>    
+    </lightning-card>    
+</template>
