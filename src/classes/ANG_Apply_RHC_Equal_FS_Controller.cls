@@ -48,7 +48,12 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public Boolean showCountrySpecificColumns {get{return countrySpecificsList.contains(bspValue);} private set;}
 
 	public Integer agenciesFetched {get; private set;}
-
+	public Integer batchPercentage {get; set;}
+	public AsyncApexJob batchJob {get; set;}
+	private List<AsyncApexJob> batchJobs {get; set;}
+	public Boolean pollerBool {get; set;}
+	public Boolean batchStatusBool {get; set;}
+	public Datetime batchTimestamp {get; private set;}
 
 	public ANG_Apply_RHC_Equal_FS_Controller() {
 		populateModes();
@@ -113,6 +118,8 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	previousIataCode = iataCode;
     	previousModeValue = modeValue;
     	previousActionValue = actionValue;
+    	batchStatusBool = false;
+    	batchJob = null;
     	Boolean rhcFlag = actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ? false : true; //Apply_RHC_per_RS
 
     	if (modeValue == 'BSP') {
@@ -215,7 +222,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	}
 
 	public void applyOrRevertRHC() {
-		
+		batchJob = null;
 		Boolean isRegardlessRisk = (actionValue == 'Apply_RHC_regardless' || actionValue == 'Revert_RHC_regardless');
 		Boolean isApply =( actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS');
 
@@ -237,7 +244,6 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	  		} catch(Exception e) { ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for Agencies with Iata code(s): ' + String.join(iataCodesAndNames,',') + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString())); }
 	  		
   		} else {
-
 
   			for (ANG_BSP_Attributes__c attribute : bspAttributes){
   				if(attribute.recordtypeid == RHCConfRT){
@@ -265,8 +271,44 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
   			}
 
   			update bspAttributes;
+
+  			//and to force the NEWGEN-5173 to run
+  			batchTimestamp = Datetime.now();
+
+  			Database.executeBatch(new ANG_CalculateRHCperBSP(bspValue), 200);
+
+	  		batchStatusBool = true;
+			pollerBool = true;
+			batchPercentage = 0;
+
   			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to this BSP'));
   		}
+	}
+
+	public void getBatchStatus() {
+		if (batchJob == null) {
+			batchJobs = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
+						FROM AsyncApexJob 
+						WHERE ApexClass.Name = 'ANG_CalculateRHCperBSP'
+							AND CreatedById = :UserInfo.getUserId()
+							AND CreatedDate >= :batchTimestamp
+						ORDER BY CreatedDate DESC];
+
+			if (!batchJobs.isEmpty()) batchJob = batchJobs[0];
+		} else {
+			batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
+						FROM AsyncApexJob 
+						WHERE Id = :batchJob.Id];
+			
+			if (batchJob.JobItemsProcessed > 0) batchPercentage = batchJob.JobItemsProcessed * 100 / batchJob.TotalJobItems;
+
+			if (batchJob.status == 'Processing' && batchPercentage == 100) batchPercentage = 99;
+			if (batchJob.status == 'Completed' && batchPercentage == 0) batchPercentage = 100;
+
+			pollerBool = (batchJob.status == 'Ended' || batchJob.status == 'Completed') ? false : true;
+
+			if (!pollerBool) ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to the following agencies:'));
+		}
 	}
 
 }

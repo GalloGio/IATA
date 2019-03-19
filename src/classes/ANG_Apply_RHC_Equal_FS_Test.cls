@@ -357,7 +357,6 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 		system.assert(controller.renderConfirmButton, 'Should be available now');
 		system.assert(controller.hasAttributesToShow, 'Should have Attributes to show');
 		system.assert(controller.showCountrySpecificColumns, 'Should show the Columns for min in max points to this BSP');
-		system.assert(controller.showCountrySpecificColumns, 'Should show the Columns for min in max points to this BSP');
 		
 		system.assert(!controller.hasNext, 'Should only find one account and for that, only one page');
 		system.assert(!controller.hasPrevious, 'Should only find one account and for that, only one page');
@@ -372,6 +371,7 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 
 		controller.applyOrRevertRHC();
 
+		controller.getBatchStatus();
 
 		list<ANG_BSP_Attributes__c> bsps = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = 'BSP-HK'];
 		for (ANG_BSP_Attributes__c bsp: bsps){
@@ -409,6 +409,9 @@ private class ANG_Apply_RHC_Equal_FS_Test {
 			else
 				system.assertEquals(bsp.FS_Percentage__c, 100);
 		}
+
+		controller.getBatchStatus();
+		controller.getBatchStatus();
 
 		Test.stopTest();
 
