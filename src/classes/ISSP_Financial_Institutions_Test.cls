@@ -176,7 +176,7 @@ private class ISSP_Financial_Institutions_Test {
 
             System.assertEquals(2, controller.financialInstitutionList.size());
             System.assertEquals(true, controller.financialInstitutionsFound);
-            System.assertEquals(true, controller.userCanRequestGDI);
+            System.assertEquals(false, controller.userCanRequestGDI);
         }
 
         Test.stopTest();
@@ -194,7 +194,7 @@ private class ISSP_Financial_Institutions_Test {
 
             System.assertEquals(2, controller.financialInstitutionList.size());
             System.assertEquals(true, controller.financialInstitutionsFound);
-            System.assertEquals(true, controller.userCanRequestGDI);
+            System.assertEquals(false, controller.userCanRequestGDI);
 
             List<SelectOption> paginationSizeOptions = controller.paginationSizeOptions;
 
