@@ -10,9 +10,6 @@
                 <field>Answer__c</field>
             </layoutItems>
             <layoutItems>
-                <field>To_display_on_Homepage__c</field>
-            </layoutItems>
-            <layoutItems>
                 <field>CNS_Article__c</field>
             </layoutItems>
         </layoutColumns>
