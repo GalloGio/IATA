@@ -97,7 +97,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 		Schema.DescribeFieldResult fieldResult = Currency_Center_Survey__c.Reporting_Type__c.getDescribe();
 
 		for(Schema.PicklistEntry val : fieldResult.getPicklistValues()) {
-			reportingTypeList.add(new SelectOption(val.getLabel(), val.getLabel()));
+			reportingTypeList.add(new SelectOption(val.getLabel(),val.getLabel()));
 		}
 		
 		
@@ -924,10 +924,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 							wccsObject.typeReportMap.get(key).Total_Currency__c = totalAmount;
 
 							//total currency in USD
-							wccsObject.typeReportMap.get(key).Total_Amount_USD__c = wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c * totalAmount;
+							wccsObject.typeReportMap.get(key).Total_Amount_USD__c = totalAmount / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 							
 							//Convert the amount of the bank to USD
-							bank.Amount_USD__c = wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c * bank.Amount__c;
+							bank.Amount_USD__c = bank.Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 
 							//percentage of the total amount taht this bank have
 							bank.Bank_Percentage__c = (100 * bank.Amount__c)/totalAmount;
@@ -943,10 +943,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 						wccsObject.typeReportMap.get(key).Total_Currency__c = bank.Amount__c;
 
 						//total currency in USD
-						wccsObject.typeReportMap.get(key).Total_Amount_USD__c = wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c *  bank.Amount__c;
+						wccsObject.typeReportMap.get(key).Total_Amount_USD__c = bank.Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 					
 						//Convert the amount of the bank to USD
-						bank.Amount_USD__c = wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c * bank.Amount__c;
+						bank.Amount_USD__c = bank.Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 
 						//percentage of the total amount taht this bank have
 						bank.Bank_Percentage__c = 100;
@@ -991,7 +991,9 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 		String key = buildReportTypeMapKey(sectionReportKey, sectionCurrencyKey);
 
 		if(wccsObject.typeReportMap.containsKey(key)) {
-			wccsObject.typeReportMap.get(key).Last_Allocation_Total_Amount_USD__c = wccsObject.typeReportMap.get(key).Last_Allocation_Amount__c * wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
+			if(wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c != null && wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c > 0){
+				wccsObject.typeReportMap.get(key).Last_Allocation_Total_Amount_USD__c = wccsObject.typeReportMap.get(key).Last_Allocation_Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
+			}
 		}
 	}
 

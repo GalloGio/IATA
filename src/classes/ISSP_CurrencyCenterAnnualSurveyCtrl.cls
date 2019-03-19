@@ -923,10 +923,10 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 						wccsObject.typeReportMap.get(key).Total_Currency__c = totalAmount;
 
 						//total currency in USD
-						wccsObject.typeReportMap.get(key).Total_Amount_USD__c = wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c * totalAmount;
+						wccsObject.typeReportMap.get(key).Total_Amount_USD__c = totalAmount / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 						
 						//Convert the amount of the bank to USD
-						bank.Amount_USD__c = wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c * bank.Amount__c;
+						bank.Amount_USD__c = bank.Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 
 						//percentage of the total amount taht this bank have
 						bank.Bank_Percentage__c = (100 * bank.Amount__c)/totalAmount;
@@ -941,10 +941,10 @@ public without sharing class ISSP_CurrencyCenterAnnualSurveyCtrl {
 						wccsObject.typeReportMap.get(key).Total_Currency__c = bank.Amount__c;
 
 						//total currency in USD
-						wccsObject.typeReportMap.get(key).Total_Amount_USD__c = wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c *  bank.Amount__c;
+						wccsObject.typeReportMap.get(key).Total_Amount_USD__c = bank.Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 					
 						//Convert the amount of the bank to USD
-						bank.Amount_USD__c = wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c * bank.Amount__c;
+						bank.Amount_USD__c = bank.Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 
 						//percentage of the total amount taht this bank have
 						bank.Bank_Percentage__c = 100;
