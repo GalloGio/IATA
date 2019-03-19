@@ -2,7 +2,7 @@
     <lightning-card>
         <div slot="title">
             <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
-            Recent Cases
+            {label.CSP_RecentCases}
         </div>
         <div slot="actions">
             <lightning-button variant="base" label="See All" title="See All" icon-name="utility:forward" icon-position="right"></lightning-button>
@@ -23,10 +23,10 @@
                 <div if:false={dataRecords}>
                     <div class="slds-text-align_center">
                         <div class="slds-text-heading_medium">
-                            <h1>You don't have any cases for now.</h1>
+                            <h1>{label.CSP_NoCases1}</h1>
                         </div>
                         <div class="slds-text-body_regular">
-                            <h1>But when you have, you'll view the most recent ones with their basic details in this area.</h1> 
+                            <h1>{label.CSP_NoCases2}</h1> 
                         </div>
                         <div class="slds-m-top_medium">
                             <h1><lightning-formatted-url value="www.salesforce.com" label="Whats is a case and when do I need it?"></lightning-formatted-url></h1>
