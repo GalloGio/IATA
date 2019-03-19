@@ -4,8 +4,8 @@
     <name>KB admins</name>
     <queueMembers>
         <users>
-            <user>aertsr@iata.org</user>
             <user>irturko@iata.org</user>
+            <user>aertsr@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>

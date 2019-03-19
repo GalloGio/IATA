@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>GCS-MarketIS</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>GCS_L1L2_Queues_Members</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
