@@ -72,6 +72,8 @@ public class ANG_RHCAlertTriggerHandler{
                                             , (SELECT 
                                                 Id
                                                 , Name
+                                                , Guaranteed_amount__c
+                                                , IATA_ISO_Country__r.Name
                                                 , Short_Name__c
                                                 , IATACode__c
                                                 , ANG_IsNewGenAgency__c
@@ -98,11 +100,14 @@ public class ANG_RHCAlertTriggerHandler{
         Set<String> notificationTemplates = new Set<String>();
         map<id,ANG_Risk_Alert__c> riskAlertMap = new map<id,ANG_Risk_Alert__c>();
         List<ANG_Risk_Alert__c> orangeRiskAlerts = new List<ANG_Risk_Alert__c>();
-
+        raAccMap= new map<id,account>();
         for(ANG_Risk_Alert__c a : triggerNew){
             
             //NEWGEN-5198
-            if(a.ANG_Severity__c == 'Orange') orangeRiskAlerts.add(a);
+            if(a.ANG_Severity__c == 'Orange'){
+                orangeRiskAlerts.add(a);
+                raAccMap.put(a.id,accounts.get(a.ANG_Account__c));
+            }
 
             String key = countries.get(a.ANG_Account__c) + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
             if(!configs.containsKey(key)) key = DEFAULT_CODE + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
@@ -120,6 +125,9 @@ public class ANG_RHCAlertTriggerHandler{
 
         if(!orangeRiskAlerts.isEmpty())sendNotificationToSeniors(orangeRiskAlerts,'RTS_Notification_Manager_orange');
 
+        //prevent breaking already existing logic
+        raAccMap.clear();
+            
             if(alertsToNotify.isEmpty()) return; //no match, no need to go further
 
             //Fetch email templates and RHC Information 
