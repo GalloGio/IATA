@@ -435,8 +435,8 @@
             <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Log_Phone_Case</actionName>
-            <actionType>CustomButton</actionType>
+            <actionName>Case.Log_Phone_case_lightning</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
         </platformActionListItems>
     </platformActionList>
