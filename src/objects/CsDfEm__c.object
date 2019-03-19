@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <label>Case RT default email</label>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>agMgEm__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Management Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>agMgRt__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Management RT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>arMgEM__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Management Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>arMgRT__c</fullName>
+        <externalId>false</externalId>
+        <label>Airline Management RT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>caUsEm__c</fullName>
+        <externalId>false</externalId>
+        <label>CASS USA Service Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>caUsRT__c</fullName>
+        <externalId>false</externalId>
+        <label>CASS USA Management RT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>cnsEM__c</fullName>
+        <externalId>false</externalId>
+        <label>CNS Endorsement Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>cnsRT__c</fullName>
+        <externalId>false</externalId>
+        <label>CNS Endorsment RT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>efEM__c</fullName>
+        <externalId>false</externalId>
+        <label>EF Services Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>efRT__c</fullName>
+        <externalId>false</externalId>
+        <label>EF Services RT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>icsEM__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA Customer Service Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>icsRT__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA Customer Service RT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>iinEM__c</fullName>
+        <externalId>false</externalId>
+        <label>Info IATAN Email</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>iinRT__c</fullName>
+        <externalId>false</externalId>
+        <label>Info IATAN RT</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>
