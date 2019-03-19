@@ -1,0 +1,20 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<font size="4" face="Arial,Sans-Serif">Dear Colleague,<span lang="en-US"></span></font><table width="866" cellspacing="0" cellpadding="0" border="0"><tbody><tr height="300"><td class="xl63" style="height:225.0pt;width:650pt" width="866" height="300"><font size="4" face="Arial,Sans-Serif">
+</font><p style="font-size: 11pt; margin: 0px;"><font size="4" face="Arial,Sans-Serif"><span style="color:#0070C0;" lang="en-US"></span>Please
+ note </font><font size="4" face="Arial,Sans-Serif">{!Currency_Center_Survey__c.Airline__c} reported currency repatriation issues for {!Currency_Center_Survey__c.Country_Name__c} as
+ part of the Annual Remittance of Foreign Balances Survey 2019.<span lang="en-US"></span></font></p><font size="4" face="Arial,Sans-Serif">
+</font><p style="font-size: 11pt; margin: 0px;"><font size="4" face="Arial,Sans-Serif"><span style="color:#0070C0;" lang="en-US">&nbsp;</span><span lang="en-US"></span></font></p><font size="4" face="Arial,Sans-Serif">
+</font><p style="font-size: 11pt; margin: 0px;"><font size="4" face="Arial,Sans-Serif">You
+ can access the information in the Currency Center. Please note the data
+ of all airlines across the different countries will be aggregated and 
+analyzed
+once the survey is closed on </font><font size="4" face="Arial,Sans-Serif"><span style="background-color: rgb(255, 255, 255);">{!CASE(</span></font><font size="4" face="Arial,Sans-Serif"><span style="background-color: rgb(255, 255, 255);">MONTH(TODAY()),1,'January',2,'February',3,'March',4,'April',5,'May',6,'June',7,'July',8,'August',9,'September',10,'October',11,'November',12,'December','')}</span>&nbsp; 15<sup>th</sup> .<span lang="en-US"></span></font></p><font size="4" face="Arial,Sans-Serif">
+</font><p style="font-size: 11pt; margin: 0px;"><font size="4" face="Arial,Sans-Serif"><span style="color:#0070C0;" lang="en-US">&nbsp;</span><span lang="en-US"></span></font></p><font size="4" face="Arial,Sans-Serif">
+
+Currency Center</font><br>
+    <span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+</tr></tbody></table>]]></td>
+</tr>
+</table>
