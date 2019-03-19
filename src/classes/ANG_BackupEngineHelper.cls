@@ -167,6 +167,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountFields.add('ANG_Accreditation_Model__c');
 		accountFields.add('ANG_IEP_Status__c');
 		accountFields.add('ANG_IEP_HE_AccntNum__c');
+		accountFields.add('Financial_Assessment_Points__c');
 		
 		Set<String> contactFields = new Set<String>();
 		
