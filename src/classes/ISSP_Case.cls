@@ -53,7 +53,7 @@ public without sharing class ISSP_Case {
     public Contact con {get; set;}
     public List <FAQ__kav> finalArticleList {get; set;}
     //public FAQ__kav selectedArtical { get; set; }
-    public List <How_To__kav> finalHowList {get; set;} //TF-sp2
+    //public List <How_To__kav> finalHowList {get; set;} //TF-sp2
     //public How_To__kav selectedHow { get; set; }//TF-sp2
     public List <articleWrapper> globalList {get; set;}//TF-sp2
     public articleWrapper selectedArtical { get; set; }
@@ -193,16 +193,16 @@ public without sharing class ISSP_Case {
                 return new PageReference('/ISSP_SISMembershipApplicationForm?id=' + caseId + '&step=2');
             }
             // If Case is an ICCS Case, redirect to ICCS Service
-			Set<String> recordTypesSet = new Set<String>{
-				'FDS ASP Management',
-				'FDS ICCS Bank Account Management',
-				'FDS ICCS Membership Management',
-				'FDS ICCS Product Management'
-			};
-			if(newCase.Origin == 'Portal' && recordTypesSet.contains(newCase.RecordType.Name)){
+            Set<String> recordTypesSet = new Set<String>{
+                'FDS ASP Management',
+                'FDS ICCS Bank Account Management',
+                'FDS ICCS Membership Management',
+                'FDS ICCS Product Management'
+            };
+            if(newCase.Origin == 'Portal' && recordTypesSet.contains(newCase.RecordType.Name)){
                 PageReference pr = new PageReference('/ISSP_ICCS_Service?caseId=' + caseId);
                 return pr;
-			}
+            }
             showAlertMessage();
 
         }
@@ -479,7 +479,7 @@ public without sharing class ISSP_Case {
             }
 
             finalArticleList = new List <FAQ__kav>();
-            finalHowList = new List <How_To__kav>();//TF-sp2
+            //finalHowList = new List <How_To__kav>();//TF-sp2
             globalList = new List <articleWrapper>();//TF-sp2
             List <CaseArticle> caseArticleList = [SELECT Id, KnowledgeArticleId  FROM CaseArticle WHERE CaseId = :caseId];
             if (!caseArticleList.isEmpty()) {
@@ -492,7 +492,7 @@ public without sharing class ISSP_Case {
                 system.debug('currentLanguage: ' + currentLanguage);
                 List <FAQ__kav> kList = [SELECT Id, ArticleNumber, CreatedDate, CreatedBy.Name,
                                          Language, LastModifiedDate, Title, KnowledgeArticleId,
-                                         Summary, Answer__c, ArticleType
+                                         Summary, Answer__c//, ArticleType
                                          FROM FAQ__kav
                                          WHERE PublishStatus = 'Online'
                                                  AND KnowledgeArticleId IN :articleIdSet];
@@ -532,46 +532,46 @@ public without sharing class ISSP_Case {
                 }
 
                 //TF-sp2
-                List <How_To__kav> hList = [SELECT Id, ArticleNumber, CreatedDate, CreatedBy.Name,
-                                            Language, LastModifiedDate, Title, KnowledgeArticleId,
-                                            Instructions__c, ArticleType
-                                            FROM How_To__kav
-                                            WHERE PublishStatus = 'Online'
-                                                    AND KnowledgeArticleId IN :articleIdSet];
-                for (How_To__kav thisVersion : hList) {
-                    system.debug('HOW TO LANGUAGE: ' + thisVersion.Language);
-                    if (thisVersion.Language == currentLanguage) {
-                        finalHowList.add(thisVersion);
-                        if (!articleMap.containsKey(thisVersion.KnowledgeArticleId)) {
-                            system.debug('adding my language to how to');
-                            articleMap.put(thisVersion.KnowledgeArticleId, thisVersion.KnowledgeArticleId);
+                //List <How_To__kav> hList = [SELECT Id, ArticleNumber, CreatedDate, CreatedBy.Name,
+                //                            Language, LastModifiedDate, Title, KnowledgeArticleId,
+                //                            Instructions__c, ArticleType
+                //                            FROM How_To__kav
+                //                            WHERE PublishStatus = 'Online'
+                //                                   AND KnowledgeArticleId IN :articleIdSet];
+                // for (How_To__kav thisVersion : hList) {
+                //    system.debug('HOW TO LANGUAGE: ' + thisVersion.Language);
+                //    if (thisVersion.Language == currentLanguage) {
+                        //finalHowList.add(thisVersion);
+                //        if (!articleMap.containsKey(thisVersion.KnowledgeArticleId)) {
+                //            system.debug('adding my language to how to');
+                //            articleMap.put(thisVersion.KnowledgeArticleId, thisVersion.KnowledgeArticleId);
                             //TF-sp2
-                            articleWrapper newArticle = new articleWrapper();
-                            newArticle.articleId = thisVersion.KnowledgeArticleId;
-                            newArticle.articleTitle = thisVersion.Title;
-                            newArticle.articleText = thisVersion.Instructions__c;
-                            newArticle.articleType = 'How To';
-                            globalList.add(newArticle);
-                        }
-                    }
-                }
-                for (How_To__kav thisVersion : hList) {
-                    if (!articleMap.containsKey(thisVersion.KnowledgeArticleId)) {
-                        system.debug('how to not there yet');
-                        if (thisVersion.Language == 'en_US') {
-                            system.debug('adding english to how to');
-                            finalHowList.add(thisVersion);
-                            articleMap.put(thisVersion.KnowledgeArticleId, thisVersion.KnowledgeArticleId);
-                            //TF-sp2
-                            articleWrapper newArticle = new articleWrapper();
-                            newArticle.articleId = thisVersion.KnowledgeArticleId;
-                            newArticle.articleTitle = thisVersion.Title;
-                            newArticle.articleText = thisVersion.Instructions__c;
-                            newArticle.articleType = 'How To';
-                            globalList.add(newArticle);
-                        }
-                    }
-                }
+                //            articleWrapper newArticle = new articleWrapper();
+                //            newArticle.articleId = thisVersion.KnowledgeArticleId;
+                //            newArticle.articleTitle = thisVersion.Title;
+                //            newArticle.articleText = thisVersion.Instructions__c;
+                //            newArticle.articleType = 'How To';
+                //            globalList.add(newArticle);
+                //        }
+                //    }
+                //}
+                //for (How_To__kav thisVersion : hList) {
+                //    if (!articleMap.containsKey(thisVersion.KnowledgeArticleId)) {
+                //        system.debug('how to not there yet');
+                //        if (thisVersion.Language == 'en_US') {
+                //            system.debug('adding english to how to');
+                //            //finalHowList.add(thisVersion);
+                //            articleMap.put(thisVersion.KnowledgeArticleId, thisVersion.KnowledgeArticleId);
+                //            //TF-sp2
+                //            articleWrapper newArticle = new articleWrapper();
+                //           newArticle.articleId = thisVersion.KnowledgeArticleId;
+                //            newArticle.articleTitle = thisVersion.Title;
+                //            newArticle.articleText = thisVersion.Instructions__c;
+                //            newArticle.articleType = 'How To';
+                //            globalList.add(newArticle);
+                //        }
+                //    }
+                //}
             }
 
             isNewCase = false;
