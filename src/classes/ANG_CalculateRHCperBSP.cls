@@ -33,14 +33,15 @@
 	  	}
 
 	   	global void execute(Database.BatchableContext BC, List<ANG_RHC_Information__c> scope) {
-	   		rhcInfosToUpdate = scope;
-	   		ANG_RHCHelper.calculateRHCAmount(rhcInfosToUpdate);
+	   		ANG_RHCHelper.calculateRHCAmount(scope);
+	   		rhcInfosToUpdate.addAll(scope);
 		}
 		
 		global void finish(Database.BatchableContext BC) {
 
 			try{
 				if(!rhcInfosToUpdate.isEmpty()){
+                    ANG_IEP_CalloutHelper.isRunningTestForThreshold = true;
 					update rhcInfosToUpdate;
 				}
 			}catch(Exception e){
