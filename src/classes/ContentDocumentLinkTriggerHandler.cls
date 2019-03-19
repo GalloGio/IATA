@@ -36,16 +36,24 @@ public with sharing class ContentDocumentLinkTriggerHandler {
     */
     public void updateVisibilityAccess() {
         Set<Id> contents = new Set<Id>();
+        List<ContentDocumentLink> bannerContent = new List<ContentDocumentLink>();
         List<ContentDocumentLink> documentsToInsert = new List<ContentDocumentLink>();
         Schema.SObjectType bannerObject = Schema.ISSP_Banner__c.getSObjectType();
-        Id assetLibrary = [SELECT Id FROM ContentWorkspace WHERE DeveloperName = 'sfdc_asset_company_assets'].Id;
         
-        for(ContentDocumentLink doc : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :assetLibrary]) {
-            contents.add(doc.ContentDocumentId);
-        }
-
         for(ContentDocumentLink doc : newList) {
             if(doc.LinkedEntityId.getSObjectType() == bannerObject) {
+                bannerContent.add(doc);
+            }
+        }
+
+        if(!bannerContent.isEmpty()) {
+            Id assetLibrary = [SELECT Id FROM ContentWorkspace WHERE DeveloperName = 'sfdc_asset_company_assets'].Id;
+
+            for(ContentDocumentLink doc : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :assetLibrary]) {
+                contents.add(doc.ContentDocumentId);
+            }
+
+            for(ContentDocumentLink doc : bannerContent) {
                 if(!contents.contains(doc.ContentDocumentId)) {
                     doc.Visibility = 'AllUsers';
                     documentsToInsert.add(
@@ -56,10 +64,10 @@ public with sharing class ContentDocumentLinkTriggerHandler {
                             Visibility  ='AllUsers'
                         )
                     );                    
-                }
-            }        
-        }
+                }       
+            }
 
-        insert documentsToInsert; 
+            insert documentsToInsert; 
+        }
     }
 }

@@ -1,7 +1,12 @@
 import { LightningElement, wire, track } from 'lwc';
 import getBannerInformation from '@salesforce/apex/PortalNewsController.getBannerInformation';
+import CSP_ForYou from '@salesforce/label/c.CSP_ForYou';
+
 
 export default class PortalNewsInfo extends LightningElement {
+    label = {
+        CSP_ForYou
+    };    
     @track loading = true;
     @track dataRecords = false;
     @track maxSize;

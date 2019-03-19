@@ -37,17 +37,12 @@ public with sharing class PortalNewsController {
         String UserPortalStatus;
         String UserPortalAccountSector;
         String soql;
-        String TodayInstance = String.valueOf(Date.today());
-        User portalUser = [
-                SELECT Id, ContactId
-                FROM User 
-                WHERE Id = :UserInfo.getUserId()
-        ];    
+        String TodayInstance = String.valueOf(Date.today());  
         Contact PortalContact = [
             SELECT User_Portal_Status__c, Account.Sector__c, 
                 Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c 
             FROM Contact 
-            WHERE Id = :portalUser.ContactId
+            WHERE Id = :[SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId
             LIMIT 1
         ];
         System.debug('____ [cls PortalNewsController - populateVariables] PortalContact - ' + PortalContact);
