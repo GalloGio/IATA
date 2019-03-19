@@ -60,11 +60,11 @@
                     var errors = response.getError();
                     if (errors) {
                         if (errors[0] && errors[0].message) {
-                            console.log("Error message: " +
+                            console.error("Error message: " +
                                 errors[0].message);
                         }
                     } else {
-                        console.log("Unknown error");
+                        console.error("Unknown error");
                     }
                 }
             });
@@ -169,11 +169,11 @@
                     var errors = response.getError();
                     if (errors) {
                         if (errors[0] && errors[0].message) {
-                            console.log("Error message: " +
+                            console.error("Error message: " +
                                 errors[0].message);
                         }
                     } else {
-                        console.log("Unknown error");
+                        console.error("Unknown error");
                     }
                 }
             });
@@ -246,11 +246,11 @@
                 var errors = response.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
+                        console.error("Error message: " +
                             errors[0].message);
                     }
                 } else {
-                    console.log("Unknown error");
+                    console.error("Unknown error");
                 }
             }
 
@@ -306,11 +306,11 @@
                 var errors = response2.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
+                        console.error("Error message: " +
                             errors[0].message);
                     }
                 } else {
-                    console.log("Unknown error");
+                    console.error("Unknown error");
                 }
             }
         });
@@ -360,11 +360,11 @@
                 var errors = response2.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
+                        console.error("Error message: " +
                             errors[0].message);
                     }
                 } else {
-                    console.log("Unknown error");
+                    console.error("Unknown error");
                 }
             }
         });
@@ -391,11 +391,11 @@
                 var errors = response2.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
+                        console.error("Error message: " +
                             errors[0].message);
                     }
                 } else {
-                    console.log("Unknown error");
+                    console.error("Unknown error");
                 }
             }
         });
@@ -729,11 +729,11 @@
                 var errors = response2.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
+                        console.error("Error message: " +
                             errors[0].message);
                     }
                 } else {
-                    console.log("Unknown error");
+                    console.error("Unknown error");
                 }
             }
         });
@@ -861,11 +861,11 @@
                 var errors = response2.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
+                        console.error("Error message: " +
                             errors[0].message);
                     }
                 } else {
-                    console.log("Unknown error");
+                    console.error("Unknown error");
                 }
             }
             component.set("v.showLoadingSpinner", false);
@@ -948,7 +948,7 @@
                                     toastEvent.fire();
                                 }
                             } else {
-                                console.log("Unknown error");
+                                console.error("Unknown error");
                             }
                         }
 

@@ -197,11 +197,11 @@
                 var errors = response1.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
+                        console.error("Error message: " +
                             errors[0].message);
                     }
                 } else {
-                    console.log("Unknown error");
+                    console.error("Unknown error");
                 }
             }
 
@@ -252,7 +252,7 @@
     handleActionSelect: function (component, event, helper) {
        
         var action = event.getParam('value');
-        console.log(action);
+        console.error(action);
 
 
         if (action == 'transferAttachment') {
@@ -343,11 +343,11 @@
                 var errors = response2.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
+                        console.error("Error message: " +
                             errors[0].message);
                     }
                 } else {
-                    console.log("Unknown error");
+                    console.error("Unknown error");
                 }
             }
         });
@@ -428,11 +428,11 @@
                 var errors = response2.getError();
                 if (errors) {
                     if (errors[0] && errors[0].message) {
-                        console.log("Error message: " +
+                        console.error("Error message: " +
                             errors[0].message);
                     }
                 } else {
-                    console.log("Unknown error");
+                    console.error("Unknown error");
                 }
             }
         });
