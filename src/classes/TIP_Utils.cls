@@ -80,6 +80,14 @@ public class TIP_Utils{
 	public static String LISTED_BY_IATA_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('TIP_BIN_Range__c', 'Unenrolled_Known');
 	public static String BIN_RANGE_PROVIDER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('TIP_BIN_Range__c', 'Enrolled');
 
+    public static final String REPORT_TYPE_TIP_AUTO_REPORTS  = 'TIP_AUTO_REPORTS';
+    public static final String REQUEST_TYPE_TIP_AUTO_REPORTS = 'TIP_AUTO_REPORTS'; 
+    
+    public static final String REMOTE_INVOCATION_STATUS_COMPLETED    = 'Completed';
+    public static final String REMOTE_INVOCATION_STATUS_FAILED       = 'Failed'; 
+    public static final String REMOTE_INVOCATION_STATUS_INITIALIZING = 'Initializing';
+    public static final String REMOTE_INVOCATION_STATUS_IN_PROGRESS  = 'In Progress';  
+
 	//TIP-49 - validate IATA code is unique for payment providers
   	/*public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
 		  

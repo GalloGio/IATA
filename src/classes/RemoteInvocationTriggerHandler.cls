@@ -124,9 +124,9 @@ public without sharing class RemoteInvocationTriggerHandler {
             //
             // ONLY TIP AUTOMATIC REPORTS
             //
-            if(oldMap.get(ri.id).Status__c == AMS_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING && 
-                ri.Status__c == AMS_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS && 
-                ri.Request_Type__c == AMS_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS
+            if(oldMap.get(ri.id).Status__c == TIP_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING && 
+                ri.Status__c == TIP_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS && 
+                ri.Request_Type__c == TIP_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS
               ) {
                 remoteInvocationInProgressList.add(ri);
                 riSet.add(ri.Id);
@@ -150,7 +150,7 @@ public without sharing class RemoteInvocationTriggerHandler {
             List<ISSP_External_Report__c> existingExternalReportsList = [Select id, Account__c
                                                                From ISSP_External_Report__c
                                                               Where Account__c In :accountsSet
-                                                                And Report_ID__c = :AMS_Utils.REPORT_TYPE_TIP_AUTO_REPORTS];
+                                                                And Report_ID__c = :TIP_Utils.REPORT_TYPE_TIP_AUTO_REPORTS];
 
  
             Map<Id, ISSP_External_Report__c> accountExternalReportMap = new Map<Id, ISSP_External_Report__c>();
@@ -190,7 +190,7 @@ public without sharing class RemoteInvocationTriggerHandler {
                 Id auxAccountId = airLineCodeAccountId.get(ipRi.Internal_ID__c);
 
                 if(auxAccountId == null) {
-                    auxStatus = AMS_Utils.REMOTE_INVOCATION_STATUS_FAILED;
+                    auxStatus = TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED;
                     auxErrorMessage = 'The account : ' + ipRi.Internal_ID__c + ' does not exist';
                     break;                         
                 }
@@ -200,7 +200,7 @@ public without sharing class RemoteInvocationTriggerHandler {
                 if(auxEr == null) {
                     auxEr = new ISSP_External_Report__c (
                                     Account__c = auxAccountId,
-                                    Report_ID__c = AMS_Utils.REPORT_TYPE_TIP_AUTO_REPORTS
+                                    Report_ID__c = TIP_Utils.REPORT_TYPE_TIP_AUTO_REPORTS
                                 );
                 }
 
@@ -234,14 +234,14 @@ public without sharing class RemoteInvocationTriggerHandler {
                         //
                         // All good
                         //
-                        auxStatus = AMS_Utils.REMOTE_INVOCATION_STATUS_COMPLETED;
+                        auxStatus = TIP_Utils.REMOTE_INVOCATION_STATUS_COMPLETED;
 
                     } catch(DmlException de) {
                         //
                         // Error!!!
                         //
                         System.debug('ERROR : ' + de.getMessage());
-                        auxStatus = AMS_Utils.REMOTE_INVOCATION_STATUS_FAILED;
+                        auxStatus = TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED;
                         auxErrorMessage = de.getMessage();
                     }
                 }

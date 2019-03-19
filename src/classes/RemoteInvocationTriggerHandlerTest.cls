@@ -292,17 +292,17 @@ public class RemoteInvocationTriggerHandlerTest {
 		Remote_Invocation__c ri = new Remote_Invocation__c (
 			Integration_Transaction_ID__c = 'ABC1',
 			Internal_ID__c = '123',
-			Request_Type__c = AMS_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
+			Request_Type__c = TIP_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
 			Source__c = 'IFG',
-			Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
+			Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
 		);
 
 		Remote_Invocation__c ri2 = new Remote_Invocation__c (
 			Integration_Transaction_ID__c = 'ABC2',
 			Internal_ID__c = '321',
-			Request_Type__c = AMS_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
+			Request_Type__c = TIP_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
 			Source__c = 'IFG',
-			Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
+			Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
 		);
 
 		List<Remote_Invocation__c> lri = new List<Remote_Invocation__c>();
@@ -341,23 +341,19 @@ public class RemoteInvocationTriggerHandlerTest {
 
 		lri = [Select Id, Status__c From Remote_Invocation__c Where Integration_Transaction_ID__c Like 'ABC%'];
 
-		lri[0].Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
-		lri[1].Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
+		lri[0].Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
+		lri[1].Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
 
 		update lri;
 
+		//
+		//
+		//
 		lri = [Select Id, Integration_Transaction_ID__c, Internal_ID__c, Status__c From Remote_Invocation__c Where Integration_Transaction_ID__c Like 'ABC%'];		
-
-		System.debug('ALEX ON TR lri : ' + lri);
 
 		lria = [Select Id, Object_ID_Created__c, Remote_Invocation__c, Status__c From Remote_Invocation_Artefact__c Where Remote_Invocation__r.Integration_Transaction_ID__c Like 'ABC%'];
 
-
-		System.debug('ALEX ON TR lria : ' + lria);
-
 		List<ISSP_External_Report__c> erl = [Select id, Account__c, Report_ID__c From ISSP_External_Report__c];
-
-		System.debug('ALEX ON TR erl : ' + erl);
 
 		Map<Id, Id> extRepAccountMap = new Map<Id, Id>();
 
@@ -365,13 +361,14 @@ public class RemoteInvocationTriggerHandlerTest {
 			extRepAccountMap.put(auxEr.Id, auxEr.Account__c);
 		}
 
+		//
+		//  
+		//
 		for(Remote_Invocation_Artefact__c auxRia : lria) {
 			if(auxRia.Remote_Invocation__c == ri.Id) {
-				//System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), riAccountMap.get(ri.Id));
 				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc.Id); 
 			}
 			if(auxRia.Remote_Invocation__c == ri2.Id) {
-				//System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), riAccountMap.get(ri2.Id)); 
 				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc2.Id);
 			}			
 		}
@@ -379,9 +376,9 @@ public class RemoteInvocationTriggerHandlerTest {
 		Remote_Invocation__c ri3 = new Remote_Invocation__c (
 			Integration_Transaction_ID__c = 'ABC3',
 			Internal_ID__c = '321',
-			Request_Type__c = AMS_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
+			Request_Type__c = TIP_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
 			Source__c = 'IFG',
-			Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
+			Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
 		);
 
 		insert ri3;
@@ -402,12 +399,15 @@ public class RemoteInvocationTriggerHandlerTest {
 
 		insert lria2;
 
-		ri3.Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
+		ri3.Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
 
 		update ri3;
 
 		erl = [Select id, Account__c, Report_ID__c From ISSP_External_Report__c];
 
+		//
+		//
+		//
 		System.assertEquals(erl.size(), 2);
 
 		extRepAccountMap = new Map<Id, Id>();
@@ -418,6 +418,9 @@ public class RemoteInvocationTriggerHandlerTest {
 
 		lria = [Select Id, Object_ID_Created__c, Remote_Invocation__c, Status__c From Remote_Invocation_Artefact__c Where Remote_Invocation__r.Integration_Transaction_ID__c Like 'ABC%'];
 
+		//
+		//
+		//
 		for(Remote_Invocation_Artefact__c auxRia : lria) {
 			if(auxRia.Remote_Invocation__c == ri.Id) {
 				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc.Id); 
