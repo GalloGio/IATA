@@ -562,7 +562,7 @@ private class AMS_XML_GeneratorTest {
         Test.startTest();
 
         Agency_Applied_Change_code__c aaChangeCode = [SELECT OSCAR__c, OSCAR__r.Oscar_Communication_Case_Id__c, Account__r.Location_Class__c, Change_Code__c,
-                                                        Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c, Account__r.IATACode__c
+                                                        Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c, Account__r.IATACode__c, Account__r.ANG_IsNewGenAgency__c
                                                       FROM Agency_Applied_Change_code__c ];
 
         AMS_XML_Generator xmlGen = new AMS_XML_Generator();
