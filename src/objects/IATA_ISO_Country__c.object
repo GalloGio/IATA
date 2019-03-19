@@ -1474,6 +1474,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Croatia</label>
                 </value>
                 <value>
+                    <fullName>Cuba</fullName>
+                    <default>false</default>
+                    <label>Cuba</label>
+                </value>
+                <value>
                     <fullName>Cyprus</fullName>
                     <default>false</default>
                     <label>Cyprus</label>
