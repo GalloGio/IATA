@@ -8,51 +8,54 @@
             <lightning-button variant="base" label="See All" title="See All" icon-name="utility:forward"
                 icon-position="right"></lightning-button>
         </div>
-        <div style=" margin: 10px 0 20px 0;">
+        <div>
             <div class="backgroundInverse" if:true={isLoaded}>
                 <lightning-spinner alternative-text="Loading"></lightning-spinner>
             </div>
-            <div>
-                <lightning-layout vertical-align="center" horizontal-align="space" multiple-rows="true"
-                    style="height: 300px;">
-                    <template for:each={favoriteServices} for:item="favoriteService">
-                        <lightning-layout-item size="3" key={favoriteService.Id} flexibility="no-grow"
-                            class={favoriteService.classcss} padding="around-small" onclick={redirect}
-                            data-right={favoriteService.Right__c} data-appurl={favoriteService.Application_Start_URL__c}
-                            data-openwindow={favoriteService.Portal_Application__r.New_Window__c}>
-                            <lightning-card>
-                                <div class="slds-is-relative slds-text-align_center">
-                                    <div style="position: relative; top: 9.5rem;">
-                                        {favoriteService.Application_Name__c}
-                                        <br>
-                                        ({favoriteService.Right__c})
-                                    </div>
-                                </div>
-                            </lightning-card>
-                        </lightning-layout-item>
-                    </template>
-                    <lightning-layout-item size="2" flexibility="auto, no-grow" padding="around-small"
-                        style="height: 250px; border: 1px solid #3333FF;cursor:pointer">
-                        <lightning-card>
-                            <div class="slds-card__body slds-card__body_inner">
-                                <div class="slds-illustration slds-illustration_small">
-                                    <lightning-icon icon-name="action:new" size="small"
-                                        style="position: relative; top: 10px;background-color: #E8EAFE;">
-                                    </lightning-icon>
-
-                                    <h2 class="slds-text-heading_small"
-                                        style="position: relative; top: 6.5rem;color: #3333FF;">Request New Service</h2>
-                                </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_4-of-5">
+                    <div class="slds-grid">
+                        <template for:each={favoriteServices} for:item='favoriteServicesRow'>
+                            <div class="slds-col slds-size_1-of-3" key={favoriteServicesRow}>
+                                <template for:each={favoriteServicesRow} for:item="favoriteServicesTile">
+                                    <article class={favoriteServicesTile.myclass} key={favoriteServicesTile.id}
+                                        onclick={redirect} data-appurl={favoriteServicesTile.Application_Start_URL__c}
+                                        data-requestable={favoriteServicesTile.Portal_Application__r.Requestable__c}
+                                        data-appfullurl={favoriteServicesTile.Portal_Application__r.Application_URL__c}
+                                        data-openwindow={favoriteServicesTile.Portal_Application__r.New_Window__c}>
+                                        <div>
+                                            <lightning-icon icon-name="utility:forward_up" size="xx-small"
+                                                slot="actions" class={favoriteServicesTile.extIconClass}>
+                                            </lightning-icon>
+                                        </div>
+                                        <div class="tileText">
+                                            <h1 class="slds-align_absolute-center">
+                                                {favoriteServicesTile.Portal_Application__r.Name}
+                                            </h1>
+                                        </div>
+                                    </article>
+                                </template>
                             </div>
-                        </lightning-card>
-                    </lightning-layout-item>
-                </lightning-layout>
+                        </template>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-5 slds-p-around_small">
+                    <div class="slds-card__body slds-card__body_inner bigTile slds-card_boundary">
+                        <div
+                            class="slds-illustration slds-illustration_small slds-p-horizontal_large slds-p-vertical_small">
+                            <lightning-icon icon-name="action:new" size="small" class="tileNewServiceIcon">
+                            </lightning-icon>
+                            <h3 class="slds-text-heading_small tileNewServiceText">
+                                {label.csp_Request_New_Service}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
             </div>
             <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
                 <lightning-layout-item padding="around-small">
                     <lightning-icon icon-name="utility:chevronleft" onclick={handlePrevious} size="small"
                         style="cursor:pointer" variant="light"></lightning-icon>
-                    <!--lightning-button label="Previous" icon-name="utility:chevronleft" onclick={handlePrevious}></lightning-button-->
                 </lightning-layout-item>
                 <template for:each={sliderIcons} for:item="sliderIcon">
                     <lightning-layout-item padding="around-small" key={sliderIcon.id}>
@@ -64,10 +67,8 @@
                     <lightning-icon icon-name="utility:chevronright" size="small" onclick={handleNext} variant="light"
                         style="cursor:pointer">
                     </lightning-icon>
-                    <!--lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={handleNext}></lightning-button-->
                 </lightning-layout-item>
             </lightning-layout>
         </div>
-
     </lightning-card>
 </template>
