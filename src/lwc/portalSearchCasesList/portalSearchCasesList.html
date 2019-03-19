@@ -1,0 +1,37 @@
+<template>
+    <div if:true={rendered}>
+        <div class="slds-card_boundary">
+            <lightning-card>
+                <div slot="title">
+                    <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
+                    Cases
+                </div>
+                <div slot="actions" if:true={dataRecords}>
+                    <lightning-button variant="base" label="See All" title="See All" icon-name="utility:forward" icon-position="right"></lightning-button>
+                </div>
+                <p class="slds-p-horizontal_small">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+                    <template if:false={loading}>
+                        <div if:true={dataRecords}>
+                            <lightning-datatable
+                                key-field="Id"
+                                data={data}
+                                columns={columns}
+                                hide-checkbox-column>
+                            </lightning-datatable>
+                        </div>
+                        <div if:false={dataRecords}>
+                            <div class="slds-text-align_center">
+                                <div class="slds-text-heading_medium">
+                                    <h3>Nothing corresponds to your search criteria</h3>
+                                </div>
+                            </div>                            
+                        </div>                    
+                    </template>
+                </p>
+            </lightning-card>
+        </div>
+    </div>
+</template>
