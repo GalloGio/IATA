@@ -515,6 +515,7 @@ public with sharing class ISSP_AvailableServices{
         public Boolean selected {get; set;}
         public Portal_Applications__c recordService {get; set;}
         public String btnLabel {get; set;}
+        public String popupLabel {get; set;}
         public Boolean isEasyPayService {get; set;}
         public String portalServiceRole {get; set;} 
         public boolean useDefaultRole {get; set;}
@@ -533,30 +534,33 @@ public with sharing class ISSP_AvailableServices{
             this.modalStyle = 'modal-dialog';
 
             if(this.isEasyPayService) {
-                this.addUsersEnable = isAdmin;
                 this.accountNotOpenError = (IepStatus != ANG_ISSP_PortalServiceHelper.STATUS_OPEN);
                 if(this.accountNotOpenError) {
                     this.lineErrorMessage = System.Label.ANG_ISSP_IEP_add_users_to_account_not_open_error_msg;
                 }
             } else {
-                this.addUsersEnable = !inRecord.Cannot_be_managed_by_portal_admin__c;             
                 this.accountNotOpenError = false;
             }
+            this.addUsersEnable = isRequestableWithoutApproval(isAdmin, inRecord, currentPortalUser.Profile);
 
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
                                         
             if (flagIsIepPortalService && (IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT || IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) && isAdmin && isAuthorisedSignatory) {
                 this.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
+                this.popupLabel = System.Label.ISSP_ServiceRequestConfirm + ' ' + System.Label.ANG_ISSP_IATA_EasyPay;
                 this.useDefaultRole = true;
             } else {
                 this.useDefaultRole = false;
                 if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
                     this.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
+                    this.popupLabel = System.Label.ISSP_ServiceRequestConfirm + ' ' + System.Label.ANG_ISSP_IATA_EasyPay;
                     this.modalStyle = 'modal-dialog modal-lg';
-                } else if (isRequestableWithoutApproval(isAdmin,inRecord,currentPortalUser.Profile)) {
+                } else if (this.addUsersEnable) {
                     this.btnLabel = System.Label.ISSP_Enable_Service;
+                    this.popupLabel = System.Label.ISSP_ServiceAccessConfirm;
                 } else {
                     this.btnLabel = System.Label.ISSP_New_Service_Request;
+                    this.popupLabel = System.Label.ISSP_ServiceRequestConfirm + ' ' + inRecord.Name;
                 }
             }
         }

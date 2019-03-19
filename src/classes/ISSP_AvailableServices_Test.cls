@@ -581,7 +581,7 @@ public class ISSP_AvailableServices_Test {
 
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
 
-        Portal_Applications__c easyPayServ = [Select id, name From Portal_Applications__c where name =: ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED Limit 1];
+        Portal_Applications__c easyPayServ = [Select id, name, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c From Portal_Applications__c where name =: ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED Limit 1];
 
         User testeUser3 = new User (
                 Alias = 'newUser2', 
