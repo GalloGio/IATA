@@ -1,20 +1,42 @@
 import { LightningElement, api, track } from 'lwc';
 import getFilteredCases from '@salesforce/apex/PortalCasesCtrl.getFilteredCases';
+import getSelectedColumns from '@salesforce/apex/CSP_Utils.getSelectedColumns';
+import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
+import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
+import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 
 export default class PortalSearchCasesList extends LightningElement {
+    label = {
+        CSP_NoSearchResults,
+        CSP_SeeAll,
+        CSP_Cases
+    };    
     @track dataRecords = false;
     @track filteringObject;
     @track loading = true;
     @track error;
     @track data;
-    @track columns = [
-        {label: 'Case Number', fieldName: 'CaseNumber', type: 'text', sortable: true},
-        {label: 'Type of case', fieldName: 'Type_of_case_Portal__c', type: 'text'},
-        {label: 'Subject', fieldName: 'Subject', type: 'text'},
-        {label: 'Country concerned', fieldName: 'Country_concerned_by_the_query__c', type: 'text'},
-        {label: 'Created Date', fieldName: 'CreatedDate', type: 'date', typeAttributes: {year: "numeric", month: "long", day: "2-digit", hour: "2-digit", minute: "2-digit"}},
-        {label: 'Status', fieldName: 'Portal_Case_Status__c', type: 'text'}
+    @track columns;
+    fieldLabels = [
+        'CaseNumber', 'Type_of_case_Portal__c', 'Subject', 'Country_concerned_by_the_query__c', 'CreatedDate', 'Portal_Case_Status__c' 
     ];
+
+    connectedCallback() {
+        getSelectedColumns({ sObjectType : 'Case', sObjectFields : this.fieldLabels })
+        .then(results => {           
+                this.columns = [
+                    {label: results.CaseNumber, fieldName: 'CaseNumber', type: 'text'},
+                    {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text'},
+                    {label: results.Subject, fieldName: 'Subject', type: 'text'},
+                    {label: results.Country_concerned_by_the_query__c, fieldName: 'Country_concerned_by_the_query__c', type: 'text'},
+                    {label: results.CreatedDate, fieldName: 'CreatedDate', type: 'date', typeAttributes: {year: "numeric", month: "long", day: "2-digit", hour: "2-digit", minute: "2-digit"}},
+                    {label: results.Portal_Case_Status__c, fieldName: 'Portal_Case_Status__c', type: 'text'}
+                ];
+        })
+        .catch(error => {
+            this.error = error;
+        }); 
+    }
 
     @api
     get filteringObjectParent() {

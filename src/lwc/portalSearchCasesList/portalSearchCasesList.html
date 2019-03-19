@@ -4,10 +4,10 @@
             <lightning-card>
                 <div slot="title">
                     <lightning-icon icon-name="utility:right" size="large" variant="error"></lightning-icon>
-                    Cases
+                    {label.CSP_Cases}
                 </div>
                 <div slot="actions" if:true={dataRecords}>
-                    <lightning-button variant="base" label="See All" title="See All" icon-name="utility:forward" icon-position="right"></lightning-button>
+                    <lightning-button variant="base" label={label.CSP_SeeAll} title="See All" icon-name="utility:forward" icon-position="right"></lightning-button>
                 </div>
                 <p class="slds-p-horizontal_small">
                     <template if:true={loading}>
@@ -25,7 +25,7 @@
                         <div if:false={dataRecords}>
                             <div class="slds-text-align_center">
                                 <div class="slds-text-heading_medium">
-                                    <h3>Nothing corresponds to your search criteria</h3>
+                                    <h3>{label.CSP_NoSearchResults}</h3>
                                 </div>
                             </div>                            
                         </div>                    
