@@ -5,7 +5,7 @@
             {label.CSP_RecentCases}
         </div>
         <div slot="actions">
-            <lightning-button variant="base" label="See All" title="See All" icon-name="utility:forward" icon-position="right"></lightning-button>
+            <lightning-button variant="base" label={label.CSP_SeeAll} title="See All" icon-name="utility:forward" icon-position="right"></lightning-button>
         </div>        
         <div class="slds-m-around__medium">
             <template if:true={loading}>
@@ -29,8 +29,8 @@
                             <h1>{label.CSP_NoCases2}</h1> 
                         </div>
                         <div class="slds-m-top_medium">
-                            <h1><lightning-formatted-url value="www.salesforce.com" label="Whats is a case and when do I need it?"></lightning-formatted-url></h1>
-                            <h1><lightning-formatted-url value="www.salesforce.com" label="How can I see and update the details of a case?"></lightning-formatted-url></h1>
+                            <h1><lightning-formatted-url value="www.salesforce.com" label={label.CSP_Question1}></lightning-formatted-url></h1>
+                            <h1><lightning-formatted-url value="www.salesforce.com" label={label.CSP_Question2}></lightning-formatted-url></h1>
                         </div>
                     </div>
                 </div>
