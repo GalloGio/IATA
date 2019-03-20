@@ -170,7 +170,7 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Asked_IATA_code_email_and_phone__c</fullName>   
+        <fullName>Asked_IATA_code_email_and_phone__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep asked for the caller&apos;s IATA code and verify email and phone number.</inlineHelpText>
         <label>Asked IATA code, email and phone</label>
@@ -230,10 +230,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Asks_if_additional_confirmation__c</fullName>      
+        <fullName>Asks_if_additional_confirmation__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep asks the customer if they would like to get a written confirmation. In case the customer says yes: has this been done?</inlineHelpText>
         <label>Asks if additional confirmation is requi</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -259,10 +260,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Avoided_long_silences__c</fullName>    
+        <fullName>Avoided_long_silences__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep avoided long silences during the call</inlineHelpText>
         <label>Avoided long silences</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -303,10 +305,11 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>Checked_account_offers_services__c</fullName>       
+        <fullName>Checked_account_offers_services__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep proactively checks the accounts and offers opportunities for additional services (i.e. portal accesses, admins, pending users…)</inlineHelpText>
         <label>Checked account &amp; offers  services</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -330,6 +333,26 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Comments_2__c</fullName>
+        <description>Additional field for comments</description>
+        <externalId>false</externalId>
+        <label>Comments 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Comments_3__c</fullName>
+        <description>Additional field for comments</description>
+        <externalId>false</externalId>
+        <label>Comments 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Comments__c</fullName>
@@ -342,10 +365,11 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Confident__c</fullName>      
+        <fullName>Confident__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep remained confident throughout the call</inlineHelpText>
         <label>Remained confident throughout the call</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -371,10 +395,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Correctly_pronounced_caller_s_name__c</fullName>       
+        <fullName>Correctly_pronounced_caller_s_name__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep used the proper pronunciation of the caller’s name</inlineHelpText>
         <label>Correctly pronounced caller&apos;s name</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -423,10 +448,11 @@
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Did_not_talk_over_the_customer__c</fullName>     
+        <fullName>Did_not_talk_over_the_customer__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep did not interrupt or talk over the customer</inlineHelpText>
         <label>Did not talk over the customer</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -452,10 +478,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Documented_info_in_case__c</fullName>       
+        <fullName>Documented_info_in_case__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep documented complete call information in the Salesforce case</inlineHelpText>
         <label>Documented the info in the SF case</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -491,10 +518,11 @@
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Effective_active_listening_skills__c</fullName>       
+        <fullName>Effective_active_listening_skills__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep used effective active listening skills</inlineHelpText>
         <label>Effective active listening skills</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -535,10 +563,11 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Finalized_with_a_WOW__c</fullName>      
+        <fullName>Finalized_with_a_WOW__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep finalized the call/case with a &quot;WOW&quot;</inlineHelpText>
         <label>Finalized with a &quot;WOW&quot;</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -564,10 +593,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Followed_up_with_customer_as_agreed__c</fullName>       
+        <fullName>Followed_up_with_customer_as_agreed__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep followed up with the customer through the Customer Portal within the agreed upon timeframe</inlineHelpText>
         <label>Followed up with customer as agreed</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -593,10 +623,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Friendly_polite_and_professional__c</fullName>       
+        <fullName>Friendly_polite_and_professional__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep was friendly, polite and professional</inlineHelpText>
         <label>Was friendly, polite and professional</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -622,11 +653,12 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Identified_themselves__c</fullName>        
+        <fullName>Identified_themselves__c</fullName>
         <description>The CS Rep identified themselves to the customer</description>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep identified themselves to the customer</inlineHelpText>
         <label>Identified themselves</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -652,10 +684,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Interaction_within_scripts_guide__c</fullName>        
+        <fullName>Interaction_within_scripts_guide__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep adequately adapted their approach to interacting with the customer, within the scripts guidelines, when necessary</inlineHelpText>
         <label>Interaction was within the scripts guide</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -681,10 +714,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Knowledge_of_IATA__c</fullName>       
+        <fullName>Knowledge_of_IATA__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Reps demonstrates accurate knowledge of the processes and products of IATA, and provides correct information and guidance to the customers.</inlineHelpText>
         <label>Demonstrates accurate knowledge of IATA</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -710,10 +744,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Mentioned_IATA__c</fullName>        
+        <fullName>Mentioned_IATA__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep mentioned IATA</inlineHelpText>
         <label>Mentioned IATA</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -751,10 +786,11 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Next_issue_avoidance__c</fullName>        
+        <fullName>Next_issue_avoidance__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Next Issue Avoidance: The CS Rep informed the customer of relevant supporting documentation or instructions to help avoid future issues</inlineHelpText>
         <label>Next issue avoidance</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -780,10 +816,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Offered_assistance__c</fullName>        
+        <fullName>Offered_assistance__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep offered assistance to the caller</inlineHelpText>
         <label>Offered assistance</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -866,6 +903,7 @@
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep asked pertinent questions to accurately diagnose the problem</inlineHelpText>
         <label>Pertinent questions</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -891,10 +929,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Professional_and_represents_IATA__c</fullName>        
+        <fullName>Professional_and_represents_IATA__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep remembers he is representing IATA in every single word used. The CS Rep uses a professional and customer centric language.</inlineHelpText>
         <label>Was professional and represents IATA</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -920,10 +959,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Proper_tone__c</fullName>        
+        <fullName>Proper_tone__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep maintained proper tone, pitch, volume and pace throughout the call</inlineHelpText>
         <label>Proper tone, pitch, volume and pace</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -949,10 +989,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Provided_reference__c</fullName>        
+        <fullName>Provided_reference__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep provided a reference number to the customer after resolving their issue</inlineHelpText>
         <label>Provided reference number to customer</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -978,10 +1019,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Refrained_using_complicated_jargon__c</fullName>        
+        <fullName>Refrained_using_complicated_jargon__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep refrained from using complicated jargon and adapted their responses to the customer&apos;s need.</inlineHelpText>
         <label>Refrained from using complicated jargon</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1007,10 +1049,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Request_fully_resolved_in_line__c</fullName>       
+        <fullName>Request_fully_resolved_in_line__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep resolved the request fully in line with the customer&apos;s request. The case has not been closed before having provided a full resolution.</inlineHelpText>
         <label>Request fully resolved in line</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1036,10 +1079,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>SF_case_was_edited_correctly__c</fullName>        
+        <fullName>SF_case_was_edited_correctly__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The Salesforce case was edited correctly. If the opportunity took place, has the CS Rep added some &quot;remarks&quot; about the customer in their contact detail?</inlineHelpText>
         <label>SF case was edited correctly</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1076,10 +1120,11 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Summarized_at_the_end_of_the_call__c</fullName>        
+        <fullName>Summarized_at_the_end_of_the_call__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep summarized the call, indicated action items (if any) and ensure information is clear for the customer.</inlineHelpText>
         <label>Summarized at the end of the call</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1105,10 +1150,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Summarized_customers_main_points__c</fullName>        
+        <fullName>Summarized_customers_main_points__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep summarized the customer’s main points before troubleshooting or offering a solution</inlineHelpText>
         <label>Summarized customers main points</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1138,6 +1184,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Thank you for calling IATA. We are here for you for future occasions.</inlineHelpText>
         <label>Thanked Customer for calling at the end</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1163,10 +1210,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Thanked_the_Customer__c</fullName>       
+        <fullName>Thanked_the_Customer__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep thanked the customer</inlineHelpText>
         <label>Thanked the Customer</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1192,10 +1240,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Took_ownership_of_problem__c</fullName>        
+        <fullName>Took_ownership_of_problem__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep took ownership of the problem using the &quot;I&quot;, not the &quot;we&quot; or &quot;they&quot;.  If required, the CS Rep provided an apology for any dissatisfaction.</inlineHelpText>
         <label>Took ownership of problem</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1221,10 +1270,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Used_courteous_words_and_phrases__c</fullName>        
+        <fullName>Used_courteous_words_and_phrases__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep used courteous words and phrases</inlineHelpText>
         <label>Used courteous words and phrases</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1250,10 +1300,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Used_resources__c</fullName>        
+        <fullName>Used_resources__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep used appropriate resources to address the issue and offers preferences</inlineHelpText>
         <label>Used appropriate resources</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1279,10 +1330,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Validated_account_and_contact__c</fullName>       
+        <fullName>Validated_account_and_contact__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Data quality - The CS Rep took the time to validate account and contact details as email and phone number</inlineHelpText>
         <label>Validated account and contact details</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1308,10 +1360,11 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Verified_email_and_phone_number__c</fullName>       
+        <fullName>Verified_email_and_phone_number__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>The CS Rep asked for the caller&apos;s IATA code and verify email and phone number.</inlineHelpText>
         <label>Verified email and phone number</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
