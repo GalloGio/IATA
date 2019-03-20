@@ -21,16 +21,11 @@ public with sharing class PortalDocumentsController {
         List<String> AccessLibraryName;
         List<Access_to_Libraries_on_Portal__c> accessToLibrariesCS = Access_to_Libraries_on_Portal__c.getAll().values(); /* Custom Setting to control the visibility on Libraries */  
 
-        User tmpPortalUSer = [
-            SELECT Id, ContactId 
-            FROM User 
-            WHERE Id = :UserInfo.getUserId()
-        ];
         Contact PortalContact = [
             SELECT User_Portal_Status__c, Account.Sector__c, Account.Category__c, Account.RecordType.Name, 
                 Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c, Account.ICH_Member__c
             FROM Contact
-            WHERE Id = :tmpPortalUSer.ContactId 
+            WHERE Id = :[SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId
             LIMIT 1
         ];
         System.debug('____ [cls PortalDocumentsController - getSearchDocuments] PortalContact - ' + PortalContact);
