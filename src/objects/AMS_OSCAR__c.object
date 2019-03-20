@@ -3060,6 +3060,16 @@ Format: YYYY</inlineHelpText>
                     <default>false</default>
                     <label>N/A</label>
                 </value>
+                <value>
+                    <fullName>Partially paid</fullName>
+                    <default>false</default>
+                    <label>Partially paid</label>
+                </value>
+                <value>
+                    <fullName>Over paid</fullName>
+                    <default>false</default>
+                    <label>Over paid</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -9836,7 +9846,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13229,7 +13247,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16577,7 +16603,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19982,7 +20016,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23595,7 +23637,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27019,7 +27069,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30415,7 +30473,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48100,7 +48166,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -51677,7 +51751,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -55077,7 +55159,15 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Over paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partially paid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
