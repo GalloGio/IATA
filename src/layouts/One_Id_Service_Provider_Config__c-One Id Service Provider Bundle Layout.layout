@@ -80,6 +80,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Additional_Terms_Custom_Labels__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Is_Active__c</field>
             </layoutItems>
             <layoutItems>

@@ -10423,6 +10423,10 @@ ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두�
         <name>ISSP_CCOthers_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP CCOthers Invalid Contact --></label>
+        <name>ISSP_CCOthers_Invalid_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CNS_Documents --></label>
         <name>ISSP_CNS_Documents</name>
     </customLabels>
@@ -11487,6 +11491,86 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>자주 묻는 질문</label>
         <name>ISSP_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_AllCountries --></label>
+        <name>ISSP_FDS_AllCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_AllCountriesWithServices --></label>
+        <name>ISSP_FDS_AllCountriesWithServices</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_ChooseCountries --></label>
+        <name>ISSP_FDS_ChooseCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Countries --></label>
+        <name>ISSP_FDS_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountriesSelected --></label>
+        <name>ISSP_FDS_CountriesSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountryName --></label>
+        <name>ISSP_FDS_CountryName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CustomFilterBtn --></label>
+        <name>ISSP_FDS_CustomFilterBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Download --></label>
+        <name>ISSP_FDS_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_DownloadOpts --></label>
+        <name>ISSP_FDS_DownloadOpts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FileFormat --></label>
+        <name>ISSP_FDS_FileFormat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FillAllFields --></label>
+        <name>ISSP_FDS_FillAllFields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Filters --></label>
+        <name>ISSP_FDS_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_NoResults --></label>
+        <name>ISSP_FDS_NoResults</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Operations --></label>
+        <name>ISSP_FDS_Operations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_OperationsSelected --></label>
+        <name>ISSP_FDS_OperationsSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_PopupTitle --></label>
+        <name>ISSP_FDS_PopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Remittance --></label>
+        <name>ISSP_FDS_Remittance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_RemittanceSelected --></label>
+        <name>ISSP_FDS_RemittanceSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_SelectAll --></label>
+        <name>ISSP_FDS_SelectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_UnselectAll --></label>
+        <name>ISSP_FDS_UnselectAll</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Fax --></label>
@@ -12567,6 +12651,10 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
     <customLabels>
         <label>다운로드 일자</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_DownloadWarning --></label>
+        <name>ISSP_OperationalCalendar_DownloadWarning</name>
     </customLabels>
     <customLabels>
         <label>필터를 활성화하기</label>
@@ -15417,12 +15505,20 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
+        <label><!-- MultiselectPicklist_AddAll --></label>
+        <name>MultiselectPicklist_AddAll</name>
+    </customLabels>
+    <customLabels>
         <label>아래로</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
     <customLabels>
         <label>제거</label>
         <name>MultiselectPicklist_Remove</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MultiselectPicklist_RemoveAll --></label>
+        <name>MultiselectPicklist_RemoveAll</name>
     </customLabels>
     <customLabels>
         <label>위로</label>
