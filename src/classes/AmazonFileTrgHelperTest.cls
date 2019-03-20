@@ -218,9 +218,9 @@ private class AmazonFileTrgHelperTest {
         Remote_Invocation__c ri = new Remote_Invocation__c (
             Integration_Transaction_ID__c = 'ABC1',
             Internal_ID__c = '123',
-            Request_Type__c = AMS_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
+            Request_Type__c = TIP_Utils.REQUEST_TYPE_TIP_AUTO_REPORTS,
             Source__c = 'IFG',
-            Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
+            Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_INITIALIZING
         );
 
         insert ri;
@@ -243,7 +243,7 @@ private class AmazonFileTrgHelperTest {
 
         insert lria;
 
-        ri.Status__c = AMS_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
+        ri.Status__c = TIP_Utils.REMOTE_INVOCATION_STATUS_IN_PROGRESS;
 
         update ri;
 
