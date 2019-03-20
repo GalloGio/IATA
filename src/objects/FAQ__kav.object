@@ -50,13 +50,6 @@
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
     </fields>
-    <fields>
-        <fullName>To_display_on_Homepage__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>To display on Homepage</label>
-        <type>Checkbox</type>
-    </fields>
     <label>FAQ</label>
     <pluralLabel>FAQs</pluralLabel>
 </CustomObject>
