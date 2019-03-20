@@ -4,6 +4,7 @@
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
     <customButtons>China_Pilot_Conversion_Wizard</customButtons>
+    <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
