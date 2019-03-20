@@ -2646,7 +2646,7 @@ NOT( ISPICKVAL( Security_Type__c , &quot;Manifestacion de Bienes&quot;) )
         <showsStatus>false</showsStatus>
         <url>https://composer.congamerge.com/composer8/index.html?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_290}&amp;id={!Financial_Security__c.Id}&amp;fp0=1&amp;ds1=0&amp;ds5=0&amp;LG3=2&amp;OFN=IATA+Notification+Letter+-+{!Financial_Security__c.IATA_code__c}&amp;ds4=0&amp;ReportId=00O20000003q4lt</url>
     </webLinks>
-    <webLinks xmlns="http://soap.sforce.com/2006/04/metadata">
+    <webLinks>
         <fullName>Send_Acknowledgement</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
