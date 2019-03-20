@@ -1,4 +1,4 @@
-<apex:page standardController="Country_Profile__c" extensions="ISSP_CurrencyCenterCountryController" action="{!checkAccess}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<apex:page docType="html-5.0" standardController="Country_Profile__c" extensions="ISSP_CurrencyCenterCountryController" action="{!checkAccess}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
  <html>
  <c:ISSP_Header ></c:ISSP_Header>
  <head>
@@ -87,6 +87,7 @@
           $this.find('h4').removeClass('up-arrow').addClass('down-arrow');
         } else {
           //$this.parents('.panel').find('.panel-body').slideDown();
+          $this.parent().removeClass('panel-changed').addClass('panel-standard');
           $this.removeClass('panel-collapsed');
           $this.find('h4').removeClass('down-arrow').addClass('up-arrow');
         }
@@ -106,6 +107,14 @@
         $('[class*="customValueStyle"]:has(div:empty, span:empty)').parent().hide();
         $('[class*="customValueStyle"]:empty').parent().hide();        
       });
+
+      $(function() {
+        $( document ).tooltip();
+      });
+
+      function closeSelectCountries(){
+        $('#selectCountries').modal('hide');
+      }
     </script>
  </head>
  <body>
@@ -156,6 +165,12 @@
                 <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Actual_Amount_Blocked__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Actual_Amount_Blocked__c'),'fieldChanged','')}"/></div>
                 <div class="col-xs-6 customValueStyle"><apex:outputField value="{!Country_Profile__c.Actual_Amount_Blocked__c}"/></div>
               </div>
+
+              <div class="row">
+                <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Actual_Amount_Blocked_In_Local_Currency__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Actual_Amount_Blocked_In_Local_Currency__c'),'fieldChanged','')}"/></div>
+                <div class="col-xs-6 customValueStyle"><apex:outputField value="{!Country_Profile__c.Actual_Amount_Blocked_In_Local_Currency__c}"/></div>
+              </div>
+
               <div class="row">
                 <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Issue_Started__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Issue_Started__c'),'fieldChanged','')}"/></div>
                 <div class="col-xs-6 customValueStyle"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.Issue_Started__c}"/></apex:outputText></div>
@@ -171,6 +186,10 @@
               <div class="row">
                 <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Number_of_Airlines_Reporting_Issues__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Number_of_Airlines_Reporting_Issues__c'),'fieldChanged','')}"/></div>
                 <div class="col-xs-6 customValueStyle"><apex:outputField value="{!Country_Profile__c.Number_of_Airlines_Reporting_Issues__c}"/></div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Number_of_Airlines_Present_In_Market__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Number_of_Airlines_Present_In_Market__c'),'fieldChanged','')}"/></div>
+                <div class="col-xs-6 customValueStyle"><apex:outputField value="{!Country_Profile__c.Number_of_Airlines_Present_In_Market__c}"/></div>
               </div>
               <div class="row">
                 <div class="col-xs-6 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Local_Task_Force__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Local_Task_Force__c'),'fieldChanged','')}"/></div>
@@ -195,10 +214,15 @@
               </div>
 
               <div class="row row-buttons">
-                <button type="button" class="btn btn-download" onclick="window.open('/ISSP_CurrencyCenterCountryPdf?id={!Country_Profile__c.Id}','_blank');">
+                <!--button type="button" class="btn btn-download" onclick="window.open('/ISSP_CurrencyCenterCountryPdf?id={!Country_Profile__c.Id}','_blank');">
                   <span class="glyphicon download-icon" aria-hidden="true"></span>{!$Label.CurrencyCenter_Download_Pdf}
+                </button-->
+                <button type="button" class="btn btn-download" data-toggle="modal" data-target="#selectCountries">
+                    <span class="glyphicon download-icon" aria-hidden="true" />{!$Label.CurrencyCenter_Download_Pdf}
                 </button>
-                
+                <button type="button" class="btn btn-download" onclick="window.open('/ISSP_FAQ2Case??MainNav=Queries&subNav=MyQueries&mid=M1S1&type=CurrencyRepatriationIssues&isocode={!Country_Profile__c.ISO_Code__c}','_blank');">
+                  <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;{!$Label.ISSP_F2CCreate}
+                </button>
               </div>
 
               <div class="row row-buttons">
@@ -214,8 +238,8 @@
                   
             </div>
         </div>
-            
-        
+
+         <apex:outputText rendered="false">{!Country_Profile__c.CreatedDate}</apex:outputText>
         <!-- ACCORDIONS ROW -->
         <div class="row sections">
           
@@ -223,12 +247,13 @@
             <div class="row">
               <!-- GENERAL INFORMATION PANEL -->
               <div class="col-xs-12 section">
-                  <div class="panel {!IF(isGeneralInformationChanged,'panel-changed','panel-standard')}" id="panel_generalInformation">
+                  <div class="panel {!IF(isGeneralInformationChanged,'panel-changed','panel-standard')}" id="panel_generalInformation" title="{!IF(NOT(generalInformationLastUpdate == null), $Label.ISSP_CurrencyCenter_Last_Updated_On,'')} {!generalInformationLastUpdate}">
                     <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_generalInformation">
                       <h4 class="panel-title down-arrow">
                       <a data-toggle="collapse" data-target="#collapse_generalInformation" href="">
                         {!$Label.CurrencyCenter_General_Information}
                       </a>
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                       </h4>
                     </div>
                     <div id="collapse_generalInformation" class="panel-collapse collapse">
@@ -236,7 +261,7 @@
                         <div class="row">
                           <p>
                             <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_gi__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_gi__c'),'fieldChanged','')}"/></div>
-                            <div class="col-sm-12 customValueStyle">
+                            <div class="col-sm-12 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Update_gi__c'),CONTAINS(fieldsWithChangedDate,',Update_gi__c')),changedDate['Update_gi__c'],'')}">
                               <!-- actual value for update (general information) -->
                               <apex:outputField value="{!Country_Profile__c.Update_gi__c}"/>
                             </div>
@@ -245,7 +270,9 @@
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.History_of_Blocked_Funds_in_Country__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'History_of_Blocked_Funds_in_Country__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.History_of_Blocked_Funds_in_Country__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'History_of_Blocked_Funds_in_Country__c'),CONTAINS(fieldsWithChangedDate,',History_of_Blocked_Funds_in_Country__c')),changedDate['History_of_Blocked_Funds_in_Country__c'],'')}">
+                              <apex:outputField value="{!Country_Profile__c.History_of_Blocked_Funds_in_Country__c}"/>
+                          </div>
                           </p>
                         </div>
                         <!--
@@ -259,7 +286,7 @@
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Presence_of_BSP__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Launch_Date__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.BSP_Launch_Date__c}"/></apex:outputText></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Launch_Date__c'),CONTAINS(fieldsWithChangedDate,',BSP_Launch_Date__c')),changedDate['BSP_Launch_Date__c'],'')}"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.BSP_Launch_Date__c}"/></apex:outputText></div>
                           </p>
                         </div>
                         <!--
@@ -273,19 +300,19 @@
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Presence_of_CASS__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Launch_Date__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.CASS_Launch_Date__c}"/></apex:outputText></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Launch_Date__c'),CONTAINS(fieldsWithChangedDate,',CASS_Launch_Date__c')),changedDate['CASS_Launch_Date__c'],'')}"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.CASS_Launch_Date__c}"/></apex:outputText></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Presence_of_ICCS__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Presence_of_ICCS__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.Presence_of_ICCS__c}"/></apex:outputText></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Presence_of_ICCS__c'),CONTAINS(fieldsWithChangedDate,',Presence_of_ICCS__c')),changedDate['Presence_of_ICCS__c'],'')}"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.Presence_of_ICCS__c}"/></apex:outputText></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Market_Size__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Market_Size__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Market_Size__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Market_Size__c'),CONTAINS(fieldsWithChangedDate,',Market_Size__c')),changedDate['Market_Size__c'],'')}"><apex:outputField value="{!Country_Profile__c.Market_Size__c}"/></div>
                           </p>
                         </div>
                         <!-- ATTACHMENTS ROW (GENERAL INFORMATION) -->
@@ -313,12 +340,13 @@
               <!-- END GENERAL INFORMATION PANEL -->
               <!-- NEXT ACTION PANEL -->
               <div class="col-xs-12 section">
-                  <div class="panel {!IF(isNextActionChanged,'panel-changed','panel-standard')}" id="panel_nextAction">
+                  <div class="panel {!IF(isNextActionChanged,'panel-changed','panel-standard')}" id="panel_nextAction" title="{!IF(NOT(nextActionLastUpdate == null),$Label.ISSP_CurrencyCenter_Last_Updated_On,'')} {!nextActionLastUpdate}">
                     <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_nextAction">
                       <h4 class="panel-title down-arrow">
                       <a data-toggle="collapse" data-target="#collapse_nextAction" href="">
                         {!$Label.CurrencyCenter_Next_Action}
                       </a>
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                       </h4>
                     </div>
                     <div id="collapse_nextAction" class="panel-collapse collapse">
@@ -374,12 +402,13 @@
               <!-- END NEXT ACTION PANEL -->
               <!-- ACTION SUMMARY PANEL -->
               <div class="col-xs-12 section">
-                  <div class="panel {!IF(isNextActionChanged,'panel-changed','panel-standard')}" id="panel_actionSummary">
+                  <div class="panel {!IF(isNextActionChanged,'panel-changed','panel-standard')}" id="panel_actionSummary" title="{!IF(NOT(nextActionLastUpdate == null),$Label.ISSP_CurrencyCenter_Last_Updated_On,'')} {!nextActionLastUpdate}">
                     <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_actionSummary">
                       <h4 class="panel-title  down-arrow">
                       <a data-toggle="collapse" data-target="#collapse_actionSummary" href="">
                         {!$Label.CurrencyCenter_Action_Summary}
                       </a>
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                       </h4>
                     </div>
                     <div id="collapse_actionSummary" class="panel-collapse collapse">
@@ -440,12 +469,13 @@
             <div class="row">
               <!-- BSP & CASS PROFILE PANEL -->
               <div class="col-xs-12 section">
-                  <div class="panel {!IF(isBspCassChanged,'panel-changed','panel-standard')}" id="panel_bspCassProfile">
+                  <div class="panel {!IF(isBspCassChanged,'panel-changed','panel-standard')}" id="panel_bspCassProfile" title="{!IF(NOT(bspCassLastUpdate == null), $Label.ISSP_CurrencyCenter_Last_Updated_On,'')} {!bspCassLastUpdate}">
                     <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_bspCassProfile">
                       <h4 class="panel-title down-arrow">
                       <a data-toggle="collapse" data-target="#collapse_bspCassProfile" href="">
                         {!$Label.CurrencyCenter_BSP_CASS_Proffile}
                       </a>
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                       </h4>
                     </div>
                     <div id="collapse_bspCassProfile" class="panel-collapse collapse">
@@ -472,67 +502,92 @@
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Launch_Date__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Launch_Date__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.BSP_Launch_Date__c}"/></apex:outputText></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Launch_Date__c'),CONTAINS(fieldsWithChangedDate,',BSP_Launch_Date__c')),changedDate['BSP_Launch_Date__c'],'')}"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.BSP_Launch_Date__c}"/></apex:outputText></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_ICCS_Availability__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_ICCS_availability__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_ICCS_Availability__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_ICCS_availability__c'),CONTAINS(fieldsWithChangedDate,',BSP_ICCS_availability__c')),changedDate['BSP_ICCS_availability__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_ICCS_Availability__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Airlines_participating__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Airlines_participating__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_Airlines_participating__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Airlines_participating__c'),CONTAINS(fieldsWithChangedDate,',BSP_Airlines_participating__c')),changedDate['BSP_Airlines_participating__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_Airlines_participating__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Clearing_Bank__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Clearing_Bank__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_Clearing_Bank__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Clearing_Bank__c'),CONTAINS(fieldsWithChangedDate,',BSP_Clearing_Bank__c')),changedDate['BSP_Clearing_Bank__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_Clearing_Bank__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Currency_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Currency_1__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_Currency_1__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Currency_1__c'),CONTAINS(fieldsWithChangedDate,',BSP_Currency_1__c')),changedDate['BSP_Currency_1__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_Currency_1__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Settlement_Frequency_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Settlement_Frequency_1__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_Settlement_Frequency_1__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Settlement_Frequency_1__c'),CONTAINS(fieldsWithChangedDate,',BSP_Settlement_Frequency_1__c')),changedDate['BSP_Settlement_Frequency_1__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_Settlement_Frequency_1__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Average_Monthly_Volume_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Average_Monthly_Volume_1__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_Average_Monthly_Volume_1__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Average_Monthly_Volume_1__c'),CONTAINS(fieldsWithChangedDate,',BSP_Average_Monthly_Volume_1__c')),changedDate['BSP_Average_Monthly_Volume_1__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_Average_Monthly_Volume_1__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Currency_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Currency_2__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_Currency_2__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Currency_2__c'),CONTAINS(fieldsWithChangedDate,',BSP_Currency_2__c')),changedDate['BSP_Currency_2__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_Currency_2__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Settlement_Frequency_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Settlement_Frequency_2__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_Settlement_Frequency_2__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Settlement_Frequency_2__c'),CONTAINS(fieldsWithChangedDate,',BSP_Settlement_Frequency_2__c')),changedDate['BSP_Settlement_Frequency_2__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_Settlement_Frequency_2__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Average_Monthly_Volume_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Average_Monthly_Volume_2__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_Average_Monthly_Volume_2__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Average_Monthly_Volume_2__c'),CONTAINS(fieldsWithChangedDate,',BSP_Average_Monthly_Volume_2__c')),changedDate['BSP_Average_Monthly_Volume_2__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_Average_Monthly_Volume_2__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_Payment_Card_Profile_Acceptance__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_Payment_Card_Profile_Acceptance__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.BSP_Payment_Card_Profile_Acceptance__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'BSP_Payment_Card_Profile_Acceptance__c'),CONTAINS(fieldsWithChangedDate,',BSP_Payment_Card_Profile_Acceptance__c')),changedDate['BSP_Payment_Card_Profile_Acceptance__c'],'')}"><apex:outputField value="{!Country_Profile__c.BSP_Payment_Card_Profile_Acceptance__c}"/></div>
+                              </p>
+                            </div>
+
+                            <div class="row">
+                              <p>
+                              <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Acquisition_Model__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Acquisition_Model__c'),'fieldChanged','')}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Acquisition_Model__c'),CONTAINS(fieldsWithChangedDate,',Acquisition_Model__c')),changedDate['Acquisition_Model__c'],'')}"><apex:outputField value="{!Country_Profile__c.Acquisition_Model__c}"/></div>
+                              </p>
+                            </div>
+                            <div class="row">
+                              <p>
+                              <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Acquisition_Model_Info__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Acquisition_Model_Info__c'),'fieldChanged','')}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Acquisition_Model_Info__c'),CONTAINS(fieldsWithChangedDate,',Acquisition_Model_Info__c')),changedDate['Acquisition_Model_Info__c'],'')}"><apex:outputField value="{!Country_Profile__c.Acquisition_Model_Info__c}"/></div>
+                              </p>
+                            </div>
+                            <div class="row">
+                              <p>
+                              <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Providers__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Providers__c'),'fieldChanged','')}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Providers__c'),CONTAINS(fieldsWithChangedDate,',Providers__c')),changedDate['Providers__c'],'')}"><apex:outputField value="{!Country_Profile__c.Providers__c}"/></div>
+                              </p>
+                            </div>
+                            <div class="row">
+                              <p>
+                              <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Providers_Info__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Providers_Info__c'),'fieldChanged','')}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Providers_Info__c'),CONTAINS(fieldsWithChangedDate,',Providers_Info__c')),changedDate['Providers_Info__c'],'')}"><apex:outputField value="{!Country_Profile__c.Providers_Info__c}"/></div>
                               </p>
                             </div>
 
@@ -569,61 +624,61 @@
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Launch_Date__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Launch_Date__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.CASS_Launch_Date__c}"/></apex:outputText></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Launch_Date__c'),CONTAINS(fieldsWithChangedDate,',CASS_Launch_Date__c')),changedDate['CASS_Launch_Date__c'],'')}"><apex:outputText value="{0,date,dd MMM yyyy}"><apex:param value="{!Country_Profile__c.CASS_Launch_Date__c}"/></apex:outputText></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_ICCS_Availability__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_ICCS_Availability__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.CASS_ICCS_Availability__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_ICCS_Availability__c'),CONTAINS(fieldsWithChangedDate,',CASS_ICCS_Availability__c')),changedDate['CASS_ICCS_Availability__c'],'')}"><apex:outputField value="{!Country_Profile__c.CASS_ICCS_Availability__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Airlines_Participating__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Airlines_Participating__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.CASS_Airlines_Participating__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Airlines_Participating__c'),CONTAINS(fieldsWithChangedDate,',CASS_Airlines_Participating__c')),changedDate['CASS_Airlines_Participating__c'],'')}"><apex:outputField value="{!Country_Profile__c.CASS_Airlines_Participating__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Clearing_Bank__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Clearing_Bank__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.CASS_Clearing_Bank__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Clearing_Bank__c'),CONTAINS(fieldsWithChangedDate,',CASS_Clearing_Bank__c')),changedDate['CASS_Clearing_Bank__c'],'')}"><apex:outputField value="{!Country_Profile__c.CASS_Clearing_Bank__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Currency_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Currency_1__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.CASS_Currency_1__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Currency_1__c'),CONTAINS(fieldsWithChangedDate,',CASS_Currency_1__c')),changedDate['CASS_Currency_1__c'],'')}"><apex:outputField value="{!Country_Profile__c.CASS_Currency_1__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Settlement_Frequency_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Settlement_Frequency_1__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.CASS_Settlement_Frequency_1__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Settlement_Frequency_1__c'),CONTAINS(fieldsWithChangedDate,',CASS_Settlement_Frequency_1__c')),changedDate['CASS_Settlement_Frequency_1__c'],'')}"><apex:outputField value="{!Country_Profile__c.CASS_Settlement_Frequency_1__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Average_Monthly_Volume_1__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Average_Monthly_Volume_1__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.CASS_Average_Monthly_Volume_1__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Average_Monthly_Volume_1__c'),CONTAINS(fieldsWithChangedDate,',CASS_Average_Monthly_Volume_1__c')),changedDate['CASS_Average_Monthly_Volume_1__c'],'')}"><apex:outputField value="{!Country_Profile__c.CASS_Average_Monthly_Volume_1__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Currency_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Currency_2__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.CASS_Currency_2__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Currency_2__c'),CONTAINS(fieldsWithChangedDate,',CASS_Currency_2__c')),changedDate['CASS_Currency_2__c'],'')}"><apex:outputField value="{!Country_Profile__c.CASS_Currency_2__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Settlement_Frequency_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Settlement_Frequency_2__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.CASS_Settlement_Frequency_2__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Settlement_Frequency_2__c'),CONTAINS(fieldsWithChangedDate,',CASS_Settlement_Frequency_2__c')),changedDate['CASS_Settlement_Frequency_2__c'],'')}"><apex:outputField value="{!Country_Profile__c.CASS_Settlement_Frequency_2__c}"/></div>
                               </p>
                             </div>
                             <div class="row">
                               <p>
                               <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_Average_Monthly_Volume_2__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_Average_Monthly_Volume_2__c'),'fieldChanged','')}"/></div>
-                              <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.CASS_Average_Monthly_Volume_2__c}"/></div>
+                              <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'CASS_Average_Monthly_Volume_2__c'),CONTAINS(fieldsWithChangedDate,',CASS_Average_Monthly_Volume_2__c')),changedDate['CASS_Average_Monthly_Volume_2__c'],'')}"><apex:outputField value="{!Country_Profile__c.CASS_Average_Monthly_Volume_2__c}"/></div>
                               </p>
                             </div>
 
@@ -657,20 +712,30 @@
               <!-- END BSP & CASS PROFILE PANEL -->
               <!-- AIRLINES CHARGES PANEL -->
               <div class="col-xs-12 section">
-                  <div class="panel {!IF(isAirlinesChargesChanged,'panel-changed','panel-standard')}" id="panel_airlinesCharges">
+                  <div class="panel {!IF(isAirlinesChargesChanged,'panel-changed','panel-standard')}" id="panel_airlinesCharges" title="{!IF(NOT(airlinesChargesLastUpdate == null), $Label.ISSP_CurrencyCenter_Last_Updated_On,'')} {!airlinesChargesLastUpdate}">
                     <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_airlinesCharges">
                       <h4 class="panel-title down-arrow">
                       <a data-toggle="collapse" data-target="#collapse_airlinesCharges" href="">
                         {!$Label.CurrencyCenter_Airlines_Charges}
                       </a>
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                       </h4>
                     </div>
                     <div id="collapse_airlinesCharges" class="panel-collapse collapse">
                       <div class="panel-body">
+                        <!-- Request Airlines Charges Update: INI -->
+                        <div class="row" title="{!$Label.CurrencyCenter_Request_Update_Hover}">
+                          <p>
+                            <apex:form >
+                            &nbsp;&nbsp;&nbsp;&nbsp;<apex:outputLink value="/ISSP_FAQ2Case??MainNav=Queries&subNav=MyQueries&mid=M1S1&type=AirlineChargesUpdate&isocode={!Country_Profile__c.ISO_Code__c}" target="_blank" id="requestACUpdateId">{!$Label.CurrencyCenter_Request_Update}</apex:outputLink>
+                            </apex:form>
+                          </p>
+                        </div>
+                        <!-- Request Airlines Charges Update: END -->
                         <div class="row">
                           <p>
                           <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Update__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Update__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-12 customValueStyle">
+                          <div class="col-sm-12 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'AC_Update__c'),CONTAINS(fieldsWithChangedDate,',AC_Update__c')),changedDate['AC_Update__c'],'')}">
                             <!-- actual value for general update (CASS) -->
                             <apex:outputField value="{!Country_Profile__c.AC_Update__c}"/>
                           </div>
@@ -679,51 +744,53 @@
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Fuel__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Fuel__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.AC_Fuel__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'AC_Fuel__c'),CONTAINS(fieldsWithChangedDate,',AC_Fuel__c')),changedDate['AC_Fuel__c'],'')}"><apex:outputField value="{!Country_Profile__c.AC_Fuel__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Airport__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Airport__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.AC_Airport__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'AC_Airport__c'),CONTAINS(fieldsWithChangedDate,',AC_Airport__c')),changedDate['AC_Airport__c'],'')}"><apex:outputField value="{!Country_Profile__c.AC_Airport__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Ground_Handling__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Ground_Handling__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.AC_Ground_Handling__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'AC_Ground_Handling__c'),CONTAINS(fieldsWithChangedDate,',AC_Ground_Handling__c')),changedDate['AC_Ground_Handling__c'],'')}"><apex:outputField value="{!Country_Profile__c.AC_Ground_Handling__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Catering__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Catering__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.AC_Catering__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'AC_Catering__c'),CONTAINS(fieldsWithChangedDate,',AC_Catering__c')),changedDate['AC_Catering__c'],'')}"><apex:outputField value="{!Country_Profile__c.AC_Catering__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Crew_Accommodation__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Crew_Accommodation__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.AC_Crew_Accommodation__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'AC_Crew_Accommodation__c'),CONTAINS(fieldsWithChangedDate,',AC_Crew_Accommodation__c')),changedDate['AC_Crew_Accommodation__c'],'')}"><apex:outputField value="{!Country_Profile__c.AC_Crew_Accommodation__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Pax_Accommodation__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Pax_Accommodation__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.AC_Pax_Accommodation__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'AC_Pax_Accommodation__c'),CONTAINS(fieldsWithChangedDate,',AC_Pax_Accommodation__c')),changedDate['AC_Pax_Accommodation__c'],'')}"><apex:outputField value="{!Country_Profile__c.AC_Pax_Accommodation__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Ground_Transport__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Ground_Transport__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.AC_Ground_Transport__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'AC_Ground_Transport__c'),CONTAINS(fieldsWithChangedDate,',AC_Ground_Transport__c')),changedDate['AC_Ground_Transport__c'],'')}"><apex:outputField value="{!Country_Profile__c.AC_Ground_Transport__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Line_Maintenance__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Line_Maintenance__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.AC_Line_Maintenance__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'AC_Line_Maintenance__c'),CONTAINS(fieldsWithChangedDate,',AC_Line_Maintenance__c')),changedDate['AC_Line_Maintenance__c'],'')}"><apex:outputField value="{!Country_Profile__c.AC_Line_Maintenance__c}"/></div>
                           </p>
                         </div>
+                        
+
                         <!-- ATTACHMENTS ROW (GENERAL INFORMATION) -->
                         <apex:outputPanel rendered="{!attAC.size!=0}">
                         <div class="row horizontal-separator"></div>
@@ -750,12 +817,13 @@
 
               <!-- ECONOMIC PROFILE PANEL -->
               <div class="col-xs-12 section">
-                  <div class="panel panel {!IF(isEconomicProfileChanged,'panel-changed','panel-standard')}" id="panel_economicProfile">
+                  <div class="panel panel {!IF(isEconomicProfileChanged,'panel-changed','panel-standard')}" id="panel_economicProfile" title="{!IF(NOT(economicProfileLastUpdate == null), $Label.ISSP_CurrencyCenter_Last_Updated_On,'')} {!economicProfileLastUpdate}">
                     <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_economicProfile">
                       <h4 class="panel-title down-arrow">
                       <a data-toggle="collapse" data-target="#collapse_economicProfile" href="">
                         {!$Label.CurrencyCenter_Economic_Profile}
                       </a>
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                       </h4>
                     </div>
                     <div id="collapse_economicProfile" class="panel-collapse collapse">
@@ -773,7 +841,7 @@
                         <div class="row horizontal-separator"></div>
                         <div class="row">
                           <p>
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Update_e__c'),CONTAINS(fieldsWithChangedDate,',Update_e__c')),changedDate['Update_e__c'],'')}">
                               <!-- actual value for update -->
                               <apex:outputField value="{!Country_Profile__c.Update_e__c}"/>
                             </div>
@@ -788,7 +856,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.GDP_Growth_yoy__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'GDP_Growth_yoy__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.GDP_Growth_yoy__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'GDP_Growth_yoy__c'),CONTAINS(fieldsWithChangedDate,',GDP_Growth_yoy__c')),changedDate['GDP_Growth_yoy__c'],'')}"><apex:outputField value="{!Country_Profile__c.GDP_Growth_yoy__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -798,7 +866,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Non_Performing_Loans_share_of_total__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Non_Performing_Loans_share_of_total__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Non_Performing_Loans_share_of_total__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Non_Performing_Loans_share_of_total__c'),CONTAINS(fieldsWithChangedDate,',Non_Performing_Loans_share_of_total__c')),changedDate['Non_Performing_Loans_share_of_total__c'],'')}"><apex:outputField value="{!Country_Profile__c.Non_Performing_Loans_share_of_total__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -808,7 +876,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Foreign_Exchange_Reserves_change_yoy__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Foreign_Exchange_Reserves_change_yoy__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Foreign_Exchange_Reserves_change_yoy__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Foreign_Exchange_Reserves_change_yoy__c'),CONTAINS(fieldsWithChangedDate,',Foreign_Exchange_Reserves_change_yoy__c')),changedDate['Foreign_Exchange_Reserves_change_yoy__c'],'')}"><apex:outputField value="{!Country_Profile__c.Foreign_Exchange_Reserves_change_yoy__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -818,7 +886,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Inflation_yoy__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Inflation_yoy__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Inflation_yoy__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Inflation_yoy__c'),CONTAINS(fieldsWithChangedDate,',Inflation_yoy__c')),changedDate['Inflation_yoy__c'],'')}"><apex:outputField value="{!Country_Profile__c.Inflation_yoy__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -828,7 +896,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Current_Account_Balance_of_GDP__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Current_Account_Balance_of_GDP__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Current_Account_Balance_of_GDP__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Current_Account_Balance_of_GDP__c'),CONTAINS(fieldsWithChangedDate,',Current_Account_Balance_of_GDP__c')),changedDate['Current_Account_Balance_of_GDP__c'],'')}"><apex:outputField value="{!Country_Profile__c.Current_Account_Balance_of_GDP__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -848,7 +916,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Sovereign_Credit_Rating__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Sovereign_Credit_Rating__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Sovereign_Credit_Rating__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Sovereign_Credit_Rating__c'),CONTAINS(fieldsWithChangedDate,',Sovereign_Credit_Rating__c')),changedDate['Sovereign_Credit_Rating__c'],'')}"><apex:outputField value="{!Country_Profile__c.Sovereign_Credit_Rating__c}"/></div>
                           </p>
                         </div>
                         <!-- ATTACHMENTS ROW (ECONOMIC PROFILE) -->
@@ -881,12 +949,13 @@
             <div class="row">
               <!-- CURRENCY PANEL -->
               <div class="col-xs-12 section">
-                  <div class="panel {!IF(isCurrencyChanged,'panel-changed','panel-standard')}" id="panel_currency">
+                  <div class="panel {!IF(isCurrencyChanged,'panel-changed','panel-standard')}" id="panel_currency" title="{!IF(NOT(currencyLastUpdate == null), $Label.ISSP_CurrencyCenter_Last_Updated_On,'')} {!currencyLastUpdate}">
                     <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_currency" >
                       <h4 class="panel-title down-arrow">
                       <a data-toggle="collapse" data-target="#collapse_currency" href="">
                         {!$Label.CurrencyCenter_Currency}
                       </a>
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                       </h4>
                     </div>
                     <div id="collapse_currency" class="panel-collapse collapse">
@@ -894,7 +963,7 @@
                         <div class="row">
                           <p>
                             <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_c__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_c__c'),'fieldChanged','')}"/></div>
-                            <div class="col-sm-12 customValueStyle">
+                            <div class="col-sm-12 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Update_c__c'),CONTAINS(fieldsWithChangedDate,',Update_c__c')),changedDate['Update_c__c'],'')}">
                               <!-- actual value for update -->
                               <apex:outputField value="{!Country_Profile__c.Update_c__c}"/>
                             </div>
@@ -903,9 +972,19 @@
                         <div class="row horizontal-separator"></div>
                         <div class="row">
                           <p>
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'General_Profile_c__c'),CONTAINS(fieldsWithChangedDate,',General_Profile_c__c')),changedDate['General_Profile_c__c'],'')}">
                               <!-- actual value for general profile (summary) -->
                               <apex:outputField value="{!Country_Profile__c.General_Profile_c__c}"/>
+                            </div>
+                          </p>
+                        </div>
+                        <div class="row horizontal-separator"></div>
+                        <div class="row">
+                          <p>
+                            <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Hedging_Opportunities__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Hedging_Opportunities__c'),'fieldChanged','')}"/></div>
+                            <div class="col-sm-12" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Hedging_Opportunities__c'),CONTAINS(fieldsWithChangedDate,',Hedging_Opportunities__c')),changedDate['Hedging_Opportunities__c'],'')}">
+                              <!-- actual value for hedging opportunities -->
+                              <apex:outputField value="{!Country_Profile__c.Hedging_Opportunities__c}"/>
                             </div>
                           </p>
                         </div>
@@ -917,7 +996,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Currency_Exchange_Rate__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Currency_Exchange_Rate__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Currency_Exchange_Rate__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Currency_Exchange_Rate__c'),CONTAINS(fieldsWithChangedDate,',Currency_Exchange_Rate__c')),changedDate['Currency_Exchange_Rate__c'],'')}"><apex:outputField value="{!Country_Profile__c.Currency_Exchange_Rate__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -927,7 +1006,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Spot_1m_Change__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Spot_1m_Change__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Spot_1m_Change__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Spot_1m_Change__c'),CONTAINS(fieldsWithChangedDate,',Spot_1m_Change__c')),changedDate['Spot_1m_Change__c'],'')}"><apex:outputField value="{!Country_Profile__c.Spot_1m_Change__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -937,7 +1016,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Spot_12m_Change__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Spot_12m_Change__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Spot_12m_Change__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Spot_12m_Change__c'),CONTAINS(fieldsWithChangedDate,',Spot_12m_Change__c')),changedDate['Spot_12m_Change__c'],'')}"><apex:outputField value="{!Country_Profile__c.Spot_12m_Change__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -947,7 +1026,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Forward_NDF__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Forward_NDF__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Forward_NDF__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Forward_NDF__c'),CONTAINS(fieldsWithChangedDate,',Forward_NDF__c')),changedDate['Forward_NDF__c'],'')}"><apex:outputField value="{!Country_Profile__c.Forward_NDF__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -957,7 +1036,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Credit_Spread__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Credit_Spread__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Credit_Spread__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Credit_Spread__c'),CONTAINS(fieldsWithChangedDate,',Credit_Spread__c')),changedDate['Credit_Spread__c'],'')}"><apex:outputField value="{!Country_Profile__c.Credit_Spread__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
@@ -967,7 +1046,7 @@
                               <apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Devaluation_Risk__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Devaluation_Risk__c'),'fieldChanged','')}"/>
                             </a>
                           </div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Devaluation_Risk__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Devaluation_Risk__c'),CONTAINS(fieldsWithChangedDate,',Devaluation_Risk__c')),changedDate['Devaluation_Risk__c'],'')}"><apex:outputField value="{!Country_Profile__c.Devaluation_Risk__c}"/></div>
                           </p>
                         </div>
                         <!--<hr class="dashedLineCustom"/>-->
@@ -976,19 +1055,19 @@
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.International_Fares_Currency__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'International_Fares_Currency__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.International_Fares_Currency__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'International_Fares_Currency__c'),CONTAINS(fieldsWithChangedDate,',International_Fares_Currency__c')),changedDate['International_Fares_Currency__c'],'')}"><apex:outputField value="{!Country_Profile__c.International_Fares_Currency__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-7 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Acceptability_Of_Currency__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Acceptability_Of_Currency__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-5 customValueStyle"><apex:outputField value="{!Country_Profile__c.Acceptability_Of_Currency__c}"/></div>
+                          <div class="col-sm-5 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Acceptability_Of_Currency__c'),CONTAINS(fieldsWithChangedDate,',Acceptability_Of_Currency__c')),changedDate['Acceptability_Of_Currency__c'],'')}"><apex:outputField value="{!Country_Profile__c.Acceptability_Of_Currency__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Alerts__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Alerts__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Alerts__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Alerts__c'),CONTAINS(fieldsWithChangedDate,',Alerts__c')),changedDate['Alerts__c'],'')}"><apex:outputField value="{!Country_Profile__c.Alerts__c}"/></div>
                           </p>
                         </div>
                         <!-- ATTACHMENTS ROW (CURRENCY) -->
@@ -1016,12 +1095,13 @@
               <!-- END CURRENCY PANEL -->
               <!-- REPATRIATION PROCESS PANEL -->
               <div class="col-xs-12 section">
-                  <div class="panel {!IF(isRepatriationChanged,'panel-changed','panel-standard')}" id="panel_repatriationProcess">
+                  <div class="panel {!IF(isRepatriationChanged,'panel-changed','panel-standard')}" id="panel_repatriationProcess" title="{!IF(NOT(repatriationLastUpdate == null), $Label.ISSP_CurrencyCenter_Last_Updated_On,'')} {!repatriationLastUpdate}">
                     <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_repatriationProcess">
                       <h4 class="panel-title down-arrow">
                       <a data-toggle="collapse" data-target="#collapse_repatriationProcess" href="">
                         {!$Label.CurrencyCenter_Repatriation_Process}
                       </a>
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                       </h4>
                     </div>
                     <div id="collapse_repatriationProcess" class="panel-collapse collapse">
@@ -1029,7 +1109,7 @@
                         <div class="row">
                           <p>
                             <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_rp__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_rp__c'),'fieldChanged','')}"/></div>
-                            <div class="col-sm-12 customValueStyle">
+                            <div class="col-sm-12 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Update_rp__c'),CONTAINS(fieldsWithChangedDate,',Update_rp__c')),changedDate['Update_rp__c'],'')}">
                               <!-- actual value for update (repatriation process) -->
                               <apex:outputField value="{!Country_Profile__c.Update_rp__c}"/>
                             </div>
@@ -1038,31 +1118,31 @@
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Formal_FX_Repatriation_Procedure__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Formal_FX_Repatriation_Procedure__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Formal_FX_Repatriation_Procedure__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Formal_FX_Repatriation_Procedure__c'),CONTAINS(fieldsWithChangedDate,',Formal_FX_Repatriation_Procedure__c')),changedDate['Formal_FX_Repatriation_Procedure__c'],'')}"><apex:outputField value="{!Country_Profile__c.Formal_FX_Repatriation_Procedure__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Quotas_or_Restrictions__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Quotas_or_Restrictions__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Quotas_or_Restrictions__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Quotas_or_Restrictions__c'),CONTAINS(fieldsWithChangedDate,',Quotas_or_Restrictions__c')),changedDate['Quotas_or_Restrictions__c'],'')}"><apex:outputField value="{!Country_Profile__c.Quotas_or_Restrictions__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Withholding_Tax_on_FX_Cross_Border__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Withholding_Tax_on_FX_Cross_Border__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Withholding_Tax_on_FX_Cross_Border__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Withholding_Tax_on_FX_Cross_Border__c'),CONTAINS(fieldsWithChangedDate,',Withholding_Tax_on_FX_Cross_Border__c')),changedDate['Withholding_Tax_on_FX_Cross_Border__c'],'')}"><apex:outputField value="{!Country_Profile__c.Withholding_Tax_on_FX_Cross_Border__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Documentation_Forms__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Documentation_Forms__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Documentation_Forms__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Documentation_Forms__c'),CONTAINS(fieldsWithChangedDate,',Documentation_Forms__c')),changedDate['Documentation_Forms__c'],'')}"><apex:outputField value="{!Country_Profile__c.Documentation_Forms__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.ICCS_Simplified_Process__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'ICCS_Simplified_Process__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.ICCS_Simplified_Process__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'ICCS_Simplified_Process__c'),CONTAINS(fieldsWithChangedDate,',ICCS_Simplified_Process__c')),changedDate['ICCS_Simplified_Process__c'],'')}"><apex:outputField value="{!Country_Profile__c.ICCS_Simplified_Process__c}"/></div>
                           </p>
                         </div>
                         <!-- ATTACHMENTS ROW (REPATRIATION PROCESS) -->
@@ -1090,12 +1170,13 @@
               <!-- END REPATRIATION PROCESS PANEL -->
               <!-- IMPORTANT CONTACTS PANEL -->
               <div class="col-xs-12 section">
-                  <div class="panel {!IF(isImportantContactsChanged,'panel-changed','panel-standard')}" id="panel_importantContacts">
+                  <div class="panel {!IF(isImportantContactsChanged,'panel-changed','panel-standard')}" id="panel_importantContacts" title="{!IF(NOT(importantContactsLastUpdate == null), $Label.ISSP_CurrencyCenter_Last_Updated_On,'')} {!importantContactsLastUpdate}">
                     <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_importantContacts">
                       <h4 class="panel-title down-arrow">
                       <a data-toggle="collapse" data-target="#collapse_importantContacts" href="">
                         {!$Label.CurrencyCenter_Important_Contacts}
                       </a>
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                       </h4>
                     </div>
                     <div id="collapse_importantContacts" class="panel-collapse collapse">
@@ -1103,7 +1184,7 @@
                         <div class="row">
                           <p>
                             <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_ic__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_ic__c'),'fieldChanged','')}"/></div>
-                            <div class="col-sm-12 customValueStyle">
+                            <div class="col-sm-12 customValueStyle" title="{!IF(CONTAINS(fieldsWithChangedDate,'Update_ic__c'),changedDate['Update_ic__c'],'')}">
                               <!-- actual value for update (important contacts) -->
                               <apex:outputField value="{!Country_Profile__c.Update_ic__c}"/>
                             </div>
@@ -1112,37 +1193,37 @@
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Central_Bank__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Central_Bank__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Central_Bank__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Central_Bank__c'),CONTAINS(fieldsWithChangedDate,',Central_Bank__c')),changedDate['Central_Bank__c'],'')}"><apex:outputField value="{!Country_Profile__c.Central_Bank__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.International_Banks_Domestic_Banks__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'International_Banks_Domestic_Banks__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.International_Banks_Domestic_Banks__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'International_Banks_Domestic_Banks__c'),CONTAINS(fieldsWithChangedDate,',International_Banks_Domestic_Banks__c')),changedDate['International_Banks_Domestic_Banks__c'],'')}"><apex:outputField value="{!Country_Profile__c.International_Banks_Domestic_Banks__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Minister_of_Transport_and_Tourism__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Minister_of_Transport_and_Tourism__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Minister_of_Transport_and_Tourism__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Minister_of_Transport_and_Tourism__c'),CONTAINS(fieldsWithChangedDate,',Minister_of_Transport_and_Tourism__c')),changedDate['Minister_of_Transport_and_Tourism__c'],'')}"><apex:outputField value="{!Country_Profile__c.Minister_of_Transport_and_Tourism__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Civil_Aviation_Authority__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Civil_Aviation_Authority__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Civil_Aviation_Authority__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Civil_Aviation_Authority__c'),CONTAINS(fieldsWithChangedDate,',Civil_Aviation_Authority__c')),changedDate['Civil_Aviation_Authority__c'],'')}"><apex:outputField value="{!Country_Profile__c.Civil_Aviation_Authority__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Travel_Agent_Association__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Travel_Agent_Association__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Travel_Agent_Association__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Travel_Agent_Association__c'),CONTAINS(fieldsWithChangedDate,',Travel_Agent_Association__c')),changedDate['Travel_Agent_Association__c'],'')}"><apex:outputField value="{!Country_Profile__c.Travel_Agent_Association__c}"/></div>
                           </p>
                         </div>
                         <div class="row">
                           <p>
                           <div class="col-sm-4 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Local_BAR__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Local_BAR__c'),'fieldChanged','')}"/></div>
-                          <div class="col-sm-8 customValueStyle"><apex:outputField value="{!Country_Profile__c.Local_BAR__c}"/></div>
+                          <div class="col-sm-8 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Local_BAR__c'),CONTAINS(fieldsWithChangedDate,',Local_BAR__c')),changedDate['Local_BAR__c'],'')}"><apex:outputField value="{!Country_Profile__c.Local_BAR__c}"/></div>
                           </p>
                         </div>
                         <!-- ATTACHMENTS ROW (IMPORTANT CONTACTS) -->
@@ -1177,12 +1258,13 @@
         <div class="row">
           <div class="col-lg-12 col-xs-12">
             <!-- ICCS PANEL -->
-            <div class="panel {!IF(isIccsChanged,'panel-changed','panel-standard')}" id="panel_iccs">
+            <div class="panel {!IF(isIccsChanged,'panel-changed','panel-standard')}" id="panel_iccs" title="{!$Label.ISSP_CurrencyCenter_Last_Updated_On} {!Country_Profile__c.LastModifiedDate}">
               <div class="panel-heading panel-collapsed" data-toggle="collapse" data-target="#collapse_iccs">
                 <h4 class="panel-title down-arrow">
                 <a data-toggle="collapse" data-target="#collapse_iccs" href="">
                 <!--{!$Label.CurrencyCenter_ICCS}-->&nbsp;
                 </a>
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" style="color: red; font-size: 20px;"></span>
                 </h4>
               </div>
               <div id="collapse_iccs" class="panel-collapse collapse">
@@ -1192,34 +1274,34 @@
                     <div class="col-lg-4 col-md-6 col-sm-12">
                       <div class="row">
                         <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Availability__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Availability__c'),'fieldChanged','')}"/></div>
-                        <div class="col-sm-9 customValueStyle"><apex:outputField value="{!Country_Profile__c.Availability__c}"/></div>
+                        <div class="col-sm-9 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Availability__c'),CONTAINS(fieldsWithChangedDate,',Availability__c')),changedDate['Availability__c'],'')}"><apex:outputField value="{!Country_Profile__c.Availability__c}"/></div>
                       </div>
                       <div class="row row-buttons">
                         <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Status_and_Figures__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Status_and_Figures__c'),'fieldChanged','')}"/></div>
-                        <div class="col-sm-9 customValueStyle"><apex:outputField value="{!Country_Profile__c.Status_and_Figures__c}"/></div>
+                        <div class="col-sm-9 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Status_and_Figures__c'),CONTAINS(fieldsWithChangedDate,',Status_and_Figures__c')),changedDate['Status_and_Figures__c'],'')}"><apex:outputField value="{!Country_Profile__c.Status_and_Figures__c}"/></div>
                       </div>
                       <div class="row row-buttons">
                         <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Tax_Fees_on_Cross_Border_Payments__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Tax_Fees_on_Cross_Border_Payments__c'),'fieldChanged','')}"/></div>
-                        <div class="col-sm-9 customValueStyle"><apex:outputField value="{!Country_Profile__c.Tax_Fees_on_Cross_Border_Payments__c}"/></div>
+                        <div class="col-sm-9 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Tax_Fees_on_Cross_Border_Payments__c'),CONTAINS(fieldsWithChangedDate,',Tax_Fees_on_Cross_Border_Payments__c')),changedDate['Tax_Fees_on_Cross_Border_Payments__c'],'')}"><apex:outputField value="{!Country_Profile__c.Tax_Fees_on_Cross_Border_Payments__c}"/></div>
                       </div>
                       <div class="row row-buttons">
                         <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.FX_Bank_Partners__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'FX_Bank_Partners__c'),'fieldChanged','')}"/></div>
-                        <div class="col-sm-9 customValueStyle"><apex:outputField value="{!Country_Profile__c.FX_Bank_Partners__c}"/></div>
+                        <div class="col-sm-9 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'FX_Bank_Partners__c'),CONTAINS(fieldsWithChangedDate,',FX_Bank_Partners__c')),changedDate['FX_Bank_Partners__c'],'')}"><apex:outputField value="{!Country_Profile__c.FX_Bank_Partners__c}"/></div>
                       </div>
                       <div class="row row-buttons">
                         <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Clearing_Currency__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Clearing_Currency__c'),'fieldChanged','')}"/></div>
-                        <div class="col-sm-9 customValueStyle"><apex:outputField value="{!Country_Profile__c.Clearing_Currency__c}"/></div>
+                        <div class="col-sm-9 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Clearing_Currency__c'),CONTAINS(fieldsWithChangedDate,',Clearing_Currency__c')),changedDate['Clearing_Currency__c'],'')}"><apex:outputField value="{!Country_Profile__c.Clearing_Currency__c}"/></div>
                       </div>
                     </div>
 
                     <div class="col-lg-4 col-md-6 col-sm-12">
                       <div class="row">
                         <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.History__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'History__c'),'fieldChanged','')}"/></div>
-                        <div class="col-sm-9 customValueStyle"><apex:outputField value="{!Country_Profile__c.History__c}"/></div>
+                        <div class="col-sm-9 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'History__c'),CONTAINS(fieldsWithChangedDate,',History__c')),changedDate['History__c'],'')}"><apex:outputField value="{!Country_Profile__c.History__c}"/></div>
                       </div>
                       <div class="row row-buttons">
                         <div class="col-sm-3 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update__c'),'fieldChanged','')}"/></div>
-                        <div class="col-sm-9 customValueStyle"><apex:outputField value="{!Country_Profile__c.Update__c}"/></div>
+                        <div class="col-sm-9 customValueStyle" title="{!IF(OR(BEGINS(fieldsWithChangedDate,'Update__c'),CONTAINS(fieldsWithChangedDate,',Update__c')),changedDate['Update__c'],'')}"><apex:outputField value="{!Country_Profile__c.Update__c}"/></div>
                       </div>
                     </div>
 
@@ -1251,6 +1333,46 @@
           </div>
         </div>
 
+
+        <apex:form >
+          <!--Used to re-populate selectedCountries after Download-->
+          <apex:actionFunction name="populateSelectedCountries" action="{!PopulateSelectedCountries}" rerender="selectAllButton,tblSelectedCountries" />
+        </apex:form>
+        <div class="modal fade" id="selectCountries" tabindex="-1" role="dialog" aria-labelledby="selectCountriesLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <apex:form >
+                      <div class="modal-header">
+                          <h4 class="modal-title" id="selectCountriesLabel">Select countries</h4>
+                      </div>
+                      <div class="modal-body" style="overflow: auto; max-height: 250px;">
+                          <apex:dataTable value="{!selectedCountries}" var="selectedCountry" id="tblSelectedCountries">
+                              <apex:column >
+                                  <apex:facet name="header"></apex:facet>
+                                  <apex:inputCheckbox value="{!selectedCountry.selected}" />
+                              </apex:column>
+                              <apex:column >
+                                  <apex:facet name="header"></apex:facet>
+                                  <apex:outputText value="{!selectedCountry.country.Name}" />
+                              </apex:column>
+                          </apex:dataTable>
+                      </div>
+                      <div class="modal-footer">
+                          <apex:commandLink action="{!selectionAction}" reRender="selectAllButton,tblSelectedCountries" style="float:left;">
+                              <apex:commandButton value="{!selectAllLabel}" styleClass="btn btn-download" id="selectAllButton" />
+                          </apex:commandLink>
+                        <!--type="application/pdf" -->
+                          <apex:commandLink action="{!generatePdf}" onclick="closeSelectCountries(); populateSelectedCountries();" reRender="selectAllButton,tblSelectedCountries">
+                              <apex:commandButton value="{!$Label.CurrencyCenter_Download_Pdf}" styleClass="btn btn-download" />
+                          </apex:commandLink>
+                          <button type="button" class="btn btn-download" data-toggle="modal" data-target="#selectCountries" onclick="populateSelectedCountries();">
+                              Cancel
+                          </button>
+                      </div>
+                    </apex:form>
+                </div>
+            </div>
+        </div>
         <c:ISSP_CustomFooter />
 
      </div>
