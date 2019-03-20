@@ -32,6 +32,10 @@
         <members>User</members>
         <name>CustomObject</name>
     </types>
+	<types>
+        <members>*</members>
+        <name>QuickAction</name>
+    </types>
     <types>
         <members>*</members>
         <name>CustomPermission</name>
