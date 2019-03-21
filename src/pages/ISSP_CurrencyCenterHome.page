@@ -19,7 +19,7 @@
             <div class="row boxes-row text-center">
               <apex:commandLink action="{!GoToBlockedFunds}" styleClass="col-md-2 col-sm-4 header-box blocked-funds"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_Blocked_Funds}</div></div></apex:commandLink>
               <apex:commandLink action="{!GoToWatchList}" styleClass="col-md-2 col-sm-4 header-box watch-list"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_Watch_List}</div></div></apex:commandLink>
-              <apex:commandLink styleClass="col-md-2 col-sm-4 header-box all-others"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_All_Others}</div></div></apex:commandLink>
+              <apex:commandLink action="{!GoToAllOthers}" styleClass="col-md-2 col-sm-4 header-box all-others"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_All_Others}</div></div></apex:commandLink>
               <apex:commandLink action="{!GoToManageNotifications}" styleClass="col-md-2 col-sm-4 header-box manage-notif"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_Manage_Notifications_Button}</div></div></apex:commandLink>
               <apex:commandLink action="{!GoToHeatMap}" styleClass="col-md-2 col-sm-4 header-box heat-map"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_Heat_Map}</div></div></apex:commandLink>
               <apex:commandLink action="{!GoToReportingActions}" styleClass="col-md-2 col-sm-4 header-box reporting-actions"><div class="text-wrapper"><div class="text">{!$Label.CurrencyCenter_Reporting_And_Actions}</div></div></apex:commandLink>
