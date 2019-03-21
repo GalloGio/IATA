@@ -170,7 +170,7 @@ public without sharing class ISSP_UserTriggerHandler {
                 for (Portal_Application_Right__c thisRecord : appRightList){
                     listContactId.add(thisRecord.Contact__c);
                 }
-                ISSP_WS_Utilities.invokeSisModifyUser(listContactId);
+                System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listContactId, 'invokeSisModifyUser'));
             }
         }
     }
@@ -179,10 +179,10 @@ public without sharing class ISSP_UserTriggerHandler {
         Boolean callSIS = ISSP_WS_SIS_Callout_Common.SIS_CALLOUTS_ENABLED && !preventSISIntegration;
         if (callSIS) {
             if (!contactIdAddSet.isEmpty()) {
-                ISSP_WS_Utilities.invokeSisActivateUsers(new list<Id>(contactIdAddSet));
+                System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(new list<Id>(contactIdAddSet), 'invokeSisActivateUsers'));
             }
             if (!contactRemoveIdSet.isEmpty()) {
-                ISSP_WS_Utilities.invokeSisDeactivateUsers(new list<Id>(contactRemoveIdSet));
+                System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(new list<Id>(contactRemoveIdSet), 'invokeSisDeactivateUsers'));
             }
         }
     }
