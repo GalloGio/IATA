@@ -74,11 +74,11 @@ public with sharing class ISSP_SIS_AccountHandler {
             }
         }
         if (!listInsertAccountId.isEmpty()) {
-            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listInsertAccountId, 'invokeCreateAccount'));
+            ISSP_WS_Utilities.invokeCreateAccount(listInsertAccountId);
             BLOCK_EXECUTION = true;
         }
         if (!listUpdateAccountId.isEmpty()) {
-            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listUpdateAccountId, 'invokeUpdateAccount'));
+            ISSP_WS_Utilities.invokeUpdateAccount(listUpdateAccountId);
             BLOCK_EXECUTION = true;
         }
     }
@@ -112,11 +112,11 @@ public with sharing class ISSP_SIS_AccountHandler {
             }
         }
         if (!listInsertAccountId.isEmpty()) {
-			System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listInsertAccountId, 'invokeCreateAccount'));
+            ISSP_WS_Utilities.invokeCreateAccount(listInsertAccountId);
             BLOCK_EXECUTION = true;
         }
         if (!listUpdateAccountId.isEmpty()) {
-			System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listUpdateAccountId, 'invokeUpdateAccount'));
+            ISSP_WS_Utilities.invokeUpdateAccount(listUpdateAccountId);
             BLOCK_EXECUTION = true;
         }
     }
@@ -281,7 +281,7 @@ public with sharing class ISSP_SIS_AccountHandler {
         }
         if (!listAccountId.isEmpty()) {
             // give SIS Joining App to all interested users inside these accounts
-            System.schedule('ScheduledJob ' + String.valueOf(Math.random()), ISSP_SIS_Schedulable.getNextFireTime(), new ISSP_SIS_Schedulable(listAccountId, 'invokeGiveSISAppToAccountUsers'));
+            ISSP_WS_Utilities.invokeGiveSISAppToAccountUsers(listAccountId);
         }
     }
 }
