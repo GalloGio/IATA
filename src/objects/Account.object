@@ -17893,6 +17893,28 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Special_remarks__c</fullName>
+        <description>Multi-picklist to annotate accounts with special remarks</description>
+        <externalId>false</externalId>
+        <label>Special remarks</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>TIDS for NDC</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Status__c</fullName>
         <externalId>false</externalId>
         <label>Status</label>
@@ -33688,6 +33710,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -41117,6 +41146,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -47195,6 +47231,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -53180,6 +53223,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Zimbabwe</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62241,6 +62291,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Zimbabwe</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -71574,6 +71631,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -77637,6 +77701,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>Services_Rendered_Country__c</picklist>
             <values>
                 <fullName>United States</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -84028,6 +84099,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <picklist>Services_Rendered_Country__c</picklist>
             <values>
                 <fullName>United States</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -93309,6 +93387,13 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Zimbabwe</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Special_remarks__c</picklist>
+            <values>
+                <fullName>1</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
