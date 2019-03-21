@@ -3660,8 +3660,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>NEW.GSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0</controllingFieldValue>
+                <controllingFieldValue>ANG.NEW.GE.STANDARD.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.SA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0.BSP</controllingFieldValue>
+                <controllingFieldValue>ANG.MULTICOUNTRY.AE.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSA.1.0.BSP</controllingFieldValue>
                 <controllingFieldValue>NEW.HO.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.BR</controllingFieldValue>
@@ -3685,8 +3687,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>NEW.GSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0</controllingFieldValue>
+                <controllingFieldValue>ANG.NEW.GE.STANDARD.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.SA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0.BSP</controllingFieldValue>
+                <controllingFieldValue>ANG.MULTICOUNTRY.AE.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSA.1.0.BSP</controllingFieldValue>
                 <controllingFieldValue>NEW.HO.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.BR</controllingFieldValue>
@@ -3710,8 +3714,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>NEW.GSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0</controllingFieldValue>
+                <controllingFieldValue>ANG.NEW.GE.STANDARD.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.SA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0.BSP</controllingFieldValue>
+                <controllingFieldValue>ANG.MULTICOUNTRY.AE.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSA.1.0.BSP</controllingFieldValue>
                 <controllingFieldValue>NEW.HO.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.BR</controllingFieldValue>

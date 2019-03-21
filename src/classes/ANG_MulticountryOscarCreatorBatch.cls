@@ -115,6 +115,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 	        
 	        fieldsOfObject = new Map<String,Object>();
 	        fieldsOfObject.put('AMS_Online_Accreditation__c',stagingArea.Id);
+	        fieldsOfObject.put('Oscar_Communication_Case_Id__c', newCaseMC.Id);
 	        ANG_EntityCreator.updateOscar(oscar, fieldsOfObject);
 	        	        
 	        upsert oscar;
