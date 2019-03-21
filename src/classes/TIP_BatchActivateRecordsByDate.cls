@@ -155,13 +155,27 @@ global class TIP_BatchActivateRecordsByDate implements  Database.Batchable<sObje
    			String status = sObjectsFields.get(sObjectType).get(FIELD_STATUS);
    			String dateToUpdate = sObjectsFields.get(sObjectType).get(FIELD_START_DATE_TO_UPDATE);
 
-   			result = dateCompare((Date) o.get(startDate), (Date) o.get(endDate));
-   			o.put(status, sObjectsStatus.get(sObjectType).get(result));
-   			if(o.get(dateToUpdate) == null) o.put(dateToUpdate, o.get(startDate));
-   			regsToUpdate.add(o);
-   			
+			String auxStatus = '';
+   			if (sObjectType == PRODUCT_TYPE) {
+				auxStatus = sObjectsFields.get(sObjectType).get(FIELD_STATUS);
+				if(auxStatus == TIP_Utils.PARTNER_PRODUCT_STATUS_INACTIVE) {
+					o.put(status, TIP_Utils.PARTNER_PRODUCT_STATUS_TERMINATED);
+				}
+   			} else if (sObjectType == PRODUCT_TYPE) {
+   				//
+   				// Second part for the account
+   				//
+   			}
+
+   			if(auxStatus == '') {
+	   			result = dateCompare((Date) o.get(startDate), (Date) o.get(endDate));
+	   			o.put(status, sObjectsStatus.get(sObjectType).get(result));
+
+	   			if(o.get(dateToUpdate) == null) o.put(dateToUpdate, o.get(startDate));
+   			}
+   			regsToUpdate.add(o);   			
    		}
-   			system.debug('PF regsToUpdate'+regsToUpdate);
+   		system.debug('PF regsToUpdate'+regsToUpdate);
 	}
 
 	public static Integer dateCompare(Date startDate, Date endDate){

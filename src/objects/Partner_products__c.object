@@ -585,14 +585,6 @@ Specify if payment is guaranteed to the airline against: fraud dispute, commerci
                 <fullName>CC</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>CC VA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EP</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>PP_Pay_in_Model__c</picklist>

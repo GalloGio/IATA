@@ -57,6 +57,7 @@ public class TIP_Utils{
 	public static String PARTNER_PRODUCT_STATUS_IN_PROGRESS='IN_PROGRESS';
 	public static String PARTNER_PRODUCT_STATUS_REJECTED='REJECTED';
 	public static String PARTNER_PRODUCT_STATUS_DRAFT='DRAFT';
+	public static String PARTNER_PRODUCT_STATUS_TERMINATED='TERMINATED';	
 
 	//Partner Product status
 	public static String PARTNER_PRODUCT_NETWORK_TYPE_OPEN_LOOP='OPEN_LOOP';

@@ -78,6 +78,15 @@
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
         <label>BSP Country</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>IATA_ISO_Country__c.ISO_Code__c</field>
+                <operation>equals</operation>
+                <valueField>IATA_ISO_Country__c.BSP_Country_free_text__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Payment Product Country Configs</relationshipLabel>
         <relationshipName>TIP_Payment_Product_Country_Configs</relationshipName>
