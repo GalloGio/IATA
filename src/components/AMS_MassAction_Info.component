@@ -1,0 +1,32 @@
+<apex:component >
+	<apex:attribute name="operation" description="Type of operation" type="String"/>
+	<div style="margin-top: 10px; margin-bottom: 10px;">
+		<p>Please see below the expected format for the file (only .csv type is supported).</p>
+		<div style="margin-top: 10px;">
+			<apex:outputPanel layout="none" rendered="{!operation == 'CVR'}">
+				<table border="1">
+					<tr>
+						<td>Account Id</td>
+						<td>Form Effective Date</td>
+						<td>Financial Security expiry date</td>
+					</tr>
+					<tr>
+						<td>recordId</td>
+						<td>yyyy-mm-dd</td>
+						<td>yyyy-mm-dd</td>
+					</tr>
+				</table>
+			</apex:outputPanel>
+			<apex:outputPanel layout="none" rendered="{!operation == 'PCI_C'}">
+				<table border="1">
+					<tr>
+						<td>OSCAR Id</td>
+					</tr>
+					<tr>
+						<td>recordId</td>
+					</tr>
+				</table>
+			</apex:outputPanel>
+		</div>
+	</div>
+</apex:component>

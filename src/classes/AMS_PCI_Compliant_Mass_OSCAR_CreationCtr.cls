@@ -11,6 +11,8 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
     public list<jsonError> errorMessagesToShow { get; set; }
     private integer counter=0;  //keeps track of the offset
     private integer list_size=10; //sets the page size or number of rows
+    public String csvFileContent {get;set;} //AMSU-189
+
     public boolean updateTable {
         get{
             if(updateTable == null)
@@ -180,6 +182,11 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
         selectedClasses = null;
         summaryMap = null;
         accountIds = null;
+        /*** AMSU-189 ***/
+        isBatchRunning = false;
+        isBatchFinished = false;
+        batchId = null;
+        csvFileContent = null;
     }
 
     public void search() {
@@ -364,6 +371,50 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
          return (allErrorMessages.size()/list_size);
       }
    }
+
+    /*** AMSU-189 ***/
+    public void uploadFile() {
+        System.debug('Upload File');
+        System.debug(csvFileContent);
+
+        try {
+            List<String> rows = csvFileContent.split('\n');
+            rows.remove(0);
+
+            if(operation == 'CVR') {
+                Map<Id,Map<String,Object>> params = parseCSV_CVR(rows);
+                batchId = Database.executeBatch(new AMS_OSCAR_Mass_ActionBatch(AMS_OSCAR_Mass_ActionBatch.CREATE_VR, 'Account', params.keySet(), params), 1);
+                isBatchRunning = true;
+            } else if(operation == 'PCI_C') {
+                Set<Id> recordIds = new Set<Id>();
+                for(String row : rows) {
+                    recordIds.add(row.trim());       
+                }
+                System.debug('Start batch');
+                System.debug('recordIds: ' + recordIds);
+                batchId = Database.executeBatch(new AMS_OSCAR_Mass_ActionBatch(AMS_OSCAR_Mass_ActionBatch.PROCESS_PCI, 'AMS_OSCAR__c', recordIds, null), 1);
+                isBatchRunning = true;
+            } else {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Invalid operation, please contact support.'));
+            }
+        } catch(Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+        }
+    }
+
+    private Map<Id,Map<String,Object>> parseCSV_CVR(List<String> rows) {
+        Map<Id,Map<String,Object>> res = new Map<Id,Map<String,Object>>();
+
+        for(String row : rows) {
+            List<String> columns = row.split(',');
+            Map<String,Object> params = new Map<String,Object>();
+            res.put(columns[0], params);
+            params.put('Form_Effective_Date__c', columns[1]);
+            params.put('Financial_Security_expiry_date__c', columns[2]);
+        }
+
+        return res;
+    }
 
     // ****************************************
     // ************* helper methods ***********
