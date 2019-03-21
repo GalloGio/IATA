@@ -16,12 +16,20 @@ global with sharing class WSJavascript {
     }
 
     /**
-        Update input case adding a DML Option to send an email
+        Send an email to the input case suign the input template
     **/
-    webservice static void updateCase(Case caseObject, Boolean triggerUserEmail) {
-        Database.DMLOptions dlo = new Database.DMLOptions();
-        dlo.EmailHeader.triggerUserEmail = triggerUserEmail;
-        caseObject.setOptions(dlo);
-        update caseObject;
+    webservice static void sendEmail(Id caseId, String templateName) {
+        Case cse = [SELECT Id, ContactId FROM Case WHERE Id = :caseId];
+        EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :templateName];
+        OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+
+        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
+        mail.setOrgWideEmailAddressId(orgAddress.Id);
+        mail.setTemplateId(template.Id);
+        mail.setTargetObjectId(cse.ContactId);
+        mail.setWhatId(cse.Id);
+        mail.setTreatTargetObjectAsRecipient(true);
+        mail.setSaveAsActivity(true);
+        Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
     }
 }
