@@ -257,6 +257,10 @@
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action20 --></label>
+        <name>AMS_OSCAR_Action20</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_OSCAR_Action3 --></label>
         <name>AMS_OSCAR_Action3</name>
     </customLabels>
@@ -331,6 +335,18 @@
     <customLabels>
         <label><!-- AMS OSCAR DISAPPROVAL --></label>
         <name>AMS_OSCAR_DISAPPROVAL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_ENDORSEMENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_FINANCIAL_SECURITY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_fees --></label>
+        <name>AMS_OSCAR_GDI_fees</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -545,8 +561,28 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP46 --></label>
+        <name>AMS_OSCAR_STEP46</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP47 --></label>
+        <name>AMS_OSCAR_STEP47</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP48 --></label>
+        <name>AMS_OSCAR_STEP48</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP49 --></label>
+        <name>AMS_OSCAR_STEP49</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP5 --></label>
         <name>AMS_OSCAR_STEP5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP50 --></label>
+        <name>AMS_OSCAR_STEP50</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
@@ -693,15 +729,15 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label>Vui lòng đọc</label>
+        <label>Bạn có thể truy cập vào tài khoản IATA EasyPay của mình từ</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</name>
     </customLabels>
     <customLabels>
-        <label>Câu hỏi Thường gặp này</label>
+        <label>Cổng thông tin Dịch vụ Khách hàng của IATA</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</name>
     </customLabels>
     <customLabels>
-        <label>để tìm hiểu thêm về cách quản lý tài khoản EasyPay của bạn và bắt đầu sử dụng.</label>
+        <label>vào bất cứ lúc nào. Bây giờ các đồng nghiệp của bạn cũng có thể yêu cầu truy cập vào tài khoản mới mở của bạn.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</name>
     </customLabels>
     <customLabels>
@@ -709,11 +745,11 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Đồng nghiệp của bạn hiện có thể nộp đơn đăng ký để truy cập tài khoản mới mở của bạn từ Cổng thông tin Dịch vụ Khách hàng của IATA. &amp;lt;a href=&quot;&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot;&gt;Câu hỏi Thường gặp&amp;lt;/a&gt; ở trên mô tả cách bạn có thể quản lý truy cập của người dùng.&quot;</label>
+        <label>Vui lòng tham khảo phần Câu hỏi Thường gặp/Trợ giúp trên cổng thông tin IATA EasyPay để biết thêm thông tin về cách quản lý tài khoản EasyPay của bạn.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</name>
     </customLabels>
     <customLabels>
-        <label>Chúc mừng bạn đã mở tài khoản IATA EasyPay mới. Vui lòng tham khảo bài viết này để biết thông tin về cách quản lý tài khoản EasyPay của bạn và các bước ban đầu khi chuyển tiền để bạn có thể bắt đầu phát hành vé EasyPay. Đồng nghiệp của bạn hiện có thể nộp đơn đăng ký để truy cập tài khoản mới mở của bạn từ Cổng thông tin Dịch vụ Khách hàng của IATA. Bài viết trên mô tả cách bạn quản lý truy cập của người dùng. Cảm ơn bạn, Bộ phận Dịch vụ Khách hàng IATA</label>
+        <label>Chúc mừng bạn đã mở tài khoản IATA EasyPay mới của bạn. Bạn có thể truy cập tài khoản IATA EasyPay của mình từ Cổng thông tin Dịch vụ Khách hàng IATA &lt;https://portal.iata.org/ISSP_Login&gt; vào bất cứ lúc nào. Bây giờ các đồng nghiệp của bạn cũng có thể yêu cầu truy cập vào tài khoản mới mở của bạn. Vui lòng tham khảo phần Câu hỏi Thường gặp/Trợ giúp trên cổng thông tin IATA EasyPay để biết thêm thông tin về cách quản lý tài khoản EasyPay của bạn. Xin cảm ơn bạn, Bộ phận Dịch vụ Khách hàng của IATA</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</name>
     </customLabels>
     <customLabels>
@@ -807,6 +843,50 @@
     <customLabels>
         <label>Vai trò Dịch vụ Cổng thông tin</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
+    </customLabels>
+    <customLabels>
+        <label>Tôi đồng ý</label>
+        <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label>Danh sách Các tổ chức Tài chính cung cấp Bảo hiểm Bảo đảm Tài chính tại quốc gia của bạn</label>
+        <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label>Đi đến Cổng thông tin GDI</label>
+        <name>ANG_ISSP_GDI_Navigate_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label>Hiển thị hồ sơ theo trang:</label>
+        <name>ANG_ISSP_GDI_Page_Display_Records</name>
+    </customLabels>
+    <customLabels>
+        <label>Trang Đầu</label>
+        <name>ANG_ISSP_GDI_Page_First</name>
+    </customLabels>
+    <customLabels>
+        <label>Trang Cuối</label>
+        <name>ANG_ISSP_GDI_Page_Last</name>
+    </customLabels>
+    <customLabels>
+        <label>Trang Sau</label>
+        <name>ANG_ISSP_GDI_Page_Next</name>
+    </customLabels>
+    <customLabels>
+        <label>Trang Trước</label>
+        <name>ANG_ISSP_GDI_Page_Previous</name>
+    </customLabels>
+    <customLabels>
+        <label>Với việc yêu cầu Euler Hermes cung cấp Bảo đảm Tài chính của mình cho IATA, bạn đồng ý cho IATA chia sẻ với Euler Hermes các thông tin mà IATA nắm giữ liên quan đến tình hình tài chính của bạn, cho dù là thông tin nhận trực tiếp từ bạn khi xin Chứng nhận IATA hay thông tin mà IATA lưu giữ trong quá trình bạn là thành viên IATA.</label>
+        <name>ANG_ISSP_GDI_Terms_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_UserProvisioningError --></label>
+        <name>ANG_ISSP_GDI_UserProvisioningError</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng chờ. Bạn sẽ được chuyển đến Cổng thông tin GDI sau một lát nữa.</label>
+        <name>ANG_ISSP_GDI_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
         <label>Pháp nhân chính:</label>
@@ -1181,6 +1261,10 @@
         <name>ANG_OSCAR_WARNING_RISK</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_OnGoing_OSCAR_Warning --></label>
+        <name>ANG_OnGoing_OSCAR_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_PCI_COMPLIANT --></label>
         <name>ANG_PCI_COMPLIANT</name>
     </customLabels>
@@ -1201,15 +1285,15 @@
         <name>ANG_RHC_AmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG RHC HUB Current Usage Tooltip --></label>
+        <label>Số tiền RHC đã sử dụng</label>
         <name>ANG_RHC_HUB_Current_UsageTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_RHC RHC Amount Tooltip --></label>
+        <label>Ngưỡng doanh số Tiền mặt BSP chưa thanh toán của đại lý</label>
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG RHC Risk Status Tooltip --></label>
+        <label>Được xác định bởi lịch sử rủi ro của đại lý và kết quả đánh giá tài chính của họ</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -1719,6 +1803,10 @@
         <name>CurrencyCenter_Actual_Amount_Blocked</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_AddCountry_Monthly_Survey --></label>
+        <name>CurrencyCenter_AddCountry_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Airlines_Charges --></label>
         <name>CurrencyCenter_Airlines_Charges</name>
     </customLabels>
@@ -1733,6 +1821,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Survey --></label>
+        <name>CurrencyCenter_Annual_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Surveys --></label>
+        <name>CurrencyCenter_Annual_Surveys</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Attachments_Description --></label>
@@ -1763,6 +1859,10 @@
         <name>CurrencyCenter_Back_Home</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Back_ReportingActions --></label>
+        <name>CurrencyCenter_Back_ReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Blocked_Funds --></label>
         <name>CurrencyCenter_Blocked_Funds</name>
     </customLabels>
@@ -1787,6 +1887,18 @@
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Question --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Title --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Monthly_Survey --></label>
+        <name>CurrencyCenter_Cancel_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
         <name>CurrencyCenter_Countries</name>
     </customLabels>
@@ -1801,6 +1913,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Title --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Details --></label>
@@ -1829,6 +1949,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_Economic_Profile --></label>
         <name>CurrencyCenter_Economic_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Edit --></label>
+        <name>CurrencyCenter_Edit</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Exchange_Rates_Directory --></label>
@@ -1879,6 +2003,10 @@
         <name>CurrencyCenter_Issue_Started</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Link --></label>
+        <name>CurrencyCenter_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Manage_Notifications --></label>
         <name>CurrencyCenter_Manage_Notifications</name>
     </customLabels>
@@ -1891,12 +2019,24 @@
         <name>CurrencyCenter_Manage_Notifications_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Survey --></label>
+        <name>CurrencyCenter_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Surveys --></label>
+        <name>CurrencyCenter_Monthly_Surveys</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Next_Action --></label>
         <name>CurrencyCenter_Next_Action</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Number_of_Airlines_Reporting --></label>
         <name>CurrencyCenter_Number_of_Airlines_Reporting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Open --></label>
+        <name>CurrencyCenter_Open</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Preferences_Save_Error --></label>
@@ -1919,6 +2059,22 @@
         <name>CurrencyCenter_Repatriation_Process</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Reporting_And_Actions --></label>
+        <name>CurrencyCenter_Reporting_And_Actions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update --></label>
+        <name>CurrencyCenter_Request_Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update_Hover --></label>
+        <name>CurrencyCenter_Request_Update_Hover</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Save_Monthly_Survey --></label>
+        <name>CurrencyCenter_Save_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Save_Preferences --></label>
         <name>CurrencyCenter_Save_Preferences</name>
     </customLabels>
@@ -1939,12 +2095,32 @@
         <name>CurrencyCenter_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Question --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Title --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submit_Monthly_Survey --></label>
+        <name>CurrencyCenter_Submit_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Survey --></label>
+        <name>CurrencyCenter_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Treasury_Dashboard --></label>
         <name>CurrencyCenter_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Unfollow --></label>
         <name>CurrencyCenter_Unfollow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_UpcomingActions --></label>
+        <name>CurrencyCenter_UpcomingActions</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Update_Feeds --></label>
@@ -5639,7 +5815,7 @@ and
         <name>ISSP_AMS_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Agency_Accreditation --></label>
+        <label>Công nhận Đại lý</label>
         <name>ISSP_AMS_Agency_Accreditation</name>
     </customLabels>
     <customLabels>
@@ -5647,23 +5823,23 @@ and
         <name>ISSP_AMS_Agency_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Associate_Entity --></label>
+        <label>Áp dụng cho một Công ty Liên kết Mới</label>
         <name>ISSP_AMS_Apply_New_Associate_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Branch_Office --></label>
+        <label>Áp dụng cho một Văn Phòng Chi nhánh Mới</label>
         <name>ISSP_AMS_Apply_New_Branch_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Cargo_Head_Office --></label>
+        <label>Áp dụng cho một Trụ sở Văn phòng Vận tải Hàng hóa Mới</label>
         <name>ISSP_AMS_Apply_New_Cargo_Head_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
+        <label>Áp dụng cho một Công ty Đứng dầu Mới</label>
         <name>ISSP_AMS_Apply_New_Head_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Office --></label>
+        <label>Áp dụng cho một Trụ sở Mới</label>
         <name>ISSP_AMS_Apply_New_Office</name>
     </customLabels>
     <customLabels>
@@ -5675,11 +5851,11 @@ and
         <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
+        <label>Áp dụng cho một Công ty Du lịch Đứng đầu Mới</label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Office --></label>
+        <label>Áp dụng cho một Trụ sở Văn phòng Du lịch Mới</label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Office</name>
     </customLabels>
     <customLabels>
@@ -6751,43 +6927,43 @@ and
         <name>ISSP_AMS_LABEL_Listed_Shares</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Association --></label>
+        <label>Hiệp hội</label>
         <name>ISSP_AMS_LS_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Co-operative --></label>
+        <label>Hợp tác</label>
         <name>ISSP_AMS_LS_Co_operative</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Corporation --></label>
+        <label>Công ty</label>
         <name>ISSP_AMS_LS_Corporation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Government --></label>
+        <label>Doanh nghiệp Nhà nước</label>
         <name>ISSP_AMS_LS_Government</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Limited Company --></label>
+        <label>Công ty Trách nhiệm Hữu hạn</label>
         <name>ISSP_AMS_LS_Limited_Company</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Limited Partnership --></label>
+        <label>Công ty Hợp danh Hữu hạn</label>
         <name>ISSP_AMS_LS_Limited_Partnership</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Other --></label>
+        <label>Khác</label>
         <name>ISSP_AMS_LS_Other</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Partnership --></label>
+        <label>Công ty Hợp danh</label>
         <name>ISSP_AMS_LS_Partnership</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Sole Owner --></label>
+        <label>Doanh nghiệp Tư nhân</label>
         <name>ISSP_AMS_LS_Sole_Owner</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS LS Trust Company --></label>
+        <label>Công ty Tín thác</label>
         <name>ISSP_AMS_LS_Trust_Company</name>
     </customLabels>
     <customLabels>
@@ -7567,7 +7743,7 @@ and
         <name>ISSP_AMS_NoC_New_HO_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC No Company Owners --></label>
+        <label>Không có công ty nào được liệt kê là các chủ sở hữu hiện tại của Công ty bạn.</label>
         <name>ISSP_AMS_NoC_No_Company_Owners</name>
     </customLabels>
     <customLabels>
@@ -8403,7 +8579,7 @@ and
         <name>ISSP_AMS_Step3_4_Companies</name>
     </customLabels>
     <customLabels>
-        <label>Nếu công ty của bạn được sở hữu toàn bộ- hoặc một phần bởi một hoặc nhiều công ty, xin vui lòng nhập thông tin ở đây (ngoại trừ tổ chức của bạn là một đơn vị có tư cách pháp nhân sở hữu cổ phần được niêm yết trên sàn giao dịch chứng khoán hoặc được giao dịch thường xuyên trên một thị trường ‘phi tập trung’).</label>
+        <label>Nếu công ty của bạn được sở hữu toàn bộ- hoặc một phần của một hoặc nhiều công ty, xin vui lòng nhập thông tin ở đây (ngoại trừ tổ chức của bạn là một đơn vị có tư cách pháp nhân sở hữu cổ phần được niêm yết trên sàn giao dịch chứng khoán hoặc được giao dịch thường xuyên trên một thị trường ‘phi tập trung’).</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
     </customLabels>
     <customLabels>
@@ -9395,15 +9571,15 @@ and
         <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP --></label>
+        <label>Tổng sở hữu (các cá nhân + công ty) phải tương đương 100% để trình lên IATA.</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE --></label>
+        <label>Theo hồ sơ lưu của chúng tôi, Chủ sở hữu của Mã IATA này không phải là 100%. Vui lòng cập nhật thông tin chi tiết về Đại lý (phần Chủ sở hữu Đại lý / Cổ phần) để đảm bảo rằng tổng sở hữu tương đương 100% để chúng tôi có thể cập nhật hồ sơ của mình.</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
+        <label>TỔNG SỞ HỮU:</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
     <customLabels>
@@ -9431,7 +9607,7 @@ and
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_SAME_OWNER_ERROR --></label>
+        <label>Không thể thêm cùng Mã IATA Code như mã đang được cập nhật là Chủ sở hữu Công ty.</label>
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
@@ -9547,7 +9723,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC --></label>
+        <label>Tương đương Bảo đảm Tài chính</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</name>
     </customLabels>
     <customLabels>
@@ -9555,7 +9731,7 @@ and
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_FORMULA --></label>
+        <label>Theo Công thức</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
@@ -10243,6 +10419,10 @@ and
         <name>ISSP_CCOthers_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP CCOthers Invalid Contact --></label>
+        <name>ISSP_CCOthers_Invalid_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CNS_Documents --></label>
         <name>ISSP_CNS_Documents</name>
     </customLabels>
@@ -10665,8 +10845,20 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_CurrencyCenter</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reporting Actions Page --></label>
+        <name>ISSP_CurrencyCenterReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CurrencyCenter_Description --></label>
         <name>ISSP_CurrencyCenter_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Download --></label>
+        <name>ISSP_CurrencyCenter_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Last Updated On --></label>
+        <name>ISSP_CurrencyCenter_Last_Updated_On</name>
     </customLabels>
     <customLabels>
         <label>Lọc theo loại tiền tệ</label>
@@ -11357,6 +11549,18 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Filter_by_Type_Of_Participation</name>
     </customLabels>
     <customLabels>
+        <label>Các tổ chức Tài chính</label>
+        <name>ISSP_Financial_Insititutions</name>
+    </customLabels>
+    <customLabels>
+        <label>Các nhà cung cấp Bảo hiểm là Tổ chức Tài chính</label>
+        <name>ISSP_Financial_Insititutions_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>Các tổ chức Tài chính sau đây cung cấp Bảo hiểm Bảo đảm Tài chính tại quốc gia của bạn</label>
+        <name>ISSP_Financial_Insititutions_Subheader</name>
+    </customLabels>
+    <customLabels>
         <label>Tổng số tiền bảo lãnh (đã chuyển đổi)</label>
         <name>ISSP_Financial_Securities_Converted_Total_Amount</name>
     </customLabels>
@@ -11841,7 +12045,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_InvalidPassword</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_InvalidPostalCode --></label>
+        <label>Định dạng Mã Bưu chính Không hợp lệ</label>
         <name>ISSP_InvalidPostalCode</name>
     </customLabels>
     <customLabels>
@@ -13236,6 +13440,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- ISSP SIS Membership AutoBilling Helptext --></label>
         <name>ISSP_SIS_Membership_AutoBilling_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership AutoBilling Helptext2 --></label>
+        <name>ISSP_SIS_Membership_AutoBilling_Helptext2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_SIS_Membership_BankMandateDescription --></label>
@@ -15360,7 +15568,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_CategoryError</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CheckEmail --></label>
+        <label>Đã hoàn tất đăng ký thành công</label>
         <name>OneId_CheckEmail</name>
     </customLabels>
     <customLabels>
@@ -15920,7 +16128,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Profile_OfficeEmail</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_RegistrationComplete --></label>
+        <label>Vui lòng kiểm tra email để lấy chi tiết truy cập của bạn</label>
         <name>OneId_RegistrationComplete</name>
     </customLabels>
     <customLabels>
@@ -17339,7 +17547,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Warning_Empty_Cart</name>
     </customLabels>
     <customLabels>
-        <label><!-- Warning_Expired --></label>
+        <label>Hết hạn</label>
         <name>Warning_Expired</name>
     </customLabels>
     <customLabels>

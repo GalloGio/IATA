@@ -65,7 +65,7 @@
         <externalId>false</externalId>
         <inlineHelpText>To be checked only for top level groups: DG, AGM, BoG</inlineHelpText>
         <label>Top Level Group</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -79,7 +79,7 @@
         <relationshipLabel>Industry Groups (Under)</relationshipLabel>
         <relationshipName>Industry_Groups</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -89,7 +89,7 @@
         <label>Abbreviation</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -99,7 +99,7 @@
         <defaultValue>true</defaultValue>
         <externalId>false</externalId>
         <label>Active</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -109,7 +109,7 @@
         <description>The hidden flag to be checked after the Group has been approved. Used in validation rules</description>
         <externalId>false</externalId>
         <label>Approved</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -118,7 +118,7 @@
         <externalId>false</externalId>
         <label>Cargo / Passenger</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -146,7 +146,7 @@
         <relationshipLabel>Local Groups</relationshipLabel>
         <relationshipName>Local_Groups</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -158,7 +158,7 @@
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipName>Local_Governance</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -167,7 +167,7 @@
         <externalId>false</externalId>
         <label>Division</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -235,7 +235,7 @@
         <inlineHelpText>Number of Meetings per year</inlineHelpText>
         <label>Frequency of Face to Face Meetings</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -330,7 +330,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Industry_Groups</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -342,7 +342,7 @@
         <label>Group Owner</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -356,7 +356,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Local_Groups</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -366,7 +366,7 @@
         <label>IATA Local Office</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -390,7 +390,7 @@
         <relationshipLabel>Local Groups</relationshipLabel>
         <relationshipName>APJCs</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -449,7 +449,7 @@
         <externalId>false</externalId>
         <label>Local Group type</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -569,7 +569,7 @@
         <externalId>false</externalId>
         <label>Managed in SSW</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -597,7 +597,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -700,7 +700,7 @@
         <externalId>false</externalId>
         <label>Open to non-IATA Airlines and Others</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -725,7 +725,7 @@
         <externalId>false</externalId>
         <label>Permanent or Temporary Group</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -760,7 +760,7 @@
         <externalId>false</externalId>
         <label>Region</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -808,7 +808,7 @@
         <relationshipLabel>Subgroups</relationshipLabel>
         <relationshipName>IATA_Groups</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -817,7 +817,7 @@
         <externalId>false</externalId>
         <label>Resolution</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -951,7 +951,7 @@
         <externalId>false</externalId>
         <label>Restricted Number of Participants</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -979,7 +979,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <label>Unique Name</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -1093,11 +1093,11 @@ Record Type + Group Type + ISO_Country_Name</description>
     </listViews>
     <nameField>
         <label>Group Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Industry Groups</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Local_Groups</fullName>
         <active>true</active>

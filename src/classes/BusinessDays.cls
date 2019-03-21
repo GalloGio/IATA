@@ -143,10 +143,15 @@ throw new transformationException('updatedCase.First_Business_Day__c' +  updated
                     Id processRTId = RecordTypeSingleton.getInstance().getRecordType('Case', 'CS_Process_IDFS_ISS').Id;
                     Id globalRT = RecordTypeSingleton.getInstance().getRecordType('Case', 'Cases_Global').Id;
                     //hoursToUse  = '01m200000000S6AAAU'; // germany
-                    //The diff method comes back in milliseconds, so we divide by 3600000 to get hours.
-                    Double timeSinceLastStatus = BusinessHours.diff(hoursToUse, updatedCase.Last_Status_Change__c, System.now()) / 3600000.0;
-                    System.debug('+++TA in BA: '+ timeSinceLastStatus);
-                    // millisecond()
+					
+					Double timeSinceLastStatus = 0;
+					if(!oldCase.IsClosed){
+						//The diff method comes back in milliseconds, so we divide by 3600000 to get hours.
+						timeSinceLastStatus = BusinessHours.diff(hoursToUse, updatedCase.Last_Status_Change__c, System.now()) / 3600000.0;
+						System.debug(timeSinceLastStatus);
+						// millisecond()
+					}
+					
                     Double normaleDatetimeSinceLastStatus = (System.now().getTime() -  updatedCase.Last_Status_Change__c.getTime()) / 3600000.0;
                     System.debug('+++TA in BA: '+ normaleDatetimeSinceLastStatus);
                     
@@ -166,7 +171,7 @@ throw new transformationException('updatedCase.First_Business_Day__c' +  updated
                     if (oldCase.RecordTypeId != globalRT && oldCase.BusinessHoursId  == defaultHours.Id) {
                         updatedCase.Time_Unassigned__c += normaleDatetimeSinceLastStatus;
                     }
-                    else if (stopStatusSetPerBucket.get(oldCase.Status) == 'With Customer') {
+                    else if (stopStatusSetPerBucket.get(oldCase.Status) == 'Pending Customer') {
                         
                         // to do  hard coded.....beware.....how about a custom setting?
                         

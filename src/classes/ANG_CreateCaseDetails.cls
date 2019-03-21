@@ -9,20 +9,20 @@
 		INT_066
 
     Sample URI
-    /services/apexrest/case-create-details/500XXXXXXXX/payment-status
+    /services/apexrest/case-create-details/500xxxxxxxxxxxx/payment-status?caller=<NameOfExtSystem>
 
     Sample body
     [
-		{"caller":"GDI","paymentStatus":"Paid"}
+		{"paymentStatus":"Paid"}
     ]
 ***********************************************************/
 
 @RestResource(urlMapping='/case-create-details/*')
 global without sharing class ANG_CreateCaseDetails {
     
-	public static final set<string> setValidPaymentStatus = new set<string>{'Paid','Outstanding','N/A'};	//Valid account type
+	public static final set<string> setValidPaymentStatus = new set<string>{'Paid','Outstanding','N/A','Fully paid','Over paid','Partially paid','Not paid'};	//Valid Payment Status
     public static final set<string> setValidRequest = new set<string>{ANG_RestServiceHelper.URIRequest_CasePaymentStatus};    //Valid type of request, part of URI
-    public static final set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_GDI};			//Valid caller
+    public static final set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_SAP};			//Valid caller
 
     @HttpPost
     global static void doPost(){
@@ -41,6 +41,7 @@ global without sharing class ANG_CreateCaseDetails {
 
             string caseId = SplittedURI[2];   //get the case identifier code request URI
             string requestType = SplittedURI[3];    //get the payment status from the request URI
+            string requestCaller = req.params.get('caller');	//Name of the caller (e.g. GDI)    //get the payment status from the request URI
 
             if(!ANG_CreateCaseDetails.setValidRequest.contains(requestType)){
                 ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Wrong URI:'+requestType)), 400);
@@ -57,7 +58,7 @@ global without sharing class ANG_CreateCaseDetails {
 
 				CasePaymentStatus casePaymentStatus = new CasePaymentStatus(req,caseId);
 
-				if(casePaymentStatus.execute())
+				if(casePaymentStatus.execute(requestCaller))
 	            	ANG_RestServiceHelper.GenerateResponse(json.serialize(new INT066_SuccessPayload(caseId)), 200);
 			}
 
@@ -84,22 +85,32 @@ global without sharing class ANG_CreateCaseDetails {
 		private RestRequest req;
 		private String caseId;
 
+        private final Map<String,String> paymentStatusMap = new Map<String,String>{
+            'Fully paid' => 'Paid',
+            'Over paid' => 'Over paid',
+            'Partially paid' => 'Partially paid',
+            'Not paid' => 'Outstanding',
+            'Paid' => 'Paid',
+            'Outstanding' => 'Outstanding',
+            'N/A' => 'N/A'
+            };
+
 		public CasePaymentStatus(RestRequest req, String caseId){
 			this.req = req;
 			this.caseId = caseId;
 		}
 
-		public boolean execute(){
+		public boolean execute(String caller){
 			
 			//payload
 			INT066_Payload payloadList = (INT066_Payload)System.JSON.deserialize(req.requestBody.toString(), INT066_Payload.class);
 
             //Retrieve parameter from the querystring
-            string caller = payloadList.caller;	//Name of the caller (e.g. GDI) 
+            //string caller = payloadList.caller;	//Name of the caller (e.g. GDI) 
             string paymentStatus = payloadList.paymentStatus; //e.g.: Paid
 
 			if(caller==null || caller== '' || !setValidCaller.contains(caller)){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('400', 'Caller not specified or invalid:'+caller)), 400);
+                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'Caller not specified or invalid:'+caller)), 403);
                 return false;
             }
 
@@ -113,7 +124,7 @@ global without sharing class ANG_CreateCaseDetails {
             list<Case> lsCase;
 			AMS_OSCAR__c oscar;
 
-			lsCase = [SELECT Id, OSCAR__c FROM Case where Id =: caseId];
+			lsCase = [SELECT Id, OSCAR__c,  Account.ANG_IsNewGenAgency__c, Reason1__c  FROM Case where Id =: caseId];
 
 			if(lsCase==null || lsCase.isEmpty()){
                 ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'Case with Id' + caseId +' not found')), 404);
@@ -125,12 +136,23 @@ global without sharing class ANG_CreateCaseDetails {
                 return false;
             }
             
+            
             Case gdiCase = lsCase.get(0);
             
 			//Perform Validations
 
 			if(gdiCase.OSCAR__c == null){
 				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', 'The Oscar Record was not found in the case with Id ' + caseId) ), 404);
+				return false;
+            }
+
+            if(gdiCase.Reason1__c != 'GDI setup'){
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Case Type with Id' + caseId +' is not GDI but instead: ' + gdiCase.Reason1__c) ), 403);
+				return false;
+            }
+
+            if(!gdiCase.Account.ANG_IsNewGenAgency__c){
+				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('403', 'The Account Related the Case with Id' + caseId +' is not a NewGen agency') ), 403);
 				return false;
             }
 
@@ -153,7 +175,7 @@ global without sharing class ANG_CreateCaseDetails {
 				return false;
             }
 
-			oscar.Invoice_status__c = paymentStatus;
+			oscar.Invoice_status__c = paymentStatusMap.get(paymentStatus);
 
             if(oscar.Payment_Type__c == 'PPA' ){
                 
