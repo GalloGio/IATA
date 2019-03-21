@@ -1086,6 +1086,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		if(trgCase){
 			system.debug('trgCase Trigger.isUpdate');
 			SidraLiteManager.afterInsertSidraLiteCases(Trigger.new);
+            DPCCasesUtil.addAdditionalContactsAfter();
 		}
 		/*trgCase Trigger.isInsert*/
 
@@ -1249,6 +1250,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		new ANG_CaseTriggerHandler().onAfterUpdate();
 		/*ANG Triggers*/
 
+		ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Case', 'ANG_Case_Tracking_History__c'); //ACAMBAS - WMO-390
 
 	/*Trigger.isUpdate*/
 	}

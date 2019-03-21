@@ -1,0 +1,62 @@
+<apex:component controller="ISSP_CurrencyCenterEventListingCtrl">
+	<apex:includeScript value="{!URLFOR($Resource.Currency_Center, '/jquery.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.Currency_Center, '/bootstrap.js')}"/>
+
+    <script>
+        $( function() {
+            var icons = {};
+            $( "#eventList" ).accordion({
+                icons: icons
+            });
+            $(".toolbar a").on("click", null, null, function(event) {
+                window.location.href = $(this).attr("href");
+                event.preventDefault();
+            });
+        });
+    </script>
+
+	<style>
+        #eventList .ui-accordion-header{
+          font-size:14px;
+          font-weight:bold;
+          background-image:none;
+          background-color:#E6E6E6; /*337ab7;*/
+          color:#0075BC; /*fff*/
+        }
+        #eventList .ui-icon {
+        	display: none;
+        }
+        #eventList .reportName a {
+            font-family: Verdana;
+            font-size:13px;
+            color: #black !important;
+        }
+        #eventList .ui-widget-content{
+          border: 1px solid #e6e6e6;
+        }
+        #eventList .ui-widget-header{
+          border: 1px solid #e6e6e6;
+        }
+        #eventList .ui-state-active{
+          border: 1px solid #e6e6e6;
+        }
+    </style>
+
+    <!-- UPCOMING EVENTS & ACTIONS -->
+    <div id="eventList" >
+    	<h3><span class="glyphicon glyphicon-time"></span>&nbsp;{!$Label.CurrencyCenter_UpcomingActions}</h3>
+    	<div>
+            <table>
+	            <apex:repeat value="{!newsList}" var="entry">
+	                <tr>
+	                	<td class="arrow" style="color:#337ab7;"><span class="glyphicon glyphicon-flag"/>&nbsp;</td>
+	                    <td class="reportName">
+                    		<a href="/{!entry.idt}"> {!entry.title}</a>
+	                    </td>
+	                </tr>
+	            </apex:repeat>
+            </table>
+        </div>
+    </div>
+
+</apex:component>

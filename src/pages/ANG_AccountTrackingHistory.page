@@ -1,3 +1,20 @@
 <apex:page standardController="Account" showHeader="true" sidebar="true">
-	<c:ANG_GenericHistoryViewer trackedObject="{!Account}" trackerApiName="ANG_Account_Tracking_History__c" trackedApiName="Account"/>	
+	<apex:variable var="isClassic" value="{! $User.UIThemeDisplayed == 'Theme2' || $User.UIThemeDisplayed == 'Theme3' }"/>
+	<apex:outputPanel rendered="{!isClassic}">
+		<c:ANG_GenericHistoryViewer trackedObjectId="{!Account.Id}" trackerApiName="ANG_Account_Tracking_History__c" trackedApiName="Account"/>
+	</apex:outputPanel>
+	<apex:outputPanel rendered="{!!isClassic}">		
+		<apex:includeLightning />
+		<div id="lightning" /> 
+		<script>
+			$Lightning.use("c:GenericHistoryViewerApp", function() {
+				$Lightning.createComponent("c:GenericHistoryViewer",
+					{ trackedObjectId : "{!Account.Id}",
+					  trackerApiName : "ANG_Account_Tracking_History__c",
+					  trackedApiName : "Account" },
+					"lightning"
+				);
+			});
+		</script>
+	</apex:outputPanel>
 </apex:page>
