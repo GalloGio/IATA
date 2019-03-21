@@ -1,13 +1,22 @@
 public without sharing class GDPR_Helper {
 
     private static final String characters = 'ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmonpqrstuvwxyz';
-    public enum UserType{USER, CONTACT, LEAD, NONE}
+    public enum UserType{USER, CONTACT, LEAD, NONE, FORBID}
+
+    public static Boolean isDisposalEmail(String email){      
+        // Check if email domain is in the black list (disposal email)
+        String domain =  email.split('@')[1];
+        return [select count() from Fobidden_Disposal_Email_Domain__mdt where Domain_Name__c =: domain ] > 0;
+    }
 
     public static UserType doUserExists(String email){      
         
         List<User> searchUsers = new List<User>();
         List<Contact> searchContacts = new List<Contact>();
         List<Lead> searchLeads = new List<Lead>();
+        // Check if email is fobidden first
+        if(GDPR_Helper.isDisposalEmail(email))
+            return UserType.FORBID;
 
         try{
             searchUsers = [SELECT ID FROM USER WHERE Email = :email ORDER BY LastModifiedDate];        
@@ -175,6 +184,18 @@ public without sharing class GDPR_Helper {
         }
         return indiv;
     }
+
+    public static void createLead(String firstName, String lastName, String email, String company){
+        // Create lead. Lead trigger will attach the individual record. The connector will sync the prospect (SF=>Pardot)
+        Lead lead = new Lead(FirstName = firstName, LastName = lastName, Email = email, company = company);
+        try{
+            INSERT lead;
+        }catch(Exception e){
+            System.debug('[GDPR_HELPER] - '+e.getStackTraceString());
+        }
+    }
+
+    
 
      public static String headerHtml() {
         String str = '<div style="background-color: #1E32FA; margin-bottom: 30px; font-family: Arial, Helvetica, sans-serif;">'+

@@ -5,6 +5,7 @@
     <aura:attribute name="individual"  type="Map" default="{ 'sobjectType': 'Individual' }" />
     <aura:attribute name="prospect"  type="Pardot_API.Pardot_Prospect"  />
     <aura:attribute name="picklists"  type="GDRP_UserInfo_CTRL.PicklistWrapper"  />
+    <aura:attribute name="isContact" type="Boolean" default="true" />
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
@@ -37,7 +38,7 @@
 
                     <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
                         <label class="slds-form-element__label labels" >Company</label>
-                        <ui:inputText value="{!v.individual.Company__c}" class="slds-input required-input fields"  />
+                        <ui:inputText value="{!v.individual.Company__c}" class="slds-input required-input fields"  disabled="{!v.isContact}"/>
                     </div>
 
                     <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
@@ -70,6 +71,23 @@
                                 </aura:iteration>
                         </ui:inputSelect>
                     </div>
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <label class="slds-form-element__label labels" >Job Function</label>
+                        <ui:inputSelect aura:id="jobFunctions" class="slds-select fields" value="{!v.individual.Job_Function__c}">
+                            <ui:inputSelectOption text="" label=""/>
+                            <aura:iteration items="{!v.picklists.jobFunctions}" var="row" indexVar="i">
+                                <ui:inputSelectOption text="{!row.value}" label="{!row.label}"/>
+                            </aura:iteration>
+                    </ui:inputSelect>
+                    </div>
+
+                    <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                        <label class="slds-form-element__label labels" >Department</label>
+                        <ui:inputText value="{!v.individual.Department__c}" class="slds-input required-input fields" />
+                    </div>
+
+                    <!-- LEAD: Title Department__c   CONTACT: Title Department -->
 
                     <div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
                         <label class="slds-form-element__label labels" >Email</label>

@@ -1,8 +1,10 @@
 <aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable,lightning:isUrlAddressable" access="global">
-	
+    <ltng:require scripts="{!$Resource.GDPR_Helper}" />
+    
 	<aura:attribute name="doDisplayTab" type="Boolean" default="false"/>
     <aura:attribute name="tabId" type="String" default="1"/>    
     <aura:attribute name="version" type="String" default="1" />
+    <aura:attribute name="isRegisteredUser" type="Boolean" default="false"/>
     
     <aura:handler event="c:EVT_GDPR_DisplayTab" action="{!c.handleApplicationEvent}"/>
    
@@ -17,12 +19,14 @@
             </lightning:tab>
             <lightning:tab class="element" label="INTERESTS" id="3">
                 <c:GDPR_Interests/>    
-            </lightning:tab>  
-            <lightning:tab class="element" label="PRIVACY MANAGEMENT" id="4">
-                <c:GDPR_RequestList/>
-                <c:GDPR_RequestListDPO/>
-                <c:GDPR_WebToCase/>
-            </lightning:tab> 
+            </lightning:tab>
+            <aura:if isTrue="{!v.isRegisteredUser}">
+                <lightning:tab class="element" label="PRIVACY MANAGEMENT" id="4">
+                    <c:GDPR_RequestList/>
+                    <c:GDPR_RequestListDPO/>
+                    <c:GDPR_WebToCase/>
+                </lightning:tab>
+            </aura:if>
         </lightning:tabset>
 	</aura:if>
 </aura:component>

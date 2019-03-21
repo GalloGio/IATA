@@ -13114,6 +13114,325 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Industry__c</fullName>
+        <externalId>false</externalId>
+        <label>Industry</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Academic</fullName>
+                    <default>false</default>
+                    <label>Academic</label>
+                </value>
+                <value>
+                    <fullName>Aerospace/Defence</fullName>
+                    <default>false</default>
+                    <label>Aerospace/Defence</label>
+                </value>
+                <value>
+                    <fullName>Aircraft Maintenance</fullName>
+                    <default>false</default>
+                    <label>Aircraft Maintenance</label>
+                </value>
+                <value>
+                    <fullName>Airline</fullName>
+                    <default>false</default>
+                    <label>Airline</label>
+                </value>
+                <value>
+                    <fullName>Airline - Cargo Only</fullName>
+                    <default>false</default>
+                    <label>Airline - Cargo Only</label>
+                </value>
+                <value>
+                    <fullName>Air Navigation</fullName>
+                    <default>false</default>
+                    <label>Air Navigation</label>
+                </value>
+                <value>
+                    <fullName>Airport</fullName>
+                    <default>false</default>
+                    <label>Airport</label>
+                </value>
+                <value>
+                    <fullName>Airport (Operators and Owners)</fullName>
+                    <default>false</default>
+                    <label>Airport (Operators and Owners)</label>
+                </value>
+                <value>
+                    <fullName>Air Traffic Control</fullName>
+                    <default>false</default>
+                    <label>Air Traffic Control</label>
+                </value>
+                <value>
+                    <fullName>Analyst</fullName>
+                    <default>false</default>
+                    <label>Analyst</label>
+                </value>
+                <value>
+                    <fullName>Associations, Alliances and NGOs</fullName>
+                    <default>false</default>
+                    <label>Associations, Alliances and NGOs</label>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                    <label>Cargo Agent</label>
+                </value>
+                <value>
+                    <fullName>Car Rentals</fullName>
+                    <default>false</default>
+                    <label>Car Rentals</label>
+                </value>
+                <value>
+                    <fullName>Consulting</fullName>
+                    <default>false</default>
+                    <label>Consulting</label>
+                </value>
+                <value>
+                    <fullName>Cruise Lines</fullName>
+                    <default>false</default>
+                    <label>Cruise Lines</label>
+                </value>
+                <value>
+                    <fullName>Engineering</fullName>
+                    <default>false</default>
+                    <label>Engineering</label>
+                </value>
+                <value>
+                    <fullName>Financial Institutions</fullName>
+                    <default>false</default>
+                    <label>Financial Institutions</label>
+                </value>
+                <value>
+                    <fullName>Freight Forwarding</fullName>
+                    <default>false</default>
+                    <label>Freight Forwarding</label>
+                </value>
+                <value>
+                    <fullName>Fuel and Energy</fullName>
+                    <default>false</default>
+                    <label>Fuel and Energy</label>
+                </value>
+                <value>
+                    <fullName>GDS Global Distribution System</fullName>
+                    <default>false</default>
+                    <label>GDS Global Distribution System</label>
+                </value>
+                <value>
+                    <fullName>General Public</fullName>
+                    <default>false</default>
+                    <label>General Public</label>
+                </value>
+                <value>
+                    <fullName>Global Media</fullName>
+                    <default>false</default>
+                    <label>Global Media</label>
+                </value>
+                <value>
+                    <fullName>Government / Policy Maker</fullName>
+                    <default>false</default>
+                    <label>Government / Policy Maker</label>
+                </value>
+                <value>
+                    <fullName>Government and Regulatory</fullName>
+                    <default>false</default>
+                    <label>Government and Regulatory</label>
+                </value>
+                <value>
+                    <fullName>Ground Handling</fullName>
+                    <default>false</default>
+                    <label>Ground Handling</label>
+                </value>
+                <value>
+                    <fullName>Hotels and Resorts</fullName>
+                    <default>false</default>
+                    <label>Hotels and Resorts</label>
+                </value>
+                <value>
+                    <fullName>IATA</fullName>
+                    <default>false</default>
+                    <label>IATA</label>
+                </value>
+                <value>
+                    <fullName>Industrial Equipment and Manufacturing</fullName>
+                    <default>false</default>
+                    <label>Industrial Equipment and Manufacturing</label>
+                </value>
+                <value>
+                    <fullName>Industry Association &amp; Alliances</fullName>
+                    <default>false</default>
+                    <label>Industry Association &amp; Alliances</label>
+                </value>
+                <value>
+                    <fullName>Industry Provider</fullName>
+                    <default>false</default>
+                    <label>Industry Provider</label>
+                </value>
+                <value>
+                    <fullName>In-Flight Services</fullName>
+                    <default>false</default>
+                    <label>In-Flight Services</label>
+                </value>
+                <value>
+                    <fullName>Information &amp; Communications Technology</fullName>
+                    <default>false</default>
+                    <label>Information &amp; Communications Technology</label>
+                </value>
+                <value>
+                    <fullName>Insurance</fullName>
+                    <default>false</default>
+                    <label>Insurance</label>
+                </value>
+                <value>
+                    <fullName>Legal</fullName>
+                    <default>false</default>
+                    <label>Legal</label>
+                </value>
+                <value>
+                    <fullName>Library - Bookstore</fullName>
+                    <default>false</default>
+                    <label>Library - Bookstore</label>
+                </value>
+                <value>
+                    <fullName>Marketing, Communications and PR</fullName>
+                    <default>false</default>
+                    <label>Marketing, Communications and PR</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Publishing and Media</fullName>
+                    <default>false</default>
+                    <label>Publishing and Media</label>
+                </value>
+                <value>
+                    <fullName>Railway</fullName>
+                    <default>false</default>
+                    <label>Railway</label>
+                </value>
+                <value>
+                    <fullName>Research and Academic Training</fullName>
+                    <default>false</default>
+                    <label>Research and Academic Training</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
+                </value>
+                <value>
+                    <fullName>Specialized Media</fullName>
+                    <default>false</default>
+                    <label>Specialized Media</label>
+                </value>
+                <value>
+                    <fullName>Tour Operator</fullName>
+                    <default>false</default>
+                    <label>Tour Operator</label>
+                </value>
+                <value>
+                    <fullName>Transportation - Other</fullName>
+                    <default>false</default>
+                    <label>Transportation - Other</label>
+                </value>
+                <value>
+                    <fullName>Travel Agent</fullName>
+                    <default>false</default>
+                    <label>Travel Agent</label>
+                </value>
+                <value>
+                    <fullName>Travel and Tourism</fullName>
+                    <default>false</default>
+                    <label>Travel and Tourism</label>
+                </value>
+                <value>
+                    <fullName>International Air Transport</fullName>
+                    <default>false</default>
+                    <label>International Air Transport</label>
+                </value>
+                <value>
+                    <fullName>Airline Suppliers</fullName>
+                    <default>false</default>
+                    <label>Airline Suppliers</label>
+                </value>
+                <value>
+                    <fullName>Education</fullName>
+                    <default>false</default>
+                    <label>Education</label>
+                </value>
+                <value>
+                    <fullName>Equipment Manufacturers</fullName>
+                    <default>false</default>
+                    <label>Equipment Manufacturers</label>
+                </value>
+                <value>
+                    <fullName>Financial</fullName>
+                    <default>false</default>
+                    <label>Financial</label>
+                </value>
+                <value>
+                    <fullName>General Sales Agent</fullName>
+                    <default>false</default>
+                    <label>General Sales Agent</label>
+                </value>
+                <value>
+                    <fullName>Governmental Institutions</fullName>
+                    <default>false</default>
+                    <label>Governmental Institutions</label>
+                </value>
+                <value>
+                    <fullName>Industry Associations</fullName>
+                    <default>false</default>
+                    <label>Industry Associations</label>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+                <value>
+                    <fullName>Media or Publishing</fullName>
+                    <default>false</default>
+                    <label>Media or Publishing</label>
+                </value>
+                <value>
+                    <fullName>Tourism</fullName>
+                    <default>false</default>
+                    <label>Tourism</label>
+                </value>
+                <value>
+                    <fullName>IT Sector</fullName>
+                    <default>false</default>
+                    <label>IT Sector</label>
+                </value>
+                <value>
+                    <fullName>Transportation</fullName>
+                    <default>false</default>
+                    <label>Transportation</label>
+                </value>
+                <value>
+                    <fullName>Accomodation</fullName>
+                    <default>false</default>
+                    <label>Accomodation</label>
+                </value>
+                <value>
+                    <fullName>Entertainment Industry</fullName>
+                    <default>false</default>
+                    <label>Entertainment Industry</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <listViews>
         <fullName>APJCMembersDE</fullName>
         <columns>FULL_NAME</columns>

@@ -317,6 +317,11 @@ public without sharing class Pardot_API {
 		public String opted_out {get;set;} // true or false
         @AuraEnabled
 		public list<String> area_of_Interest {get;set;}
+        @AuraEnabled
+		public String job_Function {get;set;}
+        @AuraEnabled
+		public String department {get;set;}
+
 
 		public String buildURLParameter() {
 			String parameters = '?';
@@ -338,6 +343,10 @@ public without sharing class Pardot_API {
 				parameters += 'country='+EncodingUtil.urlEncode(this.country, 'UTF-8')+'&';
             if(this.opted_out != null)
 				parameters += 'opted_out='+opted_out+'&';
+            if(this.job_Function != null)
+				parameters += 'job_Function='+EncodingUtil.urlEncode(this.job_Function, 'UTF-8')+'&';
+            if(this.department != null)
+				parameters += 'department='+EncodingUtil.urlEncode(this.department, 'UTF-8')+'&';
 
 			parameters = parameters.removeEnd('&');
 			return parameters == '?' ? '' : parameters;

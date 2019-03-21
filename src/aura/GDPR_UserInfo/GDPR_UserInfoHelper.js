@@ -23,7 +23,8 @@
         action.setCallback(this, function(a) {
 			var result = a.getReturnValue();
             if(result != null) {
-                   cmp.set("v.individual", result);
+				   cmp.set("v.individual", result);
+				   cmp.set("v.isContact", (result.Timestamp__c === 'true'));
             } else {
 				console.log("error");
 			}
@@ -32,10 +33,10 @@
 	},
 
 	saveUserInfo : function(cmp) {
-		// Create lead + individual
+		// Save lead or contact on Salesforce => tigger will updtae individual record
 		var action = cmp.get("c.updateUserInfo");
         action.setParams({
-			"prospect": this.individualToProspect(cmp)
+			"indivJson": JSON.stringify(cmp.get("v.individual"))
         });
 
         action.setCallback(this, function(a) {
