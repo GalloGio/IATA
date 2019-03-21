@@ -4,6 +4,20 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>Vendor_Relations_Business_Analytics</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Vendor Relations – Business Analytics</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Due_Diligence_Publications</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -82,7 +96,7 @@
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Cases - Global</value>
+                <value>Cases - Global,Complaint (IDFS ISS)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
@@ -96,12 +110,45 @@
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCS_E_F</assignedTo>
+            <assignedTo>Cases_E_F_Thailand</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>Cases - Global,Complaint (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>E&amp;F - Enhancement &amp; Financing</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Thailand</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_E_F_Thailand</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - E&amp;F Thailand</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_E_F</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Complaint (IDFS ISS),Cases - Global</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
@@ -580,7 +627,7 @@
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Invoicing / Billing request,New Account request,New Connectivity request,Update configuration request,iiNet Information request,iiNet WEB File retrieval,iiNet WEB How-to question,iiNet WEB interface</value>
+                <value>Update configuration request,General information,Integrated file processing,iiNet WEB File retrieval,iiNet WEB interface,Invoicing / Billing request,New Account request,New Connectivity request</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -599,7 +646,7 @@
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Integrated connectivity,Integrated file processing</value>
+                <value>Integrated connectivity</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -622,7 +669,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -636,7 +683,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -650,7 +697,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -664,7 +711,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -678,7 +725,7 @@
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Risk Monitoring Engine</value>
+                <value>Risk Monitoring Engine,GDI Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -1246,6 +1293,25 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;))</formula>
                 <field>Case.Country_concerned_by_the_query__c</field>
                 <operation>equals</operation>
                 <value>Israel</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>NewGen_Support</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>NewGen ISS</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>GDI,IATA Easy Pay,New Accreditation Models,Remittance Holding Capacity</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -1940,23 +2006,25 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
                 <operation>notEqual</operation>
-                <value>Agency Risk Management,Risk Management Process</value>
+                <value>Risk Management Process,Agency Risk Management</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Due_Diligence</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>Corporate Compliance</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>notEqual</operation>
-                <value>IEP Due Diligence</value>
-            </criteriaItems>
+            <formula>OR(
+AND(
+ISPICKVAL(CaseArea__c, &quot;Corporate Compliance&quot;),
+NOT(ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;))
+),
+AND(
+OR(
+ISPICKVAL(Parent.Reason1__c, &quot;Screening IEP Model A&quot;),
+ISPICKVAL(Parent.Reason1__c, &quot;Screening IEP Model B&quot;)),
+ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
+)
+)</formula>
             <template>All/New_Case_Assigned_to_the_Queue</template>
         </ruleEntry>
         <ruleEntry>
@@ -3184,16 +3252,8 @@ ISPICKVAL( Status , &quot;Open&quot;)
         <ruleEntry>
             <assignedTo>Cases_IDPC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>IDPC</value>
-            </criteriaItems>
+            <formula>OR(AND(Account_Concerned__c = &apos;0011r00002DnBrF&apos;,RecordType.DeveloperName=&apos;Inter_DPCs&apos;), 
+AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;InternalCasesEuropeSCE&apos;))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
@@ -3885,6 +3945,25 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <template>Quality/New_Case_Business_delivery</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_ARM_Global_Emergency</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SAAM,Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Agency Risk Management,Risk Management Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Priority</field>
+                <operation>equals</operation>
+                <value>Emergency</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_ARM_Europe</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND 2) OR 3 OR (2 AND 4 AND 5)</booleanFilter>
@@ -3911,7 +3990,7 @@ ISPICKVAL( Status , &quot;Open&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>SAAM,Internal Cases (IDFS ISS)</value>
+                <value>SAAM,Internal Cases (IDFS ISS),OSCAR Communication</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>

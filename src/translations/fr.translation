@@ -257,6 +257,10 @@
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action20 --></label>
+        <name>AMS_OSCAR_Action20</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_OSCAR_Action3 --></label>
         <name>AMS_OSCAR_Action3</name>
     </customLabels>
@@ -331,6 +335,18 @@
     <customLabels>
         <label><!-- AMS OSCAR DISAPPROVAL --></label>
         <name>AMS_OSCAR_DISAPPROVAL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_ENDORSEMENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_ENDORSEMENT --></label>
+        <name>AMS_OSCAR_GDI_FINANCIAL_SECURITY</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GDI_fees --></label>
+        <name>AMS_OSCAR_GDI_fees</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -545,8 +561,28 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP46 --></label>
+        <name>AMS_OSCAR_STEP46</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP47 --></label>
+        <name>AMS_OSCAR_STEP47</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP48 --></label>
+        <name>AMS_OSCAR_STEP48</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP49 --></label>
+        <name>AMS_OSCAR_STEP49</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP5 --></label>
         <name>AMS_OSCAR_STEP5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP50 --></label>
+        <name>AMS_OSCAR_STEP50</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
@@ -693,15 +729,15 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez lire ceci</label>
+        <label>Vous pouvez accéder à votre compte IATA EasyPay depuis le</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</name>
     </customLabels>
     <customLabels>
-        <label>FAQ</label>
+        <label>Portail de service à la clientèle de l’IATA</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</name>
     </customLabels>
     <customLabels>
-        <label>pour en savoir plus sur la manière de gérer votre compte EasyPay et de démarrer.</label>
+        <label>à tout moment. Vos collègues peuvent désormais solliciter l’accès au compte que vous venez d’ouvrir.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</name>
     </customLabels>
     <customLabels>
@@ -709,11 +745,11 @@
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</name>
     </customLabels>
     <customLabels>
-        <label>Vos collègues peuvent désormais demander à accéder au compte que vous venez d’ouvrir à partir du portail de service à la clientèle d’IATA. La &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&gt;FAQ&amp;lt;/a&gt; ci-dessus décrit comment vous pouvez gérer l’accès utilisateur.</label>
+        <label>Veuillez consulter la section FAQ/Aide du portail IATA EasyPay pour en savoir plus sur la gestion de votre compte EasyPay.</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</name>
     </customLabels>
     <customLabels>
-        <label>Félicitations pour l’ouverture de votre nouveau compte IATA EasyPay. Veuillez prendre connaissance du présent article qui décrit comment gérer votre compte EasyPay et les démarches initiales pour transférer des fonds de façon à pouvoir commencer à émettre des billets EasyPay. Vos collègues peuvent désormais demander à accéder au compte que vous venez d’ouvrir à partir du portail de service à la clientèle d’IATA. L’article ci-dessus décrit comment vous pouvez gérer l’accès utilisateur. Merci, le Service à la clientèle d&apos;IATA</label>
+        <label>&quot;Félicitations pour l’ouverture de votre nouveau compte IATA EasyPay. Vous pouvez accéder à votre compte IATA EasyPay depuis le Portail de service à la clientèle de l’IATA &lt;https://portal.iata.org/ISSP_Login&gt; à tout moment. Vos collègues peuvent désormais solliciter l’accès au compte que vous venez d’ouvrir. Veuillez consulter la section FAQ/Aide du portail IATA EasyPay pour en savoir plus sur la gestion de votre compte EasyPay. Merci, Service à la clientèle de l’IATA&quot;</label>
         <name>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</name>
     </customLabels>
     <customLabels>
@@ -807,6 +843,50 @@
     <customLabels>
         <label>Fonction du service portail</label>
         <name>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</name>
+    </customLabels>
+    <customLabels>
+        <label>J’accepte</label>
+        <name>ANG_ISSP_GDI_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label>La liste des Institutions financières qui fournissent une Garantie financière dans votre pays</label>
+        <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label>Aller au Portail GDI</label>
+        <name>ANG_ISSP_GDI_Navigate_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label>Afficher les registres par page :</label>
+        <name>ANG_ISSP_GDI_Page_Display_Records</name>
+    </customLabels>
+    <customLabels>
+        <label>Première page</label>
+        <name>ANG_ISSP_GDI_Page_First</name>
+    </customLabels>
+    <customLabels>
+        <label>Dernière page</label>
+        <name>ANG_ISSP_GDI_Page_Last</name>
+    </customLabels>
+    <customLabels>
+        <label>Page suivante</label>
+        <name>ANG_ISSP_GDI_Page_Next</name>
+    </customLabels>
+    <customLabels>
+        <label>Page précédente</label>
+        <name>ANG_ISSP_GDI_Page_Previous</name>
+    </customLabels>
+    <customLabels>
+        <label>En demandant à Euler Hermes de fournir une garantie financière à l’IATA, vous consentez à ce que l’IATA partage avec Euler Hermes les informations que cette dernière détient et qui sont pertinentes pour votre situation financière, qu’elles aient été obtenues directement auprès de vous lors de votre demande d’accréditation IATA ou que l’IATA les ait conservées pendant toute la durée de votre adhésion à l’IATA.</label>
+        <name>ANG_ISSP_GDI_Terms_Conditions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_UserProvisioningError --></label>
+        <name>ANG_ISSP_GDI_UserProvisioningError</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez patienter. Vous allez être redirigé(e) vers le portail GDI dans quelques instants.</label>
+        <name>ANG_ISSP_GDI_UserProvisioningWait</name>
     </customLabels>
     <customLabels>
         <label>Maison mère:</label>
@@ -1181,6 +1261,10 @@
         <name>ANG_OSCAR_WARNING_RISK</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_OnGoing_OSCAR_Warning --></label>
+        <name>ANG_OnGoing_OSCAR_Warning</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_PCI_COMPLIANT --></label>
         <name>ANG_PCI_COMPLIANT</name>
     </customLabels>
@@ -1201,15 +1285,15 @@
         <name>ANG_RHC_AmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG RHC HUB Current Usage Tooltip --></label>
+        <label>Montant RHC consommé</label>
         <name>ANG_RHC_HUB_Current_UsageTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG_RHC RHC Amount Tooltip --></label>
+        <label>Seuil monétaire concernant les ventes au comptant des agents restant dues au BSP</label>
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label><!-- ANG RHC Risk Status Tooltip --></label>
+        <label>Déterminé par les antécédents de risques des agents et les résultats de leur examen financier</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -1720,6 +1804,10 @@
         <name>CurrencyCenter_Actual_Amount_Blocked</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_AddCountry_Monthly_Survey --></label>
+        <name>CurrencyCenter_AddCountry_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Airlines_Charges --></label>
         <name>CurrencyCenter_Airlines_Charges</name>
     </customLabels>
@@ -1734,6 +1822,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Survey --></label>
+        <name>CurrencyCenter_Annual_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Annual_Surveys --></label>
+        <name>CurrencyCenter_Annual_Surveys</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Attachments_Description --></label>
@@ -1764,6 +1860,10 @@
         <name>CurrencyCenter_Back_Home</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Back_ReportingActions --></label>
+        <name>CurrencyCenter_Back_ReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Blocked_Funds --></label>
         <name>CurrencyCenter_Blocked_Funds</name>
     </customLabels>
@@ -1788,6 +1888,18 @@
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Question --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Confirmation_Title --></label>
+        <name>CurrencyCenter_Cancel_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Cancel_Monthly_Survey --></label>
+        <name>CurrencyCenter_Cancel_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
         <name>CurrencyCenter_Countries</name>
     </customLabels>
@@ -1802,6 +1914,14 @@
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Title --></label>
+        <name>CurrencyCenter_DeleteCountry_Confirmation_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Details --></label>
@@ -1830,6 +1950,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_Economic_Profile --></label>
         <name>CurrencyCenter_Economic_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Edit --></label>
+        <name>CurrencyCenter_Edit</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Exchange_Rates_Directory --></label>
@@ -1880,6 +2004,10 @@
         <name>CurrencyCenter_Issue_Started</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Link --></label>
+        <name>CurrencyCenter_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Manage_Notifications --></label>
         <name>CurrencyCenter_Manage_Notifications</name>
     </customLabels>
@@ -1892,12 +2020,24 @@
         <name>CurrencyCenter_Manage_Notifications_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Survey --></label>
+        <name>CurrencyCenter_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Monthly_Surveys --></label>
+        <name>CurrencyCenter_Monthly_Surveys</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Next_Action --></label>
         <name>CurrencyCenter_Next_Action</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Number_of_Airlines_Reporting --></label>
         <name>CurrencyCenter_Number_of_Airlines_Reporting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Open --></label>
+        <name>CurrencyCenter_Open</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Preferences_Save_Error --></label>
@@ -1920,6 +2060,22 @@
         <name>CurrencyCenter_Repatriation_Process</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Reporting_And_Actions --></label>
+        <name>CurrencyCenter_Reporting_And_Actions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update --></label>
+        <name>CurrencyCenter_Request_Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Request_Update_Hover --></label>
+        <name>CurrencyCenter_Request_Update_Hover</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Save_Monthly_Survey --></label>
+        <name>CurrencyCenter_Save_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Save_Preferences --></label>
         <name>CurrencyCenter_Save_Preferences</name>
     </customLabels>
@@ -1940,12 +2096,32 @@
         <name>CurrencyCenter_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Question --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submission_Confirmation_Title --></label>
+        <name>CurrencyCenter_Submission_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Submit_Monthly_Survey --></label>
+        <name>CurrencyCenter_Submit_Monthly_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Survey --></label>
+        <name>CurrencyCenter_Survey</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Treasury_Dashboard --></label>
         <name>CurrencyCenter_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Unfollow --></label>
         <name>CurrencyCenter_Unfollow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_UpcomingActions --></label>
+        <name>CurrencyCenter_UpcomingActions</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Update_Feeds --></label>
@@ -5666,7 +5842,7 @@ and
         <name>ISSP_AMS_Address</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Agency_Accreditation --></label>
+        <label>Accréditation des agences</label>
         <name>ISSP_AMS_Agency_Accreditation</name>
     </customLabels>
     <customLabels>
@@ -5674,23 +5850,23 @@ and
         <name>ISSP_AMS_Agency_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Associate_Entity --></label>
+        <label>Demander une Nouvelle filiale</label>
         <name>ISSP_AMS_Apply_New_Associate_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Branch_Office --></label>
+        <label>Demander une Nouvelle succursale</label>
         <name>ISSP_AMS_Apply_New_Branch_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Cargo_Head_Office --></label>
+        <label>Demander un Nouveau Siège social de fret</label>
         <name>ISSP_AMS_Apply_New_Cargo_Head_Office</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Head_Entity --></label>
+        <label>Demander une Nouvelle Maison mère</label>
         <name>ISSP_AMS_Apply_New_Head_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Office --></label>
+        <label>Demander un Nouveau siège social</label>
         <name>ISSP_AMS_Apply_New_Office</name>
     </customLabels>
     <customLabels>
@@ -5702,11 +5878,11 @@ and
         <name>ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Entity --></label>
+        <label>Demander une Nouvelle Maison mère de voyages</label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Entity</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_Apply_New_Travel_Head_Office --></label>
+        <label>Demander un Nouveau Siège social de voyages</label>
         <name>ISSP_AMS_Apply_New_Travel_Head_Office</name>
     </customLabels>
     <customLabels>
@@ -7603,7 +7779,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_NoC_New_HO_Code</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS NoC No Company Owners --></label>
+        <label>Aucune entreprise n’est répertoriée comme propriétaire actuelle de votre Société.</label>
         <name>ISSP_AMS_NoC_No_Company_Owners</name>
     </customLabels>
     <customLabels>
@@ -8441,7 +8617,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AMS_Step3_4_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step3 4 Companies New --></label>
+        <label>Si votre entreprise appartient en tout ou partie à une ou plusieurs sociétés, veuillez saisir les informations ici (sauf si votre organisation est une entité légale dont les actions participent à des opérations boursières ou sont régulièrement échangées sur un marché hors cote).</label>
         <name>ISSP_AMS_Step3_4_Companies_New</name>
     </customLabels>
     <customLabels>
@@ -9433,15 +9609,15 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_ANNUAL_REV_ERROR_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP --></label>
+        <label>La Propriété totale (Personnes physiques + Sociétés) doit être équivalente à 100 % pour permettre la présentation à l’IATA.</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE --></label>
+        <label>D’après nos registres, la Propriété de ce Code IATA n’est pas de 100 %. Veuillez mettre à jour les informations de l’agence (section Propriété / Actionnariat) pour vous assurer que la propriété totale équivaut à 100 % et nous permettre d’actualiser nos registres.</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL --></label>
+        <label>PROPRIÉTÉ TOTALE :</label>
         <name>ISSP_ANG_ANNUAL_REV_OWNERSHIP_TOTAL</name>
     </customLabels>
     <customLabels>
@@ -9469,7 +9645,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_ANNUAL_REV_WORK_AREA_TITLE</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_ANNUAL_SAME_OWNER_ERROR --></label>
+        <label>Il est impossible d’ajouter le même Code IATA que celui qui est en cours de mise à jour comme Propriétaire de la société.</label>
         <name>ISSP_ANG_ANNUAL_SAME_OWNER_ERROR</name>
     </customLabels>
     <customLabels>
@@ -9585,7 +9761,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC --></label>
+        <label>Égal à la garantie financière</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_EQUAL_FINANCIAL_SEC</name>
     </customLabels>
     <customLabels>
@@ -9593,7 +9769,7 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_ANG_IATA_CODE_SEARCH_FINANCIAL_SECURITY_EXISTS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ANG_IATA_CODE_SEARCH_FORMULA --></label>
+        <label>Selon Formule</label>
         <name>ISSP_ANG_IATA_CODE_SEARCH_FORMULA</name>
     </customLabels>
     <customLabels>
@@ -10282,6 +10458,10 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_CCOthers_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP CCOthers Invalid Contact --></label>
+        <name>ISSP_CCOthers_Invalid_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CNS_Documents --></label>
         <name>ISSP_CNS_Documents</name>
     </customLabels>
@@ -10705,8 +10885,20 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_CurrencyCenter</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reporting Actions Page --></label>
+        <name>ISSP_CurrencyCenterReportingActions</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CurrencyCenter_Description --></label>
         <name>ISSP_CurrencyCenter_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Download --></label>
+        <name>ISSP_CurrencyCenter_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CurrencyCenter Last Updated On --></label>
+        <name>ISSP_CurrencyCenter_Last_Updated_On</name>
     </customLabels>
     <customLabels>
         <label>Filtrage par la monnaie</label>
@@ -11337,6 +11529,86 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_FAQ</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_FDS_AllCountries --></label>
+        <name>ISSP_FDS_AllCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_AllCountriesWithServices --></label>
+        <name>ISSP_FDS_AllCountriesWithServices</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_ChooseCountries --></label>
+        <name>ISSP_FDS_ChooseCountries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Countries --></label>
+        <name>ISSP_FDS_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountriesSelected --></label>
+        <name>ISSP_FDS_CountriesSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CountryName --></label>
+        <name>ISSP_FDS_CountryName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_CustomFilterBtn --></label>
+        <name>ISSP_FDS_CustomFilterBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Download --></label>
+        <name>ISSP_FDS_Download</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_DownloadOpts --></label>
+        <name>ISSP_FDS_DownloadOpts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FileFormat --></label>
+        <name>ISSP_FDS_FileFormat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_FillAllFields --></label>
+        <name>ISSP_FDS_FillAllFields</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Filters --></label>
+        <name>ISSP_FDS_Filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_NoResults --></label>
+        <name>ISSP_FDS_NoResults</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Operations --></label>
+        <name>ISSP_FDS_Operations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_OperationsSelected --></label>
+        <name>ISSP_FDS_OperationsSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_PopupTitle --></label>
+        <name>ISSP_FDS_PopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_Remittance --></label>
+        <name>ISSP_FDS_Remittance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_RemittanceSelected --></label>
+        <name>ISSP_FDS_RemittanceSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_SelectAll --></label>
+        <name>ISSP_FDS_SelectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FDS_UnselectAll --></label>
+        <name>ISSP_FDS_UnselectAll</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Fax --></label>
         <name>ISSP_Fax</name>
     </customLabels>
@@ -11396,6 +11668,18 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>Filtrer par type de participation</label>
         <name>ISSP_Filter_by_Type_Of_Participation</name>
+    </customLabels>
+    <customLabels>
+        <label>Institutions financières</label>
+        <name>ISSP_Financial_Insititutions</name>
+    </customLabels>
+    <customLabels>
+        <label>Prestataires d’assurances des Institutions financières</label>
+        <name>ISSP_Financial_Insititutions_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>Les Institutions financières suivantes fournissent une Garantie financière dans votre pays</label>
+        <name>ISSP_Financial_Insititutions_Subheader</name>
     </customLabels>
     <customLabels>
         <label>Total du montant garanti (converti)</label>
@@ -11882,7 +12166,7 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_InvalidPassword</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_InvalidPostalCode --></label>
+        <label>Format de Code postal non valable</label>
         <name>ISSP_InvalidPostalCode</name>
     </customLabels>
     <customLabels>
@@ -12404,6 +12688,10 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
     <customLabels>
         <label>Date de téléchargement</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_DownloadWarning --></label>
+        <name>ISSP_OperationalCalendar_DownloadWarning</name>
     </customLabels>
     <customLabels>
         <label>Activer les filtres</label>
@@ -13277,6 +13565,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
     <customLabels>
         <label><!-- ISSP SIS Membership AutoBilling Helptext --></label>
         <name>ISSP_SIS_Membership_AutoBilling_Helptext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP SIS Membership AutoBilling Helptext2 --></label>
+        <name>ISSP_SIS_Membership_AutoBilling_Helptext2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_SIS_Membership_BankMandateDescription --></label>
@@ -15252,12 +15544,20 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
+        <label><!-- MultiselectPicklist_AddAll --></label>
+        <name>MultiselectPicklist_AddAll</name>
+    </customLabels>
+    <customLabels>
         <label>Vers le bas</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
     <customLabels>
         <label>Supprimer</label>
         <name>MultiselectPicklist_Remove</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MultiselectPicklist_RemoveAll --></label>
+        <name>MultiselectPicklist_RemoveAll</name>
     </customLabels>
     <customLabels>
         <label>Vers le haut</label>
@@ -15400,7 +15700,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>OneId_CategoryError</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CheckEmail --></label>
+        <label>Enregistrement effectué avec succès</label>
         <name>OneId_CheckEmail</name>
     </customLabels>
     <customLabels>
@@ -15960,7 +16260,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>OneId_Profile_OfficeEmail</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_RegistrationComplete --></label>
+        <label>Veuillez consulter votre messagerie pour obtenir vos données d’accès</label>
         <name>OneId_RegistrationComplete</name>
     </customLabels>
     <customLabels>
@@ -17379,7 +17679,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>Warning_Empty_Cart</name>
     </customLabels>
     <customLabels>
-        <label><!-- Warning_Expired --></label>
+        <label>Expiré</label>
         <name>Warning_Expired</name>
     </customLabels>
     <customLabels>

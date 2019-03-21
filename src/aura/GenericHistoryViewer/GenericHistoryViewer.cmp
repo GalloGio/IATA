@@ -1,0 +1,60 @@
+<aura:component controller="ANG_GenericHistoryViewerController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:appHostable" access="global" >
+    <aura:attribute name="trackedObjectId" type="String"/>
+    <aura:attribute name="trackedApiName" type="String"/> 
+    <aura:attribute name="trackerApiName" type="String"/>	
+    <aura:attribute name="data" type="List"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <table class="slds-table slds-table--bordered slds-no-row-hover">
+        <tbody>
+            <tr>
+                <th>Date</th>
+                <th>User</th>
+                <th>Action</th>
+            </tr>   
+            <aura:iteration items="{!v.data}" var="row">
+                <tr>
+                    <td>{!row.createdDate}</td>
+                    <td><a href="#" onclick="{!c.navigateToId}" data-rec-id="{!row.createdById}">{!row.createdByName}</a></td>
+                    <!--td><b>{!row.fieldName}</b> changed from <b><a href="#" onclick="{!c.navigateToId}" data-rec-id="{!row.oldValue}">{!row.oldValue}</a></b> to <b>{!row.newValue}</b></td-->
+                    <td>
+                        <aura:renderIf isTrue="{!row.isLookUpValueOld}">
+                            
+                            <table class="table-lookup">
+                                <tr class="tr-lookup">
+                                    <td class="td-lookup"><b>{!row.fieldName}</b>&nbsp;changed from&nbsp;</td>
+                                    <td class="td-lookup">
+                                        <a href="#" onclick="{!c.navigateToId}" data-rec-id="{!row.oldValue}">
+                                            <lightning:recordViewForm recordId="{!row.oldValue}" objectApiName="{!row.lookupObject}">
+                                                <lightning:outputField fieldName="Name" variant="label-hidden"/>
+                                            </lightning:recordViewForm>
+                                        </a>
+                                    </td>
+                                    <td class="td-lookup">&nbsp;to&nbsp;</td>
+                                    <td class="td-lookup">
+                                        <a href="#" onclick="{!c.navigateToId}" data-rec-id="{!row.newValue}">
+                                            <lightning:recordViewForm recordId="{!row.newValue}" objectApiName="{!row.lookupObject}">
+                                                <lightning:outputField fieldName="Name" variant="label-hidden"/>
+                                            </lightning:recordViewForm>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <aura:set attribute="else">
+                                <aura:renderIf isTrue="{!row.oldValue == row.newValue}">
+                                    <b>{!row.fieldName}</b> changed
+                                    <aura:set attribute="else">
+                                       <b>{!row.fieldName}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>
+                                    </aura:set>
+                                </aura:renderIf>
+                            </aura:set>
+
+                        </aura:renderIf>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

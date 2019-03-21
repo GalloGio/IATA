@@ -47,6 +47,10 @@
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_Online_Agency_URL__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>HO_Shipping_Address__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

@@ -89,8 +89,8 @@ global class ANG_OscarProcessHelper {
 			updater.acctMap.put(theAccount.Id,theAccount);
 			updater.onlineAMap.put(theAccreditation.Id,theAccreditation);
 
-			/*** AMSU-162 ***/
-			if(AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) && !isShippingAddressValid(theAccreditation)) {
+			/*** AMSU-162 ***/                                                       /************************ ENHC0012583 *************************/
+			if((AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)) && !isShippingAddressValid(theAccreditation)) {
 				isIATACodeGenerationRunning = false;
 				System.debug('[ANG_OscarProcessHelper] Incomplete shipping address.');
 				return new String[]{'-1','Incomplete shipping address.','-1'};
@@ -384,10 +384,10 @@ global class ANG_OscarProcessHelper {
 	public static void updateUpdater(EntityUpdater updater){
 
 		if(!updater.acctMap.values().isEmpty())
-			update updater.acctMap.values();
+            update updater.acctMap.values();
 
 		if(!updater.onlineAMap.values().isEmpty())		
-			update updater.onlineAMap.values();
+            update updater.onlineAMap.values();
 
 		if(!updater.oscarMap.values().isEmpty()){
 			isIATACodeGenerationRunning = false;
@@ -543,10 +543,10 @@ global class ANG_OscarProcessHelper {
         changeCode.reasonCode = n.Reason_Code__c;
         //changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
         if(n==null)
-        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
-        else
-        	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
-        
+	        changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId);
+	    else
+	    	changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
+	    
         changeCode.reasonDesc  = n.Reason_Code_Description__c;
         changeCode.status  = n.Account_status_change__c;
         changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
@@ -692,25 +692,28 @@ global class ANG_OscarProcessHelper {
 	    System.debug('[ANG_OscarProcessHelper] 3. Number of script statements used so far : ' +  Limits.getDmlStatements());
     }
 
-    webservice static String[] processRestrictFOP(String oscarId, Boolean restrictCreditCard , Boolean restrictCash){
+    webservice static String[] processRestoreFOP(String oscarId, Boolean restoreCC , Boolean restoreCA){
 
-    	/*
-		Restrict FoP for the full hierarchy 
-		- Accounts with statuses "Terminated", "Not accreditated","New application pending" and "Not in Operation" will not be affected
-		- If "Restrict cash" is selected set Status = "Non-active" on Accounts' Agency Authorization having Form of Payment ID = CA
-		- If "Restrict credit card is selected set Status = "Non-active" on Accounts' Agency Authorization having Form of Payment ID = CC
-    	*/
+		return processRestrictRestoreFOP(oscarId, false , false ,restoreCC , restoreCA);
+    }
+
+    webservice static String[] processRestrictFOP(String oscarId, Boolean restrictCC , Boolean restrictCA){
+
+		return processRestrictRestoreFOP(oscarId, restrictCC , restrictCA, false, false);
+    }
+
+    webservice static String[] processRestrictRestoreFOP(String oscarId, Boolean restrictCC , Boolean restrictCA, Boolean restoreCC , Boolean restoreCA){
+
+		System.debug('[ANG_OscarProcessHelper] Starting processRestrictRestoreFOP with values:');
+		System.debug('[ANG_OscarProcessHelper] oscarId :' + oscarId);
+		System.debug('[ANG_OscarProcessHelper] restrictCC :' + restrictCC);
+		System.debug('[ANG_OscarProcessHelper] restrictCA :' + restrictCA);
+		System.debug('[ANG_OscarProcessHelper] restoreCC :' + restoreCC);
+		System.debug('[ANG_OscarProcessHelper] restoreCA :' + restoreCA);
 
 		AMS_OSCAR__c oscar = [Select Id, Account__c, STEP38__c, SIDRA_lite_reason__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
-
 		
 		try{
-
-			//no need to check, running when step38 is being approved
-	    	/*if(oscar.STEP38__c == AMS_Utils.PASSED){
-	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
-				return new String[]{'-1',exMessage};
-	    	}*/
 
 			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
 
@@ -722,48 +725,60 @@ global class ANG_OscarProcessHelper {
 
 			accountHierarchyRelationships.add(oscar.Account__c);
 
-			Set<Id> accountIdsChanged = restrictRestoreFOPonAccounts(accountHierarchyRelationships, false, false, restrictCreditCard , restrictCash , 'Non-active');
+			Set<AgencyAuthorizationOBject> aaObjectSet = restrictRestoreFOPonAccounts(accountHierarchyRelationships, restoreCC, restoreCA, restrictCC , restrictCA);
 			
-			oscar.ANG_Restrict_Cash__c = restrictCash; 
-			oscar.ANG_Restrict_Credit_Card__c = restrictCreditCard;
+			System.debug('[ANG_OscarProcessHelper] AgencyAuthorizationOBject returned are:'+aaObjectSet);
+
+
+			oscar.ANG_Restrict_Cash__c = restrictCA; 
+			oscar.ANG_Restrict_Credit_Card__c = restrictCC;
+			oscar.ANG_Restore_Cash__c = restoreCA; 
+			oscar.ANG_Restore_Credit_Card__c = restoreCC;
 			oscar.STEP38__c = AMS_Utils.PASSED;
 
 			EntityUpdater updater = new EntityUpdater();
 			
 			updater.oscarMap.put(oscar.Id,oscar);
 
-			if(!accountIdsChanged.isEmpty()){
-
-				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged];
-
-				String changeCodeName= null;
+			if(!aaObjectSet.isEmpty()){
 				
-				/*
-					 - PCA if Restrict cash is set
-					 - CCA if Restrict Credit card is set 
-					 - FOP if both Restrict cash and Restrict Credit card are set
-				*/
+				Set<Id> accountIdsChanged = new Set<Id>();
 
-				if(restrictCreditCard && restrictCash)
-					changeCodeName = 'FOP';
-				else if(restrictCash)
-					changeCodeName = 'PCA';
-				else
-					changeCodeName = 'CCA';
+				for(AgencyAuthorizationOBject aaObject: aaObjectSet)
+					accountIdsChanged.add(aaObject.AccountId);
 
-				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
+				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged]);
+
+				Map<String,Set<Account>> ccAccountsMap = new Map<String,Set<Account>>();
+
+				for(AgencyAuthorizationOBject aaObject: aaObjectSet){
+					
+					if(aaObject.changeCodeToInsert != null){
+
+						if(ccAccountsMap.get(aaObject.changeCodeToInsert) == null)
+							ccAccountsMap.put(aaObject.changeCodeToInsert,new Set<Account>{accountToCreateCC.get(aaObject.AccountId)});
+						else
+							ccAccountsMap.get(aaObject.changeCodeToInsert).add(accountToCreateCC.get(aaObject.AccountId));
+					}
+					
+				}
+
+				System.debug('[ANG_OscarProcessHelper] ccAccountsMap to create are:'+ccAccountsMap);
+
+				for(String changeCode : ccAccountsMap.keySet())
+					createChangeCodeForFOP(updater, oscar, new List<Account>(ccAccountsMap.get(changeCode)), changeCode );
 
 			}
-			//no more need to update OSCAR. Running from automation (Before Trigger)
-			updater.oscarMap.remove(oscar.id);
-			updateUpdater(updater);
+            
 		
 		}catch(Exception ex){
 			
 			oscar.STEP38__c = AMS_Utils.FAILED;
 			//update oscar;
 
-			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+			String exMessage = 'An error occured while restricting/restoring Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+			System.debug('[ANG_OscarProcessHelper] An error occured while restricting/restoring Forms of Payment:' + AMS_Utils.errorMessageBeautifyer(ex));
+
 			return new String[]{'-1',exMessage};
 		}
 
@@ -771,140 +786,130 @@ global class ANG_OscarProcessHelper {
 
     }
 
-    webservice static String[] processRestoreFOP(String oscarId, Boolean restoreCreditCard , Boolean restoreCash){
 
-    	/*
-			Restore FoP for the full hierarchy 
-			- Accounts with statuses "Terminated", "Not accreditated","New application pending" and "Not in Operation" will not be affected
-			- If "Restore cash" is selected set Status = "Active" on Accounts' Agency Authorization having Form of Payment ID = CA
-			- If "Restore credit card and if the Account has PCI Compliant = "Yes" then set Status = "Active" on  Agency Authorization having Form of Payment ID = CC
-    	*/
 
-    	AMS_OSCAR__c oscar = [Select Id, Account__c,STEP39__c, Is_NewGen__c from AMS_OSCAR__c where Id = :oscarId LIMIT 1];
+    public static Set<AgencyAuthorizationOBject> restrictRestoreFOPonAccounts(Set<Id> accounts, Boolean restoreCreditCard , Boolean restoreCash, Boolean restrictCreditCard, Boolean restrictCash){
 
-    	
+    	//System.debug('Performing restrictRestoreFOPonAccounts on accounts:'+accounts + ' with value restrictCash set to ' + restrictCash + ' and restrictCreditCard set to ' + restrictCreditCard + ' and valueToAdd set to ' + valueToAdd + 'and restoreCreditCard value set to ' + restoreCreditCard + ' and restoreCash value set to ' + restoreCash);
 
-		try{
+		Set<AgencyAuthorizationOBject> accountsChanged = new Set<AgencyAuthorizationOBject>();
 
-			//no need to check, running when step39 is being approved
-	    	/*if(oscar.STEP39__c == AMS_Utils.PASSED){
-	    		String exMessage = 'The status on this step is Passed, so no action will occur.';
-				return new String[]{'-1',exMessage};
-	    	}*/
-
-			Map<Id, List<AMS_Agencies_relationhip__c>> allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
-
-			Set<Id> accountHierarchyRelationships = new Set<Id>();
-			accountHierarchyRelationships = ANG_AgencyChangesHelper.extractAllAccounts(allRelationsOnHierarchy);
-
-			accountHierarchyRelationships.add(oscar.Account__c);
-
-			Set<Id> accountIdsChanged = restrictRestoreFOPonAccounts(accountHierarchyRelationships, restoreCreditCard, restoreCash, false, false,  'Active');
-		
-			oscar.ANG_Restore_Credit_Card__c = restoreCreditCard; 
-			oscar.ANG_Restore_Cash__c = restoreCash;
-			oscar.STEP39__c = AMS_Utils.PASSED;
-			
-			EntityUpdater updater = new EntityUpdater();
-			
-			updater.oscarMap.put(oscar.Id,oscar);
-
-			if(!accountIdsChanged.isEmpty()){
-				
-				List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged];
-
-				String changeCodeName= null;
-				
-				/*
-				 - PCR if Restore cash is set
-				 - CCR if Restore Credit card is set 
-				 - FPR if both Restore cash and Restore Credit card are set
-				*/
-
-				if(restoreCreditCard && restoreCash)
-					changeCodeName = 'FPR';
-				else if(restoreCash)
-					changeCodeName = 'PCR';
-				else
-					changeCodeName = 'CCR';
-
-				updater = createChangeCodeForFOP(updater, oscar, accountToCreateCC, changeCodeName );
-			}
-
-			//no more need to OSCAR. Running from automation (Before Trigger)
-			updater.oscarMap.remove(oscar.id);
-			updateUpdater(updater);
-
-		}catch(Exception ex){
-			
-			oscar.STEP39__c = AMS_Utils.FAILED;
-			//update oscar;
-
-			String exMessage = 'An error occured while restricting Forms of Payment:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
-			return new String[]{'-1',exMessage};
-		}
-
-		return new String[]{'0',null};
-
-    }
-
-    public static Set<Id> restrictRestoreFOPonAccounts(Set<Id> accounts, Boolean restoreCreditCard , Boolean restoreCash, Boolean restrictCreditCard, Boolean restrictCash, String valueToAdd){
-
-    	System.debug('Performing restrictRestoreFOPonAccounts on accounts:'+accounts + ' with value restrictCash set to ' + restrictCash + ' and restrictCreditCard set to ' + restrictCreditCard + ' and valueToAdd set to ' + valueToAdd + 'and restoreCreditCard value set to ' + restoreCreditCard + ' and restoreCash value set to ' + restoreCash);
-
-    	Set<Id> accountIdsChanged = new Set<Id>();
-
-    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts];
+    	List<Agency_Authorization__c> aaLst = [Select Id, ANG_FormOfPayment_ID__c, Status__c, Account__c, Account__r.Is_PCI_compliant__c from Agency_Authorization__c where Account__c in :accounts and (ANG_FormOfPayment_ID__c = 'CA' or ANG_FormOfPayment_ID__c = 'CC')];
     	List<Agency_Authorization__c> aaLstToUpdate = new List<Agency_Authorization__c>();
 
-    	for(Agency_Authorization__c aa: aaLst){
+		Map<Id,AgencyAuthorizationOBject> accountsAA = new Map<Id,AgencyAuthorizationOBject>();
 
-    		if( restrictCash || restrictCreditCard){
+		for(Agency_Authorization__c aa: aaLst){
+			
+			AgencyAuthorizationOBject aaObject;
 
-	    		if(restrictCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
+			if(accountsAA.get(aa.Account__c) == null)
+				aaObject = new AgencyAuthorizationOBject(aa.Account__c);
+			else
+				aaObject = accountsAA.get(aa.Account__c);
 
-					if(aa.Status__c != valueToAdd){
-		    			aa.Status__c = valueToAdd;
-		    			accountIdsChanged.add(aa.Account__c);
-		    		}
+			if(aa.ANG_FormOfPayment_ID__c == 'CA')
+				aaObject.addCash(aa);
+			else
+				aaObject.addCreditCard(aa);
 
-	    			aaLstToUpdate.add(aa);
-	    		}
+			accountsAA.put(aa.Account__c,aaObject);
 
-	    		if(restrictCreditCard && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
-    				aa.Status__c = valueToAdd;
-    				aaLstToUpdate.add(aa);
-    				accountIdsChanged.add(aa.Account__c);
-    			}
+		}
 
-    		}
+		String process = restoreCash  && restoreCreditCard  ? 'Restore All' : 
+						 restrictCash && restrictCreditCard ? 'Restrict All' : 
+						 restrictCash ? 'Restrict Cash' :
+						 restrictCreditCard ? 'Restrict Credit Card' :
+						 restoreCash ? 'Restore Cash' : 'Restore Credit Card';
 
-    		if(restoreCash || restoreCreditCard){
+		List<ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcess = [SELECT Cash_before__c,Credit_Card_before__c,Action_in_FoP_OSCAR__c,Cash_after__c,Credit_Card_after__c,Change_Code__c FROM ANG_Forms_Of_Payment_CC_Matrix__mdt WHERE Action_in_FoP_OSCAR__c =:process];
 
-				if(restoreCash && aa.ANG_FormOfPayment_ID__c == 'CA'){
+		Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt> matrixAAProcessMap = new Map<String,ANG_Forms_Of_Payment_CC_Matrix__mdt>();
 
-    				aa.Status__c = valueToAdd;
-    				accountIdsChanged.add(aa.Account__c);
-    				aaLstToUpdate.add(aa);
-    			}
+		for(ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject: matrixAAProcess)
+			matrixAAProcessMap.put(matrixObject.Cash_before__c+matrixObject.Credit_Card_before__c,matrixObject);
 
-	    		if(restoreCreditCard && aa.Account__r.Is_PCI_compliant__c == 'Yes' && aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != valueToAdd){
-    				aa.Status__c = valueToAdd;
-    				aaLstToUpdate.add(aa);
-    				accountIdsChanged.add(aa.Account__c);
-    			}
+		ANG_Forms_Of_Payment_CC_Matrix__mdt matrixObject;
 
-    		}
+		for(AgencyAuthorizationOBject aaOjectToAnalyze: accountsAA.values()){
+			
+			matrixObject = matrixAAProcessMap.get(aaOjectToAnalyze.oldCA+aaOjectToAnalyze.oldCC);
 
-    	}
+			System.debug('matrixObject is ' + matrixObject);
 
+			aaOjectToAnalyze.addCashValue(matrixObject.Cash_after__c, matrixObject.Change_Code__c);
+			aaOjectToAnalyze.addCreditCardValue(matrixObject.Credit_Card_after__c, matrixObject.Change_Code__c);
+			
+			if(aaOjectToAnalyze.changedCA)
+				aaLstToUpdate.add(aaOjectToAnalyze.cashAA);
+			if(aaOjectToAnalyze.changedCC)
+				aaLstToUpdate.add(aaOjectToAnalyze.creditCardAA);
+
+			if(aaOjectToAnalyze.changedCA || aaOjectToAnalyze.changedCC)
+				accountsChanged.add(aaOjectToAnalyze);				
+		}
+
+				
     	if(!aaLstToUpdate.isEmpty())
     		update aaLst;
 
-    	return accountIdsChanged;
+    	return accountsChanged;
     	
     }
 
+	public class AgencyAuthorizationOBject{
+
+		Public Agency_Authorization__c creditCardAA;
+		Public Agency_Authorization__c cashAA;
+
+		Public String oldCC;
+		Public String oldCA;
+
+		Public Id accountId;
+
+		Public String changeCodeToInsert;
+
+		boolean changedCC;
+		boolean changedCA;
+
+		public AgencyAuthorizationOBject(Id accountId){
+			this.accountId = accountId;
+			this.changedCC = false;
+			this.changedCA = false;
+			this.oldCA = null;
+			this.oldCC = null;
+		}
+
+		public void addCreditCard(Agency_Authorization__c aa){
+			this.creditCardAA = aa;
+			this.oldCC = aa.Status__c;
+		}
+
+		public void addCash(Agency_Authorization__c aa){
+			this.cashAA = aa;
+			this.oldCA = aa.Status__c;
+		}
+
+		public void addCashValue(String value,String changeCodeToInsert){
+			if(this.oldCA == value)
+				return;
+			
+			cashAA.Status__c = value;
+			changedCA = true;
+			this.changeCodeToInsert = changeCodeToInsert;
+		}
+
+		public void addCreditCardValue(String value, String changeCodeToInsert){
+			if(this.oldCC == value)
+				return;
+			
+			creditCardAA.Status__c = value;
+			this.changedCC = true;
+			this.changeCodeToInsert = changeCodeToInsert;
+		}
+
+	}
 
     public static EntityUpdater createChangeCodeForFOP(EntityUpdater updater, AMS_Oscar__c theOSCAR, List<Account> accounts, String changeCodeName) {
 		
@@ -1160,10 +1165,10 @@ global class ANG_OscarProcessHelper {
 	        accOscarObjsMap.get(acc.Id).oscar = oscar;
     	}
 
-		if(!oscarsToInsert.isEmpty())
+    	if(!oscarsToInsert.isEmpty())
     		insert oscarsToInsert;
-		
-		OrgWideEmailAddress[] owea;
+
+    	OrgWideEmailAddress[] owea;
 
 		if(!accsToSendEmail.isEmpty()){
 			owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
@@ -1173,10 +1178,10 @@ global class ANG_OscarProcessHelper {
 
 		for (Account acc: accs){
 		// fields needed on contact: Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
-			
+
 			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
 			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
-			
+
 			//if(accsToSendEmail.contains(acc.Id))
 	            //AMS_AgencyRegulationAutoRenewal.sendEmailAlert(new List<Contact>{accOscarObjsMap.get(acc.Id).con}, accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGANNUALREVAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false);			
 
@@ -1211,27 +1216,7 @@ global class ANG_OscarProcessHelper {
 		return contactsToReturn;
 
 	}
-/*
-	private static Contact fetchKeyContact(Account acc, List<Contact> contacts){
 
-		if(contacts == null || contacts.isEmpty())
-			return null;
-
-		Contact adminCon;
-
-		for (Contact con :contacts){
-			if (con.Financial_Assessment_Contact__c){
-				return con;	
-			}
-			adminCon = con.User_Portal_Status__c == 'Approved Admin' && adminCon == null ? con : adminCon;
-		} 
-
-		if (adminCon != null)
-			return adminCon;			
- 
-		return contacts[0];
-	}
-*/
 	webservice static String[] createOscarChangesCase(Id accreditationId){
 		
 		Savepoint sp = Database.setSavepoint();
@@ -1265,7 +1250,6 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('ParentId',c.Id);
 	        fieldsOfObject.put('BSPCountry__c',newAccr.HO_Account__r.BillingCountry);
 	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
-	        fieldsOfObject.put('ContactId',c.ContactId);
 	        fieldsOfObject.put('Origin','Internal User');
 	        fieldsOfObject.put('Reason1__c','Agency Changes');
 	        fieldsOfObject.put('Region__c',newAccr.HO_Account__r.Region_formula__c);
@@ -1314,6 +1298,116 @@ global class ANG_OscarProcessHelper {
 	        fieldsOfObject.put('Oscar_Communication_Case_Id__c',newCaseOscar.id);
 
 			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCHANGES, newAccr.HO_Account__c, fieldsOfObject);
+
+			insert oscar;
+
+			newCaseOscar.Oscar__c = oscar.Id;
+
+			update newCaseOscar;
+
+			newCaseOscar = [Select Id, Casenumber from Case where Id=:newCaseOscar.Id LIMIT 1];
+
+		}catch(Exception ex){
+
+       		Database.rollback(sp);
+
+        	String exMessage = 'Unhandle error on process:\n\r ' + AMS_Utils.errorMessageBeautifyer(ex);
+
+	        System.debug('[ANG_OscarProcessHelper create changes oscar case] Process failed with the following exception:' + ex.getStackTraceString());
+
+	        isIATACodeGenerationRunning = false;
+
+			return new String[]{'-1',exMessage};
+
+		}
+
+		System.debug('Created oscar with id: ' + oscar.Id);
+
+		return new String[]{newCaseOscar.Id,newCaseOscar.Casenumber};
+
+	}
+
+	webservice static String[] createOscarCorrectionCase(Id accreditationId){
+		
+		Savepoint sp = Database.setSavepoint();
+		AMS_OSCAR__c oscar = null;
+		Case newCaseOscar = null;
+
+		try{
+
+			System.debug('Starting to create Oscar Correction from Staging area');
+			
+			List<String> fieldList = new List<String>();
+
+			Map<String, Schema.SObjectField> schemaFieldMap = AMS_Pax_Accreditation_Form__c.sObjectType.getDescribe().fields.getMap();
+
+			for (String field : schemaFieldMap.keySet()){
+					fieldList.add(field);
+			}
+
+			AMS_Pax_Accreditation_Form__c acr = Database.query('SELECT '+String.join(fieldList, ', ')+', HO_Account__r.BillingCountry, HO_Account__r.Region_formula__c, HO_Account__r.IATACode__c, HO_Account__r.Name FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId LIMIT 1');
+
+			AMS_Pax_Accreditation_Form__c newAccr = acr.clone(false, true, false, false);
+
+			Case c = [Select Id , ContactId, Account.BillingCountry, Account.Region_formula__c, Account.IATACode__c, Account.Name, Reason1__c,SIDRA_Lite_Reason__c from Case where Id = :newAccr.SAAM_Case__c LIMIT 1 ];
+
+	        Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+
+			Map<String,Object> fieldsOfObject = new Map<String,Object>();
+
+	        fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('ContactId',c.ContactId);
+	        fieldsOfObject.put('ParentId',c.Id);
+	        fieldsOfObject.put('BSPCountry__c',newAccr.HO_Account__r.BillingCountry);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin','Internal User');
+	        fieldsOfObject.put('Reason1__c','Corrections');
+	        fieldsOfObject.put('Region__c',newAccr.HO_Account__r.Region_formula__c);
+	        fieldsOfObject.put('Subject','Correction - ' + newAccr.HO_Account__r.IATACode__c + ' - ' + newAccr.HO_Account__r.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
+	        newCaseOscar =ANG_EntityCreator.createCase(caseRT, newAccr.HO_Account__c, fieldsOfObject);
+
+	        insert newCaseOscar;
+
+
+
+	        newAccr.SAAM_Case__c = newCaseOscar.Id;
+	        insert newAccr;
+
+            // need to create the accreditation contacts as well..
+			
+            			fieldList.clear();
+			schemaFieldMap = AMS_Accreditation_Contact__c.sObjectType.getDescribe().fields.getMap();
+
+			for (String field : schemaFieldMap.keySet()){
+					fieldList.add(field);
+			}
+
+			List<AMS_Accreditation_Contact__c> contactsList = Database.query('SELECT '+String.join(fieldList, ', ')+' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :accreditationId');
+
+			List<AMS_Accreditation_Contact__c> newAccreditationContactList = new List<AMS_Accreditation_Contact__c>();
+
+			for(AMS_Accreditation_Contact__c ac: contactsList){
+
+				AMS_Accreditation_Contact__c newAc = ac.clone(false, true, false, false);
+				newAc.AMS_Pax_Accreditation_Form__c = newAccr.Id;
+				newAccreditationContactList.add(newAc);
+            }
+
+			if(!newAccreditationContactList.isEmpty())
+				insert newAccreditationContactList;
+            
+			fieldsOfObject = new Map<String,Object>();
+
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGCORRECTION);
+	        fieldsOfObject.put('SIDRA_lite_reason__c',c.SIDRA_Lite_Reason__c);
+			fieldsOfObject.put('Status__c','Open');			
+			fieldsOfObject.put('AMS_Online_Accreditation__c',newAccr.Id);
+			fieldsOfObject.put('Change_effective_as_of__c',newAccr.Effective_Date_Of_Change__c);
+	        fieldsOfObject.put('Oscar_Communication_Case_Id__c',newCaseOscar.id);
+
+			oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_NGCORRECTION, newAccr.HO_Account__c, fieldsOfObject);
 
 			insert oscar;
 
@@ -1521,10 +1615,7 @@ global class ANG_OscarProcessHelper {
 					attachments = new Messaging.EmailFileAttachment[]{attach};
 				}
                 
-               	AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(origin == AMS_Utils.ANG_MASSIVE_FOP ? AMS_Utils.NGFOP : ANG_PCI_RENEWAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);  
-				//if we need a fallback contact:
-               // AMS_AgencyRegulationAutoRenewal.sendEmailAlert((fetchKeyContactsForPCI(contactsAcc.get(acc.Id)).isEmpty() ? contactsAcc.get(acc.Id) : fetchKeyContactsForPCI(contactsAcc.get(acc.Id))), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(AMS_Utils.NGFOP, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);  
-
+               	AMS_AgencyRegulationAutoRenewal.sendEmailAlert(keyContactMap.get(acc.Id), accOscarObjsMap.get(acc.Id).oscar.Id, AMS_OSCARTriggerHandler.ANGemailTemplates(origin == AMS_Utils.ANG_MASSIVE_FOP ? AMS_Utils.NGFOP : ANG_PCI_RENEWAL, null, true), accOscarObjsMap.get(acc.Id).oscar.Oscar_Communication_Case_Id__c, owea[0], false, attachments);
 			}
 
 			System.debug('[ANG_OscarProcessHelper.createPCIComplianceOscars] - Finished Inserting oscars: '+ accOscarObjsMap.get(acc.id).oscar.Id + ' | Case: '+accOscarObjsMap.get(acc.id).cse.Id);
@@ -1534,6 +1625,101 @@ global class ANG_OscarProcessHelper {
 			createPortalNotifications(acctSet,casesMaps,notificationTemplate,keyContactMap);
 
         return casesToUpdate;
+    }
+
+    public static List<AMS_OSCAR__c> createGDIOscars(List<Account> accs, Map<Id,List<Contact>> contactsAcc){
+
+    	Map<id,OscarObjectsWrapper> accOscarObjsMap = new Map<id,OscarObjectsWrapper>();
+		OscarObjectsWrapper oscarObjs;
+		
+		Map<String,Object> fieldsOfObject;
+
+		List<Case> casesToInsert = new List<Case>();
+
+		Map<Id,Account> accountMap = new Map<Id,Account>();
+
+		//Case:
+		for(Account acc : accs){
+
+			accountMap.put(acc.Id,acc);
+
+			System.debug('[ANG_OscarProcessHelper.createGDIOscars] - Inserting GDI Oscar for Account: '+acc.Id+' - '+acc.Name+' - '+acc.IataCode__c);
+
+			Contact keyContact = fetchKeyContactForGDI(contactsAcc.get(acc.Id));
+
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Account_Concerned__c',acc.Id);
+	      	fieldsOfObject.put('ContactId',keyContact.Id);
+	        fieldsOfObject.put('BSPCountry__c',acc.BillingCountry);
+	        fieldsOfObject.put('Region__c',acc.Region_formula__c);
+	        fieldsOfObject.put('CaseArea__c','Accreditation Process');
+	        fieldsOfObject.put('Origin', 'GDI Portal');
+	        fieldsOfObject.put('Reason1__c','GDI setup');
+	        fieldsOfObject.put('Subject','GDI setup - ' + acc.ANG_Accreditation_Model__c + ' - ' + acc.Name);
+	        fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
+	        
+	       	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+
+	        //assign to queue
+	        if(!Test.isRunningTest()){
+	       		Database.DMLOptions dmo = new Database.DMLOptions();
+	       	 	dmo.assignmentRuleHeader.useDefaultRule = true;
+	        	cse.setOptions(dmo);
+	        }
+
+	        oscarObjs = new OscarObjectsWrapper();
+	        oscarObjs.cse = cse;
+	        oscarObjs.con = keyContact;
+
+	        accOscarObjsMap.put(acc.id,oscarObjs);
+	        casesToInsert.add(cse);
+		}
+
+		if (!casesToInsert.isEmpty())
+       		insert casesToInsert;
+
+       	Set<Id> casesIds = new Set<Id>();
+	    for (Case cse : casesToInsert){
+	    	casesIds.add(cse.Id);
+	    }
+
+       	for(Case insertedCase : [Select ownerId, Account_Concerned__c, CaseNumber from Case where Id in :casesIds]){
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).ownerId = insertedCase.ownerId;
+       		accOscarObjsMap.get(insertedCase.Account_Concerned__c).CaseNumber = insertedCase.CaseNumber;
+       	}
+
+		//AMS_OSCAR__c:
+		List<AMS_Oscar__c> oscarsToInsert = new List<AMS_OSCAR__c>(); 
+
+        for (Account acc : accs){
+        
+			fieldsOfObject = new Map<String,Object>();
+	        fieldsOfObject.put('Process__c',AMS_Utils.NGGDI);
+			fieldsOfObject.put('Status__c','Open');
+			fieldsOfObject.put('OwnerId',accOscarObjsMap.get(acc.Id).ownerId);
+			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
+			fieldsOfObject.put('Name',accOscarObjsMap.get(acc.Id).CaseNumber);
+			
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_GDI, acc.Id, fieldsOfObject);		
+	        oscarsToInsert.add(oscar);
+	        accOscarObjsMap.get(acc.Id).oscar = oscar;
+    	}
+
+    	if(!oscarsToInsert.isEmpty())
+    		insert oscarsToInsert;
+
+		List<Case> casesToUpdate = new List<Case>();
+
+		for (Account acc: accs){
+			accOscarObjsMap.get(acc.Id).cse.Oscar__c = accOscarObjsMap.get(acc.Id).oscar.Id;
+			casesToUpdate.add(accOscarObjsMap.get(acc.Id).cse);
+		}
+
+		if(!casesToUpdate.isEmpty())
+			update casesToUpdate;
+
+        return oscarsToInsert;
+
     }
 
       private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate,Map<Id,List<Contact>> keyContactMap){
@@ -1651,30 +1837,25 @@ global class ANG_OscarProcessHelper {
  		return contactsToReturnLst;
 	}
 
-	
-
-	private static List<Contact> fetchKeyContactsForPCI(List<Contact> contacts){
+	private static Contact fetchKeyContactForGDI(List<Contact> contacts){
 
 		if(contacts == null || contacts.isEmpty())
 			return null;
 
-		Set<Contact> contactsMap = new set<Contact>();
+		List<Contact> admins = new List<Contact>();
 
 		for (Contact con :contacts){
 
+			if(con.Financial_Assessment_Contact__c)
+				return con;
 			if(con.User_Portal_Status__c == 'Approved Admin')
-				contactsMap.add(con);
-			if (con.Financial_Assessment_Contact__c)
-				contactsMap.add(con);
-			if(con.BSP_CASS_Payment_contact__c)
-				contactsMap.add(con);
+				admins.add(con);
 		} 
 
- 		
- 		List<Contact> toReturn = new List<Contact>();
- 		toReturn.addAll(contactsMap);
+		if (!admins.isEmpty())
+ 			return admins[0];
 
- 		return toReturn;
+ 		return contacts[0];
 	}
     
 
@@ -1774,6 +1955,7 @@ global class ANG_OscarProcessHelper {
     	public AMS_Oscar__c oscar;
     	public Id ownerId;
     	public Contact con;
+    	public String caseNumber;
 
     	public OscarObjectsWrapper(){
 
@@ -1893,7 +2075,7 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Oscar_Communication_Case_Id__c',accOscarObjsMap.get(acc.Id).cse.Id);
 			fieldsOfObject.put('Dossier_Reception_Date__c',Date.today());
 
-			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(AMS_Utils.RECTYPE_IEPMODELA, acc.Id, fieldsOfObject);		
+			AMS_Oscar__c oscar = ANG_EntityCreator.createOscar(model == 'A'? AMS_Utils.RECTYPE_IEPMODELA : AMS_Utils.RECTYPE_IEPMODELB, acc.Id, fieldsOfObject);		
 	        oscarsToInsert.add(oscar);
 	        accOscarObjsMap.get(acc.Id).oscar = oscar;
 		}
@@ -1934,1214 +2116,4 @@ global class ANG_OscarProcessHelper {
         }
         return oscarsToInsert;
     }
-
-	//EM - To be removed
-	public static void fakemethod () {
-		if (Test.isRunningTest()) {
-			Integer i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-			i=0;
-		}
-	
-	}
-
-
 }

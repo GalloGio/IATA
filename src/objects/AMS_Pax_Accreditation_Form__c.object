@@ -866,6 +866,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Acreditation Type</label>
     </fieldSets>
     <fieldSets>
@@ -951,6 +956,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Name</label>
     </fieldSets>
     <fieldSets>
@@ -998,6 +1008,11 @@
         </displayedFields>
         <displayedFields>
             <field>VAT_Number_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -1086,16 +1101,31 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Location</label>
     </fieldSets>
     <fieldSets>
         <fullName>ANG_locationtype</fullName>
         <description>fields to be migrated when we have a change of location type process</description>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Location Type</label>
     </fieldSets>
     <fieldSets>
         <fullName>ANG_locationtypetodifferentlegalentity</fullName>
         <description>fields to be migrated when we have a change of Location Type to Different Legal Entity</description>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Location Type to Different Legal Entity</label>
     </fieldSets>
     <fieldSets>
@@ -1103,6 +1133,11 @@
         <description>fields to be migrated when we have a change of major shareholding</description>
         <displayedFields>
             <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -1156,6 +1191,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Minor Shareholding</label>
     </fieldSets>
     <fieldSets>
@@ -1183,6 +1223,11 @@
         </displayedFields>
         <displayedFields>
             <field>ISSP_AMS_License_No__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_VAT_number__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -27214,6 +27259,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
 )</errorConditionFormula>
         <errorDisplayField>CASS_Number__c</errorDisplayField>
         <errorMessage>CASS Number should be inserted for Accounts with Location Class equals to C, R, I Q or G (for GSSA application processes) or for Cargo Agents.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Change_Location_Class_after_IATACode_gen</fullName>
+        <active>false</active>
+        <description>Once the IATA Code is generated the Location Class can no longer be changed.</description>
+        <errorConditionFormula>AND(   
+ISCHANGED(Location_Class__c), 
+NOT( ISBLANK( IATACode__c ) ) 
+)</errorConditionFormula>
+        <errorDisplayField>Location_Class__c</errorDisplayField>
+        <errorMessage>Agent needs to be pointed to create a new account and new application.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>ISSP_AMS_T_C_Accepted_on_Submit</fullName>

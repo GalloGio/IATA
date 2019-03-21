@@ -369,6 +369,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	map<Id,IFAP_Quality_Issue__c> RelatedQualityIssues = new Map<Id,IFAP_Quality_Issue__c>();
 	private Map<Id,Account> sidraCasesAccounts;
     private Map<Id,Account> accountsToUpdate = new Map<Id,Account>();
+	
+	//private List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
 
     Set<Id> caseAccsSet = new Set<Id>();
     /*Maps, Sets, Lists*/
@@ -431,7 +433,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 
 			//START - Too many SOQL fix
-			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out')) from Account where Id in :acctIds]);
+			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out' and status != 'Closed_Non compliance')) from Account where Id in :acctIds]);
 			Set<Id> caseIds;
 
 			for (Account acct : acctsToUpdate.values()) {
@@ -477,6 +479,23 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			CaseChildHelper.CreateChildCase(Trigger.old, Trigger.new);
 		}  
 	}
+	
+	/**
+	 * KPI Reporting part created here as separated part of the trigger, because of terrible quality of code in this file.
+	 * Trigger is created without good practices, is unreadable, so here is separated part responsible for Case Status monitoring, and
+	 * FDS_KPI_Reporting__c, KPI_Value__c records creation.
+	 *
+	 * JIRA - ICSC-35
+	 */
+//if(Trigger.isUpdate) {
+	if(Trigger.isUpdate && CaseTriggerHelper.isDone == false) {
+        CaseTriggerHelper.createKPIValues(Trigger.oldMap, Trigger.newMap, Trigger.new);
+	}
+
+	/**
+	 * END of separated part
+	 */
+	
 	/*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	
 	if(trigger.isInsert || trigger.isUpdate){	
@@ -1067,6 +1086,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		if(trgCase){
 			system.debug('trgCase Trigger.isUpdate');
 			SidraLiteManager.afterInsertSidraLiteCases(Trigger.new);
+            DPCCasesUtil.addAdditionalContactsAfter();
 		}
 		/*trgCase Trigger.isInsert*/
 
@@ -1229,6 +1249,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		/*ANG Triggers*/
 		new ANG_CaseTriggerHandler().onAfterUpdate();
 		/*ANG Triggers*/
+
+		ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Case', 'ANG_Case_Tracking_History__c'); //ACAMBAS - WMO-390
+
 	/*Trigger.isUpdate*/
 	}
 	/****************************************************************************************************************************************************/    

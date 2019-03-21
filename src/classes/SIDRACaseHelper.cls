@@ -10,6 +10,7 @@ public with sharing class SIDRACaseHelper {
 	private static Map<Id, Account> sidraCasesAccounts;
 	private static Map<Id, Account> accountsToUpdate = new Map<Id, Account>();
 	private static Boolean  isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
+	public static Boolean isSAAMChildCaseCreated = false; //ACAMBAS - WMO-384 
 
 	// IRR withdrawal reasons used to have a comment record in SIDRA cases
 	public final static string IATACHARGES = 'IATA Charges';
@@ -89,8 +90,9 @@ public with sharing class SIDRACaseHelper {
 			}		
 		}
 
-		if (sidraCasesToBeProcessed.size() > 0) {
+		if (sidraCasesToBeProcessed.size() > 0 && !isSAAMChildCaseCreated) {
 			System.enqueueJob(new createChildCaseToSidraCases(sidraCasesToBeProcessed));
+			isSAAMChildCaseCreated = true;
 		}
 
 		//ACAMBAS - WMO-384 - End
@@ -114,8 +116,9 @@ public with sharing class SIDRACaseHelper {
 			}	
 		}
 			
-		if (sidraCasesToBeProcessed.size() > 0) {
+		if (sidraCasesToBeProcessed.size() > 0 && !isSAAMChildCaseCreated) {
 			System.enqueueJob(new createChildCaseToSidraCases(sidraCasesToBeProcessed));
+			isSAAMChildCaseCreated = true; 
 		}	
 	}
 
