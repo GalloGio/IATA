@@ -897,6 +897,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if (trgCase) { 
             System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isInsert]');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
+            DPCCasesUtil.addAdditionalContactsBefore(Trigger.new);
         }
         /*trgCase Trigger.isInsert*/
 
@@ -1642,6 +1643,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             Datetime Last24Hours = Datetime.now().addDays(-1);
             List<Case> caseLast24Hours = new List<Case>();
             Set<Id> accountIds = new Set<Id>();
+            list<Id> listCasesUpdatedAIMS = new list<Id>();
+            
             for (Case aCase : trigger.new) { // Fill a set of Account Ids for the cases select statement
                 Case aCaseOld = Trigger.oldMap.get(aCase.Id);
                 // Only for Sidra small amount cases, only cases created within the last 24 hours
@@ -1664,6 +1667,23 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     aCase.DEF_Approval_Rejection_Date__c = DateTime.now();    
                 }
                 //ACAMBAS - WMO-384 - End 
+                if (aCase.RecordTypeId == SIDRAcaseRecordTypeID &&
+                    aCaseOld.Update_AIMS_Repayment_agreed__c == null &&
+                    aCase.Update_AIMS_Repayment_agreed__c != null) {
+                    listCasesUpdatedAIMS.add(aCase.Id);
+                }
+            }
+
+            // Validation when the field Update_AIMS_Repayment_agreed__c is updated
+            // Update not allowed if there is no Repayment Instalment records related to the case
+            if (!listCasesUpdatedAIMS.isEmpty()) {
+                for (Case cse: [SELECT Id, (SELECT Id FROM Case_Details__r WHERE RecordType.DeveloperName = 'Repayment_Instalment')
+                    FROM Case WHERE Id IN :listCasesUpdatedAIMS]) {
+                    Case originalCase = trigger.newmap.get(cse.Id);
+                    if (cse.Case_Details__r.isEmpty()) {
+                        originalCase.addError('Please complete the repayment instalment section to be able to confirm that the agreement has been reached');
+                    }
+                }
             }
 
             if (accountIds.size() > 0) { // This list should be empty if all of the cases aren't related to the Sidra Small amount process

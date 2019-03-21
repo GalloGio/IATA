@@ -1,4 +1,4 @@
-<apex:page standardController="How_To__kav"
+<apex:page standardController="FAQ__kav"
     extensions="howto_controller"
     showHeader="false"
     sidebar="false"
@@ -8,19 +8,19 @@
     >
    <html>
     
-    	<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
- 	<body>
- 	<c:pkb_css />
+      <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
+  <body>
+  <c:pkb_css />
     <style type="text/css">
         div.knowledgeBlock {
-        	border-top-color: rgb(242, 207, 91);
-        	border-top-width: 3px;
-  			border-top-style: solid;
-        	background-color: #f8f8f8;
-        	border-bottom: 1px solid #eaeaea;
-        	border-left: 1px solid #eaeaea;
-        	border-right: 1px solid #eaeaea;
-        	padding:10px 10px 30px 10px;
+          border-top-color: rgb(242, 207, 91);
+          border-top-width: 3px;
+        border-top-style: solid;
+          background-color: #f8f8f8;
+          border-bottom: 1px solid #eaeaea;
+          border-left: 1px solid #eaeaea;
+          border-right: 1px solid #eaeaea;
+          padding:10px 10px 30px 10px;
         }
     </style>
     <script>
@@ -85,25 +85,25 @@
         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
      <div>
         <div id="left_column">
-        	<apex:outputPanel styleClass="relatedArticles" layout="block">
-    		<h4 class="section">{!$Label.PKB2_Related_Articles}</h4>
+          <apex:outputPanel styleClass="relatedArticles" layout="block">
+        <h4 class="section">{!$Label.PKB2_Related_Articles}</h4>
 
-    		<apex:outputPanel layout="block" styleClass="searchDrillr">
-    		
-      		<knowledge:articleList articleVar="a" 
-		        pageSize="{!relatedArticles+1}"
-		        keyword="{!theKad.title}"
-		        pageNumber="1"
-		        language="{!selectedLanguage}">
-		        
-		        <apex:variable var="typeName" value="{!SUBSTITUTE(a.articleTypeName, '__kav', '')}" />
-		        <apex:variable var="feedback" value="{!feedbackSourceParam}={!feedbackRelated}" />
-		        <apex:variable var="params" value="{!IF(ISBLANK(allSearchParams), feedback, allSearchParams+ '&' +feedback)}" />
-		        <apex:variable var="articleURL" value="{!$Site.CurrentSiteUrl}articles{!selectedLanguageURL}{!typeName}/{!a.urlName}" />
-		        <apex:outputPanel layout="block" rendered="{!(LEFT(theKad.id, 15) != LEFT(a.Id, 15))}" style="margin-bottom: 10px;">		           
-		           <a class="relatedLink" href="{!articleURL}/?{!params}">{!a.Title}</a>
-		        </apex:outputPanel>
-		        
+        <apex:outputPanel layout="block" styleClass="searchDrillr">
+        
+          <knowledge:articleList articleVar="a" 
+            pageSize="{!relatedArticles+1}"
+            keyword="{!theKad.title}"
+            pageNumber="1"
+            language="{!selectedLanguage}">
+            
+            <apex:variable var="typeName" value="{!SUBSTITUTE(a.articleTypeName, '__kav', '')}" />
+            <apex:variable var="feedback" value="{!feedbackSourceParam}={!feedbackRelated}" />
+            <apex:variable var="params" value="{!IF(ISBLANK(allSearchParams), feedback, allSearchParams+ '&' +feedback)}" />
+            <apex:variable var="articleURL" value="{!$Site.CurrentSiteUrl}articles{!selectedLanguageURL}{!typeName}/{!a.urlName}" />
+            <apex:outputPanel layout="block" rendered="{!(LEFT(theKad.id, 15) != LEFT(a.Id, 15))}" style="margin-bottom: 10px;">               
+               <a class="relatedLink" href="{!articleURL}/?{!params}">{!a.Title}</a>
+            </apex:outputPanel>
+            
        </knowledge:articleList>
        
     </apex:outputPanel>
@@ -114,17 +114,17 @@
                     
         <div id="right_column">
             
-        	<div id="right_content" style="margin:40px 20px">
+          <div id="right_content" style="margin:40px 20px">
                 <apex:outputPanel layout="block" id="backbutton" style="margin-bottom: 50px;">
-            	<a class="relatedLink" href="{!$Site.BaseUrl}{!faqHome}?{!allSearchParams}&MainNav=resources&subNav=faq&mid=M2S1">&lt; {!$Label.PKB2_Back_To_Results}</a>
+              <a class="relatedLink" href="{!$Site.BaseUrl}{!faqHome}?{!allSearchParams}&MainNav=resources&subNav=faq&mid=M2S1">&lt; {!$Label.PKB2_Back_To_Results}</a>
           <!--  <a class="relatedLink" style="float:right" href="{!$Site.CurrentSiteUrl}?{!pkbCon.languageParam}={!pkbCon.selectedLanguage}">{!$Label.PKB2_Back_To_Search_Page}</a> -->
           
-      		</apex:outputPanel>
-          	    
+          </apex:outputPanel>
+                
               <div style="margin-bottom:20px">
                   <h4>{!theKad.title}</h4>
                   <div id="kav" class="knowledgeBlock">
-                      <apex:outputField value="{!How_To__kav.Instructions__c}" />
+                      <!--<apex:outputField value="{!FAQ__kav.Instructions__c}" />-->
                   </div>
                 </div>
           
@@ -181,9 +181,9 @@
                         <apex:commandButton action="{!recordArticleFeedback}" value="{!$Label.PKB2_Submit}" onclick="copyComments();" oncomplete="closeModal2(); refreshYesNo();" rerender="feedbackResponse, feedback" status="feedbackStatus" />&nbsp;
                         <apex:commandButton onclick="closeModal2(); return false;" value="{!$Label.PKB2_Cancel}" /><br/>
                         <apex:actionStatus id="feedbackStatus">
-		                    <apex:facet name="start"><apex:image value="{!$Resource.pkb_loadingdots}" /></apex:facet>
-		                    <apex:facet name="stop"></apex:facet>
-		                </apex:actionStatus>
+                        <apex:facet name="start"><apex:image value="{!$Resource.pkb_loadingdots}" /></apex:facet>
+                        <apex:facet name="stop"></apex:facet>
+                    </apex:actionStatus>
                       </apex:outputPanel>
                     </p>
                   </div>

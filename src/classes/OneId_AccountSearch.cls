@@ -24,7 +24,8 @@ public without sharing class OneId_AccountSearch {
 		String fieldString = 'SELECT Id, '+String.join(fieldsToQuery, ', ');
         String limitString = ' LIMIT 20';
 
-		String objectString = ' FROM Account WHERE RecordType.DeveloperName in :recordTypesSet';
+        //WMO-385 exclude MSO accounts from the results
+		String objectString = ' FROM Account WHERE RecordType.DeveloperName in :recordTypesSet AND Location_Class__c <> \'M\'';
 
 		if(filters != null){
 			for(String key : filters.keySet()){

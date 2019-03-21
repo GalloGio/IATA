@@ -147,7 +147,7 @@ public class BusinessDays {
                     if (oldCase.RecordTypeId != globalRT && oldCase.BusinessHoursId  == defaultHours.Id) {
                         updatedCase.Time_Unassigned__c += normaleDatetimeSinceLastStatus;
                     }
-                    else if (stopStatusSetPerBucket.get(oldCase.Status) == 'With Customer') {
+                    else if (stopStatusSetPerBucket.get(oldCase.Status) == 'Pending Customer') {
                         
                         // to do  hard coded.....beware.....how about a custom setting?
                         

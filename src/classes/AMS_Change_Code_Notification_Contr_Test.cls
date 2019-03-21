@@ -5,9 +5,18 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
+
+        Account airlineAccount = new Account(
+				RecordTypeId = airRtId,
+				Name = 'Airline',
+				IATACode__c = '123',
+                Airline_designator__c='AA',
+                IATA_ISO_Country__c = isoc.Id
+		);
 
         Account msoAccount =  new Account (
             RecordTypeId = agcRtId,
@@ -16,10 +25,11 @@ private class AMS_Change_Code_Notification_Contr_Test {
             IATA_ISO_Country__c = isoc.Id,
             Status__c = 'Approved'
             );  
-        insert msoAccount;
+        
+        insert new List<Account> {airlineAccount, msoAccount};
 
         Contact con = new Contact (
-          AccountId = msoAccount.id,
+          AccountId = airlineAccount.id,
           RecordTypeId = conRtId, 
           LastName = 'portalUser',
             FirstName = 'firstname',
@@ -36,11 +46,12 @@ private class AMS_Change_Code_Notification_Contr_Test {
         insert oscar;
 
         Case oscarCase = new Case();
-        oscarCase.AccountId = msoAccount.Id;
+        oscarCase.AccountId = airlineAccount.Id;
         oscarCase.ContactId = con.Id; 
         oscarCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         oscarCase.OSCAR__c = oscar.Id;
         oscarCase.Status = 'Open';
+        oscarCase.Account_Concerned__c = msoAccount.Id;
         insert oscarCase;
 
 
@@ -68,9 +79,18 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
+
+        Account airlineAccount = new Account(
+				RecordTypeId = airRtId,
+				Name = 'Airline',
+				IATACode__c = '123',
+                Airline_designator__c='AA',
+                IATA_ISO_Country__c = isoc.Id
+		);
 
         Account msoAccount =  new Account (
             RecordTypeId = agcRtId,
@@ -79,10 +99,11 @@ private class AMS_Change_Code_Notification_Contr_Test {
             IATA_ISO_Country__c = isoc.Id,
             Status__c = 'Approved'
             );  
-        insert msoAccount;
+        
+        insert new List<Account> {airlineAccount, msoAccount};
 
         Contact con = new Contact (
-          AccountId = msoAccount.id,
+          AccountId = airlineAccount.id,
           RecordTypeId = conRtId, 
           LastName = 'portalUser',
             FirstName = 'firstname',
@@ -92,11 +113,12 @@ private class AMS_Change_Code_Notification_Contr_Test {
         insert con;
 
         Case ccase = new Case();
-        ccase.AccountId = msoAccount.Id;
+        ccase.AccountId = airlineAccount.Id;
         ccase.ContactId = con.Id; 
         ccase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
         ccase.Status = 'Open';
 		ccase.Late_Payment_Date__c = Date.today();
+		ccase.Account_Concerned__c = msoAccount.Id;
         insert ccase;
 
         Agency_Applied_Change_code__c ccode= new Agency_Applied_Change_code__c();
@@ -124,10 +146,18 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
         	Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
 		insert isoc;
 
+		Account airlineAccount = new Account(
+				RecordTypeId = airRtId,
+				Name = 'Airline',
+				IATACode__c = '123',
+                Airline_designator__c='AA',
+                IATA_ISO_Country__c = isoc.Id
+		);
 
 		Account msoAccount =  new Account (
 				RecordTypeId = agcRtId,
@@ -136,10 +166,10 @@ private class AMS_Change_Code_Notification_Contr_Test {
 				IATA_ISO_Country__c = isoc.Id,
 				Status__c = 'Approved'
 		);
-		insert msoAccount;
+		insert new List<Account> {airlineAccount, msoAccount};
 
 		Contact con = new Contact (
-				AccountId = msoAccount.id,
+				AccountId = airlineAccount.id,
 				RecordTypeId = conRtId,
 				LastName = 'portalUser',
 				FirstName = 'firstname',
@@ -151,12 +181,13 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		Id caseRecrdType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 
 		Case ccase = new Case();
-				ccase.AccountId = msoAccount.Id;
+				ccase.AccountId = airlineAccount.Id;
 				ccase.ContactId = con.Id;
 				ccase.RecordTypeId = caseRecrdType;
 				ccase.Status = 'Open';
 				ccase.Remittance_Period__c='20180615W';
         		ccase.Late_Payment_Date__c = Date.today();	
+        		ccase.Account_Concerned__c = msoAccount.Id;
 		insert ccase;
 
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');

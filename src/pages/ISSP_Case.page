@@ -1217,11 +1217,11 @@
                                             </apex:facet>
                                             <a href="javascript:getSelectArtical('{!article.articleId}');">{!article.articleTitle}</a>
                                         </apex:column>
-                                        <apex:column value="{!article.articleType}">
+                                        <!-- <apex:column value="{!article.articleType}">
                                             <apex:facet name="header">
                                                 {!$ObjectType.KnowledgeArticleVersion.Fields.ArticleType.Label}
                                             </apex:facet>
-                                        </apex:column>
+                                        </apex:column> -->
                                     </apex:pageblocktable>
                                 </apex:pageblock>
 

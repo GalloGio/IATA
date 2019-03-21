@@ -12,12 +12,14 @@
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/dataTables.buttons.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.bootstrap.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/jszip.min.js')}"></script>
-<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.min.js')}"></script>
+<apex:includeScript value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.0.1.5.min.js')}"/>
+<!-- <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/pdfmake.min.js')}"></script> -->
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/vfs_fonts.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.html5.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.print.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.colVis.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/iata_logo.js')}"></script>
+<apex:includeScript value="{!URLFOR($Resource.jszip, '/FileSaver.min.js')}"/>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
 
@@ -25,6 +27,27 @@
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/buttons.bootstrap.min.css')}" rel="stylesheet"/>
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/details.min.css')}" rel="stylesheet"/>
 <link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
+
+<style>
+    .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 2s linear infinite;
+        margin-left: 45%;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    #loading-modal-content {
+        margin-top: 25%;
+    }
+</style>
 
 <script>
     moment.locale("{!UserLanguage}");
@@ -155,7 +178,12 @@
             columns: ':visible',
             format: {
                 body: function ( data, row, column, node ) {
-                    return formatDate(data);
+                    var datatype= $(node).attr("data-type");
+                    if (datatype=="date") {
+                        return formatDate(data);
+                    } else {
+                        return data;
+                    }
                 }
             }
         },
@@ -168,7 +196,12 @@
             footer: true,
             format: {
                 body: function ( data, row, column, node ) {
-                    return formatDate(data);
+                    var datatype= $(node).attr("data-type");
+                    if (datatype=="date") {
+                        return formatDate(data);
+                    } else {
+                        return data;
+                    }
                 }
             }
         },
@@ -219,6 +252,7 @@
         pdfButton.orientation = colCount>6? "landscape": "portrait";
         var isDisabled = $(".buttons-pdf").prop("disabled");
         $(".buttons-pdf").remove();
+        $("#advanced-filters").empty();
         var table =  $('.table-pagination').dataTable();
         new $.fn.dataTable.Buttons(table, {
             buttons: [pdfButton]
@@ -238,6 +272,12 @@
             .toggleClass('btn-default btn-primary')
             .prop("disabled", isDisabled);
         $(".buttons-csv").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
+        /*** WMO-388 ***/
+        if("{!isAirline}" == "true") {
+            $("#advanced-filters")
+                .append("<div class='dt-buttons btn-group'><button class='btn buttons-html5 btn-primary'><span class='glyphicon glyphicon-th' style='padding-right:2px;'></span><span>{!$Label.ISSP_FDS_CustomFilterBtn}</span></button></div>");
+            $("#advanced-filters").attr('onclick','openCustomFilters()');
+        }
     }
     
     function containsInArray(array, match) {
@@ -399,6 +439,7 @@
             $.each(node.cells, function (j, cell) {
                 if (colTypes[j]=="date") {
                     var jcell = $(cell);
+                    jcell.attr("data-type","date");
                     jcell.attr("data-order",jcell.text());
                     jcell.text(formatDate(jcell.text()));
                 }
@@ -469,6 +510,278 @@
             return str;
         }
     }
+
+    /*** WMO-388 ***/
+    function openCustomFilters() {
+        $('#custom-filters').modal('show'); 
+        moveAll("#right-opt-operation-filter", "#left-opt-operation-filter", "value");
+        moveAll("#right-opt-remittance-filter", "#left-opt-remittance-filter", "value");
+        moveAll("#right-opt-country-filter", "#left-opt-country-filter", "title");
+        prepopulate("#typeFilter", "operation-filter");
+        prepopulate("#frequencyFilter", "remittance-filter");
+        prepopulate(".countryFilter", "country-filter");
+    }
+
+    function prepopulate(fromId, toId) {
+        var fromVal = $(fromId).val();
+        if(fromVal) {
+            var elem = $("#left-opt-"+toId+" option[value='"+fromVal+"']");
+            if(elem) {
+                var selectedVal = $(elem).detach();
+                $(selectedVal).appendTo("#right-opt-"+toId);    
+            }
+        }
+    }
+
+    function changeTypeOfDownload(val) {
+        if(val.value == "custom") {
+            $("#countrySelector").removeClass("invisible");
+        } else {
+            $("#countrySelector").addClass("invisible");
+        }
+        moveAll("#right-opt-operation-filter", "#left-opt-operation-filter", "value");
+        moveAll("#right-opt-remittance-filter", "#left-opt-remittance-filter", "value");
+        moveAll("#right-opt-country-filter", "#left-opt-country-filter", "title");
+    }
+
+    function downloadZip() {
+        var opt = $("#typeOfDownload").val();
+        var fileFormat = $("input[name='formatFile']:checked").val();
+        var operations = [];
+        $("#right-opt-operation-filter option").each(function() {operations.push($(this).val());});
+        var remittance = [];
+        $("#right-opt-remittance-filter option").each(function() {remittance.push($(this).val());});
+        var countries = [];
+        $("#right-opt-country-filter option").each(function() {countries.push($(this).val());});
+
+        var hasBSP = false;
+        $.each($("#right-opt-operation-filter option"), function(i,v) {
+            hasBSP |= !v.value.includes('CASS');
+        });
+
+        hasBSP = Boolean(hasBSP);
+        if(!fileFormat || operations.length < 1 || (hasBSP && remittance.length < 1) || (countries.length < 1 && opt == 'custom')) {
+            alert("{!$Label.ISSP_FDS_FillAllFields}");
+            return;
+        }
+
+        alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}");
+
+        startDownload(opt, operations, remittance, countries, "{!account.Id}", fileFormat);
+    }
+
+    var generationCounter;
+    var zipFile;
+    function startDownload(opt, operations, remittance, countries, accountId, fileFormat) {
+        generationCounter = null;
+        zipFile = null;
+        $('#downloadBtn').attr("disabled", true);
+        $("#loading-modal").modal("show");
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ISSP_OperationalCalendarController.createZipFile}',
+            opt, operations, remittance, countries, accountId,
+            function(result, event) {
+                if (event.status) {
+                    zipFile = new JSZip();
+                    
+                    if(fileFormat == 'csv') {
+                        generationCounter = 0;
+                        $.each(result.folders, function(i, f) {
+                            if(f.files.length > 0) {
+                                generationCounter++;
+                            }
+                        });
+                    } else {
+                        generationCounter = result.nrOfFiles;  
+                    }
+
+                    if(generationCounter == 0) {
+                        alert("{!$Label.ISSP_FDS_NoResults}");
+                        return;
+                    }
+                    $.each(result.folders, function(i,v) {
+                        if(v.files.length > 0) {
+                            var folder = zipFile.folder(v.folderName);
+                            if(fileFormat == 'pdf') {
+                                createPDFFile(folder, v.files); 
+                            } else {
+                                createCSVFile(folder, v.files);
+                            }                            
+                        }
+                    });
+                } else if (event.type === 'exception') {
+                    showError(event.message);
+                    $('#downloadBtn').attr("disabled", false);
+                    $("#loading-modal").modal("hide");
+                } else {
+                    console.log('Unknown error during download result: ' + unescape(result));
+                    $('#downloadBtn').attr("disabled", false);
+                    $("#loading-modal").modal("hide");
+                }
+            },
+            {escape: false}
+        );
+    }
+
+    function createCSVFile(folder, files) {
+        var fileBody = '';
+
+        $.each(files, function(index1, file) {
+            $.each(file.table.body, function(index2, row) {
+                if((!fileBody && index2 == 0) || (index2 > 0)) {
+                    var r = '';
+                    $.each(row, function(index3, column) {
+                        var val = safeValueForCSV(column.text);
+                        r += val +',';  
+                    });
+
+                    r += (index2 == 0 ? '{!$Label.ISSP_FDS_CountryName}' : safeValueForCSV(file.countryName)) + '\n';
+                    fileBody +=  r;
+                }
+            });
+        });
+
+        var dt = new Date();
+        var csvFileName = folder.root.substring(0, folder.root.length-1) + ' ' + dt.getFullYear();
+        addCSVFileToFolder(folder, fileBody, csvFileName + ".csv");  
+    }
+
+    function safeValueForCSV(v) {
+        var val = v.replace(/(\r\n|\n|\r|\s+|\t|&#160;)/gm,' ');
+        val = val.replace(/"/g, '""');
+        val = val.replace(/ +(?= )/g,'');  
+        return v;
+    }
+
+    function addCSVFileToFolder(folder, file, filename) {
+        folder.file(filename, file);
+        generationCounter--;
+        if(generationCounter == 0) {
+            finishDownload();
+        }
+    }
+
+    function buildCSVFile(file) {
+        var rows = "";
+        $.each(file.table.body, function(index1, row) {
+            var r = [];
+            $.each(row, function(index2, column) {
+                var val = column.text.replace(/(\r\n|\n|\r|\s+|\t|&nbsp;)/gm,' ');
+                val = val.replace(/"/g, '""');
+                val = val.replace(/ +(?= )/g,'');
+                r.push(val);
+            });
+            rows += r.join(",");
+            rows += "\n";
+        });
+        return rows;
+    }
+
+    function createPDFFile(folder, files) {
+        $.each(files, function(index, file) {
+            var metafile = buildPDFFile(file);
+            var pdffile = pdfMake.createPdf(metafile);
+            pdffile.getBuffer(function(buffer) {
+                //addPDFFileToFolder(folder, new Blob([buffer], {type: 'application/pdf'}), file.fileName + ".pdf");
+                addPDFFileToFolder(folder, buffer, file.fileName + ".pdf");
+            }); 
+        });
+    }
+
+    function addPDFFileToFolder(folder, file, filename) {
+        folder.file(filename, file);
+        generationCounter--;
+        if(generationCounter == 0) {
+            finishDownload();
+        }
+    }
+
+    function finishDownload() {
+        zipFile.generateAsync({type:"blob"})
+        .then(function(content) {            
+            if(window.navigator.msSaveBlob) {
+                navigator.msSaveBlob(content, "Operational Calendars.zip");
+            } else {
+                var bContent = URL.createObjectURL(content);
+            var element = document.createElement('a');
+                element.setAttribute('href', bContent);
+            element.setAttribute('download', "Operational Calendars.zip");
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            }            
+            $('#downloadBtn').attr("disabled", false);
+            $("#loading-modal").modal("hide");
+        });
+    }
+
+    function applyTableStyle(rows, filename) {
+        var body = [];
+        var header = rows[0];     
+        body.push(header);   
+        for(var i=1; i<rows.length; i++) {
+            var row = rows[i];
+            var style = (i%2 == 0 ? "tableBodyEven" : "tableBodyOdd");
+            for(var j=0; j<row.length; j++) {
+                row[j].style = style;
+            }
+            body.push(rows[i]);
+        }
+
+        return body;
+    }
+
+    function buildPDFFile(data) {
+        var docDefinition = {
+            content: [
+                {
+                    alignment: "center",
+                    image: iata_logo,
+                    margin: [0,0,0,0]
+                },
+                {
+                    style: "title",
+                    text: data.fileName,
+                    margin: [0,0,0,12]
+                },
+                {                    
+                    layout: "noBorders",
+                    table: {
+                        headerRows: 1,
+                        body: applyTableStyle(data.table.body, data.fileName)
+                    }
+                }
+            ],
+            footer: function(page, pages) {
+                return {
+                    columns: [
+                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + moment().format('D MMM YYYY'),
+                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + data.lastModifiedDateStr,
+                        {
+                            alignment: 'right',
+                            text: ['\n',{ text: page.toString() },  ' / ', { text: pages.toString() }]
+                        }
+                    ],
+                    margin: [10, 0]
+                }
+            },
+            styles: {
+                title: {alignment: "center", fontSize: 15},
+                tableHeader: {bold: true, fontSize: 11, color: "white", fillColor: "#2d4154", alignment: "center"},
+                tableBodyEven: {},
+                tableBodyOdd: {fillColor: "#f3f3f3"},
+                tableFooter: {bold: true, fontSize: 11, color: "white", fillColor: "#2d4154"}
+            },
+            defaultStyles: {
+                fontSize: 10
+            },
+            pageOrientation: data.orientation,
+            pageSize: "A4"
+        }
+        
+        return docDefinition;
+    }
 </script>
 
 <div class="container" >
@@ -489,12 +802,15 @@
                     <label class="form-check-label" for="enableFiltersCheck">{!$Label.ISSP_OperationalCalendar_EnableFilters}</label>
                 </apex:outputPanel>
             </div>
-            <div class="col-sm-8">
+            <div class="{!IF(isAirline, 'col-sm-6', 'col-sm-8')}">
                 <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
             </div>
-            <div id="exportCSV" class="col-sm-2">
+            <div id="exportCSV" class="{!IF(isAirline, 'col-sm-4', 'col-sm-2')}" style="float: right; text-align: right;">
                 <span id="exportCSV"></span>
-                <span id="exportPDF" class="pull-right"></span>
+                <span id="exportPDF"></span>
+                <apex:outputPanel layout="none" rendered="{!isAirline}">
+                    <span id="advanced-filters" class="pull-right" style="margin-left: 1%"></span>
+                </apex:outputPanel>
             </div>
         </div>
         <div class="row">
@@ -578,6 +894,113 @@
         <!-- DATA TABLE -->
         <div id="table-container"></div>
 
+        <!-- WMO-388 -->
+        <apex:outputPanel layout="none" rendered="{!isAirline}">
+            <div id="custom-filters" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <apex:form id="adv-filters">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3 class="modal-title" style="color: rgb(32, 107, 164); text-align: center;">
+                                    {!$Label.ISSP_FDS_PopupTitle}
+                                </h3>
+                            </div>            
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                        <label for="typeOfDownload">{!$Label.ISSP_FDS_DownloadOpts}</label>
+                                        <select id="typeOfDownload" class="form-control required" onchange="changeTypeOfDownload(this);">
+                                            <option value="all">{!$Label.ISSP_FDS_AllCountries}</option>
+                                            <option value="allservices">{!$Label.ISSP_FDS_AllCountriesWithServices}</option>
+                                            <option value="custom" selected="selected">{!$Label.ISSP_FDS_ChooseCountries}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                        <label for="formatOfDownload">{!$Label.ISSP_FDS_FileFormat}</label>
+                                        <fieldset style="border-left: 3px solid #b22222 !important;" id="formatOfDownload">
+                                            <input style="margin-left: 2%;margin-right: 1%;" type="radio" name="formatFile" value="csv">CSV</input>
+                                            <input style="margin-left: 2%;margin-right: 1%;" type="radio" name="formatFile" value="pdf">PDF</input>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                        <c:ISSP_MultipicklistCmp
+                                            leftLabel="{!$Label.ISSP_FDS_Operations}" 
+                                            rightLabel="{!$Label.ISSP_FDS_OperationsSelected}"
+                                            leftOptions="{!operationsOpts}"
+                                            rightOptions="{!selectedOperations}"
+                                            compareKey="value"
+                                            size="4"
+                                            required="true"
+                                            identifier="operation-filter"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                        <c:ISSP_MultipicklistCmp
+                                            leftLabel="{!$Label.ISSP_FDS_Remittance}" 
+                                            rightLabel="{!$Label.ISSP_FDS_RemittanceSelected}"
+                                            leftOptions="{!remittancesOpts}"
+                                            rightOptions="{!selectedFrenquencies}"
+                                            compareKey="value"
+                                            size="4"
+                                            required="true"
+                                            identifier="remittance-filter"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div id="countrySelector" class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                        <c:ISSP_MultipicklistCmp
+                                            leftLabel="{!$Label.ISSP_FDS_Countries}" 
+                                            rightLabel="{!$Label.ISSP_FDS_CountriesSelected}"
+                                            leftOptions="{!countriesOpts}"
+                                            rightOptions="{!selectedCountries}"
+                                            compareKey="title"
+                                            size="8"
+                                            required="true"
+                                            identifier="country-filter"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="modal-footer">
+                                <button id="downloadBtn" type="button" class="btn btn-primary" onclick="downloadZip(); return false;">{!$Label.ISSP_FDS_Download}</button>
+                            </div>
+                        </apex:form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loading-modal" class="modal fade">
+                <div class="modal-dialog">
+                    <div id="loading-modal-content" class="modal-content">
+                        <div class="modal-body">
+                            <p style="text-align: center;">
+                                {!$Label.ISSP_OperationalCalendar_DownloadWarning}
+                            </p>
+                            <div style="text-align: center;">
+                                <div class="loader"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </apex:outputPanel>
     </div>
 
 </div>
