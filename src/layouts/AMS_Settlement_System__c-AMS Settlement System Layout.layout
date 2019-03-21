@@ -124,6 +124,16 @@
         <fields>Operation_Period_code__c</fields>
         <relatedList>operational_Calendar__c.ISS_operation__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Risk_Status__c</fields>
+        <fields>RHC_Amnt_Calc_Type__c</fields>
+        <fields>Limit_Cash_Condition__c</fields>
+        <fields>FS_Percentage__c</fields>
+        <fields>Min_FA_Points__c</fields>
+        <fields>Max_FA_Points__c</fields>
+        <relatedList>ANG_BSP_Attributes__c.BSP__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
