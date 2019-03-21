@@ -135,7 +135,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
 						ORDER BY ANG_AccountId__r.Name];
     	
-    	bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue];
+    	bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue ORDER BY Risk_Status__c];
     	
     	if(actionValue != 'Apply_RHC_regardless')
     		for(ANG_BSP_Attributes__c bsp : bspAttributes) 
