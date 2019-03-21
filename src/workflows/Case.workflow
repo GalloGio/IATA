@@ -4041,6 +4041,18 @@
         <template>Approval_notifications_DPC_Systems/Rejection_of_CR</template>
     </alerts>
     <alerts>
+        <fullName>X1st_email_on_CS_escalated_case</fullName>
+        <description>1st email on CS escalated case</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Escalation_1st_level_CS_managers</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/IFG_Internal_Case_Close_confirmation_e_mail_HTML_English</template>
+    </alerts>
+    <alerts>
         <fullName>sMAP_Inform_to_CM_Case_Owner</fullName>
         <description>sMAP - Deadline reached pending inputs inform CM &amp; Case Owner</description>
         <protected>false</protected>
@@ -11882,6 +11894,36 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>Process</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Escalation case 1st email</fullName>
+        <actions>
+            <name>X1st_email_on_CS_escalated_case</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - Global,Cases - China &amp; North Asia</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>notContain</operation>
+            <value>Recycle</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Escalation</value>
+        </criteriaItems>
+        <description>Sends an email to CS managers when the case has origin &quot;Escalated&quot;</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>External split for OPS Mgt cases</fullName>
