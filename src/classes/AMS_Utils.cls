@@ -2661,10 +2661,4 @@ public without sharing class AMS_Utils {
         return res;
     }
     /*** AMSU-195 End ***/
-    
-    public static Integer getRandomNumber(){
-    	Integer randomKey = Crypto.getRandomInteger();
-    	
-    	return randomKey < 0 ? randomKey * -1 : randomKey;
-    }
 }

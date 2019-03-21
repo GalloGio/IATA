@@ -1,0 +1,140 @@
+<apex:component controller="ISSP_CurrencyCenterReportListingCtrl">
+   
+    <apex:includeScript value="{!URLFOR($Resource.CurrencyCenter_Bootstrap, '/js/jquery.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.CurrencyCenter_Bootstrap, '/js/bootstrap.js')}"/>
+    
+    <style>
+        #reportList .ui-accordion-header {
+          font-size:14px;
+          font-weight:bold;
+          background-image:none;
+          background-color:#E6E6E6; /*7030A0;*/
+          color:#0075BC;
+        }
+        #reportList .ui-icon {
+            background-image: url(http://download.jqueryui.com/themeroller/images/ui-icons_0075BC_256x240.png);
+        }
+        #reportList .ui-widget-content{
+          border: 1px solid #e6e6e6;
+        }
+        #reportList .ui-widget-header{
+          border: 1px solid #e6e6e6;
+        }
+        #reportList .ui-state-active{
+          border: 1px solid #e6e6e6;
+        }
+        .reportName {
+            font-family: Verdana;
+            font-size:13px;
+            color: black !important;
+        }
+        
+    </style>
+
+    <div style="height: 490px;">
+        <div id="reportList">
+            <!-- Currency Repatriation -->
+            <apex:repeat var="sectionTitle" value="{!setOfSections}">
+                <h3> {!sectionTitle}</h3>
+                <div id="yearList">
+                    <apex:repeat var="yearTitle" value="{!setOfYearsSection}">
+                        <h3>{!yearTitle}</h3>
+                        <div  class="collapse test2" aria-expanded="false">
+                            <apex:repeat var="reportsmonth" value="{!mapOfYearsSection[yearTitle]}">
+                                <div>
+                                    <span class="glyphicon glyphicon-list-alt" style="color: #0075BC"/>&nbsp;
+                                    <apex:outputLink styleClass="reportName" value="/sfc/servlet.shepherd/version/download/{!reportsmonth.Id}">{!reportsmonth.MonthName}</apex:outputLink>
+                                </div>
+                             </apex:repeat>
+                        </div>
+                    </apex:repeat>
+                </div>
+            </apex:repeat>
+
+            <!-- Annual RBF -->
+            <apex:repeat var="sectionTitleRBF" value="{!sectionNameRBF}">
+                <h3>{!sectionTitleRBF}</h3>
+                <div>
+                    <table>
+                        <apex:repeat var="rbf" value="{!reportsMapRBF[sectionTitleRBF]}">
+                            <tr>
+                                <td class="reportName">
+                                    <span class="glyphicon glyphicon-list-alt" style="color: #0075BC"/>&nbsp;
+                                    <apex:outputLink styleClass="reportName" value="/sfc/servlet.shepherd/version/download/{!rbf.id}">{!rbf.YearName}</apex:outputLink>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </apex:repeat>
+
+            <!-- Blocked Funds Forum -->
+            <apex:repeat var="sectionTitleMisc" value="{!sectionNameMisc}">
+                <h3>{!sectionTitleMisc}</h3>
+                <div>
+                    <table>
+                        <apex:repeat var="misc" value="{!reportsMapMisc[sectionTitleMisc]}">
+                            <tr>
+                                <td class="reportName">
+                                    <span class="glyphicon glyphicon-list-alt" style="color: #0075BC"/>&nbsp;
+                                    <apex:outputLink styleClass="reportName" value="/sfc/servlet.shepherd/version/download/{!misc.id}">{!misc.YearName} </apex:outputLink>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </apex:repeat>
+        </div>
+    </div>
+
+<!--
+			<div>
+				<table>
+					<apex:repeat var="cv" value="{!reportsMap[sectionTitle]}">
+						<tr>
+							<td class="reportName">
+			                    <apex:outputLink value="/{!cv.id}"> {!cv.description} </apex:outputLink>
+			                </td>
+						</tr>
+					</apex:repeat>
+				</table>
+			</div>
+-->            
+
+
+	<script>
+        $( function() {
+            var icons = {
+                header: "ui-icon-triangle-1-s",
+                activeHeader: "ui-icon-triangle-1-n"
+            };
+            $( "#reportList" ).accordion({
+                icons: icons,
+                heightStyle: "fill"
+            });
+            $( "#yearList" ).accordion({
+                icons: icons,
+                heightStyle: "content"
+            });
+            $(".toolbar a").on("click", null, null, function(event) {
+                window.location.href = $(this).attr("href");
+                event.preventDefault();
+            });
+        });
+
+        
+        var anc = document.getElementsByClassName("test1");
+        for (var t=0; t<anc.length; t++ ) {
+            anc[t].href = anc[t].href.replace(/\%20/g, '-');
+        } 
+
+        var div = document.getElementsByClassName("test2");
+        for (var t=0; t<div.length; t++ ) {
+            console.log(div[t].previousElementSibling.href);
+            var newID = div[t].previousElementSibling.href;
+            var realID = newID.split("#");
+           div[t].id = realID[1];
+        } 
+        
+    </script>
+</apex:component>

@@ -132,6 +132,8 @@ global without sharing class ISSP_OperationalCalendarController {
         } else {
             this.description = this.defaultcountryTranslated + ' ' + this.defaultOperationType;
         }
+
+        initAdvFilters();
     }
     
     public Set<Id> getSetIds(list<sObject> listObject) {
@@ -190,10 +192,10 @@ global without sharing class ISSP_OperationalCalendarController {
             }
         }
         // countries
-        String fieldName = getIsoCountryFieldName();
+        //String fieldName = getIsoCountryFieldName();
         map<String,IATA_ISO_Country__c> mapNameCountry = new map<String,IATA_ISO_Country__c>();
         for (IATA_ISO_Country__c country : IATAIsoCountryDAO.getIsoCountriesByIds(setCountryId)) {
-            String countryName = (String)country.get(fieldName);
+            String countryName = country.Name;
             if (countryName==null) countryName = country.Name;
             mapNameCountry.put(countryName, country);
             if (country.Id == this.defaultCountry) this.defaultcountryTranslated = countryName;
@@ -603,6 +605,281 @@ global without sharing class ISSP_OperationalCalendarController {
             this.disclaimerLabelName = disclaimer.Label__c;
         } catch (Exception e) {
             this.disclaimerLabelName = null;
+        }
+    }
+
+
+    /*** WMO-388 ***/
+    public List<SelectOption> operationsOpts {get;set;}
+    public List<SelectOption> remittancesOpts {get;set;}
+    public List<SelectOption> countriesOpts {get;set;}
+
+    public void initAdvFilters() {
+        Schema.DescribeFieldResult operations = Schema.operational_Calendar__c.Operation_Type__c.getDescribe();
+        Schema.DescribeFieldResult remittances = Schema.Account.Remittance_frequency__c.getDescribe();
+        operationsOpts = buildFilter(operations.getPicklistValues());
+        remittancesOpts = buildFilter(remittances.getPicklistValues());
+        countriesOpts = this.countryOptions.clone();
+        countriesOpts.remove(0);
+    }
+
+    private List<SelectOption> buildFilter(List<Schema.PicklistEntry> ple) {
+        List<SelectOption> options = new List<SelectOption>();
+        for(Schema.PicklistEntry pickListVal : ple){
+            options.add(new SelectOption(pickListVal.getValue(), pickListVal.getLabel()));
+        }
+
+        options.sort();
+        
+        return options;
+    }
+
+    public List<SelectOption> selectedOperations {
+        get {
+            if(selectedOperations == null) {
+                selectedOperations = new List<SelectOption>();
+            }
+            return selectedOperations;
+        }
+        set;
+    }
+
+    public List<SelectOption> selectedFrenquencies {
+        get {
+            if(selectedFrenquencies == null) {
+                selectedFrenquencies = new List<SelectOption>();
+            }
+            return selectedFrenquencies;
+        }
+        set;
+    }
+
+    public List<SelectOption> selectedCountries {
+        get {
+            if(selectedFrenquencies == null) {
+                selectedFrenquencies = new List<SelectOption>();
+            }
+            return selectedFrenquencies;
+        }
+        set;
+    }
+
+    @RemoteAction
+    public static ZipFileWrapper createZipFile(String option, List<String> operations, List<String> remittance, List<Id> countries, Id accountId) {
+        System.debug('countries: ' + countries);
+
+        ZipFileWrapper zfw = new ZipFileWrapper(Label.ISSP_OperationalCalendar + ' - ' + Datetime.now());
+        Schema.FieldSet cassFields = SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_CASS_Airline;
+        Schema.FieldSet bspFields = SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_BSP_Airline;
+        
+        Map<String,FolderWrapper> mapFolders = new Map<String,FolderWrapper>();        
+        for(String operation : operations) {
+            mapFolders.put(operation, new FolderWrapper(operation));
+        }
+
+        Map<Id,Set<IATA_ISO_Country__c>> countriesByOperationMap = fetchCountriesOperations(option, countries, accountId);
+        Set<Id> operationsIds = countriesByOperationMap.keySet();
+
+        String queryStr = 'SELECT Id,RecordTypeId,First_Day__c,Frequency_code__c,HAR_Day__c,ISS_operation__c,Last_Day__c,Name,Operation_Code__c,'
+            + ' Operation_Currency__c,Operation_Period_code__c,Operation_Type__c,Period_Code__c,Remittance_Day__c,Settlement_Day__c,'
+            + ' EP_Settlement_date__c, Billing_Availability__c, Airline_Input_Upload_Cut_Off__c, CASS_reports_Availability__c,'
+            + ' Agent_Correction_Cut_Off__c, Airline_Correction_Response_Cut_Off__c, LastModifiedDate,ISS_operation__r.Name'
+            + ' FROM Operational_Calendar__c'
+            + ' WHERE First_Day__c = THIS_YEAR AND ISS_operation__c IN :operationsIds ';
+
+        List<String> conditions = new List<String>();
+        if(operations != null && !operations.isEmpty()) {
+            conditions.add(' Operation_Type__c IN (\''+ String.join(operations, '\',\'') +'\') ');
+        }
+        if(remittance != null && !remittance.isEmpty()) {
+            conditions.add(' Frequency_Code__c IN (\''+ String.join(remittance, '\',\'') +'\') ');
+        }
+        if(!conditions.isEmpty()) {
+            queryStr += ' AND' + String.join(conditions, ' AND ');
+        }
+        queryStr += ' ORDER BY Settlement_Day__c';
+
+        System.debug('queryStr: ' + queryStr);
+        //List<Operational_Calendar__c> operationsCalendar = (List<Operational_Calendar__c>) Database.query(queryStr); 
+
+        Map<String,Map<String,FileWrapper>> mapFilesByFolder = new Map<String,Map<String,FileWrapper>>();
+        Integer currentYear = Date.today().year();
+
+        //System.debug('Operations: ' + operationsCalendar);
+
+        for(Operational_Calendar__c opc : Database.query(queryStr)) {            
+            Schema.FieldSet fieldSchema = opc.Operation_Type__c.contains('BSP') ? bspFields : cassFields;
+            List<Schema.FieldSetMember> fieldsList = fieldSchema.getFields();
+            String orientation = fieldsList.size() > 6 ? 'landscape' : 'portrait';
+            List<CellWrapper> row = createRow(opc, fieldsList, 'tableBodyOdd');
+            Set<IATA_ISO_Country__c> countriesByOperationSet = countriesByOperationMap.get(opc.ISS_operation__c);
+            Map<String,FileWrapper> filesByCountryOp = mapFilesByFolder.get(opc.Operation_Type__c);
+            if(filesByCountryOp == null) {
+                filesByCountryOp = new Map<String,FileWrapper>();
+                mapFilesByFolder.put(opc.Operation_Type__c, filesByCountryOp);
+            }
+            for(IATA_ISO_Country__c country : countriesByOperationSet) {
+                FileWrapper countryFile = filesByCountryOp.get(country.Name);
+                if(countryFile == null) {
+                    String fileName = Label.ISSP_OperationalCalendar + ' ' + country.Name + '-' + opc.Operation_Type__c + ' ' + currentYear;
+                    countryFile = new FileWrapper(fileName, orientation, fieldsList, country.Name);
+                    filesByCountryOp.put(country.Name, countryFile);
+                }
+                if(countryFile.lastModifiedDate < opc.LastModifiedDate.date()) {
+                    countryFile.lastModifiedDate = opc.LastModifiedDate.date();
+                }
+                countryFile.table.body.add(row);
+            }
+
+            System.debug('countriesByOperationSet: ' + countriesByOperationSet);
+        }  
+
+        for(String folderName : mapFilesByFolder.keySet()) {
+            FolderWrapper fw = mapFolders.get(folderName);
+            Map<String,FileWrapper> filesMap = mapFilesByFolder.get(folderName);
+            if(filesMap != null && !filesMap.isEmpty()) {
+                fw.files.addAll(filesMap.values());
+            }
+
+            zfw.nrOfFiles += fw.files.size();
+        }
+
+        zfw.folders.addAll(mapFolders.values());
+        return zfw;
+    }
+
+    private static Map<Id,Set<IATA_ISO_Country__c>> fetchCountriesOperations(String option, List<Id> countries, Id accountId) {
+        Map<Id,Set<IATA_ISO_Country__c>> mapOperationsToCountries = new Map<Id,Set<IATA_ISO_Country__c>>();
+        List<IATA_ISO_Country__c> lstCountries;
+
+        if(option == 'allservices') {
+            List<Services_Rendered__c> services = [SELECT ISO_Country_Code__c
+                                                   FROM Services_Rendered__c 
+                                                   WHERE Services_Rendered_to_Airline__c = :accountId AND ISO_Country_Code__c <> null];
+            Set<String> countryCodes = new Set<String>();
+            for(Services_Rendered__c service : services) {
+                countryCodes.add(service.ISO_Country_Code__c);
+            }
+
+            lstCountries = IATAIsoCountryDAO.getIsoCountryByIsoCodes(countryCodes);
+        } else if (option == 'custom') {
+            lstCountries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>(countries));
+        } else {//all
+            lstCountries = IATAIsoCountryDAO.getIsoCountries();
+        }
+
+        for(IATA_ISO_Country__c country : lstCountries) {
+            if(country.AMS_Settlement_System__c != null) {
+                Set<IATA_ISO_Country__c> setCountries = mapOperationsToCountries.get(country.AMS_Settlement_System__c);
+                if(setCountries == null) {
+                    setCountries = new Set<IATA_ISO_Country__c>();
+                    mapOperationsToCountries.put(country.AMS_Settlement_System__c, setCountries);
+                }
+                setCountries.add(country);
+            }
+
+            if(country.AMS_Settlement_System_CASS__c != null) {
+                Set<IATA_ISO_Country__c> setCountries = mapOperationsToCountries.get(country.AMS_Settlement_System_CASS__c);
+                if(setCountries == null) {
+                    setCountries = new Set<IATA_ISO_Country__c>();
+                    mapOperationsToCountries.put(country.AMS_Settlement_System_CASS__c, setCountries);
+                }
+                setCountries.add(country);
+            }
+        }
+
+        return mapOperationsToCountries;
+    }
+
+    private static List<CellWrapper> createRow(Operational_Calendar__c opCalendar, List<Schema.FieldSetMember> fieldsList, String rowStyle) {
+        List<CellWrapper> res = new List<CellWrapper>();
+        for(Schema.FieldSetMember member : fieldsList) {
+            String fieldApiName = member.getFieldPath();
+            Object untypedVal = opCalendar.get(fieldApiName);
+            String val = member.getType() == Schema.DisplayType.Date ? formatDate((Date) untypedVal) : safeValue(untypedVal);
+            res.add(new CellWrapper(rowStyle, val));
+        }
+        return res;
+    }
+
+    private static String formatDate(Date dt) {
+        if(dt != null) {
+            Datetime dtOut = Datetime.newInstance(dt.year(), dt.month(), dt.day(), 0,0,0);   
+            return dtOut.format('d MMM yyyy');
+        } else {
+            return '';
+        }
+    }
+
+    private static String safeValue(Object val) {
+        return val == null ? '' : String.valueOf(val);
+    }
+
+    public class ZipFileWrapper {
+        public String zipFileName {get;set;}
+        public List<FolderWrapper> folders {get;set;}
+        public Integer nrOfFiles {get;set;}
+
+        public ZipFileWrapper(String zipFileName) {
+            this.zipFileName = zipFileName;
+            this.folders = new List<FolderWrapper>();
+            this.nrOfFiles = 0;
+        }
+    }
+
+    public class FolderWrapper {
+        public String folderName {get;set;}
+        public List<FileWrapper> files {get;set;}
+
+        public FolderWrapper(String folderName) {
+            this.folderName = folderName;
+            this.files = new List<FileWrapper>();
+        }
+    }
+
+    public class FileWrapper {
+        public Date lastModifiedDate {
+            get;
+            set {
+                lastModifiedDate = value;
+                lastModifiedDateStr = formatDate(lastModifiedDate);
+            }
+        }
+        public String lastModifiedDateStr {get;set;}
+        public String fileName {get;set;}
+        public String countryName {get;set;}
+        public String orientation {get;set;}
+        public TableBodyWrapper table {get;set;}
+
+        public FileWrapper(String fileName, String orientation, List<Schema.FieldSetMember> fieldsList, String countryName) {
+            this.fileName = fileName;
+            this.countryName = countryName;
+            this.orientation = orientation;
+            this.table = new TableBodyWrapper(fieldsList);
+            this.lastModifiedDate = Date.newInstance(1900, 1, 1);
+        }
+    }
+
+    public class TableBodyWrapper {        
+        public List<List<CellWrapper>> body {get;set;} 
+
+        public TableBodyWrapper(List<Schema.FieldSetMember> fieldsList) {
+            this.body = new List<List<CellWrapper>>();
+            List<CellWrapper> headerRow = new List<CellWrapper>();
+            for(Schema.FieldSetMember member : fieldsList) {
+                headerRow.add(new CellWrapper('tableHeader', member.getLabel()));
+            }
+            this.body.add(headerRow);
+        }
+    }
+
+    public class CellWrapper {
+        public String style {get;set;}
+        public String text {get;set;}
+
+        public CellWrapper(String style, String text) {
+            this.style = style;
+            this.text = text;
         }
     }
 }

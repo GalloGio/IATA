@@ -55,16 +55,17 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
         system.debug('AMS_2_MDM_Batch: countryIsoCodes - ' + countryIsoCodes);    
 
-        //FM AMSU-116
-        //List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c 
-        //                                                                        FROM AMS_Change_Codes_Billable_Setup__c where Country_To_Exclude__c in :countryIsoCodes];
-        List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c, Location_Type_To_Exclude__c 
-                                                                                FROM AMS_Change_Codes_Billable_Setup__c where Country_To_Exclude__c in :countryIsoCodes];
+        //WMO-456 added special remarks
+        List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = new List<AMS_Change_Codes_Billable_Setup__c>();
+        for(AMS_Change_Codes_Billable_Setup__c bchangeCodeExclude : [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c, Location_Type_To_Exclude__c, Special_Remarks__c 
+                                                                                FROM AMS_Change_Codes_Billable_Setup__c]) {
 
-        system.debug('AMS_2_MDM_Batch: lChangeCodesBillableSetup - ' + lChangeCodesBillableSetup);
+            if(countryIsoCodes.contains(bchangeCodeExclude.Country_To_Exclude__c) || String.isNotBlank(bchangeCodeExclude.Special_Remarks__c)) 
+                lChangeCodesBillableSetup.add(bchangeCodeExclude); 
+        }
 
         //lstAccount = [SELECT Id, Name, Location_Class__c, Country_ISO_Code__c FROM Account WHERE id in :setAccountKeys];
-        lstAccount = [SELECT Id, Name, Location_Class__c, Location_Type__c,Country_ISO_Code__c FROM Account WHERE id in :setAccountKeys]; //FM AMSU-116
+        lstAccount = [SELECT Id, Name, Location_Class__c, Location_Type__c,Country_ISO_Code__c, Special_Remarks__c FROM Account WHERE id in :setAccountKeys]; //FM AMSU-116 //WMO-456
         system.debug('AMS_2_MDM_Batch: lstAccount - ' + lstAccount);
         for(Account auxAccount :lstAccount){
             //system.debug('AMS_2_MDM_Batch: auxAccount - ' + auxAccount);
@@ -104,15 +105,23 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
                     //FM AMSU-116
                     Boolean bLocation_Type_To_Exclude_Empty = ccbs.Location_Type_To_Exclude__c == null ? true : false;
                     Boolean bLocation_Type_To_Exclude_Contains = false;
-                    if(!bLocation_Type_To_Exclude_Empty) bLocation_Type_To_Exclude_Contains = ccbs.Location_Type_To_Exclude__c.containsIgnoreCase(auxAccAccount.Location_Type__c) ? true : false;
+                    if(!bLocation_Type_To_Exclude_Empty) {
+                        bLocation_Type_To_Exclude_Contains = ccbs.Location_Type_To_Exclude__c.containsIgnoreCase(auxAccAccount.Location_Type__c) ? true : false;
+                    }
 
-                    if(au.Change_Code__c == ccbs.Change_Code__c 
-                        && auxAccAccount.Country_ISO_Code__c == ccbs.Country_To_Exclude__c 
+                    //WMO-456                   
+                    Boolean excludeSpecialRemarks = String.isNotBlank(ccbs.Special_Remarks__c) && String.isNotBlank(auxAccAccount.Special_Remarks__c) && 
+                        auxAccAccount.Special_Remarks__c.split(';').contains(ccbs.Special_Remarks__c) && 
+                        auxAccAccount.Location_Class__c == ccbs.Location_Class_To_Exclude__c && 
+                        ( bLocation_Type_To_Exclude_Empty || bLocation_Type_To_Exclude_Contains); 
+                    Boolean excludeByCountry = auxAccAccount.Country_ISO_Code__c == ccbs.Country_To_Exclude__c 
                         && auxAccAccount.Location_Class__c == ccbs.Location_Class_To_Exclude__c
-                        && ( bLocation_Type_To_Exclude_Empty || bLocation_Type_To_Exclude_Contains)){  //FM AMSU-116
+                        && ( bLocation_Type_To_Exclude_Empty || bLocation_Type_To_Exclude_Contains);
                         
+                    if(au.Change_Code__c == ccbs.Change_Code__c && (excludeByCountry || excludeSpecialRemarks)){  //FM AMSU-116 //WMO-456                        
                         bToSend = false;                            
                     }
+                    
                 }
 
                 if(bToSend){
