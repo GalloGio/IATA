@@ -1414,9 +1414,9 @@ Completed: Process is complete</inlineHelpText>
         <columns>Applicable_Fee__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>VER_Number__c</field>
+            <field>NAME</field>
             <operation>equals</operation>
-            <value>5036044374</value>
+            <value>IDCA-212091</value>
         </filters>
         <label>For specific IDCA</label>
         <language>en_US</language>

@@ -3695,6 +3695,18 @@
         <template>SIS_Help_Desk/SIS_Email_notification_to_SIS_Ops_team_for_review_and_acceptance</template>
     </alerts>
     <alerts>
+        <fullName>SIS_EInvoicing_Case_confirmation_Send_Notification</fullName>
+        <description>Send a notification to portal user who submitted a SIS E-Joining form</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>SIS_E_Invoicing/SIS_E_Invoicing_Case_confirmation_online_HTML_English</template>
+    </alerts>
+    <alerts>
         <fullName>SIS_Escalated_Case_Assignment</fullName>
         <description>SIS Escalated Case Assignment</description>
         <protected>false</protected>
@@ -3845,6 +3857,18 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Workflow_and_Metrics_team/Salesforce_Change_Request_UAT_Required_Reminder</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_a_notification_to_SIS_Customer_Support_when_a_SIS_E_Joining_form_is_submitt</fullName>
+        <description>Send a notification to SIS Customer Support when a SIS E-Joining form is submitted</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SISCustomerSupport</recipient>
+            <type>role</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>SIS_E_Invoicing/SIS_E_Invoicing_New_Form_submitted_internal_use</template>
     </alerts>
     <alerts>
         <fullName>Send_an_email_as_soon_as_a_case_is_created_for_IDCard_Application</fullName>
@@ -4015,6 +4039,18 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Approval_notifications_DPC_Systems/Rejection_of_CR</template>
+    </alerts>
+    <alerts>
+        <fullName>X1st_email_on_CS_escalated_case</fullName>
+        <description>1st email on CS escalated case</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Escalation_1st_level_CS_managers</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/IFG_Internal_Case_Close_confirmation_e_mail_HTML_English</template>
     </alerts>
     <alerts>
         <fullName>sMAP_Inform_to_CM_Case_Owner</fullName>
@@ -11860,6 +11896,36 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Escalation case 1st email</fullName>
+        <actions>
+            <name>X1st_email_on_CS_escalated_case</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - Global,Cases - China &amp; North Asia</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.OwnerId</field>
+            <operation>notContain</operation>
+            <value>Recycle</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>Escalation</value>
+        </criteriaItems>
+        <description>Sends an email to CS managers when the case has origin &quot;Escalated&quot;</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>External split for OPS Mgt cases</fullName>
         <actions>
             <name>External_OPS_Mgt_cases</name>
@@ -17828,6 +17894,17 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>MITA Interline Agreements</value>
         </criteriaItems>
         <description>the query is reopened and assigned to SIN complaint team</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>SIS E-Joining - Case Submitted Notification</fullName>
+        <actions>
+            <name>SIS_EInvoicing_Case_confirmation_Send_Notification</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>When a new case for SIS E-Joining is submitted( its status changes from Draft to Open) this notification is sent</description>
+        <formula>AND(   RecordType.DeveloperName=&apos;IDFS_Airline_Participation_Process&apos;,   ISPICKVAL(CaseArea__c,&apos;Airline Joining&apos;),   ISPICKVAL(Reason1__c,&apos;SIS Client&apos;),   ISPICKVAL(Classification_SIS__c,&apos;SIS Membership&apos;),   ISPICKVAL(Status,&apos;For Review and Acceptance&apos;),   ISPICKVAL($User.UserType,&apos;PowerPartner&apos;) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

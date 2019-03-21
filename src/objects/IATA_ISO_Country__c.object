@@ -227,7 +227,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <label>EasyPay Model</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1472,6 +1472,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <fullName>Croatia</fullName>
                     <default>false</default>
                     <label>Croatia</label>
+                </value>
+                <value>
+                    <fullName>Cuba</fullName>
+                    <default>false</default>
+                    <label>Cuba</label>
                 </value>
                 <value>
                     <fullName>Cyprus</fullName>
