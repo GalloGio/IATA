@@ -47,7 +47,7 @@
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -61,6 +61,7 @@
         <relationshipLabel>BSP Attributes</relationshipLabel>
         <relationshipName>BSP_Attributes</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -84,6 +85,7 @@ X-Handling Agents and Shipping Lines
 J-Joint Vent</inlineHelpText>
         <label>Class Type</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -196,6 +198,7 @@ J-Joint Vent</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
     </fields>
@@ -205,6 +208,7 @@ J-Joint Vent</inlineHelpText>
         <description>Has Limit Cash Condition?</description>
         <externalId>false</externalId>
         <label>Limit Cash Condition</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -216,6 +220,7 @@ J-Joint Vent</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -227,6 +232,7 @@ J-Joint Vent</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -241,6 +247,7 @@ J-Joint Vent</inlineHelpText>
         <relationshipLabel>BSP Attributes</relationshipLabel>
         <relationshipName>BSP_Attributes</relationshipName>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -250,6 +257,7 @@ J-Joint Vent</inlineHelpText>
         <externalId>false</externalId>
         <label>RHC Amount Calculation Type</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -275,6 +283,7 @@ J-Joint Vent</inlineHelpText>
         <externalId>false</externalId>
         <label>Remittance Frequency</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -318,6 +327,7 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -327,6 +337,7 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <externalId>false</externalId>
         <label>Risk Status</label>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -342,6 +353,7 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <label>UniqueKey</label>
         <length>100</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -350,9 +362,11 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
     <nameField>
         <displayFormat>{0}</displayFormat>
         <label>Name</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>BSP Attributes</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Cash_Condition_Conf</fullName>
         <active>true</active>
