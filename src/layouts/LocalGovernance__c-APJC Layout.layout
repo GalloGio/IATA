@@ -167,6 +167,9 @@
         <fields>Date_Legal_Requested_to_Sign_Off_Minutes__c</fields>
         <relatedList>LocalGovernance_Meeting__c.Local_Governance__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>

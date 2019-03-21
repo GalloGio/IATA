@@ -1,11 +1,10 @@
 global class ISSP_SISMembershipApplication_Ctrl {
 
     public static final String APP_NAME = 'Join SIS e-Invoicing';
-    public static final Id CASE_RT_AIRLINE_PARTICIPATION = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('IDFS_Airline_Participation_Process').getRecordTypeId();
-    public static final Map<String,Schema.RecordTypeInfo> MAP_AP_RT = Schema.SObjectType.AP_Process_Form__c.getRecordTypeInfosByDeveloperName();
-    public static final Id AP_RT_ISPA = MAP_AP_RT.get('SIS_Application_ISPA').getRecordTypeId();
-    public static final Id AP_RT_ISUA = MAP_AP_RT.get('SIS_Application_ISUA').getRecordTypeId();
-    public static final Id AP_RT_TOU  = MAP_AP_RT.get('SIS_Application_TOU').getRecordTypeId();
+    public static final Id CASE_RT_AIRLINE_PARTICIPATION = RecordTypeSingleton.getInstance().getRecordTypeId('Case','IDFS_Airline_Participation_Process');
+    public static final Id AP_RT_ISPA = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_ISPA');
+    public static final Id AP_RT_ISUA = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_ISUA');
+    public static final Id AP_RT_TOU  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_TOU');
     public static final Map<Id,String> MAP_RECORDTYPE_FORMS = new Map<Id,String>{
         AP_RT_ISPA => 'ISPA',
         AP_RT_ISUA => 'ISUA',
@@ -83,7 +82,7 @@ global class ISSP_SISMembershipApplication_Ctrl {
         this.account = [
             SELECT Id,Name,Legal_name__c,Status__c,Country_ISO_Code__c,
                 Sector__c, Category__c,Airline_Prefix__c,Airline_designator__c,
-                Give_SIS_Membership__c,SIS_Status__c,SIS_Sub_Status__c,
+                Give_SIS_Membership__c,SIS_Status__c,SIS_Sub_Status__c, Region_formula__c,
                 BillingStreet,BillingCity,BillingState,BillingPostalCode,BillingCountry
             FROM Account
             WHERE Id = :hqAccountId];
@@ -184,6 +183,7 @@ global class ISSP_SISMembershipApplication_Ctrl {
                 CaseArea__c = 'Airline Joining',
                 Reason1__c = 'SIS Client',
                 Classification_SIS__c = 'SIS Membership',
+                Region__c = account.Region_formula__c,
                 Type = selectedType,
                 Defect_Issue__c = MAP_DEFECT_ISSUE.get(selectedType),
                 Subject = 'SIS Participation - ' + account.name + ' - ' + selectedType,

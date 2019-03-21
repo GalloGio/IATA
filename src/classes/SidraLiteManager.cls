@@ -231,6 +231,8 @@ public with sharing class SidraLiteManager {
             SidraLiteHelperForSMAP.checkBussinessRules(parentCase);
         } else if (parentCase.RecordtypeId == RECORDTYPE_OSCAR) {
             SidraLiteHelperForOSCAR.checkBussinessRules(parentCase);
+        } else if (parentCase.RecordtypeId == RECORDTYPE_SIDRA) {
+            SidraLiteHelperForSIDRA.checkBussinessRules(parentCase);
         } else {
             throw new SidraLiteException('This case recordtype is not allowed');
         }
@@ -542,6 +544,9 @@ public with sharing class SidraLiteManager {
         }
         if (parentCase.RecordtypeId == RECORDTYPE_OSCAR) {
             return SidraLiteHelperForOSCAR.getRelatedCase(parentCase);
+        }
+        if (parentCase.RecordtypeId == RECORDTYPE_SIDRA) {
+            return getRelatedCaseDefault(parentCase);
         }
         return null;
     }

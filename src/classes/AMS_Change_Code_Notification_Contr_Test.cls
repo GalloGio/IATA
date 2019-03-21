@@ -148,7 +148,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		);
 		insert con;
 
-		Id caseRecrdType = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+		Id caseRecrdType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 
 		Case ccase = new Case();
 				ccase.AccountId = msoAccount.Id;
@@ -158,8 +158,6 @@ private class AMS_Change_Code_Notification_Contr_Test {
 				ccase.Remittance_Period__c='20180615W';
         		ccase.Late_Payment_Date__c = Date.today();	
 		insert ccase;
-
-		RecordTypeInfo rtInfo = Schema.SObjectType.AmazonFile__c.getRecordTypeInfosByName().get('File');
 
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
 		insert Amazon_Cred;
@@ -195,7 +193,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 		AmazonFile__c azFile = new AmazonFile__c(
 				Name='ICE POP' + ' ' + '20180615W' + ' ' + '13737.04',
-				RecordTypeId = rtInfo.getRecordTypeId(),
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'File'),
 				Remittance_Period__c = '20180615W',
 				Category__c = 'ICE POP',
 				File_Identifier_picklist__c = 'ICE_POP',

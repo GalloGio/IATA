@@ -55,6 +55,8 @@ public without sharing class AMS_Utils {
     public static final String AE = 'AE';
 
     public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
+    public static final String PORTAL_APP_ACCESS_REQUESTED = 'Access Requested';
+    public static final String PORTAL_APP_ACCESS_DENIED = 'Access Denied';
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
@@ -91,6 +93,7 @@ public without sharing class AMS_Utils {
     public static final String NGVR             = 'VR.1.0';
     public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
     public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
+    public static final String NGGDI            = 'ANG.GDI.1.0';
 
     public static final String NGCHINACONVERSION  = 'ANG.MAJOR.CHANGES.CHINA.1.0'; //ACAMBAS - NEWGEN-4445
  
@@ -112,7 +115,7 @@ public without sharing class AMS_Utils {
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
-	//AMSU-162
+    //AMSU-162
     public static final Set<String> AMS_ProcessesAddressToValidate = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA, new_MSO};
 
     //AMSU-180
@@ -149,22 +152,30 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWGENFOP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGFormsOfPayment');
     public static final String RECTYPE_NEWGENOPTINOUT  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_FS_OPTINOUT');
     public static final String RECTYPE_NEWGENANNUALREVAL = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_ANNUAL_REVALIDATION');
-    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
+    public static final String RECTYPE_BANK_ACCOUNT_SETUP    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','BANK_ACCOUNT_SETUP');
+    public static final String RECTYPE_IEPMODELA    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_A_ONBOARDING');
+    public static final String RECTYPE_IEPMODELB    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_MODEL_B_SCREENING');
+    public static final String RECTYPE_GDI          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
 
     public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
     public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
     public static final String RECTYPE_SIDRA        = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
     public static final String RECTYPE_IFAP         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
+
     public static final String RECTYPE_IATAAGENCY   = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
     
     public static final String RECTYPE_IATAEASYPAY  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c', 'IATA_EasyPay_Opt_in_Out');
-    public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Accreditation_Requirement__c', 'IEP_Model_A');
 
-    public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Settlement_System__c','BSP');
+    public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c','IEP_Model_A');
 
+    public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+
+    public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
+
+    public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP};
 
     //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
 
@@ -290,7 +301,7 @@ public without sharing class AMS_Utils {
     public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
     public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
     public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES}; 
-	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
+    public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
 
     public static final String OPEN = 'Open';
     public static final String NO_IEP_ACCOUNT = 'No IEP Account';
@@ -307,8 +318,8 @@ public without sharing class AMS_Utils {
 
     //Mass created FOP case/OSCAR is assigned to one of theses queues when created:
     public static final Set<String> MASS_FOP_QUEUES = new Set<String>{'NewGen PCI - Africa & Middle East','NewGen PCI - Americas','NewGen PCI - Asia & Pacific','NewGen PCI - China & North Asia','NewGen PCI - Europe'};
-	
-	/* AMSU-139 */
+    
+    /* AMSU-139 */
     public static final String REJECTED = 'Rejected';
     public static final String REJECTED_CLOSED = 'Rejected Closed';
     public static final String ACCEPTED = 'Accepted';
@@ -1476,7 +1487,7 @@ public without sharing class AMS_Utils {
                         if(oscarAcctDB.get(key) != oscarOnlineAccreditation.get(value)) {
                             accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
                             System.debug('ADDED ENTRY :' + value + ':' + oscarOnlineAccreditation.get(value));
-                    	}
+                        }
                     }
                 }
             }
@@ -2305,7 +2316,7 @@ public without sharing class AMS_Utils {
 
         return lRes;
     }
-	
+    
     //AMSU-112
     public static String replaceTabCharcter(String str) {
         return String.isBlank(str) ? str : str.replaceAll('\t', ' ');
@@ -2650,4 +2661,10 @@ public without sharing class AMS_Utils {
         return res;
     }
     /*** AMSU-195 End ***/
+    
+    public static Integer getRandomNumber(){
+    	Integer randomKey = Crypto.getRandomInteger();
+    	
+    	return randomKey < 0 ? randomKey * -1 : randomKey;
+    }
 }

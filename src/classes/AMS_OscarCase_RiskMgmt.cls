@@ -65,9 +65,14 @@ public class AMS_OscarCase_RiskMgmt {
 			System.debug('[AMS_OscarCase_RiskMgmt] : Entering CreateRiskChangeCode STEP1');
 
 			list<case> lsAPDToCreate = new list<case>();
+
+			//get all parent cases Ids
+			Set<Id> parentCasesIds = new Set<Id>();
+
 			//INC305031 changed the query from for to list;
-			List<Case> listCases = [select id, AccountId, (select id from Hierarchy_Account_Selections__r) from Case where id in:mapTrgNew.keyset()];
+			List<Case> listCases = [select id, AccountId, ParentId, Parent.RecordTypeId, Parent.AccountId, (select id from Hierarchy_Account_Selections__r) from Case where id in:mapTrgNew.keyset()];
 			for(case c: listCases){
+				parentCasesIds.add(c.ParentId);
 				if(c.Hierarchy_Account_Selections__r.isEmpty())
 					lsAPDToCreate.add(c);
 			}
@@ -79,9 +84,13 @@ public class AMS_OscarCase_RiskMgmt {
 			for(AMS_Process_Detail__c apd:[select id, HOId__c, Case__c, Account__c from AMS_Process_Detail__c where case__c in:mapTrgNew.keyset()])
 				mapAllHOs.put(apd.Account__c, apd.HOId__c);
 
-			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId, CNS_Agency__c, Default_date__c
+			Map<Id,Account> allAccsMap = new Map<Id,Account>([select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, 
+							ParentId, Parent.ParentId, CNS_Agency__c, Default_date__c, ANG_IsNewGenAgency__c,
+							(SELECT Id, RecordTypeId, CreatedDate, AccountId, Status FROM Cases WHERE RecordTypeId = :AMS_Utils.RECTYPE_IFAP AND Id NOT IN :parentCasesIds)
 							from Account
-							where id in:mapAllHOs.keyset()]){
+							where id in:mapAllHOs.keyset()]);
+
+			for(Account a:allAccsMap.values()) {
 				id HOID = mapAllHOs.get(a.ID);
 				list<Account> lsAccnt = new list<Account>();
 				//First Check: Parent.ParentID. I'm a BR of a BR
@@ -175,7 +184,7 @@ public class AMS_OscarCase_RiskMgmt {
 								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, Current_Outstanding_Amount_USD__c, Type_of_REI_WD__c,
 								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c,
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, Parent.Status, IRR_Approval_Rejection_Date__c, IRR_Type__c,
-								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c,
+								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c, ParentId, Parent.RecordtypeId,
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
 								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c, Account.ANG_IsNewGenAgency__c, Account.ParentId
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
@@ -183,6 +192,7 @@ public class AMS_OscarCase_RiskMgmt {
 								  from case where id in:mapTrgNew.keySet()]);
 
 			set<string> setOperationCalendarExtID = new set<string>();
+			List<Technical_Logs__c> notifications = new List<Technical_Logs__c>();
 
 			for(Case c: mapCases.values()){
 				setAccntIdCase.add(c.AccountId);
@@ -243,6 +253,7 @@ public class AMS_OscarCase_RiskMgmt {
 						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
 
 					if(CCToBeGenerated){
+						//mapCasePerAccount.put(c.AccountId, c);
 						list<AMS_ChangeCodes__c> ls;
 						if(mapChangeCodeToCreate.KeySet().contains(c.Id))
 							ls = mapChangeCodeToCreate.get(c.Id);
@@ -348,7 +359,11 @@ public class AMS_OscarCase_RiskMgmt {
 
 				if(!setAccntIdToClearExpDate.isEmpty())
 					ClearExpiryDate(setAccntIdToClearExpDate);
+
 			}
+
+			if(!notifications.isEmpty())
+				insert notifications;
 		}
 	}
 

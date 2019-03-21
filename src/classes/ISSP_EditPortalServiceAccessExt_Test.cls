@@ -14,6 +14,7 @@ private class ISSP_EditPortalServiceAccessExt_Test {
 		
 		User testUser = IECTestUtil.createSampleUser(c);
 		testUser.TD_Team__c = true;
+		testUser.ProfileId = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'].Id;
         insert testUser;
 	}
 

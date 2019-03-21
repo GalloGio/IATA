@@ -29,8 +29,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	boolean AMS_OSCARCaseTrigger = true;
 	boolean trgAccelyaRequestSetCountry = true;
 	boolean trgCase = true;
-
-	List<Case> cases = new list<Case>();
 	
 	if(!Test.isRunningTest()){
 		trgCaseIFAP_AfterInsertDeleteUpdateUndelete = GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;     //55555555555555
@@ -65,11 +63,43 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	Id CaseSAAMId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
     Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
-	/*Record type*/	
-            
-/***********************************************************************************************************************************************************/
-/*Share trigger code*/
-
+/*Record type*/	
+    
+    /*Variables*/
+    Boolean caseRecType = false;
+	Boolean isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
+    Boolean isIFAPCase = false;
+	Integer futureLimit = Limits.getFutureCalls();
+	Boolean ThereAreICCSProductManagementCases = false;
+	Boolean ThereAreICCSBankAccountManagementCases = false;
+	List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+	boolean hasEmail = false;
+	Boolean isAccelya = false;
+	String CurrUser;
+	/*Variables*/
+     
+    /*Maps, Sets, Lists*/
+    set<string> casesIds = new set<string>();
+    Set<Id> CaseIdsNew = new Set<Id>();
+    Set<Id> accountNotificationIdSet = new Set <Id>(); //TF
+    Set<Id> setASCaseIds = new Set<Id>();
+	Set<Id> setDIPCaseIds = new Set<Id>();
+	Set<Id> sCaseIds = new Set<Id>();
+	list<Case> cases = new list<Case>();
+	list<Case> ICHcases = new list<Case>();
+    list<Case> IFAPcases = new list<Case>(); 
+	list<Case> casesToConsider = new list<Case>();
+	list<Case> casesWhoClosedCase = new list<Case>();
+    list<IFAP_Quality_Issue__c> issues = new list<IFAP_Quality_Issue__c>();
+    list<Account> lstAccountsToUpdate = new List<Account>();
+    list<String> bspCountryList = new List<String>();
+	map<Id,IFAP_Quality_Issue__c> RelatedQualityIssues = new Map<Id,IFAP_Quality_Issue__c>();
+	private Map<Id,Account> sidraCasesAccounts;
+    private Map<Id,Account> accountsToUpdate = new Map<Id,Account>();
+    Set<Id> caseAccsSet = new Set<Id>();
+    /*Maps, Sets, Lists*/
+    /***********************************************************************************************************************************************************/
+    /*Share trigger code*/
     /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete && !CaseChildHelper.noValidationsOnTrgCAseIFAP){
         System.debug('____ [cls CaseAfterTrigger - trgCaseIFAP_AfterInsertDeleteUpdateUndelete]');
@@ -125,9 +155,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				acctIds.add(cse.AccountId);
 			}
 
-			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([SELECT Id,Number_of_open_Financial_Review_Cases__c, 
-																(SELECT Id, AccountId FROM Cases WHERE RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' AND status != 'Assessment Cancelled' and status != 'Closed Opt-out')) 
-																FROM Account WHERE Id IN :acctIds]);
+			//START - Too many SOQL fix
+			Map<Id,Account> acctsToUpdate = new Map<Id,Account>([select Id,Number_of_open_Financial_Review_Cases__c, (select Id, AccountId from Cases where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled' and status != 'Closed Opt-out' and status != 'Closed_Non compliance')) from Account where Id in :acctIds]);
 			Set<Id> caseIds;
 
 			for (Account acct : acctsToUpdate.values()) {
@@ -157,6 +186,23 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			CaseChildHelper.CreateChildCase(Trigger.old, Trigger.new);
 		}  
 	}
+	
+	/**
+	 * KPI Reporting part created here as separated part of the trigger, because of terrible quality of code in this file.
+	 * Trigger is created without good practices, is unreadable, so here is separated part responsible for Case Status monitoring, and
+	 * FDS_KPI_Reporting__c, KPI_Value__c records creation.
+	 *
+	 * JIRA - ICSC-35
+	 */
+//if(Trigger.isUpdate) {
+	if(Trigger.isUpdate && CaseTriggerHelper.isDone == false) {
+        CaseTriggerHelper.createKPIValues(Trigger.oldMap, Trigger.newMap, Trigger.new);
+	}
+
+	/**
+	 * END of separated part
+	 */
+	
 	/*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	
 	if(trigger.isInsert || trigger.isUpdate){	
@@ -602,7 +648,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			Set<ID> CaseIdsNew = new Set<ID>();
 			for(Case c: trigger.new){
 				if(c.parentId != null && c.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE')
-					 && c.Reason1__c != 'FA/ FS Non-Compliance' && c.Status == 'Closed'){
+					 && c.Reason1__c != 'FA/ FS Non-Compliance'){
 					CaseIdsNew.add(c.Id);
 				}
 			}
@@ -909,6 +955,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		/*ANG Triggers*/
 		new ANG_CaseTriggerHandler().onAfterUpdate();
 		/*ANG Triggers*/
+
+
 	/*Trigger.isUpdate*/
 	}
 	/****************************************************************************************************************************************************/    

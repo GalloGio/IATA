@@ -853,6 +853,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static AChangeStructure applyChangeOfFields(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
 
+		//NEWGEN-4299 - force Risk related information to be recalculated in account
+		Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();	
+
 		System.debug('[ANG_AgencyChangesHelper] Performing change of fields');
 
 		if(toReturn == null)
@@ -977,6 +980,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
                     
 					if(toReturn.accountsMap.containsKey(accId) && toReturn.accountsMap.get(accId).Location_Type__c == AMS_Utils.HE && oscarToProcess.ANG_Type_Of_Change__c == AMS_Utils.VFMR){
+						involvedAccounts.put(accID,null);
+						
 						if(accFieldApiName == 'Remittance_frequency__c' && oldValue != newValue)
 							accountsToUpdateRHC.add(accId);
 					}
@@ -995,6 +1000,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(!accountsToUpdateRHC.isEmpty())
 				recalculateRHCInformation(accountsToUpdateRHC);
+
+			if(!involvedAccounts.isEmpty()) new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
+
 		}
 
 		//this would overwrite existing struct, create a new method in the wrapper to add content in this struct

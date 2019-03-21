@@ -199,9 +199,9 @@ public with sharing class AMS_AccreditationContactHelper
         }
         return role;
     }
-    
-    public static Contact populateNewContactFields(Contact con, AMS_Accreditation_Contact__c ac)
-    {
+
+    public static Contact populateNewContactFields(Contact con, AMS_Accreditation_Contact__c ac){
+
         con.FirstName = ac.First_Name__c;
         con.LastName = ac.Last_Name__c;
         con.Title = ac.Job_Title__c;
@@ -225,15 +225,102 @@ public with sharing class AMS_AccreditationContactHelper
         if (ac.AddressCity__c != null) con.OtherCity =  ac.AddressCity__c;
         if (ac.AddressPostcode__c != null) con.OtherPostalCode =  ac.AddressPostcode__c;
         if (ac.AddressCountry__c != null) con.OtherCountry =  ac.AddressCountry__c;
+
+        return con;
+
+    }
+    
+    public static Contact updateNewContactFields(Contact con, AMS_Accreditation_Contact__c ac)
+    {
+
+        Contact clonedCon = con.clone(true, false, false, false);
+
+
+        con.FirstName = ac.First_Name__c;
+        con.LastName = ac.Last_Name__c;
+        con.Title = ac.Job_Title__c;
+        if(con.AccountId==null)
+           con.AccountId = ac.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c;
+        con.Membership_Main_Contact__c = ac.Membership_Main_Contact__c;
+        con.Financial_Assessment_Contact__c = ac.Financial_Assessment_Contact__c;
+        con.Phone = ac.Phone__c;
+        con.Mobilephone = ac.Mobile__c;
+        con.Fax = ac.FAX__c;
+        con.Birthdate = ac.Birthdate__c;
+        con.Email = ac.Email__c;
+        con.ISO_Country__c = ac.ISO_Country__c;
+        con.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+        con.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
+        con.list_Dangerous_Goods_Awareness__c = ac.list_Dangerous_Goods_Awareness__c;
+        con.Authorized_Signatory__c = ac.Authorised_signatory__c;
+        con.Designated_Portal_Admin__c = ac.Portal_administrator__c;
+        con.Invoicing_Contact__c = ac.Invoicing_Contact__c;
+        if (ac.AddressStreet__c != null) con.OtherStreet =  ac.AddressStreet__c;
+        if (ac.AddressCity__c != null) con.OtherCity =  ac.AddressCity__c;
+        if (ac.AddressPostcode__c != null) con.OtherPostalCode =  ac.AddressPostcode__c;
+        if (ac.AddressCountry__c != null) con.OtherCountry =  ac.AddressCountry__c;
+
+        if(!verifyChangesOnContactOrAccount(con,clonedCon))
+            return null;
+
         return con;
     }
 
+    public static boolean verifyChangesOnContactOrAccount(sObject oldRecord, sObject newRecord){
+
+        Map<String, Schema.SObjectField> mapString;
+
+        if(oldRecord.getSObjectType() == Contact.SObjectType){
+
+            mapString = Schema.SObjectType.Contact.fields.getMap();
+
+        } else if(oldRecord.getSObjectType() == Account.SObjectType){
+
+            mapString = Schema.SObjectType.Account.fields.getMap();
+        }
+
+        boolean changed = false;
+
+        try {
+
+            for (String str : mapString.keyset()) {
+                if(newRecord.get(str) != oldRecord.get(str)){ 
+                    System.debug('Record was changed on field:'+str);
+                    changed = true;
+                } 
+            } 
+        } catch (Exception e) {
+            System.debug('Error: ' + e);
+            return true;
+        }
+        
+        System.debug('verifyChangesOnContactOrAccount returning:'+changed);
+        
+        return changed;
+    }
+    
     public static Account populateNewAccountFields(Account acc, AMS_Accreditation_Contact__c ac)
     {
         acc.Name = ac.Name;
         acc.Legal_Name__c = ac.Name;
         acc.Registration_Number__c = ac.Registration_Number__c;
         acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+        return acc;
+    }
+
+    public static Account updateNewAccountFields(Account acc, AMS_Accreditation_Contact__c ac)
+    {
+
+        Account clonedAcc = acc.clone(true, false, false, false);
+
+        acc.Name = ac.Name;
+        acc.Legal_Name__c = ac.Name;
+        acc.Registration_Number__c = ac.Registration_Number__c;
+        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+        if(!verifyChangesOnContactOrAccount(acc,clonedAcc))
+            return null;
 
         return acc;
     }
