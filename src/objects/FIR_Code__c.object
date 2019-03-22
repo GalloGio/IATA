@@ -46,9 +46,9 @@
     <description>Used by E&amp;F to set the lsit of Related Airports/FIR Codes, related to one account. FIR codes are stored in object E&amp;F Related Records object.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
