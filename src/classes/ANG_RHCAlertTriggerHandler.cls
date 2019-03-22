@@ -219,6 +219,7 @@ public class ANG_RHCAlertTriggerHandler{
         //NewGenApp End  
 
         if(!processCases.isEmpty()) insert processCases;
+        system.debug('mailList ' + mailList);
         if(!mailList.isEmpty()) System.enqueueJob(new ANG_RHCHelper.RiskAlertMailService(mailList, notifiedAlerts));
 
             if(!notificationTargets.isEmpty()){
