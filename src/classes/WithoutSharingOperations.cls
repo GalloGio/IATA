@@ -25,4 +25,13 @@ public without sharing class WithoutSharingOperations {
     public static void upsertContacts(List<Contact> cons) {
         upsert cons;
     }
+
+    /**
+     * Workaround to create Portal User by Internal Users
+     * without sharing - class
+     */
+    public static ID insertUser(User usr){
+        insert usr;
+        return usr.id;
+    }
 }

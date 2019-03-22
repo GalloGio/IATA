@@ -372,11 +372,11 @@ public with sharing class ISSP_PortalUserStatusChange {
             newUser.UID__c = UID;
             newUser.Community__c = 'ISSP';
             system.debug('inserting newuser');
-            insert newUser;
-            system.debug('inserted newuser: ' + newUser.Id);
+            ID userID = WithoutSharingOperations.insertUser(newUser);
+            system.debug('inserted newuser: ' + userID);
             // new email process
             String password = Comm_User_Helper.generateRandomString(6)+'1a';
-            System.setPassword(newUser.Id, password);
+            System.setPassword(userID, password);
             String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
             cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
             string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
@@ -390,7 +390,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 
             Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
             Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
-            Comm_User_Helper.permissionASS(new list<Id>{newUser.Id});
+            Comm_User_Helper.permissionASS(new list<Id>{userID});
             
         }else{
             system.debug('will update user with this profile id: ' + newUser.ProfileId);
