@@ -12,7 +12,7 @@ private class WSJavascriptTest {
         Case cse = new Case(ContactId = contact.Id);
         insert cse;
 
-        EmailTemplate template = [SELECT Id, DeveloperName FROM EmailTemplate LIMIT 1];
+        EmailTemplate template = [SELECT Id, DeveloperName FROM EmailTemplate WHERE isActive = true LIMIT 1];
 
         Test.StartTest();
         cse.Subject = 'test';
