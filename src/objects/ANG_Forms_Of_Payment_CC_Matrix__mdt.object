@@ -257,6 +257,27 @@
         </valueSet>
     </fields>
     <label>Forms Of Payment CC Matrix</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>NamespacePrefix</columns>
+        <columns>IsProtected</columns>
+        <columns>Action_in_FoP_OSCAR__c</columns>
+        <columns>Cash_after__c</columns>
+        <columns>Cash_before__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Credit_Card_after__c</columns>
+        <columns>Credit_Card_before__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Action_in_FoP_OSCAR__c</field>
+            <operation>equals</operation>
+            <value>Restrict Cash</value>
+        </filters>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>Forms Of Payment CC Matrix</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>
