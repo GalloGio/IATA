@@ -215,10 +215,12 @@ public with sharing class ANG_AgencyChangesHelper {
 					
 					System.debug('[ANG_AgencyChangesHelper] Checkpoint2 changesCodes are:'+ changesContainer.changeCodesToCreate.size() + ' ' + changesContainer.changeCodesToCreate);
 
-					System.debug('[ANG_AgencyChangesHelper] Starting Risk Actions');
-
-					performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected);
-
+					if(!isMulticountry){
+						System.debug('[ANG_AgencyChangesHelper] Starting Risk Actions');
+						performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected);
+						System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
+					}
+	
 					if (changesContainer.accountsMap.get(oscar.Account__c).IATA_ISO_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE && 
 						oscar.Type_of_change__c != AMS_Utils.ANG_LOCATION) {
 
@@ -230,7 +232,6 @@ public with sharing class ANG_AgencyChangesHelper {
                         }
                     }
 
-					System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
 				}
 
 				if(oscar.Process__c == AMS_Utils.NGCORRECTION){
