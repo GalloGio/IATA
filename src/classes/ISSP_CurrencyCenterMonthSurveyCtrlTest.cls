@@ -27,7 +27,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
         Account portalAccount1 = new Account(
             Name = 'TestAirline',
             OwnerId = portalAccountOwner1.Id,
-            RecordType = [SELECT Name,id from RecordType WHERE Name = 'Airline Headquarters' LIMIT 1][0]
+            RecordType = RecordTypeSingleton.getInstance().getRecordType('Account', 'IATA_Airline')
         );
         Database.insert(portalAccount1);
                 
@@ -37,7 +37,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
             Lastname = 'McTesty',
             AccountId = portalAccount1.Id,
             Email = System.now().millisecond() + 'test@test.com',
-            RecordType = [SELECT Name,id from RecordType WHERE Name = 'Standard' LIMIT 1][0]
+            RecordType = RecordTypeSingleton.getInstance().getRecordType('Account', 'Standard_Contact')
         );
         Database.insert(contact1);
                 
