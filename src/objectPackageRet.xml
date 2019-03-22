@@ -42,15 +42,19 @@
     </types>
     <types>
         <members>*</members>
-        <name>Flow</name>
+        <name>FlexiPage</name>
     </types>
     <types>
         <members>*</members>
-        <name>FlowDefinition</name>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>QuickAction</name>
     </types>
     <types>
         <members>*</members>
         <name>Workflow</name>
     </types>
-    <version>43.0</version>
+    <version>45.0</version>
 </Package>
