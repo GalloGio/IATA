@@ -446,6 +446,8 @@ public class ANG_MulticountryHelper {
 
 		ANG_RHCHelper.moveRHCInfos(srcAcct.RHC_Informations__r, new Map<Id,Id>{srcAcct.Id => assignFieldsAcct.Id});
 
+        System.enqueueJob(new ANG_Risk_Helper.FutureHandler(new Map<Id,Id>{srcAcct.Id => assignFieldsAcct.Id}));
+		
 	}
 
 
