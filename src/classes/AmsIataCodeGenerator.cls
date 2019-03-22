@@ -691,7 +691,7 @@ global class AmsIataCodeGenerator{
     */
     public static void checkDigitCreation(AMS_Pax_Accreditation_Form__c agt, Account act, boolean saveRecord){
      
-        Map<String,String> letterIndex = new Map<String,String>{'A'=> '10','B'=> '11','C' => '','D'=> '13','E'=> '14','F'=> '15','G'=> '16','H'=> '17','I'=> '18','J'=> '19','K'=> '20','L'=> '21','M'=> '22','N'=> '23','O'=> '24','P'=> '25','Q'=> '26','R'=> '27','S'=> '28','T'=> '29','U'=> '30','V'=> '31','W'=> '32','X'=> '33','Y'=> '34','Z'=> '35'};
+        Map<String,String> letterIndex = new Map<String,String>{'A'=> '10','B'=> '11','C' => '12','D'=> '13','E'=> '14','F'=> '15','G'=> '16','H'=> '17','I'=> '18','J'=> '19','K'=> '20','L'=> '21','M'=> '22','N'=> '23','O'=> '24','P'=> '25','Q'=> '26','R'=> '27','S'=> '28','T'=> '29','U'=> '30','V'=> '31','W'=> '32','X'=> '33','Y'=> '34','Z'=> '35'};
         String nACode = agt.A_code__c;
         String nCCode  ='' ; 
         String cNCode = agt.N_code__c;
@@ -708,7 +708,7 @@ global class AmsIataCodeGenerator{
         if(!agt.C_code__c.isNumeric())
         {
             String[] stringCharacters = agt.C_code__c.split('');
-            stringCharacters.remove(0);
+            //stringCharacters.remove(0);
             
             for(String c : stringCharacters)
             {
