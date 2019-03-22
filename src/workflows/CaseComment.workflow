@@ -559,7 +559,8 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( $User.Id &lt;&gt; Parent.Owner:User.Id, ISPICKVAL(Parent.Status, &apos;Closed&apos; ),  OR (  Parent.RecordType.DeveloperName = &apos;CasesEurope&apos;,  Parent.RecordType.DeveloperName = &apos;CasesAmericas&apos;,  Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;,  Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;,  Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;,  Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;,  Parent.RecordType.DeveloperName = &apos;Inter_DPCs&apos;, Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName = &apos;Cases_SIS_Help_Desk&apos;, Parent.RecordType.DeveloperName = &apos;InternalCasesEuropeSCE&apos;  ), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
+        <formula>AND ( $User.Id &lt;&gt; Parent.Owner:User.Id, ISPICKVAL(Parent.Status, &apos;Closed&apos; ),  OR (  Parent.RecordType.DeveloperName = &apos;CasesEurope&apos;,
+        Parent.RecordType.DeveloperName = &apos;Cases_Global&apos;, Parent.RecordType.DeveloperName = &apos;CasesAmericas&apos;,  Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;,  Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;,  Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;,  Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;,  Parent.RecordType.DeveloperName = &apos;Inter_DPCs&apos;, Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName = &apos;Cases_SIS_Help_Desk&apos;, Parent.RecordType.DeveloperName = &apos;InternalCasesEuropeSCE&apos;  ), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
