@@ -1146,7 +1146,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <customLink>Send_other_letters_A_ME</customLink>
+                <customLink>Send_other_letters_A_ME_lightning</customLink>
             </layoutItems>
             <layoutItems>
                 <customLink>Send_other_letters_A1</customLink>
