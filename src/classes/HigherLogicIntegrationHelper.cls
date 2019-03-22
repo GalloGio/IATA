@@ -8,12 +8,10 @@ public class HigherLogicIntegrationHelper {
 	public static String DISABLE_EXISTING_MEMBERS = 'DISABLE_EXISTING_MEMBERS';
 	public static String GRANT_ACCESS = 'GRANT_ACCESS';
 	public static String REMOVE_ACCESS = 'REMOVE_ACCESS';
-	
-	private static Map<String,Schema.RecordTypeInfo> recordTypesMap = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName();
 
-	private static String AGENCY_RECORD_TYPE_ID = recordTypesMap.get('IATA_Agency').getRecordTypeId();
-	private static String BRANCH_RECORD_TYPE_ID = recordTypesMap.get('IATA_Airline_BR').getRecordTypeId();
-	private static String HEADQUARTER_RECORD_TYPE_ID = recordTypesMap.get('IATA_Airline').getRecordTypeId();
+	private static String AGENCY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	private static String BRANCH_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+	private static String HEADQUARTER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	
     private static List<Account> fetchAccountRecords(Set<Id> accountIdSet){
     	
