@@ -4,8 +4,8 @@
  */
 public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvocationINT {
 
-	Map<String,Remote_Invocation__c> mapRemoteInvocations = new Map<String,Remote_Invocation__c>();
-	Map<String, Remote_Invocation_Artefact__c> mapRemoteInvocationArtifacts = new Map<String, Remote_Invocation_Artefact__c>();
+	Map<ID,Remote_Invocation__c> mapRemoteInvocations = new Map<ID,Remote_Invocation__c>();
+	Map<ID, Remote_Invocation_Artefact__c> mapRemoteInvocationArtifacts = new Map<ID, Remote_Invocation_Artefact__c>();
 	Set<String> remoteInvocationsWithoutArtifcts = new Set<String>();
 
 	List<Remote_Invocation_Artefact__c> rmtInvocationArtListToUpdate = new List<Remote_Invocation_Artefact__c>();
@@ -90,14 +90,24 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 											STEP47__c, STEP9__c, STEP49__c, Oscar_Communication_Case_Id__c
 											FROM AMS_OSCAR__c WHERE Oscar_Communication_Case_Id__c IN :mapRemoteInvocationArtifacts.keySet()]; 
 
-			System.debug('[ANG_SAP_PPA_RemoveInvocation] doProcess - Oscar list to Process: ' + oscarList);
+			Map<ID, AMS_OSCAR__c> mapCaseIdWithRemoteInternalID = new Map<ID, AMS_OSCAR__c>();
+
+			for(AMS_OSCAR__c oscar : oscarList){
+				mapCaseIdWithRemoteInternalID.put(oscar.Oscar_Communication_Case_Id__c, oscar);
+			}
 							
 			Remote_Invocation__c ri;
+			List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
+
 			for(Remote_Invocation_Artefact__c remoteInovArt : mapRemoteInvocationArtifacts.values()){
 
 				ri = mapRemoteInvocations.get(remoteInovArt.Remote_Invocation__c);
 
-				for(AMS_OSCAR__c osc : oscarList){
+				//To prevent the 15 character ID - to ensure all the ID have 18 characters.
+				ID idToCompare = remoteInovArt.Internal_ID__c;
+				AMS_OSCAR__c osc = mapCaseIdWithRemoteInternalID.get(idToCompare);
+
+				if(osc != null){
 
 					//Process Payment_Type == 'PPA'
 					if(remoteInovArt.Payment_type__c == 'PPA' && String.isBlank(mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).External_Id__c)){
@@ -123,17 +133,19 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 
 					osc.Payment_Type__c = remoteInovArt.Payment_type__c;
 					osc.Billing_Document_Number__c = mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).External_Id__c;
-				}
 
-				ri.Status__c = 'Completed';
-				remoteInovArt.Request_Result__c = 'Completed';
-				rmtInvocationArtListToUpdate.add(remoteInovArt);
+					ri.Status__c = 'Completed';
+					remoteInovArt.Request_Result__c = 'Completed';
+					rmtInvocationArtListToUpdate.add(remoteInovArt);
+					oscarsToUpdate.add(osc);
+				}		
 			}
+
 
 			System.debug('[ANG_SAP_PPA_RemoveInvocation] - doProcess - Before Update OscarList: ' + oscarList);
 
 			//Update Oscar list
-			if(!oscarList.isEmpty()) update oscarList;
+			if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;
 
 			//Update Remote Invocation Artefact Status
 			if(!rmtInvocationArtListToUpdate.isEmpty()) update rmtInvocationArtListToUpdate;
