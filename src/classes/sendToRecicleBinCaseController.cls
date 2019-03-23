@@ -9,17 +9,18 @@ public static String findRecycleQueue(String searchKey) {
     }   
     
     //grabs Case
-    Case c = [SELECT Id, Region__c FROM Case WHERE Id =:searchKey LIMIT 1];
+    list<Case> caseList = [SELECT Id, Region__c FROM Case WHERE Id =:searchKey LIMIT 1];
 
+    if(caseList.isEmpty())return '';
     //Recycle Queues are always set as "Recycle Bin + (Region of Case)"
-    String queueName = 'Recycle Bin ' + c.Region__c;
+    String queueName = 'Recycle Bin ' + caseList.get(0).Region__c;
 
     //Grabs the Queue
-    Group g = [select Id from Group where Type = 'Queue' and Name =: queueName LIMIT 1];
+    list<Group> groupList = [select Id from Group where Type = 'Queue' and Name =: queueName LIMIT 1];
 
-    if(g != null){
+    if(!groupList.isEmpty()){
         //Returns Queue Id to Web Component to assign the Owner of the Case
-        return g.id;
+        return groupList.get(0).id;
     }
     return '';
 }

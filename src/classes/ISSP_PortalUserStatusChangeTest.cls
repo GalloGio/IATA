@@ -469,4 +469,99 @@ private class ISSP_PortalUserStatusChangeTest {
         return false;
     }
 
+
+    // aura methods
+
+    public static testMethod void testSaveNewStatus() {
+        List<Profile> portalProfiles = [SELECT Id, Name FROM Profile WHERE Name = 'ISS Portal (Partner)' OR Name = 'ISS Portal Delegated Admin User'];
+
+        Map<String,Profile> profileMap = new Map<String,Profile>();
+        for(Profile p : portalProfiles){
+            profileMap.put(p.name,p);
+        }
+
+        List<ISSP_CS__c> cSettings = new List<ISSP_CS__c>();
+        ISSP_CS__c cSetting1 = new ISSP_CS__c();
+        cSetting1.Name = 'ISS_Portal';
+        cSetting1.Value__c = String.valueOf(profileMap.get('ISS Portal (Partner)').Id).substring(0, 15);
+
+        ISSP_CS__c cSetting2 = new ISSP_CS__c();
+        cSetting2.Name = 'Host';
+        cSetting2.Value__c = 'portal.iata.org';//'portal.iata.org'
+
+        ISSP_CS__c cSetting3 = new ISSP_CS__c();
+        cSetting3.Name = 'ISS_Portal_Delegated_Admin';
+        cSetting3.Value__c = String.valueOf(profileMap.get('ISS Portal Delegated Admin User').Id).substring(0, 15);
+
+        cSettings.add(cSetting1);
+        cSettings.add(cSetting2);
+        cSettings.add(cSetting3);
+        insert cSettings;
+
+        Map<String,String> customSetingMap = new Map<String,String>();
+        for(ISSP_CS__c cs : [select Name,value__c from ISSP_CS__c]){
+            customSetingMap.put(cs.Name.trim(),cs.Value__c);
+            ISSP_Constant.customSetingMap.put(cs.Name.trim(),cs.Value__c);
+        }
+
+
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        insert acc;
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= acc.Id;
+        con.email='asd@asd.com';
+        insert con;    
+
+        list<SelectOptionWrapper> communityList= ISSP_PortalUserStatusChange.getAvalaibleCommunities();
+       
+        List<SelectOptionWrapper> userportalstatus =ISSP_PortalUserStatusChange.getUserPortalStatusOptions(con.id);
+        
+       
+        // activate user
+        ApexMessageHandling result= ISSP_PortalUserStatusChange.saveNewStatusAura('ISS Customer Portal', 'Approved User', con.id,'');
+        system.assertEquals(true, result.isSuccess);
+        
+
+    }
+    public static testMethod void testDeactivateUser() {
+        
+        Account acc = ISSP_ObjectFactory.createNewAccount();
+        insert acc;
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= acc.Id;
+        con.user_portal_status__c='Approved User';
+        con.email='asd@asd.com';
+        insert con;    
+
+       Portal_Applications__c portalApp = new Portal_Applications__c();
+        portalApp.Name = 'test portalApp';
+        portalApp.Critical_Service__c = true;
+        insert portalApp;
+
+        Portal_Application_Right__c portAppRight = new Portal_Application_Right__c();
+        portAppRight.Right__c = 'Access Granted';
+        portAppRight.Contact__c = con.id;
+        portAppRight.Portal_Application__c = portalApp.Id;
+        insert portAppRight;
+
+        
+        //fail to deactivate user
+        list<SelectOptionWrapper> rejectionReasons= ISSP_PortalUserStatusChange.getRejectionReasons();
+        system.debug(rejectionReasons);
+
+        ApexMessageHandling resut= ISSP_PortalUserStatusChange.saveNewStatusAura('ISS Customer Portal', 'Deactivate', con.id,'Retired');
+        system.assertEquals(false, resut.isSuccess);
+        
+        system.assertEquals(false,ISSP_PortalUserStatusChange.hasIdCard(con.id));
+
+        portalApp.Critical_Service__c = false;
+        update portalApp;
+
+        ApexMessageHandling result= ISSP_PortalUserStatusChange.saveNewStatusAura('ISS Customer Portal', 'Deactivate', con.id,'Retired');
+        system.assertEquals(true, result.isSuccess);
+
+    }
+    
+
+    
 }

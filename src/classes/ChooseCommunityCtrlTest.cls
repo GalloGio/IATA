@@ -1,6 +1,7 @@
 @istest
 private  class ChooseCommunityCtrlTest {
 	
+	 
 	 static testMethod void myUnitTest() {
 
 
@@ -27,6 +28,27 @@ private  class ChooseCommunityCtrlTest {
 
 	}
 
+	//testing aura methods
+
+	 static testMethod void testResetPassword() {
+		Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+
+		//check if user is active
+		system.assertEquals(true, ChooseCommunityCtrl.hasValidUser(contact.id));
+
+		List<SelectOptionWrapper> communitiesList =ChooseCommunityCtrl.getAvalaibleCommunities();	
+
+		//send reset email
+		ChooseCommunityCtrl.SendEmail(contact.id,communitiesList.get(0).value); 
+	 }
 
 
 }
