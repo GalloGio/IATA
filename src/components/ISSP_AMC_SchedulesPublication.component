@@ -20,7 +20,7 @@
                         <label for="twoCharacterRadio">{!$Label.ISSP_AMC_SCHEDULES_PUBLICATION_QUESTION}</label>
                     </div>
                     <div class="col-md-4">
-                        <apex:selectRadio id="twoCharacterRadio" onclick="startLoading()" value="{!participation.Has_the_company_published_their_schedule__c}" styleClass="{!IF(AND(hasError, participation.Has_the_company_published_their_schedule__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
+                        <apex:selectRadio id="twoCharacterRadio" onclick="if(this.value != '{!participation.Has_the_company_published_their_schedule__c}'){ startLoading();}" value="{!participation.Has_the_company_published_their_schedule__c}" styleClass="{!IF(AND(hasError, participation.Has_the_company_published_their_schedule__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
                             <apex:actionSupport event="onchange" rerender="radioPanel" oncomplete="stopLoading()"/>
                             <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                             <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />

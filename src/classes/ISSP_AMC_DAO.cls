@@ -748,9 +748,9 @@ public class ISSP_AMC_DAO {
                             }
                         }
                         if((participation.Does_the_airline_presently_hold_a_three__c == 'No')){
-                            errorMessages.add(Label.ISSP_AMC_ICAO_CODE + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
+                            /*errorMessages.add(Label.ISSP_AMC_ICAO_CODE + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
                                             '<a href="#" step="step2" goto="#ICAO_CODE" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a></br>');
-                            parOnlineRecord.Status__c = 'Incomplete';
+                            parOnlineRecord.Status__c = 'Incomplete';*/
                         }
                         if(hasError){
                             errorSectionFields += '</ul>';
@@ -779,32 +779,26 @@ public class ISSP_AMC_DAO {
                         String errorSection = Label.ISSP_AMC_FIELDS_IN_MESSAGE + ' ' + Label.ISSP_AMC_PREFERENCE_OF_CODE + ' ' + Label.ISSP_AMC_REQUIRES_AN_ANSWER + 
                                             '<a href="#" step="step2" goto="#PREFERENCEOFCODE" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a>';
                         String errorSectionFields = '<ul>';
-                        if(participation.Preference_of_Code_1__c == null || String.isEmpty(participation.Preference_of_Code_1__c)){
-                            errorSectionFields += '<li>'+Label.ISSP_AMC_PREFERENCE_ONE+ ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
-                            hasError = true;
+                        if(String.isNotEmpty(participation.Preference_of_Code_1__c)){
+                            if(participation.Preference_of_Code_1__c.length() != 2 || (participation.Preference_of_Code_1__c.isNumeric())){
+                                errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_ONE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
+                                hasError = true; 
+                                parOnlineRecord.Status__c = 'Incomplete';
+                            }
                         }
-                        else if(participation.Preference_of_Code_1__c.length() != 2 || (participation.Preference_of_Code_1__c.isNumeric())){
-                            errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_ONE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
-                            hasError = true; 
-                            parOnlineRecord.Status__c = 'Incomplete';
+                        if(String.isNotEmpty(participation.Preference_of_Code_2__c)){
+                            if(participation.Preference_of_Code_2__c.length() != 2 || (participation.Preference_of_Code_2__c.isNumeric())){
+                                errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_TWO + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
+                                hasError = true; 
+                                parOnlineRecord.Status__c = 'Incomplete';
+                            }
                         }
-                        if(participation.Preference_of_Code_2__c == null || String.isEmpty(participation.Preference_of_Code_2__c)){
-                            errorSectionFields += '<li>'+Label.ISSP_AMC_PREFERENCE_TWO+ ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
-                            hasError = true;
-                        }
-                        else if(participation.Preference_of_Code_2__c.length() != 2 || (participation.Preference_of_Code_2__c.isNumeric())){
-                            errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_TWO + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
-                            hasError = true; 
-                            parOnlineRecord.Status__c = 'Incomplete';
-                        }
-                        if(participation.Preference_of_Code_3__c == null || String.isEmpty(participation.Preference_of_Code_3__c)){
-                            errorSectionFields += '<li>'+Label.ISSP_AMC_PREFERENCE_THREE+ ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
-                            hasError = true;
-                        }
-                        else if(participation.Preference_of_Code_3__c.length() != 2 || (participation.Preference_of_Code_3__c.isNumeric())){
-                            errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_THREE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
-                            hasError = true; 
-                            parOnlineRecord.Status__c = 'Incomplete';
+                        if(String.isNotEmpty(participation.Preference_of_Code_3__c)){
+                            if(participation.Preference_of_Code_3__c.length() != 2 || (participation.Preference_of_Code_3__c.isNumeric())){
+                                errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_THREE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
+                                hasError = true; 
+                                parOnlineRecord.Status__c = 'Incomplete';
+                            }
                         }
                         if(hasError){
                             errorSectionFields += '</ul>';
@@ -1539,9 +1533,9 @@ public class ISSP_AMC_DAO {
                             }
                         }
                         if((participation.Does_the_airline_presently_hold_a_three__c == 'No')){
-                            errorMessages.add(Label.ISSP_AMC_ICAO_CODE + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
+                            /*errorMessages.add(Label.ISSP_AMC_ICAO_CODE + ' ' + Label.ISSP_AMC_NOT_VALID_FOR_SUBMISSION + 
                                             '<a href="#" step="step2" goto="#ICAO_CODE" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a></br>');
-                            parOnlineRecord.Status__c = 'Incomplete';
+                            parOnlineRecord.Status__c = 'Incomplete';*/
                         }
                         if(hasError){
                             errorSectionFields += '</ul>';
@@ -1569,32 +1563,26 @@ public class ISSP_AMC_DAO {
                         String errorSection = Label.ISSP_AMC_FIELDS_IN_MESSAGE + ' ' + Label.ISSP_AMC_PREFERENCE_OF_CODE + ' ' + Label.ISSP_AMC_REQUIRES_AN_ANSWER + 
                                             '<a href="#" step="step2" goto="#PREFERENCEOFCODE" onclick="return navigateToStep(this);" class="alert-link"> '+ Label.ISSP_AMC_CLICK_HERE_TO_GET_THERE+'</a>';
                         String errorSectionFields = '<ul>';
-                        if(participation.Preference_of_Code_1__c == null || String.isEmpty(participation.Preference_of_Code_1__c)){
-                            errorSectionFields += '<li>'+Label.ISSP_AMC_PREFERENCE_ONE+ ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
-                            hasError = true;
+                        if(String.isNotEmpty(participation.Preference_of_Code_1__c)){
+                            if(participation.Preference_of_Code_1__c.length() != 3 || !(participation.Preference_of_Code_1__c.isNumeric())){
+                                errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_ONE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
+                                hasError = true; 
+                                parOnlineRecord.Status__c = 'Incomplete';
+                            }
                         }
-                        else if(participation.Preference_of_Code_1__c.length() != 3 || !(participation.Preference_of_Code_1__c.isNumeric())){
-                            errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_ONE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
-                            hasError = true; 
-                            parOnlineRecord.Status__c = 'Incomplete';
+                        if(String.isNotEmpty(participation.Preference_of_Code_2__c)){
+                            if(participation.Preference_of_Code_2__c.length() != 3 || !(participation.Preference_of_Code_2__c.isNumeric())){
+                                errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_TWO + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
+                                hasError = true; 
+                                parOnlineRecord.Status__c = 'Incomplete';
+                            }
                         }
-                        if(participation.Preference_of_Code_2__c == null || String.isEmpty(participation.Preference_of_Code_2__c)){
-                            errorSectionFields += '<li>'+Label.ISSP_AMC_PREFERENCE_TWO+ ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
-                            hasError = true;
-                        }
-                        else if(participation.Preference_of_Code_2__c.length() != 3 || !(participation.Preference_of_Code_2__c.isNumeric())){
-                            errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_TWO + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
-                            hasError = true; 
-                            parOnlineRecord.Status__c = 'Incomplete';
-                        }
-                        if(participation.Preference_of_Code_3__c == null || String.isEmpty(participation.Preference_of_Code_3__c)){
-                            errorSectionFields += '<li>'+Label.ISSP_AMC_PREFERENCE_THREE+ ' ' + Label.ISSP_AMC_FIELD_IS_REQUIRED + '</li>';
-                            hasError = true;
-                        }
-                        else if(participation.Preference_of_Code_3__c.length() != 3 || !(participation.Preference_of_Code_3__c.isNumeric())){
-                            errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_THREE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
-                            hasError = true; 
-                            parOnlineRecord.Status__c = 'Incomplete';
+                        if(String.isNotEmpty(participation.Preference_of_Code_3__c)){
+                            if(participation.Preference_of_Code_3__c.length() != 3 || !(participation.Preference_of_Code_3__c.isNumeric())){
+                                errorSectionFields += '<li>' + Label.ISSP_AMC_PREFERENCE_THREE + ' ' + Label.ISSP_AMC_IATA_CODE_VALIDATION + '</li>';
+                                hasError = true; 
+                                parOnlineRecord.Status__c = 'Incomplete';
+                            }
                         }
                         if(hasError){
                                 errorSectionFields += '</ul>';

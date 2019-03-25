@@ -655,12 +655,30 @@
         <description>Head Officer Billing Contact Salutation</description>
         <externalId>false</externalId>
         <label>HOB Salutation</label>
-        <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Mr.</fullName>
+                    <default>false</default>
+                    <label>Mr.</label>
+                </value>
+                <value>
+                    <fullName>Mrs.</fullName>
+                    <default>false</default>
+                    <label>Mrs.</label>
+                </value>
+                <value>
+                    <fullName>Ms.</fullName>
+                    <default>false</default>
+                    <label>Ms.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>HOB_Title__c</fullName>
@@ -725,12 +743,30 @@
         <description>Head Officer Contact Salutation</description>
         <externalId>false</externalId>
         <label>HOC Salutation</label>
-        <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Mr.</fullName>
+                    <default>false</default>
+                    <label>Mr.</label>
+                </value>
+                <value>
+                    <fullName>Mrs.</fullName>
+                    <default>false</default>
+                    <label>Mrs.</label>
+                </value>
+                <value>
+                    <fullName>Ms.</fullName>
+                    <default>false</default>
+                    <label>Ms.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>HOC_Title__c</fullName>
@@ -1746,12 +1782,30 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
         <description>Simplified Invoicing and Settlement Salutation</description>
         <externalId>false</externalId>
         <label>SIS Salutation</label>
-        <length>100</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Mr.</fullName>
+                    <default>false</default>
+                    <label>Mr.</label>
+                </value>
+                <value>
+                    <fullName>Mrs.</fullName>
+                    <default>false</default>
+                    <label>Mrs.</label>
+                </value>
+                <value>
+                    <fullName>Ms.</fullName>
+                    <default>false</default>
+                    <label>Ms.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>SIS_Title__c</fullName>
@@ -1966,6 +2020,36 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>HOB_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>HOC_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Has_airline_assigned_two_char_code__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -2151,6 +2235,21 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2231,6 +2330,36 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>HOB_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>HOC_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Has_airline_assigned_two_char_code__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -2416,6 +2545,21 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2496,6 +2640,36 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>HOB_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>HOC_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Has_airline_assigned_two_char_code__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -2681,6 +2855,21 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2761,6 +2950,36 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>HOB_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>HOC_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Has_airline_assigned_two_char_code__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -2946,6 +3165,21 @@ Location code for IATA LOCATION IDENTIFIER APPLICATION</description>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

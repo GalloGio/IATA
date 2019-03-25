@@ -11922,6 +11922,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Preference of Code</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMC_PREFERENCE_OF_CODE2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMC PREFERENCE OF CODE2</shortDescription>
+        <value>If you do not select any preference we will be assigning a random code by the system.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMC_PREFERENCE_ONE</fullName>
         <categories>Page Labels</categories>
         <language>en_US</language>

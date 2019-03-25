@@ -37,6 +37,11 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
         .hidden{
             display: none !important;
         }
+        
+        .asteriskRequiredField{
+            color: red;
+            font-size: large;
+        }
 
     </style>
         
@@ -75,11 +80,13 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                         <apex:outputPanel id="hocContact">
                         
                         <div class="form-group">
-                            <label for="nameOrganization1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE}</label>
+                            <label for="nameOrganization1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE} <span class="asteriskRequiredField">*</span></label>
                             <div class="col-sm-3">
+                                <!--<apex:inputField value="{!contactSalutation.Salutation}">
+                                </apex:inputField>-->
                                 <apex:selectList id="nameOrganization1" styleClass="form-control" size="1" value="{!controllerParticipation.HOC_Salutation__c}">
-                                    <apex:selectOptions value="{!salutationList}" />
-                                </apex:selectList>
+                                    <apex:selectOptions value="{!salutationListHOC}" />
+                                </apex:selectList> 
                             </div>
                             <div class="col-sm-offset-3 col-sm-1">
                                 <apex:commandLink id="btnId" styleClass="btn btn-primary btn-sm " html-data-toggle="modal" html-data-target=".searchHocContact" reRender="fake">
@@ -88,7 +95,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="firstName1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME}</label>
+                            <label for="firstName1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME} <span class="asteriskRequiredField">*</span></label>
                             <div class="col-sm-8">
                                 <div class="{!IF(AND(hasError, OR(participation.HOC_First_Name__c == null, participation.HOC_First_Name__c == "")), 'has-error has-feedback', '')}">
                                     <apex:inputText id="firstName1" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control requiredTag allchar" value="{!controllerParticipation.HOC_First_Name__c}"/>
@@ -100,7 +107,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="lastName1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME}</label>
+                            <label for="lastName1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME} <span class="asteriskRequiredField">*</span></label>
                             <div class="col-sm-8">
                                 <div class="{!IF(AND(hasError, OR(participation.HOC_Last_Name__c == null, participation.HOC_Last_Name__c == "")), 'has-error has-feedback', '')}">
                                     <apex:inputText id="lastName1" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOC_Last_Name__c}"/>
@@ -112,7 +119,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="title1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE}</label>
+                            <label for="title1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE} <span class="asteriskRequiredField">*</span></label>
                             <div class="col-sm-8">
                                 <div class="{!IF(AND(hasError, OR(participation.HOC_Title__c == null, participation.HOC_Title__c == "")), 'has-error has-feedback', '')}">
                                     <apex:inputText maxlength="15" id="title1" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar entityTitle" value="{!controllerParticipation.HOC_Title__c}"/>
@@ -124,7 +131,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="city1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TELEPHONE_NUMBER}</label>
+                            <label for="city1" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TELEPHONE_NUMBER} <span class="asteriskRequiredField">*</span></label>
                             <div class="col-sm-8">
                                 <div class="{!IF(AND(hasError, OR(participation.HOC_Phone__c == null, participation.HOC_Phone__c == "")), 'has-error has-feedback', '')}">
                                     <apex:inputText id="city1" onchange="telephoneValidation(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control alltelef" value="{!controllerParticipation.HOC_Phone__c}"/>
@@ -136,7 +143,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="email" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL}</label>
+                            <label for="email" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL} <span class="asteriskRequiredField">*</span></label>
                             <div class="col-sm-8">
                                 <div class="{!IF(AND(hasError, OR(participation.HOC_Email__c == null, participation.HOC_Email__c == "")), 'has-error has-feedback', '')}">
                                     <apex:inputText id="email" onchange="validateEmail(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allemails" value="{!controllerParticipation.HOC_Email__c}"/>
@@ -180,10 +187,10 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                         <div class="panel-body">
                             <apex:outputPanel id="hobContact">
                             <div class="form-group">
-                                <label for="nameOrganization2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE}</label>
+                                <label for="nameOrganization2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-3">
                                     <apex:selectList id="nameOrganization2" styleClass="form-control" size="1" value="{!controllerParticipation.HOB_Salutation__c}">
-                                        <apex:selectOptions value="{!salutationList}" />
+                                        <apex:selectOptions value="{!salutationListHOB}" />
                                     </apex:selectList>
                                 </div>
                                 <div class="col-sm-offset-3 col-sm-1">
@@ -193,7 +200,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="legalName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME}</label>
+                                <label for="legalName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.HOB_First_Name__c == null, participation.HOB_First_Name__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText id="legalName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOB_First_Name__c}"/>
@@ -205,7 +212,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="tradingName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME}</label>
+                                <label for="tradingName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.HOB_Last_Name__c == null, participation.HOB_Last_Name__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText id="tradingName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.HOB_Last_Name__c}"/>
@@ -217,7 +224,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="streetAddress2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE}</label>
+                                <label for="streetAddress2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.HOB_Title__c == null, participation.HOB_Title__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText maxlength="15" id="streetAddress2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar entityTitle" value="{!controllerParticipation.HOB_Title__c}"/>
@@ -229,7 +236,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="city2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TELEPHONE_NUMBER}</label>
+                                <label for="city2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TELEPHONE_NUMBER} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.HOB_Phone__c == null, participation.HOB_Phone__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText id="city2" onchange="telephoneValidation(this, 'glyphicon glyphicon-remove form-control-feedback')" styleClass="form-control alltelef" value="{!controllerParticipation.HOB_Phone__c}"/>
@@ -241,7 +248,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="email2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL}</label>
+                                <label for="email2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.HOB_Email__c == null, participation.HOB_Email__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText id="email2" onchange="validateEmail(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allemails" value="{!controllerParticipation.HOB_Email__c}"/>
@@ -275,15 +282,15 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                         <div class="panel-body">
                             <apex:outputPanel id="sisContact">
                             <div class="form-group">
-                                <label for="nameOrganization2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE}</label>
+                                <label for="nameOrganization2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_CONTACT_SALUTE} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-3">
                                     <apex:selectList id="nameOrganization2" styleClass="form-control" size="1" value="{!controllerParticipation.SIS_Salutation__c}">
-                                        <apex:selectOptions value="{!salutationList}" />
+                                        <apex:selectOptions value="{!salutationListSIS}" />
                                     </apex:selectList>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="legalName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME}</label>
+                                <label for="legalName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_FIRST_NAME} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.SIS_First_Name__c == null, participation.SIS_First_Name__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText id="legalName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_First_Name__c}"/>
@@ -295,7 +302,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="tradingName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME}</label>
+                                <label for="tradingName2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_LAST_NAME} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.SIS_Last_Name__c == null, participation.SIS_Last_Name__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText id="tradingName2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Last_Name__c}"/>
@@ -307,7 +314,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="streetAddress2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE}</label>
+                                <label for="streetAddress2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TITLE} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.SIS_Title__c == null, participation.SIS_Title__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText maxlength="15" id="streetAddress2" onchange="validateLatinChar(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allchar" value="{!controllerParticipation.SIS_Title__c}"/>
@@ -319,7 +326,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="city2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TELEPHONE_NUMBER}</label>
+                                <label for="city2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_TELEPHONE_NUMBER} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.SIS_Phone__c == null, participation.SIS_Phone__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText id="city2" onchange="telephoneValidation(this, 'glyphicon glyphicon-remove form-control-feedback')" styleClass="form-control alltelef" value="{!controllerParticipation.SIS_Phone__c}"/>
@@ -331,7 +338,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="email2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL}</label>
+                                <label for="email2" class="col-sm-3 control-label">{!$Label.ISSP_AMC_EMAIL} <span class="asteriskRequiredField">*</span></label>
                                 <div class="col-sm-8">
                                     <div class="{!IF(AND(hasError, OR(participation.SIS_Email__c == null, participation.SIS_Email__c == "")), 'has-error has-feedback', '')}">
                                         <apex:inputText id="email2" onchange="validateEmail(this, 'glyphicon glyphicon-remove form-control-feedback', 'has-error has-feedback')" styleClass="form-control allemails" value="{!controllerParticipation.SIS_Email__c}"/>
@@ -738,7 +745,7 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
             function validateEmail(element, errorClass) {
                 var x = element.parentElement.classList;
                 var y = element.parentElement.children;
-                filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                filter = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
                 if(element.value  != null && element.value != ""){
                     if (!filter.test(element.value)) {
                         //x.remove("emailValidation");

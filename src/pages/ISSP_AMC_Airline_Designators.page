@@ -354,22 +354,26 @@ VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
                         {!$Label.ISSP_AMC_DESIGNATOR_APPROVAL}
                     </div>
 
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 20%;">
-                            {!$Label.ISSP_AMC_STEP_1_OF_4}
-                        </div>
-                    </div>
-                    <div class="navbar removeMarginBottom">
-                        <div class="navbar-inner">
-                            <ul class="nav nav-tabs nav-justified">
-                                <li class="active"><a href="#step1" data-toggle="tab" data-step="1">{!$Label.ISSP_AMC_SELECT_TYPE_OF_OPERATION}</a></li>
-                                <li><a href="#step2" data-toggle="tab" data-step="2">{!$Label.ISSP_AMC_COMPLETE_APPLICATION_FORM}</a></li>
-                                <li><a href="#step3" data-toggle="tab" data-step="3">{!$Label.ISSP_AMC_REVIEW_REQUIREMENTS}</a></li>
-                                <li><a href="#step4" data-toggle="tab" data-step="4">{!$Label.ISSP_AMC_SUBMIT_TO_IATA}</a></li>
-                            </ul>
-                        </div>
-                    </div>
                     <apex:form id="step1Frm" html-data-toggle="validator" styleClass="tab-content form-horizontal formValidator">
+
+                        <apex:actionFunction action="{!saveParticipation}" id="saveOnSwitch" name="saveOnSwitch" reRender="errorMessageStep1,errorMessageStep2,step3Panel,errorMessageStep4" status="Loading" oncomplete="stopLoading()">
+                            <apex:param name="step" assignTo="{!step}" value="3"/>
+                        </apex:actionFunction>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" style="width: 20%;">
+                                {!$Label.ISSP_AMC_STEP_1_OF_4}
+                            </div>
+                        </div>
+                        <div class="navbar removeMarginBottom">
+                            <div class="navbar-inner">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li class="active"><a href="#step1" data-toggle="tab" data-step="1">{!$Label.ISSP_AMC_SELECT_TYPE_OF_OPERATION}</a></li>
+                                    <li><a href="#step2" data-toggle="tab" data-step="2">{!$Label.ISSP_AMC_COMPLETE_APPLICATION_FORM}</a></li>
+                                    <li><a href="#step3" data-toggle="tab" data-step="3" onclick="startLoading(); saveOnSwitch();">{!$Label.ISSP_AMC_REVIEW_REQUIREMENTS}</a></li>
+                                    <li><a href="#step4" data-toggle="tab" data-step="4">{!$Label.ISSP_AMC_SUBMIT_TO_IATA}</a></li>
+                                </ul>
+                            </div>
+                        </div>
 
                         <div class="tab-pane fade in active" id="step1">
                             <apex:outputpanel id="step1Panel">

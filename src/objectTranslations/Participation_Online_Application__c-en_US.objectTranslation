@@ -245,6 +245,18 @@
     <fields>
         <label><!-- HOB Salutation --></label>
         <name>HOB_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr.</masterLabel>
+            <translation><!-- Mr. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs.</masterLabel>
+            <translation><!-- Mrs. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms.</masterLabel>
+            <translation><!-- Ms. --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- HOB Title --></label>
@@ -269,6 +281,18 @@
     <fields>
         <label><!-- HOC Salutation --></label>
         <name>HOC_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr.</masterLabel>
+            <translation><!-- Mr. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs.</masterLabel>
+            <translation><!-- Mrs. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms.</masterLabel>
+            <translation><!-- Ms. --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- HOC Title --></label>
@@ -675,6 +699,18 @@
     <fields>
         <label><!-- SIS Salutation --></label>
         <name>SIS_Salutation__c</name>
+        <picklistValues>
+            <masterLabel>Mr.</masterLabel>
+            <translation><!-- Mr. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mrs.</masterLabel>
+            <translation><!-- Mrs. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ms.</masterLabel>
+            <translation><!-- Ms. --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- SIS Title --></label>

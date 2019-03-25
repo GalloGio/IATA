@@ -37,12 +37,13 @@ public class ISSP_AMC_EntityContactData {
             return faq2Case.countryList;
         } 
     }
-    public List <SelectOption> salutationList {
+    
+    public List <SelectOption> salutationListSIS {
         get {
-            if(salutationList == null){
+            if(salutationListSIS == null){
                 List <SelectOption> optionList = new List <SelectOption>();
             
-                Schema.DescribeFieldResult fieldResult = Contact.Salutation.getDescribe();
+                Schema.DescribeFieldResult fieldResult = Participation_Online_Application__c.SIS_Salutation__c.getDescribe();
                 List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
 
                 for( Schema.PicklistEntry f : ple){
@@ -50,7 +51,41 @@ public class ISSP_AMC_EntityContactData {
                 }
                 return optionList;
             }
-            return salutationList;
+            return salutationListSIS;
+        }
+    }
+    
+    public List <SelectOption> salutationListHOC {
+        get {
+            if(salutationListHOC == null){
+                List <SelectOption> optionList = new List <SelectOption>();
+            
+                Schema.DescribeFieldResult fieldResult = Participation_Online_Application__c.HOC_Salutation__c.getDescribe();
+                List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+
+                for( Schema.PicklistEntry f : ple){
+                    optionList.add(new SelectOption( f.getValue(),f.getLabel()));
+                }
+                return optionList;
+            }
+            return salutationListHOC;
+        }
+    }
+    
+        public List <SelectOption> salutationListHOB {
+        get {
+            if(salutationListHOB == null){
+                List <SelectOption> optionList = new List <SelectOption>();
+            
+                Schema.DescribeFieldResult fieldResult = Participation_Online_Application__c.HOB_Salutation__c.getDescribe();
+                List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+
+                for( Schema.PicklistEntry f : ple){
+                    optionList.add(new SelectOption( f.getValue(),f.getLabel()));
+                }
+                return optionList;
+            }
+            return salutationListHOB;
         }
     }
 

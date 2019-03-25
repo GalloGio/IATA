@@ -16,7 +16,7 @@
                             <label for="aocRadio">{!$Label.ISSP_AMC_ULD_QUESTION}</label>
                         </div>
                         <div class="col-md-4">
-                            <apex:selectRadio id="aocRadio" onclick="startLoading()" value="{!participation.Is_ULD_participation_IATA_program__c}" styleClass="{!IF(AND(hasError, participation.Is_ULD_participation_IATA_program__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
+                            <apex:selectRadio id="aocRadio" onclick="if(this.value != '{!participation.Is_ULD_participation_IATA_program__c}'){ startLoading();}" value="{!participation.Is_ULD_participation_IATA_program__c}" styleClass="{!IF(AND(hasError, participation.Is_ULD_participation_IATA_program__c == null), 'requiredSelectRadio', '')}" style="width:100px;">
                                 <apex:actionSupport event="onchange" rerender="aocPanel" oncomplete="stopLoading()" />
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
