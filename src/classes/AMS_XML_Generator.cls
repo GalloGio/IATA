@@ -224,26 +224,39 @@ public with sharing class AMS_XML_Generator {
             getElementNode(liNode, 'quantity', '1');
 
             /*NEWGEN-3267 START*/
-
+            
             /* NEWGEN-5164 START*/
-            if(changeCodeCaseNumber.get(ag.Id) <> null){
-                Opportunity curOpp = oppForGDIorGDN.get(ag.OSCAR__c);
+            Boolean isGDIorGDN  = gdiOrGdnChangeCode.contains(ag.Change_Code__c);
+            Opportunity curOpp  = oppForGDIorGDN.get(ag.OSCAR__c);
+            String caseId       = changeCodeCaseNumber.get(ag.Id);
 
-                //If it's a GDI/GDN change code and have an opportunity for the specific oscar
-                if(curOpp != NULL){
-                    getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
-                    Date offerDate =  curOpp.Offer_exchange_rate_date__c;
+            //If it's a GDI/GDN change code and have an opportunity for the specific oscar
+            if(isGDIorGDN && curOpp != NULL){
+                
+                if(caseId != NULL){
+                    getElementNode(liNode, 'CaseId', caseId);
+                }
+
+                Date offerDate = curOpp.Offer_exchange_rate_date__c;
+                
+                if(offerDate != NULL){
                     Datetime dtOfferDate = datetime.newInstance(offerDate.year(), offerDate.month(),offerDate.day());
                     getElementNode(liNode, 'offerDate', dtOfferDate.format('yyyyMMdd'));
+                }
+                
+                if(curOpp.GDI_Offer_Id__c != NULL){
                     getElementNode(liNode, 'offerId', curOpp.GDI_Offer_Id__c);
                 }
-                else if(!gdiOrGdnChangeCode.contains(ag.Change_Code__c)){
-                    getElementNode(liNode, 'CaseId', changeCodeCaseNumber.get(ag.Id));
-                }
+
+            }
+            //Otherwise only send the case id if the account is new gen
+            else if(!isGDIorGDN && ag.Account__r.ANG_IsNewGenAgency__c && caseId != NULL){
+                getElementNode(liNode, 'CaseId', caseId);
             }
             /* NEWGEN-5164 END */
             
             /*NEWGEN-3267 END*/
+            
         }
 
         system.debug('--------- doc: ' + doc.toXmlString());        
